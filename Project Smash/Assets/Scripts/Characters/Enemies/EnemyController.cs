@@ -8,6 +8,7 @@ public class EnemyController : MonoBehaviour
 {
     [SerializeField] float attackRange = 1.5f;
     [SerializeField] Collider2D playerSpotterTrigger = null;
+    public bool testMode=false;
     EnemyMovement movement;
     Transform playerTransform;
     EnemyAttack attack;
@@ -35,6 +36,7 @@ public class EnemyController : MonoBehaviour
             return; 
         }
         if (!isPlayerSpotted /*&& movement.IsPlayerReachable()*/) return;
+        if (testMode) return;
         AttackBehavior();
     }
 

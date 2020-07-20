@@ -4,5 +4,5 @@ using UnityEngine;
 
 public enum ButtonList
 {
-    buttonA, buttonB, buttonX,buttonY, buttonRB, noButton
+    buttonA, buttonB, buttonX,buttonY, buttonRB, dpadRightButton, noButton
 }

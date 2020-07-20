@@ -81,6 +81,22 @@ public class @_Controller : IInputActionCollection, IDisposable
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """"
+                },
+                {
+                    ""name"": ""ButtonLB"",
+                    ""type"": ""Button"",
+                    ""id"": ""492c5cf6-9b87-42d3-b934-5c677ac15281"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
+                },
+                {
+                    ""name"": ""DPadLeft"",
+                    ""type"": ""Button"",
+                    ""id"": ""34d1bbec-8e9b-4ca2-94ee-4f65e5f925a8"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
                 }
             ],
             ""bindings"": [
@@ -220,7 +236,7 @@ public class @_Controller : IInputActionCollection, IDisposable
                     ""name"": """",
                     ""id"": ""0a3aac74-3050-4c67-9876-75dc69d9bb64"",
                     ""path"": ""<Gamepad>/buttonEast"",
-                    ""interactions"": ""Press(behavior=2)"",
+                    ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Gamepad"",
                     ""action"": ""ButtonB"",
@@ -231,7 +247,7 @@ public class @_Controller : IInputActionCollection, IDisposable
                     ""name"": """",
                     ""id"": ""4e6e2bba-9679-4449-8745-6d3f402aeeea"",
                     ""path"": ""<Gamepad>/buttonSouth"",
-                    ""interactions"": ""Press(behavior=2)"",
+                    ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Gamepad"",
                     ""action"": ""ButtonA"",
@@ -242,7 +258,7 @@ public class @_Controller : IInputActionCollection, IDisposable
                     ""name"": """",
                     ""id"": ""43e3f5d3-92ab-4057-953f-b9806fb54e85"",
                     ""path"": ""<Gamepad>/buttonWest"",
-                    ""interactions"": ""Press(behavior=2)"",
+                    ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Gamepad"",
                     ""action"": ""ButtonX"",
@@ -264,7 +280,7 @@ public class @_Controller : IInputActionCollection, IDisposable
                     ""name"": """",
                     ""id"": ""1f3bacbf-f109-4248-b3e3-70cfb30d0cbd"",
                     ""path"": ""<Gamepad>/buttonNorth"",
-                    ""interactions"": ""Press(behavior=2)"",
+                    ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Gamepad"",
                     ""action"": ""ButtonY"",
@@ -275,9 +291,9 @@ public class @_Controller : IInputActionCollection, IDisposable
                     ""name"": """",
                     ""id"": ""56091307-0007-4725-921a-a3f2fe3aa924"",
                     ""path"": ""<Gamepad>/rightShoulder"",
-                    ""interactions"": ""Press(behavior=2)"",
+                    ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": """",
+                    ""groups"": ""Gamepad"",
                     ""action"": ""ButtonRB"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
@@ -290,6 +306,28 @@ public class @_Controller : IInputActionCollection, IDisposable
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""Quit"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""b632a11e-86b6-475a-a04a-1a8921aa9af4"",
+                    ""path"": ""<Gamepad>/leftShoulder"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""ButtonLB"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""d460d0b8-193d-413c-bad9-c3054017b8ca"",
+                    ""path"": ""<Gamepad>/dpad/left"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""DPadLeft"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -970,6 +1008,8 @@ public class @_Controller : IInputActionCollection, IDisposable
         m_Player_ButtonStart = m_Player.FindAction("ButtonStart", throwIfNotFound: true);
         m_Player_ButtonRB = m_Player.FindAction("ButtonRB", throwIfNotFound: true);
         m_Player_Quit = m_Player.FindAction("Quit", throwIfNotFound: true);
+        m_Player_ButtonLB = m_Player.FindAction("ButtonLB", throwIfNotFound: true);
+        m_Player_DPadLeft = m_Player.FindAction("DPadLeft", throwIfNotFound: true);
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
         m_UI_Navigate = m_UI.FindAction("Navigate", throwIfNotFound: true);
@@ -1044,6 +1084,8 @@ public class @_Controller : IInputActionCollection, IDisposable
     private readonly InputAction m_Player_ButtonStart;
     private readonly InputAction m_Player_ButtonRB;
     private readonly InputAction m_Player_Quit;
+    private readonly InputAction m_Player_ButtonLB;
+    private readonly InputAction m_Player_DPadLeft;
     public struct PlayerActions
     {
         private @_Controller m_Wrapper;
@@ -1056,6 +1098,8 @@ public class @_Controller : IInputActionCollection, IDisposable
         public InputAction @ButtonStart => m_Wrapper.m_Player_ButtonStart;
         public InputAction @ButtonRB => m_Wrapper.m_Player_ButtonRB;
         public InputAction @Quit => m_Wrapper.m_Player_Quit;
+        public InputAction @ButtonLB => m_Wrapper.m_Player_ButtonLB;
+        public InputAction @DPadLeft => m_Wrapper.m_Player_DPadLeft;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -1089,6 +1133,12 @@ public class @_Controller : IInputActionCollection, IDisposable
                 @Quit.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnQuit;
                 @Quit.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnQuit;
                 @Quit.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnQuit;
+                @ButtonLB.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnButtonLB;
+                @ButtonLB.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnButtonLB;
+                @ButtonLB.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnButtonLB;
+                @DPadLeft.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnDPadLeft;
+                @DPadLeft.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnDPadLeft;
+                @DPadLeft.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnDPadLeft;
             }
             m_Wrapper.m_PlayerActionsCallbackInterface = instance;
             if (instance != null)
@@ -1117,6 +1167,12 @@ public class @_Controller : IInputActionCollection, IDisposable
                 @Quit.started += instance.OnQuit;
                 @Quit.performed += instance.OnQuit;
                 @Quit.canceled += instance.OnQuit;
+                @ButtonLB.started += instance.OnButtonLB;
+                @ButtonLB.performed += instance.OnButtonLB;
+                @ButtonLB.canceled += instance.OnButtonLB;
+                @DPadLeft.started += instance.OnDPadLeft;
+                @DPadLeft.performed += instance.OnDPadLeft;
+                @DPadLeft.canceled += instance.OnDPadLeft;
             }
         }
     }
@@ -1321,6 +1377,8 @@ public class @_Controller : IInputActionCollection, IDisposable
         void OnButtonStart(InputAction.CallbackContext context);
         void OnButtonRB(InputAction.CallbackContext context);
         void OnQuit(InputAction.CallbackContext context);
+        void OnButtonLB(InputAction.CallbackContext context);
+        void OnDPadLeft(InputAction.CallbackContext context);
     }
     public interface IUIActions
     {

@@ -68,6 +68,22 @@
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": ""
+                },
+                {
+                    "name": "ButtonLB",
+                    "type": "Button",
+                    "id": "492c5cf6-9b87-42d3-b934-5c677ac15281",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
+                    "name": "DPadLeft",
+                    "type": "Button",
+                    "id": "34d1bbec-8e9b-4ca2-94ee-4f65e5f925a8",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
                 }
             ],
             "bindings": [
@@ -207,7 +223,7 @@
                     "name": "",
                     "id": "0a3aac74-3050-4c67-9876-75dc69d9bb64",
                     "path": "<Gamepad>/buttonEast",
-                    "interactions": "Press(behavior=2)",
+                    "interactions": "",
                     "processors": "",
                     "groups": "Gamepad",
                     "action": "ButtonB",
@@ -218,7 +234,7 @@
                     "name": "",
                     "id": "4e6e2bba-9679-4449-8745-6d3f402aeeea",
                     "path": "<Gamepad>/buttonSouth",
-                    "interactions": "Press(behavior=2)",
+                    "interactions": "",
                     "processors": "",
                     "groups": "Gamepad",
                     "action": "ButtonA",
@@ -229,7 +245,7 @@
                     "name": "",
                     "id": "43e3f5d3-92ab-4057-953f-b9806fb54e85",
                     "path": "<Gamepad>/buttonWest",
-                    "interactions": "Press(behavior=2)",
+                    "interactions": "",
                     "processors": "",
                     "groups": "Gamepad",
                     "action": "ButtonX",
@@ -251,7 +267,7 @@
                     "name": "",
                     "id": "1f3bacbf-f109-4248-b3e3-70cfb30d0cbd",
                     "path": "<Gamepad>/buttonNorth",
-                    "interactions": "Press(behavior=2)",
+                    "interactions": "",
                     "processors": "",
                     "groups": "Gamepad",
                     "action": "ButtonY",
@@ -262,9 +278,9 @@
                     "name": "",
                     "id": "56091307-0007-4725-921a-a3f2fe3aa924",
                     "path": "<Gamepad>/rightShoulder",
-                    "interactions": "Press(behavior=2)",
+                    "interactions": "",
                     "processors": "",
-                    "groups": "",
+                    "groups": "Gamepad",
                     "action": "ButtonRB",
                     "isComposite": false,
                     "isPartOfComposite": false
@@ -277,6 +293,28 @@
                     "processors": "",
                     "groups": "",
                     "action": "Quit",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "b632a11e-86b6-475a-a04a-1a8921aa9af4",
+                    "path": "<Gamepad>/leftShoulder",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Gamepad",
+                    "action": "ButtonLB",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "d460d0b8-193d-413c-bad9-c3054017b8ca",
+                    "path": "<Gamepad>/dpad/left",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Gamepad",
+                    "action": "DPadLeft",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

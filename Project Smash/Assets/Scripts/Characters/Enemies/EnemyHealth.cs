@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using System.Threading;
 using UnityEngine;
 
 namespace PSmash.Combat
@@ -16,13 +17,15 @@ namespace PSmash.Combat
         Coroutine coroutine;
         TestSceneManager sceneManager;
         AudioSource audioSource;
+        bool testMode = false;
         bool isDead = false;
         bool isGuardActive = true;
         bool isInterruptedByDamage = false;
-        bool isBreakingGuard = false;
+        bool guardBroke = false;
         bool crRunning = false;
         int initialHealth;
         int initialGuard;
+        float timer = 0;
         // Start is called before the first frame update
         void Start()
         {
@@ -34,6 +37,9 @@ namespace PSmash.Combat
             sceneManager = FindObjectOfType<TestSceneManager>();
             audioSource = GetComponent<AudioSource>();
             if(sceneManager!= null) sceneManager.enemiesAlive.Add(gameObject);
+            //For Test Mode
+            testMode = GetComponent<EnemyController>().testMode;
+
         }
 
         public bool IsDead()
@@ -58,28 +64,24 @@ namespace PSmash.Combat
 
         void Damaged(Transform attacker, int damage)
         {
-
+            if (isDead) return;
             //Debug.Log("Damaged");
-            float guardScale;
-            float healthScale;
             if (guard > 0)
             {
-                guard -= damage;
+                if (!testMode) guard -= damage;
                 if (guard <= 0)
                 {
                     guard = 0;
-                    isBreakingGuard = true;
-                    Debug.Log("Stunned");
-                    animator.SetInteger("Damaged", 20);
+                    guardBroke = true;
+                    animator.Play("GuardBroke");
                     isInterruptedByDamage = true;
-                    if (!crRunning)
-                    {
-                        Debug.Log("Starting Coroutine");
-                        StartCoroutine(WaitingForDamageToEnd());
-                        //Debug.Break();
-                    }
+                    StunEffects();
                 }
-                guardScale = (float)guard / (float)initialGuard;
+                else
+                {
+                    CheckWhichDamage(attacker);
+                }
+                float guardScale = (float)guard / (float)initialGuard;
                 guardBar.SubstractDamage(guardScale, initialGuard);
             }  
             else
@@ -87,37 +89,72 @@ namespace PSmash.Combat
                 health -= damage;
                 if (health <= 0)
                 {
-                    StopAllCoroutines();
                     health = 0;
                     isDead = true;
-                    Debug.Log(gameObject.name + " diead");
                     StartCoroutine(GameObjectDied());
                 }
-                healthScale = (float)health / (float)initialHealth;
+                else
+                {
+                    CheckWhichDamage(attacker);
+                }
+                float healthScale = (float)health / (float)initialHealth;
                 healhtBar.SubstractDamage(healthScale);
                 guardBar.SubstractDamage(0, initialGuard);
             }
-            if (isDead) return;
-            if (attacker == null)
+        }
+
+        private void CheckWhichDamage(Transform attacker)
+        {
+            if (attacker == null) animator.Play("DamageOnly", -1, 0f);
+            if (!guardBroke && attacker != null)
+            {
+                animator.Play("Damaged", -1, 0f);
+                isInterruptedByDamage = true;
+                DamageEffects();
+                if (crRunning)
+                {
+                    crRunning = false;
+                    StopCoroutine(coroutine);
+                }
+                coroutine = StartCoroutine(WaitingForDamageToEnd());
+            }
+        }
+
+        private void Damaged()
+        {
+            animator.Play("Damaged", -1, 0f);
+            isInterruptedByDamage = true;
+            DamageEffects();
+            if (crRunning)
+            {
+                crRunning = false;
+                StopCoroutine(coroutine);
+            }
+            coroutine = StartCoroutine(WaitingForDamageToEnd());
+        }
+
+        void StunEffects()
+        {
+            audioSource.PlayOneShot(guardBrokeSound);
+
+        }
+
+        void DamageEffects()
+        {
+            audioSource.PlayOneShot(damagedSound);
+        }
+        void DamagedByAttackEffects(Transform attacker)
+        {
+            if (attacker != null && !guardBroke)
+            {
+
+            }
+            if(attacker == null)
             {
                 Debug.Log("Damage Only");
                 //Debug.Break();
                 animator.SetTrigger("DamageOnly");
             }
-
-            if (attacker != null && !isBreakingGuard)
-            {
-                audioSource.PlayOneShot(damagedSound);
-                //Debug.Log("Interrupted  " + attacker.gameObject);
-                animator.SetInteger("Damaged", 1);
-                isInterruptedByDamage = true;
-                if (!crRunning)
-                {
-                    Debug.Log("Coroutine has finished");
-                    coroutine = StartCoroutine(WaitingForDamageToEnd());
-                }
-            }
-
         }
 
         IEnumerator WaitingForDamageToEnd()
@@ -129,7 +166,6 @@ namespace PSmash.Combat
                 yield return new WaitForFixedUpdate();
             }
             isInterruptedByDamage = false;
-            isBreakingGuard = false;
             animator.SetInteger("Damaged", 0);
             //Debug.Break();
             crRunning = false;
@@ -140,7 +176,8 @@ namespace PSmash.Combat
         }
         IEnumerator GameObjectDied()
         {
-            animator.SetInteger("Damaged", 90);
+            Debug.Log(gameObject.name + " diead");
+            animator.Play("Dead", -1, 0f);
             GetComponent<Rigidbody2D>().gravityScale = 0;
             GetComponent<Collider2D>().enabled = false;
             GetComponent<Rigidbody2D>().velocity = new Vector2(0, 0);
@@ -159,6 +196,10 @@ namespace PSmash.Combat
             audioSource.PlayOneShot(guardBrokeSound, 1);
         }
 
+        void GuardBrokeRecovery()
+        {
+            guardBroke = false;
+        }
         void DropItem()
         {
             Instantiate(dropItem, transform.position, Quaternion.identity);

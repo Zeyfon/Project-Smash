@@ -22,7 +22,7 @@ namespace PSmash.Combat
 
         [Header("Combo Attack")]
         [SerializeField] Transform attackTransform = null;
-        [SerializeField] int damage = 10;
+        [SerializeField] int comboAttackDamage = 10;
         [SerializeField] float radiusOfAttack = 0.5f;
         [SerializeField] AudioClip[] attackSounds = null;
 
@@ -42,19 +42,14 @@ namespace PSmash.Combat
         [Header("Forward Attack")]
         [SerializeField] AudioClip forwardAttackSound = null;
 
-        _Controller _controller;
+        [Header("Damages")]
+        [SerializeField] int hikingSpikeDamage = 20;
+
         Animator animator;
         Rigidbody2D rb;
         AudioSource audioSource;
-        Vector2 movement;
-        //bool isAttacking = false;
         bool canContinueCombo = false;
-        //float currentXValue = 0;
 
-        private void Awake()
-        {
-            _controller = new _Controller();
-        }
         private void Start()
         {
             rb = GetComponent<Rigidbody2D>();
@@ -62,21 +57,10 @@ namespace PSmash.Combat
             audioSource = GetComponent<AudioSource>();
         }
 
-        private void OnEnable()
-        {
-            _controller.Player.Enable();
-            _controller.Player.Move.performed += ctx => movement = ctx.ReadValue<Vector2>();
-        }
-        private void OnDisable()
-        {
-            _controller.Player.Disable();
-            _controller.Player.Move.performed -= ctx => movement = ctx.ReadValue<Vector2>();
-        }
-
-        public void Attack(bool isPressedAttack,bool isGrounded)
+        public void Attack(bool isPressedAttack,bool isGrounded, float yInput)
         {
             //Debug.Log("Wants To Attack");
-            if(!GetComponent<PlayerMovement>().isGrounded && animator.GetInteger("Attack") == 0 && movement.y <-0.5f /*&& Mathf.Abs(movement.x) < 0.2f*/)
+            if(!GetComponent<PlayerMovement>().isGrounded && animator.GetInteger("Attack") == 0 && yInput <-0.5f /*&& Mathf.Abs(movement.x) < 0.2f*/)
             {
                 //Debug.Log("Smash Attack");
                 animator.SetInteger("Attack", 50);
@@ -107,7 +91,6 @@ namespace PSmash.Combat
         IEnumerator LookingForEnemy()
         {
             int counter = 0;
-            RaycastHit2D hit;
             while (true)
             {
                 if (animator.GetInteger("Attack") == 0)
@@ -119,12 +102,11 @@ namespace PSmash.Combat
                 else if (counter == 1)
                 {
                     counter = 0;
-                    hit = Physics2D.Raycast(transform.position, transform.right, 1.1f, whatIsAttackable);
+                    RaycastHit2D hit = Physics2D.Raycast(transform.position, transform.right, 1.1f, whatIsAttackable);
                     Debug.DrawRay(transform.position, transform.right * 1.1f, Color.cyan);
                     if (hit)
                     {
                         Debug.Log("Player hit Enemy");
-                        //Debug.Break();
                         GetComponent<PlayerMovement>().SetVelocityTo0();
                         hit.transform.GetComponent<EnemyHealth>().DamageTaken(transform, forwardAttackDamage);
                         animator.SetInteger("Attack", 35);
@@ -136,45 +118,15 @@ namespace PSmash.Combat
             }
         }
 
-
-        public void SubAttack()
+        public void SecondaryWeaponAttack(int attack)
         {
-            rb.gravityScale = 0;
-            switch (weapons)
-            {
-                case SecondaryWeaponsList.Bomb:
-                    MolotovAttack();
-                    break;
-                case SecondaryWeaponsList.Spike:
-                    SpikeAttack();
-                    break;
-                case SecondaryWeaponsList.MegaArm:
-                    MegaArmAttack();
-                    break;
-            }
-        }
-
-        private void SpikeAttack()
-        {
-            animator.SetInteger("Attack", 10);
-        }
-
-        private void MegaArmAttack()
-        {
-            throw new NotImplementedException();
-        }
-
-        public void MolotovAttack()
-        {
-            animator.SetInteger("Attack", 20);
-           // GetComponent<PlayerMovement>().GravityAdjust();
+            animator.SetInteger("Attack", attack);
         }
 
         public void Parry()
         {
-            Debug.Log("Start Parry");
+           // Debug.Log("Start Parry");
             animator.SetInteger("Attack", 90);
-           // GetComponent<PlayerMovement>().GravityAdjust();
         }
 
         void SpawnSubThrowAttack()
@@ -183,8 +135,16 @@ namespace PSmash.Combat
             GameObject subWeaponClone = Instantiate(subWeapon, spawnPosition, Quaternion.identity, null);
             subWeaponClone.GetComponent<Projectile>().IslookingRight(transform.right);
         }
-
         public void MainAttackSendDamage()
+        {
+            SendDamage(comboAttackDamage);
+        }
+        void HikingSpikeAttack()
+        {
+            SendDamage(hikingSpikeDamage);
+        }
+
+        private void SendDamage(int damage)
         {
             Collider2D[] colls = Physics2D.OverlapCircleAll(attackTransform.position, radiusOfAttack, whatIsAttackable);
             if (colls.Length == 0) return;
@@ -195,16 +155,12 @@ namespace PSmash.Combat
                     coll.SendMessage("Hit");
                     return;
                 }
-                //Debug.Log("Enemy Hit");
                 coll.GetComponent<EnemyHealth>().DamageTaken(transform, damage);
             }
-        }
+        }     
 
-        private void OnDrawGizmos()
-        {
-            Gizmos.DrawWireSphere(attackTransform.position, radiusOfAttack);
-        }
-        
+
+
 
         //Anim Events
         void SpawnBomb()
@@ -215,7 +171,9 @@ namespace PSmash.Combat
 
         void GravityAdjust()
         {
-            GetComponent<PlayerMovement>().GravityAdjust();
+
+            rb.gravityScale = 0;
+            rb.sharedMaterial = GetComponent<PlayerMovement>().FullFriction();
             rb.velocity = new Vector2(0, 0);
         }
 
@@ -228,7 +186,7 @@ namespace PSmash.Combat
         {
             if (state == 1)
             {
-                Debug.Log("Combo Window Active");
+                //Debug.Log("Combo Window Active");
                 canContinueCombo = true;
             }
             else canContinueCombo = false;      
@@ -302,6 +260,10 @@ namespace PSmash.Combat
         {
             audioSource.PlayOneShot(forwardAttackSound);
 
+        }
+        private void OnDrawGizmos()
+        {
+            Gizmos.DrawWireSphere(attackTransform.position, radiusOfAttack);
         }
     }
 }

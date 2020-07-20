@@ -58,6 +58,7 @@ namespace PSmash.Combat
                 healthScale = (float)health / (float)initialHealth;
             }
             eventManager.PlayerReceivedDamage(healthScale);
+            //Debug.Break();
         }
 
         IEnumerator GameObjectDied()
