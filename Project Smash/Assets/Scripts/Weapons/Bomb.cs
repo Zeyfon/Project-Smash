@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -8,8 +9,6 @@ public class Bomb : MonoBehaviour
     [SerializeField] GameObject bombExplotion;
     [SerializeField] LayerMask whatIsGround;
     AudioSource audioSource;
-
-    bool isEnemyHit = false;
     // Start is called before the first frame update
     void Start()
     {
@@ -19,39 +18,56 @@ public class Bomb : MonoBehaviour
     private void OnCollisionEnter2D(Collision2D collision)
     {
 
-        if (collision.collider.CompareTag("Player")) return;
-        Quaternion childRotation;
 
-        if (collision.collider.CompareTag("Ground"))
-        {        
-            audioSource.PlayOneShot(bombBreakingSound, 1);
-            GetComponent<Collider2D>().enabled = false;
-            ContactPoint2D contact = collision.contacts[0];
-            print(contact.collider.gameObject + "  " + contact.normal);
-            childRotation = new Quaternion(contact.normal.x, contact.normal.y,0, 0);
-            transform.GetChild(0).gameObject.SetActive(false);
-            Instantiate(bombExplotion, contact.point, childRotation);
-            StartCoroutine(WaitingSoundToEnd());
-            return;
-        }
+        //if (collision.collider.CompareTag("Ground"))
+        //{
 
-            RaycastHit2D hit = Physics2D.Raycast((Vector2)transform.position + new Vector2(0, 1), Vector2.down, 6, whatIsGround);
+
+        //    return;
+        //}
+        if (collision.collider.CompareTag("Enemy"))
+        {
+            RaycastHit2D hit = Physics2D.Raycast(collision.transform.position, Vector2.down, 6, whatIsGround);
             if (hit)
             {
-                GetComponent<Collider2D>().enabled = false;
-                audioSource.PlayOneShot(bombBreakingSound, 1);
-                Debug.Log("Enemt hit  " + hit.normal);
-                isEnemyHit = true;
-                childRotation = new Quaternion(hit.normal.x, hit.normal.y, 0, 0);
-                transform.GetChild(0).gameObject.SetActive(false);
-                Instantiate(bombExplotion, hit.point, childRotation);
-                StartCoroutine(WaitingSoundToEnd());
+                //Debug.Log("Enemt hit  " + hit.normal);
+                BombBreak(hit.normal,hit.point);
                 return;
             }
-        
-        Debug.Log(collision.gameObject.tag);
-        Debug.Break();
+            Debug.LogWarning("Bomb didn't find ground on Enemy");
+            Debug.Break();
+        }
+        if (collision.collider.CompareTag("Burnable"))
+        {
+            RaycastHit2D hit = Physics2D.Raycast(collision.transform.position, Vector2.down, 6, whatIsGround);
+            if (hit)
+            {
+                //Debug.Log("Enemt hit  " + hit.normal);
+                BombBreak(hit.normal, hit.point);
+                return;
+            }
+        }
+        else
+        {
+            ContactPoint2D contact = collision.contacts[0];
+            print(contact.collider.gameObject + "  " + contact.normal);
+            BombBreak(contact.normal, contact.point);
+        }
 
+        //Debug.LogWarning("Bomb collided with something else");
+        //Debug.Break();
+    }
+
+    void BombBreak(Vector2 spawnOrientation, Vector2 spawnPosition)
+    {
+        audioSource.PlayOneShot(bombBreakingSound, 1);
+        GetComponent<Collider2D>().enabled = false;
+        transform.GetChild(0).gameObject.SetActive(false);
+        Quaternion childRotation = Quaternion.Euler(0,0, Mathf.Atan2(spawnOrientation.x, spawnOrientation.y)*Mathf.Rad2Deg*-1);
+        print(childRotation);
+        Instantiate(bombExplotion, spawnPosition, childRotation);
+        //bombClone.GetComponent<Rigidbody2D>().SetRotation(childRotation);
+        StartCoroutine(WaitingSoundToEnd());
     }
     IEnumerator WaitingSoundToEnd()
     {

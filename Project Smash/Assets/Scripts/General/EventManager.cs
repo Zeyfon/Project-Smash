@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class EventManager : MonoBehaviour
 {
@@ -21,6 +19,9 @@ public class EventManager : MonoBehaviour
 
     public delegate void BootsObtained();
     public static event BootsObtained PlayerGotBoots;
+
+    public delegate void SubWeaponChange();
+    public static event SubWeaponChange SubWeaponchangeDone;
 
     public void PlayerReceivedDamage(float healthScale)
     {
@@ -57,5 +58,11 @@ public class EventManager : MonoBehaviour
         Debug.Log("Player Got the Boots");
         if (PlayerGotBoots == null) return;
         PlayerGotBoots();
+    }
+
+    public void SubWeabonChange()
+    {
+        if (SubWeaponchangeDone == null) return;
+        SubWeaponchangeDone();
     }
 }

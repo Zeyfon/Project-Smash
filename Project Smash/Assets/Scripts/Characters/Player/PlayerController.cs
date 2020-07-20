@@ -8,32 +8,28 @@ using System.Numerics;
 
 namespace PSmash.Control
 {
-    public class PlayerController : MonoBehaviour
+    public class PlayerController : MonoBehaviour,IIsAttacking
     {
 
         public static Transform playerTransform;
-        public float xInput;
-        public float yInput;
-        public bool attack = false;
-        public bool jump = false;
 
-        Transform interactableObjectTransform = null;
-        PlayerMovement playerMovement = null;
-        PlayerInteractions playerInteractions = null;
-        PlayerFighter fighter = null;
-        Animator animator = null;
+        Transform interactableObjectTransform;
+        PlayerMovement playerMovement;
+        PlayerInteractions playerInteractions;
+        PlayerFighter fighter;
+        SecondaryWeaponSystem secondaryWeapons;
+        Animator animator;
         Rigidbody2D rb;
         bool isInteractingWithObject = false;
         bool interactableObjectSet = false;
         bool isInteractableObjectClose = false;
-        bool canJump = true;
-        bool isJumping = false;
         bool isInteractingButtonPressed = false;
         bool isGrounded = true;
         bool isAttacking = false;
-        bool canAttack = true;
         bool isEvading = false;
         float gravityScale;
+        float xInput;
+        float yInput;
 
         private void Awake()
         {
@@ -47,6 +43,7 @@ namespace PSmash.Control
             playerInteractions = GetComponent<PlayerInteractions>();
             playerMovement = GetComponent<PlayerMovement>();
             fighter = GetComponent<PlayerFighter>();
+            secondaryWeapons = GetComponent<SecondaryWeaponSystem>();
             animator = GetComponent<Animator>();
             rb = GetComponent<Rigidbody2D>();
             gravityScale = rb.gravityScale;
@@ -55,15 +52,21 @@ namespace PSmash.Control
         // Update is called once per frame
         void FixedUpdate()
         {
+            //if (InteractingWithObjects()) return;
             if (isAttacking || isEvading) return;
-            if (InteractingWithObjects())return;
-            //Debug.Log("Can Move");
             InteractWithMovement();
         }
 
         private void InteractWithMovement()
         {
             playerMovement.PlayerMoving(xInput, yInput, isInteractingWithObject);
+        }
+
+        //Method called from the InputHandler
+        public void GetMovement(float xInput, float yInput)
+        {
+            this.xInput = xInput;
+            this.yInput = yInput;
         }
 
         private bool InteractingWithObjects()
@@ -125,22 +128,25 @@ namespace PSmash.Control
             }
         }
         #endregion
+
         #region ActionButtons
         //Action Buttons
         public void JumpButtonPressed()
         {
-            //Debug.Log("Jump Button Pressed");
-            //if (!isJumping || isAttacking) return;
-            //Debug.Log("Will Jump");
+            if (isAttacking || isEvading|| playerMovement.IsMovingOnLadder()) return;
             playerMovement.Jump();
-            isJumping = true;
         }
 
         public void AttackButtonPressed(bool isPressedAttack)
         {
-            isAttacking = true;
-            StartCoroutine(CheckAttacking());
-            fighter.Attack(isPressedAttack, isGrounded);
+            if (isEvading || playerMovement.IsMovingOnWall() || playerMovement.IsMovingOnLadder()) return;
+
+            if (animator.GetInteger("Attack") == 0)
+            {
+                StartCoroutine(CheckAttacking());
+                isAttacking = true;
+            }
+            fighter.Attack(isPressedAttack, isGrounded, yInput);
         }
 
         public void InteractButtonPressed(bool isInteractionButtonPressed)
@@ -151,7 +157,7 @@ namespace PSmash.Control
         public void ParryButtonPressed()
         {
             Debug.Log("Parry button Pressed");
-            if (isAttacking) return;
+            if (isAttacking || isEvading || playerMovement.IsMovingOnWall() || playerMovement.IsMovingOnLadder()) return;
             Debug.Log("Will Parry");
             isAttacking = true;
             StartCoroutine(CheckAttacking());
@@ -160,27 +166,32 @@ namespace PSmash.Control
 
         public void EvadeButtonPressed()
         {
-            if (isAttacking || isEvading) return;
+            if (isAttacking || isEvading || playerMovement.IsMovingOnWall() || playerMovement.IsMovingOnLadder()) return;
             playerMovement.EvadeMovement();
             isEvading = true;
             StartCoroutine(CheckEvasion());
         }
 
-        public void SubAttackButtonPressed()
+        public void SecondaryWeaponButtonPressed()
+        {
+
+            if (isAttacking || isEvading || playerMovement.IsMovingOnLadder()) return;
+            Debug.Log("Secondary Weapon Action");
+            secondaryWeapons.PerformSecondaryWeaponAction(this);
+        }
+        public void SecondaryWeaponSelectorPressed()
         {
             if (isAttacking) return;
-            isAttacking = true;
-            StartCoroutine(CheckAttacking());
-            fighter.SubAttack();
+            secondaryWeapons.ChangeActiveWeapon();
         }
 
-        public void MolotoveBombButtonPressed()
+        public void IIsAttacking()
         {
-            if (isAttacking) return;
+            Debug.Log("Interface Activated");
             isAttacking = true;
             StartCoroutine(CheckAttacking());
-            fighter.MolotovAttack();
         }
+
         #endregion
         IEnumerator CheckAttacking()
         {
@@ -215,10 +226,9 @@ namespace PSmash.Control
             isEvading = false;
         }
 
-        //private void OnDrawGizmos()
-        //{
-        //    Gizmos.DrawWireSphere(groundCheck1.position, groundCheckRadius);
-        //    Gizmos.DrawWireSphere(groundCheck2.position, groundCheckRadius);
-        //}
+        public void SetIsAttacking(bool state)
+        {
+            isAttacking = state;
+        }
     }
 }

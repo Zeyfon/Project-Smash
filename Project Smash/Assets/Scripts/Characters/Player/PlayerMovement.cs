@@ -3,7 +3,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using Cinemachine;
 using Unity.Mathematics;
 using PSmash.Combat;
 
@@ -20,17 +19,21 @@ namespace PSmash.Movement
         [Header("Ladder")]
         [SerializeField] float checkLadderDistance = 1;
         [SerializeField] LayerMask whatIsLadder;
+        [SerializeField] LayerMask whatIsPlatform;
         [SerializeField] Transform ladderCheck = null;
         
 
         [Header("Movement")]
         [SerializeField] float maxRunningSpeed = 5;
+        [SerializeField] float maxWallSpeed = 2;
         [SerializeField] float maxInteractingSpeed = 2;
-        [SerializeField] float jumpForce = 4000;
+        [SerializeField] float jumpVelocity = 8;
+        [SerializeField] int raycastFrameInterval = 10;
+        [SerializeField] AudioClip jumpSound;
 
         [Header("Attacks")]
         //[SerializeField] Vector2 splashAttackSpeed = new Vector2(0,0);
-
+        [SerializeField] Vector2 forwardAttackSpeed = new Vector2(0, 0);
 
         [Header("SlopeManagement")]
         [SerializeField] LayerMask whatIsSlope;
@@ -44,40 +47,34 @@ namespace PSmash.Movement
         [SerializeField] Vector2 simpleEvasionInitialVelocity;
         [SerializeField] Vector2 rollSpeed = new Vector2(0,0);
 
-        [SerializeField] Vector2 forwardAttackSpeed = new Vector2(0,0);
-        [SerializeField] AudioClip jumpSound;
-
-        [SerializeField] ParticleSystem dust;
+        [Header("Extra")]
+        [SerializeField] bool canDoubleJump = true;
+        [SerializeField] ParticleSystem dust = null;
 
         Rigidbody2D rb;
         Animator animator;
-        _Controller _controller;
         AudioSource audioSource;
         Coroutine coroutine;
         Vector2 slopeNormalPerp;
         Vector2 colliderSize;
-        Vector2 movement;
         float slopeDownAngle;
         float slopeDownAngleOld;
         float slopeSideAngle;
         float gravityScale;
         float currentSpeed;
         float yInput;
+        float xInput;
         bool lookingRight = true;
         bool isOnSlope = false;
         public bool isGrounded;
-        bool canJump = true;
         bool isJumping;
         bool canWalkOnSlope;
-        bool isMovingInLadder = false;
+        bool isMovingOnLadder = false;
         bool isDetectingLadder = false;
         bool isMovingUp = false;
-        bool isEvading = false;
+        bool isMovingOnWall = false;
+        int counter = 0;
 
-        private void Awake()
-        {
-            _controller = new _Controller();
-        }
         // Start is called before the first frame update
         void Start()
         {
@@ -85,244 +82,24 @@ namespace PSmash.Movement
             gravityScale = rb.gravityScale;
             colliderSize = GetComponent<CapsuleCollider2D>().size;
             animator = GetComponent<Animator>();
-            StartCoroutine(LookingForLadder());
             audioSource = GetComponent<AudioSource>();
-
-        }
-        //Called from PlayerController
-
-        private void OnEnable()
-        {
-            _controller.Player.Enable();
-            _controller.Player.Move.performed += ctx => movement = ctx.ReadValue<Vector2>();
-        }
-        private void OnDisable()
-        {
-            _controller.Player.Disable();
-            _controller.Player.Move.performed -= ctx => movement = ctx.ReadValue<Vector2>();
         }
 
         // The ground will be checked all frame tu ensure the correct detection among all actions
         private void Update()
         {
-            CheckGround();
-        }
-
-        public void CheckGround()
-        {
-            isGrounded = Physics2D.OverlapCircle(groundCheck1.position, groundCheckRadius, whatIsGround);
-            if (!isGrounded)
-            {
-                isGrounded = Physics2D.OverlapCircle(groundCheck2.position, groundCheckRadius, whatIsGround);
-            }
-            animator.SetBool("Grounded", isGrounded);
-            //print("Is Grounded  "+ isGrounded);
-            if (rb.velocity.y <= 0.0f)
-            {
-                isJumping = false;
-            }
-            if (isGrounded && !isJumping && slopeDownAngle <= maxSlopeAngle)
-            {
-                canJump = true;
-                isJumping = false;
-            }
-        }
-
-        //Action triggered in PlayerController. Depending on the player state is that it will do it or not. 
-        //The decision is taken in the PlayerMovement script
-        public void Jump()
-        {
-            //Debug.Log("Grounded  " + isGrounded + " CanJump  " + canJump);
-            if ((!isGrounded || !canJump)) return;
-            CreateDust();
-            canJump = false;
-            isJumping = true;
-            rb.AddForce(new Vector2(0, jumpForce), ForceMode2D.Impulse);
-            animator.SetTrigger("Jump");
-        }
-
-
-
-        // Main Method of the Class
-        public void PlayerMoving(float xInput,float yInput, bool isInteractingWithObject)
-        {
-            //if (isEvading) return;
-            this.yInput = yInput;
             SlopeCheck(xInput);
-            Move(xInput, yInput, isInteractingWithObject);
-            animator.SetFloat("yVelocity", rb.velocity.y);
+            CheckGround();
+            CheckForLadder();
         }
 
-        public void Move(float xInput, float yInput, bool isInteractingWithObject)
+        public void GetMovement(float xInput, float yInput)
         {
-            Flip(xInput, isMovingInLadder, isInteractingWithObject);
-            if (MovementInLadder(yInput, isInteractingWithObject)) return;
-            MovementOutsideLadder(xInput);
-        }
-        bool MovementInLadder(float yInput, bool isInteractingWithObject)
-        {
-            if (isDetectingLadder && !isMovingInLadder && yInput > 0.8f)
-            {
-                ClimbingLadderStart(yInput);
-                return true;
-            }
-            if(isMovingInLadder && !isDetectingLadder && isMovingUp)
-            {
-                UpperSideExitLadder();
-                return true;
-            }
-            if (isMovingInLadder && isGrounded && !isMovingUp)
-            {
-                LowerSideExitLadder();
-
-                return true;
-            }
-            if (isMovingInLadder)
-            {
-                rb.velocity = new Vector2(0, yInput * currentSpeed);
-                return true;
-            }
-            return false;
+            this.xInput = xInput;
+            this.yInput = yInput;
         }
 
-        void MovementOutsideLadder(float xInput)
-        {
-            float xVelocity;
-            if (isGrounded && !isOnSlope && !isJumping)
-            {
-                xVelocity = xInput * currentSpeed;
-                rb.velocity = new Vector2(xVelocity, rb.velocity.y);
-                animator.SetFloat("xVelocity", Mathf.Abs(xVelocity));
-                //print("Not In Slope");
-            }
-
-            if (isGrounded && isOnSlope && !isJumping && canWalkOnSlope)
-            {
-                xVelocity = -xInput * currentSpeed * slopeNormalPerp.x;
-                rb.velocity = new Vector2(xVelocity, -xInput * currentSpeed * slopeNormalPerp.y);
-                animator.SetFloat("xVelocity", Mathf.Abs(xVelocity));
-                //print("In Slope");
-            }
-            if (!isGrounded)
-            {
-                rb.velocity = new Vector2(xInput * currentSpeed, rb.velocity.y);
-                rb.sharedMaterial = noFriction;
-                //print("In The Air");
-            }
-        }
-
-        private void Flip(float xInput, bool isMovingInLadder, bool isInteractingWithObject)
-        {
-            if (isInteractingWithObject)
-            {
-                currentSpeed = maxInteractingSpeed;
-                return;
-            }
-            if (isMovingInLadder) return;
-            currentSpeed = maxRunningSpeed;
-            Quaternion currentRotation = new Quaternion(0, 0, 0, 0);
-            if (xInput > 0 && !lookingRight)
-            {
-                CreateDust();
-                //print("Change To Look Right");
-                Vector3 rotation = new Vector3(0, 0, 0);
-                currentRotation.eulerAngles = rotation;
-                transform.rotation = currentRotation;
-                lookingRight = true;
-            }
-            if (xInput < 0 && lookingRight)
-            {
-                //print("Change To Look Left");
-                CreateDust();
-                Vector3 rotation = new Vector3(0, 180, 0);
-                currentRotation.eulerAngles = rotation;
-                transform.rotation = currentRotation;
-                lookingRight = false;
-            }
-        }
-
-        void CreateDust()
-        {
-            if (!isGrounded) return;
-            dust.Play();
-        }
-        IEnumerator LookingForLadder()
-        {
-            int counter = 0;
-            while (true)
-            {
-                if (counter >= 5)
-                {
-                    if (yInput > 0.02f)
-                    {
-                        isMovingUp = true;
-                        //Debug.DrawRay(transform.position, Vector2.up);
-                        RaycastHit2D hit = Physics2D.Raycast(ladderCheck.position, Vector2.up, checkLadderDistance, whatIsLadder);
-                        if (hit)
-                        {
-                            isDetectingLadder = true;
-                        }
-                        else
-                        {
-                            isDetectingLadder = false;
-                        }
-                    }
-
-                    if (yInput < -0.02f)
-                    {
-
-                        isMovingUp = false;
-                        // Debug.DrawRay(transform.position, Vector2.down);
-                        RaycastHit2D hit = Physics2D.Raycast(ladderCheck.position, Vector2.down, checkLadderDistance, whatIsLadder);
-                        if (hit)
-                        {
-                            isDetectingLadder = true;
-                        }
-                        else
-                        {
-                            isDetectingLadder = false;
-                        }
-                    }
-                }
-                counter++;
-                yield return new WaitForEndOfFrame();
-            }
-
-        }
-        void ClimbingLadderStart(float yInput)
-        {
-            Debug.Log("Started Climbing a ladder");
-            RaycastHit2D hit = Physics2D.Raycast(ladderCheck.position, Vector2.up, checkLadderDistance, whatIsLadder);
-            transform.position = new Vector3(hit.collider.transform.position.x, transform.position.y, 0);
-            isMovingInLadder = true;
-            ChangeGravityScale(0);
-            rb.velocity = new Vector2(0, yInput * currentSpeed);
-            //print("Moving in Ladder");
-        }
-        void UpperSideExitLadder()
-        {
-            //The next upadte must have a script that move the complete gameobject according to the LeaveStairs Upperside.
-            //This will fix the problem when is about to exit.
-            //That way the player will not be controlling the gameobject when exiting.
-            rb.MovePosition(transform.position + new Vector3(0, 0.2f));
-            Debug.Log("Upside Ladder check");
-            print("Ladder Moving " + isMovingInLadder + " IsInLadder  " + isDetectingLadder + " isMovingUp " + isMovingUp);
-            isMovingInLadder = false;
-            ChangeGravityScale(gravityScale);
-        }
-
-        void LowerSideExitLadder()
-        {
-            //The next upadte must have a script that move the complete gameobject according to the LeaveStairs Downside.
-            //This will fix the problem when is about to exit.
-            //That way the player will not be controlling the gameobject when exiting.
-            Debug.Log("Downside Ladder check");
-            //print("Ladder Moving " + isMovingInLadder + " isGrounded  " + isGrounded + " IsInLadder  " + isDetectingLadder);
-            isMovingInLadder = false;
-            ChangeGravityScale(gravityScale);
-            //Debug.Break();
-        }
-
+        #region SlopeMovement
         public void SlopeCheck(float xInput)
         {
             Vector2 checkPos = transform.position - new Vector3(0.0f, colliderSize.y / 2);
@@ -349,7 +126,6 @@ namespace PSmash.Movement
                 isOnSlope = true;
                 //slopeSideAngle = Vector2.Angle(slopeHitBack.normal, Vector2.up);
                 slopeSideAngle = 0.0f;
-
             }
             else
             {
@@ -394,30 +170,371 @@ namespace PSmash.Movement
                 rb.sharedMaterial = lowFriction;
             }
         }
+        #endregion
 
-        void ChangeGravityScale(float gravityScale)
+        public void CheckGround()
         {
-            rb.gravityScale = gravityScale;
+            isGrounded = Physics2D.OverlapCircle(groundCheck1.position, groundCheckRadius, whatIsGround);
+            if (!isGrounded)
+            {
+                isGrounded = Physics2D.OverlapCircle(groundCheck2.position, groundCheckRadius, whatIsGround);
+            }
+            animator.SetBool("Grounded", isGrounded);
+            //print("Is Grounded  "+ isGrounded);
+            if (rb.velocity.y <= 0.0f)
+            {
+                isJumping = false;
+            }
+            if (isGrounded && !isJumping && slopeDownAngle <= maxSlopeAngle)
+            {
+                canDoubleJump = true;
+                isJumping = false;
+            }
         }
 
+
+
+        #region LadderControl
+
+        private void CheckForLadder()
+        {
+            counter++;
+            if (counter >= 10)
+            {
+                if (!IsMovingOnLadder())
+                {
+                    LadderDetectionOutsideLadderMovement(0.5f);
+                }
+                else
+                {
+                    LadderDetectionInsideLadderMovement();
+                }
+                counter = 0;
+            }
+        }
+
+        private void LadderDetectionOutsideLadderMovement(float minYInput)
+        {
+            if (yInput > minYInput)
+            {
+                //Debug.Log("CheckingLadder");
+                isMovingUp = true;
+                Debug.DrawRay(transform.position, Vector2.up, Color.gray);
+                RaycastHit2D hit = Physics2D.Raycast(transform.position + new Vector3(0, -colliderSize.y / 2), Vector2.up, checkLadderDistance, whatIsLadder); ;
+                if (hit)
+                {
+                    isDetectingLadder = true;
+                    StartLadderMovementFromBelow(yInput);
+                }
+                else
+                {
+                    isDetectingLadder = false;
+                }
+            }
+
+            if (yInput < -minYInput)
+            {
+                //Debug.Log("CheckingLadder");
+                isMovingUp = false;
+                Debug.DrawRay(transform.position, Vector2.down, Color.gray);
+                RaycastHit2D hit = Physics2D.Raycast(ladderCheck.position, Vector2.down, checkLadderDistance, whatIsLadder);
+                if (hit)
+                {
+                    isDetectingLadder = true;
+                    StartLadderMovementFromAbove(yInput);
+                }
+                else
+                {
+                    isDetectingLadder = false;
+                }
+            }
+        }
+
+
+        private void LadderDetectionInsideLadderMovement()
+        {
+            if (yInput > 0)
+            {
+                //Debug.Log("Checking for Above Ladder Exit");
+                Vector3 raycastOriginPosition = transform.position + new Vector3(0, -colliderSize.y / 2);
+                isMovingUp = true;
+                Debug.DrawRay(raycastOriginPosition, Vector2.up, Color.gray);
+                RaycastHit2D hit = Physics2D.Raycast(raycastOriginPosition, Vector2.up, checkLadderDistance, whatIsLadder); ;
+                if (hit)
+                {
+                    isDetectingLadder = true;
+                }
+                else
+                {
+                    ExitLadderFromAbove();
+                    isDetectingLadder = false;
+                }
+            }
+            if (yInput < 0 && isGrounded)
+            {
+                ExitLadderFromBelow();
+            }
+        }
+
+        void StartLadderMovementFromBelow(float yInput)
+        {
+            Debug.Log("LadderMovement Started Below");
+            RaycastHit2D hit = Physics2D.Raycast(transform.position + new Vector3(0, -1.5f), Vector2.up, checkLadderDistance, whatIsLadder);
+            transform.position = new Vector3(hit.collider.transform.position.x, transform.position.y, 0);
+            isMovingOnLadder = true;
+            GravityScale(0);
+        }
+        void StartLadderMovementFromAbove(float yInput)
+        {
+            RaycastHit2D hit = Physics2D.Raycast(transform.position, Vector2.down, checkLadderDistance, whatIsGround);
+            if (!hit.collider.CompareTag("LadderTop")) return;
+            Debug.Log("Started Climbing a ladder");
+            hit.collider.transform.parent.GetComponent<Ladder>().InvertPlatform();
+            rb.position = new Vector2(hit.collider.transform.position.x, hit.point.y+colliderSize.y/2);
+            isMovingOnLadder = true;
+            GravityScale(0);
+        }
+
+        void ExitLadderFromAbove()
+        {
+            Debug.Log("Exiting Ladder from Above");
+            RaycastHit2D hit = Physics2D.Raycast(transform.position /*+ new Vector3(0, colliderSize.y)*/, Vector2.down, 2, whatIsGround);
+            if (hit)
+            {
+                rb.MovePosition(hit.point + new Vector2(0,colliderSize.y / 2));
+            }
+            rb.velocity = new Vector2(0, 0);
+            isMovingOnLadder = false;
+            GravityScale(gravityScale);
+        }
+
+        void ExitLadderFromBelow()
+        {
+            //Debug.Log("Downside Ladder check");
+            isMovingOnLadder = false;
+            GravityScale(gravityScale);
+        }
+
+        #endregion
+
+        //Action triggered in PlayerController. Depending on the player state is that it will do it or not. 
+        //The decision is taken in the PlayerMovement script
+        public void Jump()
+        {
+            //Debug.Log("Wants to Jump");
+            if (IsMovingOnWall())
+            {
+                isMovingOnWall = false;
+                canDoubleJump = true;
+                JumpMovement();
+                GravityScale(gravityScale);
+                rb.drag = 1;
+                return;
+            }
+            else if (isGrounded && canWalkOnSlope)
+            {
+                JumpMovement();
+                return;
+            }
+            else if (isOnSlope && canDoubleJump)
+            {
+                JumpMovement();
+                canDoubleJump = false;
+                //Debug.Log("1 " + canDoubleJump);
+                return;
+            }
+            else if (canDoubleJump && canWalkOnSlope)
+            {
+                JumpMovement();
+                canDoubleJump = false;
+                //Debug.Log("2 " + canDoubleJump);
+                return;
+            }
+        }
+
+        private void JumpMovement()
+        {
+            isJumping = true;
+            rb.velocity = Vector2.up * jumpVelocity;
+            animator.SetTrigger("Jump");
+        }
+
+
+
+        // Main Method of the Class
+        public void PlayerMoving(float xInput, float yInput, bool isInteractingWithObject)
+        {
+            this.xInput = xInput;
+            this.yInput = yInput;
+            animator.SetFloat("yVelocity", rb.velocity.y);
+            if (IsMovingOnWall())
+            {
+                WallMovement(xInput, yInput);
+                return;
+            }
+            else if (IsMovingOnLadder()) 
+            {
+                LadderMovement(yInput, isInteractingWithObject);
+                return;
+            }
+            else
+            {
+                FreeMovement(xInput, yInput, isInteractingWithObject);
+            }
+        }
+
+        private void WallMovement(float xInput, float yInput)
+        {
+            rb.velocity = new Vector2(xInput, yInput) * maxWallSpeed;
+        }
+
+        void LadderMovement(float yInput, bool isInteractingWithObject)
+        {
+            rb.velocity = new Vector2(0, yInput * currentSpeed);
+        }
+        public void FreeMovement(float xInput, float yInput, bool isInteractingWithObject)
+        {
+            Flip(xInput, isMovingOnLadder, isInteractingWithObject);
+            MovementOutsideLadder(xInput);
+        }
+
+        #region InLadderMovement
+
+        public bool IsMovingOnLadder()
+        {
+            return isMovingOnLadder;
+        }
+
+        #endregion
+
+
+        #region WallMovement
+        public void SwitchWallMovement()
+        {
+            isMovingOnWall = !isMovingOnWall;
+            CheckIsMovingOnWall(isMovingOnWall);
+        }
+        public void SetIsMovingOnWall(bool state)
+        {
+            isMovingOnWall = state;
+            CheckIsMovingOnWall(isMovingOnWall);
+        }
+        private void CheckIsMovingOnWall(bool isMovingOnWall)
+        {
+            if (isMovingOnWall)
+            {
+                rb.gravityScale = 0;
+                isMovingOnWall = true;
+                rb.drag = 0;
+            }
+            else
+            {
+                rb.gravityScale = gravityScale;
+                isMovingOnWall = false;
+                rb.drag = 1;
+            }
+        }
+
+        public bool IsMovingOnWall()
+        {
+            return isMovingOnWall;
+        }
+        #endregion
+
+
+        #region Outside Ladder Movement
+        void MovementOutsideLadder(float xInput)
+        {
+            float xVelocity;
+            if (isGrounded && !isOnSlope && !isJumping)
+            {
+                xVelocity = xInput * currentSpeed;
+                rb.velocity = new Vector2(xVelocity, rb.velocity.y);
+                animator.SetFloat("xVelocity", Mathf.Abs(xVelocity));
+                //print("Not In Slope");
+            }
+
+            if (isGrounded && isOnSlope && !isJumping && canWalkOnSlope)
+            {
+                xVelocity = -xInput * currentSpeed * slopeNormalPerp.x;
+                rb.velocity = new Vector2(xVelocity, -xInput * currentSpeed * slopeNormalPerp.y);
+                animator.SetFloat("xVelocity", Mathf.Abs(xVelocity));
+                //print("In Slope");
+            }
+            if (!isGrounded)
+            {
+                rb.velocity = new Vector2(xInput * currentSpeed, rb.velocity.y);
+                rb.sharedMaterial = noFriction;
+                //print("In The Air");
+            }
+        }
+
+        #endregion
+
+
+        private void Flip(float xInput, bool isMovingInLadder, bool isInteractingWithObject)
+        {
+            if (isInteractingWithObject)
+            {
+                currentSpeed = maxInteractingSpeed;
+                return;
+            }
+            if (isMovingInLadder) return;
+            currentSpeed = maxRunningSpeed;
+            Quaternion currentRotation = new Quaternion(0, 0, 0, 0);
+            if (xInput > 0 && !lookingRight)
+            {
+                CreateDust();
+                //print("Change To Look Right");
+                Vector3 rotation = new Vector3(0, 0, 0);
+                currentRotation.eulerAngles = rotation;
+                transform.rotation = currentRotation;
+                lookingRight = true;
+            }
+            if (xInput < 0 && lookingRight)
+            {
+                //print("Change To Look Left");
+                CreateDust();
+                Vector3 rotation = new Vector3(0, 180, 0);
+                currentRotation.eulerAngles = rotation;
+                transform.rotation = currentRotation;
+                lookingRight = false;
+            }
+        }
+
+        //Might need to check the xInput here
+        //Before was the movement, but that can be access in this script
+        //Must be access through the Input Handler
         public void EvadeMovement()
         {
             //if (isEvading) return;
             gameObject.layer = LayerMask.NameToLayer("PlayerGhost");
             //isEvading = true;
-            if (movement.x == 0)
+            if (xInput == 0)
             {
                 Debug.Log("Simple jump behind evasion");
                 animator.SetInteger("Evade", 1);
             }
-            if (movement.x != 0)
+            if (xInput != 0)
             {
                 //Debug.Log("Will evade with a roll to the left");
                 animator.SetInteger("Evade", 10);
             }
 
         }
-        
+
+        #region Events
+        void CreateDust()
+        {
+            if (!isGrounded) return;
+            dust.Play();
+        }
+
+        void GravityScale(float gravityScale)
+        {
+            rb.gravityScale = gravityScale;
+        }
+
         void SimpleEvasionForceApplication()
         {
             //Debug.Log("Applying Evasion force");
@@ -437,13 +554,7 @@ namespace PSmash.Movement
                 PlayerMoving(rollSpeed.x * transform.right.x, rollSpeed.y, false);
             }
         }
-        public void GravityAdjust()
-        {
 
-            rb.gravityScale = 0;
-            rb.sharedMaterial = fullFriction;
-            rb.velocity = new Vector2(0, 0);
-        }
 
         public void AddImpulse(float impulse)
         {
@@ -461,7 +572,6 @@ namespace PSmash.Movement
             {
                 yield return new WaitForFixedUpdate();
                 PlayerMoving(forwardAttackSpeed.x*transform.right.x, forwardAttackSpeed.y, false);
-                //rb.velocity = new Vector2(forwardAttackSpeed.x * transform.right.x, forwardAttackSpeed.y);
             }
         }
 
@@ -474,12 +584,15 @@ namespace PSmash.Movement
 
         void JumpSound()
         {
-            //audioSource.clip = jumpSound;
-            //audioSource.pitch = Unity.Mathematics.Random[]
             audioSource.PlayOneShot(jumpSound);
         }
 
+        public PhysicsMaterial2D FullFriction()
+        {
+            return fullFriction;
+        }
 
+        #endregion
         private void OnDrawGizmos()
         {
             Gizmos.DrawWireSphere(groundCheck1.position, groundCheckRadius);

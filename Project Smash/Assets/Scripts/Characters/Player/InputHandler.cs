@@ -1,4 +1,5 @@
 ﻿using PSmash.Control;
+using PSmash.Movement;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
@@ -14,14 +15,19 @@ public class InputHandler : MonoBehaviour
     ICommand buttonX;
     ICommand buttonY;
     ICommand buttonRB;
+    ICommand dPadRight;
+
     PlayerController playerController;
+    PlayerMovement playerMovement;
     EventManager eventManager;
     _Controller _controller;
+
     Vector2 movement;
 
     private void Awake()
     {
         playerController = transform.parent.GetComponent<PlayerController>();
+        playerMovement = transform.parent.GetComponent<PlayerMovement>();
         _controller = new _Controller();
     }
     private void Start()
@@ -34,19 +40,27 @@ public class InputHandler : MonoBehaviour
 
     private void Update()
     {
-        playerController.xInput = movement.x;
-        playerController.yInput = movement.y;
+        //Debug.Log(movement);
+        playerController.GetMovement(movement.x, movement.y);
     }
+
 
     private void OnEnable()
     {
         _controller.Player.Enable();
         _controller.Player.Move.performed += ctx => movement = ctx.ReadValue<Vector2>();
-        _controller.Player.ButtonA.performed += ctx => ButtonAPressed();
-        _controller.Player.ButtonB.performed += ctx => ButtonBPressed();
-        _controller.Player.ButtonX.performed += ctx => ButtonXPressed();
-        _controller.Player.ButtonY.performed += ctx => ButtonYPressed();
-        _controller.Player.ButtonRB.performed += cx => ButtonRBPressed();
+        _controller.Player.ButtonA.started += ctx => ButtonAPressed();
+        _controller.Player.ButtonA.canceled += ctx => ButtonAReleased();
+        _controller.Player.ButtonB.started += ctx => ButtonBPressed();
+        _controller.Player.ButtonB.canceled += ctx => ButtonBReleased();
+        _controller.Player.ButtonX.started += ctx => ButtonXPressed();
+        _controller.Player.ButtonX.canceled += ctx => ButtonXReleased();
+        _controller.Player.ButtonY.started += ctx => ButtonYPressed();
+        _controller.Player.ButtonY.canceled += ctx => ButtonYReleased();
+        _controller.Player.ButtonRB.started += cx => ButtonRBPressed();
+        _controller.Player.ButtonRB.canceled += ctx => ButtonRBReleased();
+        _controller.Player.DPadLeft.performed += ctx => DPadLeftPressed();
+        _controller.Player.ButtonLB.performed += ctx => ButtonLBPressed();
         //_controller.Player.ButtonStart.performed += ctx => eventManager.PressingPauseButton();
         _controller.Player.Quit.performed += ctx => QuitKeyPressed();
         _controller.UI.ButtonStart.performed += ctx => eventManager.PressingPauseButton();
@@ -59,17 +73,24 @@ public class InputHandler : MonoBehaviour
     {
         _controller.Player.Disable();
         _controller.Player.Move.performed -= ctx => movement = ctx.ReadValue<Vector2>();
-        _controller.Player.ButtonA.performed -= ctx => ButtonAPressed();
-        _controller.Player.ButtonB.performed -= ctx => ButtonBPressed();
-        _controller.Player.ButtonX.performed -= ctx => ButtonXPressed();
-        _controller.Player.ButtonY.performed -= ctx => ButtonYPressed();
-        _controller.Player.ButtonRB.performed -= cx => ButtonRBPressed();
-        //_controller.Player.ButtonStart.performed -= ctx => eventManager.PressingPauseButton();
+        _controller.Player.ButtonA.started -= ctx => ButtonAPressed();
+        _controller.Player.ButtonA.canceled -= ctx => ButtonAReleased();
+        _controller.Player.ButtonB.started -= ctx => ButtonBPressed();
+        _controller.Player.ButtonB.canceled -= ctx => ButtonBReleased();
+        _controller.Player.ButtonX.started -= ctx => ButtonXPressed();
+        _controller.Player.ButtonX.canceled -= ctx => ButtonXReleased();
+        _controller.Player.ButtonY.started -= ctx => ButtonYPressed();
+        _controller.Player.ButtonY.canceled -= ctx => ButtonYReleased();
+        _controller.Player.ButtonRB.started -= cx => ButtonRBPressed();
+        _controller.Player.ButtonRB.canceled -= ctx => ButtonRBReleased();
+        _controller.Player.DPadLeft.performed -= ctx => DPadLeftPressed();
+        _controller.Player.ButtonLB.performed -= ctx => ButtonLBPressed();
+        //_controller.Player.ButtonStart.performed += ctx => eventManager.PressingPauseButton();
         _controller.Player.Quit.performed -= ctx => QuitKeyPressed();
-
         _controller.UI.ButtonStart.performed -= ctx => eventManager.PressingPauseButton();
         EventManager.PauseGame -= PauseGame;
         EventManager.UnpauseGame -= UnpauseGame;
+        EventManager.PlayerGotBoots -= PlayerGotBoots;
     }
 
     private void SetInitialCommandsToButtons()
@@ -77,8 +98,14 @@ public class InputHandler : MonoBehaviour
         buttonA = GetComponent<JumpCommand>();
         buttonX = GetComponent<AttackCommand>();
         buttonB = GetComponent<EvadeCommand>();
-        buttonY = GetComponent<SubAttackCommand>();
+        buttonY = GetComponent<SecondaryWeaponCommand>();
         buttonRB = GetComponent<ParryCommand>();
+        dPadRight = GetComponent<SecondaryWeaponSelectorCommand>();
+    }
+
+    public Vector2 GetMovement()
+    {
+        return movement;
     }
 
     #region ControllerButtons
@@ -88,6 +115,15 @@ public class InputHandler : MonoBehaviour
         //Debug.Log("X Button Signal");
         buttonX.Execute(playerController);
     }
+    private void ButtonXReleased()
+    {
+        if (buttonX == null) return;
+        if (buttonX is AttackCommand)
+        {
+            buttonX.Execute(playerController);
+            //Debug.Log("Button Released");
+        }
+    }
 
     private void ButtonBPressed()
     {
@@ -95,20 +131,70 @@ public class InputHandler : MonoBehaviour
         buttonB.Execute(playerController);
     }
 
+    private void ButtonBReleased()
+    {
+        if (buttonB == null) return;
+        if (buttonB is AttackCommand)
+        {
+            //Debug.Log("Button Released");
+        }
+    }
+
     private void ButtonAPressed()
     {
         if (buttonA == null) return;
         buttonA.Execute(playerController);
+    }
+    private void ButtonAReleased()
+    {
+        if (buttonA == null) return;
+        if (buttonA is AttackCommand)
+        {
+            //Debug.Log("Button Released");
+        }
     }
     private void ButtonYPressed()
     {
         if (buttonY == null) return;
         buttonY.Execute(playerController);
     }
+    private void ButtonYReleased()
+    {
+        if (buttonY == null) return;
+        if (buttonY is AttackCommand)
+        {
+            //Debug.Log("Button Released");
+        }
+    }
+
     private void ButtonRBPressed()
     {
         if (buttonRB == null) return;
         buttonRB.Execute(playerController);
+    }
+
+    private void ButtonRBReleased()
+    {
+        if (buttonRB == null) return;
+        if (buttonRB is AttackCommand)
+        {
+            //Debug.Log("Button Released");
+        }
+    }
+
+    private void ButtonLBPressed()
+    {
+        if (dPadRight == null) return;
+        dPadRight.Execute(playerController);
+    }
+    private void DPadLeftPressed()
+    {
+        Debug.Log("Pressed");
+    }
+
+    private void DPadLeftReleased()
+    {
+        Debug.Log("Released");
     }
 
     private void QuitKeyPressed()
@@ -140,7 +226,6 @@ public class InputHandler : MonoBehaviour
         print(gameObject.name + "  game was paused");
         movement = new Vector2(0, 0);
         _controller.Player.Disable();
-        //_controller.UI.Enable();
     }
 
     #endregion

@@ -15,9 +15,10 @@ public class BombFire : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        StartCoroutine(FireDamage());
+        StartCoroutine(FireDamageToEnemies());
         audioSource = GetComponent<AudioSource>();
         StartCoroutine(AudioFadeIn());
+        StartCoroutine(FireDamageToItems());
     }
 
     IEnumerator AudioFadeIn()
@@ -32,7 +33,7 @@ public class BombFire : MonoBehaviour
         }
     }
 
-    IEnumerator FireDamage()
+    IEnumerator FireDamageToEnemies()
     {
         EnemyHealth target;
         float timer = 0;
@@ -51,5 +52,19 @@ public class BombFire : MonoBehaviour
             yield return new WaitForSeconds(damageInterval);
         }
         Destroy(gameObject);
+    }
+
+    IEnumerator FireDamageToItems()
+    {
+        ItemsHealth target;
+        Vector2 size = GetComponent<BoxCollider2D>().size;
+        Vector2 origin = GetComponent<BoxCollider2D>().offset + (Vector2)transform.position;
+        Collider2D[] colls = Physics2D.OverlapBoxAll(origin, size, whatIsAttackable);
+        foreach (Collider2D coll in colls)
+        {
+            target = coll.GetComponent<ItemsHealth>();
+            if (target != null) coll.GetComponent<ItemsHealth>().Burn();
+        }
+        yield return null;
     }
 }
