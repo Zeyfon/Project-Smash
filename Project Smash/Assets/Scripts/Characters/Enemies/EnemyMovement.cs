@@ -183,6 +183,20 @@ public class EnemyMovement : MonoBehaviour
     {
         return isPlayerReachable;
     }
+
+    public void ImpulseFromAttack(Transform attacker, float impulse)
+    {
+        if(attacker.position.x > transform.position.x)
+        {
+            rb.velocity = new Vector2(-impulse, 0);
+        }
+        else
+        {
+            rb.velocity = new Vector2(impulse, 0);
+
+        }
+    }
+
     public void Cancel()
     {
         //StopCoroutine(coroutine);

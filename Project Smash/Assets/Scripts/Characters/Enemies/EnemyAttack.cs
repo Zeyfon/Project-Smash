@@ -40,7 +40,7 @@ public class EnemyAttack : MonoBehaviour
     private void Update()
     {
         if (health.IsDead()) return;
-        if (health.IsBeingInterruptedByDamage()) return;
+        if (health.IsInterrupted()) return;
         if (target == null) return;
         //Debug.Log(target);
         if (!canAttack) return;

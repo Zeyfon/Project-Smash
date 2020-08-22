@@ -8,8 +8,8 @@ namespace PSmash.Combat
     public class PlayerHealth : MonoBehaviour
     {
         [SerializeField] int health = 100;
-        HealthBar healhtBar;
-        EventManager eventManager;
+        public delegate void PlayerisDamaged(float remaininHealthPercentage);
+        public event PlayerisDamaged OnPlayerDamage;
 
         bool isDead = false;
         bool isGuarding = true;
@@ -18,7 +18,6 @@ namespace PSmash.Combat
         // Start is called before the first frame update
         void Start()
         {
-            eventManager = FindObjectOfType<EventManager>();
             initialHealth = health;
         }
 
@@ -57,8 +56,7 @@ namespace PSmash.Combat
             {
                 healthScale = (float)health / (float)initialHealth;
             }
-            eventManager.PlayerReceivedDamage(healthScale);
-            //Debug.Break();
+            OnPlayerDamage(healthScale);
         }
 
         IEnumerator GameObjectDied()

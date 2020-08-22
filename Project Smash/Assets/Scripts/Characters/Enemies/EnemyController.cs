@@ -30,12 +30,8 @@ public class EnemyController : MonoBehaviour
     void FixedUpdate()
     {
         if (health.IsDead()) return;
-        if (health.IsBeingInterruptedByDamage()) 
-        { 
-            //Debug.Log("Not Moving"); 
-            return; 
-        }
-        if (!isPlayerSpotted /*&& movement.IsPlayerReachable()*/) return;
+        if (health.IsInterrupted()) return;
+        if (!isPlayerSpotted) return;
         if (testMode) return;
         AttackBehavior();
     }

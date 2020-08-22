@@ -17,15 +17,16 @@ namespace PSmash.Combat
         Coroutine coroutine;
         TestSceneManager sceneManager;
         AudioSource audioSource;
+        EnemyMovement movement;
         bool testMode = false;
         bool isDead = false;
-        bool isGuardActive = true;
-        bool isInterruptedByDamage = false;
+        bool isInterrupted = false;
         bool guardBroke = false;
         bool crRunning = false;
         int initialHealth;
         int initialGuard;
-        float timer = 0;
+        float impulseVelocity = 0;
+
         // Start is called before the first frame update
         void Start()
         {
@@ -36,15 +37,19 @@ namespace PSmash.Combat
             animator = GetComponent<Animator>();
             sceneManager = FindObjectOfType<TestSceneManager>();
             audioSource = GetComponent<AudioSource>();
+            movement = GetComponent<EnemyMovement>();
             if(sceneManager!= null) sceneManager.enemiesAlive.Add(gameObject);
             //For Test Mode
             testMode = GetComponent<EnemyController>().testMode;
-
         }
 
         public bool IsDead()
         {
             return isDead;
+        }
+        public bool IsInterrupted()
+        {
+            return isInterrupted;
         }
 
         public void DamageTaken(Transform attacker, int damage)
@@ -64,6 +69,7 @@ namespace PSmash.Combat
 
         void Damaged(Transform attacker, int damage)
         {
+
             if (isDead) return;
             //Debug.Log("Damaged");
             if (guard > 0)
@@ -74,7 +80,8 @@ namespace PSmash.Combat
                     guard = 0;
                     guardBroke = true;
                     animator.Play("GuardBroke");
-                    isInterruptedByDamage = true;
+                    isInterrupted = true;
+                    impulseVelocity = 10;
                     StunEffects();
                 }
                 else
@@ -101,6 +108,7 @@ namespace PSmash.Combat
                 healhtBar.SubstractDamage(healthScale);
                 guardBar.SubstractDamage(0, initialGuard);
             }
+            if(attacker != null) movement.ImpulseFromAttack(attacker, impulseVelocity);
         }
 
         private void CheckWhichDamage(Transform attacker)
@@ -109,8 +117,9 @@ namespace PSmash.Combat
             if (!guardBroke && attacker != null)
             {
                 animator.Play("Damaged", -1, 0f);
-                isInterruptedByDamage = true;
+                isInterrupted = true;
                 DamageEffects();
+                impulseVelocity = 3;
                 if (crRunning)
                 {
                     crRunning = false;
@@ -123,7 +132,7 @@ namespace PSmash.Combat
         private void Damaged()
         {
             animator.Play("Damaged", -1, 0f);
-            isInterruptedByDamage = true;
+            isInterrupted = true;
             DamageEffects();
             if (crRunning)
             {
@@ -136,25 +145,11 @@ namespace PSmash.Combat
         void StunEffects()
         {
             audioSource.PlayOneShot(guardBrokeSound);
-
         }
 
         void DamageEffects()
         {
             audioSource.PlayOneShot(damagedSound);
-        }
-        void DamagedByAttackEffects(Transform attacker)
-        {
-            if (attacker != null && !guardBroke)
-            {
-
-            }
-            if(attacker == null)
-            {
-                Debug.Log("Damage Only");
-                //Debug.Break();
-                animator.SetTrigger("DamageOnly");
-            }
         }
 
         IEnumerator WaitingForDamageToEnd()
@@ -165,14 +160,9 @@ namespace PSmash.Combat
             {
                 yield return new WaitForFixedUpdate();
             }
-            isInterruptedByDamage = false;
+            isInterrupted = false;
             animator.SetInteger("Damaged", 0);
-            //Debug.Break();
             crRunning = false;
-        }
-        public bool IsBeingInterruptedByDamage()
-        {
-            return isInterruptedByDamage;
         }
         IEnumerator GameObjectDied()
         {

@@ -97,6 +97,14 @@ public class @_Controller : IInputActionCollection, IDisposable
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """"
+                },
+                {
+                    ""name"": ""LeftTrigger"",
+                    ""type"": ""Button"",
+                    ""id"": ""15182669-89a0-4c08-b90b-dba5d2a9d938"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
                 }
             ],
             ""bindings"": [
@@ -328,6 +336,17 @@ public class @_Controller : IInputActionCollection, IDisposable
                     ""processors"": """",
                     ""groups"": ""Gamepad"",
                     ""action"": ""DPadLeft"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""331111fa-bcd6-4e7a-8111-56f64b1f1450"",
+                    ""path"": ""<Gamepad>/leftTrigger"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""LeftTrigger"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -933,6 +952,90 @@ public class @_Controller : IInputActionCollection, IDisposable
                     ""isPartOfComposite"": false
                 }
             ]
+        },
+        {
+            ""name"": ""WeaponSelection"",
+            ""id"": ""e5d7206c-f393-42ac-9205-fd3d5bb0dcde"",
+            ""actions"": [
+                {
+                    ""name"": ""DPadUp"",
+                    ""type"": ""Button"",
+                    ""id"": ""7daf7340-99d9-4021-802f-8f1652e79e0a"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
+                },
+                {
+                    ""name"": ""DPadRight"",
+                    ""type"": ""Button"",
+                    ""id"": ""31bbe730-46b1-47aa-a5ca-07f722017ff5"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
+                },
+                {
+                    ""name"": ""DPadDown"",
+                    ""type"": ""Button"",
+                    ""id"": ""c04eedda-ca76-459c-a101-7cd84f19a79a"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
+                },
+                {
+                    ""name"": ""DPadLeft"",
+                    ""type"": ""Button"",
+                    ""id"": ""a0bb0e9f-92a4-4982-a764-baca7d7aaa1c"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""b5d71c31-76b8-4f3b-8c0b-180ca8e67392"",
+                    ""path"": ""<Gamepad>/dpad/up"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""DPadUp"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""49fb1c5a-01a4-4da5-bf1a-8986ff04fdbb"",
+                    ""path"": ""<Gamepad>/dpad/right"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""DPadRight"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""9837534f-149c-4adc-9c74-5adf5c588b06"",
+                    ""path"": ""<Gamepad>/dpad/down"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""DPadDown"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""9347f95c-eaaa-458e-ba09-1681d4807b97"",
+                    ""path"": ""<Gamepad>/dpad/left"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""DPadLeft"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                }
+            ]
         }
     ],
     ""controlSchemes"": [
@@ -1010,6 +1113,7 @@ public class @_Controller : IInputActionCollection, IDisposable
         m_Player_Quit = m_Player.FindAction("Quit", throwIfNotFound: true);
         m_Player_ButtonLB = m_Player.FindAction("ButtonLB", throwIfNotFound: true);
         m_Player_DPadLeft = m_Player.FindAction("DPadLeft", throwIfNotFound: true);
+        m_Player_LeftTrigger = m_Player.FindAction("LeftTrigger", throwIfNotFound: true);
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
         m_UI_Navigate = m_UI.FindAction("Navigate", throwIfNotFound: true);
@@ -1027,6 +1131,12 @@ public class @_Controller : IInputActionCollection, IDisposable
         m_UI_ButtonX = m_UI.FindAction("ButtonX", throwIfNotFound: true);
         m_UI_ButtonY = m_UI.FindAction("ButtonY", throwIfNotFound: true);
         m_UI_ButtonStart = m_UI.FindAction("ButtonStart", throwIfNotFound: true);
+        // WeaponSelection
+        m_WeaponSelection = asset.FindActionMap("WeaponSelection", throwIfNotFound: true);
+        m_WeaponSelection_DPadUp = m_WeaponSelection.FindAction("DPadUp", throwIfNotFound: true);
+        m_WeaponSelection_DPadRight = m_WeaponSelection.FindAction("DPadRight", throwIfNotFound: true);
+        m_WeaponSelection_DPadDown = m_WeaponSelection.FindAction("DPadDown", throwIfNotFound: true);
+        m_WeaponSelection_DPadLeft = m_WeaponSelection.FindAction("DPadLeft", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -1086,6 +1196,7 @@ public class @_Controller : IInputActionCollection, IDisposable
     private readonly InputAction m_Player_Quit;
     private readonly InputAction m_Player_ButtonLB;
     private readonly InputAction m_Player_DPadLeft;
+    private readonly InputAction m_Player_LeftTrigger;
     public struct PlayerActions
     {
         private @_Controller m_Wrapper;
@@ -1100,6 +1211,7 @@ public class @_Controller : IInputActionCollection, IDisposable
         public InputAction @Quit => m_Wrapper.m_Player_Quit;
         public InputAction @ButtonLB => m_Wrapper.m_Player_ButtonLB;
         public InputAction @DPadLeft => m_Wrapper.m_Player_DPadLeft;
+        public InputAction @LeftTrigger => m_Wrapper.m_Player_LeftTrigger;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -1139,6 +1251,9 @@ public class @_Controller : IInputActionCollection, IDisposable
                 @DPadLeft.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnDPadLeft;
                 @DPadLeft.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnDPadLeft;
                 @DPadLeft.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnDPadLeft;
+                @LeftTrigger.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnLeftTrigger;
+                @LeftTrigger.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnLeftTrigger;
+                @LeftTrigger.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnLeftTrigger;
             }
             m_Wrapper.m_PlayerActionsCallbackInterface = instance;
             if (instance != null)
@@ -1173,6 +1288,9 @@ public class @_Controller : IInputActionCollection, IDisposable
                 @DPadLeft.started += instance.OnDPadLeft;
                 @DPadLeft.performed += instance.OnDPadLeft;
                 @DPadLeft.canceled += instance.OnDPadLeft;
+                @LeftTrigger.started += instance.OnLeftTrigger;
+                @LeftTrigger.performed += instance.OnLeftTrigger;
+                @LeftTrigger.canceled += instance.OnLeftTrigger;
             }
         }
     }
@@ -1322,6 +1440,63 @@ public class @_Controller : IInputActionCollection, IDisposable
         }
     }
     public UIActions @UI => new UIActions(this);
+
+    // WeaponSelection
+    private readonly InputActionMap m_WeaponSelection;
+    private IWeaponSelectionActions m_WeaponSelectionActionsCallbackInterface;
+    private readonly InputAction m_WeaponSelection_DPadUp;
+    private readonly InputAction m_WeaponSelection_DPadRight;
+    private readonly InputAction m_WeaponSelection_DPadDown;
+    private readonly InputAction m_WeaponSelection_DPadLeft;
+    public struct WeaponSelectionActions
+    {
+        private @_Controller m_Wrapper;
+        public WeaponSelectionActions(@_Controller wrapper) { m_Wrapper = wrapper; }
+        public InputAction @DPadUp => m_Wrapper.m_WeaponSelection_DPadUp;
+        public InputAction @DPadRight => m_Wrapper.m_WeaponSelection_DPadRight;
+        public InputAction @DPadDown => m_Wrapper.m_WeaponSelection_DPadDown;
+        public InputAction @DPadLeft => m_Wrapper.m_WeaponSelection_DPadLeft;
+        public InputActionMap Get() { return m_Wrapper.m_WeaponSelection; }
+        public void Enable() { Get().Enable(); }
+        public void Disable() { Get().Disable(); }
+        public bool enabled => Get().enabled;
+        public static implicit operator InputActionMap(WeaponSelectionActions set) { return set.Get(); }
+        public void SetCallbacks(IWeaponSelectionActions instance)
+        {
+            if (m_Wrapper.m_WeaponSelectionActionsCallbackInterface != null)
+            {
+                @DPadUp.started -= m_Wrapper.m_WeaponSelectionActionsCallbackInterface.OnDPadUp;
+                @DPadUp.performed -= m_Wrapper.m_WeaponSelectionActionsCallbackInterface.OnDPadUp;
+                @DPadUp.canceled -= m_Wrapper.m_WeaponSelectionActionsCallbackInterface.OnDPadUp;
+                @DPadRight.started -= m_Wrapper.m_WeaponSelectionActionsCallbackInterface.OnDPadRight;
+                @DPadRight.performed -= m_Wrapper.m_WeaponSelectionActionsCallbackInterface.OnDPadRight;
+                @DPadRight.canceled -= m_Wrapper.m_WeaponSelectionActionsCallbackInterface.OnDPadRight;
+                @DPadDown.started -= m_Wrapper.m_WeaponSelectionActionsCallbackInterface.OnDPadDown;
+                @DPadDown.performed -= m_Wrapper.m_WeaponSelectionActionsCallbackInterface.OnDPadDown;
+                @DPadDown.canceled -= m_Wrapper.m_WeaponSelectionActionsCallbackInterface.OnDPadDown;
+                @DPadLeft.started -= m_Wrapper.m_WeaponSelectionActionsCallbackInterface.OnDPadLeft;
+                @DPadLeft.performed -= m_Wrapper.m_WeaponSelectionActionsCallbackInterface.OnDPadLeft;
+                @DPadLeft.canceled -= m_Wrapper.m_WeaponSelectionActionsCallbackInterface.OnDPadLeft;
+            }
+            m_Wrapper.m_WeaponSelectionActionsCallbackInterface = instance;
+            if (instance != null)
+            {
+                @DPadUp.started += instance.OnDPadUp;
+                @DPadUp.performed += instance.OnDPadUp;
+                @DPadUp.canceled += instance.OnDPadUp;
+                @DPadRight.started += instance.OnDPadRight;
+                @DPadRight.performed += instance.OnDPadRight;
+                @DPadRight.canceled += instance.OnDPadRight;
+                @DPadDown.started += instance.OnDPadDown;
+                @DPadDown.performed += instance.OnDPadDown;
+                @DPadDown.canceled += instance.OnDPadDown;
+                @DPadLeft.started += instance.OnDPadLeft;
+                @DPadLeft.performed += instance.OnDPadLeft;
+                @DPadLeft.canceled += instance.OnDPadLeft;
+            }
+        }
+    }
+    public WeaponSelectionActions @WeaponSelection => new WeaponSelectionActions(this);
     private int m_KeyboardMouseSchemeIndex = -1;
     public InputControlScheme KeyboardMouseScheme
     {
@@ -1379,6 +1554,7 @@ public class @_Controller : IInputActionCollection, IDisposable
         void OnQuit(InputAction.CallbackContext context);
         void OnButtonLB(InputAction.CallbackContext context);
         void OnDPadLeft(InputAction.CallbackContext context);
+        void OnLeftTrigger(InputAction.CallbackContext context);
     }
     public interface IUIActions
     {
@@ -1397,5 +1573,12 @@ public class @_Controller : IInputActionCollection, IDisposable
         void OnButtonX(InputAction.CallbackContext context);
         void OnButtonY(InputAction.CallbackContext context);
         void OnButtonStart(InputAction.CallbackContext context);
+    }
+    public interface IWeaponSelectionActions
+    {
+        void OnDPadUp(InputAction.CallbackContext context);
+        void OnDPadRight(InputAction.CallbackContext context);
+        void OnDPadDown(InputAction.CallbackContext context);
+        void OnDPadLeft(InputAction.CallbackContext context);
     }
 }

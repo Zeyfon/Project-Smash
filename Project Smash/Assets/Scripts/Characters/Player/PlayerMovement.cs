@@ -27,6 +27,7 @@ namespace PSmash.Movement
         [SerializeField] float maxRunningSpeed = 5;
         [SerializeField] float maxWallSpeed = 2;
         [SerializeField] float maxInteractingSpeed = 2;
+        [SerializeField] float maxChargingSpeed = 2;
         [SerializeField] float jumpVelocity = 8;
         [SerializeField] int raycastFrameInterval = 10;
         [SerializeField] AudioClip jumpSound;
@@ -72,6 +73,7 @@ namespace PSmash.Movement
         bool isMovingOnLadder = false;
         bool isDetectingLadder = false;
         bool isMovingUp = false;
+        bool isChargingAttack = false;
         bool isMovingOnWall = false;
         int counter = 0;
 
@@ -90,7 +92,7 @@ namespace PSmash.Movement
         {
             SlopeCheck(xInput);
             CheckGround();
-            CheckForLadder();
+            if(!isChargingAttack) CheckForLadder();
         }
 
         public void GetMovement(float xInput, float yInput)
@@ -394,7 +396,8 @@ namespace PSmash.Movement
         }
         public void FreeMovement(float xInput, float yInput, bool isInteractingWithObject)
         {
-            Flip(xInput, isMovingOnLadder, isInteractingWithObject);
+            //Debug.Log(isChargingAttack);
+            if(!isChargingAttack) Flip(xInput, isMovingOnLadder, isInteractingWithObject);
             MovementOutsideLadder(xInput);
         }
 
@@ -446,6 +449,11 @@ namespace PSmash.Movement
         void MovementOutsideLadder(float xInput)
         {
             float xVelocity;
+            if (isChargingAttack) currentSpeed = maxChargingSpeed;
+            else
+            {
+                currentSpeed = maxRunningSpeed;
+            }
             if (isGrounded && !isOnSlope && !isJumping)
             {
                 xVelocity = xInput * currentSpeed;
@@ -590,6 +598,11 @@ namespace PSmash.Movement
         public PhysicsMaterial2D FullFriction()
         {
             return fullFriction;
+        }
+
+        public void IsChargingAttack(bool isChargingAttack)
+        {
+            this.isChargingAttack = isChargingAttack;
         }
 
         #endregion
