@@ -236,11 +236,11 @@ GameObject:
   - component: {fileID: 2312532540698110074}
   - component: {fileID: 2312532540698110075}
   - component: {fileID: 2312532540698110079}
+  - component: {fileID: 996314957006668565}
   - component: {fileID: 2312532540698110073}
   - component: {fileID: 2585932885008859321}
   - component: {fileID: 8893404729174105131}
   - component: {fileID: 4822788685991592625}
-  - component: {fileID: 996314957006668565}
   - component: {fileID: 3593885106481495268}
   m_Layer: 11
   m_Name: Player
@@ -285,8 +285,8 @@ CapsuleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  m_Size: {x: 0.8, y: 1.4}
+  m_Offset: {x: 0, y: 0.67}
+  m_Size: {x: 0.56, y: 1.4}
   m_Direction: 0
 --- !u!50 &2312532540698110075
 Rigidbody2D:
@@ -303,7 +303,7 @@ Rigidbody2D:
   m_Mass: 15
   m_LinearDrag: 1
   m_AngularDrag: 0.05
-  m_GravityScale: 3
+  m_GravityScale: 2
   m_Material: {fileID: 0}
   m_Interpolate: 0
   m_SleepingMode: 1
@@ -328,115 +328,6 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
---- !u!114 &2312532540698110073
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2312532540698110077}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c1873848765a5c94caefb2e0dafda5ea, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  attack: 0
-  jump: 0
---- !u!114 &2585932885008859321
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2312532540698110077}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4f41d996dc0d5c64b8f5eb731b944ac2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  whatIsGround:
-    serializedVersion: 2
-    m_Bits: 256
-  groundCheckRadius: 0.1
-  groundCheck1: {fileID: 2312532539122712383}
-  groundCheck2: {fileID: 2312532539664395664}
-  checkLadderDistance: 1
-  whatIsLadder:
-    serializedVersion: 2
-    m_Bits: 512
-  ladderCheck: {fileID: 7510437509772932401}
-  maxRunningSpeed: 5
-  maxWallSpeed: 2
-  maxInteractingSpeed: 2
-  jumpVelocity: 14
-  jumpSound: {fileID: 8300000, guid: e37524d7545066a4e8752c953056cd0d, type: 3}
-  forwardAttackSpeed: {x: 8, y: 0}
-  whatIsSlope:
-    serializedVersion: 2
-    m_Bits: 256
-  slopeCheckDistance: 0.5
-  noFriction: {fileID: 6200000, guid: 22229002b67e3954cb0b31741f9095cd, type: 2}
-  lowFriction: {fileID: 6200000, guid: 65236b81a583a484aa33d4c136233544, type: 2}
-  fullFriction: {fileID: 6200000, guid: 4b501e885db70b54faf1caa7979b5f5f, type: 2}
-  maxSlopeAngle: 40
-  simpleEvasionInitialVelocity: {x: 5, y: 5}
-  rollSpeed: {x: 4, y: 0}
-  canDoubleJump: 1
-  dust: {fileID: 4065494262431453867}
-  isGrounded: 0
---- !u!114 &8893404729174105131
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2312532540698110077}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 21d01466683839c4b8c4e71681276384, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  weapons: 0
-  subWeapon: {fileID: 998539890193747574, guid: 307be606762ee004c8b01c8704523763,
-    type: 3}
-  whatIsAttackable:
-    serializedVersion: 2
-    m_Bits: 66560
-  followCamera: {fileID: 0}
-  bomb: {fileID: 8788416685099349674, guid: 045bb866a38cb16408c73ac1efe0a49b, type: 3}
-  thrownSpeed: 10
-  weaponOriginPosition: {x: -0.4, y: 0.4}
-  attackTransform: {fileID: 2359603805246190859}
-  comboAttackDamage: 10
-  radiusOfAttack: 0.7
-  attackSounds:
-  - {fileID: 8300000, guid: 013ebdbea1f3c7f47a11da24762257a9, type: 3}
-  - {fileID: 8300000, guid: 9fa8be560de37e64d80ec589fa173cb8, type: 3}
-  - {fileID: 8300000, guid: c41a63151f41bc846940e89129c4f53b, type: 3}
-  forwardAttackDamage: 15
-  splashAttackSpeed: {x: 0, y: -30}
-  splashAttackSound: {fileID: 8300000, guid: 61597779d36e0ac47b70b51590b89aa1, type: 3}
-  splashAttackAreaSize: {x: 4, y: 2}
-  splashDamage: 20
-  parrySound: {fileID: 8300000, guid: 4ce99a63863d13441b6c6c709669616f, type: 3}
-  evadeSounds:
-  - {fileID: 8300000, guid: f2efa23650d27ba49a27c03a52428d73, type: 3}
-  - {fileID: 8300000, guid: 58648815a1ab21848aa73501bcec5415, type: 3}
-  forwardAttackSound: {fileID: 8300000, guid: ff91d12c5795ef944881e4e98d7c2fe7, type: 3}
-  hikingSpikeDamage: 20
---- !u!114 &4822788685991592625
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2312532540698110077}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cf2c5ae850d0125488bb258dfd34460f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  health: 100
 --- !u!82 &996314957006668565
 AudioSource:
   m_ObjectHideFlags: 0
@@ -533,6 +424,118 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &2312532540698110073
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2312532540698110077}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c1873848765a5c94caefb2e0dafda5ea, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &2585932885008859321
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2312532540698110077}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4f41d996dc0d5c64b8f5eb731b944ac2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  whatIsGround:
+    serializedVersion: 2
+    m_Bits: 256
+  groundCheckRadius: 0.1
+  groundCheck1: {fileID: 2312532539122712383}
+  groundCheck2: {fileID: 2312532539664395664}
+  checkLadderDistance: 1
+  whatIsLadder:
+    serializedVersion: 2
+    m_Bits: 512
+  whatIsPlatform:
+    serializedVersion: 2
+    m_Bits: 256
+  ladderCheck: {fileID: 7510437509772932401}
+  maxRunningSpeed: 5
+  maxWallSpeed: 2
+  maxInteractingSpeed: 2
+  maxChargingSpeed: 2
+  jumpVelocity: 14
+  raycastFrameInterval: 10
+  jumpSound: {fileID: 8300000, guid: e37524d7545066a4e8752c953056cd0d, type: 3}
+  forwardAttackSpeed: {x: 8, y: 0}
+  whatIsSlope:
+    serializedVersion: 2
+    m_Bits: 256
+  slopeCheckDistance: 0.5
+  noFriction: {fileID: 6200000, guid: 22229002b67e3954cb0b31741f9095cd, type: 2}
+  lowFriction: {fileID: 6200000, guid: 65236b81a583a484aa33d4c136233544, type: 2}
+  fullFriction: {fileID: 6200000, guid: 4b501e885db70b54faf1caa7979b5f5f, type: 2}
+  maxSlopeAngle: 40
+  simpleEvasionInitialVelocity: {x: 5, y: 5}
+  rollSpeed: {x: 4, y: 0}
+  canDoubleJump: 1
+  dust: {fileID: 4065494262431453867}
+  isGrounded: 0
+--- !u!114 &8893404729174105131
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2312532540698110077}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 21d01466683839c4b8c4e71681276384, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  weapons: 0
+  subWeapon: {fileID: 998539890193747574, guid: 307be606762ee004c8b01c8704523763,
+    type: 3}
+  whatIsAttackable:
+    serializedVersion: 2
+    m_Bits: 66560
+  followCamera: {fileID: 0}
+  bomb: {fileID: 8788416685099349674, guid: 045bb866a38cb16408c73ac1efe0a49b, type: 3}
+  thrownSpeed: 10
+  weaponOriginPosition: {x: -0.4, y: 0.4}
+  attackTransform: {fileID: 2359603805246190859}
+  comboAttackDamage: 10
+  radiusOfAttack: 0.7
+  attackSounds:
+  - {fileID: 8300000, guid: 013ebdbea1f3c7f47a11da24762257a9, type: 3}
+  - {fileID: 8300000, guid: 9fa8be560de37e64d80ec589fa173cb8, type: 3}
+  - {fileID: 8300000, guid: c41a63151f41bc846940e89129c4f53b, type: 3}
+  forwardAttackDamage: 15
+  splashAttackSpeed: {x: 0, y: -30}
+  splashAttackSound: {fileID: 8300000, guid: 61597779d36e0ac47b70b51590b89aa1, type: 3}
+  splashAttackAreaSize: {x: 4, y: 2}
+  splashDamage: 20
+  parrySound: {fileID: 8300000, guid: 4ce99a63863d13441b6c6c709669616f, type: 3}
+  evadeSounds:
+  - {fileID: 8300000, guid: f2efa23650d27ba49a27c03a52428d73, type: 3}
+  - {fileID: 8300000, guid: 58648815a1ab21848aa73501bcec5415, type: 3}
+  forwardAttackSound: {fileID: 8300000, guid: ff91d12c5795ef944881e4e98d7c2fe7, type: 3}
+  hikingSpikeDamage: 20
+--- !u!114 &4822788685991592625
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2312532540698110077}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cf2c5ae850d0125488bb258dfd34460f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  health: 100
 --- !u!114 &3593885106481495268
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5369,7 +5372,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6010682520662287977}
-  - component: {fileID: 8214261986531448047}
   - component: {fileID: 6215508761862299424}
   - component: {fileID: 7072133131191848094}
   - component: {fileID: 4682710752839506855}
@@ -5399,18 +5401,6 @@ Transform:
   m_Father: {fileID: 2312532540698110076}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &8214261986531448047
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5572292502395956635}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8ed44ec70ed5adf47be24c5c3e8eecf8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &6215508761862299424
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5577,6 +5567,10 @@ MonoBehaviour:
       m_Calls: []
     m_ActionId: 492c5cf6-9b87-42d3-b934-5c677ac15281
     m_ActionName: Player/ DPadRight[/XInputControllerWindows/dpad/right]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 34d1bbec-8e9b-4ca2-94ee-4f65e5f925a8
+    m_ActionName: Player/DPadLeft[/XInputControllerWindows/dpad/left]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Player
@@ -5798,7 +5792,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2359603805246190859}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: AttackPosition
   m_TagString: Untagged
   m_Icon: {fileID: 0}

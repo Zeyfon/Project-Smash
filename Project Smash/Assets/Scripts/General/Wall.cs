@@ -8,14 +8,21 @@ public class Wall : MonoBehaviour
     {
         if (collision.CompareTag("Player"))
         {
-            collision.GetComponent<SecondaryWeaponSystem>().CanMoveOnWall(true);
+            SecondaryWeaponSystem weapons = collision.GetComponent<SecondaryWeaponSystem>();
+            if (weapons != null) weapons.CanMoveOnWall(true);
+            ToolSystem tools = collision.GetComponent<ToolSystem>();
+            if (tools != null) tools.WallDetected(true);
+            
         }
     }
     private void OnTriggerExit2D(Collider2D collision)
     {
         if (collision.CompareTag("Player"))
         {
-            collision.GetComponent<SecondaryWeaponSystem>().CanMoveOnWall(false);
+            SecondaryWeaponSystem weapons = collision.GetComponent<SecondaryWeaponSystem>();
+            if (weapons != null) weapons.CanMoveOnWall(false);
+            ToolSystem tools = collision.GetComponent<ToolSystem>();
+            if (tools != null) tools.WallDetected(false);
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using UnityEditor;
+using UnityEngine;
 
 public class EventManager : MonoBehaviour
 {
@@ -22,6 +23,9 @@ public class EventManager : MonoBehaviour
 
     public delegate void SubWeaponChange();
     public static event SubWeaponChange SubWeaponchangeDone;
+
+    public delegate void PlayerPerformsUncontrolledAction(bool state);
+    public static event PlayerPerformsUncontrolledAction PlayerPerformUncontrolledAction;
 
     public void PlayerReceivedDamage(float healthScale)
     {
@@ -64,5 +68,16 @@ public class EventManager : MonoBehaviour
     {
         if (SubWeaponchangeDone == null) return;
         SubWeaponchangeDone();
+    }
+
+    public void PlayerControlDisable()
+    {
+        if (PlayerPerformUncontrolledAction == null) return;
+        PlayerPerformUncontrolledAction(false);
+    }
+    public void PlayerControlEnable()
+    {
+        if (PlayerPerformUncontrolledAction == null) return;
+        PlayerPerformUncontrolledAction(true);
     }
 }

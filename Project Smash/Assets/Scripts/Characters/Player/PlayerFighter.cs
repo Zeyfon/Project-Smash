@@ -186,7 +186,7 @@ namespace PSmash.Combat
         {
             if (state == 1)
             {
-                //Debug.Log("Combo Window Active");
+                Debug.Log("Combo Window Active");
                 canContinueCombo = true;
             }
             else canContinueCombo = false;      

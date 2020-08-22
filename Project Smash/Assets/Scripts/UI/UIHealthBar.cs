@@ -1,21 +1,26 @@
-﻿using System;
+﻿using PSmash.Combat;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class UIHealthBar : MonoBehaviour
 {
+    PlayerHealth playerHealth;
 
+    private void Awake()
+    {
+        playerHealth = FindObjectOfType<PlayerHealth>();
+    }
     private void OnEnable()
     {
-        EventManager.PlayerIsDamaged += UpdateHealthScale;
+        playerHealth.OnPlayerDamage += UpdateHealthScale;
     }
 
     private void OnDisable()
     {
-        EventManager.PlayerIsDamaged -= UpdateHealthScale;
+        playerHealth.OnPlayerDamage -= UpdateHealthScale;
     }
-
 
     private void UpdateHealthScale(float healthScale)
     {
