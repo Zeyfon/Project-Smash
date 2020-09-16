@@ -3,18 +3,22 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class StartScene : MonoBehaviour
+namespace PSmash.Temporal
 {
-    // Start is called before the first frame update
-    void Start()
+    public class StartScene : MonoBehaviour
     {
-        StartCoroutine(TestStarter());
-    }
+        // Start is called before the first frame update
+        void Start()
+        {
+            StartCoroutine(TestStarter());
+        }
 
-    IEnumerator TestStarter()
-    {
-        yield return new WaitForSeconds(1);
-        SceneManager.LoadScene(1);
+        IEnumerator TestStarter()
+        {
+            yield return new WaitForSeconds(1);
+            SceneManager.LoadScene(1);
+        }
+        // Update is called once per fram
     }
-    // Update is called once per fram
 }
+

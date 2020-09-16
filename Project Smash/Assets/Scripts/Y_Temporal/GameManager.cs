@@ -3,19 +3,17 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Analytics;
 
-public class GameManager : MonoBehaviour
+namespace PSmash.Temporal
 {
-
-    // Start is called before the first frame update
-    void Start()
+    public class GameManager : MonoBehaviour
     {
-        Debug.Log("Level Checked");
-        AnalyticsEvent.LevelComplete(1);
-    }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
+        // Start is called before the first frame update
+        void Start()
+        {
+            Debug.Log("Level Checked");
+            AnalyticsEvent.LevelComplete(1);
+        }
     }
 }
+

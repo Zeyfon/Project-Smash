@@ -3,36 +3,40 @@ using System.Collections.Generic;
 using System.Runtime.InteropServices.WindowsRuntime;
 using UnityEngine;
 
-public class TestSceneManager : MonoBehaviour
+namespace PSmash.Temporal
 {
-    [SerializeField] GameObject enemy;
-    [SerializeField] List<Transform> spawnPositions = new List<Transform>();
-
-    //The  enemis add and removes from the list by themselves in the EnemyHealth Script
-    public List<GameObject> enemiesAlive = new List<GameObject>();
-
-    // Start is called before the first frame update
-    void Start()
+    public class TestSceneManager : MonoBehaviour
     {
-        StartCoroutine(CheckingEnemies());
-    }
+        [SerializeField] GameObject enemy;
+        [SerializeField] List<Transform> spawnPositions = new List<Transform>();
 
-    IEnumerator CheckingEnemies()
-    {
-        while (true)
+        //The  enemis add and removes from the list by themselves in the EnemyHealth Script
+        public List<GameObject> enemiesAlive = new List<GameObject>();
+
+        // Start is called before the first frame update
+        void Start()
         {
-            yield return new WaitForSeconds(2);
-            if (enemiesAlive.Count < 3) StartCoroutine(CreateEnemy());
+            StartCoroutine(CheckingEnemies());
+        }
+
+        IEnumerator CheckingEnemies()
+        {
+            while (true)
+            {
+                yield return new WaitForSeconds(2);
+                if (enemiesAlive.Count < 3) StartCoroutine(CreateEnemy());
+            }
+        }
+        IEnumerator CreateEnemy()
+        {
+            Instantiate(enemy, GetRandomSpawnPosition(), Quaternion.identity);
+            yield return null;
+        }
+
+        Vector3 GetRandomSpawnPosition()
+        {
+            return spawnPositions[Random.Range(0, spawnPositions.Count)].position;
         }
     }
-    IEnumerator CreateEnemy()
-    {  
-        Instantiate(enemy, GetRandomSpawnPosition(), Quaternion.identity);
-        yield return null;
-    }
-
-    Vector3 GetRandomSpawnPosition()
-    {
-        return spawnPositions[Random.Range(0, spawnPositions.Count)].position;
-    }
 }
+
