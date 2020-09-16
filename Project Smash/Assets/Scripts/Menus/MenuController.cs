@@ -8,6 +8,8 @@ using UnityEngine.InputSystem;
 public class MenuController : MonoBehaviour
 {
     [SerializeField] Transform buttonTransform = null;
+    [SerializeField] Transform weaponsTransform = null;
+    [SerializeField] Transform statusTransform = null;
     [SerializeField] List<InputButton> inputButtons = new List<InputButton>();
 
     InputButton inputButton;
@@ -23,7 +25,6 @@ public class MenuController : MonoBehaviour
     }
     void Update()
     {
-
         if (buttonTransform != GetCurrentButton())
         {
             buttonTransform = GetCurrentButton();
@@ -41,26 +42,23 @@ public class MenuController : MonoBehaviour
     {
         eventSystem.SetSelectedGameObject(null);
         eventSystem.SetSelectedGameObject(buttonTransform.gameObject);
-        _controller.UI.ButtonA.performed += ButtonAPressed;
-        _controller.UI.ButtonA.Enable();
+        //_controller.UI.ButtonA.performed += ButtonAPressed;
         _controller.UI.ButtonB.performed += ButtonBPressed;
-        _controller.UI.ButtonB.Enable();
-        _controller.UI.ButtonX.performed += ButtonXPressed;
-        _controller.UI.ButtonX.Enable();
-        _controller.UI.ButtonY.performed += ButtonYPressed;
-        _controller.UI.ButtonY.Enable();
+        //_controller.UI.ButtonX.performed += ButtonXPressed;
+        //_controller.UI.ButtonY.performed += ButtonYPressed;
+    }
+
+    void EnableMenus()
+    {
+
     }
 
     private void OnDisable()
     {
-        _controller.UI.ButtonA.performed -= ButtonAPressed;
-        _controller.UI.ButtonA.Disable();
+        //_controller.UI.ButtonA.performed -= ButtonAPressed;
         _controller.UI.ButtonB.performed -= ButtonBPressed;
-        _controller.UI.ButtonB.Disable();
-        _controller.UI.ButtonX.performed -= ButtonXPressed;
-        _controller.UI.ButtonX.Disable();
-        _controller.UI.ButtonY.performed -= ButtonYPressed;
-        _controller.UI.ButtonY.Disable();
+        //_controller.UI.ButtonX.performed -= ButtonXPressed;
+        //_controller.UI.ButtonY.performed -= ButtonYPressed;
     }
 
     private void ButtonAPressed(InputAction.CallbackContext obj)
@@ -71,7 +69,8 @@ public class MenuController : MonoBehaviour
 
     private void ButtonBPressed(InputAction.CallbackContext obj)
     {
-        SetNewButtonLayout(ButtonList.buttonB);
+        //SetNewButtonLayout(ButtonList.buttonB);
+
     }
     private void ButtonXPressed(InputAction.CallbackContext obj)
     {

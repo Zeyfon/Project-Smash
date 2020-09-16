@@ -11,6 +11,11 @@ TagManager:
   - Ground
   - Burnable
   - LadderTop
+  - ThinPlatform
+  - WalkableWalls
+  - CameraTarget
+  - Parry
+  - Guard
   layers:
   - Default
   - TransparentFX
@@ -20,20 +25,20 @@ TagManager:
   - UI
   - 
   - 
-  - Ground
+  - GroundGeneral
   - Ladder
   - Enemies
   - Player
   - PlayerGhost
-  - Attacks
+  - Combat
   - Throwables
-  - PlayerGuard
+  - GroundElements
   - Interactable
   - Collectible
   - PlayerSpotter
-  - 
-  - 
-  - 
+  - DamagableElements
+  - OnlyPlayerGround
+  - NotPlayerNPCGround
   - 
   - 
   - 
@@ -57,6 +62,12 @@ TagManager:
   - name: Weapons
     uniqueID: 3284467615
     locked: 0
+  - name: InGameUI
+    uniqueID: 2915986123
+    locked: 0
   - name: Foreground
     uniqueID: 3283737283
+    locked: 0
+  - name: UI
+    uniqueID: 2577010703
     locked: 0

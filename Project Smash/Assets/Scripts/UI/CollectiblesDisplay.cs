@@ -3,27 +3,32 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using PSmash.Items;
 
-public class CollectiblesDisplay : MonoBehaviour
+namespace PSmash.UI
 {
-    Text text;
-
-    int counter = 0;
-    // Start is called before the first frame update
-    void Start()
+    public class CollectiblesDisplay : MonoBehaviour
     {
-        text = GetComponent<Text>();
-        text.text = counter.ToString();
-    }
+        Text text;
 
-    private void OnEnable()
-    {
-        Star.StartObtained += CollectibleObtained;
-    }
+        int counter = 0;
+        // Start is called before the first frame update
+        void Start()
+        {
+            text = GetComponent<Text>();
+            text.text = counter.ToString();
+        }
 
-    private void CollectibleObtained()
-    {
-        counter++;
-        text.text = counter.ToString();
+        private void OnEnable()
+        {
+            Star.OnStarCollected += CollectibleObtained;
+        }
+
+        private void CollectibleObtained()
+        {
+            counter++;
+            text.text = counter.ToString();
+        }
     }
 }
+

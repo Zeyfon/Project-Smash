@@ -1,22 +1,33 @@
 ﻿using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class Star : MonoBehaviour
+namespace PSmash.Items
 {
-    public static event Action StartObtained;
-    [SerializeField] GameObject starEffectGameObject;
-
-    private void OnTriggerEnter2D(Collider2D collision)
+    public class Star : MonoBehaviour
     {
-        if (collision.CompareTag("Player"))
+        public static int starsQuantity = 0;
+        public static event Action OnStarCollected;
+        [SerializeField] GameObject starEffectGameObject;
+
+        //This Awake Functions works to know how many stars are instantiated inside the scene. 
+        //DO NOT DELETE
+
+        private void Awake()
         {
-            StartObtained();
-            Instantiate(starEffectGameObject, transform.position, Quaternion.Euler(0,0,90));
-
-            Destroy(gameObject);
+            starsQuantity += 1;
         }
-    }
 
+        private void OnTriggerEnter2D(Collider2D collision)
+        {
+            if (collision.CompareTag("Player"))
+            {
+                OnStarCollected();
+                Instantiate(starEffectGameObject, transform.position, Quaternion.Euler(0, 0, 90));
+
+                Destroy(gameObject);
+            }
+        }
+
+    }
 }
+
