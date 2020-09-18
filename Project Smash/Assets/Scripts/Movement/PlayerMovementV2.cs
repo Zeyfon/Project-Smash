@@ -72,7 +72,6 @@ namespace PSmash.Movement
         Animator animator;
         AudioSource audioSource;
         Coroutine coroutine;
-        EventManager eventManager;
         PlayerHealth health;
         Vector2 slopeNormalPerp;
         Vector2 colliderSize;
@@ -104,10 +103,10 @@ namespace PSmash.Movement
         void Awake()
         {
             rb = GetComponent<Rigidbody2D>();
+            if (rb == null) Debug.LogWarning("Rigidbody was not found");
             colliderSize = GetComponent<CapsuleCollider2D>().size;
             animator = GetComponent<Animator>();
             audioSource = GetComponent<AudioSource>();
-            eventManager = FindObjectOfType<EventManager>();
             health = GetComponent<PlayerHealth>();
         }
 
@@ -555,7 +554,7 @@ namespace PSmash.Movement
                 StartCoroutine(TimerToGetOffLadder());
             }
             //Start ladder movement at the bottom (Grounded)
-            else if(isGrounded && !isCollidingWithThinPlatform && isPlayerAboveLadderTop && yInput > 0.8f)
+            else if(isGrounded && !isCollidingWithThinPlatform && yInput > 0.8f)
             {
                 print("Start at bottom of Ladder");
                 GravityScale(0);
@@ -607,12 +606,11 @@ namespace PSmash.Movement
         {
             rb.MovePosition(newPosition);
             animator.SetInteger("LadderMovement", 5);
-            eventManager.PlayerControlDisable();
+            EnablePlayerController(false);
             rb.velocity = new Vector2(0, 0);
             isMovingOnLadder = false;
             moveThroughFloor = false;
             GravityScale(gravityScale);
-            //canDetectLadder = true;
             StartCoroutine(CheckExitLadder());
         }
 
@@ -621,7 +619,6 @@ namespace PSmash.Movement
             isMovingOnLadder = false;
             moveThroughFloor = false;
             GravityScale(gravityScale);
-            //canDetectLadder = true;
             animator.SetInteger("LadderMovement", 10);
         }
 
@@ -632,7 +629,7 @@ namespace PSmash.Movement
                 yield return new WaitForEndOfFrame();
             }
             animator.SetInteger("LadderMovement", 0);
-            eventManager.PlayerControlEnable();
+            EnablePlayerController(true);
             isMovingOnLadder = false;
             moveThroughFloor = false;
             isClimbingLedge = false;
@@ -724,7 +721,6 @@ namespace PSmash.Movement
         public void IsPlayerAboveLadderTop(bool isPlayerAboveLadderTop)
         {
             this.isPlayerAboveLadderTop = isPlayerAboveLadderTop;
-            //print(isPlayerAboveLadderTop);
         }
         public bool MoveThroughFloor
         {

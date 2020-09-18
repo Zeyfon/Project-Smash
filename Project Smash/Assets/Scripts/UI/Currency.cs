@@ -26,6 +26,12 @@ namespace PSmash.UI
             PSmash.Items.Currency.OnCurrencyCollected += CurrencyCollected;
         }
 
+        private void OnDisable()
+        {
+            PSmash.Items.Currency.OnCurrencyCollected -= CurrencyCollected;
+
+        }
+
         private void CurrencyCollected()
         {
             currentQuantity++;
