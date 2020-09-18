@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Collections;
 using UnityEngine;
 using PSmash.Resources;
 
@@ -11,7 +12,6 @@ namespace PSmash.Items.Doors
 
         public delegate void KeyTaken(InteractionList myValue);
         public static event KeyTaken OnKeyTaken;
-        AudioSource audioSource;
         bool keyTaken = false;
         public static int quantityRequired;
         private void Awake()
@@ -21,17 +21,6 @@ namespace PSmash.Items.Doors
             {
                 keys.Add(myValue, 1);
             }
-            audioSource = GetComponent<AudioSource>();
-        }
-
-        // Update is called once per frame
-        void Update()
-        {
-            if (keyTaken)
-            {
-                if (audioSource.isPlaying) return;
-                Destroy(gameObject);
-            }
         }
 
         private void OnTriggerEnter2D(Collider2D collision)
@@ -40,10 +29,20 @@ namespace PSmash.Items.Doors
             {
                 GetComponent<Collider2D>().enabled = false;
                 OnKeyTaken(myValue);
-                GetComponent<AudioSource>().Play();
                 transform.GetChild(0).GetComponent<SpriteRenderer>().enabled = false;
-                keyTaken = true;
+                StartCoroutine(AudioPlays());
             }
+        }
+
+        IEnumerator AudioPlays()
+        {
+            AudioSource audioSource = GetComponent<AudioSource>();
+            audioSource.Play();
+            while (audioSource.isPlaying)
+            {
+                yield return new WaitForEndOfFrame();
+            }
+            Destroy(gameObject);
         }
     }
 

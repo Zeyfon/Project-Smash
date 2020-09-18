@@ -7,7 +7,7 @@ namespace PSmash.Control
 {
     public class PlayerControllerV2 : MonoBehaviour
     {
-        public static Transform playerTransform;
+        //public static Transform playerTransform;
         PlayerMovementV2 playerMovement;
         PlayerFighterV2 fighter;
         PlayerHealth health;
@@ -24,8 +24,8 @@ namespace PSmash.Control
             playerMovement = GetComponent<PlayerMovementV2>();
             fighter = GetComponent<PlayerFighterV2>();
             health = GetComponent<PlayerHealth>();
-            if (playerTransform) Destroy(gameObject);
-            playerTransform = transform;
+            //if (playerTransform) Destroy(gameObject);
+            //playerTransform = transform;
         }
 
         private void OnEnable()
