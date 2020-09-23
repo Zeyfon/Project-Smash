@@ -39,6 +39,7 @@ namespace PSmash.Menus
         {
             statusTransform.gameObject.SetActive(true);
             _controller.UI.Enable();
+            print("Menu activated");
         }
 
         void ButtonStartPressed()

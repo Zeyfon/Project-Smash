@@ -30,7 +30,7 @@ namespace PSmash.Resources
         public override void TakeDamage(Transform attacker, int damage)
         {
             if (isDead) return;
-            print("Damage received");
+            //print("Damage received");
             isDamaged = true;
             if (coroutine != null) StopCoroutine(coroutine);
             health -= damage;

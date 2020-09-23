@@ -5,16 +5,18 @@ namespace PSmash.Items
 {
     public class Star : MonoBehaviour
     {
-        public static int starsQuantity = 0;
+        public static int activeStarsOnSceneQuantity = 0;
         public static event Action OnStarCollected;
         [SerializeField] GameObject starEffectGameObject;
 
-        //This Awake Functions works to know how many stars are instantiated inside the scene. 
-        //DO NOT DELETE
-
-        private void Awake()
+        private void OnEnable()
         {
-            starsQuantity += 1;
+            activeStarsOnSceneQuantity += 1;
+        }
+
+        private void OnDisable()
+        {
+            activeStarsOnSceneQuantity -= 1;
         }
 
         private void OnTriggerEnter2D(Collider2D collision)

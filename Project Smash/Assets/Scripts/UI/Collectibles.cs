@@ -23,7 +23,7 @@ namespace PSmash.UI
         {
             canvasGroup.alpha = 0;
             currentStarsText.text = currentStars.ToString();
-            maxStarsText.text = Star.starsQuantity.ToString();
+            maxStarsText.text = Star.activeStarsOnSceneQuantity.ToString();
         }
 
         private void OnEnable()

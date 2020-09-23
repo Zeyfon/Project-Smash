@@ -67,7 +67,7 @@ namespace PSmash.Control
         public void MainAttackButton(bool isButtonPressed)
         {
             if (!isEnabled) return;
-            print("Attacking");
+            //print("Attacking");
             if (playerMovement.IsEvading() || playerMovement.IsMovingOnWall || playerMovement.IsClimbingLedge() || playerMovement.IsMovingOnLadder() || health.IsDamaged()) return;
             fighter.MainAttack(isButtonPressed, yInput);
         }

@@ -81,7 +81,7 @@ namespace PSmash.Combat
             rb.sharedMaterial = fullFriction;
             movement.CheckFlip(target.transform.position);
             animator.SetInteger("attack", 1);
-            while (animator.GetInteger("attack") != 100)
+            while (animator.GetInteger("attack") != 100 || health.IsInterrupted())
             {
                 yield return new WaitForEndOfFrame();
             }
@@ -95,7 +95,7 @@ namespace PSmash.Combat
         void Hit(int id)
         {
             audioSource.PlayOneShot(attackSounds[id-1]);
-            RaycastHit2D[] hits = Physics2D.RaycastAll(transform.position + new Vector3(0, 1), transform.right, 2, whatIsAttackable);
+            RaycastHit2D[] hits = Physics2D.RaycastAll(transform.position + new Vector3(0.3f, 1), transform.right, 2, whatIsAttackable);
             if (hits.Length == 0) return;
             foreach (RaycastHit2D hit in hits)
             {

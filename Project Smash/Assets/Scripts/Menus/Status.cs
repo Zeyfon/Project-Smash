@@ -14,7 +14,7 @@ namespace PSmash.Menus
 
         void Start()
         {
-            maxStarsText.text = PSmash.Items.Star.starsQuantity.ToString();
+            maxStarsText.text = PSmash.Items.Star.activeStarsOnSceneQuantity.ToString();
             if (gameObject.activeInHierarchy) gameObject.SetActive(false);
         }
 
