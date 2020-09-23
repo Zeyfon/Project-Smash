@@ -31,6 +31,7 @@ namespace PSmash.Movement
         SkeletonMecanim mecanim;
         Bone bone;
         SlopeControl slopes;
+        EnemyHealth health;
         
         Vector2 slopeNormalPerp;
         float slopeDownAngleOld;
@@ -47,6 +48,7 @@ namespace PSmash.Movement
             rb = GetComponent<Rigidbody2D>();
             animator = GetComponent<Animator>();
             mecanim = GetComponent<SkeletonMecanim>();
+            health = GetComponent<EnemyHealth>();
         }
 
         void Start()
@@ -57,15 +59,15 @@ namespace PSmash.Movement
         void FixedUpdate()
         {
             float xVelocity = (transform.right.x * rb.velocity.x) / speed;
-            //print(transform.right.x + "  " + rb.velocity + "  " + speed);
             animator.SetFloat("xVelocity", xVelocity);
         }
 
         public void MoveTo(Vector3 destination, float speedFactor)
         {
-            //print("Speed Factor  " + speedFactor);
             CheckFlip(destination);
             SlopeCheck();
+
+            if (health.IsInterrupted()) return;
             if (!IsGrounded())
             {
                 Vector2 velocity = -slopeNormalPerp * speed * transform.right.x * speedFactor;
@@ -74,7 +76,6 @@ namespace PSmash.Movement
             else
             {
                 rb.velocity = -slopeNormalPerp * speed * transform.right.x * speedFactor;
-                //print(rb.velocity);
             }
         }
 
@@ -224,12 +225,15 @@ namespace PSmash.Movement
 
         public void ImpulseFromAttack(Transform attacker, float impulse)
         {
+
             if (attacker.position.x > transform.position.x)
             {
                 rb.velocity = new Vector2(-impulse, 0);
+                print("Impulse from attack " + impulse);
             }
             else
             {
+                print("Impulse from attack " + impulse);
                 rb.velocity = new Vector2(impulse, 0);
 
             }
@@ -254,7 +258,8 @@ namespace PSmash.Movement
 
         public void Cancel()
         {
-            //CancelMovement
+            print("Cancelling Movement");
+            rb.velocity = new Vector2(0, 0);
         }
     }
 

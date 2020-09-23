@@ -102,6 +102,8 @@ namespace PSmash.InputSystem
             Door.EnablePlayerController -= EnablePlayerController;
             PlayerMovementV2.EnablePlayerController -= EnablePlayerController;
             Trap.EnablePlayerController -= EnablePlayerController;
+            Menus.Menus.OnMenusClosed -= EnablePlayerController;
+
         }
 
         private void SetInitialCommandsToButtons()
@@ -206,9 +208,9 @@ namespace PSmash.InputSystem
 
         private void ButtonStartPressed()
         {
-            print("Wants to open menu");
             if (OnPlayerStartButtonPressed != null)
             {
+                print("Player will open menu");
                 OnPlayerStartButtonPressed();
                 _controller.Player.Disable();
                 EnablePlayerController(false);
