@@ -7,10 +7,10 @@ using PSmash.Movement;
 
 namespace PSmash.Resources
 {
-    public class LightTutorial : MonoBehaviour
+    public class Hint : MonoBehaviour
     {
         [SerializeField] float fadeTime = 0.5f;
-        [SerializeField] Text text;
+        [SerializeField] Text hintText;
 
         bool cr_Running = false;
         bool canTipsRun = true;
@@ -19,7 +19,7 @@ namespace PSmash.Resources
         // Start is called before the first frame update
         void Awake()
         {
-            text.color = new Color(text.color.r, text.color.g, text.color.b, 0);
+            hintText.color = new Color(hintText.color.r, hintText.color.g, hintText.color.b, 0);
         }
 
         private void OnEnable()
@@ -49,7 +49,7 @@ namespace PSmash.Resources
         {
             print("Disabling Tips");
             canTipsRun = false;
-            if (text.color.a == 0) return;
+            if (hintText.color.a == 0) return;
             HideTips();
         }
         void EnableTips()
@@ -73,7 +73,7 @@ namespace PSmash.Resources
             {
                 alpha += Time.deltaTime/ fadeTime;
                 if (alpha > 1) alpha = 1;
-                text.color = new Color(text.color.r, text.color.g, text.color.b, alpha);
+                hintText.color = new Color(hintText.color.r, hintText.color.g, hintText.color.b, alpha);
                 yield return null;
             }
             print("End Showing");
@@ -89,7 +89,7 @@ namespace PSmash.Resources
             {
                 alpha -= Time.deltaTime / fadeTime;
                 if (alpha < 0) alpha = 0;
-                text.color = new Color(text.color.r, text.color.g, text.color.b, alpha);
+                hintText.color = new Color(hintText.color.r, hintText.color.g, hintText.color.b, alpha);
                 yield return null;
             }
             print("End Hiding");
