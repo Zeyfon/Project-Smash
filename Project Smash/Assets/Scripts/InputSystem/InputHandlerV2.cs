@@ -3,9 +3,11 @@ using PSmash.Core;
 using PSmash.Items.Doors;
 using PSmash.Items.Traps;
 using PSmash.Movement;
+using PSmash.Menus;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 namespace PSmash.InputSystem 
 {
@@ -26,19 +28,27 @@ namespace PSmash.InputSystem
 
         PlayerControllerV2 playerController;
         _Controller _controller;
+        PlayerInput input;
 
         Vector2 movement;
 
         private void Awake()
         {
+            input = GetComponent<PlayerInput>();
             playerController = transform.parent.GetComponent<PlayerControllerV2>();
             _controller = new _Controller();
+            GameObject.FindObjectOfType<Menus.Menus>()._controller = _controller;
         }
         private void Start()
         {
             SetInitialCommandsToButtons();
             SetCommandList();
             //SetButtonsInControllerMenu();
+            PlayerInput[] inputs = GameObject.FindObjectsOfType<PlayerInput>();
+            //foreach(PlayerInput input in inputs)
+            //{
+            //    print(input.gameObject.name);
+            //}
         }
 
         private void Update()
@@ -210,9 +220,13 @@ namespace PSmash.InputSystem
         {
             if (OnPlayerStartButtonPressed != null)
             {
-                print("Player will open menu");
-                OnPlayerStartButtonPressed();
+                //print("Player will open menu");
+                //input.currentActionMap = _controller.UI;
                 _controller.Player.Disable();
+                _controller.UI.Enable();
+                OnPlayerStartButtonPressed();
+                print(_controller.UI.enabled);
+                //_controller.UI.Enable();
                 EnablePlayerController(false);
                 Time.timeScale = 0;
             }
@@ -262,6 +276,7 @@ namespace PSmash.InputSystem
                 if (!_controller.Player.enabled) 
                 {
                     _controller.Player.Enable();
+                    _controller.UI.Disable();
                     Time.timeScale = 1;
                 }
                 //print("InputHandler Enabled");

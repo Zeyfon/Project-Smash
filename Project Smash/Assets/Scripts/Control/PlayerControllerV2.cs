@@ -24,8 +24,6 @@ namespace PSmash.Control
             playerMovement = GetComponent<PlayerMovementV2>();
             fighter = GetComponent<PlayerFighterV2>();
             health = GetComponent<PlayerHealth>();
-            //if (playerTransform) Destroy(gameObject);
-            //playerTransform = transform;
         }
 
         private void OnEnable()
@@ -38,7 +36,6 @@ namespace PSmash.Control
         void FixedUpdate()
         {
             if (!isEnabled) return;
-            //print(xInput + "  " + yInput);
             if (fighter.IsAttacking() || health.IsDamaged() || health.IsDead()) return;
             InteractWithMovement();
         }

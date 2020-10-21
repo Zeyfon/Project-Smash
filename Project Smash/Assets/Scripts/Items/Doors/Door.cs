@@ -21,10 +21,12 @@ namespace PSmash.Items.Doors
         [SerializeField] protected AudioClip doorFullyOpenedSound = null;
         [SerializeField] protected AudioClip doorOpeningSound = null;
         [SerializeField] protected AudioClip hitOnDoorSound = null;
+        [SerializeField] protected AudioClip keysLandingSound = null;
         [SerializeField] protected ParticleSystem dustParticles = null;
 
 
         [Header("Camera Items")]
+        [SerializeField] protected Transform followCamera = null;
         [SerializeField] protected CinemachineVirtualCamera myVirtualCamera;
         [SerializeField] protected float fadeInTime = 2;
         [SerializeField] protected float fadeOutTime = 2;

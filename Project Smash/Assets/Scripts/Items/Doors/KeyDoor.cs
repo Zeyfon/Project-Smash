@@ -1,16 +1,16 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using PSmash.Core;
 using PSmash.Resources;
 using PSmash.SceneManagement;
-using System;
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
 
 namespace PSmash.Items.Doors
 {
     public class KeyDoor : Door
     {
         [Header("Doorkey Items")]
-        [SerializeField] GameObject keySprite;
+        [SerializeField] GameObject UnlockingDoorMomentKey;
         [SerializeField] int keysRequired = 0;
         [SerializeField] List<Transform> keyPositions = new List<Transform>();
 
@@ -19,8 +19,10 @@ namespace PSmash.Items.Doors
 
         public delegate void KeyDoorOpening(InteractionList myValue);
         public static event KeyDoorOpening OnDoorOpening;
-
+        int tracker = 0;
         int currentKeys = 0;
+
+        List<GameObject> unlockingMomentKeys = new List<GameObject>();
 
         void Awake()
         {
@@ -31,7 +33,6 @@ namespace PSmash.Items.Doors
         {
             // Is in Start to allow the Keys to properly set during the Awake phase
             Key.keys.TryGetValue(doorID, out keysRequired);
-            //print(keysRequired + "  " + gameObject.name);
             GetComponentInChildren<PSmash.UI.InGameKeyDoorUI>().InitializeUI(currentKeys, keysRequired);
         }
 
@@ -64,10 +65,10 @@ namespace PSmash.Items.Doors
 
         //Check how many keys have been aquired for this door
         //and check if the required quantity have been reached.
-        void KeyTaken(InteractionList keyValue)
+        void KeyTaken(InteractionList keyValue)                           
         {
             if (keyValue != doorID) return;
-            AddKey();
+            AddKey();                                                                     
             if (currentKeys >= keysRequired)
             {
                 AllKeysAquiredMoment();
@@ -94,6 +95,7 @@ namespace PSmash.Items.Doors
                 StartCoroutine(ShowDoorMomentInmediateReturn());
             }        
             GetComponent<CircleCollider2D>().enabled = true;
+            followCamera = GameObject.FindGameObjectWithTag("FollowCamera").transform;
         }
 
         //Control all the camera movement and
@@ -119,12 +121,10 @@ namespace PSmash.Items.Doors
             DisableAvatarControl();
             yield return new WaitForSeconds(1);
             myVirtualCamera.m_Priority = 100;
-            yield return new WaitForSeconds(4);
-            //yield return fader.FadeOut(fadeOutTime);
+            yield return new WaitForSeconds(1.75f);
             myVirtualCamera.m_Priority = 0;
-            yield return new WaitForSeconds(3f);
-            //yield return fader.FadeIn(fadeInTime);
-            print("Playercontrol is Enabled");
+            yield return new WaitForSeconds(1f);
+            //print("Playercontrol is Enabled");
             EnableAvatarControl();
         }
 
@@ -132,20 +132,78 @@ namespace PSmash.Items.Doors
         //Is the controller of the Opening Door Moment
         //when the player gets near enough for the door to start opening
         //Also here the player control will be removed
-        IEnumerator OpenDoorMoment(Transform playerTransform)
+        IEnumerator UnlockingDoorMoment(Transform playerTransform)
         {
             DisableAvatarControl();
+            //For now disable the UI over the Door Object
             OnDoorOpening(doorID);
             yield return new WaitForSeconds(0.5f);
             yield return KeyCinematics(playerTransform);
+            yield return new WaitForSeconds(1);
             yield return CongratulationsMoment();
             EnableAvatarControl();
+            yield return new WaitForSeconds(0.5f);
+            DisableKeys();
+            yield return new WaitForSeconds(1.3f);
             yield return OpenDoor();
         }
+
+        //The controller of the Key Moving to the door Cinematic
+        IEnumerator KeyCinematics(Transform player)
+        {
+            float distance = 2.5f;
+            Vector2[] targetPositionsOverPlayer = new Vector2[keysRequired];
+            Vector2[] targetPositionsOverDoor = new Vector2[keysRequired];
+            float angle = 180 / (targetPositionsOverPlayer.Length + 1);
+            float betweenKeysOnDoorDistance = GetComponent<BoxCollider2D>().size.y / (keysRequired + 1);
+            for (int i = 0; i < targetPositionsOverPlayer.Length; i++)
+            {
+                targetPositionsOverPlayer[i] = new Vector2(Mathf.Cos(Mathf.Deg2Rad * (angle * (i + 1))) * distance + player.position.x,
+                                                 Mathf.Sin(Mathf.Deg2Rad * (angle * (i + 1))) * distance + player.position.y + 1);
+                targetPositionsOverDoor[i] = new Vector2(transform.position.x, transform.position.y + betweenKeysOnDoorDistance * (i + 1));
+                // Get the position to where the key will go above the player
+                // Then get the position to where it will go over the door
+                //Send this info to the SpawnKey Coroutine
+                StartCoroutine(SpawnKey(targetPositionsOverPlayer[i], targetPositionsOverDoor[i], player));
+            }
+
+            while (tracker != keysRequired)
+            {
+                yield return new WaitForEndOfFrame();
+            }
+            audioSource.PlayOneShot(keysLandingSound);
+            followCamera.GetComponent<FollowCamera>().CameraShake();
+            yield return null;
+        }
+
+        //This coroutine is in charge of instantiate each key(There will be a # of coroutines
+        //depending on the # of keys for this door
+        //Then will send both target position previously gotten to the key and will initiate the movement
+        //Each key will perform its own movement in their own script
+        //Finally this coroutine will tracking when each key finishes its movement to both targets
+        //in order to know when all keys have finished to continue the next step in this moment
+        IEnumerator SpawnKey(Vector2 targetPositionOverPlayer, Vector2 targetPositionOverDoor, Transform player)
+        {
+            GameObject unlockingDoorMomentKeyClone = Instantiate(UnlockingDoorMomentKey, player.position + new Vector3(0, 1, 0), Quaternion.identity, transform.GetChild(0));
+            yield return unlockingDoorMomentKeyClone.GetComponent<UnlockingDoorMomentKey>().KeyMoment(targetPositionOverPlayer, targetPositionOverDoor);
+            tracker++;
+            unlockingMomentKeys.Add(unlockingDoorMomentKeyClone);
+            yield return null;
+        }
+
         //Here will be the amusement moment of completing the key quest
         IEnumerator CongratulationsMoment()
         {
+            //Congratulations audio + glow on keys
+            //Glow banishes
+            //Keys disappear
             audioSource.PlayOneShot(congratulationsClip);
+            foreach(GameObject currentKey in unlockingMomentKeys)
+            {
+                currentKey.transform.GetChild(0).GetComponent<ParticleSystem>().Stop();
+                currentKey.transform.GetChild(1).GetComponent<ParticleSystem>().Play();
+                //print("Glow Started");
+            }
             while (audioSource.isPlaying)
             {
                 yield return new WaitForEndOfFrame();
@@ -153,34 +211,32 @@ namespace PSmash.Items.Doors
             yield return null;
         }
 
-        //The controller of the Key Moving to the door Cinematic
-        IEnumerator KeyCinematics(Transform player)
+        private void DisableKeys()
         {
-            Vector3 keyPositionOverdoor = transform.position + new Vector3(0,GetComponent<BoxCollider2D>().size.y/2);
-            print("Key Cinematics Started");
-            //print(keyPositions.Count);
-            for (int i = 0; i < keysRequired; i++)
+            foreach (GameObject currentKey in unlockingMomentKeys)
             {
-                yield return PutThisKeyOverTheDoor(keyPositionOverdoor, player);
-                yield return new WaitForSeconds(1);
+                StartCoroutine(DisableCurrentKey(currentKey));
             }
-            print("Key List Finished");
-            yield return null;
         }
-
-        //The actual Movement by each key in the KeyCinematic Moment
-        IEnumerator PutThisKeyOverTheDoor(Vector3 targetPosition, Transform player)
+        IEnumerator DisableCurrentKey(GameObject currentKey)
         {
-            GameObject keySpriteClone = Instantiate(keySprite, player.position + new Vector3(0, 1, 0), Quaternion.identity, transform.GetChild(0));
-            yield return keySpriteClone.GetComponent<KeySprite>().KeyMovement(targetPosition);
+            print("Disabling Key");
+            currentKey.transform.GetChild(1).GetComponent<ParticleSystem>().Stop();
+            float alpha = 1;
+            SpriteRenderer renderer = currentKey.GetComponent<SpriteRenderer>();
+            while(alpha != 0)
+            {
+                alpha -= Time.deltaTime;
+                if (alpha <= 0) alpha = 0;
+                renderer.color = new Color(renderer.color.r, renderer.color.g, renderer.color.b, alpha);
+                yield return new WaitForEndOfFrame();
+            }
             yield return null;
         }
-
         //The Opening door Mechanic
         //Also all the details added to this mechanic are here (Dust, Audio,etc)
         IEnumerator OpenDoor()
         {
-            yield return new WaitForSeconds(1);
             dustParticles.Play();
             audioSource.clip = doorOpeningSound;
             audioSource.Play();
@@ -189,9 +245,13 @@ namespace PSmash.Items.Doors
             //and the amount of time it wants to spend opening
             float rate = GetComponent<BoxCollider2D>().size.y / openingTime;
             Transform spriteTransform = transform.GetChild(0);
-            print("Trying to access Disabling Text");
+            //print("Trying to access Disabling Text");
+            BoxCollider2D collider = GetComponent<BoxCollider2D>();
+            float yOffset = collider.offset.y;
             while (timer < openingTime)
             {
+                yOffset += Time.deltaTime * rate;
+                collider.offset = new Vector2(0, yOffset);
                 spriteTransform.position = new Vector3(spriteTransform.position.x, spriteTransform.position.y + (Time.deltaTime * rate));
                 timer += Time.deltaTime;
                 yield return new WaitForEndOfFrame();
@@ -212,7 +272,7 @@ namespace PSmash.Items.Doors
             if (collision.CompareTag("Player"))
             {
                 GetComponent<CircleCollider2D>().enabled = false;
-                StartCoroutine(OpenDoorMoment(collision.transform));
+                StartCoroutine(UnlockingDoorMoment(collision.transform));
             }
         }
     }

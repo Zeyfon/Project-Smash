@@ -168,7 +168,13 @@ namespace PSmash.Control
         }
         private void OnDrawGizmos()
         {
+            if (transform.parent == null) return;
             Gizmos.DrawWireSphere(transform.parent.position, movementRange);
+        }
+
+        void FlipTowardsTarget()
+        {
+            movement.CheckFlip(target.position);
         }
     }
 

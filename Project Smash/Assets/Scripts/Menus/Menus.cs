@@ -2,21 +2,22 @@
 using System;
 using System.Collections;
 using UnityEngine;
+using PSmash.InputSystem;
 
 namespace PSmash.Menus
 {
     public class Menus : MonoBehaviour
     {
-        [SerializeField] Transform weaponsTransform = null;
-        [SerializeField] Transform statusTransform = null;
+        //[SerializeField] Transform weaponsTransform = null;
+        [SerializeField] GameObject status = null;
         public delegate void MenusClosed(bool state);
         public static event MenusClosed OnMenusClosed;
-
-        _Controller _controller;
+        GameObject statusMenuClone;
+        public _Controller _controller;
         // Start is called before the first frame update
         void Awake()
         {
-            _controller = new _Controller();
+            statusMenuClone = Instantiate(status, transform);
         }
 
         private void OnEnable()
@@ -37,9 +38,7 @@ namespace PSmash.Menus
 
         void EnableMenus()
         {
-            statusTransform.gameObject.SetActive(true);
-            _controller.UI.Enable();
-            print("Menu activated");
+            statusMenuClone.SetActive(true);
         }
 
         void ButtonStartPressed()
@@ -54,13 +53,14 @@ namespace PSmash.Menus
 
         void StarCollected()
         {
-            statusTransform.GetComponent<Status>().StarCollected();
+            statusMenuClone.GetComponent<MainMenu>().StarCollected();
         }
 
-        private void CloseMenus()
+        public  void CloseMenus()
         {
-            statusTransform.gameObject.SetActive(false);
-            _controller.UI.Disable();
+            //print("Closing Menu");
+
+            statusMenuClone.SetActive(false);
             OnMenusClosed(true);
         }
     }

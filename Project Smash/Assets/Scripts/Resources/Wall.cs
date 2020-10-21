@@ -4,8 +4,11 @@ using UnityEngine;
 
 namespace PSmash.Resources
 {
+
     public class Wall : MonoBehaviour
     {
+
+        bool isPlayerOnWall = false;
         private void OnTriggerEnter2D(Collider2D collision)
         {
             if (collision.CompareTag("Player"))
@@ -14,7 +17,6 @@ namespace PSmash.Resources
                 if (weapons != null) weapons.CanMoveOnWall(true);
                 ToolSystem tools = collision.GetComponent<ToolSystem>();
                 if (tools != null) tools.WallDetected(true);
-
             }
         }
         private void OnTriggerExit2D(Collider2D collision)
@@ -26,6 +28,11 @@ namespace PSmash.Resources
                 ToolSystem tools = collision.GetComponent<ToolSystem>();
                 if (tools != null) tools.WallDetected(false);
             }
+        }
+
+        public bool IsPlayerOnWall()
+        {
+            return isPlayerOnWall;
         }
     }
 }

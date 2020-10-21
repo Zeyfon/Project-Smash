@@ -67,6 +67,8 @@ namespace PSmash.Movement
 
         public delegate void PlayerController(bool state);
         public static event PlayerController EnablePlayerController;
+        public delegate void PlayerOnWall(bool state);
+        public event PlayerOnWall OnPlayerWallState;
 
         Rigidbody2D rb;
         Animator animator;
@@ -748,11 +750,15 @@ namespace PSmash.Movement
                     if (transform.right.x < 0) Flip(1);
                     GravityScale(0);
                     animator.SetInteger("WallMovement", 1);
+                    if (OnPlayerWallState == null) return;
+                    OnPlayerWallState(true);
                 }
                 else 
                 { 
                     GravityScale(gravityScale);
                     animator.SetInteger("WallMovement", 50);
+                    if (OnPlayerWallState == null) return;
+                    OnPlayerWallState(false);
                 }
 
             }

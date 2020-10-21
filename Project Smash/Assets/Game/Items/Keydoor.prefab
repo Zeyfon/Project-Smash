@@ -30,35 +30,6 @@ Transform:
   m_Father: {fileID: 3851916382799367753}
   m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &3013498468480636783
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3851916382799367758}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 24fa23742a340b942b902b8897431426, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  opendoor: 0
-  doorID: 0
-  openingTime: 5
-  audioSource: {fileID: 5036893165240752739}
-  congratulationsClip: {fileID: 8300000, guid: 4709ec204e8aa8b4ebfe319793c6ac9f, type: 3}
-  doorFullyOpenedSound: {fileID: 8300000, guid: 84e55a63c7f028c418d0d60b5d778be0,
-    type: 3}
-  doorOpeningSound: {fileID: 8300000, guid: 9548ae3f821d8424c8feb5d7e985c699, type: 3}
-  hitOnDoorSound: {fileID: 8300000, guid: 9d17886083aa2c54f91ac6a845e086fb, type: 3}
-  dustParticles: {fileID: 2040235516799772607}
-  myVirtualCamera: {fileID: 2216721147959089046}
-  fadeInTime: 2
-  fadeOutTime: 2
-  keySprite: {fileID: 3621033831599576660, guid: dda9aebef4adb0a4090ed1451b251c7e,
-    type: 3}
-  keysRequired: 0
-  keyPositions: []
 --- !u!1 &2289985399781105063
 GameObject:
   m_ObjectHideFlags: 0
@@ -119,6 +90,38 @@ Transform:
   m_Father: {fileID: 3851916382799367753}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &3013498468480636783
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3851916382799367758}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 24fa23742a340b942b902b8897431426, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  opendoor: 0
+  doorID: 0
+  openingTime: 5
+  audioSource: {fileID: 5036893165240752739}
+  congratulationsClip: {fileID: 8300000, guid: 4709ec204e8aa8b4ebfe319793c6ac9f, type: 3}
+  doorFullyOpenedSound: {fileID: 8300000, guid: 84e55a63c7f028c418d0d60b5d778be0,
+    type: 3}
+  doorOpeningSound: {fileID: 8300000, guid: 9548ae3f821d8424c8feb5d7e985c699, type: 3}
+  hitOnDoorSound: {fileID: 8300000, guid: 9d17886083aa2c54f91ac6a845e086fb, type: 3}
+  keysLandingSound: {fileID: 8300000, guid: 61597779d36e0ac47b70b51590b89aa1, type: 3}
+  dustParticles: {fileID: 2040235516799772607}
+  myVirtualCamera: {fileID: 2216721147959089046}
+  fadeInTime: 2
+  fadeOutTime: 2
+  followCamera: {fileID: 0}
+  UnlockingDoorMomentKey: {fileID: 3621033831599576660, guid: dda9aebef4adb0a4090ed1451b251c7e,
+    type: 3}
+  keysRequired: 0
+  keyPositions: []
+  panBothSides: 0
 --- !u!1001 &2040235517666854697
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -132,7 +135,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1341132500, guid: 90c86d238ad422e4d9907d2029927369, type: 3}
       propertyPath: m_LocalScale.x
-      value: 1
+      value: 2.42
       objectReference: {fileID: 0}
     - target: {fileID: 1341132500, guid: 90c86d238ad422e4d9907d2029927369, type: 3}
       propertyPath: m_LocalRotation.z
@@ -146,10 +149,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1341132500, guid: 90c86d238ad422e4d9907d2029927369, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 1.33
+      objectReference: {fileID: 0}
     - target: {fileID: 1341132501, guid: 90c86d238ad422e4d9907d2029927369, type: 3}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: 8147458213028822481, guid: cc2b44306b8d2b941ab3602a88e9fb9c,
+      objectReference: {fileID: 21300000, guid: af84f92105942794bac8e52d40c19c92,
         type: 3}
     - target: {fileID: 1549230228, guid: 90c86d238ad422e4d9907d2029927369, type: 3}
       propertyPath: m_LocalPosition.y

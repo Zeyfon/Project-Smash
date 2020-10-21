@@ -17,20 +17,20 @@ namespace PSmash.Core
 
         private void OnEnable()
         {
-            fighter.AirSmashAttackEffect += AirSmashAttack;
+            fighter.AirSmashAttackEffect += CameraShake;
         }
 
         private void OnDisable()
         {
-            fighter.AirSmashAttackEffect -= AirSmashAttack;
+            fighter.AirSmashAttackEffect -= CameraShake;
 
         }
-        public void AirSmashAttack()
+        public void CameraShake()
         {
-            StartCoroutine(AirSmashAttackCoroutine());
+            StartCoroutine(CameraShakeCO());
         }
 
-        IEnumerator AirSmashAttackCoroutine()
+        IEnumerator CameraShakeCO()
         {
             Debug.Log("Splash Effects On");
             CinemachineVirtualCamera cam = GetComponent<CinemachineVirtualCamera>();
@@ -40,7 +40,7 @@ namespace PSmash.Core
             float amplitude = noise.m_AmplitudeGain;
             while (noise.m_AmplitudeGain > 0)
             {
-                amplitude -= Time.deltaTime * 20;
+                amplitude -= Time.deltaTime * 500;
                 if (amplitude <= 0) amplitude = 0;
                 noise.m_AmplitudeGain = amplitude;
 
