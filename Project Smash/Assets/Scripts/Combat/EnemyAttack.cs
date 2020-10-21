@@ -73,14 +73,31 @@ namespace PSmash.Combat
         {
             isAttacking = true;
             if (attackCoroutine != null) return;
-            attackCoroutine = StartCoroutine(Attack());
+            //attackCoroutine = StartCoroutine(ComboAttack());
+            attackCoroutine = StartCoroutine(UnblockableAttack());
         }
 
-        IEnumerator Attack()
+        IEnumerator ComboAttack()
         {
             rb.sharedMaterial = fullFriction;
             movement.CheckFlip(target.transform.position);
             animator.SetInteger("attack", 1);
+            while (animator.GetInteger("attack") != 100 || health.IsInterrupted())
+            {
+                yield return new WaitForEndOfFrame();
+            }
+            animator.SetInteger("attack", 0);
+            rb.sharedMaterial = lowFriction;
+            yield return new WaitForSeconds(1);
+            isAttacking = false;
+            attackCoroutine = null;
+        }
+
+        IEnumerator UnblockableAttack()
+        {
+            rb.sharedMaterial = fullFriction;
+            movement.CheckFlip(target.transform.position);
+            animator.SetInteger("attack", 10);
             while (animator.GetInteger("attack") != 100 || health.IsInterrupted())
             {
                 yield return new WaitForEndOfFrame();

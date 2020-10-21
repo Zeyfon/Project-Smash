@@ -120,6 +120,7 @@ namespace PSmash.Menus
         {
             currentStarsText.text = currentStarsQuantity.ToString();
             SetInitialMainMenuState();
+            if (eventSystem == null) return;
             StartCoroutine(SetInitialTabSelection());
         }
 
