@@ -98,7 +98,7 @@ LightmapSettings:
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
   m_LightingDataAsset: {fileID: 0}
-  m_UseShadowmask: 0
+  m_UseShadowmask: 1
 --- !u!196 &4
 NavMeshSettings:
   serializedVersion: 2
@@ -200,6 +200,11 @@ PrefabInstance:
       propertyPath: m_SortingLayer
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 4061137515592008306, guid: 54501c5fa962e084199705357b764b81,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: b9236375bb9df1f4790e95a90bca4fd3, type: 2}
     - target: {fileID: 4253380083514601662, guid: 54501c5fa962e084199705357b764b81,
         type: 3}
       propertyPath: m_Name
@@ -265,11 +270,21 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4900411632562877674, guid: 54501c5fa962e084199705357b764b81,
+        type: 3}
+      propertyPath: addNormals
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5034233818721008413, guid: 54501c5fa962e084199705357b764b81,
         type: 3}
       propertyPath: parriedSound
       value: 
       objectReference: {fileID: 8300000, guid: 11c55ac643fc0d64a87dcfc8d213fabe, type: 3}
+    - target: {fileID: 7128362010898324784, guid: 54501c5fa962e084199705357b764b81,
+        type: 3}
+      propertyPath: testMode
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7128362010898324785, guid: 54501c5fa962e084199705357b764b81,
         type: 3}
       propertyPath: guardBrokeSound

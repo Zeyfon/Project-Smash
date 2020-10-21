@@ -23,7 +23,7 @@ namespace PSmash.Items
         {
             if (collision.CompareTag("Player"))
             {
-                OnStarCollected();
+                if (OnStarCollected != null) OnStarCollected();
                 Instantiate(starEffectGameObject, transform.position, Quaternion.Euler(0, 0, 90));
 
                 Destroy(gameObject);

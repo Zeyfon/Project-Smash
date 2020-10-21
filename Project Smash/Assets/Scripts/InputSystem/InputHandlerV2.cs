@@ -44,11 +44,6 @@ namespace PSmash.InputSystem
             SetInitialCommandsToButtons();
             SetCommandList();
             //SetButtonsInControllerMenu();
-            PlayerInput[] inputs = GameObject.FindObjectsOfType<PlayerInput>();
-            //foreach(PlayerInput input in inputs)
-            //{
-            //    print(input.gameObject.name);
-            //}
         }
 
         private void Update()

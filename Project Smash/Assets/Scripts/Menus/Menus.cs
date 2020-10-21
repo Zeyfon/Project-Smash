@@ -9,8 +9,7 @@ namespace PSmash.Menus
     public class Menus : MonoBehaviour
     {
         //[SerializeField] Transform weaponsTransform = null;
-        [SerializeField] GameObject status = null;
-        public delegate void MenusClosed(bool state);
+        [SerializeField] GameObject status = null;        public delegate void MenusClosed(bool state);
         public static event MenusClosed OnMenusClosed;
         GameObject statusMenuClone;
         public _Controller _controller;
@@ -22,16 +21,16 @@ namespace PSmash.Menus
 
         private void OnEnable()
         {
-            _controller.UI.ButtonB.performed += ctx => ButtonBPressed();
-            _controller.UI.ButtonStart.performed += ctx => ButtonStartPressed();
+            //_controller.UI.ButtonB.performed += ctx => ButtonBPressed();
+            //_controller.UI.ButtonStart.performed += ctx => ButtonStartPressed();
             PSmash.InputSystem.InputHandlerV2.OnPlayerStartButtonPressed += EnableMenus;
             PSmash.Items.Star.OnStarCollected += StarCollected;
         }
 
         private void OnDisable()
         {
-            _controller.UI.ButtonB.performed -= ctx => ButtonBPressed();
-            _controller.UI.ButtonStart.performed -= ctx => ButtonStartPressed();
+            //_controller.UI.ButtonB.performed -= ctx => ButtonBPressed();
+            //_controller.UI.ButtonStart.performed -= ctx => ButtonStartPressed();
             PSmash.InputSystem.InputHandlerV2.OnPlayerStartButtonPressed -= EnableMenus;
             PSmash.Items.Star.OnStarCollected -= StarCollected;
         }
@@ -58,8 +57,6 @@ namespace PSmash.Menus
 
         public  void CloseMenus()
         {
-            //print("Closing Menu");
-
             statusMenuClone.SetActive(false);
             OnMenusClosed(true);
         }

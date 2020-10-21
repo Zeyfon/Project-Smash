@@ -51,8 +51,8 @@ namespace PSmash.Control
             if (target ==null) return;
             if (health.IsInterrupted()) return;
             if (health.IsStunned()) return;
-            if (attack.IsAttacking()) return;
             if (testMode) return;
+            if (attack.IsAttacking()) return;
             if (InMovementArea() && InAttackRange() && isPlayerSpotted && CanMoveForward())
             {
                 //print("AttackBehavior");
