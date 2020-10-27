@@ -67,7 +67,6 @@ namespace PSmash.Movement
             CheckFlip(destination);
             SlopeCheck();
 
-            if (health.IsInterrupted()) return;
             if (!IsGrounded())
             {
                 Vector2 velocity = -slopeNormalPerp * speed * transform.right.x * speedFactor;
@@ -258,7 +257,7 @@ namespace PSmash.Movement
 
         public void Cancel()
         {
-            print("Cancelling Movement");
+            //print("Cancelling Movement");
             rb.velocity = new Vector2(0, 0);
         }
     }

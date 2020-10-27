@@ -175,6 +175,7 @@ GameObject:
   - component: {fileID: 8842288852017603113}
   - component: {fileID: 8059207298340403249}
   - component: {fileID: 6838855446755843027}
+  - component: {fileID: 1960831657326258413}
   m_Layer: 10
   m_Name: EnemyCharacter
   m_TagString: Enemy
@@ -315,6 +316,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b770420c5797fe64db48b167a3e7bbe1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  normalMaterial: {fileID: 0}
+  unblockableMaterial: {fileID: 0}
+  fadeIntTime: 0.5
+  unblockableAttackProbability: 0.2
   whatIsAttackable:
     serializedVersion: 2
     m_Bits: 10240
@@ -350,13 +355,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   health: 100
   audioSource: {fileID: 8059207298340403249}
-  testMode: 0
-  hasGuardBar: 1
-  guard: 50
-  timerThreshold: 1
-  timeToFullyRegenGuard: 2
+  invulnerable: 0
   damagedSound: {fileID: 8300000, guid: a2c4afa4edc26494c9d118b432321eaa, type: 3}
-  guardBrokeSound: {fileID: 8300000, guid: b64a6d58365ad70459a570484a3a0f72, type: 3}
+  staggeredSound: {fileID: 0}
+  stunnedSound: {fileID: 0}
   deadSound: {fileID: 8300000, guid: 377bc03b1d2df6341baafa2779437760, type: 3}
   guardDamageSound: {fileID: 0}
   dropItem: {fileID: 1441679831736908636, guid: a0cf1166c4b4a1448a7c27f2fe7949d6,
@@ -469,3 +471,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a4a331fc9e56f62448994ff8a8e4709a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1960831657326258413
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8842288852017603116}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 77ff96459c9d8234da021e8c531716a3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  posture: 50
+  timerThreshold: 2
+  timeToFullyRegenGuard: 100

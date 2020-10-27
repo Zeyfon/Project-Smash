@@ -43,7 +43,7 @@ namespace PSmash.UI
 
         IEnumerator FadeOut()
         {
-            print("Starting Fade Out");
+            //print("Starting Fade Out");
             float alpha = canvasGroup.alpha;
             yield return new WaitForSeconds(1);
             while (alpha > 0)
@@ -53,7 +53,7 @@ namespace PSmash.UI
                 canvasGroup.alpha = alpha;
                 yield return new WaitForEndOfFrame();
             }
-            print("Ending Fade Out");
+            //print("Ending Fade Out");
             coroutine = null;
         }
     }

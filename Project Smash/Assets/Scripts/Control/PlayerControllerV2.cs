@@ -36,7 +36,7 @@ namespace PSmash.Control
         void FixedUpdate()
         {
             if (!isEnabled) return;
-            if (fighter.IsAttacking() || health.IsDamaged() || health.IsDead()) return;
+            if (fighter.IsAttacking() || fighter.IsFinishingAnEnemy()|| health.IsDamaged() || health.IsDead()) return;
             InteractWithMovement();
         }
 

@@ -13,12 +13,14 @@ namespace PSmash.Resources
 
         Coroutine coroutine;
         Animator animator;
+        PlayerFighterV2 fighter;
 
         bool isDamaged;
 
         private void Awake()
         {
             animator = GetComponent<Animator>();
+            fighter = GetComponent<PlayerFighterV2>();
         }
 
         // Start is called before the first frame update
@@ -30,6 +32,7 @@ namespace PSmash.Resources
         public override void TakeDamage(Transform attacker, int damage)
         {
             if (isDead) return;
+            if (fighter.IsFinishingAnEnemy()) return;
             //print("Damage received");
             isDamaged = true;
             if (coroutine != null) StopCoroutine(coroutine);
@@ -50,13 +53,16 @@ namespace PSmash.Resources
 
         IEnumerator DamageEffects()
         {
-            GetComponent<AudioSource>().PlayOneShot(damagedSound);
+            //audioSource.Play();
+            audioSource.PlayOneShot(damagedSound);
+            print("Playing player damage sound");
             animator.SetInteger("Damage", 1);
             while(animator.GetInteger("Damage") != 100)
             {
                 yield return new WaitForEndOfFrame();
             }
             animator.SetInteger("Damage", 0);
+            if (GetComponent<PlayerFighterV2>().IsGuardButtonPressed()) GetComponent<PlayerFighterV2>().Guard();
             coroutine = null;
         }
 

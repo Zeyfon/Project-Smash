@@ -5,6 +5,7 @@ using UnityEngine;
 using PSmash.Resources;
 using Spine.Unity;
 using Spine;
+using PSmash.Core;
 
 namespace PSmash.Combat
 {
@@ -16,6 +17,7 @@ namespace PSmash.Combat
         [SerializeField] SecondaryWeaponsList weapons;
         [SerializeField] GameObject subWeapon = null;
         [SerializeField] LayerMask whatIsAttackable;
+        [SerializeField] LayerMask whatIsEnemy;
 
         [Header("Combo Attack")]
         [SerializeField] Transform attackTransform = null;
@@ -55,6 +57,9 @@ namespace PSmash.Combat
         Coroutine coroutine;
         PlayerHealth health;
         SkeletonMecanim mecanim;
+        TimeManager timeManager;
+        Transform targetTransform;
+
         Bone bone;
         bool canContinueCombo = false;
         bool isAttacking = false;
@@ -63,6 +68,8 @@ namespace PSmash.Combat
         bool isChargeAttackReady = false;
         bool heavyAttacking = false;
         bool isGuarding = false;
+        bool isGuardButtonPressed = false;
+        bool isFinishinAnEnemy = false;
 
         void Awake()
         {
@@ -71,6 +78,8 @@ namespace PSmash.Combat
             animator = GetComponent<Animator>();
             audioSource = GetComponent<AudioSource>();
             mecanim = GetComponent<SkeletonMecanim>();
+            timeManager = GameObject.FindObjectOfType<TimeManager>();
+
         }
 
         private void Start()
@@ -80,8 +89,17 @@ namespace PSmash.Combat
 
         public void MainAttack(bool isButtonPressed, float yInput)
         {
-            //Debug.Log("Wants To Attack");
-            if(!movement.IsGrounded() && animator.GetInteger("Attack") == 0 && yInput <-0.5f /*&& Mathf.Abs(movement.x) < 0.2f*/)
+            if (IsFinishingAnEnemy()) return;
+
+            if (IsEnemyStunned())
+            {
+                print("Enemy is Stunned");
+                //Debug.Break();
+                isAttacking = true;
+                DoFinisherMove();
+            }
+            Debug.Log("Wants To Attack");
+            if (!movement.IsGrounded() && animator.GetInteger("Attack") == 0 && yInput <-0.5f /*&& Mathf.Abs(movement.x) < 0.2f*/)
             {
                 //SplashDownAttack
                 print("SplashAttack");
@@ -144,15 +162,62 @@ namespace PSmash.Combat
             }
         }
 
+        bool IsEnemyStunned()
+        {
+            RaycastHit2D hit = Physics2D.Raycast(transform.position + new Vector3(0, 1), transform.right, 2, whatIsEnemy);
+            if (!hit) return false;
+            return hit.transform.GetComponent<EnemyHealth>().IsStunned();
+        }
+
+        void DoFinisherMove()
+        {
+            isFinishinAnEnemy = true;
+            print("Player is finishing enemy");
+            RaycastHit2D hit = Physics2D.Raycast(transform.position + new Vector3(0, 1), transform.right, 2, whatIsEnemy);
+            //Move Player to a specific position relative to the enemy
+            if(transform.position.x - hit.transform.position.x > 0)
+            {
+                //Player is at right side of enemy
+                GetComponent<Rigidbody2D>().MovePosition(hit.transform.position + new Vector3(1, 0, 0));
+            }
+            else
+            {
+                //Player is at left side of enemy
+                GetComponent<Rigidbody2D>().MovePosition(hit.transform.position + new Vector3(-1, 0, 0));
+            }
+            print("Player positioned relative to the enemy");
+            targetTransform = hit.transform;
+            targetTransform.GetComponent<EnemyHealth>().StartFinisherAnimation();
+            animator.SetInteger("Attack", 80);
+            StartCoroutine(IsAttackingAnimationStatus("Attack"));
+        }
+
+        //Anim Events
+        void TimeScaleDown()
+        {
+            StartCoroutine(FinisherTimer());
+        }
+
+        void FinisherSound()
+        {
+            targetTransform.GetComponent<EnemyHealth>().FinisherDamage(targetTransform.position);
+        }
+        IEnumerator FinisherTimer()
+        {
+            print("Start to wait");
+            timeManager.SlowTime();
+            yield return new WaitForSecondsRealtime(3);
+            targetTransform.GetComponent<EnemyHealth>().SpeedUpSound();
+            timeManager.SpeedUpTime();
+
+            print("Ended waiting");
+        }
         public void Guard(bool isGuardButtonPressed)
         {
-            if (isGuardButtonPressed)
+            this.isGuardButtonPressed = isGuardButtonPressed;
+            if (this.isGuardButtonPressed)
             {
-                isGuarding = true;
-                animator.SetInteger("Guard", 1);
-                if (coroutine != null) StopCoroutine(coroutine);
-                    coroutine = StartCoroutine(ParryMechanic());
-                StartCoroutine(IsAttackingAnimationStatus("Guard"));
+                Guard();
             }
             else
             {
@@ -161,7 +226,16 @@ namespace PSmash.Combat
             }
         }
 
-        IEnumerator ParryMechanic()
+        public void Guard()
+        {
+            isGuarding = true;
+            animator.SetInteger("Guard", 1);
+            if (coroutine != null) StopCoroutine(coroutine);
+            coroutine = StartCoroutine(EnablingParryTrigger());
+            StartCoroutine(IsAttackingAnimationStatus("Guard"));
+        }
+
+        IEnumerator EnablingParryTrigger()
         {
             float timer = 0;
             parryTrigger.enabled = true;
@@ -198,6 +272,11 @@ namespace PSmash.Combat
             {
                 IDamagable target = coll.GetComponent<IDamagable>();
                 if (target == null) continue;
+                if (isFinishinAnEnemy)
+                {
+                    damage *= 10;
+                    print("Enemy being Finished");
+                }
                 target.TakeDamage(transform, damage);
             }
         }
@@ -215,13 +294,16 @@ namespace PSmash.Combat
                 yield return new WaitForEndOfFrame();
                 if (health.IsDamaged()) break;
             }
-            //print("Player Attack Finished");
+           // print("Player Attack Finished");
             animator.SetInteger(action, 0);
             isGuarding = false;
             heavyAttacking = false;
             movement.CanFlip = true;
             isAttacking = false;
             guardTrigger.enabled = false;
+            if (IsFinishingAnEnemy()) isFinishinAnEnemy = false;
+            print("Attack Finished");
+            //if (isGuardButtonPressed) Guard();
         }
 
         void SetNewPosition()
@@ -286,6 +368,10 @@ namespace PSmash.Combat
             return isAttacking;
         }
 
+        public bool IsFinishingAnEnemy()
+        {
+            return isFinishinAnEnemy;
+        }
         public bool IsGuarding()
         {
             return isGuarding;
@@ -341,6 +427,11 @@ namespace PSmash.Combat
 
         }
 
+        public bool IsGuardButtonPressed()
+        {
+            return isGuardButtonPressed;
+        }
+
         //Anim Event
         void IsComboWindowActive(int state)
         {
@@ -364,12 +455,11 @@ namespace PSmash.Combat
             audioSource.PlayOneShot(attackSounds[sound-1]);
         }
 
-        private void OnDrawGizmos()
+        private void OnDrawGizmosSelected()
         {
             Gizmos.DrawWireCube(attackTransform.position, comboAttackArea);
+
         }
-
-
     }
 }
 

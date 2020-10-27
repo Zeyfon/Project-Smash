@@ -3,11 +3,18 @@ using PSmash.Resources;
 using System.Collections;
 using UnityEngine;
 using PSmash.Movement;
+using Spine.Unity;
 
 namespace PSmash.Combat
 {
     public class EnemyAttack : MonoBehaviour, IAction
     {
+        [SerializeField] Material normalMaterial;
+        [SerializeField] Material unblockableMaterial;
+        [SerializeField] float fadeIntTime = 0.5f;
+
+        [Range(0,100)]
+        [SerializeField] float unblockableAttackProbability = 0.2f;
         [SerializeField] LayerMask whatIsAttackable;
         [SerializeField] float attackRange = 2;
         [SerializeField] Transform attackTransform = null;
@@ -29,7 +36,9 @@ namespace PSmash.Combat
         Rigidbody2D rb;
         Coroutine attackCoroutine;
         AudioSource audioSource;
-        bool isAttacking = false;
+        bool isNormalAttacking = false;
+        bool isUnblockableAttacking = false;
+        bool isParried = false;
         int id = 0;
 
         // Start is called before the first frame update
@@ -45,10 +54,10 @@ namespace PSmash.Combat
         private void Update()
         {
             if (health.IsDead()) return;
-            if (health.IsInterrupted()) return;
-            if (health.IsStunned()) return;
+            //if (health.IsInterrupted()) return;
+            if (health.IsStaggered() ||health.IsStunned() || health.IsBlocking() || health.IsBeingFinished()) return;
             if (target == null) return;
-            if (isAttacking) return;
+            if (isNormalAttacking) return;
             if (!IsTargetInRange())
             {
                 if (PlayerIsAbove())
@@ -71,44 +80,84 @@ namespace PSmash.Combat
 
         void AttackBehaviour()
         {
-            isAttacking = true;
             if (attackCoroutine != null) return;
-            //attackCoroutine = StartCoroutine(ComboAttack());
-            attackCoroutine = StartCoroutine(UnblockableAttack());
+            float random = Random.Range(0, 100);
+            if (random < unblockableAttackProbability)
+            {
+                attackCoroutine = StartCoroutine(UnblockableAttack());
+            }
+            else
+            {
+                attackCoroutine = StartCoroutine(ComboAttack());
+            }
         }
 
         IEnumerator ComboAttack()
         {
+            isNormalAttacking = true;
             rb.sharedMaterial = fullFriction;
             movement.CheckFlip(target.transform.position);
             animator.SetInteger("attack", 1);
-            while (animator.GetInteger("attack") != 100 || health.IsInterrupted())
+            while (animator.GetInteger("attack") != 100)
             {
                 yield return new WaitForEndOfFrame();
             }
-            animator.SetInteger("attack", 0);
             rb.sharedMaterial = lowFriction;
             yield return new WaitForSeconds(1);
-            isAttacking = false;
+            //print("Combo Attack Finished");
+            isNormalAttacking = false;
             attackCoroutine = null;
         }
 
         IEnumerator UnblockableAttack()
         {
+            print("Unblockable Attacking");
+            isUnblockableAttacking = true;
+            GetComponent<SkeletonRenderer>().CustomMaterialOverride.Add(normalMaterial, unblockableMaterial);
+            yield return null;
+            //print("Material Overriden");
+            foreach (Material material in GetComponent<MeshRenderer>().materials)
+            {
+                //print(material.name);
+                StartCoroutine(FadeIn(material));
+
+            }
+            //StartCoroutine(FadeIn(unblockableMaterial));
             rb.sharedMaterial = fullFriction;
             movement.CheckFlip(target.transform.position);
             animator.SetInteger("attack", 10);
-            while (animator.GetInteger("attack") != 100 || health.IsInterrupted())
+            while (animator.GetInteger("attack") != 100)
             {
                 yield return new WaitForEndOfFrame();
             }
             animator.SetInteger("attack", 0);
             rb.sharedMaterial = lowFriction;
-            yield return new WaitForSeconds(1);
-            isAttacking = false;
+            GetComponent<SkeletonRenderer>().CustomMaterialOverride.Add(unblockableMaterial, normalMaterial);
+            GetComponent<SkeletonRenderer>().CustomMaterialOverride.Remove(unblockableMaterial);
+            GetComponent<SkeletonRenderer>().CustomMaterialOverride.Remove(normalMaterial);
             attackCoroutine = null;
+            isUnblockableAttacking = false;
+            print(gameObject.name + "  Unblockable Attack Finished");
         }
 
+        IEnumerator FadeIn(Material currentMaterial)
+        {
+            Color tintColor = currentMaterial.GetColor("_Tint");
+            float alpha = 0;
+            while (alpha != 1)
+            {
+                alpha += Time.deltaTime/fadeIntTime;
+                if (alpha >= 1) alpha = 1;
+
+                currentMaterial.SetColor("_Tint", new Color(tintColor.r, tintColor.g, tintColor.b, alpha));
+                //print(currentMaterial.GetColor("_Tint"));
+                yield return null;
+            }
+        }
+
+        //The hit directly checks if the player is parrying, guarding, attacking, etc.
+        //It puts the hits in the order they are perceived being the parry the first
+        //since the trigger collider is a little in front of the other in the player
         void Hit(int id)
         {
             audioSource.PlayOneShot(attackSounds[id-1]);
@@ -116,15 +165,15 @@ namespace PSmash.Combat
             if (hits.Length == 0) return;
             foreach (RaycastHit2D hit in hits)
             {
-                if (hit.collider.CompareTag("Parry"))
+                if (!isUnblockableAttacking & hit.collider.CompareTag("Parry"))
                 {
                     hit.collider.transform.parent.GetComponent<PlayerFighterV2>().StartParry();
-                    health.SetIsParried(true);
+                    isParried = true;
                     audioSource.PlayOneShot(parriedSound);
-                    GetComponent<IDamagable>().TakeDamage(hit.collider.transform.parent, 60);
+                    GetComponent<IDamagable>().TakeDamage(hit.collider.transform.parent, 25);
                     break;
                 }
-                if (hit.collider.CompareTag("Guard"))
+                if (!isUnblockableAttacking & hit.collider.CompareTag("Guard"))
                 {
                     audioSource.PlayOneShot(hitGuardSound);
                     return;
@@ -157,7 +206,20 @@ namespace PSmash.Combat
 
         public bool IsAttacking()
         {
-            return isAttacking;
+            if (isNormalAttacking || isUnblockableAttacking) return true;
+            else return false;
+        }
+
+        public bool IsParried
+        {
+            get
+            {
+                return isParried;
+            }
+            set
+            {
+                isParried = value;
+            }
         }
         bool IsTargetInRange()
         {
@@ -165,9 +227,18 @@ namespace PSmash.Combat
             return isInRange;
         }
 
+        public bool GetIsUnblockableAttacking()
+        {
+            return isUnblockableAttacking;
+        }
+        public bool GetIsNormalAttacking()
+        {
+            return isNormalAttacking;
+        }
+
         private void OnDrawGizmos()
         {
-            if (id == 0 && !isAttacking) return;
+            if (id == 0 && !isNormalAttacking) return;
             Gizmos.DrawWireCube(attackTransform.position, attackArea[id]);
         }
     }

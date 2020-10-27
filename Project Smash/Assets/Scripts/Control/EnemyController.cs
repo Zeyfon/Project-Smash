@@ -42,6 +42,7 @@ namespace PSmash.Control
         void Update()
         {
             timeSinceLastSawPlayer += Time.deltaTime;
+            //print("Is Attacking " + attack.IsAttacking());
         }
 
         // Update is called once per frame
@@ -49,8 +50,7 @@ namespace PSmash.Control
         {
             if (health.IsDead()) return;
             if (target ==null) return;
-            if (health.IsInterrupted()) return;
-            if (health.IsStunned()) return;
+            if (health.IsStaggered() || health.IsStunned()|| health.IsBlocking() || health.IsBeingFinished()) return;
             if (testMode) return;
             if (attack.IsAttacking()) return;
             if (InMovementArea() && InAttackRange() && isPlayerSpotted && CanMoveForward())
@@ -116,7 +116,7 @@ namespace PSmash.Control
 
         private void ResetIsPlayerSpotted()
         {
-            print("Reset Spotter");
+            //print("Reset Spotter");
             transform.GetChild(0).transform.GetComponent<Collider2D>().enabled = true;
             PlayerSpotted(target, false);
         }
