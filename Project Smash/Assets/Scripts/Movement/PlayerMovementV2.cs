@@ -834,7 +834,7 @@ namespace PSmash.Movement
 
         #endregion
 
-        private void OnDrawGizmos()
+        private void OnDrawGizmosSelected()
         {
             Gizmos.DrawWireSphere(groundCheck1.position, groundCheckRadius);
         }

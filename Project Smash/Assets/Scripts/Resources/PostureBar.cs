@@ -3,39 +3,40 @@ using System.Collections;
 
 namespace PSmash.Resources
 {
-    public class GuardBar : MonoBehaviour
+    public class PostureBar : MonoBehaviour
     {
         [SerializeField] Transform guardBar = null;
         [SerializeField] float effectTime = 0.5f;
         [SerializeField] AudioClip guardBarRecoveredSound = null;
         [SerializeField] Transform effectTransform = null;
 
-        EnemyHealth enemyHealth;
+        EnemyPosture posture;
 
         private void Awake()
         {
-            enemyHealth = transform.parent.transform.GetComponentInChildren<EnemyHealth>();
+            posture = transform.parent.transform.GetComponentInChildren<EnemyPosture>();
         }
 
         private void OnEnable()
         {
-            enemyHealth.OnGuardBarRecoveredAfterStun += GuardBarRecoverEffect;
+            posture.OnGuardBarRecoveredAfterStun += GuardBarRecoverEffect;
         }
 
         private void OnDisable()
         {
-            enemyHealth.OnGuardBarRecoveredAfterStun -= GuardBarRecoverEffect;
+            posture.OnGuardBarRecoveredAfterStun -= GuardBarRecoverEffect;
         }
 
         private void Update()
         {
-            guardBar.localScale = new Vector2(enemyHealth.GetGuardValue() / enemyHealth.GetInitialGuardValue(), transform.localScale.y); ;
+            guardBar.localScale = new Vector2(posture.GetPosture() / posture.GetInitialPosture(), transform.localScale.y); ;
         }
 
         void GuardBarRecoverEffect()
         {
             StartCoroutine(GuardBarEffect());
         }
+
         IEnumerator GuardBarEffect()
         {
             SpriteRenderer renderer = effectTransform.GetComponent<SpriteRenderer>();
