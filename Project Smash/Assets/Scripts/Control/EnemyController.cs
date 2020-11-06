@@ -49,9 +49,9 @@ namespace PSmash.Control
         void FixedUpdate()
         {
             if (health.IsDead()) return;
+            if (testMode) return;
             if (target ==null) return;
             if (health.IsStaggered() || health.IsStunned()|| health.IsBlocking() || health.IsBeingFinished()) return;
-            if (testMode) return;
             if (attack.IsAttacking()) return;
             if (InMovementArea() && InAttackRange() && isPlayerSpotted && CanMoveForward())
             {

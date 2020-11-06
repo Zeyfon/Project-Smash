@@ -14,33 +14,20 @@ namespace PSmash.Movement
         [SerializeField] float speed = 5;
 
 
-        [Header("SlopeControl")]
-        public float slopeCheckDistance = 0.5f;
-        public float maxSlopeAngle = 45;
+        [Header("General Info")]
         [SerializeField] PhysicsMaterial2D fullFriction = null;
         [SerializeField] PhysicsMaterial2D lowFriction = null;
-        public LayerMask whatIsSlope;
         [SerializeField] Transform groundCheck = null;
-        public float groundCheckRadius = 0.5f;
         [SerializeField] LayerMask whatIsGround;
-
-        [SerializeField] bool canDebug = false;
 
         Animator animator;
         Rigidbody2D rb;
         SkeletonMecanim mecanim;
-        Bone bone;
-        SlopeControl slopes;
-        EnemyHealth health;
-        
-        Vector2 slopeNormalPerp;
-        float slopeDownAngleOld;
-        float slopeDownAngle;
-        float slopeSideAngle;
+        Bone bone;        
         float currentYAngle = 0;
-        bool isOnSlope = false;
-        bool canWalkOnSlope = true;
         bool isPlayerReachable = true;
+        float groundCheckRadius = 0.5f;
+
 
         // Start is called before the first frame update
         void Awake()
@@ -48,11 +35,6 @@ namespace PSmash.Movement
             rb = GetComponent<Rigidbody2D>();
             animator = GetComponent<Animator>();
             mecanim = GetComponent<SkeletonMecanim>();
-            health = GetComponent<EnemyHealth>();
-        }
-
-        void Start()
-        {
             bone = GetComponent<SkeletonRenderer>().skeleton.FindBone(boneName);
         }
 
@@ -62,19 +44,12 @@ namespace PSmash.Movement
             animator.SetFloat("xVelocity", xVelocity);
         }
 
-        public void MoveTo(Vector3 destination, float speedFactor)
+        public void MoveTo(Vector3 target, float speedFactor)
         {
-            CheckFlip(destination);
-            SlopeCheck();
-
-            if (!IsGrounded())
+            CheckFlip(target);
+            if (IsGrounded())
             {
-                Vector2 velocity = -slopeNormalPerp * speed * transform.right.x * speedFactor;
-                velocity = new Vector2(velocity.x, 0);
-            }
-            else
-            {
-                rb.velocity = -slopeNormalPerp * speed * transform.right.x * speedFactor;
+                rb.velocity = speed * transform.right * speedFactor;
             }
         }
 
@@ -82,6 +57,8 @@ namespace PSmash.Movement
         public void MoveAwayFromTarget(Vector3 target, float speedFactor)
         {
             print("Moving Away from Target");
+            CheckFlip(target);
+
             float playerRelativePosition = target.x - transform.position.x;
             if (playerRelativePosition > 0)
             {
@@ -101,104 +78,18 @@ namespace PSmash.Movement
             bool isGrounded = Physics2D.OverlapCircle(groundCheck.position, groundCheckRadius, whatIsGround);
             return isGrounded;
         }
-        void SlopeCheck()
-        {
-            Vector2 checkPos = transform.position;
-            SlopeCheckVertical(checkPos);
-            SlopeCheckHorizontal(checkPos);
-        }
-        void SlopeCheckHorizontal(Vector2 checkPos)
-        {
-            RaycastHit2D slopeHitFront = Physics2D.Raycast(checkPos, transform.right, slopeCheckDistance, whatIsSlope);
-            RaycastHit2D slopeHitBack = Physics2D.Raycast(checkPos, -transform.right, slopeCheckDistance, whatIsSlope);
-            Debug.DrawRay(checkPos, transform.right * slopeCheckDistance, Color.blue);
-            Debug.DrawRay(checkPos, -transform.right * slopeCheckDistance, Color.blue);
-            if (slopeHitFront)
-            {
-                //print("Slope In Front");
-                isOnSlope = true;
-                slopeSideAngle = Vector2.Angle(slopeHitFront.normal, Vector2.up);
-                //print(slopeSideAngle);
-            }
-            else if (slopeHitBack)
-            {
-                //print("SlopeInBack");
-                isOnSlope = true;
-                //slopeSideAngle = Vector2.Angle(slopeHitBack.normal, Vector2.up);
-                slopeSideAngle = 0.0f;
-            }
-            else
-            {
-                isOnSlope = false;
-                slopeSideAngle = 0.0f;
-            }
-        }
-        void SlopeCheckVertical(Vector2 checkPos)
-        {
-            RaycastHit2D hit = Physics2D.Raycast(checkPos + new Vector2(0, 0.3f), Vector2.down, slopeCheckDistance, whatIsSlope);
-            if (canDebug)
-            {
-                if (hit) Debug.Log(hit);
-                else
-                {
-                    Debug.LogWarning(hit + "did not found anithing");
-                }
 
-            }
-            if (hit)
-            {
-                slopeNormalPerp = Vector2.Perpendicular(hit.normal).normalized;
-                //print(slopeNormalPerp);
-                slopeDownAngle = Vector2.Angle(hit.normal, Vector2.up);
-                if (slopeDownAngle != slopeDownAngleOld)
-                {
-                    isOnSlope = true;
-                    slopeDownAngleOld = slopeDownAngle;
-                }
-                Debug.DrawRay(hit.point, hit.normal, Color.green);
-                Debug.DrawRay(hit.point, slopeNormalPerp, Color.red);
-                //Debug.Break();
-            }
-            //print(canWalkOnSlope + "  " + isOnSlope);
-            //print(slopeDownAngle+ "  " + slopeSideAngle);
-            if (slopeDownAngle > maxSlopeAngle || slopeSideAngle > maxSlopeAngle)
-            {
-                //print(slopeDownAngle + "  " + slopeSideAngle);
-                canWalkOnSlope = false;
-            }
-            else
-            {
-                canWalkOnSlope = true;
-            }
-
-            if (!canWalkOnSlope && isOnSlope)
-            {
-                isPlayerReachable = false;
-                //Debug.Log("Player cannot be reached");
-            }
-            else
-            {
-                isPlayerReachable = true;
-            }
-            //print(canWalkOnSlope +" " + isOnSlope);
-
-            //if (isOnSlope && !isPlayerNear && canWalkOnSlope)
-            //{
-            //    rb.sharedMaterial = fullFriction;
-            //}
-            //else
-            //{
-            //    rb.sharedMaterial = lowFriction;
-            //}
+        public void Cancel()
+        {
+            //print("Cancelling Movement");
+            rb.velocity = new Vector2(0, 0);
         }
 
         public void CheckFlip(Vector3 playerPosition)
         {
             Vector2 toTarget = (playerPosition - transform.position).normalized;
-            //print(toTarget + "  " + transform.right + "  " + Vector2.Dot(toTarget, transform.right));
             if (Vector2.Dot(toTarget, transform.right) > 0)
             {
-                //Do Nothing
                 return;
             }
             else
@@ -238,6 +129,7 @@ namespace PSmash.Movement
             }
         }
 
+        //Anim Event
         void SetNewPosition()
         {
             Vector3 newPosition = mecanim.transform.TransformPoint(new Vector3(bone.WorldX, bone.WorldY, 0f));
@@ -253,12 +145,6 @@ namespace PSmash.Movement
         private void OnDrawGizmos()
         {
             Gizmos.DrawWireSphere(groundCheck.position, groundCheckRadius);
-        }
-
-        public void Cancel()
-        {
-            //print("Cancelling Movement");
-            rb.velocity = new Vector2(0, 0);
         }
     }
 

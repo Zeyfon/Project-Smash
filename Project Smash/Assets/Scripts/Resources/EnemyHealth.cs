@@ -66,7 +66,7 @@ namespace PSmash.Resources
             //Damage while Normal Attacking
             else if (attack.GetIsNormalAttacking())
             {
-                //print(gameObject.name + "  is damaged while attacking");
+                print(gameObject.name + "  is damaged while attacking");
                 posture.DamagePosture(attacker, damage, 
                                       EnemyPosture.CurrentActionsWhenDamaged.NormalAttacking);
                 DamageHealthBar(attacker, damage);
@@ -124,6 +124,7 @@ namespace PSmash.Resources
 
         public void Block()
         {
+            print(gameObject + "  is Blocking");
             isBlocking = true;
             GetComponent<ActionScheduler>().StartAction(this);
             animator.SetInteger("guard", 1);
@@ -134,6 +135,8 @@ namespace PSmash.Resources
 
         public void Stagger()
         {
+            print(gameObject + "  is Staggered");
+
             GetComponent<ActionScheduler>().StartAction(this);
             animator.SetInteger("guard", 30);
             audioSource.PlayOneShot(staggeredSound);
@@ -143,6 +146,8 @@ namespace PSmash.Resources
         }
         public void Stunned()
         {
+            print(gameObject + "  is Stunned");
+
             GetComponent<ActionScheduler>().StartAction(this);
             animator.SetInteger("guard", 30);
             audioSource.PlayOneShot(stunnedSound);
@@ -174,34 +179,33 @@ namespace PSmash.Resources
             animator.SetTrigger("Finisher");
         }
 
-        public void FinisherDamage(Vector3 attackerPosition)
-        {
-            audioSource.pitch = 0.2f;
-            audioSource.PlayOneShot(finisherDamageSound);
-            StartCoroutine(FinisherAnimation(attackerPosition));
-        }
-
         public void SpeedUpSound()
         {
             audioSource.pitch = 1;
         }
 
-        public IEnumerator FinisherAnimation(Vector3 attackerPosition)
+        public IEnumerator FinisherReaction(Vector3 attackerPosition)
         {
             float position = attackerPosition.x - transform.position.x;
             print(position);
+            GetComponent<Rigidbody2D>().gravityScale = 1;
+            GetComponent<Rigidbody2D>().drag = 2.5f;
             if (position > 0)
             {
                 //Playeris at the right side
-                GetComponent<Rigidbody2D>().velocity = new Vector2(-15, 0);
+                GetComponent<Rigidbody2D>().velocity = new Vector2(-28, 14);
             }
             else
             {
-                GetComponent<Rigidbody2D>().velocity = new Vector2(15, 0);
+                GetComponent<Rigidbody2D>().velocity = new Vector2(28, 14);
             }
-            yield return new WaitForSecondsRealtime(3);
+            yield return new WaitForSecondsRealtime(1f);
             DamageHealthBar(null, initialHealth);
             Dead();
+        }
+        public void BeingPushedAway(Vector3 attackerPosition)
+        {
+            StartCoroutine(FinisherReaction(attackerPosition));
         }
 
         private void Dead()
@@ -214,7 +218,7 @@ namespace PSmash.Resources
         IEnumerator GameObjectDied()
         {
             animator.SetTrigger("isDead");
-            GetComponent<Rigidbody2D>().gravityScale = 0;
+            //GetComponent<Rigidbody2D>().gravityScale = 0;
             gameObject.layer = LayerMask.NameToLayer("DyingEnemies");
             GetComponent<Rigidbody2D>().drag = 2;
             audioSource.PlayOneShot(deadSound,0.4f);

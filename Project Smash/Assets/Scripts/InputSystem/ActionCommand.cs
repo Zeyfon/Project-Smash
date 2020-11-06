@@ -10,7 +10,7 @@ namespace PSmash.InputSystem
 
         public ButtonList myButton;
 
-        public void ChangeMyActionButton(ICommand com, ButtonList newButton)
+        public void ChangeMyActionButton(ICommandV2 com, ButtonList newButton)
         {
             myButton = newButton;
         }
