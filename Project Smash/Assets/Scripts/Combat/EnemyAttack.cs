@@ -54,9 +54,8 @@ namespace PSmash.Combat
         private void Update()
         {
             if (health.IsDead()) return;
-            //if (health.IsInterrupted()) return;
-            if (health.IsStaggered() ||health.IsStunned() || health.IsBlocking() || health.IsBeingFinished()) return;
             if (target == null) return;
+            if (health.IsStaggered() ||health.IsStunned() || health.IsBlocking() || health.IsBeingFinished()) return;
             if (isNormalAttacking) return;
             if (!IsTargetInRange())
             {

@@ -12,43 +12,43 @@ public class InputButton : MonoBehaviour
     public ButtonList myButton;
 
     Transform inputTransform;
-    InputHandler inputHanlder;
+    InputHandlerV2 inputHanlder;
 
     bool isInitiallySet = false;
     public void GetInitialButton()
     {
         Debug.Log(this.gameObject + "  " + myButton);
 
-        if (!inputHanlder) inputHanlder = GameObject.FindGameObjectWithTag("Player").transform.GetChild(0).GetComponent<InputHandler>();
-        List<ICommand> commands = inputHanlder.commandList;
+        if (!inputHanlder) inputHanlder = GameObject.FindGameObjectWithTag("Player").transform.GetChild(0).GetComponent<InputHandlerV2>();
+        List<ICommandV2> commands = inputHanlder.commandList;
         switch (myAction)
         {
             case ActionList.Jump:
-                foreach (ICommand com in commands)
+                foreach (ICommandV2 com in commands)
                 {
-                    if (com is JumpCommand)
+                    if (com is JumpCommandV2)
                     {
-                        SetButton((com as JumpCommand).myButton);
+                        SetButton((com as JumpCommandV2).myButton);
                     }
                 }
                 break;
             case ActionList.Attack:
-                foreach(ICommand com in commands)
+                foreach(ICommandV2 com in commands)
                 {
-                    if(com is AttackCommand)
-                    {
-                        SetButton((com as AttackCommand).myButton);
-                    }
+                    //if(com is AttackCommand)
+                    //{
+                    //    SetButton((com as AttackCommand).myButton);
+                    //}
                 }
                 break;
             case ActionList.Interact:
-                foreach (ICommand com in commands)
+                foreach (ICommandV2 com in commands)
                 {
-                    if (com is InteractCommand)
-                    {
-                        SetButton((com as InteractCommand).myButton);
+                    //if (com is InteractCommand)
+                    //{
+                    //    SetButton((com as InteractCommand).myButton);
 
-                    }
+                    //}
                 }
                 break;
             default:
@@ -69,7 +69,7 @@ public class InputButton : MonoBehaviour
             isInitiallySet = true;
             return;
         }
-        inputHanlder.SwitchButtonFromMenu(myButton, myAction);
+        //inputHanlder.SwitchButtonFromMenu(myButton, myAction);
 
     }
 

@@ -12,14 +12,14 @@ namespace PSmash.Resources
     {
         [SerializeField] SecondaryWeaponsList secondaryWeaponEquipped;
         [SerializeField] Sprite[] secondaryWeaponSprites;
-        PlayerFighter fighter;
+        PlayerFighterV2 fighter;
         PlayerMovement movement;
         EventManager eventManager;
         bool canMoveOnWall = false;
         // Start is called before the first frame update
         void Start()
         {
-            fighter = GetComponent<PlayerFighter>();
+            fighter = GetComponent<PlayerFighterV2>();
             movement = GetComponent<PlayerMovement>();
             eventManager = FindObjectOfType<EventManager>();
         }
@@ -56,12 +56,12 @@ namespace PSmash.Resources
             switch (secondaryWeaponEquipped)
             {
                 case SecondaryWeaponsList.Bomb:
-                    fighter.SecondaryWeaponAttack(20);
+                    //fighter.SecondaryWeaponAttack(20);
                     action.IIsAttacking();
 
                     break;
                 case SecondaryWeaponsList.Spike:
-                    fighter.SecondaryWeaponAttack(60);
+                    //fighter.SecondaryWeaponAttack(60);
                     action.IIsAttacking();
                     break;
             }
