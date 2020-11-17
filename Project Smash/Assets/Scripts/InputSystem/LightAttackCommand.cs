@@ -5,15 +5,15 @@ using PSmash.Control;
 
 namespace PSmash.InputSystem
 {
-    public class LightAttackCommand : ActionCommand, ICommandV2
+    public class LightAttackCommand : ActionCommand, ICommand
     {
-        PlayerControllerV2 playerController;
+        PlayerController playerController;
 
         void Start()
         {
-            playerController = transform.parent.GetComponent<PlayerControllerV2>();
+            playerController = transform.parent.GetComponent<PlayerController>();
         }
-        void ICommandV2.Execute(bool isButtonPressed)
+        void ICommand.Execute(bool isButtonPressed)
         {
             if (isButtonPressed) Attack();
         }

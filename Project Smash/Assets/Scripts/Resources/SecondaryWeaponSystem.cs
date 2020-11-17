@@ -12,14 +12,14 @@ namespace PSmash.Resources
     {
         [SerializeField] SecondaryWeaponsList secondaryWeaponEquipped;
         [SerializeField] Sprite[] secondaryWeaponSprites;
-        PlayerFighterV2 fighter;
+        PlayerFighter fighter;
         PlayerMovement movement;
         EventManager eventManager;
         bool canMoveOnWall = false;
         // Start is called before the first frame update
         void Start()
         {
-            fighter = GetComponent<PlayerFighterV2>();
+            fighter = GetComponent<PlayerFighter>();
             movement = GetComponent<PlayerMovement>();
             eventManager = FindObjectOfType<EventManager>();
         }
@@ -69,15 +69,15 @@ namespace PSmash.Resources
 
         void WallMovement()
         {
-            movement.SwitchWallMovement();
+            //movement.SwitchWallMovement();
         }
 
         public void CanMoveOnWall(bool state)
         {
             canMoveOnWall = state;
-            if (movement.IsMovingOnWall() && !canMoveOnWall)
+            if (movement.IsMovingOnWall && !canMoveOnWall)
             {
-                movement.SetIsMovingOnWall(false);
+                movement.IsMovingOnWall = true;
             }
         }
     }

@@ -269,7 +269,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   attackRange: 2
-  chaseRange: 10
+  chaseRange: 6
   movementRange: 20
   suspicionTime: 5
   lookRight: 1
@@ -291,19 +291,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   boneName: 
   speed: 3.5
-  slopeCheckDistance: 0.5
-  maxSlopeAngle: 40
   fullFriction: {fileID: 6200000, guid: 4b501e885db70b54faf1caa7979b5f5f, type: 2}
   lowFriction: {fileID: 6200000, guid: 65236b81a583a484aa33d4c136233544, type: 2}
-  whatIsSlope:
-    serializedVersion: 2
-    m_Bits: 256
   groundCheck: {fileID: 4551526022927634597}
-  groundCheckRadius: 0.2
   whatIsGround:
     serializedVersion: 2
     m_Bits: 256
-  canDebug: 0
 --- !u!114 &6739119366060868613
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -340,7 +333,7 @@ MonoBehaviour:
   hitGuardSound: {fileID: 0}
   attackArea: []
   attackSounds: []
-  target: {fileID: 0}
+  targetHealth: {fileID: 0}
 --- !u!114 &8842288852017603113
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -363,6 +356,7 @@ MonoBehaviour:
   guardDamageSound: {fileID: 0}
   dropItem: {fileID: 1441679831736908636, guid: a0cf1166c4b4a1448a7c27f2fe7949d6,
     type: 3}
+  finisherDamageSound: {fileID: 0}
 --- !u!82 &8059207298340403249
 AudioSource:
   m_ObjectHideFlags: 0

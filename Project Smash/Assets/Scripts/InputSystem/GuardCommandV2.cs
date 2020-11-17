@@ -4,15 +4,15 @@ using UnityEngine.InputSystem.Composites;
 
 namespace PSmash.InputSystem
 {
-    public class GuardCommandV2 : ActionCommand, ICommandV2
+    public class GuardCommandV2 : ActionCommand, ICommand
     {
-        PlayerControllerV2 playerController;
+        PlayerController playerController;
 
         void Start()
         {
-            playerController = transform.parent.GetComponent<PlayerControllerV2>();
+            playerController = transform.parent.GetComponent<PlayerController>();
         }
-        void ICommandV2.Execute(bool isButtonPressed)
+        void ICommand.Execute(bool isButtonPressed)
         {
             GuardAction(isButtonPressed);
         }

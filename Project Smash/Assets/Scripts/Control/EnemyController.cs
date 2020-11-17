@@ -8,23 +8,19 @@ namespace PSmash.Control
 {
     public class EnemyController : MonoBehaviour
     {
-        [SerializeField] float attackRange = 1.5f;
         [SerializeField] float chaseRange = 5f;
-        [SerializeField] float movementRange = 20f;
         [SerializeField] float suspicionTime = 3f;
         [SerializeField] bool lookRight = true;
-        [SerializeField] LayerMask whatIsGround;
         public bool testMode = false;
+
         EnemyMovement movement;
-        Transform target;
         EnemyAttack attack;
         EnemyHealth health;
         Vector3 spawnPosition;
+        EnemyVision vision;
+        ActionScheduler actionScheduler;
 
         float timeSinceLastSawPlayer = 0;
-        bool isPlayerSpotted = false;
-        bool isPlayerReachable = true;
-        bool isMovingToSpawnPosition = false;
         // Start is called before the first frame update
         void Awake()
         {
@@ -32,6 +28,8 @@ namespace PSmash.Control
             movement = GetComponent<EnemyMovement>();
             attack = GetComponent<EnemyAttack>();
             health = GetComponent<EnemyHealth>();
+            vision = GetComponentInChildren<EnemyVision>();
+            actionScheduler = GetComponent<ActionScheduler>();
         }
 
         private void Start()
@@ -42,7 +40,6 @@ namespace PSmash.Control
         void Update()
         {
             timeSinceLastSawPlayer += Time.deltaTime;
-            //print("Is Attacking " + attack.IsAttacking());
         }
 
         // Update is called once per frame
@@ -50,131 +47,53 @@ namespace PSmash.Control
         {
             if (health.IsDead()) return;
             if (testMode) return;
-            if (target ==null) return;
+            if (vision.Target == null) return;
             if (health.IsStaggered() || health.IsStunned()|| health.IsBlocking() || health.IsBeingFinished()) return;
             if (attack.IsAttacking()) return;
-            if (InMovementArea() && InAttackRange() && isPlayerSpotted && CanMoveForward())
+            if (IsTargetInRange())
             {
                 //print("AttackBehavior");
                 AttackBehavior();
-                isMovingToSpawnPosition = false;
-                return;
             }
-            else if (isPlayerSpotted && timeSinceLastSawPlayer <= suspicionTime)
+            else if (timeSinceLastSawPlayer <= suspicionTime)
             {
                 //print("Suspicion Behavior");
                 SuspicionBehavior();
-                isMovingToSpawnPosition = false;
-                return;
-            }
-            else if(!InOriginPosition())
-            {
-                //print("Patrol Behavior");
-                PatrolBehavior();
-            }
-        }
-
-        private bool CanMoveForward()
-        {
-            Vector2 origin = (Vector2)transform.position + new Vector2(0, 0.5f);
-            Debug.DrawRay(origin, transform.right);
-            bool hit = Physics2D.Raycast(origin, transform.right, 1, whatIsGround);
-            if (hit)
-            {
-                return false;
             }
             else
             {
-                return true;
+                print("Patrol Behavior");
+                PatrolBehavior();
             }
         }
 
         void AttackBehavior()
         {
             timeSinceLastSawPlayer = 0;
-            if(attack.target == null) attack.StartAttackBehavior(target);
+            attack.StartAttackBehavior(vision.Target);
         }
 
         void SuspicionBehavior()
         {
-            GetComponent<ActionScheduler>().CancelCurrentAction();
+            actionScheduler.CancelCurrentAction();
         }
 
         void PatrolBehavior()
         {
-            if (!isMovingToSpawnPosition)
+            movement.StartMoveAction(spawnPosition, MovementTypes.patrol);
+            if (Mathf.Abs(transform.position.x - spawnPosition.x) < 0.5f)
             {
-                movement.StartMoveAction(spawnPosition, 0.3f);
-                isMovingToSpawnPosition = true;
-                ResetIsPlayerSpotted();
-            }
-            else
-            {
-                movement.MoveTo(spawnPosition, 0.3f);
+                movement.CheckFlip(vision.Target.position);
+                vision.Target = null;
+                attack.targetHealth = null;
             }
         }
 
-        private void ResetIsPlayerSpotted()
-        {
-            //print("Reset Spotter");
-            transform.GetChild(0).transform.GetComponent<Collider2D>().enabled = true;
-            PlayerSpotted(target, false);
-        }
 
-        bool InAttackRange()
+        bool IsTargetInRange()
         {
-            if (Mathf.Abs(transform.position.y - target.position.y) < 3)
-            {
-                bool inAttackRange = Vector3.Distance(transform.position, target.position) < chaseRange;
-                return inAttackRange;
-            }
-            else
-            {
-                return false;
-            }
-        }
-
-        bool InMovementArea()
-        {
-            bool inMovementArea = Vector3.Distance(target.position, transform.parent.position) < movementRange;
-            return inMovementArea;
-        }
-
-        bool InOriginPosition()
-        {
-            float distanceToOrigin= Vector3.Distance(transform.position, transform.parent.position);
-            bool inOriginPosition =  distanceToOrigin < 0.5f;
-            if (inOriginPosition && distanceToOrigin <5) PlayerSpotted(null, false);
-            return inOriginPosition;
-        }
-
-        public bool IsPlayerSpotter
-        {
-            get
-            {
-                return isPlayerSpotted;
-            }
-            set
-            {
-                print("PlayerSpotted");
-                isPlayerSpotted = value;
-            }
-        }
-
-        public void PlayerSpotted(Transform playerTransform, bool isPlayerSpotted)
-        {
-            this.target = playerTransform;
-            this.isPlayerSpotted = isPlayerSpotted;
-        }
-        private void OnDrawGizmos()
-        {
-            if (transform.parent == null) return;
-            Gizmos.DrawWireSphere(transform.parent.position, movementRange);
-        }
-
-        void FlipTowardsTarget()
-        {
-            movement.CheckFlip(target.position);
+            if (Mathf.Abs(transform.position.y - vision.Target.position.y) > 3) return false;
+            else return Vector3.Distance(transform.position, vision.Target.position) < chaseRange;
         }
     }
 

@@ -15,7 +15,7 @@ namespace PSmash.Resources
         bool cr_Running = false;
         bool canTipsRun = true;
 
-        PlayerMovementV2 playerMovement;
+        PlayerMovement playerMovement;
         // Start is called before the first frame update
         void Awake()
         {
@@ -101,7 +101,7 @@ namespace PSmash.Resources
             {
                 if (playerMovement == null)
                 {
-                    playerMovement = collision.GetComponent<PlayerMovementV2>();
+                    playerMovement = collision.GetComponent<PlayerMovement>();
                     playerMovement.OnPlayerWallState += IsPlayerMovingOnWall;
                 }
                 if (cr_Running) StopAllCoroutines();//StopCoroutine(currentCoroutine);

@@ -15,17 +15,17 @@ namespace PSmash.Resources
 
         [SerializeField] Sprite[] secondaryWeaponSprites;
         ToolActionList toolActions;
-        PlayerMovementV2 movement;
-        PlayerControllerV2 playerController;
+        PlayerMovement movement;
+        PlayerController playerController;
         EventManager eventManager;
         bool wallDetected = false;
         bool hikingSpykeUnlocked = true;
         // Start is called before the first frame update
         void Awake()
         {
-            movement = GetComponent<PlayerMovementV2>();
+            movement = GetComponent<PlayerMovement>();
             eventManager = FindObjectOfType<EventManager>();
-            playerController = GetComponent<PlayerControllerV2>();
+            playerController = GetComponent<PlayerController>();
         }
 
         public void ChangeActiveWeapon()

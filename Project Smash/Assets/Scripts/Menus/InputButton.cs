@@ -12,28 +12,28 @@ public class InputButton : MonoBehaviour
     public ButtonList myButton;
 
     Transform inputTransform;
-    InputHandlerV2 inputHanlder;
+    InputHandler inputHanlder;
 
     bool isInitiallySet = false;
     public void GetInitialButton()
     {
         Debug.Log(this.gameObject + "  " + myButton);
 
-        if (!inputHanlder) inputHanlder = GameObject.FindGameObjectWithTag("Player").transform.GetChild(0).GetComponent<InputHandlerV2>();
-        List<ICommandV2> commands = inputHanlder.commandList;
+        if (!inputHanlder) inputHanlder = GameObject.FindGameObjectWithTag("Player").transform.GetChild(0).GetComponent<InputHandler>();
+        List<ICommand> commands = inputHanlder.commandList;
         switch (myAction)
         {
             case ActionList.Jump:
-                foreach (ICommandV2 com in commands)
+                foreach (ICommand com in commands)
                 {
-                    if (com is JumpCommandV2)
+                    if (com is JumpCommand)
                     {
-                        SetButton((com as JumpCommandV2).myButton);
+                        SetButton((com as JumpCommand).myButton);
                     }
                 }
                 break;
             case ActionList.Attack:
-                foreach(ICommandV2 com in commands)
+                foreach(ICommand com in commands)
                 {
                     //if(com is AttackCommand)
                     //{
@@ -42,7 +42,7 @@ public class InputButton : MonoBehaviour
                 }
                 break;
             case ActionList.Interact:
-                foreach (ICommandV2 com in commands)
+                foreach (ICommand com in commands)
                 {
                     //if (com is InteractCommand)
                     //{

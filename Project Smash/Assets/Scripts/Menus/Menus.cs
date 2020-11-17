@@ -23,7 +23,7 @@ namespace PSmash.Menus
         {
             //_controller.UI.ButtonB.performed += ctx => ButtonBPressed();
             //_controller.UI.ButtonStart.performed += ctx => ButtonStartPressed();
-            PSmash.InputSystem.InputHandlerV2.OnPlayerStartButtonPressed += EnableMenus;
+            PSmash.InputSystem.InputHandler.OnPlayerStartButtonPressed += EnableMenus;
             PSmash.Items.Star.OnStarCollected += StarCollected;
         }
 
@@ -31,7 +31,7 @@ namespace PSmash.Menus
         {
             //_controller.UI.ButtonB.performed -= ctx => ButtonBPressed();
             //_controller.UI.ButtonStart.performed -= ctx => ButtonStartPressed();
-            PSmash.InputSystem.InputHandlerV2.OnPlayerStartButtonPressed -= EnableMenus;
+            PSmash.InputSystem.InputHandler.OnPlayerStartButtonPressed -= EnableMenus;
             PSmash.Items.Star.OnStarCollected -= StarCollected;
         }
 
