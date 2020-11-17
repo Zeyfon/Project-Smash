@@ -7,23 +7,22 @@ namespace PSmash.Core
 {
     public class FollowCamera : MonoBehaviour
     {
-        PlayerFighterV2 fighter;
+        //PlayerFighter fighter;
         private void Awake()
         {
-            fighter = FindObjectOfType<PlayerFighterV2>();
+            //fighter = FindObjectOfType<PlayerFighter>();
             CinemachineVirtualCamera camera = GetComponent<CinemachineVirtualCamera>();
-            camera.m_Follow = fighter.transform.GetComponentInChildren<FollowCameraTarget>().transform;
+            //camera.m_Follow = fighter.transform.GetComponentInChildren<FollowCameraTarget>().transform;
         }
 
         private void OnEnable()
         {
-            fighter.AirSmashAttackEffect += CameraShake;
+            FindObjectOfType<PlayerFighter>().AirSmashAttackEffect += CameraShake;
         }
 
         private void OnDisable()
         {
-            fighter.AirSmashAttackEffect -= CameraShake;
-
+            //FindObjectOfType<PlayerFighter>().AirSmashAttackEffect -= CameraShake;
         }
         public void CameraShake()
         {

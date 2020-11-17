@@ -5,7 +5,7 @@ namespace PSmash.Movement
     public class ThinPlatform : MonoBehaviour
     {
         PlatformEffector2D effector;
-        PlayerMovementV2 playerMovement;
+        PlayerMovement playerMovement;
 
         private void Awake()
         {
@@ -14,7 +14,7 @@ namespace PSmash.Movement
 
         private void OnCollisionEnter2D(Collision2D collision)
         {
-            if (playerMovement == null) playerMovement = collision.collider.GetComponent<PlayerMovementV2>();
+            if (playerMovement == null) playerMovement = collision.collider.GetComponent<PlayerMovement>();
             playerMovement.IsCollidingWithThinPlatform = true;
             
         }
@@ -23,7 +23,7 @@ namespace PSmash.Movement
         {
             if (playerMovement == null)
             {
-                playerMovement = collision.collider.GetComponent<PlayerMovementV2>();
+                playerMovement = collision.collider.GetComponent<PlayerMovement>();
             }
             if (playerMovement.MoveThroughFloor == true)
             {
@@ -34,7 +34,7 @@ namespace PSmash.Movement
 
         private void OnCollisionExit2D(Collision2D collision)
         {
-            if (playerMovement == null) playerMovement = collision.collider.GetComponent<PlayerMovementV2>();
+            if (playerMovement == null) playerMovement = collision.collider.GetComponent<PlayerMovement>();
             playerMovement.IsCollidingWithThinPlatform = false;
             effector.rotationalOffset = 0;
             playerMovement.MoveThroughFloor = false;
@@ -44,7 +44,7 @@ namespace PSmash.Movement
 
         private void OnTriggerExit2D(Collider2D collision)
         {
-            if (playerMovement == null) playerMovement = collision.GetComponent<PlayerMovementV2>();
+            if (playerMovement == null) playerMovement = collision.GetComponent<PlayerMovement>();
             playerMovement.IsCollidingWithThinPlatform = false;
             effector.rotationalOffset = 0;
             playerMovement.MoveThroughFloor = false;

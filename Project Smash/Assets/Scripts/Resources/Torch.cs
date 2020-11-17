@@ -3,24 +3,36 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Experimental.Rendering.Universal;
 
-public class Torch : MonoBehaviour
+namespace PSmash.Resources
 {
-    private void Awake()
+    public class Torch : MonoBehaviour
     {
-        transform.GetChild(0).gameObject.SetActive(false);
-    }
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        if (collision.CompareTag("Interactable"))
+        [SerializeField] bool startLigthened = false;
+        private void Awake()
         {
-            print(collision.gameObject);
-            if (collision.transform.GetComponentInChildren<Light2D>())
+            if (!startLigthened) EnableLight(false);
+            else EnableLight(true);
+        }
+        private void OnTriggerEnter2D(Collider2D collision)
+        {
+            if (collision.CompareTag("Interactable"))
             {
-                print("Turning on Lights");
-                transform.GetChild(0).gameObject.SetActive(true);
-                GetComponentInChildren<ParticleSystem>().Play();
-                GetComponent<Collider2D>().enabled = false;
+                print(collision.gameObject);
+                Light2D light = collision.transform.GetComponentInChildren<Light2D>();
+                if (collision.transform.GetComponentInChildren<Light2D>())
+                {
+                    print("Turning on Lights");
+                    EnableLight(true);
+                    GetComponent<Collider2D>().enabled = false;
+                }
             }
+        }
+
+        private void EnableLight(bool state)
+        {
+            transform.GetChild(0).gameObject.SetActive(state);
+            if(state) GetComponentInChildren<ParticleSystem>().Play();
         }
     }
 }
+

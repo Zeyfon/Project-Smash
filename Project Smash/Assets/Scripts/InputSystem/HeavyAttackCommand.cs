@@ -2,15 +2,15 @@
 
 namespace PSmash.InputSystem
 {
-    public class HeavyAttackCommand : ActionCommand, ICommandV2
+    public class HeavyAttackCommand : ActionCommand, ICommand
     {
-        PlayerControllerV2 playerController;
+        PlayerController playerController;
 
         void Start()
         {
-            playerController = transform.parent.GetComponent<PlayerControllerV2>();
+            playerController = transform.parent.GetComponent<PlayerController>();
         }
-        void ICommandV2.Execute(bool isButtonPressed)
+        void ICommand.Execute(bool isButtonPressed)
         {
             Attack(isButtonPressed);
         }

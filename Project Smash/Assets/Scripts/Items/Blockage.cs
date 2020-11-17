@@ -4,6 +4,7 @@ using System.Net.Http.Headers;
 using UnityEngine;
 using PSmash.Combat;
 using PSmash.Resources;
+using UnityEngine.Events;
 
 namespace PSmash.Items
 {
@@ -14,10 +15,12 @@ namespace PSmash.Items
         [SerializeField] int hitsToDestroyWall = 4;
         [SerializeField] ParticleSystem particles;
         [SerializeField] float shakeAmount = 0.2f;
+        [SerializeField] UnityEvent OnBlockageDestroyed;
         AudioSource audioSource;
         Coroutine coroutine;
         int hits = 0;
 
+        
         private void Awake()
         {
             audioSource = GetComponent<AudioSource>();
@@ -39,8 +42,7 @@ namespace PSmash.Items
             GetComponent<Collider2D>().enabled = false;
             print("Wall Destroyed");
             audioSource.PlayOneShot(destroyedSound);
-            SecretArea secret = transform.parent.GetComponent<SecretArea>();
-            if (secret != null) secret.Secretmoment();
+            OnBlockageDestroyed.Invoke();
             particles.Stop();
             StopCoroutine(coroutine);
             GetComponent<Animation>().Play();
@@ -71,7 +73,7 @@ namespace PSmash.Items
             if (collision.CompareTag("Player"))
             {
                 print("Triggered");
-                transform.parent.GetComponent<SecretArea>().ShowHiddenArea();
+                transform.parent.GetComponent<CoveredArea>().ShowHiddenArea();
                 GetComponent<Collider2D>().enabled = false;
             }
         }

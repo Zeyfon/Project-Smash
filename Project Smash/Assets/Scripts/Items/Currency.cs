@@ -7,7 +7,6 @@ namespace PSmash.Items
 {
     public class Currency : MonoBehaviour
     {
-        [SerializeField] AudioClip itemCollected = null;
         public static event Action OnCurrencyCollected;
 
         AudioSource audioSource;
@@ -42,7 +41,7 @@ namespace PSmash.Items
                 ParticleSystem.Particle p = inside[i];
                 p.remainingLifetime = 0;
                 inside[i] = p;
-                audioSource.PlayOneShot(itemCollected);
+                if(!audioSource.isPlaying) audioSource.Play();
                 OnCurrencyCollected();
             }
             ps.SetTriggerParticles(ParticleSystemTriggerEventType.Enter, inside);

@@ -28,14 +28,17 @@ namespace PSmash.Combat
         [SerializeField] AudioClip parriedSound = null;
         [SerializeField] AudioClip hitGuardSound = null;
         [SerializeField] Vector2[] attackArea;
-        [SerializeField] AudioClip[] attackSounds = null;
+        [SerializeField] AudioClip comboAttackSound = null;
+        [SerializeField] AudioClip unblockableAttackSound = null;
+        public PlayerHealth targetHealth = null;
+
         Animator animator;
         EnemyMovement movement;
-        public PlayerHealth target = null;
         EnemyHealth health;
         Rigidbody2D rb;
         Coroutine attackCoroutine;
         AudioSource audioSource;
+        ActionScheduler actionScheduler;
         bool isNormalAttacking = false;
         bool isUnblockableAttacking = false;
         bool isParried = false;
@@ -49,35 +52,38 @@ namespace PSmash.Combat
             health = GetComponent<EnemyHealth>();
             rb = GetComponent<Rigidbody2D>();
             audioSource = GetComponent<AudioSource>();
+            actionScheduler = GetComponent<ActionScheduler>();
         }
 
         private void Update()
         {
             if (health.IsDead()) return;
-            if (target == null) return;
+            if (targetHealth == null) return;
             if (health.IsStaggered() ||health.IsStunned() || health.IsBlocking() || health.IsBeingFinished()) return;
             if (isNormalAttacking) return;
-            if (!IsTargetInRange())
+            if (!IsTargetInAttackRange())
             {
                 if (PlayerIsAbove())
                 {
-                    movement.MoveAwayFromTarget(target.transform.position,0.2f);
+                    movement.MoveAwayFrom(targetHealth.transform.position,0.2f);
                     return;
                 }
-                movement.MoveTo(target.transform.position, 1f);
+                movement.MoveTo(targetHealth.transform.position, MovementTypes.chase);
             }
             else
             {
-                AttackBehaviour();
+                Attack();
             }
         }
-        public void StartAttackBehavior(Transform targetTransform)
+        //Cancels the previous action being performed
+        //and get the PlayerHealth Component to enable the methods in Update to run
+        public void StartAttackBehavior(Transform target)
         {
-            GetComponent<ActionScheduler>().StartAction(this);
-            if (target == null) target = targetTransform.GetComponent<PlayerHealth>();
+            actionScheduler.StartAction(this);
+            if (targetHealth == null)  targetHealth = target.GetComponent<PlayerHealth>();
         }
 
-        void AttackBehaviour()
+        void Attack()
         {
             if (attackCoroutine != null) return;
             float random = Random.Range(0, 100);
@@ -95,16 +101,16 @@ namespace PSmash.Combat
         {
             isNormalAttacking = true;
             rb.sharedMaterial = fullFriction;
-            movement.CheckFlip(target.transform.position);
+            movement.CheckFlip(targetHealth.transform.position);
             animator.SetInteger("attack", 1);
             while (animator.GetInteger("attack") != 100)
             {
                 yield return new WaitForEndOfFrame();
             }
             rb.sharedMaterial = lowFriction;
+            isNormalAttacking = false;
             yield return new WaitForSeconds(1);
             //print("Combo Attack Finished");
-            isNormalAttacking = false;
             attackCoroutine = null;
         }
 
@@ -123,7 +129,7 @@ namespace PSmash.Combat
             }
             //StartCoroutine(FadeIn(unblockableMaterial));
             rb.sharedMaterial = fullFriction;
-            movement.CheckFlip(target.transform.position);
+            movement.CheckFlip(targetHealth.transform.position);
             animator.SetInteger("attack", 10);
             while (animator.GetInteger("attack") != 100)
             {
@@ -157,16 +163,18 @@ namespace PSmash.Combat
         //The hit directly checks if the player is parrying, guarding, attacking, etc.
         //It puts the hits in the order they are perceived being the parry the first
         //since the trigger collider is a little in front of the other in the player
-        void Hit(int id)
+        void Hit()
         {
-            audioSource.PlayOneShot(attackSounds[id-1]);
+            audioSource.clip = comboAttackSound;
+            audioSource.pitch = Random.Range(0.6f, 1);
+            audioSource.Play();
             RaycastHit2D[] hits = Physics2D.RaycastAll(transform.position + new Vector3(0.3f, 1), transform.right, 2, whatIsAttackable);
             if (hits.Length == 0) return;
             foreach (RaycastHit2D hit in hits)
             {
                 if (!isUnblockableAttacking & hit.collider.CompareTag("Parry"))
                 {
-                    hit.collider.transform.parent.GetComponent<PlayerFighterV2>().StartParry();
+                    hit.collider.transform.parent.GetComponent<PlayerFighter>().StartParry();
                     isParried = true;
                     audioSource.PlayOneShot(parriedSound);
                     GetComponent<IDamagable>().TakeDamage(hit.collider.transform.parent, 25);
@@ -183,6 +191,9 @@ namespace PSmash.Combat
             }
         }
 
+        //This must be updated to be able to produce the same results 
+        //using relative position combined
+        //transform.position.x - target.position.x <0.5
         bool PlayerIsAbove()
         {
             RaycastHit2D hit = Physics2D.Raycast(transform.position, Vector2.up, 2.3f, whatIsPlayer);
@@ -195,8 +206,8 @@ namespace PSmash.Combat
 
         public void Cancel()
         {
-            //print(this + "  Cancelled");
-            target = null;
+            print(this + "  Cancelled");
+            targetHealth = null;
             if (animator.GetInteger("attack") > 0 && attackCoroutine != null)
             {
                 animator.SetInteger("attack", 100);
@@ -220,9 +231,9 @@ namespace PSmash.Combat
                 isParried = value;
             }
         }
-        bool IsTargetInRange()
+        bool IsTargetInAttackRange()
         {
-            bool isInRange = Mathf.Abs(target.transform.position.x - transform.position.x) < attackRange;
+            bool isInRange = Mathf.Abs(targetHealth.transform.position.x - transform.position.x) < attackRange;
             return isInRange;
         }
 

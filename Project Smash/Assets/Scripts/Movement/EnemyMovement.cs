@@ -4,6 +4,7 @@ using UnityEngine;
 using Spine.Unity;
 using Spine;
 using PSmash.Resources;
+using UnityEditor.ShaderGraph.Internal;
 
 namespace PSmash.Movement
 {
@@ -11,7 +12,11 @@ namespace PSmash.Movement
     {
         [SpineBone(dataField: "skeletonRenderer")]
         [SerializeField] public string boneName;
-        [SerializeField] float speed = 5;
+
+        [Header("Speed Values")]
+        [SerializeField] float baseSpeed = 5;
+        [SerializeField] float chaseFactor = 1;
+        [SerializeField] float patrolingFactor = 0.5f;
 
 
         [Header("General Info")]
@@ -23,7 +28,8 @@ namespace PSmash.Movement
         Animator animator;
         Rigidbody2D rb;
         SkeletonMecanim mecanim;
-        Bone bone;        
+        Bone bone;
+        ActionScheduler actionScheduler;
         float currentYAngle = 0;
         bool isPlayerReachable = true;
         float groundCheckRadius = 0.5f;
@@ -36,43 +42,84 @@ namespace PSmash.Movement
             animator = GetComponent<Animator>();
             mecanim = GetComponent<SkeletonMecanim>();
             bone = GetComponent<SkeletonRenderer>().skeleton.FindBone(boneName);
+            actionScheduler = GetComponent<ActionScheduler>();
         }
 
         void FixedUpdate()
         {
-            float xVelocity = (transform.right.x * rb.velocity.x) / speed;
+
+            //This only is for the animator to keep track of xVelocity
+            float xVelocity = (transform.right.x * rb.velocity.x) / baseSpeed;
             animator.SetFloat("xVelocity", xVelocity);
         }
 
-        public void MoveTo(Vector3 target, float speedFactor)
+        public void StartMoveAction(Vector3 destination, MovementTypes myMovement)
         {
-            CheckFlip(target);
-            if (IsGrounded())
-            {
-                rb.velocity = speed * transform.right * speedFactor;
-            }
+            actionScheduler.StartAction(this);
+            MoveTo(destination, myMovement);
         }
 
 
-        public void MoveAwayFromTarget(Vector3 target, float speedFactor)
+        //MoveTo and MoveAwayFrom must be combined in the future
+        public void MoveTo(Vector3 target, MovementTypes myMovement)
+        {
+            CheckFlip(target);
+            //print("Moving to Target");
+            if (!CanMoveTowardsTarget())
+            {
+                //Will not move
+                //print("Cant reach Target");
+                return;
+            }
+            //print("Can reach Target");
+
+            if (IsGrounded())
+            {
+                float speed = GetSpeed(myMovement);
+                rb.velocity = transform.right*speed;
+            }
+        }
+
+        public void MoveAwayFrom(Vector3 target, float speedFactor)
         {
             print("Moving Away from Target");
             CheckFlip(target);
 
-            float playerRelativePosition = target.x - transform.position.x;
-            if (playerRelativePosition > 0)
+            float targerRelativePosition = target.x - transform.position.x;
+            if (targerRelativePosition > 0)
             {
                 rb.MovePosition(new Vector2(1 * speedFactor, 0) + (Vector2)transform.position);
             }
             else rb.MovePosition(new Vector2(-1 * speedFactor, 0) + (Vector2)transform.position);
         }
-
-        public void StartMoveAction(Vector3 destination, float speedFactor)
+        private float GetSpeed(MovementTypes myMovement)
         {
-            GetComponent<ActionScheduler>().StartAction(this);
-            MoveTo(destination, speedFactor);
+            float speedFactor;
+            switch (myMovement)
+            {
+                case MovementTypes.chase:
+                    speedFactor = chaseFactor;
+                    break;
+                case MovementTypes.patrol:
+                    speedFactor = patrolingFactor;
+                    break;
+                default:
+                    speedFactor = chaseFactor;
+                    break;
+
+            }
+            return speedFactor * baseSpeed;
         }
 
+        bool CanMoveTowardsTarget()
+        {
+            Debug.DrawRay(transform.position + transform.right + new Vector3(0,1,0), Vector2.down,Color.blue);
+            RaycastHit2D hit = Physics2D.Raycast(transform.position + transform.right + new Vector3(0, 1, 0), Vector2.down, 2, whatIsGround);
+            if (!hit) return false;
+            float angle = Vector2.Angle(Vector2.up, hit.normal);
+            if (Mathf.Approximately(angle, 0)) return true;
+            return false;
+        }
         bool IsGrounded()
         {
             bool isGrounded = Physics2D.OverlapCircle(groundCheck.position, groundCheckRadius, whatIsGround);
@@ -106,11 +153,6 @@ namespace PSmash.Movement
             Vector3 rotation = new Vector3(0, currentYAngle, 0);
             currentRotation.eulerAngles = rotation;
             transform.rotation = currentRotation;
-        }
-
-        public bool IsPlayerReachable()
-        {
-            return isPlayerReachable;
         }
 
         public void ImpulseFromAttack(Transform attacker, float impulse)

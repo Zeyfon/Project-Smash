@@ -46,6 +46,7 @@ namespace PSmash.Resources
 
         public override void TakeDamage(Transform attacker, int damage)
         {
+            print(gameObject.name + " damage received");
             EnemyAttack attack = GetComponent<EnemyAttack>();
             if (isDead) return;
             //Damage while stunned
@@ -80,7 +81,7 @@ namespace PSmash.Resources
             //Damaged while performing Unblockable Attack
             else if (attack.GetIsUnblockableAttacking())
             {
-                //print(gameObject.name + "  is damaged while unblockable attacking");
+                print(gameObject.name + "  is damaged while unblockable attacking");
                 posture.DamagePosture(attacker, damage, 
                                       EnemyPosture.CurrentActionsWhenDamaged.UnblockableAttacking);
                 DamageHealthBar(attacker, damage);
@@ -135,8 +136,11 @@ namespace PSmash.Resources
 
         public void Stagger()
         {
+            if (isDead)
+            {
+                Debug.LogWarning("Wants to staggered when is already dead");
+            }
             print(gameObject + "  is Staggered");
-
             GetComponent<ActionScheduler>().StartAction(this);
             animator.SetInteger("guard", 30);
             audioSource.PlayOneShot(staggeredSound);
@@ -146,10 +150,15 @@ namespace PSmash.Resources
         }
         public void Stunned()
         {
+            if (isDead)
+            {
+                Debug.LogWarning("Wants to staggered when is already dead");
+            }
             print(gameObject + "  is Stunned");
 
             GetComponent<ActionScheduler>().StartAction(this);
             animator.SetInteger("guard", 30);
+
             audioSource.PlayOneShot(stunnedSound);
             isStunned = true;
             if (cr_Running) StopCoroutine(coroutine);
@@ -176,7 +185,8 @@ namespace PSmash.Resources
         public void StartFinisherAnimation()
         {
             StopAllCoroutines();
-            animator.SetTrigger("Finisher");
+            animator.SetInteger("finisher", 1);
+            GetComponent<ActionScheduler>().StartAction(this);
         }
 
         public void SpeedUpSound()
@@ -184,41 +194,49 @@ namespace PSmash.Resources
             audioSource.pitch = 1;
         }
 
-        public IEnumerator FinisherReaction(Vector3 attackerPosition)
-        {
-            float position = attackerPosition.x - transform.position.x;
-            print(position);
-            GetComponent<Rigidbody2D>().gravityScale = 1;
-            GetComponent<Rigidbody2D>().drag = 2.5f;
-            if (position > 0)
-            {
-                //Playeris at the right side
-                GetComponent<Rigidbody2D>().velocity = new Vector2(-28, 14);
-            }
-            else
-            {
-                GetComponent<Rigidbody2D>().velocity = new Vector2(28, 14);
-            }
-            yield return new WaitForSecondsRealtime(1f);
-            DamageHealthBar(null, initialHealth);
-            Dead();
-        }
-        public void BeingPushedAway(Vector3 attackerPosition)
+
+        public void DeliverFinishingBlow(Vector3 attackerPosition)
         {
             StartCoroutine(FinisherReaction(attackerPosition));
         }
+        public IEnumerator FinisherReaction(Vector3 attackerPosition)
+        {
+            float position = attackerPosition.x - transform.position.x;
+            GetComponent<Rigidbody2D>().gravityScale = 1;
+            GetComponent<Rigidbody2D>().drag = 2.5f;
+            //if (position > 0)
+            //{
+            //    //Playeris at the right side
+            //    GetComponent<Rigidbody2D>().velocity = new Vector2(-28, 14);
+            //}
+            //else
+            //{
+            //    GetComponent<Rigidbody2D>().velocity = new Vector2(28, 14);
+            //}
+            DamageHealthBar(null, initialHealth);
+            while (animator.GetInteger("finisher")!= 100)
+            {
+                yield return null;
+            }
 
+            StartCoroutine(GameObjectDied());
+        }
         private void Dead()
         {
             isDead = true;
+            print("Is Dead");
+            //Debug.Break();
             GetComponent<ActionScheduler>().StartAction(this);
             StopAllCoroutines();
+            print("Updated values to dead ones");
+            animator.SetInteger("attack", 0);
+            animator.SetInteger("guard", 0);
+            animator.SetInteger("finisher", 0);
+            animator.SetInteger("isDead", 100);
             StartCoroutine(GameObjectDied());
         }
         IEnumerator GameObjectDied()
         {
-            animator.SetTrigger("isDead");
-            //GetComponent<Rigidbody2D>().gravityScale = 0;
             gameObject.layer = LayerMask.NameToLayer("DyingEnemies");
             GetComponent<Rigidbody2D>().drag = 2;
             audioSource.PlayOneShot(deadSound,0.4f);

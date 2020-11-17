@@ -88,7 +88,7 @@ namespace PSmash.Resources
             if (collision.CompareTag("Player"))
             {
                 if (playerMovement == null) playerMovement = collision.GetComponent<PlayerMovement>();
-                if (playerMovement.IsMovingOnWall()) ChildPlayerToThisPlatform(collision.transform);
+                if (playerMovement.IsMovingOnWall) ChildPlayerToThisPlatform(collision.transform);
                 else
                 {
                     ReturnPlayerToBeforeParent(collision.transform);

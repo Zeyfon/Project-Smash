@@ -10,6 +10,7 @@ namespace PSmash.Core
 
         public void SlowTime()
         {
+            print("Slowing Time");
             Time.timeScale = slowDownFactor;
             Time.fixedDeltaTime = 0.02f * Time.timeScale;
         }

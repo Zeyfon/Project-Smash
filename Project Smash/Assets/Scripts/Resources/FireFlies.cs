@@ -17,7 +17,12 @@ namespace PSmash.Resources
         {
             if (collision.CompareTag("Player"))
             {
-                if (carryOnFireFliesClone != null) return; 
+                if (carryOnFireFliesClone != null)
+                {
+                    print("FireFly destroyed");
+                    Destroy(carryOnFireFliesClone);
+                }
+
                 StartCoroutine(InstantiateFireFlies(collision.transform));
             }
         }

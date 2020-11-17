@@ -8,19 +8,20 @@ namespace PSmash.Resources
     public class PlayerHealth : Health
     {
         [SerializeField] AudioClip damagedSound = null;
+        [SerializeField] AudioClip deadSound = null;
         public delegate void PlayerisDamaged(float health, float initialHealth);
         public event PlayerisDamaged OnPlayerDamage;
 
         Coroutine coroutine;
         Animator animator;
-        PlayerFighterV2 fighter;
+        PlayerFighter fighter;
 
         bool isDamaged;
 
         private void Awake()
         {
             animator = GetComponent<Animator>();
-            fighter = GetComponent<PlayerFighterV2>();
+            fighter = GetComponent<PlayerFighter>();
         }
 
         // Start is called before the first frame update
@@ -53,8 +54,6 @@ namespace PSmash.Resources
 
         IEnumerator DamageEffects()
         {
-            //audioSource.Play();
-            audioSource.PlayOneShot(damagedSound);
             print("Playing player damage sound");
             animator.SetInteger("Damage", 1);
             while(animator.GetInteger("Damage") != 100)
@@ -62,7 +61,7 @@ namespace PSmash.Resources
                 yield return new WaitForEndOfFrame();
             }
             animator.SetInteger("Damage", 0);
-            if (GetComponent<PlayerFighterV2>().IsGuardButtonPressed()) GetComponent<PlayerFighterV2>().Guard();
+            if (GetComponent<PlayerFighter>().IsGuardButtonPressed()) GetComponent<PlayerFighter>().Guard();
             coroutine = null;
         }
 
@@ -74,12 +73,24 @@ namespace PSmash.Resources
 
         IEnumerator EntityDied()
         {
+            gameObject.layer = LayerMask.NameToLayer("PlayerGhost");
             animator.SetInteger("Damage", 50);
             yield return new WaitForSeconds(2);
             //Destroy(gameObject);
             SceneManager.LoadScene(0);
         }
 
+        //AnimEvent
+        void DamageSound()
+        {
+            audioSource.PlayOneShot(damagedSound);
+
+        }
+        //AnimEvent
+        void DeadSound()
+        {
+            audioSource.PlayOneShot(deadSound);
+        }
         public bool IsDead()
         {
             return isDead;
