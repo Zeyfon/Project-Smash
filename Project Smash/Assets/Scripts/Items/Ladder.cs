@@ -8,17 +8,12 @@ namespace PSmash.Movement
         [SerializeField] Transform ladderTopTransform = null;
         PlayerMovement playerMovement;
         bool isPlayerAboveLadderTop;
-        // Start is called before the first frame update
+        //The LadderTop children must be at the same position as the father for this to work fine.
         private void Start()
         {
-            int count = ladderTopTransform.childCount;
-            for(int i = 0; i< count; i++)
-            {
-                ladderTopTransform.GetChild(i).transform.position = new Vector3(transform.position.x,
-                                                          transform.position.y + GetComponent<BoxCollider2D>().size.y / 2 - ladderTopTransform.GetChild(i).GetComponent<BoxCollider2D>().size.y / 2,
+            ladderTopTransform.position = new Vector3(transform.position.x,
+                                                          transform.position.y + GetComponent<BoxCollider2D>().size.y / 2 - ladderTopTransform.GetChild(0).GetComponent<BoxCollider2D>().size.y / 2,
                                                           transform.position.z);
-            }
-
         }
         public void InvertPlatform()
         {
@@ -27,6 +22,7 @@ namespace PSmash.Movement
 
         private void OnTriggerEnter2D(Collider2D collision)
         {
+            if (!collision.CompareTag("Player")) return;
             bool isLadderDetected = true;
             if (playerMovement == null) playerMovement = collision.GetComponent<PlayerMovement>();
             CheckPlayerRelativePositionToLadderTop(collision);
@@ -35,11 +31,13 @@ namespace PSmash.Movement
 
         private void OnTriggerStay2D(Collider2D collision)
         {
+            if (!collision.CompareTag("Player")) return;
             CheckPlayerRelativePositionToLadderTop(collision);
         }
 
         private void OnTriggerExit2D(Collider2D collision)
         {
+            if (!collision.CompareTag("Player")) return;
             bool isLadderDetected = false;
             if (playerMovement == null) playerMovement = collision.GetComponent<PlayerMovement>();
             playerMovement.SetIsLadderDetected(transform.position.x, isLadderDetected);
@@ -49,10 +47,13 @@ namespace PSmash.Movement
         {
             if ((collision.transform.position.y - ladderTopTransform.position.y) > 0)
             {
+                print("Player is above LadderTop");
                 isPlayerAboveLadderTop = true;
             }
             else
             {
+                print("Player is below LadderTop");
+
                 isPlayerAboveLadderTop = false;
             }
             playerMovement.IsPlayerAboveLadderTop(isPlayerAboveLadderTop);

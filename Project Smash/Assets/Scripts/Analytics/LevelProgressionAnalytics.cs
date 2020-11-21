@@ -7,24 +7,15 @@ public class LevelProgressionAnalytics : MonoBehaviour
 {
 
     [SerializeField] int level;
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
+    public static int currentSection = 0;
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.CompareTag("Player"))
         {
             GetComponent<Collider2D>().enabled = false;
             AnalyticsEvent.LevelComplete(level);
+
+            currentSection = level;
         }
     }
 }

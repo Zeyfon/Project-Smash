@@ -2,6 +2,8 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using PSmash.Combat;
+using UnityEngine.Analytics;
+using System.Collections.Generic;
 
 namespace PSmash.Resources
 {
@@ -73,6 +75,11 @@ namespace PSmash.Resources
 
         IEnumerator EntityDied()
         {
+            AnalyticsEvent.Custom("Player_Died", new Dictionary<string, object>
+            {
+                { "area_id", LevelProgressionAnalytics.currentSection },
+                { "time_elapsed", Time.timeSinceLevelLoad }
+            });
             gameObject.layer = LayerMask.NameToLayer("PlayerGhost");
             animator.SetInteger("Damage", 50);
             yield return new WaitForSeconds(2);

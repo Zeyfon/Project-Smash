@@ -163,13 +163,26 @@ namespace PSmash.Combat
         //The hit directly checks if the player is parrying, guarding, attacking, etc.
         //It puts the hits in the order they are perceived being the parry the first
         //since the trigger collider is a little in front of the other in the player
-        void Hit()
+        void Hit(int i)
         {
-            audioSource.clip = comboAttackSound;
-            audioSource.pitch = Random.Range(0.6f, 1);
+            if (i == 1)
+            {
+                audioSource.clip = comboAttackSound;
+                audioSource.pitch = Random.Range(0.6f, 1);
+            }
+            else
+            {
+                audioSource.clip = unblockableAttackSound;
+                audioSource.pitch = 0.4f;
+            }
             audioSource.Play();
             RaycastHit2D[] hits = Physics2D.RaycastAll(transform.position + new Vector3(0.3f, 1), transform.right, 2, whatIsAttackable);
-            if (hits.Length == 0) return;
+            if (hits.Length == 0)
+            {
+                print("Hit Nothing");
+                return; 
+            }
+
             foreach (RaycastHit2D hit in hits)
             {
                 if (!isUnblockableAttacking & hit.collider.CompareTag("Parry"))

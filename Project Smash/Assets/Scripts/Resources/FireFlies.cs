@@ -1,37 +1,39 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using PSmash.Core;
+using UnityEngine.Experimental.Rendering.Universal;
 
 namespace PSmash.Resources
 {
-
     public class FireFlies : MonoBehaviour
     {
-        [SerializeField] GameObject carryOnFireFlies = null;
+        [SerializeField] float timeToFadeOut = 10;
+        Light2D pointLight;
+        float normalizetimer;
 
-        GameObject carryOnFireFliesClone;
+        float initialInteranlRadius;
+        float initialOuterRadius;
         // Start is called before the first frame update
-
-        private void OnTriggerEnter2D(Collider2D collision)
+        void Start()
         {
-            if (collision.CompareTag("Player"))
-            {
-                if (carryOnFireFliesClone != null)
-                {
-                    print("FireFly destroyed");
-                    Destroy(carryOnFireFliesClone);
-                }
-
-                StartCoroutine(InstantiateFireFlies(collision.transform));
-            }
+            normalizetimer = 1;
+            pointLight = GetComponentInChildren<Light2D>();
+            initialInteranlRadius = pointLight.pointLightInnerRadius;
+            initialOuterRadius = pointLight.pointLightOuterRadius;
         }
 
-        IEnumerator InstantiateFireFlies(Transform targetTransform)
+        // Update is called once per frame
+        void Update()
         {
-            carryOnFireFliesClone = Instantiate(carryOnFireFlies,targetTransform.position + new Vector3(0,1,0) ,Quaternion.identity);
-            yield return null;
-            carryOnFireFliesClone.GetComponent<FollowEntity>().SetData(targetTransform, true);
+            float multiplier = 1;
+            if (normalizetimer < 0.4f) multiplier = 2.5f;
+            normalizetimer -= Time.deltaTime / (timeToFadeOut * multiplier);
+            if (normalizetimer <= 0) Destroy(gameObject);
+            else
+            {
+                pointLight.pointLightInnerRadius = initialInteranlRadius * normalizetimer;
+                pointLight.pointLightOuterRadius = initialOuterRadius * normalizetimer;
+            }
         }
     }
 }

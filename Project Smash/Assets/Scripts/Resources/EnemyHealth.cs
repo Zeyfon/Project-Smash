@@ -184,8 +184,12 @@ namespace PSmash.Resources
         } 
         public void StartFinisherAnimation()
         {
+            //animator.SetInteger("finisher", 1);
+            animator.Play("Finisher");
+        }
+        public void StartFinisherAnimation2()
+        {
             StopAllCoroutines();
-            animator.SetInteger("finisher", 1);
             GetComponent<ActionScheduler>().StartAction(this);
         }
 
@@ -201,31 +205,27 @@ namespace PSmash.Resources
         }
         public IEnumerator FinisherReaction(Vector3 attackerPosition)
         {
+            float x = 15;
+            float y = 7;
             float position = attackerPosition.x - transform.position.x;
             GetComponent<Rigidbody2D>().gravityScale = 1;
             GetComponent<Rigidbody2D>().drag = 2.5f;
-            //if (position > 0)
-            //{
-            //    //Playeris at the right side
-            //    GetComponent<Rigidbody2D>().velocity = new Vector2(-28, 14);
-            //}
-            //else
-            //{
-            //    GetComponent<Rigidbody2D>().velocity = new Vector2(28, 14);
-            //}
-            DamageHealthBar(null, initialHealth);
-            while (animator.GetInteger("finisher")!= 100)
+            if (position > 0)
             {
-                yield return null;
+                //Playeris at the right side
+                GetComponent<Rigidbody2D>().velocity = new Vector2(-x, y);
             }
-
-            StartCoroutine(GameObjectDied());
+            else
+            {
+                GetComponent<Rigidbody2D>().velocity = new Vector2(x, y);
+            }
+            DamageHealthBar(null, initialHealth);
+            yield return null;
         }
         private void Dead()
         {
             isDead = true;
             print("Is Dead");
-            //Debug.Break();
             GetComponent<ActionScheduler>().StartAction(this);
             StopAllCoroutines();
             print("Updated values to dead ones");
@@ -235,12 +235,17 @@ namespace PSmash.Resources
             animator.SetInteger("isDead", 100);
             StartCoroutine(GameObjectDied());
         }
+
+        void FinisherDead()
+        {
+            StartCoroutine(GameObjectDied());
+        }
         IEnumerator GameObjectDied()
         {
             gameObject.layer = LayerMask.NameToLayer("DyingEnemies");
             GetComponent<Rigidbody2D>().drag = 2;
             audioSource.PlayOneShot(deadSound,0.4f);
-            yield return new WaitForSeconds(2);
+            yield return new WaitForSeconds(1);
             Destroy(transform.parent.gameObject);
         }
 

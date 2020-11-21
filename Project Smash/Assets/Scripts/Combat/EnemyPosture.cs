@@ -49,7 +49,7 @@ namespace PSmash.Resources
                 percentage += Time.deltaTime / timeToFullyRegenGuard;
                 if (percentage > 1) percentage = 1;
                 posture = (percentage * initialPosture);
-                print("Regenerating Posture  " + posture);
+                //print("Regenerating Posture  " + posture);
             }
             if (!canRegen)
             {

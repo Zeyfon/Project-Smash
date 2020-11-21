@@ -38,7 +38,7 @@ namespace PSmash.Movement
             playerMovement.IsCollidingWithThinPlatform = false;
             effector.rotationalOffset = 0;
             playerMovement.MoveThroughFloor = false;
-            print("ExitContact with ThinPlatform");
+            //print("ExitContact with ThinPlatform");
             //Debug.Break();
         }
 
@@ -49,7 +49,7 @@ namespace PSmash.Movement
             effector.rotationalOffset = 0;
             playerMovement.MoveThroughFloor = false;
             GetComponent<Collider2D>().isTrigger = false;
-            print("ExitContact with ThinPlatform");
+            //print("ExitContact with ThinPlatform");
             //Debug.Break();
         }
     }
