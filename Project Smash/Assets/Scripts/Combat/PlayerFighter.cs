@@ -29,7 +29,7 @@ namespace PSmash.Combat
 
         [SerializeField] AudioClip finisherSound = null;
         [SerializeField] Transform steamTransform = null;
-        [SerializeField] Transform shockwaveTransform = null;
+        [SerializeField]  GameObject finisherEffects = null;
 
         [Header("AirSmash Attack")]
         [SerializeField] AudioClip splashAttackSound = null;
@@ -160,6 +160,7 @@ namespace PSmash.Combat
             isAttacking = false;
             guardTrigger.enabled = false;
             if (IsFinishingAnEnemy()) isFinishinAnEnemy = false;
+            gameObject.layer = LayerMask.NameToLayer("Player");
             print("Attack Finished");
         }
 
@@ -188,15 +189,21 @@ namespace PSmash.Combat
                 GetComponent<Rigidbody2D>().MovePosition(hit.transform.position + new Vector3(-1, 0, 0));
             }
             targetTransform = hit.transform;
-            StartBothCharacterAnimations();
+            StartCoroutine(StartBothCharacterAnimations());
             StartCoroutine(IsAttackingAnimationStatus("Attack"));
             yield return null;
         }
 
-        private void StartBothCharacterAnimations()
+        IEnumerator StartBothCharacterAnimations()
         {
-            targetTransform.GetComponent<EnemyHealth>().StartFinisherAnimation();
+            targetTransform.GetComponent<EnemyHealth>().StartFinisherAnimation2();
             animator.SetInteger("Attack", 80);
+            while(animator.GetInteger("Attack")!= 81)
+            {
+                yield return null;
+            }
+            targetTransform.GetComponent<EnemyHealth>().StartFinisherAnimation();
+
         }
 
 
@@ -251,7 +258,8 @@ namespace PSmash.Combat
         //Anim Event
         void Shockwave()
         {
-            shockwaveTransform.GetComponent<ParticleSystem>().Play();
+
+            Instantiate(finisherEffects,attackTransform.position,Quaternion.identity);
         }
 
         //Anim Event
@@ -283,7 +291,7 @@ namespace PSmash.Combat
         //Anim Events
         void TimeScaleDown()
         {
-            StartCoroutine(FinisherTimer());
+            //StartCoroutine(FinisherTimer());
         }
         IEnumerator FinisherTimer()
         {

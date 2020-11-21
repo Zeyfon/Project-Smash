@@ -382,7 +382,7 @@ namespace PSmash.Movement
                 //Debug.Log("InEvasion Coroutine");
                 yield return new WaitForEndOfFrame();
             }
-            StopCoroutine(coroutine);
+            if(coroutine != null) StopCoroutine(coroutine);
             isEvading = false;
             animator.SetInteger("Evade", 0);
             gameObject.layer = LayerMask.NameToLayer("Player");
