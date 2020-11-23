@@ -1,15 +1,15 @@
 ﻿using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
-using PSmash.Resources;
+using PSmash.Attributes;
 using PSmash.Items.Doors;
 
 namespace PSmash.UI
 {
     public class InGameKeyDoorUI : MonoBehaviour
     {
-        [SerializeField] Text currentKeysText;
-        [SerializeField] Text keysRequiredText;
+        [SerializeField] Text currentKeysText = null;
+        [SerializeField] Text keysRequiredText = null;
 
 
         private void OnEnable()

@@ -1,9 +1,7 @@
-﻿using PSmash.Control;
-using System.Collections;
-using UnityEngine;
-using Spine.Unity;
+﻿using PSmash.Attributes;
 using Spine;
-using PSmash.Resources;
+using Spine.Unity;
+using UnityEngine;
 
 namespace PSmash.Movement
 {

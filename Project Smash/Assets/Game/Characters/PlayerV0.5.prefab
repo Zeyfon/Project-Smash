@@ -225,11 +225,11 @@ GameObject:
   - component: {fileID: 4103293583250425879}
   - component: {fileID: 4456879624522101086}
   - component: {fileID: 7142352707370225178}
-  - component: {fileID: 8425458126645779875}
   - component: {fileID: 9037406259522812750}
   - component: {fileID: 1334943314186940025}
-  - component: {fileID: 2604875937795302057}
   - component: {fileID: 8540863619128468569}
+  - component: {fileID: 6419905940629892989}
+  - component: {fileID: 8599444798389424449}
   m_Layer: 0
   m_Name: Controller
   m_TagString: Untagged
@@ -463,19 +463,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   myButton: 0
---- !u!114 &8425458126645779875
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2796500828864873445}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8c2139bcbcdc21341854b724ac792fec, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  myButton: 4
 --- !u!114 &9037406259522812750
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -502,19 +489,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   myButton: 2
---- !u!114 &2604875937795302057
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2796500828864873445}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8d86369af75290e43a98cfa67f4a1326, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  myButton: 1
 --- !u!114 &8540863619128468569
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -529,6 +503,32 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   timeManager: {fileID: 0}
   weaponsMenu: {fileID: 0}
+--- !u!114 &6419905940629892989
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2796500828864873445}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a2c17fca8bb5238438ce57faad35f641, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  myButton: 1
+--- !u!114 &8599444798389424449
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2796500828864873445}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a36db5e0094b79c4682570cbb9c84e91, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  myButton: 4
 --- !u!1 &2915883827509995352
 GameObject:
   m_ObjectHideFlags: 0
@@ -6362,7 +6362,7 @@ MonoBehaviour:
   subWeapon: {fileID: 0}
   whatIsDamagable:
     serializedVersion: 2
-    m_Bits: 591104
+    m_Bits: 75008
   whatIsEnemy:
     serializedVersion: 2
     m_Bits: 1024
@@ -6445,7 +6445,7 @@ MonoBehaviour:
   checkLadderDistance: 1.2
   whatIsLadder:
     serializedVersion: 2
-    m_Bits: 512
+    m_Bits: 65536
   whatIsLadderTop:
     serializedVersion: 2
     m_Bits: 1048576

@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using Cinemachine;
 using PSmash.Combat;
-using PSmash.Resources;
+using PSmash.Attributes;
 
 namespace PSmash.Items.Doors
 {

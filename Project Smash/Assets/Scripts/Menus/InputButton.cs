@@ -2,96 +2,99 @@
 using UnityEngine;
 using UnityEngine.UI;
 using PSmash.InputSystem;
-using PSmash.Resources;
+using PSmash.Attributes;
 
-public class InputButton : MonoBehaviour
+namespace PSmash.Menus
 {
-    [SerializeField] Image image = null;
-    [SerializeField] ActionList myAction;
-    [SerializeField] List<Sprite> sprites = new List<Sprite>();
-    public ButtonList myButton;
-
-    Transform inputTransform;
-    InputHandler inputHanlder;
-
-    bool isInitiallySet = false;
-    public void GetInitialButton()
+    public class InputButton : MonoBehaviour
     {
-        Debug.Log(this.gameObject + "  " + myButton);
+        [SerializeField] Image image = null;
+        [SerializeField] ActionList myAction;
+        [SerializeField] List<Sprite> sprites = new List<Sprite>();
+        public ButtonList myButton;
 
-        if (!inputHanlder) inputHanlder = GameObject.FindGameObjectWithTag("Player").transform.GetChild(0).GetComponent<InputHandler>();
-        List<ICommand> commands = inputHanlder.commandList;
-        switch (myAction)
+        Transform inputTransform;
+        InputHandler inputHanlder;
+
+        bool isInitiallySet = false;
+        public void GetInitialButton()
         {
-            case ActionList.Jump:
-                foreach (ICommand com in commands)
-                {
-                    if (com is JumpCommand)
+            Debug.Log(this.gameObject + "  " + myButton);
+
+            if (!inputHanlder) inputHanlder = GameObject.FindGameObjectWithTag("Player").transform.GetChild(0).GetComponent<InputHandler>();
+            List<ICommand> commands = inputHanlder.commandList;
+            switch (myAction)
+            {
+                case ActionList.Jump:
+                    foreach (ICommand com in commands)
                     {
-                        SetButton((com as JumpCommand).myButton);
+                        if (com is JumpCommand)
+                        {
+                            SetButton((com as JumpCommand).myButton);
+                        }
                     }
-                }
-                break;
-            case ActionList.Attack:
-                foreach(ICommand com in commands)
-                {
-                    //if(com is AttackCommand)
-                    //{
-                    //    SetButton((com as AttackCommand).myButton);
-                    //}
-                }
-                break;
-            case ActionList.Interact:
-                foreach (ICommand com in commands)
-                {
-                    //if (com is InteractCommand)
-                    //{
-                    //    SetButton((com as InteractCommand).myButton);
+                    break;
+                case ActionList.Attack:
+                    foreach (ICommand com in commands)
+                    {
+                        //if(com is AttackCommand)
+                        //{
+                        //    SetButton((com as AttackCommand).myButton);
+                        //}
+                    }
+                    break;
+                case ActionList.Interact:
+                    foreach (ICommand com in commands)
+                    {
+                        //if (com is InteractCommand)
+                        //{
+                        //    SetButton((com as InteractCommand).myButton);
 
-                    //}
-                }
-                break;
-            default:
-                break;
+                        //}
+                    }
+                    break;
+                default:
+                    break;
+            }
+            transform.parent.SendMessage("InitialChildrenSet");
         }
-        transform.parent.SendMessage("InitialChildrenSet");
-    }
 
-   
-    public void SetButton(ButtonList button)
-    {
-        //Debug.Log(this.gameObject + "  " + myButton);
-        //print(myButton);
-        myButton = button;
-        ChangeButtonImage();
-        if (!isInitiallySet)
+
+        public void SetButton(ButtonList button)
         {
-            isInitiallySet = true;
-            return;
+            //Debug.Log(this.gameObject + "  " + myButton);
+            //print(myButton);
+            myButton = button;
+            ChangeButtonImage();
+            if (!isInitiallySet)
+            {
+                isInitiallySet = true;
+                return;
+            }
+            //inputHanlder.SwitchButtonFromMenu(myButton, myAction);
+
         }
-        //inputHanlder.SwitchButtonFromMenu(myButton, myAction);
 
-    }
-
-    private void ChangeButtonImage()
-    {
-        switch (myButton)
+        private void ChangeButtonImage()
         {
-            case ButtonList.buttonA:
-                image.sprite = sprites[(int)ButtonList.buttonA];
-                break;
-            case ButtonList.buttonB:
-                image.sprite = sprites[(int)ButtonList.buttonB];
-                break;
-            case ButtonList.buttonX:
-                image.sprite = sprites[(int)ButtonList.buttonX];
-                break;
-            case ButtonList.buttonY:
-                image.sprite = sprites[(int)ButtonList.buttonY];
-                break;
-            case ButtonList.noButton:
-                image.sprite = sprites[(int)ButtonList.noButton];
-                break;
+            switch (myButton)
+            {
+                case ButtonList.buttonA:
+                    image.sprite = sprites[(int)ButtonList.buttonA];
+                    break;
+                case ButtonList.buttonB:
+                    image.sprite = sprites[(int)ButtonList.buttonB];
+                    break;
+                case ButtonList.buttonX:
+                    image.sprite = sprites[(int)ButtonList.buttonX];
+                    break;
+                case ButtonList.buttonY:
+                    image.sprite = sprites[(int)ButtonList.buttonY];
+                    break;
+                case ButtonList.noButton:
+                    image.sprite = sprites[(int)ButtonList.noButton];
+                    break;
+            }
         }
     }
 }

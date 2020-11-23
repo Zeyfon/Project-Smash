@@ -1,16 +1,15 @@
-﻿using PSmash.Core;
-using PSmash.Resources;
-using System.Collections;
-using UnityEngine;
+﻿using PSmash.Attributes;
 using PSmash.Movement;
 using Spine.Unity;
+using System.Collections;
+using UnityEngine;
 
 namespace PSmash.Combat
 {
     public class EnemyAttack : MonoBehaviour, IAction
     {
-        [SerializeField] Material normalMaterial;
-        [SerializeField] Material unblockableMaterial;
+        [SerializeField] Material normalMaterial = null;
+        [SerializeField] Material unblockableMaterial = null;
         [SerializeField] float fadeIntTime = 0.5f;
 
         [Range(0,100)]
@@ -99,7 +98,7 @@ namespace PSmash.Combat
 
         IEnumerator ComboAttack()
         {
-            isNormalAttacking = true;
+            health.SetIsNormalAttacking(true);
             rb.sharedMaterial = fullFriction;
             movement.CheckFlip(targetHealth.transform.position);
             animator.SetInteger("attack", 1);
@@ -108,7 +107,7 @@ namespace PSmash.Combat
                 yield return new WaitForEndOfFrame();
             }
             rb.sharedMaterial = lowFriction;
-            isNormalAttacking = false;
+            health.SetIsNormalAttacking(false);
             yield return new WaitForSeconds(1);
             //print("Combo Attack Finished");
             attackCoroutine = null;
@@ -117,7 +116,7 @@ namespace PSmash.Combat
         IEnumerator UnblockableAttack()
         {
             print("Unblockable Attacking");
-            isUnblockableAttacking = true;
+            health.SetIsUnblockableAttacking(true);
             GetComponent<SkeletonRenderer>().CustomMaterialOverride.Add(normalMaterial, unblockableMaterial);
             yield return null;
             //print("Material Overriden");
@@ -141,7 +140,7 @@ namespace PSmash.Combat
             GetComponent<SkeletonRenderer>().CustomMaterialOverride.Remove(unblockableMaterial);
             GetComponent<SkeletonRenderer>().CustomMaterialOverride.Remove(normalMaterial);
             attackCoroutine = null;
-            isUnblockableAttacking = false;
+            health.SetIsUnblockableAttacking(false);
             print(gameObject.name + "  Unblockable Attack Finished");
         }
 
@@ -185,10 +184,13 @@ namespace PSmash.Combat
 
             foreach (RaycastHit2D hit in hits)
             {
+                //Attack was parried
+                //Will  start the parry animation in the player
+                //
                 if (!isUnblockableAttacking & hit.collider.CompareTag("Parry"))
                 {
                     hit.collider.transform.parent.GetComponent<PlayerFighter>().StartParry();
-                    isParried = true;
+                    health.SetIsParried(true);
                     audioSource.PlayOneShot(parriedSound);
                     GetComponent<IDamagable>().TakeDamage(hit.collider.transform.parent, 25);
                     break;

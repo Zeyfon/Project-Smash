@@ -3,19 +3,23 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Analytics;
 
-public class LevelProgressionAnalytics : MonoBehaviour
+namespace PSmash.Analytics
 {
-
-    [SerializeField] int level;
-    public static int currentSection = 0;
-    private void OnTriggerEnter2D(Collider2D collision)
+    public class LevelProgressionAnalytics : MonoBehaviour
     {
-        if (collision.CompareTag("Player"))
-        {
-            GetComponent<Collider2D>().enabled = false;
-            AnalyticsEvent.LevelComplete(level);
 
-            currentSection = level;
+        [SerializeField] int level;
+        public static int currentSection = 0;
+        private void OnTriggerEnter2D(Collider2D collision)
+        {
+            if (collision.CompareTag("Player"))
+            {
+                GetComponent<Collider2D>().enabled = false;
+                AnalyticsEvent.LevelComplete(level);
+
+                currentSection = level;
+            }
         }
+
     }
 }

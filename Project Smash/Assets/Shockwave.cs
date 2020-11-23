@@ -23,16 +23,11 @@ public class Shockwave : MonoBehaviour
         {
             if (testing) TestingActions();
             else NormalActions();
-
         }
-
-
     }
     void NormalActions()
     {
-
         StartCoroutine(FadeOut());
-
     }
     
     IEnumerator FadeOut()

@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
-using PSmash.Resources;
+using PSmash.Attributes;
 using System.Collections;
 using PSmash.Items.Doors;
 
@@ -8,7 +8,7 @@ namespace PSmash.UI
 {
     public class Keys : MonoBehaviour
     {
-        [SerializeField] Text currentKeysText;
+        [SerializeField] Text currentKeysText = null;
         [SerializeField] float fadeOutTime = 2;
 
         InteractionList currentValue;

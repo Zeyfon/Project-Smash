@@ -1,20 +1,19 @@
-﻿using PSmash.Control;
-using PSmash.Core;
+﻿using PSmash.Attributes;
+using PSmash.Control;
 using PSmash.Items.Doors;
 using PSmash.Items.Traps;
 using PSmash.Movement;
-using PSmash.Menus;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-namespace PSmash.InputSystem 
+namespace PSmash.InputSystem
 {
     public class InputHandler : MonoBehaviour
     {
-        [SerializeField] TimeManager timeManager;
-        [SerializeField] GameObject weaponsMenu;
+        [SerializeField] TimeManager timeManager = null;
+        [SerializeField] GameObject weaponsMenu = null;
 
         public static event Action OnPlayerStartButtonPressed;
         public List<ICommand> commandList = new List<ICommand>();
@@ -24,7 +23,7 @@ namespace PSmash.InputSystem
         ICommand buttonX;
         ICommand buttonY;
         ICommand buttonRB;
-        ICommand dPadRight;
+        //ICommand dPadRight;
 
         PlayerController playerController;
         _Controller _controller;
@@ -66,7 +65,7 @@ namespace PSmash.InputSystem
             _controller.Player.ButtonY.canceled += ctx => ButtonYReleased();
             _controller.Player.ButtonRB.started += cx => ButtonRBPressed();
             _controller.Player.ButtonRB.canceled += ctx => ButtonRBReleased();
-            _controller.Player.ButtonLB.performed += ctx => ButtonLBPressed();
+            //_controller.Player.ButtonLB.performed += ctx => ButtonLBPressed();
             _controller.Player.ButtonStart.started += ctx => ButtonStartPressed();
             _controller.Player.Quit.performed += ctx => QuitKeyPressed();
             EventManager.PauseGame += PauseGame;
@@ -93,7 +92,7 @@ namespace PSmash.InputSystem
             _controller.Player.ButtonY.canceled -= ctx => ButtonYReleased();
             _controller.Player.ButtonRB.started -= cx => ButtonRBPressed();
             _controller.Player.ButtonRB.canceled -= ctx => ButtonRBReleased();
-            _controller.Player.ButtonLB.performed -= ctx => ButtonLBPressed();
+            //_controller.Player.ButtonLB.performed -= ctx => ButtonLBPressed();
             _controller.Player.Quit.performed -= ctx => QuitKeyPressed();
             _controller.Player.ButtonStart.started -= ctx => ButtonStartPressed();
             EventManager.PauseGame -= PauseGame;
@@ -110,9 +109,9 @@ namespace PSmash.InputSystem
         {
             buttonA = GetComponent<JumpCommand>();
             buttonX = GetComponent<LightAttackCommand>();
-            buttonB = GetComponent<EvadeCommandV2>();
+            buttonB = GetComponent<EvadeCommand>();
             buttonY = GetComponent<HeavyAttackCommand>();
-            buttonRB = GetComponent<GuardCommandV2>();
+            buttonRB = GetComponent<GuardCommand>();
         }
 
         public Vector2 GetMovement()
@@ -177,11 +176,11 @@ namespace PSmash.InputSystem
             buttonRB.Execute(false);
         }
 
-        private void ButtonLBPressed()
-        {
-            if (dPadRight == null) return;
-            dPadRight.Execute(playerController);
-        }
+        //private void ButtonLBPressed()
+        //{
+        //    if (dPadRight == null) return;
+        //    dPadRight.Execute(playerController);
+        //}
         private void DPadLeftPressed()
         {
             Debug.Log("Pressed");

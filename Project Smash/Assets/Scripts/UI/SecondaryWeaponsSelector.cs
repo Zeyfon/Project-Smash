@@ -1,4 +1,4 @@
-﻿using PSmash.Core;
+﻿using PSmash.Attributes;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
@@ -7,8 +7,8 @@ namespace PSmash.UI
 {
     public class SecondaryWeaponsSelector : MonoBehaviour
     {
-        [SerializeField] Image weaponEquippedImage;
-        [SerializeField] Image weaponOnHoldImage;
+        [SerializeField] Image weaponEquippedImage = null;
+        [SerializeField] Image weaponOnHoldImage = null;
 
         Sprite spriteEquipped;
         Sprite spriteOnHold;

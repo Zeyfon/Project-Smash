@@ -1,9 +1,7 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using PSmash.Combat;
-using PSmash.Resources;
+﻿using PSmash.Attributes;
 using PSmash.SceneManagement;
+using System.Collections;
+using UnityEngine;
 
 namespace PSmash.Items.Traps
 {

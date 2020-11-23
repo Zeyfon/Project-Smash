@@ -1,11 +1,9 @@
-﻿using PSmash.Core;
+﻿using PSmash.Attributes;
 using PSmash.Movement;
-using PSmash.Resources;
 using Spine;
 using Spine.Unity;
 using System;
 using System.Collections;
-using System.Resources;
 using UnityEngine;
 
 namespace PSmash.Combat
@@ -159,7 +157,7 @@ namespace PSmash.Combat
             movement.CanFlip = true;
             isAttacking = false;
             guardTrigger.enabled = false;
-            if (IsFinishingAnEnemy()) isFinishinAnEnemy = false;
+            isFinishinAnEnemy = false;
             gameObject.layer = LayerMask.NameToLayer("Player");
             print("Attack Finished");
         }
