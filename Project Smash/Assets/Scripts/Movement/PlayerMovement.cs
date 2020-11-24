@@ -1,4 +1,4 @@
-﻿using PSmash.Resources;
+﻿using PSmash.Attributes;
 using Spine.Unity;
 using System.Collections;
 using UnityEngine;
@@ -36,7 +36,7 @@ namespace PSmash.Movement
         [SerializeField] float maxGuardingSpeed = 2;
         [SerializeField] float jumpVelocity = 14;
         [SerializeField] int raycastFrameInterval = 10;
-        [SerializeField] AudioClip jumpSound;
+        [SerializeField] AudioClip jumpSound = null;
         [SerializeField] Transform wallCheckUpper = null;
         [SerializeField] Transform wallCheckMiddle = null;
 

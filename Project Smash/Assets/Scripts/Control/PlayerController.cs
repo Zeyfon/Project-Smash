@@ -1,14 +1,14 @@
 ﻿using PSmash.Combat;
 using PSmash.Movement;
-using PSmash.Resources;
+using PSmash.Attributes;
+using PSmash.Core;
 using UnityEngine;
 
 namespace PSmash.Control
 {
     public class PlayerController : MonoBehaviour
     {
-        [SerializeField] GameObject spriteGameObject;
-        //public static Transform playerTransform;
+        [SerializeField] GameObject spriteGameObject = null;
         PlayerMovement playerMovement;
         PlayerFighter fighter;
         PlayerHealth health;
@@ -76,13 +76,12 @@ namespace PSmash.Control
             if (!isEnabled) return;
             if (playerMovement.IsEvading() || playerMovement.IsMovingOnWall || playerMovement.IsClimbingLedge() || playerMovement.IsMovingOnLadder() || health.IsDamaged()) return;
             if (CheckToolAction()) return;
-            //fighter.ToolAttack(isButtonPressed);
         }
 
         public void GuardButton(bool isButtonPressed)
         {
             if (!isEnabled) return;
-            if (fighter.IsAttacking() || playerMovement.IsEvading() || playerMovement.IsClimbingLedge() || playerMovement.IsMovingOnWall || playerMovement.IsMovingOnLadder() || health.IsDamaged()) return;
+            if (fighter.IsAttacking() || playerMovement.IsEvading() || playerMovement.IsClimbingLedge() || playerMovement.IsMovingOnWall || playerMovement.IsMovingOnLadder() || !health.IsDamaged()) return;
             fighter.Guard(isButtonPressed);
         }
 

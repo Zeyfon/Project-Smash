@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 using PSmash.Combat;
-using PSmash.Resources;
+using PSmash.Attributes;
 using PSmash.Movement;
 using System;
 

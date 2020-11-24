@@ -1,49 +1,41 @@
-﻿using PSmash.Resources;
+﻿using PSmash.Attributes;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class OreCluster : MonoBehaviour, IDamagable
+namespace PSmash.Items
 {
-    [SerializeField] int health = 30;
-    [SerializeField] AudioSource audioSource = null;
-    [SerializeField] AudioClip damageSound = null;
-    [SerializeField] GameObject drop = null;
-    public void TakeDamage(Transform attacker, int damage)
+    public class OreCluster : MonoBehaviour, IDamagable
     {
-        print("Ore Damaged");
-        health -= damage;
-        audioSource.PlayOneShot(damageSound);
-        if (health <= 0)
+        [SerializeField] int health = 30;
+        [SerializeField] AudioSource audioSource = null;
+        [SerializeField] AudioClip damageSound = null;
+        [SerializeField] GameObject drop = null;
+        public void TakeDamage(Transform attacker, int damage)
         {
-            GetComponent<Collider2D>().enabled = false;
-            StartCoroutine(DestroyObject());
+            print("Ore Damaged");
+            health -= damage;
+            audioSource.PlayOneShot(damageSound);
+            if (health <= 0)
+            {
+                GetComponent<Collider2D>().enabled = false;
+                StartCoroutine(DestroyObject());
+            }
         }
-    }
 
-    IEnumerator DestroyObject()
-    {
-        audioSource.Play();
-        for(int i = 0; i<2; i++)
+        IEnumerator DestroyObject()
         {
-            Instantiate(drop, transform.position, Quaternion.identity);
+            audioSource.Play();
+            for (int i = 0; i < 2; i++)
+            {
+                Instantiate(drop, transform.position, Quaternion.identity);
+            }
+            while (audioSource.isPlaying)
+            {
+                yield return null;
+            }
+            Destroy(gameObject);
         }
-        while (audioSource.isPlaying)
-        {
-            yield return null;
-        }
-        Destroy(gameObject);
-    }
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 }
+

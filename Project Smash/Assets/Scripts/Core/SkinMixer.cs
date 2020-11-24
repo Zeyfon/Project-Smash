@@ -2,35 +2,39 @@
 using Spine.Unity;
 using UnityEngine;
 
-public class SkinMixer : MonoBehaviour
+namespace PSmash.Core
 {
-    [Tooltip("The names must be exactly as the names of the skin " +
-             "or will throw a warnin")]
-    [SerializeField] string[] skinNames = null;
-    SkeletonMecanim skeletonMecanim;
-    // Start is called before the first frame update
-
-    private void Awake()
+    public class SkinMixer : MonoBehaviour
     {
-        skeletonMecanim = GetComponent<SkeletonMecanim>();
-    }
-    void Start()
-    {
+        [Tooltip("The names must be exactly as the names of the skin " +
+                 "or will throw a warnin")]
+        [SerializeField] string[] skinNames = null;
+        SkeletonMecanim skeletonMecanim;
+        // Start is called before the first frame update
 
-        var skeleton = skeletonMecanim.skeleton;
-        var skeletonData = skeleton.Data;
-        var combinedSkin = new Skin("merleCombined");
-        foreach(string skinName in skinNames)
+        private void Awake()
         {
-            if (skeletonData.FindSkin(skinName) == null) Debug.Log(skinName + "  was not found. Check spelling");
-            combinedSkin.AddSkin(skeletonData.FindSkin(skinName));
+            skeletonMecanim = GetComponent<SkeletonMecanim>();
         }
-        skeleton.SetSkin(combinedSkin);
-    }
+        void Start()
+        {
 
-    // Update is called once per frame
-    void Update()
-    {
-        
+            var skeleton = skeletonMecanim.skeleton;
+            var skeletonData = skeleton.Data;
+            var combinedSkin = new Skin("merleCombined");
+            foreach (string skinName in skinNames)
+            {
+                if (skeletonData.FindSkin(skinName) == null) Debug.Log(skinName + "  was not found. Check spelling");
+                combinedSkin.AddSkin(skeletonData.FindSkin(skinName));
+            }
+            skeleton.SetSkin(combinedSkin);
+        }
+
+        // Update is called once per frame
+        void Update()
+        {
+
+        }
     }
 }
+

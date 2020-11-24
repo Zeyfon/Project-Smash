@@ -1,5 +1,5 @@
 ﻿using PSmash.Core;
-using PSmash.Resources;
+using PSmash.Attributes;
 using PSmash.SceneManagement;
 using System.Collections;
 using System.Collections.Generic;

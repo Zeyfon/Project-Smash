@@ -9,7 +9,7 @@ namespace PSmash.SceneManagement
         [SerializeField] Transform cameraTransform = null;
         Vector2 startPosition;
 
-        [SerializeField] List<ParallexEffectComponents> tests;
+        [SerializeField] List<ParallexEffectComponents> tests = null;
 
 
 

@@ -1,8 +1,4 @@
-﻿using PSmash.Core;
-using System;
-using System.Collections;
-using UnityEngine;
-using PSmash.InputSystem;
+﻿using UnityEngine;
 
 namespace PSmash.Menus
 {

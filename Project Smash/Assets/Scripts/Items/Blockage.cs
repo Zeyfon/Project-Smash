@@ -1,24 +1,21 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using System.Net.Http.Headers;
+﻿using PSmash.Attributes;
+using System.Collections;
 using UnityEngine;
-using PSmash.Combat;
-using PSmash.Resources;
 using UnityEngine.Events;
 
 namespace PSmash.Items
 {
     public class Blockage : MonoBehaviour, IDamagable
     {
+        [SerializeField] int health = 40;
         [SerializeField] AudioClip damagedSound = null;
         [SerializeField] AudioClip destroyedSound = null;
-        [SerializeField] int hitsToDestroyWall = 4;
         [SerializeField] ParticleSystem particles;
         [SerializeField] float shakeAmount = 0.2f;
         [SerializeField] UnityEvent OnBlockageDestroyed;
+
         AudioSource audioSource;
         Coroutine coroutine;
-        int hits = 0;
 
         
         private void Awake()
@@ -28,13 +25,12 @@ namespace PSmash.Items
 
         public void TakeDamage(Transform attacker, int damage)
         {
-            if (hits >= hitsToDestroyWall)
+            if (health <= 0)
             {
-                GetComponent<Collider2D>().enabled = false;
                 WallDestroyed();
             }
             else WallDamaged();
-            hits++;
+            health -= damage;
         }
 
         void WallDestroyed()
@@ -46,6 +42,7 @@ namespace PSmash.Items
             particles.Stop();
             StopCoroutine(coroutine);
             GetComponent<Animation>().Play();
+            GetComponentInChildren<SpriteRenderer>().enabled = false;
         }
 
         void WallDamaged()
@@ -68,11 +65,13 @@ namespace PSmash.Items
             }
         }
 
+        //This is issued for the areas that will be covered to not let the player see them at first
+        //but once passed an specific trigger the area will be shown to the player
         private void OnTriggerEnter2D(Collider2D collision)
         {
             if (collision.CompareTag("Player"))
             {
-                print("Triggered");
+                print(transform.parent.gameObject.name );
                 transform.parent.GetComponent<CoveredArea>().ShowHiddenArea();
                 GetComponent<Collider2D>().enabled = false;
             }

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using PSmash.Core;
+using PSmash.Attributes;
 
 namespace PSmash.UI
 {
