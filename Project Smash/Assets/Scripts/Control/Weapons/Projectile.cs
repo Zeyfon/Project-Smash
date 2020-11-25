@@ -4,83 +4,103 @@ using System.Collections.Generic;
 using UnityEngine;
 using PSmash.Attributes;
 
-namespace PSmash.Weapons
+namespace PSmash.Combat.Weapons
 {
     public class Projectile : MonoBehaviour
     {
         [SerializeField] float speed = 1;
-        [SerializeField] float maxDistance = 1;
-        [SerializeField] bool lookingRight = true;
         [SerializeField] int damage = 10;
-        Rigidbody2D rb;
-        float timer = 0;
-        float initialXPosition;
-        bool hasPassed = false;
-        // Start is called before the first frame update
-        void Start()
-        {
-            initialXPosition = transform.position.x;
-            rb = GetComponent<Rigidbody2D>();
-            StartCoroutine(Timer());
-        }
+        [SerializeField] AudioClip wallHitSound = null;
+        [SerializeField] AudioClip enemyHiySound = null;
 
-        IEnumerator Timer()
+        AudioSource audioSource;
+        Rigidbody2D rb;
+        bool hasHit = false;
+        // Start is called before the first frame update
+        void Awake()
         {
-            float timer = 0;
-            while (!hasPassed)
-            {
-                timer += Time.deltaTime;
-                if (timer > 0.3f) hasPassed = true;
-                yield return new WaitForEndOfFrame();
-            }
+            audioSource = GetComponent<AudioSource>();
+            rb = GetComponent<Rigidbody2D>();
         }
 
         // Update is called once per frame
-        void Update()
+        void FixedUpdate()
         {
-            float x = Mathf.Cos(GetCosArgument());
-            if (lookingRight) x = -x;
-            rb.MovePosition(new Vector2(initialXPosition + x * maxDistance, transform.position.y));
+            if (hasHit) return;
+            float deltaPosX = transform.right.x *speed * Time.fixedDeltaTime;
+            Vector2 newPosition = transform.position + new Vector3(deltaPosX, 0);
+            rb.MovePosition(newPosition);
         }
 
-        public void IslookingRight(Vector3 isRight)
+        public void SetData(bool isLookingRight)
         {
-            if (isRight == transform.right)
-            {
-                lookingRight = true;
-            }
-            else lookingRight = false;
+            if (isLookingRight) return;
+            else transform.eulerAngles = new Vector3(0, 180, 0);
         }
-        private float GetCosArgument()
+
+        //Anim Event
+        void WallHitSound()
         {
-            float x;
-            timer += Time.deltaTime;
-            x = (timer * speed) + Mathf.PI / 2;
-            if (x >= (3f / 2f) * Mathf.PI)
-            {
-                Destroy(gameObject);
-                return x = (3f / 2f) * Mathf.PI;
-            }
-            else
-            {
-                return x;
-            }
+            audioSource.clip = wallHitSound;
+            audioSource.pitch = Random.Range(0.8f, 1f);
+            audioSource.Play();
         }
+
+        //Anim Event
+        void EnemyHitSound()
+        {
+            audioSource.clip = enemyHiySound;
+            audioSource.pitch = Random.Range(0.8f, 1f);
+            audioSource.Play();
+        }
+
+        void DestroyObject()
+        {
+            Destroy(gameObject);
+        }
+
+        //public void IslookingRight(Vector3 isRight)
+        //{
+        //    if (isRight == transform.right)
+        //    {
+        //        lookingRight = true;
+        //    }
+        //    else lookingRight = false;
+        //}
+        //private float GetCosArgument()
+        //{
+        //    float x;
+        //    timer += Time.deltaTime;
+        //    x = (timer * speed) + Mathf.PI / 2;
+        //    if (x >= (3f / 2f) * Mathf.PI)
+        //    {
+        //        Destroy(gameObject);
+        //        return x = (3f / 2f) * Mathf.PI;
+        //    }
+        //    else
+        //    {
+        //        return x;
+        //    }
+        //}
 
         private void OnTriggerEnter2D(Collider2D collision)
         {
+            if (collision.CompareTag("Player")) return;
+            GetComponent<Collider2D>().enabled = false;
+            hasHit = true;
+
             if (collision.CompareTag("Enemy"))
             {
-                //Debug.Log("Sending Damage to Enemy");
+                print(gameObject.name + "  Hit Enemy");
+                GetComponent<Animator>().SetTrigger("EnemyHit");
                 collision.GetComponent<IDamagable>().TakeDamage(transform, damage);
             }
-            if (collision.CompareTag("Player"))
+            else
             {
-                if (hasPassed)
-                {
-                    //Debug.Log("Being recovered by player");
-                    Destroy(gameObject);
-                }
+                print(collision.name);
+                print(gameObject.name + "  Hit Wall");
+                GetComponent<Animator>().SetTrigger("WallHit");
+                //collision.GetComponent<IDamagable>().TakeDamage(transform, damage);
             }
         }
     }

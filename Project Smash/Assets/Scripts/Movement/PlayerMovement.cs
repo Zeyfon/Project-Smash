@@ -86,7 +86,7 @@ namespace PSmash.Movement
         float gravityScale;
         float ladderPositionX;
         bool isFalling = false;
-        bool lookingRight = true;
+        bool isLookingRight = true;
         bool isOnSlope = false;
         bool isGrounded;
         bool isJumping;
@@ -251,6 +251,11 @@ namespace PSmash.Movement
 
         #endregion
 
+        public void StopMovement()
+        {
+            rb.velocity = new Vector2(0, 0);
+        }
+
         #region JumpControl
         public void Jump(float yInput)
         {
@@ -329,7 +334,7 @@ namespace PSmash.Movement
         #region EvasiveMovement Control
         public void EvadeMovement(float xInput)
         {
-            print("Wants to Dash");
+            //print("Wants to Dash");
             //Debug.Log("Wants to evade");
             if (xInput == 0)
             {
@@ -365,7 +370,7 @@ namespace PSmash.Movement
         {
                 while (true)
                 {
-                print("Roll force applying");
+                //print("Roll force applying");
                     ConstantInputMovement(transform.right.x);
                     animator.SetFloat("yVelocity", rb.velocity.y);
                     yield return new WaitForFixedUpdate();
@@ -681,23 +686,23 @@ namespace PSmash.Movement
             //The use of this method implies that you can Flip
             //If Flip is not allow please put that instruction outside this method
             Quaternion currentRotation = new Quaternion(0, 0, 0, 0);
-            if (xInput > 0 && !lookingRight)
+            if (xInput > 0 && !isLookingRight)
             {
                 CreateDust();
                 //print("Change To Look Right");
                 Vector3 rotation = new Vector3(0, 0, 0);
                 currentRotation.eulerAngles = rotation;
                 transform.rotation = currentRotation;
-                lookingRight = true;
+                isLookingRight = true;
             }
-            if (xInput < 0 && lookingRight)
+            if (xInput < 0 && isLookingRight)
             {
                 //print("Change To Look Left");
                 CreateDust();
                 Vector3 rotation = new Vector3(0, 180, 0);
                 currentRotation.eulerAngles = rotation;
                 transform.rotation = currentRotation;
-                lookingRight = false;
+                isLookingRight = false;
             }
         }
 
@@ -799,6 +804,11 @@ namespace PSmash.Movement
                 }
 
             }
+        }
+
+        public bool GetIsLookingRight()
+        {
+            return isLookingRight;
         }
 
         public bool CanFlip

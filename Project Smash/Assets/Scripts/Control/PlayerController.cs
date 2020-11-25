@@ -1,7 +1,6 @@
 ﻿using PSmash.Combat;
 using PSmash.Movement;
 using PSmash.Attributes;
-using PSmash.Core;
 using UnityEngine;
 
 namespace PSmash.Control
@@ -66,7 +65,6 @@ namespace PSmash.Control
         public void MainAttackButton(bool isButtonPressed)
         {
             if (!isEnabled) return;
-            //print("Attacking");
             if (playerMovement.IsEvading() || playerMovement.IsMovingOnWall || playerMovement.IsClimbingLedge() || playerMovement.IsMovingOnLadder() || health.IsDamaged()) return;
             fighter.MainAttack(isButtonPressed, yInput);
         }
@@ -80,8 +78,12 @@ namespace PSmash.Control
 
         public void GuardButton(bool isButtonPressed)
         {
+
             if (!isEnabled) return;
-            if (fighter.IsAttacking() || playerMovement.IsEvading() || playerMovement.IsClimbingLedge() || playerMovement.IsMovingOnWall || playerMovement.IsMovingOnLadder() || !health.IsDamaged()) return;
+            print(this.name + "  wants to guard");
+            print(fighter.IsAttacking() + "  " + playerMovement.IsEvading() + "  " + playerMovement.IsClimbingLedge() + "  " + playerMovement.IsMovingOnWall + "  " + playerMovement.IsMovingOnLadder() +"  "+ health.IsDamaged());
+            if (fighter.IsAttacking() || playerMovement.IsEvading() || playerMovement.IsClimbingLedge() || playerMovement.IsMovingOnWall || playerMovement.IsMovingOnLadder() || health.IsDamaged()) return;
+            print(this.name + "  wants to guard2");
             fighter.Guard(isButtonPressed);
         }
 
@@ -90,6 +92,14 @@ namespace PSmash.Control
             if (!isEnabled) return;
             if (fighter.IsAttacking() || playerMovement.IsEvading() || playerMovement.IsClimbingLedge() || playerMovement.IsMovingOnWall || playerMovement.IsMovingOnLadder() || fighter.IsGuarding() || health.IsDamaged()) return;
             playerMovement.EvadeMovement(xInput);
+        }
+
+        public void ThrowButton(bool isButtonPressed)
+        {
+            if (!isEnabled) return;
+            //print("Attacking");
+            if (fighter.IsAttacking() || playerMovement.IsEvading() || playerMovement.IsMovingOnWall || playerMovement.IsClimbingLedge() || playerMovement.IsMovingOnLadder() || health.IsDamaged()) return;
+            fighter.ThrowItemAttack(isButtonPressed);
         }
 
         bool CheckToolAction()

@@ -1,0 +1,110 @@
+{
+"skeleton": { "hash": "hC6vQ9XK+faKhxQowjNFM3NFpj0", "spine": "3.8.99", "x": -128.05, "y": -34.46, "width": 256.09, "height": 64.36 },
+"bones": [
+	{ "name": "Root Daga", "rotation": -0.08 },
+	{ "name": "Daga", "parent": "Root Daga", "x": 0.01, "y": -9.12 },
+	{ "name": "DagaEfecto", "parent": "Daga", "x": -0.03, "y": 23.26 }
+],
+"slots": [
+	{ "name": "Daga", "bone": "Daga", "attachment": "Daga" },
+	{ "name": "DagaEfecto", "bone": "DagaEfecto" }
+],
+"skins": [
+	{
+		"name": "default",
+		"attachments": {
+			"Daga": {
+				"Daga": { "x": -0.01, "y": 6.84, "width": 256, "height": 64 }
+			},
+			"DagaEfecto": {
+				"DagaEfecto": { "x": 0.05, "y": -21.89, "width": 284, "height": 64 }
+			}
+		}
+	}
+],
+"animations": {
+	"Dagger_ImpactEnemy": {
+		"slots": {
+			"Daga": {
+				"color": [
+					{ "time": 0.1667, "color": "ffffffff", "curve": 0.25, "c3": 0.75 },
+					{ "time": 0.5, "color": "ffffff00" }
+				]
+			}
+		},
+		"bones": {
+			"Daga": {
+				"rotate": [
+					{ "curve": 0.25, "c3": 0.75 },
+					{ "time": 0.1667, "angle": -4.52, "curve": 0.25, "c3": 0.75 },
+					{ "time": 0.5, "angle": -0.68 }
+				],
+				"translate": [
+					{ "curve": 0.25, "c3": 0.75 },
+					{ "time": 0.1667, "y": 3.26, "curve": 0.25, "c3": 0.75 },
+					{ "time": 0.5 }
+				]
+			}
+		}
+	},
+	"Dagger_ImpactWall": {
+		"slots": {
+			"Daga": {
+				"color": [
+					{ "color": "ffffffff", "curve": 0.25, "c3": 0.75 },
+					{ "time": 0.5, "color": "ffffff00" }
+				]
+			}
+		},
+		"bones": {
+			"Daga": {
+				"rotate": [
+					{ "curve": 0.25, "c3": 0.75 },
+					{ "time": 0.1333, "angle": -76.95, "curve": 0.25, "c3": 0.75 },
+					{ "time": 0.2667, "angle": -179.73, "curve": 0.25, "c3": 0.75 },
+					{ "time": 0.3667, "angle": 98.74, "curve": 0.25, "c3": 0.75 },
+					{ "time": 0.5, "angle": 1.51 }
+				],
+				"translate": [
+					{ "curve": 0.25, "c3": 0.75 },
+					{ "time": 0.2667, "x": 99.95, "y": 169.3, "curve": 0.25, "c3": 0.75 },
+					{ "time": 0.5, "x": 223.24, "y": -20.65 }
+				]
+			}
+		}
+	},
+	"Dagger_LoopThrow": {
+		"slots": {
+			"DagaEfecto": {
+				"color": [
+					{ "color": "ffffffff" },
+					{ "time": 0.2333, "color": "ffffffaf" },
+					{ "time": 0.5, "color": "ffffffff" }
+				],
+				"attachment": [
+					{ "name": "DagaEfecto" }
+				]
+			}
+		},
+		"bones": {
+			"Daga": {
+				"translate": [
+					{},
+					{ "time": 0.2333, "y": 1.58 },
+					{ "time": 0.5 }
+				]
+			},
+			"DagaEfecto": {
+				"translate": [
+					{ "x": -42.6, "y": 5.06 }
+				],
+				"scale": [
+					{ "x": 1.174 },
+					{ "time": 0.2333, "x": 1.207 },
+					{ "time": 0.5, "x": 1.174 }
+				]
+			}
+		}
+	}
+}
+}

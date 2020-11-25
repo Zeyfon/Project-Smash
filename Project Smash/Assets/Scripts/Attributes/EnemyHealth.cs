@@ -16,6 +16,7 @@ namespace PSmash.Attributes
         [SerializeField] AudioClip stunnedSound = null;
         [SerializeField] AudioClip deadSound = null;
         [SerializeField] AudioClip guardDamageSound = null;
+        [SerializeField] AudioClip damageWhileStunnedSound = null;
         [SerializeField] GameObject dropItem = null;
         [SerializeField] AudioClip finisherDamageSound = null;
 
@@ -57,7 +58,14 @@ namespace PSmash.Attributes
             //Further in the game the enemy could be attacked without being locked on
             if (isStunned)
             {
-                Debug.LogWarning(gameObject.name + "  was damaged being stunned");
+                print(gameObject.name + "  was damaged being stunned");
+                audioSource.PlayOneShot(damageWhileStunnedSound);
+                DamageHealthBar(attacker, damage);
+                if (health <= 0)
+                {
+                    Dead();
+                    return;
+                }
                 return;
             }
             //Damaged by Parry
@@ -73,8 +81,8 @@ namespace PSmash.Attributes
                 print(gameObject.name + "  is damaged while attacking");
                 posture.DamagePosture(attacker, damage, 
                                       EnemyPosture.CurrentActionsWhenDamaged.NormalAttacking);
-                DamageHealthBar(attacker, damage);
                 audioSource.PlayOneShot(damagedSound);
+                DamageHealthBar(attacker, damage);
                 if (health <= 0)
                 {
                     Dead();
@@ -87,8 +95,8 @@ namespace PSmash.Attributes
                 print(gameObject.name + "  is damaged while unblockable attacking");
                 posture.DamagePosture(attacker, damage, 
                                       EnemyPosture.CurrentActionsWhenDamaged.UnblockableAttacking);
-                DamageHealthBar(attacker, damage);
                 audioSource.PlayOneShot(damagedSound);
+                DamageHealthBar(attacker, damage);
                 if (health <= 0)
                 {
                     Dead();
@@ -106,8 +114,8 @@ namespace PSmash.Attributes
                 else
                 {
                     Debug.LogWarning(gameObject.name + "  was damaged while doing nothing");
-                    DamageHealthBar(attacker, damage);
                     audioSource.PlayOneShot(damagedSound);
+                    DamageHealthBar(attacker, damage);
                     if (health <= 0)
                     {
                         Dead();
@@ -116,6 +124,8 @@ namespace PSmash.Attributes
                 }
             }
         }
+
+        
 
         private void DamageHealthBar(Transform attacker, int damage)
         {

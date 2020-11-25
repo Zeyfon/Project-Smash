@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace PSmash.Attributes
 {
-    public class Floor : MonoBehaviour, IDamagable
+    public class Ground : MonoBehaviour, IDamagable
     {
 
         [SerializeField] AudioSource audioSource = null;
