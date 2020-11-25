@@ -87,18 +87,19 @@ namespace PSmash.Combat.Weapons
         {
             if (collision.CompareTag("Player")) return;
             GetComponent<Collider2D>().enabled = false;
+            //print("Collider Disabled");
             hasHit = true;
 
             if (collision.CompareTag("Enemy"))
             {
-                print(gameObject.name + "  Hit Enemy");
+                //print(gameObject.name + "  Hit Enemy");
                 GetComponent<Animator>().SetTrigger("EnemyHit");
                 collision.GetComponent<IDamagable>().TakeDamage(transform, damage);
             }
             else
             {
-                print(collision.name);
-                print(gameObject.name + "  Hit Wall");
+                //print(collision.name);
+                //print(gameObject.name + "  Hit Wall");
                 GetComponent<Animator>().SetTrigger("WallHit");
                 //collision.GetComponent<IDamagable>().TakeDamage(transform, damage);
             }

@@ -214,7 +214,7 @@ namespace PSmash.Combat
             //Keep track of the animation status to tell I am not attacking anymore
             //Run throw animation
             //Spawn dagger in the direction I am facing
-            print(this.name + "  Throwing item");
+            //print(this.name + "  Throwing item");
             animator.SetInteger("Attack", 30);
             isAttacking = true;
             StartCoroutine(IsAttackingAnimationStatus("Attack"));
@@ -251,7 +251,7 @@ namespace PSmash.Combat
             //This is to check the status of the button
             //61 will be the value to pass directly to the charge attack animation
             //70 will be the value to end the animation
-            print("Setting after attack action  " + isButtonPressed);
+            //print("Setting after attack action  " + isButtonPressed);
             if (!isButtonPressed)
             {
                 animator.SetInteger("Attack", 70);

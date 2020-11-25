@@ -51,14 +51,14 @@ namespace PSmash.Attributes
 
         public override void TakeDamage(Transform attacker, int damage)
         {
-            print(gameObject.name + " damage received");
+            //print(gameObject.name + " damage received");
             if (isDead) return;
             //Damage while stunned
             //For now this must not enter since the player will kill it instantly
             //Further in the game the enemy could be attacked without being locked on
             if (isStunned)
             {
-                print(gameObject.name + "  was damaged being stunned");
+                //print(gameObject.name + "  was damaged being stunned");
                 audioSource.PlayOneShot(damageWhileStunnedSound);
                 DamageHealthBar(attacker, damage);
                 if (health <= 0)
@@ -78,7 +78,7 @@ namespace PSmash.Attributes
             //Damage while Normal Attacking
             else if (isNormalAttacking)
             {
-                print(gameObject.name + "  is damaged while attacking");
+                //print(gameObject.name + "  is damaged while attacking");
                 posture.DamagePosture(attacker, damage, 
                                       EnemyPosture.CurrentActionsWhenDamaged.NormalAttacking);
                 audioSource.PlayOneShot(damagedSound);
@@ -92,7 +92,7 @@ namespace PSmash.Attributes
             //Damaged while performing Unblockable Attack
             else if (isUnblockableAttacking)
             {
-                print(gameObject.name + "  is damaged while unblockable attacking");
+                //print(gameObject.name + "  is damaged while unblockable attacking");
                 posture.DamagePosture(attacker, damage, 
                                       EnemyPosture.CurrentActionsWhenDamaged.UnblockableAttacking);
                 audioSource.PlayOneShot(damagedSound);
@@ -107,13 +107,13 @@ namespace PSmash.Attributes
             {
                 if (posture.GetPosture() >0)
                 {
-                    print(gameObject.name + "  Is Damaged while not attacking");
+                    //print(gameObject.name + "  Is Damaged while not attacking");
 
                     posture.DamagePosture(attacker, damage, EnemyPosture.CurrentActionsWhenDamaged.NoAttackAction);
                 }
                 else
                 {
-                    Debug.LogWarning(gameObject.name + "  was damaged while doing nothing");
+                    //Debug.LogWarning(gameObject.name + "  was damaged while doing nothing");
                     audioSource.PlayOneShot(damagedSound);
                     DamageHealthBar(attacker, damage);
                     if (health <= 0)
@@ -138,7 +138,7 @@ namespace PSmash.Attributes
 
         public void Block()
         {
-            print(gameObject + "  is Blocking");
+            //print(gameObject + "  is Blocking");
             isBlocking = true;
             GetComponent<ActionScheduler>().StartAction(this);
             animator.SetInteger("guard", 1);
@@ -153,7 +153,7 @@ namespace PSmash.Attributes
             {
                 Debug.LogWarning("Wants to staggered when is already dead");
             }
-            print(gameObject + "  is Staggered");
+            //print(gameObject + "  is Staggered");
             GetComponent<ActionScheduler>().StartAction(this);
             animator.SetInteger("guard", 30);
             audioSource.PlayOneShot(staggeredSound);
@@ -167,7 +167,7 @@ namespace PSmash.Attributes
             {
                 Debug.LogWarning("Wants to staggered when is already dead");
             }
-            print(gameObject + "  is Stunned");
+            //print(gameObject + "  is Stunned");
 
             GetComponent<ActionScheduler>().StartAction(this);
             animator.SetInteger("guard", 30);
@@ -189,7 +189,7 @@ namespace PSmash.Attributes
             isBlocking = false;
             if (isStunned)
             {
-                print("Refilling Posture Bar");
+                //print("Refilling Posture Bar");
                 isStunned = false;
 
                 posture.RefillPosture();
@@ -238,10 +238,10 @@ namespace PSmash.Attributes
         private void Dead()
         {
             isDead = true;
-            print("Is Dead");
+           // print("Is Dead");
             GetComponent<ActionScheduler>().StartAction(this);
             StopAllCoroutines();
-            print("Updated values to dead ones");
+            //print("Updated values to dead ones");
             animator.SetInteger("attack", 0);
             animator.SetInteger("guard", 0);
             animator.SetInteger("finisher", 0);

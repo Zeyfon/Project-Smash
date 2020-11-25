@@ -180,7 +180,7 @@ namespace PSmash.InputSystem
 
         private void ButtonLBPressed()
         {
-            print("Want to throw item");
+            //print("Want to throw item");
             if (buttonLB == null) return;
             buttonLB.Execute(playerController);
         }
