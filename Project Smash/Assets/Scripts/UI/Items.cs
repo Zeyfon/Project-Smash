@@ -25,7 +25,7 @@ namespace PSmash.UI
 
         private void OnDisable()
         {
-            FindObjectOfType<PlayerFighter>().onItemThrown -= ItemUsed;
+            //FindObjectOfType<PlayerFighter>().onItemThrown -= ItemUsed;
         }
 
         void ItemUsed(int currentQuantity)

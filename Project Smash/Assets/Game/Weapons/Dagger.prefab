@@ -32,7 +32,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5957079273200037511}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -20.93, y: 7.79, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -57,7 +57,7 @@ Rigidbody2D:
   m_Material: {fileID: 0}
   m_Interpolate: 0
   m_SleepingMode: 1
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
   m_Constraints: 0
 --- !u!61 &5957079273200037515
 BoxCollider2D:
@@ -72,7 +72,7 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: -0.09, y: 0}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -83,7 +83,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1, y: 0.5}
+  m_Size: {x: 0.6, y: 0.5}
   m_EdgeRadius: 0
 --- !u!33 &8400834382995094488
 MeshFilter:
@@ -129,8 +129,8 @@ MeshRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: -1010499681
+  m_SortingLayer: 2
   m_SortingOrder: 0
 --- !u!95 &7062899954565699657
 Animator:
@@ -203,10 +203,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 54293c2d8ea5fe84281807e65a205c1f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  enemyHitEffect: {fileID: 3918149250384871456, guid: b59d3c3a0c253c04f88b75666c55b0ea,
+    type: 3}
+  wallHitEWffect: {fileID: 3324937203973167759, guid: ef607aa9846ca1e4c85e4bcc9b20794b,
+    type: 3}
   speed: 14
   damage: 50
   wallHitSound: {fileID: 8300000, guid: 593dff8edcff05d42b95188bc8e9ec34, type: 3}
-  enemyHiySound: {fileID: 8300000, guid: 7bfb4473f9b658540b1ffb79bf4fb35c, type: 3}
+  enemyHitSound: {fileID: 8300000, guid: 11ed0dbf4a7f019449970f5ef9ccf248, type: 3}
 --- !u!82 &3048807680942522201
 AudioSource:
   m_ObjectHideFlags: 0
@@ -228,7 +232,7 @@ AudioSource:
   Priority: 128
   DopplerLevel: 1
   MinDistance: 3
-  MaxDistance: 17
+  MaxDistance: 20
   Pan2D: 0
   rolloffMode: 2
   BypassEffects: 0
@@ -238,22 +242,22 @@ AudioSource:
     serializedVersion: 2
     m_Curve:
     - serializedVersion: 3
-      time: 0
-      value: 1
-      inSlope: -2.180742
-      outSlope: -2.180742
+      time: 0.1644783
+      value: 1.0006691
+      inSlope: -3.0597627
+      outSlope: -3.0597627
       tangentMode: 0
       weightedMode: 0
       inWeight: 0.33333334
-      outWeight: 0.15422885
+      outWeight: 0.13527082
     - serializedVersion: 3
       time: 1
-      value: 0
-      inSlope: 0
-      outSlope: 0
+      value: 0.1876297
+      inSlope: -0.18070433
+      outSlope: -0.18070433
       tangentMode: 0
       weightedMode: 0
-      inWeight: 0.33333334
+      inWeight: 0.34110427
       outWeight: 0.33333334
     m_PreInfinity: 2
     m_PostInfinity: 2
