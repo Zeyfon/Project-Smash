@@ -8,10 +8,12 @@ namespace PSmash.Combat.Weapons
 {
     public class Projectile : MonoBehaviour
     {
+        [SerializeField] GameObject enemyHitEffect = null;
+        [SerializeField] GameObject wallHitEWffect = null;
         [SerializeField] float speed = 1;
         [SerializeField] int damage = 10;
         [SerializeField] AudioClip wallHitSound = null;
-        [SerializeField] AudioClip enemyHiySound = null;
+        [SerializeField] AudioClip enemyHitSound = null;
 
         AudioSource audioSource;
         Rigidbody2D rb;
@@ -41,6 +43,7 @@ namespace PSmash.Combat.Weapons
         //Anim Event
         void WallHitSound()
         {
+            print(gameObject.name + "  Wall Hit Sound");
             audioSource.clip = wallHitSound;
             audioSource.pitch = Random.Range(0.8f, 1f);
             audioSource.Play();
@@ -49,7 +52,8 @@ namespace PSmash.Combat.Weapons
         //Anim Event
         void EnemyHitSound()
         {
-            audioSource.clip = enemyHiySound;
+            print(gameObject.name + "  Enemy Hit Sound");
+            audioSource.clip = enemyHitSound;
             audioSource.pitch = Random.Range(0.8f, 1f);
             audioSource.Play();
         }
@@ -88,21 +92,40 @@ namespace PSmash.Combat.Weapons
             if (collision.CompareTag("Player")) return;
             GetComponent<Collider2D>().enabled = false;
             //print("Collider Disabled");
-            hasHit = true;
+
 
             if (collision.CompareTag("Enemy"))
             {
-                //print(gameObject.name + "  Hit Enemy");
+                hasHit = true;
+                Instantiate(enemyHitEffect, transform.position, Quaternion.identity);
                 GetComponent<Animator>().SetTrigger("EnemyHit");
                 collision.GetComponent<IDamagable>().TakeDamage(transform, damage);
+                //StartCoroutine(EnemyHit(collision.transform));
+                //print(gameObject.name + "  Hit Enemy");
             }
             else
             {
                 //print(collision.name);
                 //print(gameObject.name + "  Hit Wall");
+                hasHit = true;
+                Instantiate(wallHitEWffect, transform.position + new Vector3(GetComponent<BoxCollider2D>().size.x/2*transform.right.x,0), Quaternion.identity);
                 GetComponent<Animator>().SetTrigger("WallHit");
                 //collision.GetComponent<IDamagable>().TakeDamage(transform, damage);
             }
+        }
+
+        IEnumerator EnemyHit(Transform targetTransform)
+        {
+
+            while (Mathf.Abs(Vector2.Distance(targetTransform.position, transform.position)) > 0.5f)
+            {
+                print(Vector2.Distance(targetTransform.position, transform.position));
+                yield return null;
+            }
+            hasHit = true;
+            Instantiate(enemyHitEffect, transform.position, Quaternion.identity);
+            GetComponent<Animator>().SetTrigger("EnemyHit");
+            targetTransform.GetComponent<IDamagable>().TakeDamage(transform, damage);
         }
     }
 }
