@@ -23,6 +23,7 @@ namespace PSmash.InputSystem
         ICommand buttonX;
         ICommand buttonY;
         ICommand buttonRB;
+        ICommand buttonLB;
         //ICommand dPadRight;
 
         PlayerController playerController;
@@ -65,7 +66,7 @@ namespace PSmash.InputSystem
             _controller.Player.ButtonY.canceled += ctx => ButtonYReleased();
             _controller.Player.ButtonRB.started += cx => ButtonRBPressed();
             _controller.Player.ButtonRB.canceled += ctx => ButtonRBReleased();
-            //_controller.Player.ButtonLB.performed += ctx => ButtonLBPressed();
+            _controller.Player.ButtonLB.started += ctx => ButtonLBPressed();
             _controller.Player.ButtonStart.started += ctx => ButtonStartPressed();
             _controller.Player.Quit.performed += ctx => QuitKeyPressed();
             EventManager.PauseGame += PauseGame;
@@ -92,7 +93,7 @@ namespace PSmash.InputSystem
             _controller.Player.ButtonY.canceled -= ctx => ButtonYReleased();
             _controller.Player.ButtonRB.started -= cx => ButtonRBPressed();
             _controller.Player.ButtonRB.canceled -= ctx => ButtonRBReleased();
-            //_controller.Player.ButtonLB.performed -= ctx => ButtonLBPressed();
+            _controller.Player.ButtonLB.started -= ctx => ButtonLBPressed();
             _controller.Player.Quit.performed -= ctx => QuitKeyPressed();
             _controller.Player.ButtonStart.started -= ctx => ButtonStartPressed();
             EventManager.PauseGame -= PauseGame;
@@ -112,6 +113,7 @@ namespace PSmash.InputSystem
             buttonB = GetComponent<EvadeCommand>();
             buttonY = GetComponent<HeavyAttackCommand>();
             buttonRB = GetComponent<GuardCommand>();
+            buttonLB = GetComponent<ThrowableItemsCommand>();
         }
 
         public Vector2 GetMovement()
@@ -176,11 +178,12 @@ namespace PSmash.InputSystem
             buttonRB.Execute(false);
         }
 
-        //private void ButtonLBPressed()
-        //{
-        //    if (dPadRight == null) return;
-        //    dPadRight.Execute(playerController);
-        //}
+        private void ButtonLBPressed()
+        {
+            //print("Want to throw item");
+            if (buttonLB == null) return;
+            buttonLB.Execute(playerController);
+        }
         private void DPadLeftPressed()
         {
             Debug.Log("Pressed");

@@ -6,7 +6,7 @@ namespace PSmash.InputSystem
 {
     public enum ButtonList
     {
-        buttonA, buttonB, buttonX, buttonY, buttonRB, dpadRightButton, noButton
+        buttonA, buttonB, buttonX, buttonY, buttonRB, buttonLB, dpadRightButton, noButton
     }
 }
 

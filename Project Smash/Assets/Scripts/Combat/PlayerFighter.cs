@@ -5,6 +5,7 @@ using Spine.Unity;
 using System;
 using System.Collections;
 using UnityEngine;
+using PSmash.Combat.Weapons;
 
 namespace PSmash.Combat
 {
@@ -28,6 +29,11 @@ namespace PSmash.Combat
         [SerializeField] AudioClip finisherSound = null;
         [SerializeField] Transform steamTransform = null;
         [SerializeField]  GameObject finisherEffects = null;
+
+        [Header("Throw Attack")]
+        [SerializeField] GameObject dagger = null;
+        public int currentItemQuantity = 3;
+
 
         [Header("AirSmash Attack")]
         [SerializeField] AudioClip splashAttackSound = null;
@@ -55,6 +61,9 @@ namespace PSmash.Combat
         [Header("Sounds")]
         [SerializeField] AudioClip currentToolSound=null;
         public event Action AirSmashAttackEffect;
+
+        public delegate void ThrowItem(int quantity);
+        public event ThrowItem onItemThrown;
 
         Animator animator;
         AudioSource audioSource;
@@ -84,7 +93,6 @@ namespace PSmash.Combat
             audioSource = GetComponent<AudioSource>();
             mecanim = GetComponent<SkeletonMecanim>();
             timeManager = GameObject.FindObjectOfType<TimeManager>();
-
         }
 
         private void Start()
@@ -96,11 +104,6 @@ namespace PSmash.Combat
         {
 
             if (IsFinishingAnEnemy()) return;
-
-            //Uncomment this to test the FinisherAttack
-            //DoFinisherMove();
-            //return;
-
 
             else if (IsEnemyStunned())
             {
@@ -166,13 +169,13 @@ namespace PSmash.Combat
         {
             RaycastHit2D hit = Physics2D.Raycast(transform.position + new Vector3(0, 1), transform.right, 2, whatIsEnemy);
             if (!hit) return false;
-
             return hit.transform.GetComponent<EnemyHealth>().IsStunned();
         }
 
         IEnumerator DoFinisherMove()
         {
             isFinishinAnEnemy = true;
+            movement.StopMovement();
             gameObject.layer = LayerMask.NameToLayer("PlayerGhost");
             print("Player is doing Finisher Move");
             RaycastHit2D hit = Physics2D.Raycast(transform.position + new Vector3(0, 1), transform.right, 2, whatIsEnemy);
@@ -201,9 +204,30 @@ namespace PSmash.Combat
                 yield return null;
             }
             targetTransform.GetComponent<EnemyHealth>().StartFinisherAnimation();
-
         }
 
+        public void ThrowItemAttack(bool isButtonPressed)
+        {
+            movement.StopMovement();
+
+            //Tell everyone I am attacking
+            //Keep track of the animation status to tell I am not attacking anymore
+            //Run throw animation
+            //Spawn dagger in the direction I am facing
+            //print(this.name + "  Throwing item");
+            animator.SetInteger("Attack", 30);
+            isAttacking = true;
+            StartCoroutine(IsAttackingAnimationStatus("Attack"));
+        }
+
+        void SpawnItem()
+        {
+            if (currentItemQuantity <= 0) return;
+            GameObject itemClone = Instantiate(dagger, attackTransform.position, Quaternion.identity);
+            itemClone.GetComponent<Projectile>().SetData(movement.GetIsLookingRight());
+            currentItemQuantity--;
+            onItemThrown(currentItemQuantity);
+        }
 
         public void ToolAttack(bool isButtonPressed)
         {
@@ -227,7 +251,7 @@ namespace PSmash.Combat
             //This is to check the status of the button
             //61 will be the value to pass directly to the charge attack animation
             //70 will be the value to end the animation
-            print("Setting after attack action  " + isButtonPressed);
+            //print("Setting after attack action  " + isButtonPressed);
             if (!isButtonPressed)
             {
                 animator.SetInteger("Attack", 70);
@@ -304,6 +328,7 @@ namespace PSmash.Combat
         public void Guard(bool isGuardButtonPressed)
         {
             this.isGuardButtonPressed = isGuardButtonPressed;
+            print(this.name + "  wants to guard3");
             if (this.isGuardButtonPressed)
             {
                 Guard();
@@ -319,6 +344,7 @@ namespace PSmash.Combat
         {
             isGuarding = true;
             animator.SetInteger("Guard", 1);
+            print(this.name + "  wants to guard");
             if (coroutine != null) StopCoroutine(coroutine);
             coroutine = StartCoroutine(EnablingParryTrigger());
             StartCoroutine(IsAttackingAnimationStatus("Guard"));
@@ -367,11 +393,11 @@ namespace PSmash.Combat
 
         private void SendDamage(Transform attackOriginPosition, Vector2 attackArea, int damage)
         {
-            print("Looking to Damage Enemy");
+            //print("Looking to Damage Enemy");
             Collider2D[] colls = Physics2D.OverlapBoxAll(attackOriginPosition.position, attackArea, 0, whatIsDamagable);
             if (colls.Length == 0)
             {
-                print("Nothing was damaged");
+                //print("Nothing was damaged");
                 return;
             }
             foreach (Collider2D coll in colls)
@@ -381,7 +407,7 @@ namespace PSmash.Combat
                 if (isFinishinAnEnemy)
                 {
                     damage *= 10;
-                    print("Enemy being Finished");
+                    //print("Enemy being Finished");
                 }
                 target.TakeDamage(transform, damage);
             }
@@ -479,7 +505,7 @@ namespace PSmash.Combat
             Debug.Log("Charge Attack is ready");
         }
         //Anim Event
-        void ComboAttackSounds(int sound)
+        void LightAttackSound()
         {
             audioSource.pitch = UnityEngine.Random.Range(0.75f, 1.1f);
             audioSource.PlayOneShot(attackSound1);
