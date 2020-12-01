@@ -10,7 +10,12 @@ namespace PSmash.Control
     {
         [SerializeField] float chaseRange = 5f;
         [SerializeField] float suspicionTime = 3f;
+        [SerializeField] float aggroCooldownTime = 3f;
+
         [SerializeField] bool lookRight = true;
+
+
+        bool rageState = false;
         public bool testMode = false;
 
         EnemyMovement movement;
@@ -20,7 +25,8 @@ namespace PSmash.Control
         EnemyVision vision;
         ActionScheduler actionScheduler;
 
-        float timeSinceLastSawPlayer = 0;
+        float timeSinceLastSawPlayer = Mathf.Infinity;
+        float timeSinceAggrevated = Mathf.Infinity;
         // Start is called before the first frame update
         void Awake()
         {
@@ -50,7 +56,7 @@ namespace PSmash.Control
             if (vision.Target == null) return;
             if (health.IsStaggered() || health.IsStunned()|| health.IsBlocking() || health.IsBeingFinished()) return;
             if (attack.IsAttacking()) return;
-            if (IsTargetInRange())
+            if (IsAggrevated() )
             {
                 //print("AttackBehavior");
                 AttackBehavior();
@@ -84,16 +90,26 @@ namespace PSmash.Control
             if (Mathf.Abs(transform.position.x - spawnPosition.x) < 0.5f)
             {
                 movement.CheckFlip(vision.Target.position);
+                if (rageState) return;
                 vision.Target = null;
                 attack.targetHealth = null;
             }
         }
 
-
-        bool IsTargetInRange()
+        bool IsAggrevated()
         {
-            if (Mathf.Abs(transform.position.y - vision.Target.position.y) > 3) return false;
-            else return Vector3.Distance(transform.position, vision.Target.position) < chaseRange;
+            if (rageState) return true;
+            bool inAttackRange = Vector3.Distance(transform.position, vision.Target.position) < chaseRange;
+            //if (Mathf.Abs(transform.position.y - vision.Target.position.y) > 3) return false;
+            //else return Vector3.Distance(transform.position, vision.Target.position) < chaseRange;
+            if (timeSinceAggrevated <= aggroCooldownTime) return true;
+            return inAttackRange;
+        }
+
+        public void SetAutomaticAttack(Transform target)
+        {
+            vision.Target = target;
+            rageState = true;
         }
     }
 
