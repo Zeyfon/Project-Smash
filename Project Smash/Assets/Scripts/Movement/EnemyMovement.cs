@@ -21,6 +21,9 @@ namespace PSmash.Movement
         [SerializeField] PhysicsMaterial2D lowFriction = null;
         [SerializeField] Transform groundCheck = null;
         [SerializeField] LayerMask whatIsGround;
+        [SerializeField] LayerMask whatIsEnemy;
+        [SerializeField] LayerMask whatIsPlayer;
+        [SerializeField] float checkForEnemyDistance = 1;
 
         Animator animator;
         Rigidbody2D rb;
@@ -38,7 +41,7 @@ namespace PSmash.Movement
             rb = GetComponent<Rigidbody2D>();
             animator = GetComponent<Animator>();
             mecanim = GetComponent<SkeletonMecanim>();
-            bone = GetComponent<SkeletonRenderer>().skeleton.FindBone(boneName);
+            //bone = GetComponent<SkeletonRenderer>().skeleton.FindBone(boneName);
             actionScheduler = GetComponent<ActionScheduler>();
         }
 
@@ -58,31 +61,39 @@ namespace PSmash.Movement
 
 
         //MoveTo and MoveAwayFrom must be combined in the future
-        public void MoveTo(Vector3 target, MovementTypes myMovement)
+        public void MoveTo(Vector3 targetPosition, MovementTypes myMovement)
         {
-            CheckFlip(target);
-            //print("Moving to Target");
-            if (!CanMoveTowardsTarget())
+            if (IsPlayerAbove()) MoveAwayFrom(targetPosition, 0.9f);
+            //CheckFlip(target);
+            //print("Moving towards Target");
+            if (!CanMoveTowardsTarget(targetPosition) )
             {
                 //Will not move
                 //print("Cant reach Target");
+                rb.velocity = new Vector2(0, rb.velocity.y);
                 return;
             }
             //print("Can reach Target");
-
             if (IsGrounded())
             {
                 float speed = GetSpeed(myMovement);
                 rb.velocity = transform.right*speed;
             }
         }
-
-        public void MoveAwayFrom(Vector3 target, float speedFactor)
+        bool IsPlayerAbove()
         {
-            print("Moving Away from Target");
-            CheckFlip(target);
+            RaycastHit2D hit = Physics2D.Raycast(transform.position, Vector2.up, 2.3f, whatIsPlayer);
+            if (hit)
+            {
+                return true;
+            }
+            else return false;
+        }
+        public void MoveAwayFrom(Vector3 targetPosition, float speedFactor)
+        {
+            CheckFlip(targetPosition);
 
-            float targerRelativePosition = target.x - transform.position.x;
+            float targerRelativePosition = targetPosition.x - transform.position.x;
             if (targerRelativePosition > 0)
             {
                 rb.MovePosition(new Vector2(1 * speedFactor, 0) + (Vector2)transform.position);
@@ -108,15 +119,50 @@ namespace PSmash.Movement
             return speedFactor * baseSpeed;
         }
 
-        bool CanMoveTowardsTarget()
+        bool CanMoveTowardsTarget(Vector3 targetPosition)
         {
-            Debug.DrawRay(transform.position + transform.right + new Vector3(0,1,0), Vector2.down,Color.blue);
-            RaycastHit2D hit = Physics2D.Raycast(transform.position + transform.right + new Vector3(0, 1, 0), Vector2.down, 2, whatIsGround);
-            if (!hit) return false;
+            if (IsEnemyInFront(targetPosition)) return false;
+            Debug.DrawRay(transform.position + transform.right + new Vector3(0, 1, 0), Vector2.down, Color.blue);
+            RaycastHit2D hit = Physics2D.Raycast(transform.position + transform.right + new Vector3(0, 1, 0), Vector2.down, 1.5f, whatIsGround);
+            if (!hit)
+            {
+                //print("There is no ground in front");
+                return false; 
+            }
+
             float angle = Vector2.Angle(Vector2.up, hit.normal);
-            if (Mathf.Approximately(angle, 0)) return true;
-            return false;
+            if (Mathf.Approximately(angle, 0))
+            {
+                //print("There is plain groun in front");
+                return true;
+            }
+            else
+            {
+                //print("There is slope in front");
+                return false;
+            }
+
         }
+
+        public bool IsEnemyInFront(Vector3 targetPosition)
+        {
+            CheckFlip(targetPosition);
+            //print("Looking for enemy in front");
+            Debug.DrawRay(transform.position + new Vector3(0, 1, 0), transform.right, Color.cyan);
+
+            RaycastHit2D hit = Physics2D.Raycast(transform.position + new Vector3(0, 1), transform.right, checkForEnemyDistance, whatIsEnemy);
+            if (hit && hit.collider.gameObject != gameObject)
+            {
+                //print("Enemy is in front");
+                return true;
+            }
+            else
+            {
+                //print("Enemy is not in front");
+                return false;
+            }
+        }
+
         bool IsGrounded()
         {
             bool isGrounded = Physics2D.OverlapCircle(groundCheck.position, groundCheckRadius, whatIsGround);
@@ -166,6 +212,17 @@ namespace PSmash.Movement
                 rb.velocity = new Vector2(impulse, 0);
 
             }
+        }
+
+        public void Impulse(Vector2 impulse)
+        {
+            Vector2 speed = impulse * transform.right;
+            //print(speed);
+            rb.velocity = speed; 
+        }
+        public void StopMovement()
+        {
+            rb.velocity = new Vector2(0, 0);
         }
 
         //Anim Event

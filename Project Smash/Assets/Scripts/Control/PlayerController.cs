@@ -80,10 +80,7 @@ namespace PSmash.Control
         {
 
             if (!isEnabled) return;
-            print(this.name + "  wants to guard");
-            print(fighter.IsAttacking() + "  " + playerMovement.IsEvading() + "  " + playerMovement.IsClimbingLedge() + "  " + playerMovement.IsMovingOnWall + "  " + playerMovement.IsMovingOnLadder() +"  "+ health.IsDamaged());
             if (fighter.IsAttacking() || playerMovement.IsEvading() || playerMovement.IsClimbingLedge() || playerMovement.IsMovingOnWall || playerMovement.IsMovingOnLadder() || health.IsDamaged()) return;
-            print(this.name + "  wants to guard2");
             fighter.Guard(isButtonPressed);
         }
 

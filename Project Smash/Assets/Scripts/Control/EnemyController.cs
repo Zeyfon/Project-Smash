@@ -11,6 +11,9 @@ namespace PSmash.Control
         [SerializeField] float chaseRange = 5f;
         [SerializeField] float suspicionTime = 3f;
         [SerializeField] bool lookRight = true;
+
+        bool rageState = false;
+
         public bool testMode = false;
 
         EnemyMovement movement;
@@ -84,16 +87,23 @@ namespace PSmash.Control
             if (Mathf.Abs(transform.position.x - spawnPosition.x) < 0.5f)
             {
                 movement.CheckFlip(vision.Target.position);
+                if (rageState) return;
                 vision.Target = null;
                 attack.targetHealth = null;
             }
         }
 
-
         bool IsTargetInRange()
         {
+            if (rageState) return true;
             if (Mathf.Abs(transform.position.y - vision.Target.position.y) > 3) return false;
             else return Vector3.Distance(transform.position, vision.Target.position) < chaseRange;
+        }
+
+        public void SetAutomaticAttack(Transform target)
+        {
+            vision.Target = target;
+            rageState = true;
         }
     }
 

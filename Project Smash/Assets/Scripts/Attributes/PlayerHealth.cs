@@ -37,7 +37,7 @@ namespace PSmash.Attributes
         public override void TakeDamage(Transform attacker, int damage)
         {
             if (isDead) return;
-            print("Damage received");
+            //print("Damage received");
             isDamaged = true;
             if (coroutine != null) StopCoroutine(coroutine);
             health -= damage;
@@ -57,7 +57,7 @@ namespace PSmash.Attributes
 
         IEnumerator DamageEffects()
         {
-            print("Playing player damage sound");
+            //print("Playing player damage sound");
             animator.SetInteger("Damage", 1);
             while(animator.GetInteger("Damage") != 100)
             {

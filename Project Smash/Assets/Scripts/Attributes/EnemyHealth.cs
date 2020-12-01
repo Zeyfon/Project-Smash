@@ -19,6 +19,7 @@ namespace PSmash.Attributes
         [SerializeField] AudioClip damageWhileStunnedSound = null;
         [SerializeField] GameObject dropItem = null;
         [SerializeField] AudioClip finisherDamageSound = null;
+        [SerializeField] SpriteRenderer spriteRenderer = null;
 
         Coroutine coroutine;
         Animator animator;
@@ -125,8 +126,6 @@ namespace PSmash.Attributes
             }
         }
 
-        
-
         private void DamageHealthBar(Transform attacker, int damage)
         {
             if (invulnerable) return;
@@ -167,6 +166,7 @@ namespace PSmash.Attributes
             {
                 Debug.LogWarning("Wants to staggered when is already dead");
             }
+            StartCoroutine(ShowFinisherPrompt());
             //print(gameObject + "  is Stunned");
 
             GetComponent<ActionScheduler>().StartAction(this);
@@ -176,6 +176,31 @@ namespace PSmash.Attributes
             isStunned = true;
             if (cr_Running) StopCoroutine(coroutine);
             coroutine = StartCoroutine(AnimationStateCheck("guard"));
+        }
+
+        private IEnumerator ShowFinisherPrompt()
+        {
+
+            spriteRenderer.color = new Color(1, 1, 1, 0);
+            spriteRenderer.enabled = true;
+            float alpha = 0;
+            while (alpha < 1)
+            {
+                alpha += Time.deltaTime * 10;
+                if (alpha >= 1) alpha = 1;
+                spriteRenderer.color = new Color(1, 1, 1, alpha);
+                yield return null;
+            }
+            yield return new WaitForSeconds(1.5f);
+            alpha = 1;
+            while (alpha > 0)
+            {
+                alpha -= Time.deltaTime * 10;
+                if (alpha >= 1) alpha = 0;
+                spriteRenderer.color = new Color(1, 1, 1, alpha);
+                yield return null;
+            }
+            spriteRenderer.enabled = false;
         }
         IEnumerator AnimationStateCheck(String action)
         {
@@ -200,9 +225,9 @@ namespace PSmash.Attributes
             //animator.SetInteger("finisher", 1);
             animator.Play("Finisher");
         }
-        public void StartFinisherAnimation2()
+        public void StopCurrentActions()
         {
-            StopAllCoroutines();
+            //StopAllCoroutines();
             GetComponent<ActionScheduler>().StartAction(this);
         }
 
@@ -238,7 +263,7 @@ namespace PSmash.Attributes
         private void Dead()
         {
             isDead = true;
-           // print("Is Dead");
+            // print("Is Dead");
             GetComponent<ActionScheduler>().StartAction(this);
             StopAllCoroutines();
             //print("Updated values to dead ones");
@@ -251,6 +276,7 @@ namespace PSmash.Attributes
 
         void FinisherDead()
         {
+            isDead = true;
             StartCoroutine(GameObjectDied());
         }
         IEnumerator GameObjectDied()

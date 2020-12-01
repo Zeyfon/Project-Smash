@@ -2,22 +2,26 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class HitEffect : MonoBehaviour
+namespace PSmash.Attributes
 {
-    ParticleSystem ps;
-    // Start is called before the first frame update
-    void Start()
+    public class HitEffect : MonoBehaviour
     {
-        ps = GetComponent<ParticleSystem>();
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        while (ps.isPlaying)
+        ParticleSystem ps;
+        // Start is called before the first frame update
+        void Start()
         {
-            return;
+            ps = GetComponent<ParticleSystem>();
         }
-        Destroy(gameObject);
+
+        // Update is called once per frame
+        void Update()
+        {
+            while (ps.isPlaying)
+            {
+                return;
+            }
+            Destroy(gameObject);
+        }
     }
 }
+
