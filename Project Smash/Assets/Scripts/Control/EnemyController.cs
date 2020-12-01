@@ -10,10 +10,12 @@ namespace PSmash.Control
     {
         [SerializeField] float chaseRange = 5f;
         [SerializeField] float suspicionTime = 3f;
+        [SerializeField] float aggroCooldownTime = 3f;
+
         [SerializeField] bool lookRight = true;
 
-        bool rageState = false;
 
+        bool rageState = false;
         public bool testMode = false;
 
         EnemyMovement movement;
@@ -23,7 +25,8 @@ namespace PSmash.Control
         EnemyVision vision;
         ActionScheduler actionScheduler;
 
-        float timeSinceLastSawPlayer = 0;
+        float timeSinceLastSawPlayer = Mathf.Infinity;
+        float timeSinceAggrevated = Mathf.Infinity;
         // Start is called before the first frame update
         void Awake()
         {
@@ -53,7 +56,7 @@ namespace PSmash.Control
             if (vision.Target == null) return;
             if (health.IsStaggered() || health.IsStunned()|| health.IsBlocking() || health.IsBeingFinished()) return;
             if (attack.IsAttacking()) return;
-            if (IsTargetInRange())
+            if (IsAggrevated() )
             {
                 //print("AttackBehavior");
                 AttackBehavior();
@@ -93,11 +96,14 @@ namespace PSmash.Control
             }
         }
 
-        bool IsTargetInRange()
+        bool IsAggrevated()
         {
             if (rageState) return true;
-            if (Mathf.Abs(transform.position.y - vision.Target.position.y) > 3) return false;
-            else return Vector3.Distance(transform.position, vision.Target.position) < chaseRange;
+            bool inAttackRange = Vector3.Distance(transform.position, vision.Target.position) < chaseRange;
+            //if (Mathf.Abs(transform.position.y - vision.Target.position.y) > 3) return false;
+            //else return Vector3.Distance(transform.position, vision.Target.position) < chaseRange;
+            if (timeSinceAggrevated <= aggroCooldownTime) return true;
+            return inAttackRange;
         }
 
         public void SetAutomaticAttack(Transform target)
