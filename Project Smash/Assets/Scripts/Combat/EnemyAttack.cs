@@ -39,17 +39,16 @@ namespace PSmash.Combat
         ActionScheduler actionScheduler;
         bool isNormalAttacking = false;
         bool isUnblockableAttacking = false;
-        bool isParried = false;
         bool canDamageTarget = false;
         int id = 0;
 
         // Start is called before the first frame update
         void Awake()
         {
+            rb = GetComponent<Rigidbody2D>();
             animator = GetComponent<Animator>();
             movement = GetComponent<EnemyMovement>();
             health = GetComponent<EnemyHealth>();
-            rb = GetComponent<Rigidbody2D>();
             audioSource = GetComponent<AudioSource>();
             actionScheduler = GetComponent<ActionScheduler>();
         }
@@ -89,7 +88,7 @@ namespace PSmash.Combat
         public void StartAttackBehavior(Transform target)
         {
             actionScheduler.StartAction(this);
-            if (targetHealth == null)  targetHealth = target.GetComponent<PlayerHealth>();
+            targetHealth = target.GetComponent<PlayerHealth>();
         }
 
         void AttackBehavior()
@@ -99,7 +98,6 @@ namespace PSmash.Combat
             if(random > unblockableAttackProbability)
             {
                 attackCoroutine = StartCoroutine(ComboAttackCR());
-
             }
             else
             {
@@ -267,7 +265,7 @@ namespace PSmash.Combat
 
         public void Cancel()
         {
-            //print(this + "  Cancelled");
+            print(this + "  Cancelled");
             targetHealth = null;
             if (animator.GetInteger("attack") > 0 && attackCoroutine != null)
             {
@@ -279,18 +277,6 @@ namespace PSmash.Combat
         {
             if (isNormalAttacking || isUnblockableAttacking) return true;
             else return false;
-        }
-
-        public bool IsParried
-        {
-            get
-            {
-                return isParried;
-            }
-            set
-            {
-                isParried = value;
-            }
         }
 
         public bool GetIsUnblockableAttacking()

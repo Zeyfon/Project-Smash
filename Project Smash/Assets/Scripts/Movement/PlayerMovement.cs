@@ -13,7 +13,7 @@ namespace PSmash.Movement
         [Header("GroundCheck")]
         [SerializeField] LayerMask whatIsGround;
         [SerializeField] float groundCheckRadius = 0.1f;
-        [SerializeField] Transform groundCheck1 = null;
+        [SerializeField] Transform groundCheck = null;
         [SerializeField] AudioSource footStepAudioSource = null;
         [SerializeField] AudioSource climbingLegeAudioSource = null;
         [SerializeField] AudioClip landingSound = null;
@@ -397,7 +397,7 @@ namespace PSmash.Movement
 
         public void CheckGround()
         {
-            isGrounded =  Physics2D.OverlapCircle(groundCheck1.position, groundCheckRadius, whatIsGround);
+            isGrounded =  Physics2D.OverlapCircle(groundCheck.position, groundCheckRadius, whatIsGround);
             animator.SetBool("Grounded", isGrounded);
             if(isFalling && isGrounded)
             {
@@ -875,7 +875,7 @@ namespace PSmash.Movement
 
         private void OnDrawGizmosSelected()
         {
-            Gizmos.DrawWireSphere(groundCheck1.position, groundCheckRadius);
+            Gizmos.DrawWireSphere(groundCheck.position, groundCheckRadius);
         }
 
     }

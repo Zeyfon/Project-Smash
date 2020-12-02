@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace PSmash.Attributes
 {
@@ -20,6 +21,7 @@ namespace PSmash.Attributes
         [SerializeField] GameObject dropItem = null;
         [SerializeField] AudioClip finisherDamageSound = null;
         [SerializeField] SpriteRenderer spriteRenderer = null;
+        [SerializeField] UnityEvent onDamaged;
 
         Coroutine coroutine;
         Animator animator;
@@ -54,6 +56,7 @@ namespace PSmash.Attributes
         {
             //print(gameObject.name + " damage received");
             if (isDead) return;
+            onDamaged.Invoke();
             //Damage while stunned
             //For now this must not enter since the player will kill it instantly
             //Further in the game the enemy could be attacked without being locked on

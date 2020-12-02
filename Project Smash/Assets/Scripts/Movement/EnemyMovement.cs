@@ -32,6 +32,7 @@ namespace PSmash.Movement
         ActionScheduler actionScheduler;
         float currentYAngle = 0;
         bool isPlayerReachable = true;
+        bool isReturningToOrigin = false;
         float groundCheckRadius = 0.5f;
 
 
@@ -53,10 +54,26 @@ namespace PSmash.Movement
             animator.SetFloat("xVelocity", xVelocity);
         }
 
-        public void StartMoveAction(Vector3 destination, MovementTypes myMovement)
+        public void StartMoveAction(Vector3 destination, MovementTypes myMovement, Vector3 playerPosition)
         {
+            
+            //Cancel previous Action
+            //
             actionScheduler.StartAction(this);
+            if (Mathf.Abs(Vector3.Distance(destination, transform.position)) < 0.4f)
+            {
+                isReturningToOrigin = false;
+                StopMovement();
+                //CheckFlip(playerPosition);
+                return;
+            }
+            isReturningToOrigin = true;
             MoveTo(destination, myMovement);
+        }
+
+        public bool GetIsReturningToOrigin()
+        {
+            return isReturningToOrigin;
         }
 
 
@@ -85,6 +102,7 @@ namespace PSmash.Movement
             RaycastHit2D hit = Physics2D.Raycast(transform.position, Vector2.up, 2.3f, whatIsPlayer);
             if (hit)
             {
+                Debug.LogWarning("Player is above");
                 return true;
             }
             else return false;
@@ -175,9 +193,9 @@ namespace PSmash.Movement
             rb.velocity = new Vector2(0, 0);
         }
 
-        public void CheckFlip(Vector3 playerPosition)
+        public void CheckFlip(Vector3 targetPosition)
         {
-            Vector2 toTarget = (playerPosition - transform.position).normalized;
+            Vector2 toTarget = (targetPosition - transform.position).normalized;
             if (Vector2.Dot(toTarget, transform.right) > 0)
             {
                 return;
