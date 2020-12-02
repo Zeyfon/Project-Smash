@@ -223,6 +223,36 @@ PrefabInstance:
       propertyPath: m_LocalPosition.x
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 3973429734731218587, guid: b1ac60293a90baf448facfb8da74890b,
+        type: 3}
+      propertyPath: onPlayerSpotted.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3973429734731218587, guid: b1ac60293a90baf448facfb8da74890b,
+        type: 3}
+      propertyPath: onPlayerSpotted.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3973429734731218587, guid: b1ac60293a90baf448facfb8da74890b,
+        type: 3}
+      propertyPath: onPlayerSpotted.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3973429734731218587, guid: b1ac60293a90baf448facfb8da74890b,
+        type: 3}
+      propertyPath: onPlayerSpotted.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 4332039205350752737}
+    - target: {fileID: 3973429734731218587, guid: b1ac60293a90baf448facfb8da74890b,
+        type: 3}
+      propertyPath: onPlayerSpotted.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: Aggrevate
+      objectReference: {fileID: 0}
+    - target: {fileID: 3973429734731218587, guid: b1ac60293a90baf448facfb8da74890b,
+        type: 3}
+      propertyPath: onPlayerSpotted.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
     - target: {fileID: 6430469227425253186, guid: b1ac60293a90baf448facfb8da74890b,
         type: 3}
       propertyPath: m_IsActive
@@ -378,6 +408,21 @@ PrefabInstance:
       propertyPath: whatIsGround.m_Bits
       value: 2130176
       objectReference: {fileID: 0}
+    - target: {fileID: 8842288852017603112, guid: b1ac60293a90baf448facfb8da74890b,
+        type: 3}
+      propertyPath: aggroRadius
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 8842288852017603112, guid: b1ac60293a90baf448facfb8da74890b,
+        type: 3}
+      propertyPath: whatIsEnemy.m_Bits
+      value: 1024
+      objectReference: {fileID: 0}
+    - target: {fileID: 8842288852017603113, guid: b1ac60293a90baf448facfb8da74890b,
+        type: 3}
+      propertyPath: onDamaged.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8842288852017603113, guid: b1ac60293a90baf448facfb8da74890b,
         type: 3}
       propertyPath: guardDamageSound
@@ -428,6 +473,41 @@ PrefabInstance:
       propertyPath: spriteRenderer
       value: 
       objectReference: {fileID: 1881001056564010642}
+    - target: {fileID: 8842288852017603113, guid: b1ac60293a90baf448facfb8da74890b,
+        type: 3}
+      propertyPath: onDamaged.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8842288852017603113, guid: b1ac60293a90baf448facfb8da74890b,
+        type: 3}
+      propertyPath: onDamaged.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8842288852017603113, guid: b1ac60293a90baf448facfb8da74890b,
+        type: 3}
+      propertyPath: onDamaged.m_PersistentCalls.m_Calls.Array.data[1].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8842288852017603113, guid: b1ac60293a90baf448facfb8da74890b,
+        type: 3}
+      propertyPath: onDamaged.m_PersistentCalls.m_Calls.Array.data[1].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8842288852017603113, guid: b1ac60293a90baf448facfb8da74890b,
+        type: 3}
+      propertyPath: onDamaged.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 4332039205350752737}
+    - target: {fileID: 8842288852017603113, guid: b1ac60293a90baf448facfb8da74890b,
+        type: 3}
+      propertyPath: onDamaged.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: Aggrevate
+      objectReference: {fileID: 0}
+    - target: {fileID: 8842288852017603113, guid: b1ac60293a90baf448facfb8da74890b,
+        type: 3}
+      propertyPath: onDamaged.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
     - target: {fileID: 8842288852017603114, guid: b1ac60293a90baf448facfb8da74890b,
         type: 3}
       propertyPath: boneName
@@ -527,3 +607,15 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 5091425379778339785}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &4332039205350752737 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8842288852017603112, guid: b1ac60293a90baf448facfb8da74890b,
+    type: 3}
+  m_PrefabInstance: {fileID: 5091425379778339785}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4332039205350752741}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 99e31ce0163d52942992692c0f4dbe29, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

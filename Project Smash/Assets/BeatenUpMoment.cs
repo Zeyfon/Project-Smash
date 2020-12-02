@@ -43,8 +43,9 @@ namespace PSmash.Core
             foreach(Transform spawner in spawners)
             {
                 GameObject enemyClone = Instantiate(enemy, spawner.position, Quaternion.identity);
+                print(enemyClone);
+                enemyClone.GetComponentInChildren<EnemyController>().EnableRageState();
                 health.Add(enemyClone.GetComponentInChildren<EnemyHealth>());
-                enemyClone.GetComponentInChildren<EnemyController>().SetAutomaticAttack(target);
             }
             StartCoroutine(CheckForEnemyDeads());
         }
