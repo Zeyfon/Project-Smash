@@ -43,7 +43,7 @@ namespace PSmash.Control
 
         private void InteractWithMovement()
         {
-            playerMovement.ControlledMovement(xInput, yInput, isInteractingWithObject);
+            playerMovement.ControlledMovement(xInput, yInput, false);
         }
 
 
@@ -59,7 +59,8 @@ namespace PSmash.Control
             if (!isEnabled) return;
             //print("Jump");
             if (fighter.IsAttacking() || playerMovement.IsEvading() || playerMovement.IsClimbingLedge() || fighter.IsGuarding() || health.IsDamaged()) return;
-            playerMovement.Jump(yInput);
+            playerMovement.ControlledMovement(xInput, yInput, true);
+            //playerMovement.Jump(yInput);
         }
 
         public void MainAttackButton(bool isButtonPressed)
@@ -73,7 +74,7 @@ namespace PSmash.Control
         {
             if (!isEnabled) return;
             if (playerMovement.IsEvading() || playerMovement.IsMovingOnWall || playerMovement.IsClimbingLedge() || playerMovement.IsMovingOnLadder() || health.IsDamaged()) return;
-            if (CheckToolAction()) return;
+            if (ToolAction()) return;
         }
 
         public void GuardButton(bool isButtonPressed)
@@ -99,10 +100,10 @@ namespace PSmash.Control
             fighter.ThrowItemAttack(isButtonPressed);
         }
 
-        bool CheckToolAction()
+        bool ToolAction()
         {
             if (fighter.IsAttacking()) return false;
-            //print("CheckingTool Action");
+            if (fighter.ToolAttack()) return false;
 
             switch (toolAction)
             {

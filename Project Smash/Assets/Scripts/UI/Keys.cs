@@ -30,13 +30,13 @@ namespace PSmash.UI
         private void OnEnable()
         {
             Key.OnKeyTaken += KeyCollected;
-            PSmash.Items.Doors.KeyDoor.OnDoorOpening += DisableKeysUI;
+            PSmash.Items.Doors.DoorKey.OnDoorOpening += DisableKeysUI;
         }
 
         private void OnDisable()
         {
             Key.OnKeyTaken -= KeyCollected;
-            PSmash.Items.Doors.KeyDoor.OnDoorOpening -= DisableKeysUI;
+            PSmash.Items.Doors.DoorKey.OnDoorOpening -= DisableKeysUI;
         }
 
         private void KeyCollected(InteractionList myValue)

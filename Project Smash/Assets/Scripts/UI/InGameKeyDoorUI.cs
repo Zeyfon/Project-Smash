@@ -14,12 +14,12 @@ namespace PSmash.UI
 
         private void OnEnable()
         {
-            KeyDoor.OnDoorOpening += DisableInGameUI;
+            DoorKey.OnDoorOpening += DisableInGameUI;
         }
 
         private void OnDisable()
         {
-            KeyDoor.OnDoorOpening -= DisableInGameUI;
+            DoorKey.OnDoorOpening -= DisableInGameUI;
         }
 
         //private void OnDisable
@@ -39,7 +39,7 @@ namespace PSmash.UI
         //Proxy to be used by the DoorKey Class to start fading Out the UI
         public void DisableInGameUI(InteractionList myValue)
         {
-            if (myValue != transform.parent.GetComponent<KeyDoor>().doorID) return;
+            if (myValue != transform.parent.GetComponent<DoorKey>().doorID) return;
             StartCoroutine(FadeOut());
         }
 

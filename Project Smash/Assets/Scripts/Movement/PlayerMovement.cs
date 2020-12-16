@@ -7,6 +7,8 @@ namespace PSmash.Movement
 {
     public class PlayerMovement : MonoBehaviour
     {
+
+        #region Inspector
         [SpineBone(dataField: "skeletonRenderer")]
         [SerializeField] public string boneName;
 
@@ -40,16 +42,11 @@ namespace PSmash.Movement
         [SerializeField] Transform wallCheckUpper = null;
         [SerializeField] Transform wallCheckMiddle = null;
 
-        [Header("ClimbingEdges")]
-        [SerializeField] LayerMask whatIsClimbable;
-
-
         [Header("Attacks")]
         [SerializeField] Vector2 forwardAttackSpeed = new Vector2(8, 0);
         [SerializeField] Vector2 splashAttackSpeed = new Vector2(0, 0);
 
         [Header("SlopeManagement")]
-        [SerializeField] LayerMask whatIsSlope;
         [SerializeField] float slopeCheckDistance = 0.5f;
         [SerializeField] PhysicsMaterial2D noFriction = null;
         [SerializeField] PhysicsMaterial2D lowFriction = null;
@@ -66,12 +63,14 @@ namespace PSmash.Movement
         [SerializeField] bool canDoubleJump = true;
         [SerializeField] ParticleSystem dust = null;
 
+        #endregion
 
         public delegate void PlayerController(bool state);
         public static event PlayerController EnablePlayerController;
         public delegate void PlayerOnWall(bool state);
         public event PlayerOnWall OnPlayerWallState;
 
+        Transform oneWayPlatform;
         Rigidbody2D rb;
         Animator animator;
         AudioSource audioSource;
@@ -92,16 +91,14 @@ namespace PSmash.Movement
         bool isJumping;
         bool canWalkOnSlope;
         bool isMovingOnLadder = false;
-        bool isChargingAttack = false;
         bool isMovingOnWall = false;
         bool isEvading = false;
-        bool isClimbingLedge = false;
+        bool isClimbing = false;
         bool canFlip = true;
-        bool isCollidingWithThinPlatform = false;
-        bool moveThroughFloor = false;
+        bool isCollidingWithOneWayPlatform = false;
         bool isLadderDetected = false;
         bool canGetOffLadder = true;
-        bool isPlayerAboveLadderTop;
+        bool canPassPlatformFromBelow = false;
 
         // Start is called before the first frame update
         void Awake()
@@ -119,49 +116,111 @@ namespace PSmash.Movement
             gravityScale = rb.gravityScale;
         }
 
-        // The ground will be checked all frame tu ensure the correct detection among all actions
-        private void Update()
+        private void FixedUpdate()
         {
-            CheckGround();
-            
+            GroundCheck();
         }
 
-        //These methods are used by the player to control how the avatar will be moved. 
-        //Depending on the circumstances is the movement type and values
-        #region ControlledMovement Methods
+        public void GroundCheck()
+        {
+            isGrounded = Physics2D.OverlapCircle(groundCheck.position, groundCheckRadius, whatIsGround);
+            animator.SetBool("Grounded", isGrounded);
+            if (isFalling && isGrounded)
+            {
+                //audioSource.PlayOneShot(landingSound);
+            }
+            if (rb.velocity.y <= 0.0f)
+            {
+                isJumping = false;
+                isFalling = true;
+            }
+            if (isGrounded && !isJumping && slopeDownAngle <= maxSlopeAngle && rb.velocity.y ==0)
+            {
+                isFalling = false;
+                canDoubleJump = true;
+                isJumping = false;
+            }
+        }
+
+        #region GeneralMovement Methods
 
         //This method is called all the time. 
         //As long as the player does not do anything that triggers the return 
         //in FixedUpdate in the PlayerController script
-        public void ControlledMovement(float xInput, float yInput, bool isInteractingWithObject)
+        public void ControlledMovement(float xInput, float yInput, bool jump)
         {
             if (isEvading) return;
-            if (isClimbingLedge)
+            if (jump)
             {
-                print("climbing ledge");
-                //rb.velocity = new Vector2(0, 0);
-                return;
-            }
-            animator.SetFloat("yVelocity", rb.velocity.y);
+                if (isMovingOnWall)
+                {
+                    //print("Jumping Away From Wall");
+                    canDoubleJump = true;
+                    IsMovingOnWall = false;
+                    ApplyingJump();
+                    GravityScale(gravityScale);
+                    rb.drag = 1;
+                }
+                //Jumping from the Ladder
+                else if (isMovingOnLadder)
+                {
+                    //print("Jumping Away from Ladder");
+                    canDoubleJump = true;
+                    isMovingOnLadder = false;
+                    ApplyingJump();
+                    GravityScale(gravityScale);
+                    rb.drag = 1;
+                    animator.SetInteger("LadderMovement", 10);
+                    StartCoroutine(LadderCheckStandBy());
+                }
+                else if (CanPassThroughOneWayPlatform(yInput))
+                {
+                    //print("Passing through one way platform");
+                    oneWayPlatform.GetComponent<OneWayPlatform>().RotatePlatform();
+                }
 
+                else if (isGrounded && canWalkOnSlope)
+                {
+                    ApplyingJump();
+                }
+
+                else if (isOnSlope && canDoubleJump)
+                {
+                    ApplyingJump();
+                    canDoubleJump = false;
+                }
+                else if (canDoubleJump && canWalkOnSlope)
+                {
+                    ApplyingJump();
+                    canDoubleJump = false;
+                }
+            }
+
+            if (isClimbing) return;
+
+            animator.SetFloat("yVelocity", rb.velocity.y);
             if (!isMovingOnLadder && !isMovingOnWall && canFlip)
             {
-                CheckLedgeClimb();
+                CheckForInteractableElements(yInput);
             }
 
-            if(!isMovingOnLadder && isLadderDetected)
-            {
-                CheckToStartLadderMovement(yInput);
-            }
+            Moving(xInput, yInput);
+        }
 
+        private bool CanPassThroughOneWayPlatform(float yInput)
+        {
+            return isCollidingWithOneWayPlatform && yInput < -0.5f;
+        }
+
+        private void Moving(float xInput, float yInput)
+        {
             if (isMovingOnWall)
             {
                 WallMovement(xInput, yInput);
                 return;
             }
-            else if (isMovingOnLadder) 
+            else if (isMovingOnLadder)
             {
-                //print("Ladder Movement");
                 LadderMovement(yInput);
                 return;
             }
@@ -172,7 +231,7 @@ namespace PSmash.Movement
             }
         }
 
-        private void WallMovement(float xInput, float yInput)
+        void WallMovement(float xInput, float yInput)
         {
             //The gravity is set to 0 and to the initial value inside the IsMovingOnWall property
             animator.SetFloat("climbingSpeed",(Mathf.Sqrt(xInput * xInput + yInput * yInput)));
@@ -181,15 +240,14 @@ namespace PSmash.Movement
 
         void LadderMovement(float yInput)
         {
-            //Debug.Log("Ladder Moving");
+            //print("Ladder Moving");
             animator.SetFloat("climbingSpeed", Mathf.Abs(yInput));
             rb.velocity = new Vector2(0, yInput * maxLadderMovementSpeed);
-            //Debug.Log(rb.velocity);
             if(canGetOffLadder) LookingToExitLadder(yInput);
         }
-        public void ConstantInputMovement(float xInput)
+        void ConstantInputMovement(float xInput)
         {
-            //Debug.Log(xInput);
+            //print(xInput);
             SlopeCheck(xInput);
             float currentSpeed;
             currentSpeed = SetSpeed(xInput);
@@ -197,7 +255,7 @@ namespace PSmash.Movement
             MovementType(currentSpeed);
         }
 
-        private float SetSpeed(float xInput)
+        float SetSpeed(float xInput)
         {
             float currentSpeed;
             if (!canFlip)
@@ -249,253 +307,11 @@ namespace PSmash.Movement
             }
         }
 
-        #endregion
-
         public void StopMovement()
         {
             rb.velocity = new Vector2(0, 0);
         }
 
-        #region JumpControl
-        public void Jump(float yInput)
-        {
-            if (isMovingOnWall)
-            {
-                print("Jumping Away From Wall");
-                //Debug.Log("Jumps from a wall");
-                canDoubleJump = true;
-                IsMovingOnWall = false;
-                ApplyingJump();
-                GravityScale(gravityScale);
-                rb.drag = 1;
-            }
-            //Jumping from the Ladder
-            else if (isMovingOnLadder)
-            {
-                print("Jumping Away from Ladder");
-                animator.SetInteger("LadderMovement", 10);
-                canDoubleJump = true;
-                ApplyingJump();
-                GravityScale(gravityScale);
-                rb.drag = 1;
-                //canDetectLadder = false;
-                isMovingOnLadder = false;
-                StartCoroutine(LadderCheckStandBy());
-            }
-            else if (isCollidingWithThinPlatform && yInput < -0.5f)
-            {
-                moveThroughFloor = true;
-            }
-            // First Grounded Jump
-            else if (isGrounded && canWalkOnSlope)
-            {
-                ApplyingJump();
-            }
-            //Second or inAirJump only one is allowed and will be reseted once 
-            //The player is grounded
-            else if (isOnSlope && canDoubleJump)
-            {
-                ApplyingJump();
-                canDoubleJump = false;
-            }
-            else if (canDoubleJump && canWalkOnSlope)
-            {
-                ApplyingJump();
-                canDoubleJump = false;
-            }
-        }
-
-        IEnumerator LadderCheckStandBy()
-        {
-            yield return new WaitForSeconds(0.3f);
-            //canDetectLadder = true;
-        }
-
-        private void ApplyingJump()
-        {
-            isJumping = true;
-            rb.sharedMaterial = noFriction;
-            rb.velocity = Vector2.up * jumpVelocity;
-            animator.SetTrigger("Jump");
-        }
-
-        //AnimEvent
-        void Footstep()
-        {
-            //The isGrounded check is because after a jump or fall the animations
-            //pass first through the movement and that will produce always a footstep sound
-            //regarless if it is grounded or not
-            if (!isGrounded && footStepAudioSource.isPlaying) return;
-            footStepAudioSource.pitch = Random.Range(0.75f, 1);
-            footStepAudioSource.Play();
-        }
-        #endregion
-        
-        #region EvasiveMovement Control
-        public void EvadeMovement(float xInput)
-        {
-            //print("Wants to Dash");
-            //Debug.Log("Wants to evade");
-            if (xInput == 0)
-            {
-                //Back Jump Movement
-                //Debug.Log("Simple jump behind evasion");
-                StartCoroutine(CheckEvasion());
-                animator.SetInteger("Evade", 1);
-                rb.velocity = new Vector2(simpleEvasionInitialVelocity.x * -transform.right.x, simpleEvasionInitialVelocity.y);
-            }
-            else if(xInput != 0)
-            {
-                //Frontal Dash Movement
-                //Debug.Log("Will evade with a roll to the left");
-                StartCoroutine(CheckEvasion());
-                animator.SetInteger("Evade", 10);
-                //animator.Play("Dash");
-                coroutine = StartCoroutine(DashForceApplication());
-            }
-        }
-
-        //Anim Event
-        void RollSound()
-        {
-            audioSource.PlayOneShot(rollsound);
-        }
-
-        void BackjumpSound()
-        {
-            audioSource.PlayOneShot(backJumpSound);
-        }
-
-        IEnumerator DashForceApplication()
-        {
-                while (true)
-                {
-                //print("Roll force applying");
-                    ConstantInputMovement(transform.right.x);
-                    animator.SetFloat("yVelocity", rb.velocity.y);
-                    yield return new WaitForFixedUpdate();
-                }
-        }
-
-        IEnumerator CheckEvasion()
-        {
-            isEvading = true;
-            animator.SetInteger("Evade", 0);
-            gameObject.layer = LayerMask.NameToLayer("PlayerGhost");
-            while (animator.GetInteger("Evade") != 100 && !health.IsDamaged())
-            {
-                //Debug.Log("InEvasion Coroutine");
-                yield return new WaitForEndOfFrame();
-            }
-            if(coroutine != null) StopCoroutine(coroutine);
-            isEvading = false;
-            animator.SetInteger("Evade", 0);
-            gameObject.layer = LayerMask.NameToLayer("Player");
-        }
-
-    #endregion
-
-        public void CheckGround()
-        {
-            isGrounded =  Physics2D.OverlapCircle(groundCheck.position, groundCheckRadius, whatIsGround);
-            animator.SetBool("Grounded", isGrounded);
-            if(isFalling && isGrounded)
-            {
-               
-                //audioSource.PlayOneShot(landingSound);
-            }
-            if (rb.velocity.y <= 0.0f)
-            {
-                isJumping = false;
-                isFalling = true;
-            }
-            if (isGrounded && !isJumping && slopeDownAngle <= maxSlopeAngle)
-            {
-                isFalling = false;
-                canDoubleJump = true;
-                isJumping = false;
-            }
-        }
-
-        #region ClimbingLedge
-        void CheckLedgeClimb()
-        {
-            if (rb.velocity.y == 0) return;
-            RaycastHit2D isTouchingMiddleWall;
-            RaycastHit2D isTouchingUpperWall;
-            //Check if the player is detecting floor in front of him
-            //While moving upwards
-            if (rb.velocity.y > 0)
-            {
-                //print("Ledge check Upwards");
-                isTouchingMiddleWall = GetIsTouchingMiddleWall();
-                if (!isTouchingMiddleWall) return;
-                isTouchingUpperWall = GetIsTouchingUpperWall();
-                if (isTouchingUpperWall) return;
-            }
-            //While moving downards
-            else
-            {
-                
-                //print("Ledge Check Downwards");
-                isTouchingUpperWall = GetIsTouchingUpperWall();
-                if (isTouchingUpperWall) return;
-                isTouchingMiddleWall = GetIsTouchingMiddleWall();
-                if (!isTouchingMiddleWall) return;
-            }
-            //The idea is to get first the upper corner of the ledge in a Vector2 component
-            //From here we will set the player in a specific position to start the climbing ledge animation
-            //The gravity will be set off and the player control will be disable during the animation
-            //At the end of the animation the player transform will be set to the second point relative to the corner previously gotten
-            Vector2 ledgeCorner = new Vector2(0, 0);
-            RaycastHit2D hit = Physics2D.Raycast(transform.position + new Vector3(transform.right.x, 2), Vector2.down, 2.5f, whatIsClimbable);
-            print(hit.collider.name);
-            ledgeCorner = new Vector2(isTouchingMiddleWall.point.x, hit.point.y);
-            print("Start Climbing Ledge Movement");
-            ClimbingLedge(ledgeCorner);
-        }
-
-        private RaycastHit2D GetIsTouchingUpperWall()
-        {
-            return Physics2D.Raycast(wallCheckUpper.position, transform.right, 0.7f, whatIsClimbable);
-        }
-
-        private RaycastHit2D GetIsTouchingMiddleWall()
-        {
-            return Physics2D.Raycast(wallCheckMiddle.position, transform.right, 0.7f, whatIsClimbable);
-        }
-
-        void ClimbingLedge(Vector2 ledgeCorner)
-        {
-
-            isClimbingLedge = true;
-            rb.velocity = new Vector2(0, 0);
-            EnablePlayerController(false);
-            animator.SetFloat("xVelocity", 0);
-            animator.SetFloat("yVelocity", 0);
-            GravityScale(0);
-            Vector2 initialPosition = new Vector2(ledgeCorner.x + 0.1f * -transform.right.x, ledgeCorner.y-colliderSize.y);
-            rb.MovePosition(initialPosition);
-            //Debug.Break();
-            animator.SetTrigger("ClimbLedge");
-            finalPosition = new Vector2(ledgeCorner.x + 0.5f * transform.right.x, ledgeCorner.y+0.00f);          
-        }
-        //AnimEvent
-        void FinishClimbLedge()
-        {
-            print("Finish Ledge Climb");
-            transform.position = finalPosition;
-            //Debug.Break();
-            EnablePlayerController(true);
-            GravityScale(gravityScale);
-            isClimbingLedge = false;
-        }
-
-        //AnimEvent
-        void ClimbingLedgeSound()
-        {
-            climbingLegeAudioSource.Play();
-        }
         #endregion
 
         #region SlopeControl
@@ -507,8 +323,8 @@ namespace PSmash.Movement
         }
         void SlopeCheckHorizontal(Vector2 checkPos)
         {
-            RaycastHit2D slopeHitFront = Physics2D.Raycast(checkPos, transform.right, slopeCheckDistance, whatIsSlope);
-            RaycastHit2D slopeHitBack = Physics2D.Raycast(checkPos, -transform.right, slopeCheckDistance, whatIsSlope);
+            RaycastHit2D slopeHitFront = Physics2D.Raycast(checkPos, transform.right, slopeCheckDistance, whatIsGround);
+            RaycastHit2D slopeHitBack = Physics2D.Raycast(checkPos, -transform.right, slopeCheckDistance, whatIsGround);
             Debug.DrawRay(checkPos, transform.right * slopeCheckDistance, Color.blue);
             Debug.DrawRay(checkPos, -transform.right * slopeCheckDistance, Color.blue);
 
@@ -517,7 +333,7 @@ namespace PSmash.Movement
                 isOnSlope = true;
                 slopeSideAngle = Vector2.Angle(slopeHitFront.normal, Vector2.up);
             }
-            else if (slopeHitBack &&!slopeHitBack.collider.CompareTag("LadderTop") && Mathf.Abs(slopeHitBack.normal.x) < 0.9f)
+            else if (slopeHitBack && !slopeHitBack.collider.CompareTag("LadderTop") && Mathf.Abs(slopeHitBack.normal.x) < 0.9f)
             {
                 isOnSlope = true;
                 slopeSideAngle = 0.0f;
@@ -530,7 +346,7 @@ namespace PSmash.Movement
         }
         void SlopeCheckVertical(Vector2 checkPos, float xInput)
         {
-            RaycastHit2D hit = Physics2D.Raycast(checkPos, Vector2.down, slopeCheckDistance, whatIsSlope);
+            RaycastHit2D hit = Physics2D.Raycast(checkPos, Vector2.down, slopeCheckDistance, whatIsGround);
             if (hit)
             {
                 slopeNormalPerp = Vector2.Perpendicular(hit.normal).normalized;
@@ -563,47 +379,167 @@ namespace PSmash.Movement
         }
         #endregion
 
-        #region LadderControl
-
-        void CheckToStartLadderMovement(float yInput)
+        IEnumerator LadderCheckStandBy()
         {
+            yield return new WaitForSeconds(0.3f);
+        }
 
-            //Start at the upper part of the ladder
-            if(isPlayerAboveLadderTop && isCollidingWithThinPlatform && yInput < -0.9f)
+        private void ApplyingJump()
+        {
+            isJumping = true;
+            rb.sharedMaterial = noFriction;
+            rb.velocity = Vector2.up * jumpVelocity;
+            animator.SetTrigger("Jump");
+        }
+
+        //AnimEvent
+        void Footstep()
+        {
+            if (!isGrounded && footStepAudioSource.isPlaying) return;
+            footStepAudioSource.pitch = Random.Range(0.75f, 1);
+            footStepAudioSource.Play();
+        }
+
+        #region ClimbingLedge
+        void CheckForInteractableElements(float yInput)
+        {
+            if (isLadderDetected)
             {
-                print("IsOverThinPlatform " + isCollidingWithThinPlatform + "  onMovingDownOnLadder  " + moveThroughFloor + "  isLadderDetected  " + isLadderDetected + "  isMovingOnLadder  " + isMovingOnLadder);
-                print("Start At Upper Part of Ladder");
-                moveThroughFloor = true;
-                rb.velocity = new Vector2(0, 0);
-                GravityScale(0);
-                rb.position = new Vector3(ladderPositionX, transform.position.y, 0);
-                isMovingOnLadder = true;
-                animator.SetTrigger("climbLadder");
-                StartCoroutine(TimerToGetOffLadder());
+                CheckToStartMovingOnLadders(yInput);
             }
-            //Start ladder movement in the air
-            else if(!isPlayerAboveLadderTop && !isGrounded && Mathf.Abs(yInput) > 0.9f)
+            else
             {
-                print("Start at middle of Ladder");
-                rb.velocity = new Vector2(0, 0);
-                print(ladderPositionX +"  "+transform.position.y);
-                GravityScale(0);
-                rb.position = new Vector3(ladderPositionX, transform.position.y, 0);
-                isMovingOnLadder = true;
-                animator.SetTrigger("climbLadder");
-                StartCoroutine(TimerToGetOffLadder());
-            }
-            //Start ladder movement at the bottom (Grounded)
-            else if(isGrounded && !isCollidingWithThinPlatform && yInput > 0.8f)
-            {
-                print("Start at bottom of Ladder");
-                GravityScale(0);
-                rb.position = new Vector3(ladderPositionX, transform.position.y, 0);
-                isMovingOnLadder = true;
-                animator.SetTrigger("climbLadder");
-                StartCoroutine(TimerToGetOffLadder());
+                ClimbCorners();
             }
         }
+
+        void CheckToStartMovingOnLadders(float yInput)
+        {
+            //print(canPassPlatformFromBelow + " " +  isCollidingWithOneWayPlatform);
+            if (!canPassPlatformFromBelow && isCollidingWithOneWayPlatform && yInput < -0.9f)
+            {
+                //print("Start At Upper Part of Ladder");
+                oneWayPlatform.GetComponent<OneWayPlatform>().RotatePlatform();
+                StartLadderMovement();
+
+            }
+            else if (!isGrounded && Mathf.Abs(yInput) > 0.9f)
+            {
+                //print("Start at middle of Ladder");
+                StartLadderMovement();
+            }
+
+            else if (isGrounded && !isCollidingWithOneWayPlatform && yInput > 0.8f)
+            {
+                //print("Start at bottom of Ladder");
+                StartLadderMovement();
+            }
+        }
+
+        private void StartLadderMovement()
+        {
+            //StartCoroutine(LadderMovementFixedUpdated());
+            print("Started LadderMovement");
+            rb.velocity = new Vector2(0, 0);
+            GravityScale(0);
+            rb.position = new Vector3(ladderPositionX, transform.position.y, 0);
+            isMovingOnLadder = true;
+            animator.SetTrigger("climbLadder");
+            StartCoroutine(TimerToGetOffLadder());
+        }
+
+        IEnumerator LadderMovementFixedUpdated()
+        {
+            yield return new WaitForFixedUpdate();
+            print("Started LadderMovement");
+            rb.velocity = new Vector2(0, 0);
+            GravityScale(0);
+            rb.position = new Vector3(ladderPositionX, transform.position.y, 0);
+            isMovingOnLadder = true;
+            animator.SetTrigger("climbLadder");
+            yield return TimerToGetOffLadder();
+        }
+        private void ClimbingPlatformAnimation()
+        {
+            isClimbing = true;
+            rb.velocity = new Vector2(0, 0);
+            print("Climbing Animation");
+            animator.SetInteger("LadderMovement", 5);
+            EnablePlayerController(false);
+            StartCoroutine(CheckExitLadder());
+        }
+
+        private void ClimbCorners()
+        {
+            RaycastHit2D isTouchingUpperWall;
+            RaycastHit2D isTouchingMiddleWall;
+            if (rb.velocity.y > 0)
+            {
+                //print("Ledge check Upwards");
+                isTouchingMiddleWall = GetIsTouchingMiddleWall();
+                if (!isTouchingMiddleWall) return;
+                isTouchingUpperWall = GetIsTouchingUpperWall();
+                if (isTouchingUpperWall) return;
+            }
+            else
+            {
+                //print("Ledge Check Downwards");
+                isTouchingUpperWall = GetIsTouchingUpperWall();
+                if (isTouchingUpperWall) return;
+                isTouchingMiddleWall = GetIsTouchingMiddleWall();
+                if (!isTouchingMiddleWall) return;
+            }
+            RaycastHit2D hit = Physics2D.Raycast(transform.position + new Vector3(transform.right.x, 2), Vector2.down, 2.5f, whatIsGround);
+            print(hit.collider.name);
+            Vector2 ledgeCorner = new Vector2(isTouchingMiddleWall.point.x, hit.point.y);
+            print("Start Climbing Ledge Movement");
+            ClimbingLedge(ledgeCorner);
+        }
+
+        private RaycastHit2D GetIsTouchingUpperWall()
+        {
+            return Physics2D.Raycast(wallCheckUpper.position, transform.right, 0.7f, whatIsGround);
+        }
+
+        private RaycastHit2D GetIsTouchingMiddleWall()
+        {
+            return Physics2D.Raycast(wallCheckMiddle.position, transform.right, 0.7f, whatIsGround);
+        }
+
+        void ClimbingLedge(Vector2 ledgeCorner)
+        {
+
+            isClimbing = true;
+            rb.velocity = new Vector2(0, 0);
+            EnablePlayerController(false);
+            animator.SetFloat("xVelocity", 0);
+            animator.SetFloat("yVelocity", 0);
+            GravityScale(0);
+            Vector2 initialPosition = new Vector2(ledgeCorner.x + 0.1f * -transform.right.x, ledgeCorner.y-colliderSize.y);
+            rb.MovePosition(initialPosition);
+            //Debug.Break();
+            animator.SetTrigger("ClimbLedge");
+            finalPosition = new Vector2(ledgeCorner.x + 0.5f * transform.right.x, ledgeCorner.y+0.00f);          
+        }
+        //AnimEvent
+        void FinishClimbLedge()
+        {
+            print("Finish Ledge Climb");
+            transform.position = finalPosition;
+            //Debug.Break();
+            EnablePlayerController(true);
+            GravityScale(gravityScale);
+            isClimbing = false;
+        }
+
+        //AnimEvent
+        void ClimbingLedgeSound()
+        {
+            climbingLegeAudioSource.Play();
+        }
+        #endregion
+
+        #region LadderControl
 
         IEnumerator TimerToGetOffLadder()
         {
@@ -614,26 +550,13 @@ namespace PSmash.Movement
 
         private void LookingToExitLadder(float yInput)
         {
-            if (yInput > 0)
+            if (yInput > 0 && IsPlatformBelowMe())
             {
-                //Debug.Log("Checking for Above Ladder Exit");
-                Debug.DrawRay(transform.position + new Vector3(0, colliderSize.y / 2f), Vector2.down, Color.green);
-                RaycastHit2D[] hits = Physics2D.RaycastAll (transform.position + new Vector3(0, colliderSize.y / 2f), Vector2.down, checkLadderDistance, whatIsGround); 
-                foreach(RaycastHit2D hit in hits)
-                {
-                    if (hit.collider.CompareTag("ThinPlatform"))
-                    {
-                        //Debug.Break();
-                        print("Exiting Ladder from above");
-                        Vector2 newPosition = new Vector2(hit.collider.transform.position.x, hit.collider.transform.position.y + hit.collider.GetComponent<BoxCollider2D>().size.y / 2 +0.1f);
-                        print(newPosition);
-                        ExitLadderFromAbove(newPosition);
-                        return;
-                    }
-                }
+                print("ClimbingPlatform");
+                ClimbingPlatformAnimation();
             }
 
-            else if (yInput < 0 && isGrounded && !isCollidingWithThinPlatform)
+            else if (yInput < 0 && isGrounded && !isCollidingWithOneWayPlatform)
             {
                 print("Exiting Ladder from below");
                 RaycastHit2D hit = Physics2D.Raycast(transform.position + new Vector3(0,colliderSize.y/2), Vector2.down, checkLadderDistance, whatIsGround);
@@ -642,22 +565,22 @@ namespace PSmash.Movement
             }
         }
 
-        void ExitLadderFromAbove(Vector3 newPosition)
+        bool IsPlatformBelowMe()
         {
-            rb.MovePosition(newPosition);
-            animator.SetInteger("LadderMovement", 5);
-            EnablePlayerController(false);
-            rb.velocity = new Vector2(0, 0);
-            isMovingOnLadder = false;
-            moveThroughFloor = false;
-            GravityScale(gravityScale);
-            StartCoroutine(CheckExitLadder());
+            RaycastHit2D hit = Physics2D.Raycast(transform.position, Vector2.down, colliderSize.y / 2, whatIsLadderTop);
+            
+            if (hit && hit.collider.CompareTag("ThinPlatform"))
+            {
+                print("Platform is below");
+                return true;
+            }
+
+            else return false;
         }
 
         void ExitLadderFromBelow()
         {
             isMovingOnLadder = false;
-            moveThroughFloor = false;
             GravityScale(gravityScale);
             animator.SetInteger("LadderMovement", 10);
         }
@@ -670,15 +593,82 @@ namespace PSmash.Movement
             }
             animator.SetInteger("LadderMovement", 0);
             EnablePlayerController(true);
+            GravityScale(gravityScale);
             isMovingOnLadder = false;
-            moveThroughFloor = false;
-            isClimbingLedge = false;
+            isClimbing = false;
         }
 
+        //AnimEvent
         void ClimbingLadderSound()
         {
             audioSource.PlayOneShot(climbingLadderSound);
         }
+        #endregion
+
+        #region EvasiveMovement Control
+        public void EvadeMovement(float xInput)
+        {
+            //print("Wants to Dash");
+            //Debug.Log("Wants to evade");
+            if (xInput == 0)
+            {
+                //Back Jump Movement
+                //Debug.Log("Simple jump behind evasion");
+                StartCoroutine(CheckEvasion());
+                animator.SetInteger("Evade", 1);
+                rb.velocity = new Vector2(simpleEvasionInitialVelocity.x * -transform.right.x, simpleEvasionInitialVelocity.y);
+            }
+            else if (xInput != 0)
+            {
+                //Frontal Dash Movement
+                //Debug.Log("Will evade with a roll to the left");
+                StartCoroutine(CheckEvasion());
+                animator.SetInteger("Evade", 10);
+                //animator.Play("Dash");
+                coroutine = StartCoroutine(DashForceApplication());
+            }
+        }
+
+        //Anim Event
+        void RollSound()
+        {
+            audioSource.PlayOneShot(rollsound);
+        }
+
+        //AnimEvent
+
+        void BackjumpSound()
+        {
+            audioSource.PlayOneShot(backJumpSound);
+        }
+
+        IEnumerator DashForceApplication()
+        {
+            while (true)
+            {
+                //print("Roll force applying");
+                ConstantInputMovement(transform.right.x);
+                animator.SetFloat("yVelocity", rb.velocity.y);
+                yield return new WaitForFixedUpdate();
+            }
+        }
+
+        IEnumerator CheckEvasion()
+        {
+            isEvading = true;
+            animator.SetInteger("Evade", 0);
+            gameObject.layer = LayerMask.NameToLayer("PlayerGhost");
+            while (animator.GetInteger("Evade") != 100 && !health.IsDamaged())
+            {
+                //Debug.Log("InEvasion Coroutine");
+                yield return new WaitForEndOfFrame();
+            }
+            if (coroutine != null) StopCoroutine(coroutine);
+            isEvading = false;
+            animator.SetInteger("Evade", 0);
+            gameObject.layer = LayerMask.NameToLayer("Player");
+        }
+
         #endregion
 
         private void Flip(float xInput)
@@ -705,7 +695,6 @@ namespace PSmash.Movement
                 isLookingRight = false;
             }
         }
-
 
         public void ResetGravity()
         {
@@ -741,41 +730,7 @@ namespace PSmash.Movement
 
         public bool IsClimbingLedge()
         {
-            return isClimbingLedge;
-        }
-
-        public bool IsCollidingWithThinPlatform
-        {
-            get
-            {
-                return isCollidingWithThinPlatform;
-            }
-            set
-            {
-                isCollidingWithThinPlatform = value;
-            }
-        }
-
-        public void SetIsLadderDetected(float ladderPositionX, bool isLadderDetected)
-        {
-            this.ladderPositionX = ladderPositionX;
-            this.isLadderDetected = isLadderDetected;
-        }
-
-        public void IsPlayerAboveLadderTop(bool isPlayerAboveLadderTop)
-        {
-            this.isPlayerAboveLadderTop = isPlayerAboveLadderTop;
-        }
-        public bool MoveThroughFloor
-        {
-            get
-            {
-                return moveThroughFloor;
-            }
-            set
-            {
-                moveThroughFloor = value;
-            }
+            return isClimbing;
         }
 
         public bool IsMovingOnWall
@@ -878,6 +833,63 @@ namespace PSmash.Movement
             Gizmos.DrawWireSphere(groundCheck.position, groundCheckRadius);
         }
 
+        private void OnCollisionEnter2D(Collision2D collision)
+        {
+            //print("Collision Enter");
+            if (!collision.collider.CompareTag("ThinPlatform")) return;
+
+            isCollidingWithOneWayPlatform = true;
+            oneWayPlatform = collision.collider.transform;
+        }
+
+        private void OnCollisionStay2D(Collision2D collision)
+        {
+            //print("Collision Enter");
+            if (!collision.collider.CompareTag("ThinPlatform")) return;
+            if (collision.collider.transform.position.y < transform.position.y)
+            {
+                canPassPlatformFromBelow = false;
+                print("Player is Above");
+            }
+            else
+            {
+                print(collision.collider.transform.position.y + " " + transform.position.y);
+                canPassPlatformFromBelow = true;
+                print("Player is Below");
+            }
+        }
+
+        private void OnCollisionExit2D(Collision2D collision)
+        {
+            //print("Collision Enter");
+            if (!collision.collider.CompareTag("ThinPlatform")) return;
+
+            isCollidingWithOneWayPlatform = false;
+            canPassPlatformFromBelow = false;
+            oneWayPlatform = null;
+        }
+
+
+        private void OnTriggerEnter2D(Collider2D collision)
+        {
+            if (collision.CompareTag("Ladder")) 
+            {
+                print("Ladder is detected");
+                isLadderDetected = true;
+                ladderPositionX = collision.transform.position.x;
+            }
+        }
+
+        private void OnTriggerExit2D(Collider2D collision)
+        {
+            if (collision.CompareTag("Ladder"))
+            {
+                print("Ladder is not detected");
+
+                isLadderDetected = false;
+                ladderPositionX = 0;
+            }
+        }
     }
 
 }

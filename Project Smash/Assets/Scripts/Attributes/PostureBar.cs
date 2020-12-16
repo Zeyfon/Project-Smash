@@ -17,22 +17,12 @@ namespace PSmash.Attributes
             posture = transform.parent.transform.GetComponentInChildren<EnemyPosture>();
         }
 
-        private void OnEnable()
-        {
-            posture.OnGuardBarRecoveredAfterStun += GuardBarRecoverEffect;
-        }
-
-        private void OnDisable()
-        {
-            posture.OnGuardBarRecoveredAfterStun -= GuardBarRecoverEffect;
-        }
-
         private void Update()
         {
             guardBar.localScale = new Vector2(posture.GetPosture() / posture.GetInitialPosture(), transform.localScale.y); ;
         }
 
-        void GuardBarRecoverEffect()
+        public void FullyRegenPosture()
         {
             StartCoroutine(GuardBarEffect());
         }
@@ -57,7 +47,6 @@ namespace PSmash.Attributes
                 renderer.color = new Color(renderer.color.r, renderer.color.g, renderer.color.b, alpha);
             }
         }
-
     }
 }
 

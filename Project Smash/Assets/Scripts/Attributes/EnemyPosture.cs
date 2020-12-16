@@ -7,34 +7,20 @@ namespace PSmash.Attributes
 {
     public class EnemyPosture : MonoBehaviour
     {
-        public enum CurrentActionsWhenDamaged
-        {
-            NormalAttacking,
-            UnblockableAttacking,
-            Parrying,
-            NoAttackAction,
-        }
-
         [SerializeField] float posture = 50;
-        [SerializeField] float timerThreshold = 1f;
+        [SerializeField] float timeToCanRegen = 1f;
         [SerializeField] float timeToFullyRegenGuard = 60f;
 
-        public event Action OnGuardBarRecoveredAfterStun;
-
         EnemyHealth health;
-        Coroutine coroutine;
 
+        float timerCanRegen = 0;
         float initialPosture;
-        bool canRegen = true;
-        float timer = 0;
-        CurrentActionsWhenDamaged myActions;
 
         private void Awake()
         {
             health = GetComponent<EnemyHealth>();
             initialPosture = posture;
         }
-        // Start is called before the first frame update
 
         private void Update()
         {
@@ -43,69 +29,87 @@ namespace PSmash.Attributes
                 posture = 0;
                 return;
             }
-            if (canRegen && posture < initialPosture)
+            if( posture < initialPosture && timerCanRegen > timeToCanRegen)
             {
-                float percentage = (float)posture / (float)initialPosture;
-                percentage += Time.deltaTime / timeToFullyRegenGuard;
-                if (percentage > 1) percentage = 1;
-                posture = (percentage * initialPosture);
-                //print("Regenerating Posture  " + posture);
+                posture = RegenPosture();
             }
-            if (!canRegen)
-            {
-                float tempTimer = Time.timeSinceLevelLoad;
-                if (tempTimer > timer) canRegen = true;
-            }
+            UpdateTimers();
         }
-        public void DamagePosture(Transform attacker, int damage, CurrentActionsWhenDamaged action)
+
+        private float RegenPosture()
         {
-            float temp = posture;
-            temp -= damage;
-            if (temp <= 0) temp = 0;
-            posture = temp;
+            float percentage = (float)this.posture / (float)initialPosture;
+            percentage += Time.deltaTime / timeToFullyRegenGuard;
+            if (percentage > 1) percentage = 1;
+            percentage = percentage * initialPosture;
+            return percentage;
+        }
+
+        void UpdateTimers()
+        {
+            timerCanRegen += Time.deltaTime;
+        }
+
+        public void DamagePosture(int damage, DamagedActionsList action)
+        {
+            posture = PostureDamaged(damage);
             if (posture <= 0)
             {
-                health.Stunned();
+                health.Stunned(damage);
                 return;
             }
             else
             {
-                NoPostureBarDepletedAction(action);
-                RestartRegenAction();
+                PostureBarAliveAction(damage,action);
+                timerCanRegen = 0;
             }
         }
 
-        void NoPostureBarDepletedAction(CurrentActionsWhenDamaged action)
+        private float PostureDamaged(int damage)
+        {
+            float posture = this.posture;
+            posture -= damage;
+            if (posture <= 0) posture = 0;
+            return posture;
+        }
+
+        void PostureBarAliveAction(int damage,DamagedActionsList action)
         {
             switch (action)
             {
-                case CurrentActionsWhenDamaged.NormalAttacking:
+                case DamagedActionsList.NormalAttacking:
+                    health.ContinueCurrentAction(damage);
                     break;
-                case CurrentActionsWhenDamaged.UnblockableAttacking:
-                    health.Stagger();
+                case DamagedActionsList.UnblockableAttacking:
+                    if(health.GetAccumulatedDamage() > health.GetDamageThreshold())
+                    {
+                        health.Stagger(damage);
+                    }
+                    else
+                    {
+                        health.ContinueCurrentAction(damage);
+                    }
                     break;
-                case CurrentActionsWhenDamaged.Parrying:
-                    health.Stagger();
+                case DamagedActionsList.Parrying:
+                    health.Stagger(damage);
                     break;
-                case CurrentActionsWhenDamaged.NoAttackAction:
-                    health.Block();
+                case DamagedActionsList.Blocking:
+                    if (UnityEngine.Random.Range(0, 20) < health.GetCounterProbability())
+                    {
+                        health.ContinueCurrentAction(damage);
+                        print("Will Attack finishing guarding");
+                    }
+                    else
+                    {
+                        health.Block(damage);
+                    }
+                    break;
+                case DamagedActionsList.NoAction:
+                    health.Block(damage);
                     break;
                 default:
                     break;
             }
-        }
-
-        public void RefillPosture()
-        {
-            OnGuardBarRecoveredAfterStun();
-            posture = initialPosture;
-        }
-
-
-        void RestartRegenAction()
-        {
-            canRegen = false;
-            timer = Time.timeSinceLevelLoad + timerThreshold;
         }
 
         public float GetPosture()
@@ -116,6 +120,12 @@ namespace PSmash.Attributes
         public float GetInitialPosture()
         {
             return initialPosture;
+        }
+
+        //UnityEvent (EnemyHealth)
+        public void FullyRegenPosture()
+        {
+            posture = initialPosture;
         }
     }
 

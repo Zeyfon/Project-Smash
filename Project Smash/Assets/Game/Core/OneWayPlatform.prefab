@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 420164465635660891}
   - component: {fileID: 1396339484434130665}
   m_Layer: 20
-  m_Name: ThinPlatformPlayer
+  m_Name: PlatformPlayer
   m_TagString: ThinPlatform
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -67,14 +67,14 @@ PlatformEffector2D:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4703681755897356460}
   m_Enabled: 1
-  m_UseColliderMask: 1
+  m_UseColliderMask: 0
   m_ColliderMask:
     serializedVersion: 2
     m_Bits: 6144
   m_RotationalOffset: 0
   m_UseOneWay: 1
   m_UseOneWayGrouping: 0
-  m_SurfaceArc: 165
+  m_SurfaceArc: 180
   m_UseSideFriction: 0
   m_UseSideBounce: 0
   m_SideArc: 1
@@ -90,6 +90,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d4b9644caf323fd46ab6e7846cf93f10, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  effector: {fileID: 420164465635660891}
 --- !u!1 &7064657331546450540
 GameObject:
   m_ObjectHideFlags: 0
@@ -99,7 +100,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7064657331546450514}
-  m_Layer: 0
+  m_Layer: 16
   m_Name: OneWayPlatform
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -133,7 +134,7 @@ GameObject:
   - component: {fileID: 4234155235055984958}
   - component: {fileID: 1234193375725991522}
   m_Layer: 21
-  m_Name: ThinPlatformNotPlayer
+  m_Name: PlatformNotPlayer
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
