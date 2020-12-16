@@ -15,7 +15,7 @@ namespace PSmash.Control
         {
             if (collision.CompareTag("Player"))
             {
-                print(transform.parent.gameObject.name + "  PlayerSpotted ");
+                //print(transform.parent.gameObject.name + "  PlayerSpotted ");
                 onPlayerSpotted.Invoke();
             }
         }

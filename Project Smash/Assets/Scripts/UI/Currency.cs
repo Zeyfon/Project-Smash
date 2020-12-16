@@ -23,12 +23,12 @@ namespace PSmash.UI
 
         private void OnEnable()
         {
-            PSmash.Items.Currency.OnCurrencyCollected += CurrencyCollected;
+            PSmash.Items.OreDrop.OnCurrencyCollected += CurrencyCollected;
         }
 
         private void OnDisable()
         {
-            PSmash.Items.Currency.OnCurrencyCollected -= CurrencyCollected;
+            PSmash.Items.OreDrop.OnCurrencyCollected -= CurrencyCollected;
 
         }
 

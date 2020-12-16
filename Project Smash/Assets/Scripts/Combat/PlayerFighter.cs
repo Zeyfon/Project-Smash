@@ -104,40 +104,42 @@ namespace PSmash.Combat
         {
 
             if (IsFinishingAnEnemy()) return;
-
-            else if (IsEnemyStunned())
+            if (!movement.IsGrounded() && animator.GetInteger("Attack") == 0 && yInput <-0.5f)
             {
-
-                isAttacking = true;
-                StartCoroutine(DoFinisherMove());
-                //print("Enemy is Stunned");
-            }
-            else if (!movement.IsGrounded() && animator.GetInteger("Attack") == 0 && yInput <-0.5f /*&& Mathf.Abs(movement.x) < 0.2f*/)
-            {
-                //SplashDownAttack
+                //print("Splash Attack");
                 isAttacking = true;
                 StartCoroutine(RunThisAnimation("Attack", 50));
-                //print("SplashAttack");
                 return;
             }
             else if (animator.GetInteger("Attack") == 0 && isButtonPressed)
             {
-                //Combo Initial Attack
+                //print("Main Combo Attack");
                 movement.SetVelocityToCero();
                 isAttacking = true;
                 StartCoroutine(RunThisAnimation("Attack",1));
-                //print("ComboAttack");
+                
                 return;
             }
             else if(animator.GetInteger("Attack")!=0 && isComboWindowActive)
             {
-                //Combo Attack Continuity
-                animator.SetInteger("Attack", animator.GetInteger("Attack") + 1);
-                //print("ComboAttackContinuity");
+                //print("Combo Attack Continuity");
                 isComboWindowActive = false;
+                animator.SetInteger("Attack", animator.GetInteger("Attack") + 1);
                 return;
             }
         }        
+
+        public bool ToolAttack()
+        {
+            if (IsFinishingAnEnemy()) return true;
+            if (IsEnemyStunned())
+            {
+                isAttacking = true;
+                StartCoroutine(DoFinisherMove());
+                return true;
+            }
+            return false;
+        }
 
         bool IsEnemyStunned()
         {
@@ -337,7 +339,7 @@ namespace PSmash.Combat
             guardTrigger.enabled = false;
             isFinishinAnEnemy = false;
             gameObject.layer = LayerMask.NameToLayer("Player");
-            print("Attack Finished");
+            //print("Attack Finished");
         }
 
         //Anim Event
@@ -451,64 +453,6 @@ namespace PSmash.Combat
             Gizmos.DrawWireCube(attackTransform.position, comboAttackArea);
 
         }
-
-                //public void ToolAttack(bool isButtonPressed)
-        //{
-        //    isToolButtonPressed = isButtonPressed;
-        //    print(isButtonPressed);
-        //    print(isAttacking + "  " + isChargingChargeAttack + "  " + isChargeAttackReady);
-        //    if (isAttacking && !isChargingChargeAttack && !isChargeAttackReady) SetActionAfterAttackEnds(isButtonPressed);
-
-        //    if (!isAttacking && animator.GetInteger("Attack") == 0 && isButtonPressed)
-        //    {
-        //        isAttacking = true;
-        //        coroutine = StartCoroutine(RunThisAnimation("Attack", 60));
-        //        return;
-        //    }
-        //}
-
-        //private void SetActionAfterAttackEnds(bool isButtonPressed)
-        //{
-        //    //This method will be used only after the attackin animation is playing
-        //    //This is to check the status of the button
-        //    //61 will be the value to pass directly to the charge attack animation
-        //    //70 will be the value to end the animation
-        //    //print("Setting after attack action  " + isButtonPressed);
-        //    if (!isButtonPressed)
-        //    {
-        //        animator.SetInteger("Attack", 70);
-        //        return;
-        //    }
-        //    if (isButtonPressed)
-        //    {
-        //        animator.SetInteger("Attack", 61);
-        //        return;
-        //    }
-        //}
-
-        ////Anim Event
-        //void SetNewPosition()
-        //{
-        //    Vector3 newPosition = bone.GetWorldPosition(mecanim.transform);
-        //    RaycastHit2D hit = Physics2D.Raycast(transform.position + new Vector3(0, 0.5f), transform.right, Vector3.Distance(transform.position, newPosition), whatIsDamagable);
-        //    print(hit.transform);
-        //    if (hit)
-        //    {
-        //        if (transform.right.x > 0)
-        //        {
-        //            newPosition = new Vector3(newPosition.x - 0.1f, newPosition.y);
-        //        }
-        //        else
-        //        {
-        //            newPosition = new Vector3(newPosition.x + 0.1f, newPosition.y);
-        //        }
-        //    }
-        //    else
-        //    {
-        //        newPosition = new Vector3(newPosition.x, newPosition.y);
-        //    }
-        //    transform.position = newPosition;
-        //}
 
         ////AnimEvent
         //void StartChargeAttack()

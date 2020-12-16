@@ -19,7 +19,6 @@ namespace PSmash.Combat
         [SerializeField] int damage = 10;
         [SerializeField] PhysicsMaterial2D fullFriction = null;
         [SerializeField] PhysicsMaterial2D lowFriction = null;
-        [SerializeField] LayerMask whatIsPlayerGuard;
         [SerializeField] LayerMask whatIsPlayer;
         [SerializeField] AudioClip parriedSound = null;
         [SerializeField] AudioClip hitGuardSound = null;
@@ -40,7 +39,6 @@ namespace PSmash.Combat
         bool isNormalAttacking = false;
         bool isUnblockableAttacking = false;
         bool canDamageTarget = false;
-        int id = 0;
 
         // Start is called before the first frame update
         void Awake()
@@ -59,50 +57,62 @@ namespace PSmash.Combat
             if (targetHealth == null) return;
             if (health.IsStaggered() ||health.IsStunned() || health.IsBlocking() || health.IsBeingFinished()) return;
             if (IsAttacking()) return;
-            if(!movement.IsEnemyInFront(targetHealth.transform.position))
+
+            if (movement.IsPathClearToReachTarget(targetHealth.transform.position))
             {
-                if (!IsTargetInCloseAttackRange())
+                if (IsTargetInCloseAttackRange())
                 {
-                    //print("Moving Towards Target " + targetHealth.gameObject.name);
-                    movement.MoveTo(targetHealth.transform.position, MovementTypes.chase);
+                    CloseRangeAttackBehavior();
                     return;
                 }
                 else
                 {
-                    //UnblockableAttack();
-                    AttackBehavior();
+                    movement.MoveTo(targetHealth.transform.position, MovementTypes.chase);
                     return;
                 }
             }
             else
             {
-                if (IsTargetInRangeForUnblockableAttack())
+                if (IsTargetInRangeForRangedAttack())
                 {
-                    UnblockableAttack();
+                    RangeAttackBehavior();
                     return;
                 }
             }
-            OtherActions();
+            movement.StopMovement();
         }
 
-        public void StartAttackBehavior(Transform target)
+         public void StartFightBehavior(Transform target)
         {
             actionScheduler.StartAction(this);
-            targetHealth = target.GetComponent<PlayerHealth>();
+            this.targetHealth = target.GetComponent<PlayerHealth>();
         }
 
-        void AttackBehavior()
+        public void TargetLost()
+        {
+            targetHealth = null;
+        }
+
+        void CloseRangeAttackBehavior()
         {
             if (attackCoroutine != null) return;
             float random = Random.Range(0, 100);
-            if(random > unblockableAttackProbability)
+            if (random > unblockableAttackProbability)
             {
-                attackCoroutine = StartCoroutine(ComboAttackCR());
+                //print("Normal Attack");
+                NormalAttack();
             }
             else
             {
+                //print("Unblockable Attacking");
                 UnblockableAttack();
             }
+        }
+
+        private void NormalAttack()
+        {
+            if (attackCoroutine != null) return;
+            attackCoroutine = StartCoroutine(NormalAttackCR());
         }
 
         private void UnblockableAttack()
@@ -110,13 +120,27 @@ namespace PSmash.Combat
             if (attackCoroutine != null) return;
             attackCoroutine = StartCoroutine(UnblockableAttackCR());
         }
+        private void RangeAttackBehavior()
+        {
+            UnblockableAttack();
+        }
 
-        IEnumerator ComboAttackCR()
+        private bool CanCounterAttack()
+        {
+            if (health.ConsecutiveBlocks == 3)
+            {
+                health.ConsecutiveBlocks = 0;
+                return true;
+            }
+            return false;
+        }
+
+        IEnumerator NormalAttackCR()
         {
             isNormalAttacking = true;
-            health.SetIsNormalAttacking(false);
+            health.SetIsNormalAttacking(true);
             rb.sharedMaterial = fullFriction;
-            movement.CheckFlip(targetHealth.transform.position);
+            movement.FlipCheck(targetHealth.transform.position);
             animator.SetInteger("attack", 1);
             while (animator.GetInteger("attack") != 100)
             {
@@ -132,7 +156,7 @@ namespace PSmash.Combat
 
         IEnumerator UnblockableAttackCR()
         {
-            //print("Unblockable Attacking");
+            health.SetAccumulatedDamage(0);
             isUnblockableAttacking = true;
             health.SetIsUnblockableAttacking(true);
             GetComponent<SkeletonRenderer>().CustomMaterialOverride.Add(normalMaterial, unblockableMaterial);
@@ -143,11 +167,11 @@ namespace PSmash.Combat
                 //print(material.name);
                 StartCoroutine(FadeIn(material));
             }
-            //StartCoroutine(FadeIn(unblockableMaterial));
+            StartCoroutine(FadeIn(unblockableMaterial));
             //rb.sharedMaterial = fullFriction;
-            float currentDrag = rb.drag;
+            float temporalDrag = rb.drag;
             rb.drag = 6;
-            movement.CheckFlip(targetHealth.transform.position);
+            movement.FlipCheck(targetHealth.transform.position);
             animator.SetInteger("attack", 10);
             while (animator.GetInteger("attack") != 100)
             {
@@ -161,7 +185,7 @@ namespace PSmash.Combat
             attackCoroutine = null;
             isUnblockableAttacking = false;
             health.SetIsUnblockableAttacking(false);
-            rb.drag = currentDrag;
+            rb.drag = temporalDrag;
             gameObject.layer = LayerMask.NameToLayer("Enemies");
             //print(gameObject.name + "  Unblockable Attack Finished");
         }
@@ -172,17 +196,17 @@ namespace PSmash.Combat
             return isInRange;
         }
 
-        private bool IsTargetInRangeForUnblockableAttack()
+        private bool IsTargetInRangeForRangedAttack()
         {
             float distance = Vector3.Distance(transform.position, targetHealth.transform.position);
             if (distance < unblockableAttackMaxDistance) return true;
             else return false;
         }
 
-        private void OtherActions()
-        {
-            movement.StopMovement();
-        }
+        //private void OtherActions()
+        //{
+        //    movement.StopMovement();
+        //}
 
         IEnumerator FadeIn(Material currentMaterial)
         {
@@ -207,7 +231,7 @@ namespace PSmash.Combat
             movement.Impulse(unblockableAttackImpulse);
         }
 
-        void Hit(int attackType)
+        void Hit()
         {
             //print("Hit");
             if(!isUnblockableAttacking) PlaySound(comboAttackSound,0.6f,1);
@@ -265,8 +289,8 @@ namespace PSmash.Combat
 
         public void Cancel()
         {
-            print(this + "  Cancelled");
-            targetHealth = null;
+            //print(this + "  Cancelled");
+            //targetHealth = null;
             if (animator.GetInteger("attack") > 0 && attackCoroutine != null)
             {
                 animator.SetInteger("attack", 100);

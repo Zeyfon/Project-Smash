@@ -58,8 +58,8 @@ namespace PSmash.Control
             if (attack.IsAttacking()) return;
             if (IsAggrevated())
             {
-                print("AttackBehavior");
-                AttackBehavior();
+                //print("AttackBehavior");
+                FighterBehavior();
             }
             else if (timeSinceLastSawPlayer <= suspicionTime)
             {
@@ -68,7 +68,7 @@ namespace PSmash.Control
             }
             else
             {
-                print("Patrol Behavior");
+                //print("Patrol Behavior");
                 PatrolBehavior();
             }
             UpdateTimers();
@@ -81,21 +81,29 @@ namespace PSmash.Control
             timeSinceAggrevated += Time.deltaTime;
         }
 
+
+        //Used by several external elements to aggrevate this enemy
+        //Enemy Vision Script will use Aggrevate method to inform this enemy
+        //that the enemy has been spotted
         public void Aggrevate()
         {
+            print("Enemy saw");
             timeSinceAggrevated = 0;
         }
 
-        void AttackBehavior()
+        void FighterBehavior()
         {
             timeSinceLastSawPlayer = 0;
             AggrevateNearbyEnemies();
-            attack.StartAttackBehavior(player.transform);
+            //This only pass the transform to the Enemy Attack script
+            //so that script "has seen" he player and will go after him
+            attack.StartFightBehavior(player.transform);
         }
 
         void SuspicionBehavior()
         {
             actionScheduler.CancelCurrentAction();
+            attack.TargetLost();
         }
 
         void PatrolBehavior()
@@ -105,23 +113,25 @@ namespace PSmash.Control
 
         bool IsAggrevated()
         {
-            if (timeSinceAggrevated <= aggroCooldownTime) return true;
+            if (timeSinceAggrevated <= aggroCooldownTime)
+            {
+                return true;
+            }
+
             bool inAttackRange = Vector3.Distance(transform.position, player.transform.position) < chaseRange;
-            return inAttackRange && movement.GetIsReturningToOrigin();
+            return inAttackRange && movement.GetIsAtOrigin();
         }
 
         void AggrevateNearbyEnemies()
         {
-            //RaycastHit2D[] hits = Physics2D.CircleCastAll(transform.position, aggroRadius, transform.right, 0, whatIsEnemy);
+            //print("Looking to aggrevate nearby comrades");
             RaycastHit2D[] hits = Physics2D.RaycastAll(transform.position + new Vector3(0, 1, 0), transform.right, 2, whatIsEnemy);
-            //print(hits.Length);
             if (hits.Length == 0) return;
             foreach(RaycastHit2D hit in hits)
             {
-                //print("Looking to aggrevate");
                 EnemyController controller = hit.collider.GetComponent<EnemyController>();
                 if (controller == null) continue;
-                //print(gameObject.name + " is aggrevating " + controller.gameObject.name);
+                //print("Aggrevating this comrade " + hit.collider.gameObject.name);
                 controller.Aggrevate();
             }
         }
