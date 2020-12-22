@@ -52,7 +52,15 @@ namespace PSmash.Items
         {
             FireFlies fireFlies = collision.GetComponentInChildren<FireFlies>();
             if (fireFlies != null) Destroy(fireFlies.gameObject);
-            StartCoroutine(InstantiateFireFlies(collision.transform));
+            Transform target = collision.transform.GetComponentInChildren<Target>().transform;
+            if (target == null)
+            {
+                Debug.LogWarning("Target for my FireFlies could not be found");
+            }
+            else
+            {
+                StartCoroutine(InstantiateFireFlies(target));
+            }
         }
 
         private bool CanIResupplyFireFlies(Collider2D collision)
@@ -89,8 +97,8 @@ namespace PSmash.Items
         IEnumerator InstantiateFireFlies(Transform targetTransform)
         {
             carryOnFireFliesClone = Instantiate(FireFlies, targetTransform.position + new Vector3(0, 1, 0), Quaternion.identity, targetTransform);
-            yield return null;
             carryOnFireFliesClone.GetComponent<FollowEntity>().SetData(targetTransform, true);
+            yield return null;
         }
     }
 }
