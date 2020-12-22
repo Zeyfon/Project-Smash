@@ -38,7 +38,7 @@ namespace PSmash.Attributes
 
         //This method will always be called from the AIController
         //when entering a new state
-        public void SetFSMToSendDamageEvent(PlayMakerFSM pm)
+        public void SetCurrentState(PlayMakerFSM pm)
         {
             //print(fsm.FsmName + "  set in " + this);
             this.currentPM = pm;
@@ -67,34 +67,48 @@ namespace PSmash.Attributes
             {
                 posture.OnStunStateStart();
                 DamageHealth(damage, 100);
-                if (isDead)
-                {
-                    print(pm.FsmName + " DEAD Event");
-                    pm.SendEvent("DEAD");
-                    return;
-                }
-                else
-                {
+                //if (isDead)
+                //{
+                //    print(pm.FsmName + " DEAD Event");
+                //    pm.SendEvent("DEAD");
+                //    return;
+                //}
+                //else
+                //{
                     print("POSTUREDEPLETED Event");
                     pm.SendEvent("POSTUREDEPLETED");
                     return;
-                }
+              // }
             }
             else
             {
                 DamageHealth(damage, damagePenetrationPercentage);
-                if (isDead)
-                {
-                    print(pm.FsmName + "  DEAD Event");
-                    pm.SendEvent("DEAD");
-                    return;
-                }
-                else
-                {
+                //if (isDead)
+                //{
+                //    print(pm.FsmName + "  DEAD Event");
+                //    pm.SendEvent("DEAD");
+                //    return;
+                //}
+                //else
+                //{
                     print("CONTINUE Event");
                     pm.SendEvent("CONTINUE");
                     return;
-                }
+               // }
+            }
+        }
+
+        public void IsDeadCheck(PlayMakerFSM pm)
+        {
+            if (isDead)
+            {
+                print(pm.FsmName + "  DEAD Event");
+                pm.SendEvent("ISDEAD");
+            }
+            else
+            {
+                print(pm.FsmName + "  DEAD Event");
+                pm.SendEvent("ISNOTDEAD");
             }
         }
 
@@ -155,7 +169,7 @@ namespace PSmash.Attributes
                 GetComponent<Rigidbody2D>().velocity = new Vector2(x, y);
             }
             DamageHealth(damage, 100);
-            if (isDead) currentPM.SendEvent("DEAD");
+            //if (isDead) currentPM.SendEvent("DEAD");
             yield return null;
         }
 
