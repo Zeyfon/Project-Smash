@@ -16,17 +16,11 @@ namespace PSmash.Attributes
         [SerializeField] UnityEvent onStunStateEnded;
 
 
-
-        EnemyHealth health;
-        EnemyFighter fighter;
-
         float timerCanRegen = 0;
         float initialPosture;
 
         private void Awake()
         {
-            fighter = GetComponent<EnemyFighter>();
-            health = GetComponent<EnemyHealth>();
             initialPosture = posture;
         }
 
