@@ -14,8 +14,12 @@ namespace PSmash.Movement
 
         private void Start()
         {
-            target = transform.parent.GetComponentInChildren<EnemyMovement>().transform;
-            offset = transform.position - target.position;
+            EnemyMovement movement = transform.parent.GetComponentInChildren<EnemyMovement>();
+            if(movement != null)
+            {
+                target = movement.transform;
+                offset = transform.position - target.position;
+            }
         }
 
 
