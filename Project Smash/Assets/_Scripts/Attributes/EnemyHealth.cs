@@ -69,13 +69,13 @@ namespace PSmash.Attributes
                 DamageHealth(damage, 100);
                 if (isDead)
                 {
-                    //print(pm.FsmName + " DEAD Event");
+                    print(pm.FsmName + " DEAD Event");
                     pm.SendEvent("DEAD");
                     return;
                 }
                 else
                 {
-                    //print("POSTUREDEPLETED Event");
+                    print("POSTUREDEPLETED Event");
                     pm.SendEvent("POSTUREDEPLETED");
                     return;
                 }
@@ -85,13 +85,13 @@ namespace PSmash.Attributes
                 DamageHealth(damage, damagePenetrationPercentage);
                 if (isDead)
                 {
-                    //print(pm.FsmName + "  DEAD Event");
+                    print(pm.FsmName + "  DEAD Event");
                     pm.SendEvent("DEAD");
                     return;
                 }
                 else
                 {
-                    //print("CONTINUE Event");
+                    print("CONTINUE Event");
                     pm.SendEvent("CONTINUE");
                     return;
                 }
