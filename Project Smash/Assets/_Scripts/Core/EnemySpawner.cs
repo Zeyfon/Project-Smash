@@ -22,8 +22,7 @@ namespace PSmash.Core
 
         private GameObject SpawnAndGetEnemy()
         {
-            GameObject enemyClone = Instantiate(enemy, transform.position, Quaternion.identity);
-            enemyClone.GetComponentInChildren<EnemyController>().EnableRageState();
+            GameObject enemyClone = Instantiate(enemy,transform.position,Quaternion.identity, transform);
             return enemyClone;
         }
 
