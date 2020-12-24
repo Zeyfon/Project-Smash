@@ -49,15 +49,15 @@ namespace PSmash.Combat
         [SerializeField] float canParryTime = 2f;
 
         [Header("Forward Attack")]
-        [SerializeField] AudioClip forwardAttackSound = null;
+        //[SerializeField] AudioClip forwardAttackSound = null;
 
         [Header("Damages")]
-        [SerializeField] int hikingSpikeDamage = 20;
-        [SerializeField] int heavyAttackDamage = 25;
-        [SerializeField] int chargeAttackDamage = 35;
+        //[SerializeField] int hikingSpikeDamage = 20;
+        //[SerializeField] int heavyAttackDamage = 25;
+        //[SerializeField] int chargeAttackDamage = 35;
 
-        [SerializeField] float heavyAttackImpulse = 25;
-        [SerializeField] float chargeAttackImpulse = 30;
+        //[SerializeField] float heavyAttackImpulse = 25;
+        //[SerializeField] float chargeAttackImpulse = 30;
 
         [Header("Sounds")]
         [SerializeField] AudioClip currentToolSound=null;
@@ -357,16 +357,16 @@ namespace PSmash.Combat
         }
 
         //Anim Event
-        void ToolAttackDamage()
-        {
-            SendDamage(attackTransform, comboAttackArea, heavyAttackDamage);
-        }
+        //void ToolAttackDamage()
+        //{
+        //    SendDamage(attackTransform, comboAttackArea, heavyAttackDamage);
+        //}
 
-        //Anim Event
-        void ChargeAttackDamage()
-        {
-            SendDamage(attackTransform, comboAttackArea, chargeAttackDamage);
-        }
+        ////Anim Event
+        //void ChargeAttackDamage()
+        //{
+        //    SendDamage(attackTransform, comboAttackArea, chargeAttackDamage);
+        //}
         //Anim Event
         void SplashAttack()
         {
@@ -398,10 +398,10 @@ namespace PSmash.Combat
         }
 
         //AnimEvent
-        void ToolAttackImpulse()
-        {
-            movement.AddImpulse(heavyAttackImpulse);
-        }
+        //void ToolAttackImpulse()
+        //{
+        //    movement.AddImpulse(heavyAttackImpulse);
+        //}
 
         //AnimEvent
         void ToolAttackSound()
@@ -409,11 +409,11 @@ namespace PSmash.Combat
             audioSource.PlayOneShot(currentToolSound);
         }
         //AnimEvent
-        void ChargeAttackImpulse()
-        {
-            movement.AddImpulse(chargeAttackImpulse);
+        //void ChargeAttackImpulse()
+        //{
+        //    movement.AddImpulse(chargeAttackImpulse);
 
-        }
+        //}
 
         //Anim Event
         void IsComboWindowActive(int state)
