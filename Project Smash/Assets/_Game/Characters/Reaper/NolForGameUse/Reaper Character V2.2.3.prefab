@@ -1799,7 +1799,7 @@ MonoBehaviour:
       - PreviouslyInitialized
       - StunStateEntered
       variableCategoryIDs: 000000000100000003000000000000000000000000000000010000000100000002000000020000000200000003000000
-    description: 
+    description: Stun State
     docUrl: 
     showStateLabel: 0
     maxLoopCount: 0
@@ -3713,7 +3713,10 @@ MonoBehaviour:
       - Exposed
       - PreviouslyInitialized
       variableCategoryIDs: 000000000000000000000000010000000000000001000000000000000000000001000000000000000000000000000000000000000000000000000000010000000200000000000000020000000000000000000000000000000000000001000000
-    description: 
+    description: 'Special Attack State
+
+      This FSM is in charge of the actions
+      from this NPC'
     docUrl: 
     showStateLabel: 0
     maxLoopCount: 0
@@ -4932,7 +4935,10 @@ MonoBehaviour:
       - Exposed
       - PreviouslyInitialized
       variableCategoryIDs: 010000000000000000000000010000000000000000000000010000000200000002000000
-    description: 
+    description: 'NormalAttack State
+
+      This FSM is the one in charge of reactions
+      of the environment during this state'
     docUrl: 
     showStateLabel: 0
     maxLoopCount: 0
@@ -5568,7 +5574,7 @@ MonoBehaviour:
       categories:
       - 
       variableCategoryIDs: 0000000000000000000000000000000000000000
-    description: 
+    description: Dead State
     docUrl: 
     showStateLabel: 0
     maxLoopCount: 0
@@ -8082,7 +8088,7 @@ MonoBehaviour:
       - Exposed
       - PreviouslyInitialized
       variableCategoryIDs: 0000000001000000010000000100000000000000000000000100000000000000000000000100000001000000000000000000000000000000000000000000000002000000000000000200000000000000
-    description: 
+    description: Chasing State
     docUrl: 
     showStateLabel: 0
     maxLoopCount: 0
@@ -10192,7 +10198,7 @@ MonoBehaviour:
       - Components
       - General
       variableCategoryIDs: 0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000002000000000000000000000000000000000000000000000000000000000000000000000001000000000000000000000000000000010000000000000000000000000000000000000000000000
-    description: 
+    description: AI Controller
     docUrl: 
     showStateLabel: 0
     maxLoopCount: 0
@@ -11584,7 +11590,7 @@ MonoBehaviour:
       - Exposed
       - PreviouslyInitialized
       variableCategoryIDs: 00000000010000000000000000000000000000000100000000000000010000000200000000000000
-    description: 
+    description: Stagger State
     docUrl: 
     showStateLabel: 0
     maxLoopCount: 0
@@ -13197,7 +13203,7 @@ MonoBehaviour:
       - Exposed
       - PreviouslyInitialized
       variableCategoryIDs: 00000000000000000000000000000000010000000000000000000000000000000000000002000000000000000200000002000000
-    description: 
+    description: Patroling State
     docUrl: 
     showStateLabel: 0
     maxLoopCount: 0
@@ -15159,7 +15165,10 @@ MonoBehaviour:
       - Exposed
       - PreviouslyInitialized
       variableCategoryIDs: 010000000000000001000000000000000000000001000000000000000100000000000000010000000000000002000000020000000100000002000000
-    description: 
+    description: 'Special Attack State
+
+      This FSM is the one in charge of the
+      reactions to the environment for this enemy'
     docUrl: 
     showStateLabel: 0
     maxLoopCount: 0
@@ -16513,7 +16522,7 @@ MonoBehaviour:
       - 
       - PreviouslyInitialized
       variableCategoryIDs: 0000000000000000010000000100000001000000
-    description: 
+    description: Finisher State
     docUrl: 
     showStateLabel: 0
     maxLoopCount: 0
@@ -17550,7 +17559,7 @@ MonoBehaviour:
       - PreviouslyInitialized
       - Timers
       variableCategoryIDs: 0000000002000000000000000000000000000000000000000100000000000000
-    description: 
+    description: Suspicious State
     docUrl: 
     showStateLabel: 0
     maxLoopCount: 0
@@ -19526,7 +19535,7 @@ MonoBehaviour:
       - Exposed
       - PreviouslyInitialized
       variableCategoryIDs: 00000000000000000000000001000000000000000000000000000000000000000000000001000000000000000000000000000000010000000200000002000000
-    description: 
+    description: Blocking State
     docUrl: 
     showStateLabel: 0
     maxLoopCount: 0
@@ -19630,6 +19639,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8851278654538908375, guid: 587e06734df96fb45836c4df01ad03a7,
         type: 3}
+      propertyPath: m_RootOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8851278654538908375, guid: 587e06734df96fb45836c4df01ad03a7,
+        type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
       objectReference: {fileID: 0}
@@ -19645,6 +19659,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8851278654538908375, guid: 587e06734df96fb45836c4df01ad03a7,
         type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8851278654538908375, guid: 587e06734df96fb45836c4df01ad03a7,
+        type: 3}
       propertyPath: m_LocalRotation.x
       value: 0
       objectReference: {fileID: 0}
@@ -19656,16 +19675,6 @@ PrefabInstance:
     - target: {fileID: 8851278654538908375, guid: 587e06734df96fb45836c4df01ad03a7,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8851278654538908375, guid: 587e06734df96fb45836c4df01ad03a7,
-        type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8851278654538908375, guid: 587e06734df96fb45836c4df01ad03a7,
-        type: 3}
-      propertyPath: m_RootOrder
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8851278654538908375, guid: 587e06734df96fb45836c4df01ad03a7,
