@@ -43,7 +43,7 @@ namespace PSmash.Control
 
         private void InteractWithMovement()
         {
-            playerMovement.ControlledMovement(xInput, yInput, false);
+            //playerMovement.ControlledMovement(xInput, yInput, false);
         }
 
 
@@ -59,7 +59,7 @@ namespace PSmash.Control
             if (!isEnabled) return;
             //print("Jump");
             if (fighter.IsAttacking() || playerMovement.IsEvading() || playerMovement.IsClimbingLedge() || fighter.IsGuarding() || health.IsDamaged()) return;
-            playerMovement.ControlledMovement(xInput, yInput, true);
+            //playerMovement.ControlledMovement(xInput, yInput, true);
             //playerMovement.Jump(yInput);
         }
 
@@ -129,7 +129,7 @@ namespace PSmash.Control
         public void SetEnable(bool state)
         {
             //print("Playercontroller Disabled");
-            playerMovement.ControlledMovement(0, 0, false);
+            //playerMovement.ControlledMovement(0, 0, false);
             this.enabled = state;
             isEnabled = state;
         }

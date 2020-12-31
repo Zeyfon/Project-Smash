@@ -38,6 +38,7 @@ namespace PSmash.Movement
         [SerializeField] float maxGuardingSpeed = 2;
         [SerializeField] float jumpVelocity = 14;
         [SerializeField] int raycastFrameInterval = 10;
+
         [SerializeField] AudioClip jumpSound = null;
         [SerializeField] Transform wallCheckUpper = null;
         [SerializeField] Transform wallCheckMiddle = null;
@@ -99,6 +100,8 @@ namespace PSmash.Movement
         bool isLadderDetected = false;
         bool canGetOffLadder = true;
         bool canPassPlatformFromBelow = false;
+        bool previousJumpState = false;
+        bool jumpButtonWasPressed = false;
 
         // Start is called before the first frame update
         void Awake()
@@ -125,6 +128,10 @@ namespace PSmash.Movement
         {
             isGrounded = Physics2D.OverlapCircle(groundCheck.position, groundCheckRadius, whatIsGround);
             animator.SetBool("Grounded", isGrounded);
+            if (isGrounded && canWalkOnSlope)
+            {
+                canDoubleJump = true;
+            }
             if (isFalling && isGrounded)
             {
                 //audioSource.PlayOneShot(landingSound);
@@ -137,7 +144,7 @@ namespace PSmash.Movement
             if (isGrounded && !isJumping && slopeDownAngle <= maxSlopeAngle && rb.velocity.y ==0)
             {
                 isFalling = false;
-                canDoubleJump = true;
+
                 isJumping = false;
             }
         }
@@ -147,69 +154,120 @@ namespace PSmash.Movement
         //This method is called all the time. 
         //As long as the player does not do anything that triggers the return 
         //in FixedUpdate in the PlayerController script
-        public void ControlledMovement(float xInput, float yInput, bool jump)
+        public void ControlledMovement(float xInput, float yInput, bool jumpState)
         {
-            if (isEvading) return;
-            if (jump)
-            {
-                if (isMovingOnWall)
-                {
-                    //print("Jumping Away From Wall");
-                    canDoubleJump = true;
-                    IsMovingOnWall = false;
-                    ApplyingJump();
-                    GravityScale(gravityScale);
-                    rb.drag = 1;
-                }
-                //Jumping from the Ladder
-                else if (isMovingOnLadder)
-                {
-                    //print("Jumping Away from Ladder");
-                    canDoubleJump = true;
-                    isMovingOnLadder = false;
-                    ApplyingJump();
-                    GravityScale(gravityScale);
-                    rb.drag = 1;
-                    animator.SetInteger("LadderMovement", 10);
-                    StartCoroutine(LadderCheckStandBy());
-                }
-                else if (CanPassThroughOneWayPlatform(yInput))
-                {
-                    //print("Passing through one way platform");
-                    oneWayPlatform.GetComponent<OneWayPlatform>().RotatePlatform();
-                }
-
-                else if (isGrounded && canWalkOnSlope)
-                {
-                    ApplyingJump();
-                }
-
-                else if (isOnSlope && canDoubleJump)
-                {
-                    ApplyingJump();
-                    canDoubleJump = false;
-                }
-                else if (canDoubleJump && canWalkOnSlope)
-                {
-                    ApplyingJump();
-                    canDoubleJump = false;
-                }
-            }
+            //Check if the jump button was just pressed
+            //Do stuff with the jumb button was just pressed event
+            //Reset it to false if no action could be made with it
+            JumpButtonCheck(yInput, jumpState);
 
             if (isClimbing) return;
 
             animator.SetFloat("yVelocity", rb.velocity.y);
             if (!isMovingOnLadder && !isMovingOnWall && canFlip)
             {
-                CheckForInteractableElements(yInput);
+                InteractableElementsCheck(yInput);
             }
 
             Moving(xInput, yInput);
         }
 
+        private void JumpButtonCheck(float yInput, bool jumpState)
+        {
+            if (previousJumpState == !jumpState)
+            {
+                //print(previousJumpState + "  " + jumpState);
+
+                if (jumpState)
+                {
+                    jumpButtonWasPressed = true;
+                    //print("Jump button just pressed");
+                }
+                else
+                {
+                    //print("Jump button just released");
+                }
+                previousJumpState = jumpState;
+            }
+            //if (isEvading) return;
+            if (jumpState)
+            {
+                if (isGrounded && canWalkOnSlope && !CanPassThroughOneWayPlatform(yInput))
+                {
+                    print("Ground Jump");
+                    ApplyingJump();
+                    jumpButtonWasPressed = false;
+                }
+                //print("Jump Button keeping being pressed");
+                else if (jumpButtonWasPressed)
+                {
+
+                    //if (isMovingOnWall)
+                    //{
+                    //    print("Jumping Away From Wall");
+                    //    canDoubleJump = true;
+                    //    IsMovingOnWall = false;
+                    //    ApplyingJump();
+                    //    GravityScale(gravityScale);
+                    //    rb.drag = 1;
+                    //}
+
+                    if (isMovingOnLadder)
+                    {
+                        print("Jumping Away from Ladder");
+                        canDoubleJump = true;
+                        //isMovingOnLadder = false;
+                        ApplyingJump();
+                        GravityScale(gravityScale);
+                        rb.drag = 1;
+                        animator.SetInteger("LadderMovement", 10);
+                        StartCoroutine(LadderCheckStandBy());
+                    }
+                    else if (CanPassThroughOneWayPlatform(yInput))
+                    {
+                        print("Passing through one way platform");
+                        oneWayPlatform.GetComponent<OneWayPlatform>().RotatePlatform();
+                    }
+
+                    //print("Wants to do a second jump");
+                    else if (canDoubleJump)
+                    {
+                        print("Mid Air Jump");
+                        ApplyingJump();
+                        canDoubleJump = false;
+                    }
+                    else if (canDoubleJump && !canWalkOnSlope)
+                    {
+                        print("Second Jump");
+                        ApplyingJump();
+                        canDoubleJump = false;
+                    }
+                    jumpButtonWasPressed = false;
+                }
+            }
+            jumpButtonWasPressed = false;
+        }
+
+        private void ApplyingJump()
+        {
+            isJumping = true;
+            rb.sharedMaterial = noFriction;
+            rb.velocity = Vector2.up * jumpVelocity;
+            animator.SetTrigger("Jump");
+        }
+
         private bool CanPassThroughOneWayPlatform(float yInput)
         {
+            print("Checking one way platforms");
             return isCollidingWithOneWayPlatform && yInput < -0.5f;
+        }
+
+        IEnumerator LadderCheckStandBy()
+        {
+            yield return new WaitForSeconds(0.5f);
+            isClimbing = false;
+            isMovingOnLadder = false;
+
         }
 
         private void Moving(float xInput, float yInput)
@@ -312,6 +370,13 @@ namespace PSmash.Movement
             rb.velocity = new Vector2(0, 0);
         }
 
+        //AnimEvent
+        void Footstep()
+        {
+            if (!isGrounded && footStepAudioSource.isPlaying) return;
+            footStepAudioSource.pitch = Random.Range(0.75f, 1);
+            footStepAudioSource.Play();
+        }
         #endregion
 
         #region SlopeControl
@@ -379,29 +444,9 @@ namespace PSmash.Movement
         }
         #endregion
 
-        IEnumerator LadderCheckStandBy()
-        {
-            yield return new WaitForSeconds(0.3f);
-        }
 
-        private void ApplyingJump()
-        {
-            isJumping = true;
-            rb.sharedMaterial = noFriction;
-            rb.velocity = Vector2.up * jumpVelocity;
-            animator.SetTrigger("Jump");
-        }
 
-        //AnimEvent
-        void Footstep()
-        {
-            if (!isGrounded && footStepAudioSource.isPlaying) return;
-            footStepAudioSource.pitch = Random.Range(0.75f, 1);
-            footStepAudioSource.Play();
-        }
-
-        #region ClimbingLedge
-        void CheckForInteractableElements(float yInput)
+        void InteractableElementsCheck(float yInput)
         {
             if (isLadderDetected)
             {
@@ -409,67 +454,13 @@ namespace PSmash.Movement
             }
             else
             {
-                ClimbCorners();
+                ClimbingLedgeCheck();
             }
         }
 
-        void CheckToStartMovingOnLadders(float yInput)
-        {
-            //print(canPassPlatformFromBelow + " " +  isCollidingWithOneWayPlatform);
-            if (!canPassPlatformFromBelow && isCollidingWithOneWayPlatform && yInput < -0.9f)
-            {
-                //print("Start At Upper Part of Ladder");
-                oneWayPlatform.GetComponent<OneWayPlatform>().RotatePlatform();
-                StartLadderMovement();
+        #region ClimbingLedge
 
-            }
-            else if (!isGrounded && Mathf.Abs(yInput) > 0.9f)
-            {
-                //print("Start at middle of Ladder");
-                StartLadderMovement();
-            }
-
-            else if (isGrounded && !isCollidingWithOneWayPlatform && yInput > 0.8f)
-            {
-                //print("Start at bottom of Ladder");
-                StartLadderMovement();
-            }
-        }
-
-        private void StartLadderMovement()
-        {
-            //StartCoroutine(LadderMovementFixedUpdated());
-            print("Started LadderMovement");
-            rb.velocity = new Vector2(0, 0);
-            GravityScale(0);
-            rb.position = new Vector3(ladderPositionX, transform.position.y, 0);
-            isMovingOnLadder = true;
-            animator.SetTrigger("climbLadder");
-            StartCoroutine(TimerToGetOffLadder());
-        }
-
-        IEnumerator LadderMovementFixedUpdated()
-        {
-            yield return new WaitForFixedUpdate();
-            print("Started LadderMovement");
-            rb.velocity = new Vector2(0, 0);
-            GravityScale(0);
-            rb.position = new Vector3(ladderPositionX, transform.position.y, 0);
-            isMovingOnLadder = true;
-            animator.SetTrigger("climbLadder");
-            yield return TimerToGetOffLadder();
-        }
-        private void ClimbingPlatformAnimation()
-        {
-            isClimbing = true;
-            rb.velocity = new Vector2(0, 0);
-            print("Climbing Animation");
-            animator.SetInteger("LadderMovement", 5);
-            EnablePlayerController(false);
-            StartCoroutine(CheckExitLadder());
-        }
-
-        private void ClimbCorners()
+        private void ClimbingLedgeCheck()
         {
             RaycastHit2D isTouchingUpperWall;
             RaycastHit2D isTouchingMiddleWall;
@@ -540,7 +531,40 @@ namespace PSmash.Movement
         #endregion
 
         #region LadderControl
+        void CheckToStartMovingOnLadders(float yInput)
+        {
+            //print(canPassPlatformFromBelow + " " +  isCollidingWithOneWayPlatform);
+            if (!canPassPlatformFromBelow && isCollidingWithOneWayPlatform && yInput < -0.9f)
+            {
+                //print("Start At Upper Part of Ladder");
+                oneWayPlatform.GetComponent<OneWayPlatform>().RotatePlatform();
+                StartLadderMovement();
 
+            }
+            else if (!isGrounded && Mathf.Abs(yInput) > 0.9f)
+            {
+                //print("Start at middle of Ladder");
+                StartLadderMovement();
+            }
+
+            else if (isGrounded && !isCollidingWithOneWayPlatform && yInput > 0.8f)
+            {
+                //print("Start at bottom of Ladder");
+                StartLadderMovement();
+            }
+        }
+
+        private void StartLadderMovement()
+        {
+            //StartCoroutine(LadderMovementFixedUpdated());
+            print("Started LadderMovement");
+            rb.velocity = new Vector2(0, 0);
+            GravityScale(0);
+            rb.position = new Vector3(ladderPositionX, transform.position.y, 0);
+            isMovingOnLadder = true;
+            animator.SetTrigger("climbLadder");
+            StartCoroutine(TimerToGetOffLadder());
+        }
         IEnumerator TimerToGetOffLadder()
         {
             canGetOffLadder = false;
@@ -553,7 +577,7 @@ namespace PSmash.Movement
             if (yInput > 0 && IsPlatformBelowMe())
             {
                 print("ClimbingPlatform");
-                ClimbingPlatformAnimation();
+                FinishClimbingLadderAnimation();
             }
 
             else if (yInput < 0 && isGrounded && !isCollidingWithOneWayPlatform)
@@ -564,6 +588,8 @@ namespace PSmash.Movement
                 ExitLadderFromBelow();
             }
         }
+
+
 
         bool IsPlatformBelowMe()
         {
@@ -576,6 +602,16 @@ namespace PSmash.Movement
             }
 
             else return false;
+        }
+
+        private void FinishClimbingLadderAnimation()
+        {
+            isClimbing = true;
+            rb.velocity = new Vector2(0, 0);
+            print("Climbing Animation");
+            animator.SetInteger("LadderMovement", 5);
+            EnablePlayerController(false);
+            StartCoroutine(CheckExitLadder());
         }
 
         void ExitLadderFromBelow()
@@ -874,7 +910,7 @@ namespace PSmash.Movement
         {
             if (collision.CompareTag("Ladder")) 
             {
-                print("Ladder is detected");
+                //print("Ladder is detected");
                 isLadderDetected = true;
                 ladderPositionX = collision.transform.position.x;
             }
@@ -884,8 +920,7 @@ namespace PSmash.Movement
         {
             if (collision.CompareTag("Ladder"))
             {
-                print("Ladder is not detected");
-
+                //print("Ladder is not detected");
                 isLadderDetected = false;
                 ladderPositionX = 0;
             }

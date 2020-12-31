@@ -2,7 +2,7 @@
 
 namespace PSmash.InputSystem
 {
-    public class HeavyAttackCommand : ActionCommand, ICommand
+    public class ToolCommand : ActionCommand, ICommand
     {
         PlayerController playerController;
 
