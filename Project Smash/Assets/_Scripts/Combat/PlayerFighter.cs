@@ -104,30 +104,30 @@ namespace PSmash.Combat
         public void MainAttack(bool isButtonPressed, float yInput)
         {
 
-            if (IsFinishingAnEnemy()) return;
-            if (!movement.IsGrounded() && animator.GetInteger("Attack") == 0 && yInput <-0.5f)
-            {
-                //print("Splash Attack");
-                isAttacking = true;
-                StartCoroutine(RunThisAnimation("Attack", 50));
-                return;
-            }
-            else if (animator.GetInteger("Attack") == 0 && isButtonPressed)
-            {
-                //print("Main Combo Attack");
-                movement.SetVelocityToCero();
-                isAttacking = true;
-                StartCoroutine(RunThisAnimation("Attack",1));
+            //if (IsFinishingAnEnemy()) return;
+            //if (!movement.IsGrounded() && animator.GetInteger("Attack") == 0 && yInput <-0.5f)
+            //{
+            //    //print("Splash Attack");
+            //    isAttacking = true;
+            //    StartCoroutine(RunThisAnimation("Attack", 50));
+            //    return;
+            //}
+            //else if (animator.GetInteger("Attack") == 0 && isButtonPressed)
+            //{
+            //    //print("Main Combo Attack");
+            //    movement.SetVelocityToCero();
+            //    isAttacking = true;
+            //    StartCoroutine(RunThisAnimation("Attack",1));
                 
-                return;
-            }
-            else if(animator.GetInteger("Attack")!=0 && isComboWindowActive)
-            {
-                //print("Combo Attack Continuity");
-                isComboWindowActive = false;
-                animator.SetInteger("Attack", animator.GetInteger("Attack") + 1);
-                return;
-            }
+            //    return;
+            //}
+            //else if(animator.GetInteger("Attack")!=0 && isComboWindowActive)
+            //{
+            //    //print("Combo Attack Continuity");
+            //    isComboWindowActive = false;
+            //    animator.SetInteger("Attack", animator.GetInteger("Attack") + 1);
+            //    return;
+            //}
         }        
 
         public bool ToolAttack()
@@ -353,6 +353,7 @@ namespace PSmash.Combat
         //Anim Event
         void LightAttackDamage(int comboAttackNumber)
         {
+            print("NormalAttack");
             SendDamage(attackTransform, comboAttackArea, comboAttackDamages[comboAttackNumber - 1]);
         }
 

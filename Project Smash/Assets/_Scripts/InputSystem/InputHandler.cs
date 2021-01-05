@@ -32,6 +32,7 @@ namespace PSmash.InputSystem
         ICommand buttonLB;
         //ICommand dPadRight;
 
+        PlayMakerFSM currentPMState;
         PlayerController playerController;
         _Controller _controller;
 
@@ -58,8 +59,16 @@ namespace PSmash.InputSystem
             //SetButtonsInControllerMenu();
         }
 
+        //Method used by each state in PlayMaker to inform to which state the inputs will be sent
+        public void SetCurrentStateFSM(PlayMakerFSM pm)
+        {
+            currentPMState = pm;
+            print("Current State in Player is " + currentPMState.FsmName);
+        }
+
         public Vector2 GetMovementInfo()
         {
+            //print(movement);
             return movement;
         }
         
@@ -74,10 +83,10 @@ namespace PSmash.InputSystem
             _controller.Player.Move.performed += ctx => movement = ctx.ReadValue<Vector2>();
             _controller.Player.ButtonA.started += ctx => ButtonAPressed();
             _controller.Player.ButtonA.canceled += ctx => ButtonAReleased();
-            //_controller.Player.ButtonB.started += ctx => ButtonBPressed();
-            //_controller.Player.ButtonB.canceled += ctx => ButtonBReleased();
-            //_controller.Player.ButtonX.started += ctx => ButtonXPressed();
-            //_controller.Player.ButtonX.canceled += ctx => ButtonXReleased();
+            _controller.Player.ButtonB.started += ctx => ButtonBPressed();
+            _controller.Player.ButtonB.canceled += ctx => ButtonBReleased();
+            _controller.Player.ButtonX.started += ctx => ButtonXPressed();
+            _controller.Player.ButtonX.canceled += ctx => ButtonXReleased();
             //_controller.Player.ButtonY.started += ctx => ButtonYPressed();
             //_controller.Player.ButtonY.canceled += ctx => ButtonYReleased();
             //_controller.Player.ButtonRB.started += cx => ButtonRBPressed();
@@ -101,10 +110,10 @@ namespace PSmash.InputSystem
             _controller.Player.Move.performed -= ctx => movement = ctx.ReadValue<Vector2>();
             _controller.Player.ButtonA.started -= ctx => ButtonAPressed();
             _controller.Player.ButtonA.canceled -= ctx => ButtonAReleased();
-            //_controller.Player.ButtonB.started -= ctx => ButtonBPressed();
-            //_controller.Player.ButtonB.canceled -= ctx => ButtonBReleased();
-            //_controller.Player.ButtonX.started -= ctx => ButtonXPressed();
-            //_controller.Player.ButtonX.canceled -= ctx => ButtonXReleased();
+            _controller.Player.ButtonB.started -= ctx => ButtonBPressed();
+            _controller.Player.ButtonB.canceled -= ctx => ButtonBReleased();
+            _controller.Player.ButtonX.started -= ctx => ButtonXPressed();
+            _controller.Player.ButtonX.canceled -= ctx => ButtonXReleased();
             //_controller.Player.ButtonY.started -= ctx => ButtonYPressed();
             //_controller.Player.ButtonY.canceled -= ctx => ButtonYReleased();
             //_controller.Player.ButtonRB.started -= cx => ButtonRBPressed();
@@ -140,18 +149,22 @@ namespace PSmash.InputSystem
         private void ButtonXPressed()
         {
             if (buttonX == null) return;
-            buttonX.Execute(true);
+            print("Sending NORMALATTACK event to " + currentPMState.FsmName);
+            currentPMState.SendEvent("NORMALATTACK");
+            //buttonX.Execute(true);
         }
         private void ButtonXReleased()
         {
             if (buttonX == null) return;
-            buttonX.Execute(false);
+            //buttonX.Execute(false);
         }
 
         private void ButtonBPressed()
         {
             if (buttonB == null) return;
-            buttonB.Execute(true);
+            //print("Sending EVADE event to " + currentPMState.FsmName);
+            currentPMState.SendEvent("EVASION");
+            //buttonB.Execute(true);
         }
 
         private void ButtonBReleased()

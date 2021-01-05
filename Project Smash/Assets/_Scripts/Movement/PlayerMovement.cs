@@ -99,7 +99,7 @@ namespace PSmash.Movement
         bool isCollidingWithOneWayPlatform = false;
         bool isLadderDetected = false;
         bool canGetOffLadder = true;
-        bool canPassPlatformFromBelow = false;
+        bool canAutomaticallyMoveThrougPlatform = false;
         bool previousJumpState = false;
         bool jumpButtonWasPressed = false;
 
@@ -141,7 +141,7 @@ namespace PSmash.Movement
                 isJumping = false;
                 isFalling = true;
             }
-            if (isGrounded && !isJumping && slopeDownAngle <= maxSlopeAngle && rb.velocity.y ==0)
+            if (isGrounded && !isJumping && /*slopeDownAngle <= maxSlopeAngle*/ canWalkOnSlope && rb.velocity.y ==0)
             {
                 isFalling = false;
 
@@ -151,9 +151,7 @@ namespace PSmash.Movement
 
         #region GeneralMovement Methods
 
-        //This method is called all the time. 
-        //As long as the player does not do anything that triggers the return 
-        //in FixedUpdate in the PlayerController script
+        //This method is used by the MovingState FSM
         public void ControlledMovement(float xInput, float yInput, bool jumpState)
         {
             //Check if the jump button was just pressed
@@ -172,7 +170,7 @@ namespace PSmash.Movement
             Moving(xInput, yInput);
         }
 
-        private void JumpButtonCheck(float yInput, bool jumpState)
+        public void JumpButtonCheck(float yInput, bool jumpState)
         {
             if (previousJumpState == !jumpState)
             {
@@ -192,9 +190,9 @@ namespace PSmash.Movement
             //if (isEvading) return;
             if (jumpState)
             {
-                if (isGrounded && canWalkOnSlope && !CanPassThroughOneWayPlatform(yInput))
+                if (isGrounded && canWalkOnSlope && !CanPassThroughOneWayPlatform(yInput) && rb.velocity.y<0.5f)
                 {
-                    print("Ground Jump");
+                    //print("Ground Jump");
                     ApplyingJump();
                     jumpButtonWasPressed = false;
                 }
@@ -214,9 +212,9 @@ namespace PSmash.Movement
 
                     if (isMovingOnLadder)
                     {
-                        print("Jumping Away from Ladder");
+                        //print("Jumping Away from Ladder");
                         canDoubleJump = true;
-                        //isMovingOnLadder = false;
+                        isMovingOnLadder = false;
                         ApplyingJump();
                         GravityScale(gravityScale);
                         rb.drag = 1;
@@ -225,20 +223,20 @@ namespace PSmash.Movement
                     }
                     else if (CanPassThroughOneWayPlatform(yInput))
                     {
-                        print("Passing through one way platform");
+                        //print("Passing through one way platform");
                         oneWayPlatform.GetComponent<OneWayPlatform>().RotatePlatform();
                     }
 
                     //print("Wants to do a second jump");
                     else if (canDoubleJump)
                     {
-                        print("Mid Air Jump");
+                        //print("Mid Air Jump");
                         ApplyingJump();
                         canDoubleJump = false;
                     }
                     else if (canDoubleJump && !canWalkOnSlope)
                     {
-                        print("Second Jump");
+                        //print("Second Jump");
                         ApplyingJump();
                         canDoubleJump = false;
                     }
@@ -250,15 +248,17 @@ namespace PSmash.Movement
 
         private void ApplyingJump()
         {
+
             isJumping = true;
             rb.sharedMaterial = noFriction;
             rb.velocity = Vector2.up * jumpVelocity;
+            print(rb.velocity);
             animator.SetTrigger("Jump");
         }
 
         private bool CanPassThroughOneWayPlatform(float yInput)
         {
-            print("Checking one way platforms");
+            //print("Checking one way platforms");
             return isCollidingWithOneWayPlatform && yInput < -0.5f;
         }
 
@@ -267,7 +267,6 @@ namespace PSmash.Movement
             yield return new WaitForSeconds(0.5f);
             isClimbing = false;
             isMovingOnLadder = false;
-
         }
 
         private void Moving(float xInput, float yInput)
@@ -284,7 +283,7 @@ namespace PSmash.Movement
             }
             else
             {
-                ConstantInputMovement(xInput);
+                ConstantInputMovement(xInput, ConstantMovementList.RunWalk);
                 return;
             }
         }
@@ -303,32 +302,33 @@ namespace PSmash.Movement
             rb.velocity = new Vector2(0, yInput * maxLadderMovementSpeed);
             if(canGetOffLadder) LookingToExitLadder(yInput);
         }
-        void ConstantInputMovement(float xInput)
+        public void ConstantInputMovement(float xInput,ConstantMovementList movementType)
         {
             //print(xInput);
             SlopeCheck(xInput);
             float currentSpeed;
-            currentSpeed = SetSpeed(xInput);
+            currentSpeed = SetSpeed(xInput, movementType);
             if (canFlip) Flip(xInput);
             MovementType(currentSpeed);
         }
 
-        float SetSpeed(float xInput)
+        float SetSpeed(float xInput, ConstantMovementList movementType)
         {
             float currentSpeed;
-            if (!canFlip)
+            switch (movementType)
             {
-                currentSpeed = xInput * maxGuardingSpeed;
+                case ConstantMovementList.Guard:
+                    currentSpeed = xInput * maxGuardingSpeed;
+                    return currentSpeed;
+                case ConstantMovementList.RunWalk:
+                    currentSpeed = xInput * maxRunningSpeed;
+                    return currentSpeed;
+                case ConstantMovementList.Dash:
+                    currentSpeed = xInput * dashSpeed.x;
+                    return currentSpeed;
+                default:
+                    return 0;
             }
-            else if (isEvading == true)
-            {
-                currentSpeed = xInput * dashSpeed.x;
-            }
-            else
-            {
-                currentSpeed = xInput * maxRunningSpeed;
-            }
-            return currentSpeed;
         }
 
         void MovementType(float currentSpeed)
@@ -337,7 +337,6 @@ namespace PSmash.Movement
             //Debug.Log(currentSpeed);
             if (isGrounded && !isOnSlope && !isJumping)
             {
-                //Movement on Slopes
                 //print("Not In Slope");
                 rb.velocity = new Vector2(currentSpeed, rb.velocity.y);
                 animator.SetFloat("xVelocity", Mathf.Abs(currentSpeed));
@@ -345,7 +344,6 @@ namespace PSmash.Movement
             }
             if (isGrounded && isOnSlope && !isJumping && canWalkOnSlope)
             {
-                //Movement in Slopes
                 //print("In Slope");
                 float xVelocity  = -1* currentSpeed * slopeNormalPerp.x;
                 float yVelocity = -1 * currentSpeed * slopeNormalPerp.y;
@@ -450,7 +448,7 @@ namespace PSmash.Movement
         {
             if (isLadderDetected)
             {
-                CheckToStartMovingOnLadders(yInput);
+                LadderMovementCheck(yInput);
             }
             else
             {
@@ -531,10 +529,10 @@ namespace PSmash.Movement
         #endregion
 
         #region LadderControl
-        void CheckToStartMovingOnLadders(float yInput)
+        void LadderMovementCheck(float yInput)
         {
-            //print(canPassPlatformFromBelow + " " +  isCollidingWithOneWayPlatform);
-            if (!canPassPlatformFromBelow && isCollidingWithOneWayPlatform && yInput < -0.9f)
+
+            if (/*!canAutomaticallyMoveThrougPlatform &&*/ isCollidingWithOneWayPlatform && yInput < -0.9f)
             {
                 //print("Start At Upper Part of Ladder");
                 oneWayPlatform.GetComponent<OneWayPlatform>().RotatePlatform();
@@ -557,7 +555,7 @@ namespace PSmash.Movement
         private void StartLadderMovement()
         {
             //StartCoroutine(LadderMovementFixedUpdated());
-            print("Started LadderMovement");
+            //print("Started LadderMovement");
             rb.velocity = new Vector2(0, 0);
             GravityScale(0);
             rb.position = new Vector3(ladderPositionX, transform.position.y, 0);
@@ -576,13 +574,13 @@ namespace PSmash.Movement
         {
             if (yInput > 0 && IsPlatformBelowMe())
             {
-                print("ClimbingPlatform");
+                //print("ClimbingPlatform");
                 FinishClimbingLadderAnimation();
             }
 
             else if (yInput < 0 && isGrounded && !isCollidingWithOneWayPlatform)
             {
-                print("Exiting Ladder from below");
+                //print("Exiting Ladder from below");
                 RaycastHit2D hit = Physics2D.Raycast(transform.position + new Vector3(0,colliderSize.y/2), Vector2.down, checkLadderDistance, whatIsGround);
                 if (!hit || hit.collider.CompareTag("ThinPlatform")) return;
                 ExitLadderFromBelow();
@@ -597,7 +595,7 @@ namespace PSmash.Movement
             
             if (hit && hit.collider.CompareTag("ThinPlatform"))
             {
-                print("Platform is below");
+                //print("Platform is below");
                 return true;
             }
 
@@ -608,7 +606,7 @@ namespace PSmash.Movement
         {
             isClimbing = true;
             rb.velocity = new Vector2(0, 0);
-            print("Climbing Animation");
+            //print("Climbing Animation");
             animator.SetInteger("LadderMovement", 5);
             EnablePlayerController(false);
             StartCoroutine(CheckExitLadder());
@@ -683,7 +681,7 @@ namespace PSmash.Movement
             while (true)
             {
                 //print("Roll force applying");
-                ConstantInputMovement(transform.right.x);
+                //ConstantInputMovement(transform.right.x);
                 animator.SetFloat("yVelocity", rb.velocity.y);
                 yield return new WaitForFixedUpdate();
             }
@@ -732,10 +730,6 @@ namespace PSmash.Movement
             }
         }
 
-        public void ResetGravity()
-        {
-            GravityScale(gravityScale);
-        }
         void GravityScale(float gravityScale)
         {
             rb.gravityScale = gravityScale;
@@ -748,7 +742,6 @@ namespace PSmash.Movement
         }
 
         #region Status Properties
-
 
         public bool IsEvading()
         {
@@ -819,39 +812,6 @@ namespace PSmash.Movement
             if (!isGrounded) return;
             dust.Play();
         }
-
-        //Used by the PlayerFighter to apply an small impulse when attacking
-        public void AddImpulse(float impulse)
-        {
-            rb.AddForce(new Vector2(impulse * transform.right.x, 0),ForceMode2D.Impulse);
-        }
-
-        void ForwadAttackMovement()
-        {
-            coroutine = StartCoroutine(ForwardAttackMovementCO());
-        }
-
-        IEnumerator ForwardAttackMovementCO()
-        {
-            while (true)
-            {
-                yield return new WaitForFixedUpdate();
-                ControlledMovement(forwardAttackSpeed.x*transform.right.x, forwardAttackSpeed.y, false);
-            }
-        }
-        IEnumerator SplashMovement()
-        {
-            gameObject.layer = LayerMask.NameToLayer("PlayerGhost");
-            while (!isGrounded)
-            {
-                rb.velocity = splashAttackSpeed;
-                yield return new WaitForFixedUpdate();
-            }
-            rb.velocity = new Vector2(0, 0);
-            gameObject.layer = LayerMask.NameToLayer("Player");
-        }
-
-        //AnimEvent
         void JumpSound()
         {
             audioSource.PlayOneShot(jumpSound);
@@ -863,6 +823,40 @@ namespace PSmash.Movement
             audioSource.PlayOneShot(climbingWallSound);
         }
         #endregion
+
+        //Used by the PlayerFighter to apply an small impulse when attacking
+        public void AddImpulse(float impulse)
+        {
+            rb.AddForce(new Vector2(impulse * transform.right.x, 0),ForceMode2D.Impulse);
+        }
+
+        //void ForwadAttackMovement()
+        //{
+        //    coroutine = StartCoroutine(ForwardAttackMovementCO());
+        //}
+
+        //IEnumerator ForwardAttackMovementCO()
+        //{
+        //    while (true)
+        //    {
+        //        yield return new WaitForFixedUpdate();
+        //        ControlledMovement(forwardAttackSpeed.x*transform.right.x, forwardAttackSpeed.y, false);
+        //    }
+        //}
+        //IEnumerator SplashMovement()
+        //{
+        //    gameObject.layer = LayerMask.NameToLayer("PlayerGhost");
+        //    while (!isGrounded)
+        //    {
+        //        rb.velocity = splashAttackSpeed;
+        //        yield return new WaitForFixedUpdate();
+        //    }
+        //    rb.velocity = new Vector2(0, 0);
+        //    gameObject.layer = LayerMask.NameToLayer("Player");
+        //}
+
+        //AnimEvent
+
 
         private void OnDrawGizmosSelected()
         {
@@ -884,14 +878,14 @@ namespace PSmash.Movement
             if (!collision.collider.CompareTag("ThinPlatform")) return;
             if (collision.collider.transform.position.y < transform.position.y)
             {
-                canPassPlatformFromBelow = false;
-                print("Player is Above");
+                canAutomaticallyMoveThrougPlatform = false;
+                //print("Player is Above");
             }
             else
             {
-                print(collision.collider.transform.position.y + " " + transform.position.y);
-                canPassPlatformFromBelow = true;
-                print("Player is Below");
+                //print(collision.collider.transform.position.y + " " + transform.position.y);
+                canAutomaticallyMoveThrougPlatform = true;
+                //print("Player is Below");
             }
         }
 
@@ -901,7 +895,7 @@ namespace PSmash.Movement
             if (!collision.collider.CompareTag("ThinPlatform")) return;
 
             isCollidingWithOneWayPlatform = false;
-            canPassPlatformFromBelow = false;
+            canAutomaticallyMoveThrougPlatform = false;
             oneWayPlatform = null;
         }
 

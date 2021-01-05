@@ -52,12 +52,12 @@ namespace PSmash.Control
             if (state == true)
             {
                 //print("Inside Wall");
-                playerController.CurrentToolAction(ToolActionList.WallMovement);
+                //playerController.CurrentToolAction(ToolActionList.WallMovement);
             }
             else
             {
                 //print("Outside wall");
-                playerController.CurrentToolAction(ToolActionList.NoAction);
+                //playerController.CurrentToolAction(ToolActionList.NoAction);
             }
             if (movement.IsMovingOnWall && !wallDetected)
             {
