@@ -20,7 +20,7 @@ namespace PSmash.InputSystem
 
         void Attack()
         {
-            playerController.MainAttackButton(true);
+            //playerController.MainAttackButton(true);
         }
     }
 }

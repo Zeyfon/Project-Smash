@@ -46,24 +46,24 @@ namespace PSmash.Control
         });
         }
 
-        public void WallDetected(bool state)
-        {
-            wallDetected = state;
-            if (state == true)
-            {
-                //print("Inside Wall");
-                //playerController.CurrentToolAction(ToolActionList.WallMovement);
-            }
-            else
-            {
-                //print("Outside wall");
-                //playerController.CurrentToolAction(ToolActionList.NoAction);
-            }
-            if (movement.IsMovingOnWall && !wallDetected)
-            {
-                playerController.StopWallMovement();
-            }
-        }
+        //public void WallDetected(bool state)
+        //{
+        //    wallDetected = state;
+        //    if (state == true)
+        //    {
+        //        //print("Inside Wall");
+        //        //playerController.CurrentToolAction(ToolActionList.WallMovement);
+        //    }
+        //    else
+        //    {
+        //        //print("Outside wall");
+        //        //playerController.CurrentToolAction(ToolActionList.NoAction);
+        //    }
+        //    if (movement.IsMovingOnWall && !wallDetected)
+        //    {
+        //        playerController.StopWallMovement();
+        //    }
+        //}
     }
 
 }

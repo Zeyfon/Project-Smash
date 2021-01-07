@@ -18,7 +18,7 @@ namespace PSmash.InputSystem
         }
         void GuardAction(bool isButtonPressed)
         {
-            playerController.GuardButton(isButtonPressed);
+            //playerController.GuardButton(isButtonPressed);
         }
     }
 }

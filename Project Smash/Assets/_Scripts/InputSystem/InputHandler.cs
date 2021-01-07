@@ -37,8 +37,8 @@ namespace PSmash.InputSystem
         _Controller _controller;
 
         Vector2 movement;
-        bool jump = false;
-        bool jumpState = false;
+        bool jumpButtonState = false;
+        bool guardButtonState = false;
 
         private void Awake()
         {
@@ -72,9 +72,14 @@ namespace PSmash.InputSystem
             return movement;
         }
         
-        public bool GetJumpState()
+        public bool GetJumpButtonState()
         {
-            return jumpState;
+            return jumpButtonState;
+        }
+
+        public bool GetGuardButtonState()
+        {
+            return guardButtonState;
         }
 
         private void OnEnable()
@@ -87,11 +92,13 @@ namespace PSmash.InputSystem
             _controller.Player.ButtonB.canceled += ctx => ButtonBReleased();
             _controller.Player.ButtonX.started += ctx => ButtonXPressed();
             _controller.Player.ButtonX.canceled += ctx => ButtonXReleased();
-            //_controller.Player.ButtonY.started += ctx => ButtonYPressed();
-            //_controller.Player.ButtonY.canceled += ctx => ButtonYReleased();
-            //_controller.Player.ButtonRB.started += cx => ButtonRBPressed();
-            //_controller.Player.ButtonRB.canceled += ctx => ButtonRBReleased();
-            //_controller.Player.ButtonLB.started += ctx => ButtonLBPressed();
+            _controller.Player.ButtonY.started += ctx => ButtonYPressed();
+            _controller.Player.ButtonY.canceled += ctx => ButtonYReleased();
+            _controller.Player.ButtonRB.started += cx => ButtonRBPressed();
+            _controller.Player.ButtonRB.canceled += ctx => ButtonRBReleased();
+            _controller.Player.ButtonLB.started += ctx => ButtonLBPressed();
+            _controller.Player.ButtonLB.canceled += ctx => ButtonLBReleased();
+
             //_controller.Player.ButtonStart.started += ctx => ButtonStartPressed();
             //_controller.Player.Quit.performed += ctx => QuitKeyPressed();
             EventManager.PauseGame += PauseGame;
@@ -114,11 +121,13 @@ namespace PSmash.InputSystem
             _controller.Player.ButtonB.canceled -= ctx => ButtonBReleased();
             _controller.Player.ButtonX.started -= ctx => ButtonXPressed();
             _controller.Player.ButtonX.canceled -= ctx => ButtonXReleased();
-            //_controller.Player.ButtonY.started -= ctx => ButtonYPressed();
-            //_controller.Player.ButtonY.canceled -= ctx => ButtonYReleased();
-            //_controller.Player.ButtonRB.started -= cx => ButtonRBPressed();
-            //_controller.Player.ButtonRB.canceled -= ctx => ButtonRBReleased();
-            //_controller.Player.ButtonLB.started -= ctx => ButtonLBPressed();
+            _controller.Player.ButtonY.started -= ctx => ButtonYPressed();
+            _controller.Player.ButtonY.canceled -= ctx => ButtonYReleased();
+            _controller.Player.ButtonRB.started -= cx => ButtonRBPressed();
+            _controller.Player.ButtonRB.canceled -= ctx => ButtonRBReleased();
+            _controller.Player.ButtonLB.started -= ctx => ButtonLBPressed();
+            _controller.Player.ButtonLB.canceled -= ctx => ButtonLBReleased();
+
             //_controller.Player.Quit.performed -= ctx => QuitKeyPressed();
             //_controller.Player.ButtonStart.started -= ctx => ButtonStartPressed();
             EventManager.PauseGame -= PauseGame;
@@ -170,50 +179,75 @@ namespace PSmash.InputSystem
         private void ButtonBReleased()
         {
             if (buttonB == null) return;
-            buttonB.Execute(false);
+            //buttonB.Execute(false);
         }
 
         private void ButtonAPressed()
         {
             if (action1 == null) return;
             //action1.Execute(true);
-            jumpState = true;
+            jumpButtonState = true;
+            pMovement.SetJumpButtonState(true) ;
+            SetJumpButtonStateOnMovement(jumpButtonState);
         }
         private void ButtonAReleased()
         {
             if (action1 == null) return;
             //action1.Execute(false);
-            jumpState = false;
+            jumpButtonState = false;
+            pMovement.SetJumpButtonState(false);
+            SetJumpButtonStateOnMovement(jumpButtonState);
         }
+
+        private void SetJumpButtonStateOnMovement(bool jumpState)
+        {
+            if (!!this.jumpButtonState && jumpState) pMovement.SetJumpButtonPress();
+        }
+
         private void ButtonYPressed()
         {
             if (buttonY == null) return;
-            buttonY.Execute(true);
+            //buttonY.Execute(true);
+            pMovement.SetWallMovementButtonPressed(true);
+            currentPMState.SendEvent("TOOLACTION");
         }
         private void ButtonYReleased()
         {
             if (buttonY == null) return;
-            buttonY.Execute(false);
+            //buttonY.Execute(false);
+            pMovement.SetWallMovementButtonPressed(false);
+
         }
 
         private void ButtonRBPressed()
         {
             if (buttonRB == null) return;
-            buttonRB.Execute(true);
+            //buttonRB.Execute(true);
+            guardButtonState = true;
         }
 
         private void ButtonRBReleased()
         {
             if (buttonRB == null) return;
-            buttonRB.Execute(false);
+            //buttonRB.Execute(false);
+            guardButtonState = false;
         }
 
         private void ButtonLBPressed()
         {
-            //print("Want to throw item");
+            print("Want to throw item");
             if (buttonLB == null) return;
-            buttonLB.Execute(playerController);
+            //buttonLB.Execute(playerController);
+            pMovement.ThrowDaggerButtonJustPressed(true);
         }
+        private void ButtonLBReleased()
+        {
+            print("Want to throw item");
+            if (buttonLB == null) return;
+            //buttonLB.Execute(playerController);
+            pMovement.ThrowDaggerButtonJustPressed(false);
+        }
+
         private void DPadLeftPressed()
         {
             Debug.Log("Pressed");

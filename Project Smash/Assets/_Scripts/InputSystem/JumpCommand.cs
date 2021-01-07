@@ -19,7 +19,7 @@ namespace PSmash.InputSystem
 
         void Jump()
         {
-            playerController.JumpButtonPressed();
+            //playerController.JumpButtonPressed();
         }
 
     }

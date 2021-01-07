@@ -17,7 +17,7 @@ namespace PSmash.InputSystem
 
         void Attack(bool isPressedAttack)
         {
-            playerController.ToolButton(isPressedAttack);
+            //playerController.ToolButton(isPressedAttack);
         }
     }
 }

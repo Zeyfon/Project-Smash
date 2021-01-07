@@ -34,6 +34,7 @@ namespace PSmash.Combat
 
         [Header("Throw Attack")]
         [SerializeField] GameObject dagger = null;
+        [SerializeField] AudioClip throwingKnifeSound = null;
         public int currentItemQuantity = 3;
 
 
@@ -96,10 +97,6 @@ namespace PSmash.Combat
             timeManager = GameObject.FindObjectOfType<TimeManager>();
         }
 
-        private void Start()
-        {
-            bone = GetComponent<SkeletonRenderer>().skeleton.FindBone(boneName);
-        }
 
         public void MainAttack(bool isButtonPressed, float yInput)
         {
@@ -260,6 +257,7 @@ namespace PSmash.Combat
 
         void SpawnItem()
         {
+            audioSource.PlayOneShot(throwingKnifeSound);
             if (currentItemQuantity <= 0) return;
             GameObject itemClone = Instantiate(dagger, attackTransform.position, Quaternion.identity);
             itemClone.GetComponent<Projectile>().SetData(movement.GetIsLookingRight());
@@ -431,6 +429,11 @@ namespace PSmash.Combat
         {
             audioSource.pitch = UnityEngine.Random.Range(0.75f, 1.1f);
             audioSource.PlayOneShot(attackSound1);
+        }
+
+        public void FlipCheck()
+        {
+
         }
 
         public bool IsGuardButtonPressed()
