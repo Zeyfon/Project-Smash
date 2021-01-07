@@ -209,7 +209,7 @@ namespace PSmash.InputSystem
             if (buttonY == null) return;
             //buttonY.Execute(true);
             pMovement.SetWallMovementButtonPressed(true);
-            currentPMState.SendEvent("TOOLACTION");
+            //currentPMState.SendEvent("TOOLACTION");
         }
         private void ButtonYReleased()
         {
