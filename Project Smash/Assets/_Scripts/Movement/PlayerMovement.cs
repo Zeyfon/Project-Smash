@@ -101,6 +101,7 @@ namespace PSmash.Movement
         bool isWallDetected = false;
         bool isThrowDaggerButtonJustPressed = false;
         bool wallMovementState = false;
+        bool isJumpButtonPressed = false;
 
 
         // Start is called before the first frame update
@@ -181,17 +182,6 @@ namespace PSmash.Movement
             if (isGuarding)
                 animator.SetFloat("guardSpeed", Mathf.Abs(input.x));
             MovementType(currentSpeed);
-        }
-
-        private void JumpCheck(Vector2 input, bool isClimbing)
-        {
-            if (isJumping)
-            {
-                if (isCollidingWithOneWayPlatform && input.y < -0.5f)
-                    RotatePlatform();
-                else if (CanJump(isClimbing))
-                    pm.SendEvent("JUMP");
-            }
         }
 
         void MovementType(float currentSpeed)
@@ -394,6 +384,20 @@ namespace PSmash.Movement
         #endregion
 
         #region Jump
+        private void JumpCheck(Vector2 input, bool isClimbing)
+        {
+            //print("Jump is being checked " + isJumpButtonPressed);
+            if (isJumpButtonPressed)
+            {
+                if (isCollidingWithOneWayPlatform && input.y < -0.5f)
+                    RotatePlatform();
+                else if (CanJump(isClimbing))
+                {
+                    pm.SendEvent("JUMP");
+                    print("Wants To Jump");
+                }
+            }
+        }
         public bool CanJump(bool isClimbing)
         {
 
@@ -416,12 +420,14 @@ namespace PSmash.Movement
 
         public void SetJumpButtonPress()
         {
+            //print("Jump Button was pressed");
             jumpButtonWasPressed = true;
         }
 
-        public void SetJumpButtonState(bool isJumping)
+        public void SetJumpButtonState(bool isJumpButtonPressed)
         {
-            this.isJumping = isJumping;
+            this.isJumpButtonPressed = isJumpButtonPressed;
+            //print(this.isJumpButtonPressed);
         }
 
         public void ApplyJump(PhysicsMaterial2D noFriction, float jumpSpeed)
