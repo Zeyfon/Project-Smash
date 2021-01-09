@@ -1,5 +1,6 @@
 ﻿using HutongGames.PlayMaker;
 using PSmash.Attributes;
+using PSmash.Combat;
 using Spine.Unity;
 using System.Collections;
 using UnityEngine;
@@ -74,6 +75,7 @@ namespace PSmash.Movement
 
         PlayMakerFSM pm;
         GameObject oneWayPlatform;
+        PlayerFighter fighter;
         Rigidbody2D rb;
         Animator animator;
         AudioSource audioSource;
@@ -100,7 +102,7 @@ namespace PSmash.Movement
         bool cr_running = false;
         bool isWallDetected = false;
         bool isThrowDaggerButtonJustPressed = false;
-        bool wallMovementState = false;
+        bool toolButtonState = false;
         bool isJumpButtonPressed = false;
 
 
@@ -113,6 +115,7 @@ namespace PSmash.Movement
             animator = GetComponent<Animator>();
             audioSource = GetComponent<AudioSource>();
             health = GetComponent<PlayerHealth>();
+            fighter = GetComponent<PlayerFighter>();
         }
 
         public void SetCurrentStateFSM(PlayMakerFSM pm)
@@ -174,14 +177,24 @@ namespace PSmash.Movement
         {
             JumpCheck(input,false);
             SlopeCheck(input.x);
+            if (toolButtonState && CanEnemyBeFinished())
+                pm.SendEvent("FINISHER");
             if (isThrowDaggerButtonJustPressed)
                 pm.SendEvent("THROWDAGGER");
-            if (wallMovementState && isWallDetected)
+            if (toolButtonState && isWallDetected)
                 pm.SendEvent("WALLMOVEMENT");
             float currentSpeed = maxSpeed * input.x;
             if (isGuarding)
                 animator.SetFloat("guardSpeed", Mathf.Abs(input.x));
             MovementType(currentSpeed);
+        }
+
+        bool CanEnemyBeFinished()
+        {
+            if (fighter.IsEnemyStunned())
+                return true;
+            else
+                return false;
         }
 
         void MovementType(float currentSpeed)
@@ -350,9 +363,9 @@ namespace PSmash.Movement
                 return false;
         }
 
-        public void SetWallMovementButtonPressed(bool wallMovementState)
+        public void ToolButtonPressedStatus(bool toolButtonState)
         {
-            this.wallMovementState = wallMovementState;
+            this.toolButtonState = toolButtonState;
         }
         public void ResetGravity()
         {

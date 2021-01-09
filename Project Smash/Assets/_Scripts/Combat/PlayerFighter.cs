@@ -109,12 +109,17 @@ namespace PSmash.Combat
             return false;
         }
 
-        bool IsEnemyStunned()
+        public bool IsEnemyStunned()
         {
             RaycastHit2D hit = Physics2D.Raycast(transform.position + new Vector3(0, 1), transform.right, 2, whatIsEnemy);
             if (!hit) return false;
             targetTransform = hit.transform;
             return hit.transform.GetComponent<EnemyHealth>().IsStunned();
+        }
+
+        public void FinisherMove()
+        {
+            StartCoroutine(DoFinisherMove());
         }
 
         IEnumerator DoFinisherMove()
@@ -148,7 +153,9 @@ namespace PSmash.Combat
         IEnumerator StartPlayerAndTargetFinisherAnimations()
         {
             //targetTransform.GetComponent<EnemyHealth>().StopCurrentActions();
-            StartCoroutine(RunThisAnimation("Attack",80));
+            //StartCoroutine(RunThisAnimation("Attack",80));
+            animator.SetInteger("Attack", 80);
+
             while (animator.GetInteger("Attack")!= 81)
             {
                 yield return null;

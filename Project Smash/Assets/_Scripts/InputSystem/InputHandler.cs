@@ -208,14 +208,14 @@ namespace PSmash.InputSystem
         {
             if (buttonY == null) return;
             //buttonY.Execute(true);
-            pMovement.SetWallMovementButtonPressed(true);
+            pMovement.ToolButtonPressedStatus(true);
             //currentPMState.SendEvent("TOOLACTION");
         }
         private void ButtonYReleased()
         {
             if (buttonY == null) return;
             //buttonY.Execute(false);
-            pMovement.SetWallMovementButtonPressed(false);
+            pMovement.ToolButtonPressedStatus(false);
 
         }
 
