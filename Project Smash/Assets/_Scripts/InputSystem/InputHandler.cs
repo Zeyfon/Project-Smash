@@ -16,7 +16,7 @@ namespace PSmash.InputSystem
         //[SerializeField] TimeManager timeManager = null;
         //[SerializeField] GameObject weaponsMenu = null;
         [SerializeField] PlayerMovement pMovement = null;
-        [SerializeField] PlayMakerFSM pmInputProxy = null;
+        //[SerializeField] PlayMakerFSM pmInputProxy = null;
 
         PlayMakerFSM pmPlayerController = null;
 

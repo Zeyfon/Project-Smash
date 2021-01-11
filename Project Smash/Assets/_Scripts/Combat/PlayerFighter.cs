@@ -155,7 +155,6 @@ namespace PSmash.Combat
             //targetTransform.GetComponent<EnemyHealth>().StopCurrentActions();
             //StartCoroutine(RunThisAnimation("Attack",80));
             animator.SetInteger("Attack", 80);
-
             while (animator.GetInteger("Attack")!= 81)
             {
                 yield return null;
