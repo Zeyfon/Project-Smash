@@ -2,7 +2,7 @@
 
 namespace PSmash.InputSystem
 {
-    public class HeavyAttackCommand : ActionCommand, ICommand
+    public class ToolCommand : ActionCommand, ICommand
     {
         PlayerController playerController;
 
@@ -17,7 +17,7 @@ namespace PSmash.InputSystem
 
         void Attack(bool isPressedAttack)
         {
-            playerController.ToolButton(isPressedAttack);
+            //playerController.ToolButton(isPressedAttack);
         }
     }
 }

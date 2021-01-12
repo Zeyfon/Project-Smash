@@ -14,12 +14,12 @@ namespace PSmash.InputSystem
         }
         void ICommand.Execute(bool isButtonPressed)
         {
-            if (isButtonPressed) Jump();
+            //if (isButtonPressed) Jump();
         }
 
         void Jump()
         {
-            playerController.JumpButtonPressed();
+            //playerController.JumpButtonPressed();
         }
 
     }

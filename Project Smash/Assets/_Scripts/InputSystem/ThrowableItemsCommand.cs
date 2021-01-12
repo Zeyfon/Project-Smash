@@ -16,7 +16,7 @@ namespace PSmash.InputSystem
         }
         void ICommand.Execute(bool isButtonPressed)
         {
-            if (isButtonPressed) playerController.ThrowButton(isButtonPressed);
+            //if (isButtonPressed) playerController.ThrowButton(isButtonPressed);
 
         }
     }

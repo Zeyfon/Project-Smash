@@ -19,14 +19,8 @@ namespace PSmash.Attributes
         EnemyPosture posture;
         PlayMakerFSM currentPM;
 
-        //bool isStaggered = false;
-        //bool isBlocking = false;
-        //bool isBeingFinished = false;
-
-
         private void Awake()
         {
-
             posture = GetComponent<EnemyPosture>();
         }
 
@@ -46,11 +40,10 @@ namespace PSmash.Attributes
 
         public override void TakeDamage(Transform attacker, int damage)
         {
-            if (isDead) return;
+            if (isDead) 
+                return;
             if (currentPM == null)
-            {
                 Debug.LogWarning("No Enemy State set to return DAMAGE Event");
-            }
             //print("Will Send DAMAGED Event with " + damage + " of damage to " + pm.FsmName + " State");
             FsmEventData myfsmEventData = new FsmEventData();
             myfsmEventData.IntData = damage;
@@ -65,36 +58,18 @@ namespace PSmash.Attributes
             posture.posture = posture.SubstractDamageFromPosture(damage);
             if (posture.posture <= 0 && pm.FsmName != "Stun")
             {
+                //print("POSTUREDEPLETED Event");
                 posture.OnStunStateStart();
                 DamageHealth(damage, 100);
-                //if (isDead)
-                //{
-                //    print(pm.FsmName + " DEAD Event");
-                //    pm.SendEvent("DEAD");
-                //    return;
-                //}
-                //else
-                //{
-                    print("POSTUREDEPLETED Event");
-                    pm.SendEvent("POSTUREDEPLETED");
-                    return;
-              // }
+                pm.SendEvent("POSTUREDEPLETED");
+                return;
             }
             else
             {
+                //print("CONTINUE Event");
                 DamageHealth(damage, damagePenetrationPercentage);
-                //if (isDead)
-                //{
-                //    print(pm.FsmName + "  DEAD Event");
-                //    pm.SendEvent("DEAD");
-                //    return;
-                //}
-                //else
-                //{
-                    print("CONTINUE Event");
-                    pm.SendEvent("CONTINUE");
-                    return;
-               // }
+                pm.SendEvent("CONTINUE");
+                return;
             }
         }
 
@@ -102,12 +77,12 @@ namespace PSmash.Attributes
         {
             if (isDead)
             {
-                print(pm.FsmName + "  DEAD Event");
+                //print(pm.FsmName + "  DEAD Event");
                 pm.SendEvent("ISDEAD");
             }
             else
             {
-                print(pm.FsmName + "  DEAD Event");
+                //print(pm.FsmName + "  DEAD Event");
                 pm.SendEvent("ISNOTDEAD");
             }
         }
@@ -119,7 +94,7 @@ namespace PSmash.Attributes
             health = SubstractDamageFromHealth(damage, health);
             if (health <= 0)
             {
-                print("Dead");
+                //print("Dead");
                 isDead = true;
             }
         }
@@ -143,7 +118,6 @@ namespace PSmash.Attributes
         // have been correctly positioned for the animation to run
         public void StartFinisherAnimation()
         {
-            //animator.Play("Finisher");
             currentPM.SendEvent("STARTFINISHERANIMATION");
         }
 
@@ -169,7 +143,6 @@ namespace PSmash.Attributes
                 GetComponent<Rigidbody2D>().velocity = new Vector2(x, y);
             }
             DamageHealth(damage, 100);
-            //if (isDead) currentPM.SendEvent("DEAD");
             yield return null;
         }
 

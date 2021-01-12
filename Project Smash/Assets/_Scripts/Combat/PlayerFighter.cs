@@ -34,6 +34,7 @@ namespace PSmash.Combat
 
         [Header("Throw Attack")]
         [SerializeField] GameObject dagger = null;
+        [SerializeField] AudioClip throwingKnifeSound = null;
         public int currentItemQuantity = 3;
 
 
@@ -75,10 +76,10 @@ namespace PSmash.Combat
         TimeManager timeManager;
         Transform targetTransform;
 
-        Bone bone;
-        bool isComboWindowActive = false;
+        //Bone bone;
+        //bool isComboWindowActive = false;
         bool isAttacking = false;
-        bool isToolButtonPressed = false;
+        //bool isToolButtonPressed = false;
         bool isChargingChargeAttack = false;
         bool isChargeAttackReady = false;
         bool heavyAttacking = false;
@@ -94,41 +95,7 @@ namespace PSmash.Combat
             audioSource = GetComponent<AudioSource>();
             mecanim = GetComponent<SkeletonMecanim>();
             timeManager = GameObject.FindObjectOfType<TimeManager>();
-        }
-
-        private void Start()
-        {
-            bone = GetComponent<SkeletonRenderer>().skeleton.FindBone(boneName);
-        }
-
-        public void MainAttack(bool isButtonPressed, float yInput)
-        {
-
-            if (IsFinishingAnEnemy()) return;
-            if (!movement.IsGrounded() && animator.GetInteger("Attack") == 0 && yInput <-0.5f)
-            {
-                //print("Splash Attack");
-                isAttacking = true;
-                StartCoroutine(RunThisAnimation("Attack", 50));
-                return;
-            }
-            else if (animator.GetInteger("Attack") == 0 && isButtonPressed)
-            {
-                //print("Main Combo Attack");
-                movement.SetVelocityToCero();
-                isAttacking = true;
-                StartCoroutine(RunThisAnimation("Attack",1));
-                
-                return;
-            }
-            else if(animator.GetInteger("Attack")!=0 && isComboWindowActive)
-            {
-                //print("Combo Attack Continuity");
-                isComboWindowActive = false;
-                animator.SetInteger("Attack", animator.GetInteger("Attack") + 1);
-                return;
-            }
-        }        
+        }  
 
         public bool ToolAttack()
         {
@@ -142,12 +109,17 @@ namespace PSmash.Combat
             return false;
         }
 
-        bool IsEnemyStunned()
+        public bool IsEnemyStunned()
         {
             RaycastHit2D hit = Physics2D.Raycast(transform.position + new Vector3(0, 1), transform.right, 2, whatIsEnemy);
             if (!hit) return false;
             targetTransform = hit.transform;
             return hit.transform.GetComponent<EnemyHealth>().IsStunned();
+        }
+
+        public void FinisherMove()
+        {
+            StartCoroutine(DoFinisherMove());
         }
 
         IEnumerator DoFinisherMove()
@@ -181,7 +153,8 @@ namespace PSmash.Combat
         IEnumerator StartPlayerAndTargetFinisherAnimations()
         {
             //targetTransform.GetComponent<EnemyHealth>().StopCurrentActions();
-            StartCoroutine(RunThisAnimation("Attack",80));
+            //StartCoroutine(RunThisAnimation("Attack",80));
+            animator.SetInteger("Attack", 80);
             while (animator.GetInteger("Attack")!= 81)
             {
                 yield return null;
@@ -260,6 +233,7 @@ namespace PSmash.Combat
 
         void SpawnItem()
         {
+            audioSource.PlayOneShot(throwingKnifeSound);
             if (currentItemQuantity <= 0) return;
             GameObject itemClone = Instantiate(dagger, attackTransform.position, Quaternion.identity);
             itemClone.GetComponent<Projectile>().SetData(movement.GetIsLookingRight());
@@ -322,6 +296,12 @@ namespace PSmash.Combat
             isGuarding = false;
         }
 
+        public void EnableParry()
+        {
+            guard.EnableParry();
+            print("Parry Window was Enabled");
+        }
+
         //AnimEvent
         void GuardFootstepSound()
         {
@@ -353,21 +333,10 @@ namespace PSmash.Combat
         //Anim Event
         void LightAttackDamage(int comboAttackNumber)
         {
+            print("NormalAttack");
             SendDamage(attackTransform, comboAttackArea, comboAttackDamages[comboAttackNumber - 1]);
         }
 
-        //Anim Event
-        //void ToolAttackDamage()
-        //{
-        //    SendDamage(attackTransform, comboAttackArea, heavyAttackDamage);
-        //}
-
-        ////Anim Event
-        //void ChargeAttackDamage()
-        //{
-        //    SendDamage(attackTransform, comboAttackArea, chargeAttackDamage);
-        //}
-        //Anim Event
         void SplashAttack()
         {
             AirSmashAttackEffect();
@@ -377,7 +346,7 @@ namespace PSmash.Combat
 
         private void SendDamage(Transform attackOriginPosition, Vector2 attackArea, int damage)
         {
-            //print("Looking to Damage Enemy");
+            print("Looking to Damage Enemy");
             Collider2D[] colls = Physics2D.OverlapBoxAll(attackOriginPosition.position, attackArea, 0, whatIsDamagable);
             if (colls.Length == 0)
             {
@@ -416,20 +385,25 @@ namespace PSmash.Combat
         //}
 
         //Anim Event
-        void IsComboWindowActive(int state)
-        {
-            if (state == 1)
-            {
-                //Debug.Log("Combo Window Active");
-                isComboWindowActive = true;
-            }
-            else isComboWindowActive = false;
-        }
+        //void IsComboWindowActive(int state)
+        //{
+        //    if (state == 1)
+        //    {
+        //        //Debug.Log("Combo Window Active");
+        //        isComboWindowActive = true;
+        //    }
+        //    else isComboWindowActive = false;
+        //}
         //Anim Event
         void LightAttackSound()
         {
             audioSource.pitch = UnityEngine.Random.Range(0.75f, 1.1f);
             audioSource.PlayOneShot(attackSound1);
+        }
+
+        public void FlipCheck()
+        {
+
         }
 
         public bool IsGuardButtonPressed()

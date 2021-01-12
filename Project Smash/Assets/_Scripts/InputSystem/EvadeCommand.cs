@@ -20,7 +20,7 @@ namespace PSmash.InputSystem
 
         void Evade()
         {
-            playerController.EvadeButton();
+            //playerController.EvadeButton();
         }
     }
 }

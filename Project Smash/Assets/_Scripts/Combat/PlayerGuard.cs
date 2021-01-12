@@ -11,8 +11,19 @@ namespace PSmash.Combat
         [SerializeField] AudioSource audioSource = null;
         [SerializeField] AudioClip parrySound = null;
         [SerializeField] AudioClip guardSound = null;
+        [SerializeField] float parryTime = 1;
 
         bool canParry=false;
+        float parryTimer = 0;
+
+        void Update()
+        {
+            if (parryTimer < parryTime)
+                canParry = true;
+            else
+                canParry = false;
+            parryTimer += Time.deltaTime;
+        }
 
         public void TakeDamage(Transform attacker, int damage)
         {
@@ -47,6 +58,11 @@ namespace PSmash.Combat
             { 
                 //print("Finished CanParry");
             }
+        }
+
+        public void EnableParry()
+        {
+            parryTimer = 0;
         }
     }
 }

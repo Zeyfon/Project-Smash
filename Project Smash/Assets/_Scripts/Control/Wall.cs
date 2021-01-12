@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using PSmash.Attributes;
+using PSmash.Movement;
 
 namespace PSmash.Control
 {
@@ -14,20 +15,25 @@ namespace PSmash.Control
         {
             if (collision.CompareTag("Player"))
             {
-                SecondaryWeaponSystem weapons = collision.GetComponent<SecondaryWeaponSystem>();
-                if (weapons != null) weapons.CanMoveOnWall(true);
-                ToolSystem tools = collision.GetComponent<ToolSystem>();
-                if (tools != null) tools.WallDetected(true);
+                //print("Player inside Wall");
+                collision.GetComponent<PlayerMovement>().IsWallDetected(true);
+                //SecondaryWeaponSystem weapons = collision.GetComponent<SecondaryWeaponSystem>();
+                //if (weapons != null) weapons.CanMoveOnWall(true);
+                //ToolSystem tools = collision.GetComponent<ToolSystem>();
+                //if (tools != null) tools.WallDetected(true);
             }
         }
         private void OnTriggerExit2D(Collider2D collision)
         {
             if (collision.CompareTag("Player"))
             {
-                SecondaryWeaponSystem weapons = collision.GetComponent<SecondaryWeaponSystem>();
-                if (weapons != null) weapons.CanMoveOnWall(false);
-                ToolSystem tools = collision.GetComponent<ToolSystem>();
-                if (tools != null) tools.WallDetected(false);
+                //print("Player outside wall");
+                collision.GetComponent<PlayerMovement>().IsWallDetected(false);
+
+                // SecondaryWeaponSystem weapons = collision.GetComponent<SecondaryWeaponSystem>();
+                //if (weapons != null) weapons.CanMoveOnWall(false);
+                //ToolSystem tools = collision.GetComponent<ToolSystem>();
+                //if (tools != null) tools.WallDetected(false);
             }
         }
 

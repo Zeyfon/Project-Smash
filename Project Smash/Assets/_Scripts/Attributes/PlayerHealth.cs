@@ -9,8 +9,10 @@ namespace PSmash.Attributes
 {
     public class PlayerHealth : Health
     {
+        [SerializeField] PlayMakerFSM playerControllerPM;
         [SerializeField] AudioClip damagedSound = null;
         [SerializeField] AudioClip deadSound = null;
+        [SerializeField] float timeToRecoverControlAfterDamage = 0.35f;
         public delegate void PlayerisDamaged(float health, float initialHealth);
         public event PlayerisDamaged OnPlayerDamage;
 
@@ -41,6 +43,7 @@ namespace PSmash.Attributes
             isDamaged = true;
             if (coroutine != null) StopCoroutine(coroutine);
             health -= damage;
+            playerControllerPM.enabled = false;
             if (health <= 0)
             {
                 health = 0;
@@ -69,8 +72,9 @@ namespace PSmash.Attributes
 
         IEnumerator ControlReset()
         {
-            yield return new WaitForSeconds(0.11f);
+            yield return new WaitForSeconds(timeToRecoverControlAfterDamage);
             isDamaged = false;
+            playerControllerPM.enabled = true;
         }
 
         IEnumerator EntityDied()

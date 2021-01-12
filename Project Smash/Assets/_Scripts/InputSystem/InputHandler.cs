@@ -7,18 +7,24 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using HutongGames.PlayMaker;
 
 namespace PSmash.InputSystem
 {
     public class InputHandler : MonoBehaviour
     {
-        [SerializeField] TimeManager timeManager = null;
-        [SerializeField] GameObject weaponsMenu = null;
+        //[SerializeField] TimeManager timeManager = null;
+        //[SerializeField] GameObject weaponsMenu = null;
+        [SerializeField] PlayerMovement pMovement = null;
+        //[SerializeField] PlayMakerFSM pmInputProxy = null;
+
+        PlayMakerFSM pmPlayerController = null;
+
 
         public static event Action OnPlayerStartButtonPressed;
         public List<ICommand> commandList = new List<ICommand>();
 
-        ICommand buttonA;
+        ICommand action1;
         ICommand buttonB;
         ICommand buttonX;
         ICommand buttonY;
@@ -26,15 +32,22 @@ namespace PSmash.InputSystem
         ICommand buttonLB;
         //ICommand dPadRight;
 
+        PlayMakerFSM currentPMState;
         PlayerController playerController;
         _Controller _controller;
-        PlayerInput input;
 
         Vector2 movement;
+        bool jumpButtonState = false;
+        bool guardButtonState = false;
 
         private void Awake()
         {
-            input = GetComponent<PlayerInput>();
+            PlayMakerFSM[] pms = GetComponentsInParent<PlayMakerFSM>();
+            foreach(PlayMakerFSM pm in pms)
+            {
+                if (pm.FsmName == "PlayerController") pmPlayerController = pm;
+            }
+            if (pmPlayerController == null) Debug.LogWarning("FSM Player Controller could not be found");
             playerController = transform.parent.GetComponent<PlayerController>();
             _controller = new _Controller();
             GameObject.FindObjectOfType<Menus.Menus>()._controller = _controller;
@@ -46,10 +59,27 @@ namespace PSmash.InputSystem
             //SetButtonsInControllerMenu();
         }
 
-        private void Update()
+        //Method used by each state in PlayMaker to inform to which state the inputs will be sent
+        public void SetCurrentStateFSM(PlayMakerFSM pm)
         {
-            if (!playerController.enabled) return;
-            playerController.GetMovement(movement.x, movement.y);
+            currentPMState = pm;
+            print("Current State in Player is " + currentPMState.FsmName);
+        }
+
+        public Vector2 GetMovementInfo()
+        {
+            //print(movement);
+            return movement;
+        }
+        
+        public bool GetJumpButtonState()
+        {
+            return jumpButtonState;
+        }
+
+        public bool GetGuardButtonState()
+        {
+            return guardButtonState;
         }
 
         private void OnEnable()
@@ -67,8 +97,10 @@ namespace PSmash.InputSystem
             _controller.Player.ButtonRB.started += cx => ButtonRBPressed();
             _controller.Player.ButtonRB.canceled += ctx => ButtonRBReleased();
             _controller.Player.ButtonLB.started += ctx => ButtonLBPressed();
-            _controller.Player.ButtonStart.started += ctx => ButtonStartPressed();
-            _controller.Player.Quit.performed += ctx => QuitKeyPressed();
+            _controller.Player.ButtonLB.canceled += ctx => ButtonLBReleased();
+
+            //_controller.Player.ButtonStart.started += ctx => ButtonStartPressed();
+            //_controller.Player.Quit.performed += ctx => QuitKeyPressed();
             EventManager.PauseGame += PauseGame;
             EventManager.UnpauseGame += UnpauseGame;
             EventManager.PlayerGotBoots += PlayerGotBoots;
@@ -94,8 +126,10 @@ namespace PSmash.InputSystem
             _controller.Player.ButtonRB.started -= cx => ButtonRBPressed();
             _controller.Player.ButtonRB.canceled -= ctx => ButtonRBReleased();
             _controller.Player.ButtonLB.started -= ctx => ButtonLBPressed();
-            _controller.Player.Quit.performed -= ctx => QuitKeyPressed();
-            _controller.Player.ButtonStart.started -= ctx => ButtonStartPressed();
+            _controller.Player.ButtonLB.canceled -= ctx => ButtonLBReleased();
+
+            //_controller.Player.Quit.performed -= ctx => QuitKeyPressed();
+            //_controller.Player.ButtonStart.started -= ctx => ButtonStartPressed();
             EventManager.PauseGame -= PauseGame;
             EventManager.UnpauseGame -= UnpauseGame;
             EventManager.PlayerGotBoots -= PlayerGotBoots;
@@ -103,15 +137,14 @@ namespace PSmash.InputSystem
             PlayerMovement.EnablePlayerController -= EnablePlayerController;
             Trap.EnablePlayerController -= EnablePlayerController;
             Menus.Menus.OnMenusClosed -= EnablePlayerController;
-
         }
 
         private void SetInitialCommandsToButtons()
         {
-            buttonA = GetComponent<JumpCommand>();
+            action1 = GetComponent<JumpCommand>();
             buttonX = GetComponent<LightAttackCommand>();
             buttonB = GetComponent<EvadeCommand>();
-            buttonY = GetComponent<HeavyAttackCommand>();
+            buttonY = GetComponent<ToolCommand>();
             buttonRB = GetComponent<GuardCommand>();
             buttonLB = GetComponent<ThrowableItemsCommand>();
         }
@@ -125,65 +158,96 @@ namespace PSmash.InputSystem
         private void ButtonXPressed()
         {
             if (buttonX == null) return;
-            buttonX.Execute(true);
+            print("Sending NORMALATTACK event to " + currentPMState.FsmName);
+            currentPMState.SendEvent("NORMALATTACK");
+            //buttonX.Execute(true);
         }
         private void ButtonXReleased()
         {
             if (buttonX == null) return;
-            buttonX.Execute(false);
+            //buttonX.Execute(false);
         }
 
         private void ButtonBPressed()
         {
             if (buttonB == null) return;
-            buttonB.Execute(true);
+            //print("Sending EVADE event to " + currentPMState.FsmName);
+            currentPMState.SendEvent("EVASION");
+            //buttonB.Execute(true);
         }
 
         private void ButtonBReleased()
         {
             if (buttonB == null) return;
-            buttonB.Execute(false);
+            //buttonB.Execute(false);
         }
 
         private void ButtonAPressed()
         {
-            if (buttonA == null) return;
-            buttonA.Execute(true);
+            if (action1 == null) return;
+            //action1.Execute(true);
+            jumpButtonState = true;
+            pMovement.SetJumpButtonState(true) ;
+            SetJumpButtonStateOnMovement(jumpButtonState);
         }
         private void ButtonAReleased()
         {
-            if (buttonA == null) return;
-            buttonA.Execute(false);
+            if (action1 == null) return;
+            //action1.Execute(false);
+            jumpButtonState = false;
+            pMovement.SetJumpButtonState(false);
+            SetJumpButtonStateOnMovement(jumpButtonState);
         }
+
+        private void SetJumpButtonStateOnMovement(bool jumpState)
+        {
+            if (!!this.jumpButtonState && jumpState) pMovement.SetJumpButtonPress();
+        }
+
         private void ButtonYPressed()
         {
             if (buttonY == null) return;
-            buttonY.Execute(true);
+            //buttonY.Execute(true);
+            pMovement.ToolButtonPressedStatus(true);
+            //currentPMState.SendEvent("TOOLACTION");
         }
         private void ButtonYReleased()
         {
             if (buttonY == null) return;
-            buttonY.Execute(false);
+            //buttonY.Execute(false);
+            pMovement.ToolButtonPressedStatus(false);
+
         }
 
         private void ButtonRBPressed()
         {
             if (buttonRB == null) return;
-            buttonRB.Execute(true);
+            //buttonRB.Execute(true);
+            guardButtonState = true;
         }
 
         private void ButtonRBReleased()
         {
             if (buttonRB == null) return;
-            buttonRB.Execute(false);
+            //buttonRB.Execute(false);
+            guardButtonState = false;
         }
 
         private void ButtonLBPressed()
         {
-            //print("Want to throw item");
+            print("Want to throw item");
             if (buttonLB == null) return;
-            buttonLB.Execute(playerController);
+            //buttonLB.Execute(playerController);
+            pMovement.ThrowDaggerButtonJustPressed(true);
         }
+        private void ButtonLBReleased()
+        {
+            print("Want to throw item");
+            if (buttonLB == null) return;
+            //buttonLB.Execute(playerController);
+            pMovement.ThrowDaggerButtonJustPressed(false);
+        }
+
         private void DPadLeftPressed()
         {
             Debug.Log("Pressed");
@@ -197,14 +261,14 @@ namespace PSmash.InputSystem
         private void LeftTriggerPressed()
         {
             Debug.Log("Left Trigger Pressed");
-            timeManager.SlowTime();
-            weaponsMenu.SetActive(true);
+            //timeManager.SlowTime();
+            //weaponsMenu.SetActive(true);
         }
         private void LeftTriggerReleased()
         {
             Debug.Log("Left Trigger Released");
-            timeManager.SpeedUpTime();
-            weaponsMenu.SetActive(false);
+            //timeManager.SpeedUpTime();
+            //weaponsMenu.SetActive(false);
         }
 
         private void ButtonStartPressed()
@@ -258,17 +322,19 @@ namespace PSmash.InputSystem
         {
             if (!state)
             {
-                playerController.SetEnable(false);
+                //playerController.SetEnable(false);
+                if (pmPlayerController != null) pmPlayerController.enabled = false; 
                 //print("InputHandler Disabled");
             }
             else
             {
-                if (!playerController.enabled) playerController.SetEnable(true);
+                //playerController.SetEnable(true);
+                if (pmPlayerController != null) pmPlayerController.enabled = true;
                 if (!_controller.Player.enabled) 
                 {
                     _controller.Player.Enable();
                     _controller.UI.Disable();
-                    Time.timeScale = 1;
+                    //Time.timeScale = 1;
                 }
                 //print("InputHandler Enabled");
             }
@@ -284,7 +350,7 @@ namespace PSmash.InputSystem
         //This list is needed to the Button Change Mechanic 
         void SetCommandList()
         {
-            commandList.Add(buttonA);
+            commandList.Add(action1);
             commandList.Add(buttonB);
             commandList.Add(buttonX);
             commandList.Add(buttonY);
