@@ -6,7 +6,7 @@ namespace PSmash.Attributes
     {
         [Header("General")]
         [SerializeField] protected int health = 100;
-        [SerializeField] protected AudioSource audioSource;
+        protected AudioSource audioSource;
         protected bool isDead = false;
         protected int initialHealth;
 

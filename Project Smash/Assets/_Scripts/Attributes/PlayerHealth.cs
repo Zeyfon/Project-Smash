@@ -18,11 +18,12 @@ namespace PSmash.Attributes
 
         Coroutine coroutine;
         Animator animator;
-
+        
         bool isDamaged;
 
         private void Awake()
         {
+            audioSource = GetComponent<AudioSource>();
             animator = GetComponent<Animator>();
         }
 

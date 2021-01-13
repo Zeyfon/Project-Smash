@@ -63,7 +63,7 @@ namespace PSmash.InputSystem
         public void SetCurrentStateFSM(PlayMakerFSM pm)
         {
             currentPMState = pm;
-            print("Current State in Player is " + currentPMState.FsmName);
+            //print("Current State in Player is " + currentPMState.FsmName);
         }
 
         public Vector2 GetMovementInfo()
