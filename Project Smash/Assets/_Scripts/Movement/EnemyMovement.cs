@@ -44,32 +44,34 @@ namespace PSmash.Movement
 
         private void SetXVelocityInAnimator()
         {
-            float xVelocity = (transform.right.x * rb.velocity.x) / baseSpeed;
             if (animator == null) return;
+            float xVelocity = (transform.right.x * rb.velocity.x) / baseSpeed;
             animator.SetFloat("xVelocity", xVelocity);
         }
 
         //MoveTo and MoveAwayFrom must be combined in the future
-        public void MoveTo(Vector3 targetPosition, MovementTypes myMovement, PlayMakerFSM pm)
+        public void MoveTo(Vector3 targetPosition, float speedFactor, bool isMovingTowardsTarget, PlayMakerFSM pm)
         {
+            if (Mathf.Abs(targetPosition.x - transform.position.x) < 0.5f)
+                return;
             //print("Moving to target");
-            FaceTowradsTarget(targetPosition);
+            CheckWhereToFace(targetPosition, isMovingTowardsTarget);
             if (IsPlayerAbove())
             { 
                 MoveAwayFrom(targetPosition, 0.9f);
             }
             //print("Moving towards Target");
-            else if (CanMoveTowardsTarget() && IsGrounded())
+            else if (CanMoveToTheFront() && IsGrounded())
             {
-                float speed = GetSpeed(myMovement);
+                float speed = baseSpeed * speedFactor;
                 rb.velocity = transform.right * speed;
             }
             else if (!IsGrounded())
             {
                 print("Falling till reaching floor");
-                rb.velocity = new Vector2(0, rb.velocity.y);
+                //rb.velocity = new Vector2(rb.velocity.x, rb.velocity.y);
             }
-            else if(CanMidRangeBlockAttack() && !CanMoveTowardsTarget() && IsGrounded() && IsTargetInSpecialAttackRange(targetPosition))
+            else if(CanMidRangeBlockAttack() && !CanMoveToTheFront() && IsGrounded() && IsTargetInSpecialAttackRange(targetPosition))
             {
                 print("Sending to State " + pm.FsmName + " SPECIAL ATTACK Event ");
                 //Debug.Break();
@@ -100,7 +102,8 @@ namespace PSmash.Movement
         }
         public void MoveAwayFrom(Vector3 targetPosition, float speedFactor)
         {
-            FaceTowradsTarget(targetPosition);
+            print(gameObject.name + " is moving away ");
+            CheckWhereToFace(targetPosition, false);
             float targerRelativePosition = targetPosition.x - transform.position.x;
             if (targerRelativePosition > 0)
             {
@@ -109,7 +112,7 @@ namespace PSmash.Movement
             else rb.MovePosition(new Vector2(-1 * speedFactor, 0) + (Vector2)transform.position);
         }
 
-        bool CanMoveTowardsTarget()
+        bool CanMoveToTheFront()
         {
             if (IsGroundInFrontWalkable() && !IsObstacleInFront()) return true;
             else return false;
@@ -184,17 +187,42 @@ namespace PSmash.Movement
             rb.velocity = new Vector2(0, 0);
         }
 
-        public void FaceTowradsTarget(Vector3 targetPosition)
+        public void CheckWhereToFace(Vector3 targetPosition, bool isFacingTarget)
         {
-            Vector2 toTarget = (targetPosition - transform.position).normalized;
-            if (Vector2.Dot(toTarget, transform.right) > 0)
-            {
+            bool playerIsAtRight = targetPosition.x - transform.position.x > 0;
+            bool isLookingRight = transform.right.x > 0;
+
+            if (playerIsAtRight && isLookingRight && isFacingTarget)
                 return;
-            }
-            else
-            {
+            else if (playerIsAtRight && isLookingRight && !isFacingTarget)
                 Flip();
-            }
+            else if (playerIsAtRight && !isLookingRight && isFacingTarget)
+                Flip();
+            else if (playerIsAtRight && !isLookingRight && !isFacingTarget)
+                return;
+
+            else if (!playerIsAtRight && isLookingRight && isFacingTarget)
+                Flip();
+            else if (!playerIsAtRight && isLookingRight && !isFacingTarget)
+                return;
+            else if (!playerIsAtRight && !isLookingRight && isFacingTarget)
+                return;
+            else if (!playerIsAtRight && !isLookingRight && !isFacingTarget)
+                Flip();
+
+            //Vector2 toTarget;
+            //if(isFacingTarget)
+            //    toTarget = (targetPosition - transform.position).normalized;
+            //else
+            //    toTarget = (transform.position- targetPosition).normalized;
+            //if (Vector2.Dot(toTarget, transform.right) > 0)
+            //{
+            //    return;
+            //}
+            //else
+            //{
+            //    Flip();
+            //}
         }
 
         public void SetCanMidRangeBlockAttack(bool state)

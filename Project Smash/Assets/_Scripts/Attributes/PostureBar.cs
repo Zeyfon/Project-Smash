@@ -15,6 +15,8 @@ namespace PSmash.Attributes
         private void Awake()
         {
             posture = transform.parent.transform.GetComponentInChildren<EnemyPosture>();
+            if (posture == null)
+                Destroy(gameObject);
         }
 
         private void Update()

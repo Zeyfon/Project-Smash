@@ -17,10 +17,11 @@ namespace PSmash.Attributes
         [SerializeField] GameObject dropItem = null;
 
         EnemyPosture posture;
-        PlayMakerFSM currentPM;
+        PlayMakerFSM pm;
 
         private void Awake()
         {
+            audioSource = GetComponent<AudioSource>();
             posture = GetComponent<EnemyPosture>();
         }
 
@@ -35,45 +36,55 @@ namespace PSmash.Attributes
         public void SetCurrentState(PlayMakerFSM pm)
         {
             //print(fsm.FsmName + "  set in " + this);
-            this.currentPM = pm;
+            this.pm = pm;
         }
 
         public override void TakeDamage(Transform attacker, int damage)
         {
             if (isDead) 
                 return;
-            if (currentPM == null)
+            if (pm == null)
                 Debug.LogWarning("No Enemy State set to return DAMAGE Event");
             //print("Will Send DAMAGED Event with " + damage + " of damage to " + pm.FsmName + " State");
             FsmEventData myfsmEventData = new FsmEventData();
             myfsmEventData.IntData = damage;
             myfsmEventData.GameObjectData = gameObject;
             HutongGames.PlayMaker.Fsm.EventData = myfsmEventData;
-            currentPM.Fsm.Event("DAMAGED");
+            pm.Fsm.Event("DAMAGED");
         }
 
-        public void Damaged(int damage, int damagePenetrationPercentage, PlayMakerFSM pm)
+        public void Damaged(int damage, int damagePenetrationPercentage)
         {
-            //print(gameObject.name + "  Damaged");
-            posture.posture = posture.SubstractDamageFromPosture(damage);
-            if (posture.posture <= 0 && pm.FsmName != "Stun")
+            print(gameObject.name + "  Damaged");
+            if(posture != null)
             {
-                //print("POSTUREDEPLETED Event");
-                posture.OnStunStateStart();
-                DamageHealth(damage, 100);
-                pm.SendEvent("POSTUREDEPLETED");
-                return;
+                posture.posture = posture.SubstractDamageFromPosture(damage);
+                if (posture.posture <= 0 && pm.FsmName != "Stun")
+                {
+                    //print("POSTUREDEPLETED Event");
+                    posture.OnStunStateStart();
+                    DamageHealth(damage, 100);
+                    pm.SendEvent("POSTUREDEPLETED to the fsm " + pm.FsmName);
+                    return;
+                }
+                else
+                {
+                    //print("CONTINUE Event");
+                    DamageHealth(damage, damagePenetrationPercentage);
+                    pm.SendEvent("CONTINUE to the fsm " + pm.FsmName);
+                    return;
+                }
             }
             else
             {
-                //print("CONTINUE Event");
+                print("CONTINUE Event to the fsm " + pm.FsmName);
                 DamageHealth(damage, damagePenetrationPercentage);
                 pm.SendEvent("CONTINUE");
                 return;
             }
         }
 
-        public void IsDeadCheck(PlayMakerFSM pm)
+        public void IsDeadCheck()
         {
             if (isDead)
             {
@@ -111,14 +122,14 @@ namespace PSmash.Attributes
         //Inform the AI that the NPC is being Finished
         public void SetStateToFinisher()
         {
-            currentPM.SendEvent("FINISHER");
+            pm.SendEvent("FINISHER");
         }
 
         //Start the Finisher Animation once the player and this npc
         // have been correctly positioned for the animation to run
         public void StartFinisherAnimation()
         {
-            currentPM.SendEvent("STARTFINISHERANIMATION");
+            pm.SendEvent("STARTFINISHERANIMATION");
         }
 
         //The damage dealt by the player and the thrown away force of the impact
@@ -167,7 +178,7 @@ namespace PSmash.Attributes
 
         public bool IsStunned()
         {
-            if(currentPM.FsmName == "Stun")
+            if(pm.FsmName == "Stun")
             {
                 //print("Check if enemy is Stunned  " + fsm.FsmName);
                 return true;

@@ -6,7 +6,7 @@ using PSmash.Attributes;
 
 namespace PSmash.Combat.Weapons
 {
-    public class Projectile : MonoBehaviour
+    public class Projectile : MonoBehaviour, IDamagable
     {
         [SerializeField] GameObject enemyHitEffect = null;
         [SerializeField] GameObject wallHitEWffect = null;
@@ -17,6 +17,7 @@ namespace PSmash.Combat.Weapons
 
         AudioSource audioSource;
         Rigidbody2D rb;
+        Health target;
         bool hasHit = false;
         // Start is called before the first frame update
         void Awake()
@@ -40,6 +41,12 @@ namespace PSmash.Combat.Weapons
             else transform.eulerAngles = new Vector3(0, 180, 0);
         }
 
+        //Used by the Attack FSM of the Ranger01
+        public void SetTarget(Health target)
+        {
+            this.target = target;
+        }
+
         //Anim Event
         void WallHitSound()
         {
@@ -50,7 +57,7 @@ namespace PSmash.Combat.Weapons
         }
 
         //Anim Event
-        void EnemyHitSound()
+        void NPCHitSound()
         {
             //print(gameObject.name + "  Enemy Hit Sound");
             audioSource.clip = enemyHitSound;
@@ -63,69 +70,53 @@ namespace PSmash.Combat.Weapons
             Destroy(gameObject);
         }
 
-        //public void IslookingRight(Vector3 isRight)
-        //{
-        //    if (isRight == transform.right)
-        //    {
-        //        lookingRight = true;
-        //    }
-        //    else lookingRight = false;
-        //}
-        //private float GetCosArgument()
-        //{
-        //    float x;
-        //    timer += Time.deltaTime;
-        //    x = (timer * speed) + Mathf.PI / 2;
-        //    if (x >= (3f / 2f) * Mathf.PI)
-        //    {
-        //        Destroy(gameObject);
-        //        return x = (3f / 2f) * Mathf.PI;
-        //    }
-        //    else
-        //    {
-        //        return x;
-        //    }
-        //}
-
         private void OnTriggerEnter2D(Collider2D collision)
         {
-            if (collision.CompareTag("Player")) return;
-            GetComponent<Collider2D>().enabled = false;
-            //print("Collider Disabled");
+            string tag;
+            if (target == null)
+                tag = "Enemy";
+            else
+                tag = "Player";
 
-
-            if (collision.CompareTag("Enemy"))
+            print(tag);
+            if (collision.CompareTag(tag))
             {
                 hasHit = true;
                 Instantiate(enemyHitEffect, transform.position, Quaternion.identity);
-                GetComponent<Animator>().SetTrigger("EnemyHit");
                 collision.GetComponent<IDamagable>().TakeDamage(transform, damage);
-                //StartCoroutine(EnemyHit(collision.transform));
-                //print(gameObject.name + "  Hit Enemy");
+                if (GetComponent<Animator>() != null)
+                    GetComponent<Animator>().SetTrigger("TargetHit");
+                NPCHitSound();
+                StartCoroutine(DestroyGameObject());
+            }
+            else if(collision.CompareTag("Ground"))
+            {
+                hasHit = true;
+                Instantiate(wallHitEWffect, transform.position + new Vector3(GetComponent<BoxCollider2D>().size.x/2*transform.right.x,0), Quaternion.identity);
+                if (GetComponent<Animator>() != null)
+                    GetComponent<Animator>().SetTrigger("WallHit");
+                WallHitSound();
+                StartCoroutine(DestroyGameObject());
             }
             else
             {
-                //print(collision.name);
-                //print(gameObject.name + "  Hit Wall");
-                hasHit = true;
-                Instantiate(wallHitEWffect, transform.position + new Vector3(GetComponent<BoxCollider2D>().size.x/2*transform.right.x,0), Quaternion.identity);
-                GetComponent<Animator>().SetTrigger("WallHit");
-                //collision.GetComponent<IDamagable>().TakeDamage(transform, damage);
+                Debug.LogWarning(gameObject.name + " did not know to what it collided");
             }
         }
 
-        IEnumerator EnemyHit(Transform targetTransform)
+        IEnumerator DestroyGameObject()
         {
+            yield return new WaitForSeconds(2);
+            Destroy(gameObject);
+        }
 
-            while (Mathf.Abs(Vector2.Distance(targetTransform.position, transform.position)) > 0.5f)
-            {
-                print(Vector2.Distance(targetTransform.position, transform.position));
-                yield return null;
-            }
-            hasHit = true;
-            Instantiate(enemyHitEffect, transform.position, Quaternion.identity);
-            GetComponent<Animator>().SetTrigger("EnemyHit");
-            targetTransform.GetComponent<IDamagable>().TakeDamage(transform, damage);
+        public void TakeDamage(Transform attacker, int damage)
+        {
+            //The projectile was parried
+            //The projectile will return to the creator
+            ///Will be a homing missle
+            ///Will be much faster to garanty the hit
+            /// Damage the first enemy it encounter
         }
     }
 }
