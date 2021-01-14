@@ -29,6 +29,7 @@ namespace PSmash.Combat
         {
             if (canParry)
             {
+                
                 //attacker.GetComponent<EnemyHealth>().SetIsParried(true);
                 attacker.GetComponent<IDamagable>().TakeDamage(transform.parent, damage);
                 transform.parent.GetComponent<PlayerFighter>().StartParry();
