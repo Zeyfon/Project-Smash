@@ -33,8 +33,8 @@ namespace PSmash.Combat
         [SerializeField]  GameObject finisherEffects = null;
 
         [Header("Throw Attack")]
-        [SerializeField] GameObject dagger = null;
-        [SerializeField] AudioClip throwingKnifeSound = null;
+        //[SerializeField] GameObject dagger = null;
+        //[SerializeField] AudioClip throwingKnifeSound = null;
         public int currentItemQuantity = 3;
 
 
@@ -222,7 +222,7 @@ namespace PSmash.Combat
             print("Ended waiting");
         }
 
-
+        //Called from the ThrowDagger State in PlayMaker Components
         public void ThrowItemAttack(bool isButtonPressed)
         {
             isAttacking = true;
@@ -231,12 +231,12 @@ namespace PSmash.Combat
             //print(this.name + "  Throwing item");
         }
 
-        void SpawnItem()
+        public void SpawnItem(GameObject spawnItem)
         {
-            audioSource.PlayOneShot(throwingKnifeSound);
             if (currentItemQuantity <= 0) return;
-            GameObject itemClone = Instantiate(dagger, attackTransform.position, Quaternion.identity);
+            GameObject itemClone = Instantiate(spawnItem, attackTransform.position, Quaternion.identity);
             itemClone.GetComponent<Projectile>().SetData(movement.GetIsLookingRight());
+            itemClone.GetComponent<Projectile>().SetOwner(GetComponent<Health>());
             currentItemQuantity--;
             onItemThrown(currentItemQuantity);
         }
@@ -299,7 +299,7 @@ namespace PSmash.Combat
         public void EnableParry()
         {
             guard.EnableParry();
-            print("Parry Window was Enabled");
+            //print("Parry Window was Enabled");
         }
 
         //AnimEvent
@@ -333,7 +333,7 @@ namespace PSmash.Combat
         //Anim Event
         void LightAttackDamage(int comboAttackNumber)
         {
-            print("NormalAttack");
+            //print("NormalAttack");
             SendDamage(attackTransform, comboAttackArea, comboAttackDamages[comboAttackNumber - 1]);
         }
 
@@ -346,7 +346,7 @@ namespace PSmash.Combat
 
         private void SendDamage(Transform attackOriginPosition, Vector2 attackArea, int damage)
         {
-            print("Looking to Damage Enemy");
+            //print("Looking to Damage Enemy");
             Collider2D[] colls = Physics2D.OverlapBoxAll(attackOriginPosition.position, attackArea, 0, whatIsDamagable);
             if (colls.Length == 0)
             {
@@ -355,8 +355,10 @@ namespace PSmash.Combat
             }
             foreach (Collider2D coll in colls)
             {
+
                 IDamagable target = coll.GetComponent<IDamagable>();
-                if (target == null) continue;
+                if (target == null || coll.GetComponent<Projectile>())
+                    continue;
                 if (isFinishinAnEnemy)
                 {
                     damage *= 10;

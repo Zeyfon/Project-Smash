@@ -158,7 +158,7 @@ namespace PSmash.InputSystem
         private void ButtonXPressed()
         {
             if (buttonX == null) return;
-            print("Sending NORMALATTACK event to " + currentPMState.FsmName);
+            //print("Sending NORMALATTACK event to " + currentPMState.FsmName);
             currentPMState.SendEvent("NORMALATTACK");
             //buttonX.Execute(true);
         }
@@ -235,14 +235,14 @@ namespace PSmash.InputSystem
 
         private void ButtonLBPressed()
         {
-            print("Want to throw item");
+            //print("Want to throw item");
             if (buttonLB == null) return;
             //buttonLB.Execute(playerController);
             pMovement.ThrowDaggerButtonJustPressed(true);
         }
         private void ButtonLBReleased()
         {
-            print("Want to throw item");
+            //print("Want to throw item");
             if (buttonLB == null) return;
             //buttonLB.Execute(playerController);
             pMovement.ThrowDaggerButtonJustPressed(false);

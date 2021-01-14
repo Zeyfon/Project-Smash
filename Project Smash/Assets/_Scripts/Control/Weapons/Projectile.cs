@@ -14,25 +14,44 @@ namespace PSmash.Combat.Weapons
         [SerializeField] int damage = 10;
         [SerializeField] AudioClip wallHitSound = null;
         [SerializeField] AudioClip enemyHitSound = null;
+        [SerializeField] bool isHomingProyectile = false;
+        [SerializeField] float rotateSpeed = 5;
+        [SerializeField] float parriedSpeed = 15;
 
+        float currentSpeed;
         AudioSource audioSource;
         Rigidbody2D rb;
-        Health target;
+        Health owner;
         bool hasHit = false;
+        Transform target;
         // Start is called before the first frame update
         void Awake()
         {
             audioSource = GetComponent<AudioSource>();
             rb = GetComponent<Rigidbody2D>();
         }
+        void Start()
+        {
+            currentSpeed = speed;
+        }
 
         // Update is called once per frame
         void FixedUpdate()
         {
-            if (hasHit) return;
-            float deltaPosX = transform.right.x *speed * Time.fixedDeltaTime;
-            Vector2 newPosition = transform.position + new Vector3(deltaPosX, 0);
-            rb.MovePosition(newPosition);
+            if (hasHit) 
+            {
+                return;
+            }
+            //print("Moving");
+            if (target != null)
+            {
+                //print("Rotating towards " + target.gameObject.name);
+                Vector2 direction = (Vector2)target.position - rb.position;
+                direction.Normalize();
+                float rotateAmount = Vector3.Cross(direction, transform.right).z;
+                rb.angularVelocity = -rotateAmount * rotateSpeed;
+            }
+                rb.velocity = transform.right * currentSpeed;
         }
 
         public void SetData(bool isLookingRight)
@@ -42,9 +61,10 @@ namespace PSmash.Combat.Weapons
         }
 
         //Used by the Attack FSM of the Ranger01
-        public void SetTarget(Health target)
+        public void SetOwner(Health owner)
         {
-            this.target = target;
+            print(owner.gameObject.name);
+            this.owner = owner;
         }
 
         //Anim Event
@@ -72,35 +92,82 @@ namespace PSmash.Combat.Weapons
 
         private void OnTriggerEnter2D(Collider2D collision)
         {
-            string tag;
-            if (target == null)
-                tag = "Enemy";
+            if (hasHit)
+                return;
+            string tag = owner.gameObject.tag;
+            if(tag == "Player")
+            {
+                if (collision.CompareTag("Enemy"))
+                {
+                    print("Attack from Player colliding with enemy");
+                    hasHit = true;
+                    Instantiate(enemyHitEffect, transform.position, Quaternion.identity);
+                    collision.GetComponent<IDamagable>().TakeDamage(transform, damage);
+                    if (GetComponent<Animator>() != null)
+                        GetComponent<Animator>().SetTrigger("TargetHit");
+                    NPCHitSound();
+                    StartCoroutine(DestroyGameObject());
+                    rb.velocity = new Vector2(0, 0);
+                    rb.angularVelocity = 0;
+                }
+                else if (collision.CompareTag("Ground"))
+                {
+                    print("Attack from player colliding with ground");
+                    hasHit = true;
+                    Instantiate(wallHitEWffect, transform.position + new Vector3(GetComponent<BoxCollider2D>().size.x / 2 * transform.right.x, 0), Quaternion.identity);
+                    if (GetComponent<Animator>() != null)
+                        GetComponent<Animator>().SetTrigger("WallHit");
+                    WallHitSound();
+                    StartCoroutine(DestroyGameObject());
+                    rb.velocity = new Vector2(0, 0);
+                    rb.angularVelocity = 0;
+                }
+                else
+                {
+                    Debug.LogWarning(gameObject.name + " did not know to what it collided");
+                }
+            }
             else
-                tag = "Player";
+            {
+                if (collision.CompareTag("Player"))
+                {
+                    print("Attack from enemy colliding with player");
+                    hasHit = true;
+                    Instantiate(enemyHitEffect, transform.position, Quaternion.identity);
+                    collision.GetComponent<IDamagable>().TakeDamage(transform, damage);
+                    if (GetComponent<Animator>() != null)
+                        GetComponent<Animator>().SetTrigger("TargetHit");
+                    NPCHitSound();
+                    StartCoroutine(DestroyGameObject());
+                    rb.velocity = new Vector2(0, 0);
 
-            print(tag);
-            if (collision.CompareTag(tag))
-            {
-                hasHit = true;
-                Instantiate(enemyHitEffect, transform.position, Quaternion.identity);
-                collision.GetComponent<IDamagable>().TakeDamage(transform, damage);
-                if (GetComponent<Animator>() != null)
-                    GetComponent<Animator>().SetTrigger("TargetHit");
-                NPCHitSound();
-                StartCoroutine(DestroyGameObject());
-            }
-            else if(collision.CompareTag("Ground"))
-            {
-                hasHit = true;
-                Instantiate(wallHitEWffect, transform.position + new Vector3(GetComponent<BoxCollider2D>().size.x/2*transform.right.x,0), Quaternion.identity);
-                if (GetComponent<Animator>() != null)
-                    GetComponent<Animator>().SetTrigger("WallHit");
-                WallHitSound();
-                StartCoroutine(DestroyGameObject());
-            }
-            else
-            {
-                Debug.LogWarning(gameObject.name + " did not know to what it collided");
+                }
+                else if (collision.GetComponent<PlayerGuard>())
+                {
+                    print("Attack from enemy colliding with guard");
+                    hasHit = true;
+                    Instantiate(enemyHitEffect, transform.position, Quaternion.identity);
+                    collision.GetComponent<IDamagable>().TakeDamage(transform, damage);
+                    if (GetComponent<Animator>() != null)
+                        GetComponent<Animator>().SetTrigger("GuardHit");
+                    rb.velocity = new Vector2(0, 0);
+                    StartCoroutine(DestroyGameObject());
+                }
+                else if (collision.CompareTag("Ground"))
+                {
+                    print("Attack from enemy colliding with ground");
+                    hasHit = true;
+                    Instantiate(wallHitEWffect, transform.position + new Vector3(GetComponent<BoxCollider2D>().size.x / 2 * transform.right.x, 0), Quaternion.identity);
+                    if (GetComponent<Animator>() != null)
+                        GetComponent<Animator>().SetTrigger("WallHit");
+                    WallHitSound();
+                    StartCoroutine(DestroyGameObject());
+                    rb.velocity = new Vector2(0, 0);
+                }
+                else
+                {
+                    Debug.LogWarning(gameObject.name + " did not know to what it collided");
+                }
             }
         }
 
@@ -112,6 +179,29 @@ namespace PSmash.Combat.Weapons
 
         public void TakeDamage(Transform attacker, int damage)
         {
+            //Debug.Break();
+            float zRotation = 0;
+            currentSpeed = parriedSpeed;
+            if (isHomingProyectile)
+            {
+                zRotation = Random.Range(-10, 25);
+                target = owner.transform;
+            }
+
+            if(owner.transform.position.x - transform.position.x>=0)
+            {
+                transform.rotation = Quaternion.Euler(0, 0, zRotation);
+            }
+            else
+            {
+                transform.rotation = Quaternion.Euler(0, 180, zRotation);
+
+            }
+
+            owner = attacker.GetComponent<Health>();
+            hasHit = false;
+            print("New Owner is  " + owner.gameObject.name);
+            //Debug.Break();
             //The projectile was parried
             //The projectile will return to the creator
             ///Will be a homing missle

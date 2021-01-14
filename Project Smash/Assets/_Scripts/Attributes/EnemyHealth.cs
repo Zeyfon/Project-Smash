@@ -43,14 +43,19 @@ namespace PSmash.Attributes
         {
             if (isDead) 
                 return;
-            if (pm == null)
+            if (pm == null) 
+            {
                 Debug.LogWarning("No Enemy State set to return DAMAGE Event");
-            //print("Will Send DAMAGED Event with " + damage + " of damage to " + pm.FsmName + " State");
+                return;
+            }
+            print("Will Send DAMAGED Event with " + damage + " of damage to " + pm.FsmName + " State");
             FsmEventData myfsmEventData = new FsmEventData();
             myfsmEventData.IntData = damage;
             myfsmEventData.GameObjectData = gameObject;
             HutongGames.PlayMaker.Fsm.EventData = myfsmEventData;
-            pm.Fsm.Event("DAMAGED");
+            print(pm.FsmName);
+            if(pm != null)
+                pm.Fsm.Event("DAMAGED");
         }
 
         public void Damaged(int damage, int damagePenetrationPercentage)
@@ -61,17 +66,17 @@ namespace PSmash.Attributes
                 posture.posture = posture.SubstractDamageFromPosture(damage);
                 if (posture.posture <= 0 && pm.FsmName != "Stun")
                 {
-                    //print("POSTUREDEPLETED Event");
+                    print("POSTUREDEPLETED Event to the fsm " + pm.FsmName);
                     posture.OnStunStateStart();
                     DamageHealth(damage, 100);
-                    pm.SendEvent("POSTUREDEPLETED to the fsm " + pm.FsmName);
+                    pm.SendEvent("POSTUREDEPLETED");
                     return;
                 }
                 else
                 {
-                    //print("CONTINUE Event");
+                    print("CONTINUE Event to the fsm " + pm.FsmName);
                     DamageHealth(damage, damagePenetrationPercentage);
-                    pm.SendEvent("CONTINUE to the fsm " + pm.FsmName);
+                    pm.SendEvent("CONTINUE");
                     return;
                 }
             }

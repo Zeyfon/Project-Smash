@@ -15,7 +15,7 @@ namespace PSmash.Combat
         [SerializeField] float fadeIntTime = 0.5f;
         [SerializeField] Vector2 unblockableAttackImpulse;
         [SerializeField] PlayMakerFSM aiControllerpm = null;
-        [SerializeField] float aggroDistance = 2;
+        //[SerializeField] float aggroDistance = 2;
         [SerializeField] LayerMask whatIsEnemy;
 
 
@@ -35,7 +35,7 @@ namespace PSmash.Combat
 
         }
 
-        void FixedUpdate()
+        void Update()
         {
             if (canAggrevateNearbyEnemies)
             {
@@ -44,6 +44,8 @@ namespace PSmash.Combat
             }
         }
 
+
+        //Used by the AIController FSM
         public void SetAggrevateNearbyEnemies(bool state)
         {
             canAggrevateNearbyEnemies = state;
@@ -52,15 +54,30 @@ namespace PSmash.Combat
         {
             Debug.DrawRay(transform.position + new Vector3(0, 1, 0), transform.right, Color.blue);
 
-            RaycastHit2D[] hits = Physics2D.RaycastAll(transform.position + new Vector3(0, 1),transform.right,aggroDistance,whatIsEnemy);
-            if (hits.Length == 0)
+            //RaycastHit2D[] hits = Physics2D.RaycastAll(transform.position + new Vector3(0, 1),transform.right,aggroDistance,whatIsEnemy);
+            //RaycastHit2D[] hits = Physics2D.CircleCastAll(transform.position, 10, Vector2.right, 0);
+            //if (hits.Length == 0)
+            //{
+            //    print("No Enemies in front to aggrevate");
+            //}
+            //foreach (RaycastHit2D hit in hits)
+            //{
+            //    print("Aggrevating  this one  " + hit.collider.gameObject.name);
+            //    hit.collider.GetComponent<EnemyFighter>().Aggrevate();
+            //}
+            Collider2D[] colls = Physics2D.OverlapCircleAll(transform.position + new Vector3(0, 1, 0), 4);
+
+            if (colls.Length == 0)
             {
-                //print("No Enemies in front to aggrevate");
+                print("No Enemies in front to aggrevate");
             }
-            foreach(RaycastHit2D hit in hits)
+            foreach (Collider2D coll in colls)
             {
-                //print("Aggrevating  this one  " + hit.collider.gameObject.name);
-                hit.collider.GetComponent<EnemyFighter>().Aggrevate();
+                EnemyFighter fighter = coll.GetComponent<EnemyFighter>();
+                if (fighter == null || fighter == this)
+                    continue;
+                print("Aggrevating  this one  " + coll.gameObject.name);
+                fighter.Aggrevate();
             }
         }
 
