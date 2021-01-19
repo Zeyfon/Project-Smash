@@ -54,17 +54,43 @@ namespace PSmash.Combat.Weapons
                 rb.velocity = transform.right * currentSpeed;
         }
 
-        public void SetData(bool isLookingRight)
+        public void SetData(bool isLookingRight, Health owner)
         {
+            this.owner = owner;
             if (isLookingRight) return;
             else transform.eulerAngles = new Vector3(0, 180, 0);
         }
 
         //Used by the Attack FSM of the Ranger01
-        public void SetOwner(Health owner)
+        public void SetTarget(GameObject targetGameObject, Health owner)
         {
-            print(owner.gameObject.name);
             this.owner = owner;
+            Vector2 direction = ((targetGameObject.transform.position + new Vector3(0,1,0)) - transform.position).normalized;
+            print(direction);
+            float angle = Mathf.Atan(direction.y / direction.x)*Mathf.Rad2Deg;
+            print(angle);
+            if(direction.y>0 && direction.x > 0)
+            {
+                print("Is at first cuadrant");
+               //Do nothing
+            }
+            else if(direction.y>0 && direction.x < 0)
+            {
+                print("Is at second cuadrant");
+                angle = 180 + angle;
+            }
+            else if(direction.y<0 && direction.x <0)
+            {
+                print("Is at third cuadrant");
+                angle = 180 + angle;
+            }
+            else
+            {
+                print("Is at fourth cuadrant");
+                //angle *= -1;
+            }
+            transform.rotation = Quaternion.Euler(0, 0, angle);
+            print(angle);
         }
 
         //Anim Event

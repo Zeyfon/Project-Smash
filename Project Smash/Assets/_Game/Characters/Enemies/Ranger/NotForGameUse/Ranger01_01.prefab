@@ -739,14 +739,14 @@ MonoBehaviour:
         - 
         actionEnabled: 01010101
         actionIsOpen: 01010101
-        actionStartIndex: 0000000005000000080000000f000000
+        actionStartIndex: 00000000050000000800000010000000
         actionHashCodes: bf83c90004d81402ca51e90048c01101
         unityObjectParams: []
         fsmGameObjectParams:
         - useVariable: 1
           name: rangerProjectile
           tooltip: 
-          showInInspector: 0
+          showInInspector: 1
           networkSync: 0
           value: {fileID: 1338455290607430726, guid: 5a162df935c2ec84bbe6b0efeb7f2000,
             type: 3}
@@ -783,7 +783,7 @@ MonoBehaviour:
           tooltip: 
           showInInspector: 0
           networkSync: 0
-          value: SetOwner
+          value: SetTarget
         fsmObjectParams:
         - useVariable: 1
           name: projectile
@@ -800,6 +800,30 @@ MonoBehaviour:
           typeName: PSmash.Combat.Weapons.Projectile
           value: {fileID: 0}
         fsmVarParams:
+        - variableName: player
+          objectType: UnityEngine.GameObject
+          useVariable: 1
+          type: 3
+          floatValue: 0
+          intValue: 0
+          boolValue: 0
+          stringValue: 
+          vector4Value: {x: 0, y: 0, z: 0, w: 0}
+          objectReference: {fileID: 0}
+          arrayValue:
+            useVariable: 0
+            name: 
+            tooltip: 
+            showInInspector: 0
+            networkSync: 0
+            type: -1
+            objectTypeName: 
+            floatValues: []
+            intValues: 
+            boolValues: 
+            stringValues: []
+            vector4Values: []
+            objectReferences: []
         - variableName: health
           objectType: PSmash.Attributes.Health
           useVariable: 1
@@ -879,12 +903,12 @@ MonoBehaviour:
         stringParams:
         - FINISHED
         byteData: 00000000
-        arrayParamSizes: 01000000
+        arrayParamSizes: 02000000
         arrayParamTypes:
         - HutongGames.PlayMaker.FsmVar
         customTypeSizes: 
         customTypeNames: []
-        paramDataType: 13000000130000001c0000001c0000001300000014000000180000000100000018000000120000000c000000270000002700000001000000010000000f0000001700000001000000
+        paramDataType: 13000000130000001c0000001c0000001300000014000000180000000100000018000000120000000c00000027000000270000002700000001000000010000000f0000001700000001000000
         paramName:
         - gameObject
         - spawnPoint
@@ -898,14 +922,15 @@ MonoBehaviour:
         - methodName
         - parameters
         - 
+        - 
         - storeResult
         - everyFrame
         - manualUI
         - time
         - finishEvent
         - realTime
-        paramDataPos: 000000000100000000000000010000000200000000000000000000000000000001000000000000000000000000000000010000000100000002000000000000000000000003000000
-        paramByteDataSize: 000000000000000000000000000000000000000000000000000000000100000000000000000000000000000000000000000000000100000001000000000000000000000001000000
+        paramDataPos: 00000000010000000000000001000000020000000000000000000000000000000100000000000000000000000000000001000000020000000100000002000000000000000000000003000000
+        paramByteDataSize: 00000000000000000000000000000000000000000000000000000000010000000000000000000000000000000000000000000000000000000100000001000000000000000000000001000000
     - name: CHECK NEXT ACTION
       description: 
       colorIndex: 0
@@ -2007,7 +2032,7 @@ MonoBehaviour:
     handleAnimatorMove: 0
     handleAnimatorIK: 0
   fsmTemplate: {fileID: 0}
-  eventHandlerComponentsAdded: 0
+  eventHandlerComponentsAdded: 1
 --- !u!114 &1040298865542371814
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3576,7 +3601,7 @@ MonoBehaviour:
     locked: 0
     manualUpdate: 0
     keepDelayedEventsOnStateExit: 0
-    preprocessed: 0
+    preprocessed: 1
     ExposedEvents: []
     RestartOnEnable: 1
     EnableDebugFlow: 0
@@ -3602,7 +3627,7 @@ MonoBehaviour:
     handleJointBreak: 0
     handleJointBreak2D: 0
     handleOnGUI: 0
-    handleFixedUpdate: 0
+    handleFixedUpdate: 1
     handleLateUpdate: 0
     handleApplicationEvents: 0
     handleUiEvents: 0
@@ -3610,7 +3635,24 @@ MonoBehaviour:
     handleAnimatorMove: 0
     handleAnimatorIK: 0
   fsmTemplate: {fileID: 0}
-  eventHandlerComponentsAdded: 0
+  eventHandlerComponentsAdded: 1
+--- !u!114 &1980818748248014254
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4333015027581209506}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -664232604, guid: e743331561ef77147ae48cda9bcb8209, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  TargetFSMs:
+  - {fileID: 850824241728554617}
+  - {fileID: 1040298865542371814}
+  - {fileID: 6380085544928451285}
+  - {fileID: 8890351270488729592}
 --- !u!114 &3070385579913315234
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4641,7 +4683,7 @@ MonoBehaviour:
     locked: 0
     manualUpdate: 0
     keepDelayedEventsOnStateExit: 0
-    preprocessed: 0
+    preprocessed: 1
     ExposedEvents: []
     RestartOnEnable: 1
     EnableDebugFlow: 0
@@ -4675,7 +4717,7 @@ MonoBehaviour:
     handleAnimatorMove: 0
     handleAnimatorIK: 0
   fsmTemplate: {fileID: 0}
-  eventHandlerComponentsAdded: 0
+  eventHandlerComponentsAdded: 1
 --- !u!114 &5733045224994822480
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6384,7 +6426,7 @@ MonoBehaviour:
     locked: 0
     manualUpdate: 0
     keepDelayedEventsOnStateExit: 0
-    preprocessed: 0
+    preprocessed: 1
     ExposedEvents: []
     RestartOnEnable: 1
     EnableDebugFlow: 0
@@ -6418,7 +6460,7 @@ MonoBehaviour:
     handleAnimatorMove: 0
     handleAnimatorIK: 0
   fsmTemplate: {fileID: 0}
-  eventHandlerComponentsAdded: 0
+  eventHandlerComponentsAdded: 1
 --- !u!114 &6019913128090245493
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7210,7 +7252,7 @@ MonoBehaviour:
     locked: 0
     manualUpdate: 0
     keepDelayedEventsOnStateExit: 0
-    preprocessed: 0
+    preprocessed: 1
     ExposedEvents: []
     RestartOnEnable: 1
     EnableDebugFlow: 0
@@ -7244,7 +7286,7 @@ MonoBehaviour:
     handleAnimatorMove: 0
     handleAnimatorIK: 0
   fsmTemplate: {fileID: 0}
-  eventHandlerComponentsAdded: 0
+  eventHandlerComponentsAdded: 1
 --- !u!114 &6380085544928451285
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9306,7 +9348,7 @@ MonoBehaviour:
     locked: 0
     manualUpdate: 0
     keepDelayedEventsOnStateExit: 0
-    preprocessed: 0
+    preprocessed: 1
     ExposedEvents: []
     RestartOnEnable: 1
     EnableDebugFlow: 0
@@ -9332,7 +9374,7 @@ MonoBehaviour:
     handleJointBreak: 0
     handleJointBreak2D: 0
     handleOnGUI: 0
-    handleFixedUpdate: 0
+    handleFixedUpdate: 1
     handleLateUpdate: 0
     handleApplicationEvents: 0
     handleUiEvents: 0
@@ -9340,7 +9382,7 @@ MonoBehaviour:
     handleAnimatorMove: 0
     handleAnimatorIK: 0
   fsmTemplate: {fileID: 0}
-  eventHandlerComponentsAdded: 0
+  eventHandlerComponentsAdded: 1
 --- !u!114 &7800255983797074389
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10824,7 +10866,7 @@ MonoBehaviour:
     locked: 0
     manualUpdate: 0
     keepDelayedEventsOnStateExit: 0
-    preprocessed: 0
+    preprocessed: 1
     ExposedEvents: []
     RestartOnEnable: 1
     EnableDebugFlow: 0
@@ -10858,7 +10900,7 @@ MonoBehaviour:
     handleAnimatorMove: 0
     handleAnimatorIK: 0
   fsmTemplate: {fileID: 0}
-  eventHandlerComponentsAdded: 0
+  eventHandlerComponentsAdded: 1
 --- !u!114 &8054327728502592615
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11838,7 +11880,7 @@ MonoBehaviour:
     locked: 0
     manualUpdate: 0
     keepDelayedEventsOnStateExit: 0
-    preprocessed: 0
+    preprocessed: 1
     ExposedEvents: []
     RestartOnEnable: 1
     EnableDebugFlow: 0
@@ -11872,7 +11914,7 @@ MonoBehaviour:
     handleAnimatorMove: 0
     handleAnimatorIK: 0
   fsmTemplate: {fileID: 0}
-  eventHandlerComponentsAdded: 0
+  eventHandlerComponentsAdded: 1
 --- !u!114 &8890351270488729592
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -13623,7 +13665,7 @@ MonoBehaviour:
     locked: 0
     manualUpdate: 0
     keepDelayedEventsOnStateExit: 0
-    preprocessed: 0
+    preprocessed: 1
     ExposedEvents: []
     RestartOnEnable: 1
     EnableDebugFlow: 0
@@ -13649,7 +13691,7 @@ MonoBehaviour:
     handleJointBreak: 0
     handleJointBreak2D: 0
     handleOnGUI: 0
-    handleFixedUpdate: 0
+    handleFixedUpdate: 1
     handleLateUpdate: 0
     handleApplicationEvents: 0
     handleUiEvents: 0
@@ -13657,7 +13699,7 @@ MonoBehaviour:
     handleAnimatorMove: 0
     handleAnimatorIK: 0
   fsmTemplate: {fileID: 0}
-  eventHandlerComponentsAdded: 0
+  eventHandlerComponentsAdded: 1
 --- !u!1 &5634314744847624585
 GameObject:
   m_ObjectHideFlags: 0
