@@ -131,7 +131,7 @@ namespace PSmash.Movement
             }
             else
             {
-                Debug.LogWarning("Does not what to do in MoveTo Method ");
+                Debug.LogWarning(gameObject.name + "  does not what to do in MoveTo Method ");
                 rb.velocity = new Vector2(0, rb.velocity.y);
             }
         }

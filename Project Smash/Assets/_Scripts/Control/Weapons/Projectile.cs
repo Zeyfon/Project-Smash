@@ -150,7 +150,7 @@ namespace PSmash.Combat.Weapons
                 }
                 else
                 {
-                    Debug.LogWarning(gameObject.name + " did not know to what it collided");
+                    Debug.LogWarning(gameObject.name + " is from player and is not supposed to collide with  " + collision.gameObject.name);
                 }
             }
             else
@@ -192,7 +192,7 @@ namespace PSmash.Combat.Weapons
                 }
                 else
                 {
-                    Debug.LogWarning(gameObject.name + " did not know to what it collided");
+                    Debug.LogWarning(gameObject.name + " is from enemy and is not supposed to collide with  " + collision.gameObject.name);
                 }
             }
         }
