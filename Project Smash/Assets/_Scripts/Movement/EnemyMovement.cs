@@ -1,7 +1,4 @@
 ﻿using PSmash.Attributes;
-using Spine;
-using Spine.Unity;
-using System;
 using UnityEngine;
 
 namespace PSmash.Movement
@@ -14,6 +11,13 @@ namespace PSmash.Movement
         [SerializeField] float chaseFactor = 1;
         [SerializeField] float patrolingFactor = 0.5f;
 
+        [Header("Slope Control")]
+        [SerializeField] float slopeCheckDistance = 0.5f;
+        [SerializeField] float maxSlopeAngle = 40f;
+        [SerializeField] PhysicsMaterial2D noFriction = null;
+        [SerializeField] PhysicsMaterial2D lowFriction = null;
+        [SerializeField] PhysicsMaterial2D fullFriction = null;
+
 
         [Header("General Info")]
         [SerializeField] Transform groundCheck = null;
@@ -22,12 +26,24 @@ namespace PSmash.Movement
         [SerializeField] LayerMask whatIsPlayer;
         [SerializeField] float distanceCheckForObstacles = 1;
         [SerializeField] float specialAttackRange = 4;
+        [SerializeField] float groundCheckRadius = 0.5f;
 
+        [Header("TestMode")]
+        [SerializeField] bool isMovementTesting = false;
+        
+        
+        Transform targetTest;
         Animator animator;
         Rigidbody2D rb;
+        Vector2 slopeNormalPerp;
         bool canMidRangeBlockAttack = false;
+        bool isGrounded;
+        bool isOnSlope = false;
+        bool canWalkOnSlope;
+        float slopeDownAngle;
+        float slopeDownAngleOld;
+        float slopeSideAngle;
         float currentYAngle = 0;
-        float groundCheckRadius = 0.5f;
 
 
         // Start is called before the first frame update
@@ -39,8 +55,32 @@ namespace PSmash.Movement
 
         void FixedUpdate()
         {
+            GroundCheck();
             SetXVelocityInAnimator();
+            if(isMovementTesting)
+                TestAutomaticMovement();
         }
+        void TestAutomaticMovement()
+        { 
+            if(targetTest == null)
+                targetTest = GameObject.FindGameObjectWithTag("Player").transform;
+            MoveTo(targetTest.position, 1, true, null);
+
+        }
+        private void GroundCheck()
+        {
+            isGrounded = Physics2D.OverlapCircle(groundCheck.position, groundCheckRadius, whatIsGround);
+            if (isGrounded)
+            {
+                //print("IsGrounded");
+            }
+            else
+            {
+                print("NotGrounded");
+            }
+
+        }
+
 
         private void SetXVelocityInAnimator()
         {
@@ -54,28 +94,40 @@ namespace PSmash.Movement
         {
             if (Mathf.Abs(targetPosition.x - transform.position.x) < 0.5f)
                 return;
-            //print("Moving to target");
+            SlopeCheck(transform.right.x);
+            //print("Moving towards " + targetPosition);
             CheckWhereToFace(targetPosition, isMovingTowardsTarget);
             if (IsPlayerAbove())
-            { 
+            {
+                print("Player is above");
                 MoveAwayFrom(targetPosition, 0.9f);
             }
             //print("Moving towards Target");
-            else if (CanMoveToTheFront() && IsGrounded())
+            else if (CanMoveToTheFront() && isGrounded)
             {
+                //print("SlopeNormalPerp.x = " +slopeNormalPerp.x + "  SlopeNormalPerp.y  = " + slopeNormalPerp.y);
                 float speed = baseSpeed * speedFactor;
-                rb.velocity = transform.right * speed;
+                float xVelocity = -1  *speed * slopeNormalPerp.x;
+                float yVelocity = -1 * speed * slopeNormalPerp.y;
+                rb.velocity = new Vector2(xVelocity, yVelocity);
+                print("XVelocity = " + xVelocity + "  yVelocity  = " + yVelocity + "  transform.right.x  =" + transform.right.x );
+                //.velocity = transform.right * speed;
             }
-            else if (!IsGrounded())
+            else if (!isGrounded)
             {
                 print("Falling till reaching floor");
-                //rb.velocity = new Vector2(rb.velocity.x, rb.velocity.y);
             }
-            else if(CanMidRangeBlockAttack() && !CanMoveToTheFront() && IsGrounded() && IsTargetInSpecialAttackRange(targetPosition))
+            else if(CanMidRangeBlockAttack() && !CanMoveToTheFront() && isGrounded && IsTargetInSpecialAttackRange(targetPosition))
             {
                 print("Sending to State " + pm.FsmName + " SPECIAL ATTACK Event ");
                 //Debug.Break();
+                if (pm == null)
+                    return;
                 pm.SendEvent("SPECIALATTACK");
+            }
+            else if (Mathf.Approximately(slopeNormalPerp.x,1))
+            {
+                rb.velocity = new Vector2(0,rb.velocity.y);
             }
             else
             {
@@ -83,6 +135,75 @@ namespace PSmash.Movement
                 rb.velocity = new Vector2(0, rb.velocity.y);
             }
         }
+
+        #region SlopeControl
+        public void SlopeCheck(float xInput)
+        {
+            Vector2 checkPos = transform.position;
+            SlopeCheckVertical(checkPos, xInput);
+            SlopeCheckHorizontal(checkPos);
+        }
+        void SlopeCheckHorizontal(Vector2 checkPos)
+        {
+            RaycastHit2D slopeHitFront = Physics2D.Raycast(checkPos, transform.right, slopeCheckDistance, whatIsGround);
+            RaycastHit2D slopeHitBack = Physics2D.Raycast(checkPos, -transform.right, slopeCheckDistance, whatIsGround);
+            Debug.DrawRay(checkPos, transform.right * slopeCheckDistance, Color.blue);
+            Debug.DrawRay(checkPos, -transform.right * slopeCheckDistance, Color.blue);
+            print(slopeHitFront.normal);
+            if (slopeHitFront && !slopeHitFront.collider.CompareTag("LadderTop") && Mathf.Abs(slopeHitFront.normal.x) < 0.9f)
+            {
+                isOnSlope = true;
+                slopeSideAngle = Vector2.Angle(slopeHitFront.normal, Vector2.up);
+            }
+            else if (slopeHitBack && !slopeHitBack.collider.CompareTag("LadderTop") && Mathf.Abs(slopeHitBack.normal.x) < 0.9f)
+            {
+                isOnSlope = true;
+                slopeSideAngle = 0.0f;
+            }
+            else
+            {
+                isOnSlope = false;
+                slopeSideAngle = 0.0f;
+            }
+        }
+        void SlopeCheckVertical(Vector2 checkPos, float xInput)
+        {
+            RaycastHit2D hit = Physics2D.Raycast(checkPos + new Vector2(0,.2f), Vector2.down, slopeCheckDistance, whatIsGround);
+            if (hit)
+            {
+                slopeNormalPerp = Vector2.Perpendicular(hit.normal).normalized * transform.right.x;
+                slopeDownAngle = Vector2.Angle(hit.normal, Vector2.up);
+                if (slopeDownAngle != slopeDownAngleOld)
+                {
+                    isOnSlope = true;
+                    slopeDownAngleOld = slopeDownAngle;
+                }
+                Debug.DrawRay(hit.point, hit.normal, Color.green);
+                Debug.DrawRay(hit.point, slopeNormalPerp, Color.red);
+            }
+            else
+            {
+                print("No ground found in vertical Slope Check");
+            }
+            if (slopeDownAngle > maxSlopeAngle || slopeSideAngle > maxSlopeAngle)
+            {
+                canWalkOnSlope = false;
+            }
+            else
+            {
+                canWalkOnSlope = true;
+            }
+
+            if (isOnSlope && xInput == 0.0f && canWalkOnSlope)
+            {
+                rb.sharedMaterial = fullFriction;
+            }
+            else
+            {
+                rb.sharedMaterial = lowFriction;
+            }
+        }
+        #endregion
 
         private bool IsTargetInSpecialAttackRange(Vector3 targetPosition)
         {
@@ -120,24 +241,27 @@ namespace PSmash.Movement
 
         private bool IsGroundInFrontWalkable()
         {
-            Debug.DrawRay(transform.position + transform.right + new Vector3(0, 1, 0), Vector2.down, Color.blue);
-            RaycastHit2D hit = Physics2D.Raycast(transform.position + transform.right + new Vector3(0, 1, 0), Vector2.down, 1.5f, whatIsGround);
+            Debug.DrawRay(transform.position + transform.right + new Vector3(0, 0.5f, 0), Vector2.down, Color.blue);
+            RaycastHit2D hit = Physics2D.Raycast(transform.position + transform.right + new Vector3(0, .5f, 0), Vector2.down, 2f, whatIsGround);
             if (!hit)
             {
-                //print("There is no ground in front");
+                print("There is no ground in front");
                 return false;
             }
 
             float angle = Vector2.Angle(Vector2.up, hit.normal);
             if (Mathf.Approximately(angle, 0))
             {
-                //print("There is plain groun in front");
+                print("There is plain groun in front");
                 return true;
             }
             else
             {
-                //print("There is slope in front");
-                return false;
+                print("There is slope in front");
+                if (canWalkOnSlope)
+                    return true;
+                else
+                    return false;
             }
         }
         private bool IsObstacleInFront()
@@ -146,13 +270,15 @@ namespace PSmash.Movement
             //print("Looking for enemy in front");
             //Debug.DrawRay(transform.position + new Vector3(0, 1, 0), transform.right, Color.cyan);
             RaycastHit2D hit = Physics2D.Raycast(transform.position + new Vector3(0, 1), transform.right, distanceCheckForObstacles, whatIsObstacle);
-            if (hit && hit.collider.gameObject != gameObject)
+            if (hit && (hit.collider.gameObject != gameObject && !hit.collider.CompareTag("Ladder")))
             {
-                //print("There is an obstacle between the target and me");
+                print(hit.collider.gameObject.tag);
+                print("There is an obstacle between the target and me");
                 return true;
             }
             else
             {
+                print("There is no obstacle between the target and me");
                 return false;
             }
         }
@@ -173,12 +299,6 @@ namespace PSmash.Movement
                     break;
             }
             return speedFactor * baseSpeed;
-        }
-
-        bool IsGrounded()
-        {
-            bool isGrounded = Physics2D.OverlapCircle(groundCheck.position, groundCheckRadius, whatIsGround);
-            return isGrounded;
         }
 
         public void Cancel()
@@ -209,20 +329,6 @@ namespace PSmash.Movement
                 return;
             else if (!playerIsAtRight && !isLookingRight && !isFacingTarget)
                 Flip();
-
-            //Vector2 toTarget;
-            //if(isFacingTarget)
-            //    toTarget = (targetPosition - transform.position).normalized;
-            //else
-            //    toTarget = (transform.position- targetPosition).normalized;
-            //if (Vector2.Dot(toTarget, transform.right) > 0)
-            //{
-            //    return;
-            //}
-            //else
-            //{
-            //    Flip();
-            //}
         }
 
         public void SetCanMidRangeBlockAttack(bool state)

@@ -9356,6 +9356,11 @@ MonoBehaviour:
   baseSpeed: 6.5
   chaseFactor: 1
   patrolingFactor: 0.5
+  slopeCheckDistance: 0.5
+  maxSlopeAngle: 40
+  noFriction: {fileID: 0}
+  lowFriction: {fileID: 0}
+  fullFriction: {fileID: 0}
   groundCheck: {fileID: 8772356922390346027}
   whatIsGround:
     serializedVersion: 2
@@ -9368,6 +9373,8 @@ MonoBehaviour:
     m_Bits: 2048
   distanceCheckForObstacles: 1
   specialAttackRange: 4
+  groundCheckRadius: 0.5
+  isMovementTesting: 0
 --- !u!114 &7852469771817071823
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10859,7 +10866,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4333015027581209506}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 1384774831, guid: e743331561ef77147ae48cda9bcb8209, type: 3}
   m_Name: 
@@ -13835,27 +13842,27 @@ PrefabInstance:
     - target: {fileID: 2397961640516547746, guid: 587e06734df96fb45836c4df01ad03a7,
         type: 3}
       propertyPath: m_Size.x
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2397961640516547746, guid: 587e06734df96fb45836c4df01ad03a7,
         type: 3}
       propertyPath: m_Size.y
-      value: 1.5
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 2397961640516547746, guid: 587e06734df96fb45836c4df01ad03a7,
         type: 3}
       propertyPath: m_Offset.x
-      value: -0.07
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2397961640516547746, guid: 587e06734df96fb45836c4df01ad03a7,
         type: 3}
       propertyPath: m_Offset.y
-      value: 0.7
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2397961640516547746, guid: 587e06734df96fb45836c4df01ad03a7,
         type: 3}
       propertyPath: m_Direction
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2701534567474707569, guid: 587e06734df96fb45836c4df01ad03a7,
         type: 3}
