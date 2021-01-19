@@ -222,7 +222,7 @@ namespace PSmash.Movement
             }
             else
             {
-                print("NotMoving");
+                //print("NotMoving");
             }
         }
 
@@ -291,7 +291,7 @@ namespace PSmash.Movement
         #region SlopeControl
         public void SlopeCheck(float xInput)
         {
-            Vector2 checkPos = transform.position;// - new Vector3(0.0f, colliderSize.y / 2);
+            Vector2 checkPos = transform.position;
             SlopeCheckVertical(checkPos, xInput);
             SlopeCheckHorizontal(checkPos);
         }
@@ -407,7 +407,7 @@ namespace PSmash.Movement
                 else if (CanJump(isClimbing))
                 {
                     pm.SendEvent("JUMP");
-                    print("Wants To Jump");
+                    //print("Wants To Jump");
                 }
             }
         }
@@ -416,13 +416,13 @@ namespace PSmash.Movement
 
             if (isGrounded && canWalkOnSlope && rb.velocity.y < 0.5f)
             {
-                print("Ground Jump");
+                //print("Ground Jump");
                 jumpButtonWasPressed = false;
                 return true;
             }
             else if (jumpButtonWasPressed && canDoubleJump)
             {
-                print("Mid Air Jump");
+               // print("Mid Air Jump");
                 if (!isClimbing)
                     canDoubleJump = false;
                 jumpButtonWasPressed = false;
