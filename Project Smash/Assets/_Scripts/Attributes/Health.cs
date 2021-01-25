@@ -1,15 +1,23 @@
 ﻿using UnityEngine;
+using UnityEngine.Events;
 
 namespace PSmash.Attributes
 {
     public class Health : MonoBehaviour, IDamagable,IKillable
     {
         [Header("General")]
-        [SerializeField] protected int health = 100;
+        [SerializeField] protected TakeDamageEvent onTakeDamage;
+
+        protected int health;
         protected AudioSource audioSource;
         protected bool isDead = false;
-        protected int initialHealth;
+        //protected int initialHealth;
 
+        [System.Serializable]
+        public class TakeDamageEvent : UnityEvent<float>
+        {
+
+        }
         public virtual void TakeDamage(Transform attacker, int damage)
         {
             //Used by child class

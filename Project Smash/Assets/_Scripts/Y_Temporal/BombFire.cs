@@ -3,7 +3,7 @@ using UnityEngine;
 using PSmash.Combat;
 using PSmash.Attributes;
 
-namespace PSmash.Attributes
+namespace PSmash.Temporal
 {
     public class BombFire : MonoBehaviour
     {

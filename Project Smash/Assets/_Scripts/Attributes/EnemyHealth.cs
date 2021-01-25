@@ -1,10 +1,7 @@
 ﻿using HutongGames.PlayMaker;
-using System;
+using PSmash.Stats;
 using System.Collections;
 using UnityEngine;
-using UnityEngine.Events;
-using Spine;
-using Spine.Unity;
 
 namespace PSmash.Attributes
 {
@@ -18,17 +15,14 @@ namespace PSmash.Attributes
 
         EnemyPosture posture;
         PlayMakerFSM pm;
+        BaseStats baseStats;
 
         private void Awake()
         {
+            baseStats = GetComponent<BaseStats>();
+            health = (int)baseStats.GetStat(Stat.Health);
             audioSource = GetComponent<AudioSource>();
             posture = GetComponent<EnemyPosture>();
-        }
-
-        // Start is called before the first frame update
-        void Start()
-        {
-            initialHealth = health;
         }
 
         //This method will always be called from the AIController
@@ -60,6 +54,7 @@ namespace PSmash.Attributes
 
         public void Damaged(int damage, int damagePenetrationPercentage)
         {
+            onTakeDamage.Invoke(damage);
             print(gameObject.name + "  Damaged");
             if(posture != null)
             {
@@ -169,9 +164,9 @@ namespace PSmash.Attributes
             return health;
         }
 
-        public float GetInitialHealthValue()
+        public float GetMaxHealth()
         {
-            return initialHealth;
+            return baseStats.GetStat(Stat.Health);
         }
 
         public bool IsDead()

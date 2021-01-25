@@ -16,7 +16,7 @@ namespace PSmash.Attributes
         }
         private void Update()
         {
-            bar.localScale = new Vector2(enemyHealth.GetHealthValue() / enemyHealth.GetInitialHealthValue(), transform.localScale.y) ;
+            bar.localScale = new Vector2(enemyHealth.GetHealthValue() / enemyHealth.GetMaxHealth(), transform.localScale.y) ;
         }
     }
 }

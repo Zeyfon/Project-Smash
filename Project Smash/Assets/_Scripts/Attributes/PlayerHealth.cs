@@ -1,9 +1,12 @@
 ﻿using PSmash.Analytics;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Analytics;
 using UnityEngine.SceneManagement;
+using UnityEngine.Events;
+using PSmash.Stats;
 
 namespace PSmash.Attributes
 {
@@ -14,23 +17,20 @@ namespace PSmash.Attributes
         [SerializeField] AudioClip deadSound = null;
         [SerializeField] float timeToRecoverControlAfterDamage = 0.35f;
         public delegate void PlayerisDamaged(float health, float initialHealth);
-        public event PlayerisDamaged OnPlayerDamage;
+        public event PlayerisDamaged UpdateUIHealth;
 
         Coroutine coroutine;
         Animator animator;
+        BaseStats baseStats;
         
         bool isDamaged;
 
         private void Awake()
         {
+            baseStats = GetComponent<BaseStats>();
             audioSource = GetComponent<AudioSource>();
             animator = GetComponent<Animator>();
-        }
-
-        // Start is called before the first frame update
-        void Start()
-        {
-            initialHealth = health;
+            health = (int)baseStats.GetStat(Stat.Health);
         }
 
         //Take damage will always be to damage the player
@@ -43,6 +43,9 @@ namespace PSmash.Attributes
             //print("Damage received");
             isDamaged = true;
             if (coroutine != null) StopCoroutine(coroutine);
+            print(damage);
+            damage *= (1 - (int)baseStats.GetStat(Stat.Defense)/100);
+            print(damage);
             health -= damage;
             playerControllerPM.enabled = false;
             if (health <= 0)
@@ -56,7 +59,23 @@ namespace PSmash.Attributes
                 coroutine = StartCoroutine(DamageEffects());
                 StartCoroutine(ControlReset());
             }
-            OnPlayerDamage(health, initialHealth);
+            
+            onTakeDamage.Invoke(damage);
+        }
+
+        public float GetMaxHealthPoints()
+        {
+            return baseStats.GetStat(Stat.Health);
+        }
+
+        public float GetHealth()
+        {
+            return health;
+        }
+
+        public void ReplenishHealth(float health)
+        {
+            this.health += (int)health;
         }
 
         IEnumerator DamageEffects()
