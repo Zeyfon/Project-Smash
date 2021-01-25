@@ -5031,6 +5031,11 @@ MonoBehaviour:
   baseSpeed: 5
   chaseFactor: 1
   patrolingFactor: 0.5
+  slopeCheckDistance: 0.5
+  maxSlopeAngle: 40
+  noFriction: {fileID: 0}
+  lowFriction: {fileID: 0}
+  fullFriction: {fileID: 0}
   groundCheck: {fileID: 1064042087152033965}
   whatIsGround:
     serializedVersion: 2
@@ -5043,6 +5048,8 @@ MonoBehaviour:
     m_Bits: 2048
   distanceCheckForObstacles: 1
   specialAttackRange: 4
+  groundCheckRadius: 0.5
+  isMovementTesting: 0
 --- !u!114 &3484496995166027311
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -14950,7 +14957,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 604fc9b6ca066c34c961cc98031b1558, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 250
   isInvulnerable: 0
   dropItem: {fileID: 1441679831736908636, guid: a0cf1166c4b4a1448a7c27f2fe7949d6,
     type: 3}
@@ -16614,7 +16620,7 @@ MonoBehaviour:
         tooltip: 
         showInInspector: 1
         networkSync: 0
-        value: 10
+        value: 20
       boolVariables:
       - useVariable: 1
         name: hasHit

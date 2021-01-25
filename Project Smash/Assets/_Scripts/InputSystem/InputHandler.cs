@@ -6,6 +6,7 @@ using PSmash.Movement;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using PSmash.Saving;
 using UnityEngine.InputSystem;
 using HutongGames.PlayMaker;
 
@@ -13,11 +14,9 @@ namespace PSmash.InputSystem
 {
     public class InputHandler : MonoBehaviour
     {
-        //[SerializeField] TimeManager timeManager = null;
-        //[SerializeField] GameObject weaponsMenu = null;
         [SerializeField] PlayerMovement pMovement = null;
-        //[SerializeField] PlayMakerFSM pmInputProxy = null;
 
+        Collider2D interactableCollider;
         PlayMakerFSM pmPlayerController = null;
 
 
@@ -33,7 +32,7 @@ namespace PSmash.InputSystem
         //ICommand dPadRight;
 
         PlayMakerFSM currentPMState;
-        PlayerController playerController;
+        //PlayerController playerController;
         _Controller _controller;
 
         Vector2 movement;
@@ -48,7 +47,7 @@ namespace PSmash.InputSystem
                 if (pm.FsmName == "PlayerController") pmPlayerController = pm;
             }
             if (pmPlayerController == null) Debug.LogWarning("FSM Player Controller could not be found");
-            playerController = transform.parent.GetComponent<PlayerController>();
+            //playerController = transform.parent.GetComponent<PlayerController>();
             _controller = new _Controller();
             GameObject.FindObjectOfType<Menus.Menus>()._controller = _controller;
         }
@@ -99,7 +98,7 @@ namespace PSmash.InputSystem
             _controller.Player.ButtonLB.started += ctx => ButtonLBPressed();
             _controller.Player.ButtonLB.canceled += ctx => ButtonLBReleased();
 
-            //_controller.Player.ButtonStart.started += ctx => ButtonStartPressed();
+            _controller.Player.ButtonStart.started += ctx => ButtonStartPressed();
             //_controller.Player.Quit.performed += ctx => QuitKeyPressed();
             EventManager.PauseGame += PauseGame;
             EventManager.UnpauseGame += UnpauseGame;
@@ -129,7 +128,7 @@ namespace PSmash.InputSystem
             _controller.Player.ButtonLB.canceled -= ctx => ButtonLBReleased();
 
             //_controller.Player.Quit.performed -= ctx => QuitKeyPressed();
-            //_controller.Player.ButtonStart.started -= ctx => ButtonStartPressed();
+            _controller.Player.ButtonStart.started -= ctx => ButtonStartPressed();
             EventManager.PauseGame -= PauseGame;
             EventManager.UnpauseGame -= UnpauseGame;
             EventManager.PlayerGotBoots -= PlayerGotBoots;
@@ -184,6 +183,12 @@ namespace PSmash.InputSystem
 
         private void ButtonAPressed()
         {
+            if (interactableCollider != null)
+            {
+                //this.enabled = false;
+                interactableCollider.GetComponent<IInteractable>().StartInteracting();
+                return;
+            }
             if (action1 == null) return;
             //action1.Execute(true);
             jumpButtonState = true;
@@ -338,6 +343,27 @@ namespace PSmash.InputSystem
                 }
                 //print("InputHandler Enabled");
             }
+        }
+
+        public void SetInteractableCollider(Collider2D interactableCollider)
+        {
+            this.interactableCollider = interactableCollider;
+        }
+
+        public void EnableInput(bool state)
+        {
+            if (state)
+            {
+                print("Enabling input handler");
+                _controller.Player.Enable();
+            }
+            else
+            {
+                print("Disabling input handler");
+                _controller.Player.Disable();
+                movement = new Vector2(0, 0);
+            }
+            this.enabled = state;
         }
 
         #endregion

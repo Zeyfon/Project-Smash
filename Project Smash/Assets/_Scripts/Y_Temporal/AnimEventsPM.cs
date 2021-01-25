@@ -2,26 +2,30 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class AnimEventsPM : MonoBehaviour
+namespace PSmash.Temporal
 {
-
-    //It is used to prevent errors inside unity by events with no receivers
-    //for objects that use PlayMaker instead of C# Scripts
-    // Start is called before the first frame update
-    void Start()
+    public class AnimEventsPM : MonoBehaviour
     {
 
+        //It is used to prevent errors inside unity by events with no receivers
+        //for objects that use PlayMaker instead of C# Scripts
+        // Start is called before the first frame update
+        void Start()
+        {
+
+        }
+
+        // Update is called once per frame
+        void Update()
+        {
+
+        }
+
+
+        void Hit()
+        {
+
+        }
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
-
-
-    void Hit()
-    {
-
-    }
 }

@@ -1,18 +1,16 @@
 ﻿using PSmash.Attributes;
 using PSmash.Movement;
-using Spine;
-using Spine.Unity;
 using System;
 using System.Collections;
 using UnityEngine;
 using PSmash.Combat.Weapons;
+using PSmash.Stats;
 
 namespace PSmash.Combat
 {
     public class PlayerFighter : MonoBehaviour
     {
-        [SpineBone(dataField: "skeletonRenderer")]
-        [SerializeField] public string boneName;
+
         [Header("General Info")]
         [SerializeField] SecondaryWeaponsList weapons;
         [SerializeField] GameObject subWeapon = null;
@@ -21,7 +19,6 @@ namespace PSmash.Combat
 
         [Header("Combo Attack")]
         [SerializeField] Transform attackTransform = null;
-        [SerializeField] int[] comboAttackDamages;
         [SerializeField] Vector2 comboAttackArea = new Vector2(1.5f, 1.5f);
         [SerializeField] AudioClip attackSound1 = null;
         [SerializeField] AudioClip attackSound2 = null;
@@ -33,8 +30,6 @@ namespace PSmash.Combat
         [SerializeField]  GameObject finisherEffects = null;
 
         [Header("Throw Attack")]
-        //[SerializeField] GameObject dagger = null;
-        //[SerializeField] AudioClip throwingKnifeSound = null;
         public int currentItemQuantity = 3;
 
 
@@ -49,17 +44,6 @@ namespace PSmash.Combat
         [SerializeField] AudioClip guardFootstepSound = null;
         [SerializeField] float canParryTime = 2f;
 
-        [Header("Forward Attack")]
-        //[SerializeField] AudioClip forwardAttackSound = null;
-
-        [Header("Damages")]
-        //[SerializeField] int hikingSpikeDamage = 20;
-        //[SerializeField] int heavyAttackDamage = 25;
-        //[SerializeField] int chargeAttackDamage = 35;
-
-        //[SerializeField] float heavyAttackImpulse = 25;
-        //[SerializeField] float chargeAttackImpulse = 30;
-
         [Header("Sounds")]
         [SerializeField] AudioClip currentToolSound=null;
         public event Action AirSmashAttackEffect;
@@ -67,33 +51,29 @@ namespace PSmash.Combat
         public delegate void ThrowItem(int quantity);
         public event ThrowItem onItemThrown;
 
+        BaseStats baseStats;
         Animator animator;
         AudioSource audioSource;
         PlayerMovement movement;
-        Coroutine coroutine;
         PlayerHealth health;
-        SkeletonMecanim mecanim;
         TimeManager timeManager;
         Transform targetTransform;
 
-        //Bone bone;
-        //bool isComboWindowActive = false;
         bool isAttacking = false;
-        //bool isToolButtonPressed = false;
+ 
         bool isChargingChargeAttack = false;
         bool isChargeAttackReady = false;
-        bool heavyAttacking = false;
         bool isGuarding = false;
         bool isGuardButtonPressed = false;
         bool isFinishinAnEnemy = false;
 
         void Awake()
         {
+            baseStats = GetComponent<BaseStats>();
             health = GetComponent<PlayerHealth>();
             movement = GetComponent<PlayerMovement>();
             animator = GetComponent<Animator>();
             audioSource = GetComponent<AudioSource>();
-            mecanim = GetComponent<SkeletonMecanim>();
             timeManager = GameObject.FindObjectOfType<TimeManager>();
         }  
 
@@ -152,8 +132,6 @@ namespace PSmash.Combat
 
         IEnumerator StartPlayerAndTargetFinisherAnimations()
         {
-            //targetTransform.GetComponent<EnemyHealth>().StopCurrentActions();
-            //StartCoroutine(RunThisAnimation("Attack",80));
             animator.SetInteger("Attack", 80);
             while (animator.GetInteger("Attack")!= 81)
             {
@@ -321,7 +299,7 @@ namespace PSmash.Combat
             // print("Player Attack Finished");
             animator.SetInteger(action, 0);
             isGuarding = false;
-            heavyAttacking = false;
+            //heavyAttacking = false;
             movement.CanFlip = true;
             isAttacking = false;
             guardTrigger.enabled = false;
@@ -334,7 +312,7 @@ namespace PSmash.Combat
         void LightAttackDamage(int comboAttackNumber)
         {
             //print("NormalAttack");
-            SendDamage(attackTransform, comboAttackArea, comboAttackDamages[comboAttackNumber - 1]);
+            SendDamage(attackTransform, comboAttackArea, (int)baseStats.GetStat(Stat.Damage));
         }
 
         void SplashAttack()

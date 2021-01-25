@@ -1,8 +1,9 @@
 ﻿using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
+using PSmash.Menus;
 
-namespace PSmash.Menus
+namespace PSmash.Temporal
 {
     public class ControllerSelector : MonoBehaviour
     {

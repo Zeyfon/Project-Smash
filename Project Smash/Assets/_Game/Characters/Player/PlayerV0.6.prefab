@@ -1294,7 +1294,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 6581303975160096540}
-  m_RootOrder: 13
+  m_RootOrder: 14
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &7067196909739607899
 MonoBehaviour:
@@ -6768,7 +6768,7 @@ Transform:
   - {fileID: 6160213669076702481}
   - {fileID: 2562515063808682428}
   m_Father: {fileID: 6581303975160096540}
-  m_RootOrder: 14
+  m_RootOrder: 15
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &7644326294966760106
 GameObject:
@@ -8375,13 +8375,20 @@ MonoBehaviour:
         networkSync: 0
         typeName: 
         value: {fileID: 0}
+      - useVariable: 1
+        name: test
+        tooltip: 
+        showInInspector: 0
+        networkSync: 0
+        typeName: PlayMakerTriggerExit
+        value: {fileID: 0}
       materialVariables: []
       textureVariables: []
       arrayVariables: []
       enumVariables: []
       categories:
       - 
-      variableCategoryIDs: 0000000000000000000000000000000000000000000000000000000000000000
+      variableCategoryIDs: 000000000000000000000000000000000000000000000000000000000000000000000000
     description: 
     docUrl: 
     showStateLabel: 0
@@ -8391,7 +8398,7 @@ MonoBehaviour:
     locked: 0
     manualUpdate: 0
     keepDelayedEventsOnStateExit: 0
-    preprocessed: 1
+    preprocessed: 0
     ExposedEvents: []
     RestartOnEnable: 1
     EnableDebugFlow: 0
@@ -9644,7 +9651,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cf2c5ae850d0125488bb258dfd34460f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 100
+  onTakeDamage:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1354962760599718964}
+        m_MethodName: Spawn
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   playerControllerPM: {fileID: 214551376668985732}
   damagedSound: {fileID: 8300000, guid: 94d7e7a893bf8624c98df69745337bbf, type: 3}
   deadSound: {fileID: 8300000, guid: c98e5096077307b40bbfb384b636c655, type: 3}
@@ -12279,6 +12299,24 @@ MonoBehaviour:
     handleAnimatorIK: 0
   fsmTemplate: {fileID: 0}
   eventHandlerComponentsAdded: 1
+--- !u!114 &3522705847713719238
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6581303975160096547}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 24a03d575fcbe764fbfff6203d61b643, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  healthValue: 100
+  damage: 10
+  defense: 10
+  monsterRemains: 888
+  reapersEye: 777
+  rangersEye: 666
 --- !u!114 &4876046648499560663
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -12312,7 +12350,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5e7c2dd408935084c8474d73f675d2bd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  boneName: MerleMVP
   weapons: 0
   subWeapon: {fileID: 0}
   whatIsDamagable:
@@ -12322,7 +12359,6 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 1024
   attackTransform: {fileID: 5414759444693801845}
-  comboAttackDamages: 0a0000000a0000000a0000000a0000000a0000000a000000
   comboAttackArea: {x: 1.5, y: 1.5}
   attackSound1: {fileID: 8300000, guid: 8b4ce328585956a4b9ec272d27420fc9, type: 3}
   attackSound2: {fileID: 0}
@@ -22187,7 +22223,7 @@ Transform:
   m_LocalScale: {x: 0.37, y: 0.37, z: 1}
   m_Children: []
   m_Father: {fileID: 6581303975160096540}
-  m_RootOrder: 12
+  m_RootOrder: 13
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &2345282903700165352
 SpriteRenderer:
@@ -22376,8 +22412,25 @@ PrefabInstance:
       propertyPath: m_TagString
       value: Player
       objectReference: {fileID: 0}
+    - target: {fileID: 4664805819710454425, guid: 75561d9801edb4b48ad9e5f43cea3d05,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 12
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 75561d9801edb4b48ad9e5f43cea3d05, type: 3}
+--- !u!114 &1354962760599718964 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 9014929069135497056, guid: 75561d9801edb4b48ad9e5f43cea3d05,
+    type: 3}
+  m_PrefabInstance: {fileID: 8058836708823124820}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b4a54fc1155d7dd4fb94090c8dc41bea, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &6581303975160096547 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 3784079572925901943, guid: 75561d9801edb4b48ad9e5f43cea3d05,
