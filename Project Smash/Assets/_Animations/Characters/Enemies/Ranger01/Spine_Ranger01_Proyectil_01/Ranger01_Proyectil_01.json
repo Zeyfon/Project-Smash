@@ -1,0 +1,108 @@
+{
+"skeleton": { "hash": "Ti5zpDHJFV6RUWJwTBg35yeTJKM", "spine": "3.8.99", "x": -100, "y": -98, "width": 200, "height": 196 },
+"bones": [
+	{ "name": "Ranger01_Proyectil_01" },
+	{ "name": "bone", "parent": "Ranger01_Proyectil_01" }
+],
+"slots": [
+	{ "name": "Proyectil", "bone": "bone", "attachment": "12Proyectil" },
+	{ "name": "Brillo", "bone": "bone", "attachment": "01BrilloAmarillo" }
+],
+"skins": [
+	{
+		"name": "default",
+		"attachments": {
+			"Brillo": {
+				"01BrilloAmarillo": { "width": 200, "height": 196 }
+			},
+			"Proyectil": {
+				"12Proyectil": { "x": 0.5, "width": 87, "height": 86 }
+			}
+		}
+	}
+],
+"animations": {
+	"RangerP_Impact": {
+		"slots": {
+			"Brillo": {
+				"color": [
+					{ "color": "ffffffff" },
+					{ "time": 0.0667, "color": "ffffff0a" },
+					{ "time": 0.1667, "color": "ffffffff" }
+				]
+			}
+		},
+		"bones": {
+			"bone": {
+				"rotate": [
+					{ "curve": "stepped" },
+					{ "time": 0.1667 }
+				],
+				"translate": [
+					{},
+					{ "time": 0.0667, "x": -18.82 },
+					{ "time": 0.1667 }
+				],
+				"scale": [
+					{},
+					{ "time": 0.0667, "x": 0.596 },
+					{ "time": 0.1667 }
+				]
+			}
+		}
+	},
+	"RangerP_Loop": {
+		"slots": {
+			"Brillo": {
+				"color": [
+					{ "color": "ffffffff" },
+					{ "time": 0.1667, "color": "ffffff00" },
+					{ "time": 0.3333, "color": "ffffffff" }
+				]
+			}
+		},
+		"bones": {
+			"bone": {
+				"rotate": [
+					{},
+					{ "time": 0.1667, "angle": 175.09 },
+					{ "time": 0.3333, "angle": -6.07 }
+				],
+				"translate": [
+					{}
+				],
+				"scale": [
+					{},
+					{ "time": 0.1667, "x": 1.028, "y": 1.028 },
+					{ "time": 0.3333 }
+				]
+			}
+		}
+	},
+	"RangerP_Spawn": {
+		"slots": {
+			"Brillo": {
+				"color": [
+					{ "color": "ffffff00" },
+					{ "time": 0.1667, "color": "ffffffff" }
+				]
+			}
+		},
+		"bones": {
+			"bone": {
+				"rotate": [
+					{ "time": 0.1667 }
+				],
+				"translate": [
+					{ "x": 66.91, "curve": 0, "c2": 0.22, "c3": 0.75 },
+					{ "time": 0.1667 }
+				],
+				"scale": [
+					{ "x": 2.414, "curve": 0, "c2": 0.22, "c3": 0.75 },
+					{ "time": 0.1667 }
+				]
+			}
+		}
+	}
+}
+}
