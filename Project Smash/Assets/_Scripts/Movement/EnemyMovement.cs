@@ -51,6 +51,8 @@ namespace PSmash.Movement
         {
             rb = GetComponent<Rigidbody2D>();
             animator = GetComponent<Animator>();
+            if (animator == null)
+                animator = GetComponentInChildren<Animator>();
         }
 
         void FixedUpdate()
@@ -110,7 +112,7 @@ namespace PSmash.Movement
                 float xVelocity = -1  *speed * slopeNormalPerp.x;
                 float yVelocity = -1 * speed * slopeNormalPerp.y;
                 rb.velocity = new Vector2(xVelocity, yVelocity);
-                print("XVelocity = " + xVelocity + "  yVelocity  = " + yVelocity + "  transform.right.x  =" + transform.right.x );
+                //print("XVelocity = " + xVelocity + "  yVelocity  = " + yVelocity + "  transform.right.x  =" + transform.right.x );
                 //.velocity = transform.right * speed;
             }
             else if (!isGrounded)
@@ -119,7 +121,7 @@ namespace PSmash.Movement
             }
             else if(CanMidRangeBlockAttack() && !CanMoveToTheFront() && isGrounded && IsTargetInSpecialAttackRange(targetPosition))
             {
-                print("Sending to State " + pm.FsmName + " SPECIAL ATTACK Event ");
+                //print("Sending to State " + pm.FsmName + " SPECIAL ATTACK Event ");
                 //Debug.Break();
                 if (pm == null)
                     return;
@@ -149,7 +151,7 @@ namespace PSmash.Movement
             RaycastHit2D slopeHitBack = Physics2D.Raycast(checkPos, -transform.right, slopeCheckDistance, whatIsGround);
             Debug.DrawRay(checkPos, transform.right * slopeCheckDistance, Color.blue);
             Debug.DrawRay(checkPos, -transform.right * slopeCheckDistance, Color.blue);
-            print(slopeHitFront.normal);
+            //print(slopeHitFront.normal);
             if (slopeHitFront && !slopeHitFront.collider.CompareTag("LadderTop") && Mathf.Abs(slopeHitFront.normal.x) < 0.9f)
             {
                 isOnSlope = true;
@@ -245,19 +247,19 @@ namespace PSmash.Movement
             RaycastHit2D hit = Physics2D.Raycast(transform.position + transform.right + new Vector3(0, .5f, 0), Vector2.down, 2f, whatIsGround);
             if (!hit)
             {
-                print("There is no ground in front");
+                //print("There is no ground in front");
                 return false;
             }
 
             float angle = Vector2.Angle(Vector2.up, hit.normal);
             if (Mathf.Approximately(angle, 0))
             {
-                print("There is plain groun in front");
+                //print("There is plain groun in front");
                 return true;
             }
             else
             {
-                print("There is slope in front");
+                //print("There is slope in front");
                 if (canWalkOnSlope)
                     return true;
                 else
@@ -273,12 +275,12 @@ namespace PSmash.Movement
             if (hit && (hit.collider.gameObject != gameObject && !hit.collider.CompareTag("Ladder")))
             {
                 print(hit.collider.gameObject.tag);
-                print("There is an obstacle between the target and me");
+                //print("There is an obstacle between the target and me");
                 return true;
             }
             else
             {
-                print("There is no obstacle between the target and me");
+                //print("There is no obstacle between the target and me");
                 return false;
             }
         }

@@ -42,7 +42,7 @@ namespace PSmash.Attributes
                 Debug.LogWarning("No Enemy State set to return DAMAGE Event");
                 return;
             }
-            print("Will Send DAMAGED Event with " + damage + " of damage to " + pm.FsmName + " State");
+            //print("Will Send DAMAGED Event with " + damage + " of damage to " + pm.FsmName + " State");
             FsmEventData myfsmEventData = new FsmEventData();
             myfsmEventData.IntData = damage;
             myfsmEventData.GameObjectData = gameObject;
@@ -61,7 +61,7 @@ namespace PSmash.Attributes
                 posture.posture = posture.SubstractDamageFromPosture(damage);
                 if (posture.posture <= 0 && pm.FsmName != "Stun")
                 {
-                    print("POSTUREDEPLETED Event to the fsm " + pm.FsmName);
+                    //print("POSTUREDEPLETED Event to the fsm " + pm.FsmName);
                     posture.OnStunStateStart();
                     DamageHealth(damage, 100);
                     pm.SendEvent("POSTUREDEPLETED");
@@ -69,7 +69,7 @@ namespace PSmash.Attributes
                 }
                 else
                 {
-                    print("CONTINUE Event to the fsm " + pm.FsmName);
+                    //print("CONTINUE Event to the fsm " + pm.FsmName);
                     DamageHealth(damage, damagePenetrationPercentage);
                     pm.SendEvent("CONTINUE");
                     return;
@@ -77,7 +77,7 @@ namespace PSmash.Attributes
             }
             else
             {
-                print("CONTINUE Event to the fsm " + pm.FsmName);
+                //print("CONTINUE Event to the fsm " + pm.FsmName);
                 DamageHealth(damage, damagePenetrationPercentage);
                 pm.SendEvent("CONTINUE");
                 return;
