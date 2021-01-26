@@ -30,7 +30,7 @@ namespace PSmash.Attributes
             baseStats = GetComponent<BaseStats>();
             audioSource = GetComponent<AudioSource>();
             animator = GetComponent<Animator>();
-            health = (int)baseStats.GetStat(Stat.Health);
+            health = (int)baseStats.GetStat(StatsList.Health);
         }
 
         //Take damage will always be to damage the player
@@ -44,7 +44,7 @@ namespace PSmash.Attributes
             isDamaged = true;
             if (coroutine != null) StopCoroutine(coroutine);
             print(damage);
-            damage *= (1 - (int)baseStats.GetStat(Stat.Defense)/100);
+            damage *= (1 - (int)baseStats.GetStat(StatsList.Defense)/100);
             print(damage);
             health -= damage;
             playerControllerPM.enabled = false;
@@ -65,7 +65,7 @@ namespace PSmash.Attributes
 
         public float GetMaxHealthPoints()
         {
-            return baseStats.GetStat(Stat.Health);
+            return baseStats.GetStat(StatsList.Health);
         }
 
         public float GetHealth()

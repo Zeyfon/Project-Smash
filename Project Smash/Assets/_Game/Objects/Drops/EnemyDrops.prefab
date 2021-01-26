@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 1441679831736908608}
   - component: {fileID: 1441679831736908609}
   m_Layer: 0
-  m_Name: OreDrop
+  m_Name: EnemyDrops
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3789,10 +3789,10 @@ ParticleSystem:
         m_RotationOrder: 4
     minKillSpeed: 0
     maxKillSpeed: 10000
-    radiusScale: 1
+    radiusScale: 0.51
     collidesWith:
       serializedVersion: 2
-      m_Bits: 33024
+      m_Bits: 256
     maxCollisionShapes: 256
     quality: 0
     voxelSize: 0.5
@@ -4826,6 +4826,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 933c0c83317c32e4ab2e6d61a54abaff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  myMaterial: 0
 --- !u!82 &1441679831736908609
 AudioSource:
   m_ObjectHideFlags: 0

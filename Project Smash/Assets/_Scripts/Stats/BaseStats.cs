@@ -1,6 +1,8 @@
 ﻿using UnityEngine;
 using PSmash.Attributes;
 using PSmash.LevelUpSystem;
+using PSmash.Items;
+using System;
 
 namespace PSmash.Stats
 {
@@ -23,15 +25,26 @@ namespace PSmash.Stats
             health = GetComponent<PlayerHealth>();
         }
 
-        public float GetStat(Stat stat)
+        private void OnEnable()
+        {
+            EnemyDrop.onDropCollected += CollectDrop;
+        }
+
+        private void OnDisable()
+        {
+            EnemyDrop.onDropCollected -= CollectDrop;
+
+        }
+
+        public float GetStat(StatsList stat)
         {
             switch (stat)
             {
-                case Stat.Health:
+                case StatsList.Health:
                     return healthValue;
-                case Stat.Defense:
+                case StatsList.Defense:
                     return defense;
-                case Stat.Damage:
+                case StatsList.Damage:
                     return damage;
                 default:
                     return 0;
@@ -42,13 +55,13 @@ namespace PSmash.Stats
         {
             switch (skill.stat)
             {
-                case Stat.Health:
+                case StatsList.Health:
                     float extraHealthValue = Mathf.Round(healthValue*(skill.value / 100));
                     healthValue += extraHealthValue;
                     health.ReplenishHealth(extraHealthValue);
                     //print(healthValue);
                     break;
-                case Stat.Damage:
+                case StatsList.Damage:
                     float extraDamage = Mathf.Round(damage * (skill.value / 100));
                     damage = damage + extraDamage;
                     //print(damage);
@@ -58,34 +71,40 @@ namespace PSmash.Stats
             }
         }
 
-        public int GetMaterialQuantity(CraftingMaterials material)
+        public int GetMaterialQuantity(CraftingMaterialsList material)
         {
             switch (material)
             {
-                case CraftingMaterials.MonsterRemains:
+                case CraftingMaterialsList.MonsterRemains:
                     return monsterRemains;
-                case CraftingMaterials.RangerEye:
+                case CraftingMaterialsList.RangerEye:
                     return rangersEye;
-                case CraftingMaterials.ReaperEye:
+                case CraftingMaterialsList.ReaperEye:
                     return reapersEye;
                 default:
                     return 0 ;
             }
         }
 
-        public void UpdateMaterialPossessedByPlayer(CraftingMaterials material, int value)
+        private void CollectDrop(CraftingMaterialsList material)
         {
-            print(material + "  value  " + value);
+            print("Player collected  1 "  + material.ToString());
+            UpdateMaterialPossessedByPlayer(material, 1);
+        }
+
+        public void UpdateMaterialPossessedByPlayer(CraftingMaterialsList material, int value)
+        {
+            //print(material + "  value  " + value);
             switch (material)
             {
-                case CraftingMaterials.MonsterRemains:
-                    monsterRemains-=value;
+                case CraftingMaterialsList.MonsterRemains:
+                    monsterRemains +=value;
                     break;
-                case CraftingMaterials.RangerEye:
-                    rangersEye-=value;
+                case CraftingMaterialsList.RangerEye:
+                    rangersEye +=value;
                     break;
-                case CraftingMaterials.ReaperEye:
-                    reapersEye-= value;
+                case CraftingMaterialsList.ReaperEye:
+                    reapersEye += value;
                     break;
                 default:
                     break;

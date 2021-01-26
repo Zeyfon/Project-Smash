@@ -104,6 +104,7 @@ namespace PSmash.LevelUpSystem
         /// </summary>
         public void EnableMenu()
         {
+            UpdateUIVisuals();
             gameObject.SetActive(true);
             descriptionWindow.gameObject.SetActive(true);
             playerStats.transform.GetChild(0).GetComponent<InputHandler>().EnableInput(false);

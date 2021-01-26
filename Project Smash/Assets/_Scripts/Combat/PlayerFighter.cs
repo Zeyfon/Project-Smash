@@ -24,7 +24,7 @@ namespace PSmash.Combat
         [SerializeField] AudioClip attackSound2 = null;
 
         [Header("Finishing Move")]
-        [SerializeField] int finisherDamage = 100;
+        [SerializeField] int finisherAttackFactor = 10;
         [SerializeField] AudioClip finisherSound = null;
         [SerializeField] Transform steamTransform = null;
         [SerializeField]  GameObject finisherEffects = null;
@@ -105,10 +105,10 @@ namespace PSmash.Combat
         IEnumerator DoFinisherMove()
         {
             SetEnemyStateToFinisher();
-            isFinishinAnEnemy = true;
+            //isFinishinAnEnemy = true;
             movement.StopMovement();
             gameObject.layer = LayerMask.NameToLayer("PlayerGhost");
-            //print("Player is doing Finisher Move");
+            print("Player is doing Finisher Move");
             RaycastHit2D hit = Physics2D.Raycast(transform.position + new Vector3(0, 1), transform.right, 2, whatIsEnemy);
             if (transform.position.x - hit.transform.position.x > 0)
             {
@@ -122,6 +122,7 @@ namespace PSmash.Combat
             }
             targetTransform = hit.transform;
             StartCoroutine(StartPlayerAndTargetFinisherAnimations());
+            //isFinishinAnEnemy = false;
             yield return null;
         }
 
@@ -163,7 +164,7 @@ namespace PSmash.Combat
         void FinisherAttack()
         {
             if (targetTransform == null) return;
-            targetTransform.GetComponent<EnemyHealth>().DeliverFinishingBlow(transform.position, finisherDamage);
+            targetTransform.GetComponent<EnemyHealth>().DeliverFinishingBlow(transform.position, (int)baseStats.GetStat(StatsList.Damage) * finisherAttackFactor);
         }
 
         //Anim Event
@@ -313,7 +314,7 @@ namespace PSmash.Combat
         void LightAttackDamage(int comboAttackNumber)
         {
             //print("NormalAttack");
-            SendDamage(attackTransform, comboAttackArea, (int)baseStats.GetStat(Stat.Damage));
+            SendDamage(attackTransform, comboAttackArea, (int)baseStats.GetStat(StatsList.Damage));
         }
 
         void SplashAttack()
@@ -326,6 +327,7 @@ namespace PSmash.Combat
         private void SendDamage(Transform attackOriginPosition, Vector2 attackArea, int damage)
         {
             //print("Looking to Damage Enemy");
+
             Collider2D[] colls = Physics2D.OverlapBoxAll(attackOriginPosition.position, attackArea, 0, whatIsDamagable);
             if (colls.Length == 0)
             {
@@ -348,34 +350,10 @@ namespace PSmash.Combat
         }
 
         //AnimEvent
-        //void ToolAttackImpulse()
-        //{
-        //    movement.AddImpulse(heavyAttackImpulse);
-        //}
-
-        //AnimEvent
         void ToolAttackSound()
         {
             audioSource.PlayOneShot(currentToolSound);
         }
-        //AnimEvent
-        //void ChargeAttackImpulse()
-        //{
-        //    movement.AddImpulse(chargeAttackImpulse);
-
-        //}
-
-        //Anim Event
-        //void IsComboWindowActive(int state)
-        //{
-        //    if (state == 1)
-        //    {
-        //        //Debug.Log("Combo Window Active");
-        //        isComboWindowActive = true;
-        //    }
-        //    else isComboWindowActive = false;
-        //}
-        //Anim Event
         void LightAttackSound()
         {
             audioSource.pitch = UnityEngine.Random.Range(0.75f, 1.1f);

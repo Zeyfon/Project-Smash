@@ -8,7 +8,7 @@ namespace PSmash.LevelUpSystem
 {
     public class UICraftingMaterial : MonoBehaviour
     {
-        public CraftingMaterials material;
+        public CraftingMaterialsList material;
         [SerializeField] TextMeshProUGUI requiredQuantityText = null;
         [SerializeField] TextMeshProUGUI textName = null;
         [SerializeField] Image image = null;
