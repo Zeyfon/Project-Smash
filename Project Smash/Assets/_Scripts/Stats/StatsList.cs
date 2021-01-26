@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace PSmash.Stats
 {
-    public enum Stat
+    public enum StatsList
     {
         Health,
         Damage,

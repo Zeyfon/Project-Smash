@@ -7338,8 +7338,8 @@ MonoBehaviour:
       colorIndex: 0
       position:
         serializedVersion: 2
-        x: 76.703125
-        y: 226.5
+        x: 103.203125
+        y: 217.83594
         width: 156
         height: 32
       isBreakpoint: 0
@@ -7350,7 +7350,7 @@ MonoBehaviour:
           name: FINISHED
           isSystemEvent: 1
           isGlobal: 0
-        toState: Drop Item
+        toState: Wait
         linkStyle: 0
         linkConstraint: 0
         colorIndex: 0
@@ -7432,13 +7432,13 @@ MonoBehaviour:
         - everyFrameOption
         paramDataPos: 00000000000000000100000000000000000000000400000005000000
         paramByteDataSize: 00000000040000000000000000000000000000000100000004000000
-    - name: Wait
+    - name: Wait2
       description: 
       colorIndex: 0
       position:
         serializedVersion: 2
-        x: 64.10156
-        y: 315.89844
+        x: 56.4375
+        y: 476.83594
         width: 100
         height: 32
       isBreakpoint: 0
@@ -7509,8 +7509,8 @@ MonoBehaviour:
       colorIndex: 2
       position:
         serializedVersion: 2
-        x: 52.5
-        y: 362.59375
+        x: 55.820312
+        y: 550.03125
         width: 119
         height: 16
       isBreakpoint: 0
@@ -7602,8 +7602,8 @@ MonoBehaviour:
       colorIndex: 4
       position:
         serializedVersion: 2
-        x: 87.703125
-        y: 156.5
+        x: 114.203125
+        y: 147.83594
         width: 100
         height: 32
       isBreakpoint: 0
@@ -7697,8 +7697,8 @@ MonoBehaviour:
       colorIndex: 0
       position:
         serializedVersion: 2
-        x: 107.203125
-        y: 109.5
+        x: 133.70312
+        y: 100.83594
         width: 178
         height: 32
       isBreakpoint: 0
@@ -7823,14 +7823,14 @@ MonoBehaviour:
         - manualUI
         paramDataPos: 00000000000000000000000000000000010000000000000001000000
         paramByteDataSize: 00000000000000000000000000000000000000000100000001000000
-    - name: Drop Item
+    - name: Drop Monster Remains
       description: 
       colorIndex: 0
       position:
         serializedVersion: 2
-        x: 74.24219
-        y: 268.85156
-        width: 100
+        x: 62.851562
+        y: 340.4922
+        width: 164
         height: 32
       isBreakpoint: 0
       isSequence: 1
@@ -7840,33 +7840,29 @@ MonoBehaviour:
           name: FINISHED
           isSystemEvent: 1
           isGlobal: 0
-        toState: Wait
+        toState: Drop Rangers Eye
         linkStyle: 0
         linkConstraint: 0
         colorIndex: 0
       actionData:
         actionNames:
-        - HutongGames.PlayMaker.Actions.Wait
-        - HutongGames.PlayMaker.Actions.GetPosition
         - HutongGames.PlayMaker.Actions.Vector3AddXYZ
         - HutongGames.PlayMaker.Actions.CreateObject
         customNames:
         - 
         - 
-        - 
-        - 
-        actionEnabled: 01010101
-        actionIsOpen: 01010101
-        actionStartIndex: 00000000030000000a00000010000000
-        actionHashCodes: 48c011015552ad0519219405bf83c900
+        actionEnabled: 0101
+        actionIsOpen: 0101
+        actionStartIndex: 0000000006000000
+        actionHashCodes: 19219405bf83c900
         unityObjectParams: []
         fsmGameObjectParams:
         - useVariable: 1
-          name: dropItem
+          name: monsterDrop
           tooltip: 
-          showInInspector: 0
+          showInInspector: 1
           networkSync: 0
-          value: {fileID: 1441679831736908636, guid: a0cf1166c4b4a1448a7c27f2fe7949d6,
+          value: {fileID: 6134446518702650262, guid: 125a2c3d5f8d143468fa4891c148a005,
             type: 3}
         - useVariable: 1
           name: 
@@ -7880,6 +7876,117 @@ MonoBehaviour:
           showInInspector: 0
           networkSync: 0
           value: {fileID: 0}
+        fsmOwnerDefaultParams: []
+        animationCurveParams: []
+        functionCallParams: []
+        fsmTemplateControlParams: []
+        fsmEventTargetParams: []
+        fsmPropertyParams: []
+        layoutOptionParams: []
+        fsmStringParams: []
+        fsmObjectParams: []
+        fsmVarParams: []
+        fsmArrayParams: []
+        fsmEnumParams: []
+        fsmFloatParams:
+        - useVariable: 0
+          name: 
+          tooltip: 
+          showInInspector: 0
+          networkSync: 0
+          value: 0
+        - useVariable: 0
+          name: 
+          tooltip: 
+          showInInspector: 0
+          networkSync: 0
+          value: 1
+        - useVariable: 0
+          name: 
+          tooltip: 
+          showInInspector: 0
+          networkSync: 0
+          value: 0
+        fsmIntParams: []
+        fsmBoolParams: []
+        fsmVector2Params: []
+        fsmVector3Params:
+        - useVariable: 1
+          name: myPosition
+          tooltip: 
+          showInInspector: 0
+          networkSync: 0
+          value: {x: 0, y: 0, z: 0}
+        - useVariable: 1
+          name: myPosition
+          tooltip: 
+          showInInspector: 0
+          networkSync: 0
+          value: {x: 0, y: 0, z: 0}
+        - useVariable: 1
+          name: 
+          tooltip: 
+          showInInspector: 0
+          networkSync: 0
+          value: {x: 0, y: 0, z: 0}
+        fsmColorParams: []
+        fsmRectParams: []
+        fsmQuaternionParams: []
+        stringParams: []
+        byteData: 0000
+        arrayParamSizes: 
+        arrayParamTypes: []
+        customTypeSizes: 
+        customTypeNames: []
+        paramDataType: 1c0000000f0000000f0000000f000000010000000100000013000000130000001c0000001c00000013000000
+        paramName:
+        - vector3Variable
+        - addX
+        - addY
+        - addZ
+        - everyFrame
+        - perSecond
+        - gameObject
+        - spawnPoint
+        - position
+        - rotation
+        - storeObject
+        paramDataPos: 0000000000000000010000000200000000000000010000000000000001000000010000000200000002000000
+        paramByteDataSize: 0000000000000000000000000000000001000000010000000000000000000000000000000000000000000000
+    - name: Wait
+      description: 
+      colorIndex: 0
+      position:
+        serializedVersion: 2
+        x: 92.8125
+        y: 274.4297
+        width: 100
+        height: 32
+      isBreakpoint: 0
+      isSequence: 1
+      hideUnused: 0
+      transitions:
+      - fsmEvent:
+          name: FINISHED
+          isSystemEvent: 1
+          isGlobal: 0
+        toState: Drop Monster Remains
+        linkStyle: 0
+        linkConstraint: 0
+        colorIndex: 0
+      actionData:
+        actionNames:
+        - HutongGames.PlayMaker.Actions.Wait
+        - HutongGames.PlayMaker.Actions.GetPosition
+        customNames:
+        - 
+        - 
+        actionEnabled: 0101
+        actionIsOpen: 0101
+        actionStartIndex: 0000000003000000
+        actionHashCodes: 48c011015552ad05
+        unityObjectParams: []
+        fsmGameObjectParams: []
         fsmOwnerDefaultParams:
         - ownerOption: 0
           gameObject:
@@ -7925,6 +8032,106 @@ MonoBehaviour:
           showInInspector: 0
           networkSync: 0
           value: 0
+        fsmIntParams: []
+        fsmBoolParams: []
+        fsmVector2Params: []
+        fsmVector3Params:
+        - useVariable: 1
+          name: myPosition
+          tooltip: 
+          showInInspector: 0
+          networkSync: 0
+          value: {x: 0, y: 0, z: 0}
+        fsmColorParams: []
+        fsmRectParams: []
+        fsmQuaternionParams: []
+        stringParams:
+        - 
+        byteData: 000000000000
+        arrayParamSizes: 
+        arrayParamTypes: []
+        customTypeSizes: 
+        customTypeNames: []
+        paramDataType: 0f0000001700000001000000140000001c0000000f0000000f0000000f0000000700000001000000
+        paramName:
+        - time
+        - finishEvent
+        - realTime
+        - gameObject
+        - vector
+        - x
+        - y
+        - z
+        - space
+        - everyFrame
+        paramDataPos: 00000000000000000000000000000000000000000100000002000000030000000100000005000000
+        paramByteDataSize: 00000000000000000100000000000000000000000000000000000000000000000400000001000000
+    - name: Drop Rangers Eye
+      description: 
+      colorIndex: 0
+      position:
+        serializedVersion: 2
+        x: 59.25
+        y: 405.64062
+        width: 135
+        height: 32
+      isBreakpoint: 0
+      isSequence: 1
+      hideUnused: 0
+      transitions:
+      - fsmEvent:
+          name: FINISHED
+          isSystemEvent: 1
+          isGlobal: 0
+        toState: Wait2
+        linkStyle: 0
+        linkConstraint: 0
+        colorIndex: 0
+      actionData:
+        actionNames:
+        - HutongGames.PlayMaker.Actions.Vector3AddXYZ
+        - HutongGames.PlayMaker.Actions.CreateObject
+        customNames:
+        - 
+        - 
+        actionEnabled: 0101
+        actionIsOpen: 0101
+        actionStartIndex: 0000000006000000
+        actionHashCodes: 19219405bf83c900
+        unityObjectParams: []
+        fsmGameObjectParams:
+        - useVariable: 1
+          name: rangersEyeDrop
+          tooltip: 
+          showInInspector: 1
+          networkSync: 0
+          value: {fileID: 4150072908509248833, guid: ec8ed57aed9ad6a48a40d942b74299da,
+            type: 3}
+        - useVariable: 1
+          name: 
+          tooltip: 
+          showInInspector: 0
+          networkSync: 0
+          value: {fileID: 0}
+        - useVariable: 1
+          name: 
+          tooltip: 
+          showInInspector: 0
+          networkSync: 0
+          value: {fileID: 0}
+        fsmOwnerDefaultParams: []
+        animationCurveParams: []
+        functionCallParams: []
+        fsmTemplateControlParams: []
+        fsmEventTargetParams: []
+        fsmPropertyParams: []
+        layoutOptionParams: []
+        fsmStringParams: []
+        fsmObjectParams: []
+        fsmVarParams: []
+        fsmArrayParams: []
+        fsmEnumParams: []
+        fsmFloatParams:
         - useVariable: 0
           name: 
           tooltip: 
@@ -7960,12 +8167,6 @@ MonoBehaviour:
           networkSync: 0
           value: {x: 0, y: 0, z: 0}
         - useVariable: 1
-          name: myPosition
-          tooltip: 
-          showInInspector: 0
-          networkSync: 0
-          value: {x: 0, y: 0, z: 0}
-        - useVariable: 1
           name: 
           tooltip: 
           showInInspector: 0
@@ -7974,25 +8175,14 @@ MonoBehaviour:
         fsmColorParams: []
         fsmRectParams: []
         fsmQuaternionParams: []
-        stringParams:
-        - 
-        byteData: 0000000000000000
+        stringParams: []
+        byteData: 0000
         arrayParamSizes: 
         arrayParamTypes: []
         customTypeSizes: 
         customTypeNames: []
-        paramDataType: 0f0000001700000001000000140000001c0000000f0000000f0000000f00000007000000010000001c0000000f0000000f0000000f000000010000000100000013000000130000001c0000001c00000013000000
+        paramDataType: 1c0000000f0000000f0000000f000000010000000100000013000000130000001c0000001c00000013000000
         paramName:
-        - time
-        - finishEvent
-        - realTime
-        - gameObject
-        - vector
-        - x
-        - y
-        - z
-        - space
-        - everyFrame
         - vector3Variable
         - addX
         - addY
@@ -8004,11 +8194,17 @@ MonoBehaviour:
         - position
         - rotation
         - storeObject
-        paramDataPos: 000000000000000000000000000000000000000001000000020000000300000001000000050000000100000004000000050000000600000006000000070000000000000001000000020000000300000002000000
-        paramByteDataSize: 000000000000000001000000000000000000000000000000000000000000000004000000010000000000000000000000000000000000000001000000010000000000000000000000000000000000000000000000
+        paramDataPos: 0000000000000000010000000200000000000000010000000000000001000000010000000200000002000000
+        paramByteDataSize: 0000000000000000000000000000000001000000010000000000000000000000000000000000000000000000
     events:
     - name: FINISHED
       isSystemEvent: 1
+      isGlobal: 0
+    - name: DROPMONSTERREMAINS
+      isSystemEvent: 0
+      isGlobal: 0
+    - name: DROPNEXTMATERIALS
+      isSystemEvent: 0
       isGlobal: 0
     globalTransitions: []
     variables:
@@ -8019,7 +8215,31 @@ MonoBehaviour:
         showInInspector: 1
         networkSync: 0
         value: 0.65
-      intVariables: []
+      - useVariable: 1
+        name: 
+        tooltip: 
+        showInInspector: 1
+        networkSync: 0
+        value: 0
+      - useVariable: 1
+        name: 
+        tooltip: 
+        showInInspector: 0
+        networkSync: 0
+        value: 0
+      - useVariable: 1
+        name: 
+        tooltip: 
+        showInInspector: 1
+        networkSync: 0
+        value: 0
+      intVariables:
+      - useVariable: 1
+        name: 
+        tooltip: 
+        showInInspector: 0
+        networkSync: 0
+        value: 0
       boolVariables: []
       stringVariables: []
       vector2Variables: []
@@ -8035,18 +8255,31 @@ MonoBehaviour:
       quaternionVariables: []
       gameObjectVariables:
       - useVariable: 1
+        name: monsterDrop
+        tooltip: 
+        showInInspector: 1
+        networkSync: 0
+        value: {fileID: 6134446518702650262, guid: 125a2c3d5f8d143468fa4891c148a005,
+          type: 3}
+      - useVariable: 1
         name: parent
         tooltip: 
         showInInspector: 0
         networkSync: 0
         value: {fileID: 0}
       - useVariable: 1
-        name: dropItem
+        name: rangersEyeDrop
+        tooltip: 
+        showInInspector: 1
+        networkSync: 0
+        value: {fileID: 4150072908509248833, guid: ec8ed57aed9ad6a48a40d942b74299da,
+          type: 3}
+      - useVariable: 1
+        name: 
         tooltip: 
         showInInspector: 0
         networkSync: 0
-        value: {fileID: 1441679831736908636, guid: a0cf1166c4b4a1448a7c27f2fe7949d6,
-          type: 3}
+        value: {fileID: 0}
       objectVariables:
       - useVariable: 1
         name: health
@@ -8069,13 +8302,21 @@ MonoBehaviour:
         networkSync: 0
         typeName: UnityEngine.AudioClip
         value: {fileID: 8300000, guid: 377bc03b1d2df6341baafa2779437760, type: 3}
+      - useVariable: 1
+        name: 
+        tooltip: 
+        showInInspector: 0
+        networkSync: 0
+        typeName: 
+        value: {fileID: 0}
       materialVariables: []
       textureVariables: []
       arrayVariables: []
       enumVariables: []
       categories:
       - 
-      variableCategoryIDs: 00000000000000000000000000000000000000000000000000000000
+      - Exposed
+      variableCategoryIDs: 0000000000000000000000000000000000000000000000000100000000000000010000000000000000000000000000000000000000000000
     description: 
     docUrl: 
     showStateLabel: 0
@@ -14579,6 +14820,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalPosition.y
       value: 1.63
+      objectReference: {fileID: 0}
+    - target: {fileID: 2297644081278653716, guid: 587e06734df96fb45836c4df01ad03a7,
+        type: 3}
+      propertyPath: healthValue
+      value: 40
       objectReference: {fileID: 0}
     - target: {fileID: 2397961640516547746, guid: 587e06734df96fb45836c4df01ad03a7,
         type: 3}

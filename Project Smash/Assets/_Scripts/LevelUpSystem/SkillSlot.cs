@@ -72,7 +72,7 @@ namespace PSmash.LevelUpSystem
         /// <returns></returns>
         public bool HaveNecessaryMaterials(BaseStats playerStats)
         {
-            Dictionary<CraftingMaterials, int> craftingMaterials = new Dictionary<CraftingMaterials, int>();
+            Dictionary<CraftingMaterialsList, int> craftingMaterials = new Dictionary<CraftingMaterialsList, int>();
             //print("Checking if having necessary materials in Skill Slot");
             foreach (RequiredMaterial requiredMaterial in requiredMaterials)
             {
@@ -89,10 +89,10 @@ namespace PSmash.LevelUpSystem
                 }
             }
             //print("The Player has all the required materials ");
-            foreach (CraftingMaterials material in craftingMaterials.Keys)
+            foreach (CraftingMaterialsList material in craftingMaterials.Keys)
             {
                 print(material);
-                playerStats.UpdateMaterialPossessedByPlayer(material, craftingMaterials[material]);
+                playerStats.UpdateMaterialPossessedByPlayer(material, -craftingMaterials[material]);
             }
             return true;
         }
@@ -155,7 +155,7 @@ namespace PSmash.LevelUpSystem
         [System.Serializable]
         public class RequiredMaterial
         {
-            public CraftingMaterials material;
+            public CraftingMaterialsList material;
             public int quantity;
         }
 

@@ -209,7 +209,7 @@ namespace PSmash.Movement
 
         private bool IsTargetInSpecialAttackRange(Vector3 targetPosition)
         {
-            print(specialAttackRange +"  "+ Vector3.Distance(transform.position, targetPosition));
+            //print(specialAttackRange +"  "+ Vector3.Distance(transform.position, targetPosition));
             return specialAttackRange > Vector3.Distance(transform.position, targetPosition);
         }
 

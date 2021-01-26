@@ -9,7 +9,6 @@ namespace PSmash.Attributes
     {
         [Header("TestMode")]
         [SerializeField] bool isInvulnerable = true;
-
         [Header("Extras")]
         [SerializeField] GameObject dropItem = null;
 
@@ -20,7 +19,7 @@ namespace PSmash.Attributes
         private void Awake()
         {
             baseStats = GetComponent<BaseStats>();
-            health = (int)baseStats.GetStat(Stat.Health);
+            health = (int)baseStats.GetStat(StatsList.Health);
             audioSource = GetComponent<AudioSource>();
             posture = GetComponent<EnemyPosture>();
         }
@@ -166,7 +165,7 @@ namespace PSmash.Attributes
 
         public float GetMaxHealth()
         {
-            return baseStats.GetStat(Stat.Health);
+            return baseStats.GetStat(StatsList.Health);
         }
 
         public bool IsDead()

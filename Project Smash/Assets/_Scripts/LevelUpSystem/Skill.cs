@@ -9,7 +9,7 @@ namespace PSmash.LevelUpSystem
     public class Skill : ScriptableObject
     {
         public Sprite sprite;
-        public Stat stat;
+        public StatsList stat;
         public float value;
         public string description;
     }
