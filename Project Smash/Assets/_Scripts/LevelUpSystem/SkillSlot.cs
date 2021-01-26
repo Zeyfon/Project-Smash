@@ -25,7 +25,6 @@ namespace PSmash.LevelUpSystem
         /// <summary>
         /// Method used by the Button component in the same gameObject
         /// </summary>
-
         public void TryToUnlockSkill()
         {
             GetComponentInParent<UICraftingSystem>().TryToUnlockSkill(skill, this);

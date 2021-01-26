@@ -213,8 +213,9 @@ namespace PSmash.Combat
         {
             if (currentItemQuantity <= 0) return;
             GameObject itemClone = Instantiate(spawnItem, attackTransform.position, Quaternion.identity);
-            itemClone.GetComponent<Projectile>().SetData(movement.GetIsLookingRight(), health);
-            //itemClone.GetComponent<Projectile>().SetTarget(GetComponent<Health>());
+            itemClone.GetComponent<Projectile>().SetOwner(health);
+            if(!movement.GetIsLookingRight())
+                itemClone.transform.eulerAngles = new Vector3(0, 180, 0);
             currentItemQuantity--;
             onItemThrown(currentItemQuantity);
         }
