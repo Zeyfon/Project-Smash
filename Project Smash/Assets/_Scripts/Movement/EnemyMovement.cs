@@ -1,4 +1,5 @@
 ﻿using PSmash.Attributes;
+using System;
 using UnityEngine;
 
 namespace PSmash.Movement
@@ -94,6 +95,7 @@ namespace PSmash.Movement
         //MoveTo and MoveAwayFrom must be combined in the future
         public void MoveTo(Vector3 targetPosition, float speedFactor, bool isMovingTowardsTarget, PlayMakerFSM pm)
         {
+            SetPhysicsMaterial(lowFriction);
             if (Mathf.Abs(targetPosition.x - transform.position.x) < 0.5f)
                 return;
             SlopeCheck(transform.right.x);
@@ -136,6 +138,11 @@ namespace PSmash.Movement
                 Debug.LogWarning(gameObject.name + "  does not what to do in MoveTo Method ");
                 rb.velocity = new Vector2(0, rb.velocity.y);
             }
+        }
+
+        public void SetPhysicsMaterial(PhysicsMaterial2D physicsMaterial)
+        {
+            rb.sharedMaterial = physicsMaterial;
         }
 
         #region SlopeControl
