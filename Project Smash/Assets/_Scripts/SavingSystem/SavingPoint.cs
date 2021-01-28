@@ -6,7 +6,7 @@ using PSmash.LevelUpSystem;
 
 namespace PSmash.Saving
 {
-    public class SavingPoint : MonoBehaviour, IInteractable
+    public class SavingPoint : MonoBehaviour, IInteractable 
     {
         UICraftingSystem craftingSystemMenu;
 
@@ -45,6 +45,7 @@ namespace PSmash.Saving
             if (collision.CompareTag("Player"))
             {
                 collision.transform.GetChild(0).GetComponent<InputHandler>().SetInteractableCollider(GetComponent<Collider2D>());
+                GetComponent<IShowInputPrompt>().ShowInputPrompt();
             }
         }
         private void OnTriggerExit2D(Collider2D collision)
@@ -52,6 +53,7 @@ namespace PSmash.Saving
             if (collision.CompareTag("Player"))
             {
                 collision.transform.GetChild(0).GetComponent<InputHandler>().SetInteractableCollider(null);
+                GetComponent<IHideInputPrompt>().HideInputPrompt();
             }
         }
     }
