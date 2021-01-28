@@ -56,9 +56,17 @@ namespace PSmash.LevelUpSystem
             if (eventSystem != null)
             {
                 if (initialMenuSelection != previousMenuSelection)
+                {
                     eventSystem.SetSelectedGameObject(previousMenuSelection);
+                    UpdateDescriptionWindow(previousMenuSelection);
+                }
+
                 else
+                {
                     eventSystem.SetSelectedGameObject(initialMenuSelection);
+                    UpdateDescriptionWindow(initialMenuSelection);
+
+                }
 
             }
             print("Crafting Input Enabled");
@@ -92,11 +100,17 @@ namespace PSmash.LevelUpSystem
             if (previousMenuSelection != eventSystem.currentSelectedGameObject)
             {
                 //print(eventSystem.currentSelectedGameObject);
-                descriptionWindow.gameObject.transform.position = eventSystem.currentSelectedGameObject.transform.position;
                 previousMenuSelection = eventSystem.currentSelectedGameObject;
-                previousMenuSelection.GetComponent<SkillSlot>().UpdateDescriptionWindow(descriptionWindow);
+                UpdateDescriptionWindow(previousMenuSelection);
             }
         }
+
+        private void UpdateDescriptionWindow(GameObject skillSlotGameObject)
+        {
+            descriptionWindow.gameObject.transform.position = eventSystem.currentSelectedGameObject.transform.position;
+            skillSlotGameObject.GetComponent<SkillSlot>().UpdateDescriptionWindow(descriptionWindow);
+        }
+
         /// <summary>
         /// This method is the one that starts and enables the Crafting System.
         /// This one is triggered by the SavingPoint once the player is inside its trigger.

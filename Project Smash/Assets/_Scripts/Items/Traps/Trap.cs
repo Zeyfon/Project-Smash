@@ -7,13 +7,13 @@ namespace PSmash.Items.Traps
 {
     public class Trap : MonoBehaviour, IReturnPosition
     {
+        [SerializeField] int damage = 15;
         [SerializeField] float fadeOutTime = 1;
         [SerializeField] float fadeInTime = 1;
 
         public delegate void PlayerController(bool state);
         public static event PlayerController EnablePlayerController;
         Vector3 lastPosition;
-        int damage = 10;
 
         private void OnCollisionEnter2D(Collision2D collision)
         {
