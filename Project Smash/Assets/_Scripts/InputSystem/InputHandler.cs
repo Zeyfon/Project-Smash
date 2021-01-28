@@ -41,6 +41,7 @@ namespace PSmash.InputSystem
 
         private void Awake()
         {
+            _controller = new _Controller();
             PlayMakerFSM[] pms = GetComponentsInParent<PlayMakerFSM>();
             foreach(PlayMakerFSM pm in pms)
             {
@@ -48,14 +49,17 @@ namespace PSmash.InputSystem
             }
             if (pmPlayerController == null) Debug.LogWarning("FSM Player Controller could not be found");
             //playerController = transform.parent.GetComponent<PlayerController>();
-            _controller = new _Controller();
-            GameObject.FindObjectOfType<Menus.Menus>()._controller = _controller;
         }
         private void Start()
         {
             SetInitialCommandsToButtons();
             SetCommandList();
             //SetButtonsInControllerMenu();
+        }
+
+        public _Controller GetController()
+        {
+            return _controller;
         }
 
         //Method used by each state in PlayMaker to inform to which state the inputs will be sent
@@ -280,15 +284,12 @@ namespace PSmash.InputSystem
         {
             if (OnPlayerStartButtonPressed != null)
             {
-                //print("Player will open menu");
+                print("Player will open menu");
                 //input.currentActionMap = _controller.UI;
                 _controller.Player.Disable();
-                _controller.UI.Enable();
                 OnPlayerStartButtonPressed();
-                print(_controller.UI.enabled);
                 //_controller.UI.Enable();
                 EnablePlayerController(false);
-                Time.timeScale = 0;
             }
         }
 
@@ -328,7 +329,7 @@ namespace PSmash.InputSystem
             if (!state)
             {
                 //playerController.SetEnable(false);
-                if (pmPlayerController != null) pmPlayerController.enabled = false; 
+                //if (pmPlayerController != null) pmPlayerController.enabled = false; 
                 //print("InputHandler Disabled");
             }
             else
@@ -338,7 +339,6 @@ namespace PSmash.InputSystem
                 if (!_controller.Player.enabled) 
                 {
                     _controller.Player.Enable();
-                    _controller.UI.Disable();
                     //Time.timeScale = 1;
                 }
                 //print("InputHandler Enabled");

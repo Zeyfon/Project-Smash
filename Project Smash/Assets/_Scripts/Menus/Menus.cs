@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using PSmash.InputSystem;
 
 namespace PSmash.Menus
 {
@@ -8,32 +9,33 @@ namespace PSmash.Menus
         [SerializeField] GameObject status = null;        public delegate void MenusClosed(bool state);
         public static event MenusClosed OnMenusClosed;
         GameObject statusMenuClone;
-        public _Controller _controller;
+        _Controller _controller;
         // Start is called before the first frame update
         void Awake()
         {
             statusMenuClone = Instantiate(status, transform);
+            _controller = new _Controller();
         }
 
         private void OnEnable()
         {
-            //_controller.UI.ButtonB.performed += ctx => ButtonBPressed();
-            //_controller.UI.ButtonStart.performed += ctx => ButtonStartPressed();
+            _controller.UI.Cancel.performed += ctx => MenuBackTrack();
             PSmash.InputSystem.InputHandler.OnPlayerStartButtonPressed += EnableMenus;
             PSmash.Items.Star.OnStarCollected += StarCollected;
         }
 
         private void OnDisable()
         {
-            //_controller.UI.ButtonB.performed -= ctx => ButtonBPressed();
-            //_controller.UI.ButtonStart.performed -= ctx => ButtonStartPressed();
+            _controller.UI.Cancel.performed -= ctx => MenuBackTrack();
             PSmash.InputSystem.InputHandler.OnPlayerStartButtonPressed -= EnableMenus;
             PSmash.Items.Star.OnStarCollected -= StarCollected;
         }
 
         void EnableMenus()
         {
-            statusMenuClone.SetActive(true);
+            _controller.UI.Enable();
+            statusMenuClone.transform.GetChild(0).gameObject.SetActive(true);
+            Time.timeScale = 0;
         }
 
         void ButtonStartPressed()
@@ -41,9 +43,12 @@ namespace PSmash.Menus
             CloseMenus();
         }
 
-        void ButtonBPressed()
+        void MenuBackTrack()
         {
-            CloseMenus();
+            //print("Backtracking in menus  ");
+            //if no menu above close the menus
+                CloseMenus();
+            //Go One menu up
         }
 
         void StarCollected()
@@ -53,8 +58,10 @@ namespace PSmash.Menus
 
         public  void CloseMenus()
         {
-            statusMenuClone.SetActive(false);
+            _controller.UI.Disable();
+            statusMenuClone.transform.GetChild(0).gameObject.SetActive(false);
             OnMenusClosed(true);
+            Time.timeScale = 1;
         }
     }
 }

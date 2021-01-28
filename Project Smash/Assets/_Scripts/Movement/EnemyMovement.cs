@@ -79,7 +79,7 @@ namespace PSmash.Movement
             }
             else
             {
-                print("NotGrounded");
+                //print("NotGrounded");
             }
 
         }

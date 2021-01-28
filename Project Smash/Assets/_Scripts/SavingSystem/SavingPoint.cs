@@ -15,7 +15,7 @@ namespace PSmash.Saving
         void Awake()
         {
             craftingSystemMenu =  FindObjectOfType<UICraftingSystem>();
-            print(craftingSystemMenu);
+           // print(craftingSystemMenu);
         }
 
         public void StartInteracting()

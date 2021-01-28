@@ -31,7 +31,7 @@ namespace PSmash.LevelUpSystem
 
         public IEnumerator WaitingToAppear()
         {
-            print("Waiting time started");
+            //print("Waiting time started");
             float time = 0;
             while (time < timeToAppear)
             {
@@ -43,7 +43,7 @@ namespace PSmash.LevelUpSystem
 
         public IEnumerator FadeIn()
         {
-            print("Fading in DescriptionWindow");
+        //print("Fading in DescriptionWindow");
             float alpha = 0;
             while (alpha < 1)
             {
