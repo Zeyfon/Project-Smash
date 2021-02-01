@@ -12,8 +12,8 @@ GameObject:
   - component: {fileID: 4498006355351015165}
   - component: {fileID: 8082031966762038691}
   - component: {fileID: 7566768074057994490}
-  - component: {fileID: 5273876300143806364}
   - component: {fileID: 1500270271531644467}
+  - component: {fileID: 5273876300143806364}
   m_Layer: 0
   m_Name: SkillSlot
   m_TagString: Untagged
@@ -132,23 +132,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
---- !u!114 &5273876300143806364
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2911572937517322362}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f86a12ca17ec89147be5b0e995bcc3a4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  skill: {fileID: 0}
-  image: {fileID: 8082031966762038691}
-  skillSlotsUnlockableOptions: []
-  requiredMaterials: []
-  unlockableSkillPaths: []
 --- !u!114 &1500270271531644467
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -177,3 +160,20 @@ MonoBehaviour:
             m_StringArgument: 
             m_BoolArgument: 0
           m_CallState: 2
+--- !u!114 &5273876300143806364
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2911572937517322362}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f86a12ca17ec89147be5b0e995bcc3a4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  skill: {fileID: 0}
+  image: {fileID: 8082031966762038691}
+  skillSlotsUnlockableOptions: []
+  requiredMaterials: []
+  unlockableSkillPaths: []
