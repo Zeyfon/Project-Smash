@@ -9,6 +9,9 @@ namespace PSmash.LevelUpSystem
         MonsterRemains,
         ReaperEye,
         RangerEye,
+        SmashserEye,
+        SpiderEye,
+        XXXXX
     }
 }
 

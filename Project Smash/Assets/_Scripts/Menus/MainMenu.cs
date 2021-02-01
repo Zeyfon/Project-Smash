@@ -1,16 +1,13 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
-using UnityEngine.UI;
 
 namespace PSmash.Menus
 {
     public class MainMenu : MonoBehaviour
     {
-        [SerializeField] Text maxStarsText = null;
-        [SerializeField] Text currentStarsText = null;
-        [SerializeField] Transform[] menuTabs = null;
+        [SerializeField] GameObject initialSelection =  null; 
+        [SerializeField] MenuTab[] menuTabs;
         
         //This variable is used by different UI elements that need to know
         //the previous eventSystem.currentGameObjectSelected in order
@@ -28,120 +25,93 @@ namespace PSmash.Menus
         }
         void Start()
         {
-            maxStarsText.text = PSmash.Items.Star.activeStarsOnSceneQuantity.ToString();
             if (gameObject.activeInHierarchy) gameObject.SetActive(false);
         }
 
-        private void DisableSubMeus()
+        private void OnEnable()
         {
-            foreach (Transform tab in menuTabs)
+            if (eventSystem == null) return;
+            StartCoroutine(SetInitialGeneralMenuSelection());
+            UpdateSubMenus(initialSelection);
+            foreach(MenuTab tab in menuTabs)
             {
-                tab.GetChild(2).transform.gameObject.SetActive(false);
+                print(tab.gameObject.name);
             }
         }
 
         private void Update()
         {
-            //Only let pass when the selection has changed from the previous one
-            //in the EventSystem
-            if (previousGameObject == eventSystem.currentSelectedGameObject || 
-                eventSystem.currentSelectedGameObject ==null) return;
-            
-            if (IsSelectionATab())
-            {
-                //Enable the button Component in all the Tabs
-                //to let the player change between them
-                EnableTabsButtonComponent();
+            //Will Perform the rest of the code only when a change in the eventSystem.curentSelectedGameObject has ocurred
+            if (!HasMenuSelectionChanged())
+                return;
 
-                if (previousGameObject != null && IsPreviousSelectionATab())
-                {
-                    //Disable the subMenu from the previosuGameObject
-                    previousGameObject.transform.GetChild(2).gameObject.SetActive(false);
-                }
-                //Enable the subMenu from the previousGameObject
-                eventSystem.currentSelectedGameObject.transform.GetChild(2).gameObject.SetActive(true);
-            }
-            else
+            //The new selection is a Tab
+            //Do according to this condition
+            if (IsNewSelectionATab())
             {
-                //This foreach will disable the button component in all the tabs
-                //except from the one whose submenu is currently active
-                foreach(Transform tab in menuTabs)
-                {
-                    if (tab == eventSystem.currentSelectedGameObject.transform.parent.parent)
-                    {
-                        //if the tab is the owner of the submenu will continue the foreach loop
-                        //without disabling the button component
-                        continue;
-                    }
-                    tab.GetComponent<Button>().enabled = false;
-                }
+                UpdateSubMenus(eventSystem.currentSelectedGameObject);
             }
-        }
-
-        //Since previousGameObject is used by different UI Elements is updated in LateUpdate
-        //To let the Update Methods in those entities to work properly without having 
-        //running issues of this variable being updated before finishing their tasks.
-        private void LateUpdate()
-        {
+            //The new selection is a button insside a subMenu
+            //Do according to this condition
+            else if(previousGameObject != null && previousGameObject.GetComponent<MenuTab>())
+            {
+                DisableInteractionWithRestOfTabs(previousGameObject);
+            }
             previousGameObject = eventSystem.currentSelectedGameObject;
         }
 
-        void EnableTabsButtonComponent()
+        bool HasMenuSelectionChanged()
         {
-            foreach(Transform tab in menuTabs)
-            {
-                tab.GetComponent<Button>().enabled = true;
-            }
+            if (eventSystem.currentSelectedGameObject == null || previousGameObject != eventSystem.currentSelectedGameObject)
+                return true;
+            else
+                return false;
         }
 
-        bool IsSelectionATab()
+        bool IsNewSelectionATab()
         {
-            foreach(Transform tab in menuTabs)
+            foreach (MenuTab tab in menuTabs)
             {
                 if (eventSystem.currentSelectedGameObject == tab.gameObject) return true;
             }
             return false;
         }
 
-        bool IsPreviousSelectionATab()
+        void UpdateSubMenus(GameObject selectedTab)
         {
-            foreach(Transform tab in menuTabs)
+            foreach(MenuTab tab in menuTabs)
             {
-                if (tab == previousGameObject.transform)
+                tab.DisableSubMenu();
+                tab.SetInteractionCapacity(true);
+            }
+            foreach(MenuTab tab in menuTabs)
+            {
+                if (selectedTab == tab.gameObject)
                 {
-                    print("previous is a tab");
-                    return true;
+                    tab.EnableSubMenu();
                 }
             }
-            return false;
         }
 
-        private void OnEnable()
+        void DisableInteractionWithRestOfTabs(GameObject subMenuTab)
         {
-            currentStarsText.text = currentStarsQuantity.ToString();
-            SetInitialMainMenuState();
-            if (eventSystem == null) return;
-            StartCoroutine(SetInitialTabSelection());
+            foreach(MenuTab tab in menuTabs)
+            {
+                if (tab != subMenuTab.GetComponent<MenuTab>())
+                {
+                    tab.SetInteractionCapacity(false);
+                    //print("Disabling " + tab.gameObject.name + " interaction capacity");
+                }
+
+            }
         }
 
-        void SetInitialMainMenuState()
-        {
-            DisableSubMeus();
-            EnableTabsButtonComponent();
-        }
-
-        //A coroutine is used here in order to let a frame pass between 
-        //setting the selectedGameObject to null
-        //and set it to another gameObject without affecting other elements
-        // in the script
-
-        IEnumerator SetInitialTabSelection()
+        IEnumerator SetInitialGeneralMenuSelection()
         {
             eventSystem.SetSelectedGameObject(null);
             yield return null;
-            eventSystem.SetSelectedGameObject(menuTabs[0].gameObject);
-            menuTabs[0].transform.GetChild(2).gameObject.SetActive(true);
-            print("General Tab Activated");
+            eventSystem.SetSelectedGameObject(initialSelection);
+            //print("General Tab Activated");
         }
 
         public void StarCollected()

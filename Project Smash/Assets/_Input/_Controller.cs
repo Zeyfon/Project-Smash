@@ -446,54 +446,6 @@ public class @_Controller : IInputActionCollection, IDisposable
                     ""expectedControlType"": ""Quaternion"",
                     ""processors"": """",
                     ""interactions"": """"
-                },
-                {
-                    ""name"": ""ButtonA"",
-                    ""type"": ""Button"",
-                    ""id"": ""8c5302e7-60cd-499a-ac81-ee216ebe8938"",
-                    ""expectedControlType"": ""Button"",
-                    ""processors"": """",
-                    ""interactions"": """"
-                },
-                {
-                    ""name"": ""ButtonB"",
-                    ""type"": ""Button"",
-                    ""id"": ""722df33b-b8c3-424b-90f4-eb4701a1b9e2"",
-                    ""expectedControlType"": ""Button"",
-                    ""processors"": """",
-                    ""interactions"": """"
-                },
-                {
-                    ""name"": ""ButtonX"",
-                    ""type"": ""Button"",
-                    ""id"": ""f8ccea2d-e05e-49a9-8b63-e59793ccb5b4"",
-                    ""expectedControlType"": ""Button"",
-                    ""processors"": """",
-                    ""interactions"": """"
-                },
-                {
-                    ""name"": ""ButtonY"",
-                    ""type"": ""Button"",
-                    ""id"": ""4009aaab-a0b6-4b87-88ce-ae484e1d4f7b"",
-                    ""expectedControlType"": ""Button"",
-                    ""processors"": """",
-                    ""interactions"": """"
-                },
-                {
-                    ""name"": ""ButtonStart"",
-                    ""type"": ""Button"",
-                    ""id"": ""41f512de-e281-40ed-aad3-78f023241a6b"",
-                    ""expectedControlType"": ""Button"",
-                    ""processors"": """",
-                    ""interactions"": """"
-                },
-                {
-                    ""name"": ""Move"",
-                    ""type"": ""PassThrough"",
-                    ""id"": ""ee398339-e3b0-49a0-9a3d-8aa0d910134d"",
-                    ""expectedControlType"": ""Vector2"",
-                    ""processors"": """",
-                    ""interactions"": """"
                 }
             ],
             ""bindings"": [
@@ -782,193 +734,6 @@ public class @_Controller : IInputActionCollection, IDisposable
                     ""action"": ""TrackedDeviceOrientation"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""2b35a446-2cd5-409c-bd80-aa3e29077552"",
-                    ""path"": ""<Gamepad>/buttonSouth"",
-                    ""interactions"": ""Press"",
-                    ""processors"": """",
-                    ""groups"": ""Gamepad"",
-                    ""action"": ""ButtonA"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""825b51c6-3080-429d-a18e-7ba8afedef7e"",
-                    ""path"": ""<Gamepad>/buttonEast"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""Gamepad"",
-                    ""action"": ""ButtonB"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""fdc47886-d96e-492d-9dfd-71f3cc8b277b"",
-                    ""path"": ""<Gamepad>/buttonWest"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""Gamepad"",
-                    ""action"": ""ButtonX"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""f4dbec92-bf5c-4066-9d16-b8a872d6b100"",
-                    ""path"": ""<Gamepad>/buttonNorth"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""Gamepad"",
-                    ""action"": ""ButtonY"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""5e3be722-713e-4b72-a789-079a9e348d99"",
-                    ""path"": ""<Gamepad>/start"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""Gamepad"",
-                    ""action"": ""ButtonStart"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""89dbf964-c771-4ada-88d3-c8d2d52ed5df"",
-                    ""path"": ""<Keyboard>/escape"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""Keyboard&Mouse"",
-                    ""action"": ""ButtonStart"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""64e881ab-3923-40e0-b965-8fa77be45d82"",
-                    ""path"": ""<Gamepad>/leftStick"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""Gamepad"",
-                    ""action"": ""Move"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": ""2D Vector"",
-                    ""id"": ""b3a91efa-fccb-4807-86e9-1b558c43454c"",
-                    ""path"": ""2DVector"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Move"",
-                    ""isComposite"": true,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": ""up"",
-                    ""id"": ""55466706-fe49-4622-9e9c-e74cdf291faa"",
-                    ""path"": ""<Gamepad>/leftStick/up"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""Gamepad"",
-                    ""action"": ""Move"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
-                },
-                {
-                    ""name"": ""down"",
-                    ""id"": ""0b2d27dc-9b87-4068-a97c-0a7e9a73ae19"",
-                    ""path"": ""<Gamepad>/leftStick/down"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""Gamepad"",
-                    ""action"": ""Move"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
-                },
-                {
-                    ""name"": ""left"",
-                    ""id"": ""73501404-7152-4358-94ab-df7fb7fe0f35"",
-                    ""path"": """",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Move"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
-                },
-                {
-                    ""name"": ""right"",
-                    ""id"": ""b010d8b5-7cc3-4f4c-9feb-5648ccf76fc6"",
-                    ""path"": """",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Move"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
-                },
-                {
-                    ""name"": ""2D Vector"",
-                    ""id"": ""a74a8a22-9fc5-4d90-a6e2-41c5a969ff64"",
-                    ""path"": ""2DVector"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Move"",
-                    ""isComposite"": true,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": ""up"",
-                    ""id"": ""5e0b1431-4283-4fff-becb-7f1d33fd2bf4"",
-                    ""path"": ""<Keyboard>/upArrow"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""Keyboard&Mouse"",
-                    ""action"": ""Move"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
-                },
-                {
-                    ""name"": ""down"",
-                    ""id"": ""defac4f3-3670-4e90-9c53-4c60c247f8a9"",
-                    ""path"": ""<Keyboard>/downArrow"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""Keyboard&Mouse"",
-                    ""action"": ""Move"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
-                },
-                {
-                    ""name"": ""left"",
-                    ""id"": ""17a892d4-b47e-4e41-b494-dd392f88e373"",
-                    ""path"": """",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Move"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
-                },
-                {
-                    ""name"": ""right"",
-                    ""id"": ""a54e5c46-c313-47dd-8bf2-874e8df0e82f"",
-                    ""path"": """",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Move"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
                 }
             ]
         },
@@ -1145,12 +910,6 @@ public class @_Controller : IInputActionCollection, IDisposable
         m_UI_RightClick = m_UI.FindAction("RightClick", throwIfNotFound: true);
         m_UI_TrackedDevicePosition = m_UI.FindAction("TrackedDevicePosition", throwIfNotFound: true);
         m_UI_TrackedDeviceOrientation = m_UI.FindAction("TrackedDeviceOrientation", throwIfNotFound: true);
-        m_UI_ButtonA = m_UI.FindAction("ButtonA", throwIfNotFound: true);
-        m_UI_ButtonB = m_UI.FindAction("ButtonB", throwIfNotFound: true);
-        m_UI_ButtonX = m_UI.FindAction("ButtonX", throwIfNotFound: true);
-        m_UI_ButtonY = m_UI.FindAction("ButtonY", throwIfNotFound: true);
-        m_UI_ButtonStart = m_UI.FindAction("ButtonStart", throwIfNotFound: true);
-        m_UI_Move = m_UI.FindAction("Move", throwIfNotFound: true);
         // WeaponSelection
         m_WeaponSelection = asset.FindActionMap("WeaponSelection", throwIfNotFound: true);
         m_WeaponSelection_DPadUp = m_WeaponSelection.FindAction("DPadUp", throwIfNotFound: true);
@@ -1329,12 +1088,6 @@ public class @_Controller : IInputActionCollection, IDisposable
     private readonly InputAction m_UI_RightClick;
     private readonly InputAction m_UI_TrackedDevicePosition;
     private readonly InputAction m_UI_TrackedDeviceOrientation;
-    private readonly InputAction m_UI_ButtonA;
-    private readonly InputAction m_UI_ButtonB;
-    private readonly InputAction m_UI_ButtonX;
-    private readonly InputAction m_UI_ButtonY;
-    private readonly InputAction m_UI_ButtonStart;
-    private readonly InputAction m_UI_Move;
     public struct UIActions
     {
         private @_Controller m_Wrapper;
@@ -1349,12 +1102,6 @@ public class @_Controller : IInputActionCollection, IDisposable
         public InputAction @RightClick => m_Wrapper.m_UI_RightClick;
         public InputAction @TrackedDevicePosition => m_Wrapper.m_UI_TrackedDevicePosition;
         public InputAction @TrackedDeviceOrientation => m_Wrapper.m_UI_TrackedDeviceOrientation;
-        public InputAction @ButtonA => m_Wrapper.m_UI_ButtonA;
-        public InputAction @ButtonB => m_Wrapper.m_UI_ButtonB;
-        public InputAction @ButtonX => m_Wrapper.m_UI_ButtonX;
-        public InputAction @ButtonY => m_Wrapper.m_UI_ButtonY;
-        public InputAction @ButtonStart => m_Wrapper.m_UI_ButtonStart;
-        public InputAction @Move => m_Wrapper.m_UI_Move;
         public InputActionMap Get() { return m_Wrapper.m_UI; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -1394,24 +1141,6 @@ public class @_Controller : IInputActionCollection, IDisposable
                 @TrackedDeviceOrientation.started -= m_Wrapper.m_UIActionsCallbackInterface.OnTrackedDeviceOrientation;
                 @TrackedDeviceOrientation.performed -= m_Wrapper.m_UIActionsCallbackInterface.OnTrackedDeviceOrientation;
                 @TrackedDeviceOrientation.canceled -= m_Wrapper.m_UIActionsCallbackInterface.OnTrackedDeviceOrientation;
-                @ButtonA.started -= m_Wrapper.m_UIActionsCallbackInterface.OnButtonA;
-                @ButtonA.performed -= m_Wrapper.m_UIActionsCallbackInterface.OnButtonA;
-                @ButtonA.canceled -= m_Wrapper.m_UIActionsCallbackInterface.OnButtonA;
-                @ButtonB.started -= m_Wrapper.m_UIActionsCallbackInterface.OnButtonB;
-                @ButtonB.performed -= m_Wrapper.m_UIActionsCallbackInterface.OnButtonB;
-                @ButtonB.canceled -= m_Wrapper.m_UIActionsCallbackInterface.OnButtonB;
-                @ButtonX.started -= m_Wrapper.m_UIActionsCallbackInterface.OnButtonX;
-                @ButtonX.performed -= m_Wrapper.m_UIActionsCallbackInterface.OnButtonX;
-                @ButtonX.canceled -= m_Wrapper.m_UIActionsCallbackInterface.OnButtonX;
-                @ButtonY.started -= m_Wrapper.m_UIActionsCallbackInterface.OnButtonY;
-                @ButtonY.performed -= m_Wrapper.m_UIActionsCallbackInterface.OnButtonY;
-                @ButtonY.canceled -= m_Wrapper.m_UIActionsCallbackInterface.OnButtonY;
-                @ButtonStart.started -= m_Wrapper.m_UIActionsCallbackInterface.OnButtonStart;
-                @ButtonStart.performed -= m_Wrapper.m_UIActionsCallbackInterface.OnButtonStart;
-                @ButtonStart.canceled -= m_Wrapper.m_UIActionsCallbackInterface.OnButtonStart;
-                @Move.started -= m_Wrapper.m_UIActionsCallbackInterface.OnMove;
-                @Move.performed -= m_Wrapper.m_UIActionsCallbackInterface.OnMove;
-                @Move.canceled -= m_Wrapper.m_UIActionsCallbackInterface.OnMove;
             }
             m_Wrapper.m_UIActionsCallbackInterface = instance;
             if (instance != null)
@@ -1446,24 +1175,6 @@ public class @_Controller : IInputActionCollection, IDisposable
                 @TrackedDeviceOrientation.started += instance.OnTrackedDeviceOrientation;
                 @TrackedDeviceOrientation.performed += instance.OnTrackedDeviceOrientation;
                 @TrackedDeviceOrientation.canceled += instance.OnTrackedDeviceOrientation;
-                @ButtonA.started += instance.OnButtonA;
-                @ButtonA.performed += instance.OnButtonA;
-                @ButtonA.canceled += instance.OnButtonA;
-                @ButtonB.started += instance.OnButtonB;
-                @ButtonB.performed += instance.OnButtonB;
-                @ButtonB.canceled += instance.OnButtonB;
-                @ButtonX.started += instance.OnButtonX;
-                @ButtonX.performed += instance.OnButtonX;
-                @ButtonX.canceled += instance.OnButtonX;
-                @ButtonY.started += instance.OnButtonY;
-                @ButtonY.performed += instance.OnButtonY;
-                @ButtonY.canceled += instance.OnButtonY;
-                @ButtonStart.started += instance.OnButtonStart;
-                @ButtonStart.performed += instance.OnButtonStart;
-                @ButtonStart.canceled += instance.OnButtonStart;
-                @Move.started += instance.OnMove;
-                @Move.performed += instance.OnMove;
-                @Move.canceled += instance.OnMove;
             }
         }
     }
@@ -1596,12 +1307,6 @@ public class @_Controller : IInputActionCollection, IDisposable
         void OnRightClick(InputAction.CallbackContext context);
         void OnTrackedDevicePosition(InputAction.CallbackContext context);
         void OnTrackedDeviceOrientation(InputAction.CallbackContext context);
-        void OnButtonA(InputAction.CallbackContext context);
-        void OnButtonB(InputAction.CallbackContext context);
-        void OnButtonX(InputAction.CallbackContext context);
-        void OnButtonY(InputAction.CallbackContext context);
-        void OnButtonStart(InputAction.CallbackContext context);
-        void OnMove(InputAction.CallbackContext context);
     }
     public interface IWeaponSelectionActions
     {

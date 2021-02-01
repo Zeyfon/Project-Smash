@@ -69,21 +69,21 @@ namespace PSmash.LevelUpSystem
                 }
 
             }
-            print("Crafting Input Enabled");
+            //print("Crafting Input Enabled");
             _controller.UI.Enable();
             _controller.UI.Cancel.performed += ctx => CancelAction();
         }
 
         void OnDisable()
         {
-            print("Craftin Input Disabled");
+            //print("Craftin Input Disabled");
             _controller.UI.Disable();
             _controller.UI.Cancel.performed -= ctx => CancelAction();
         }
 
         void CancelAction()
         {
-            print("Canceling Action");
+            //print("Canceling Action");
             descriptionWindow.gameObject.SetActive(false);
             gameObject.SetActive(false);
             playerStats.transform.GetChild(0).GetComponent<InputHandler>().EnableInput(true);

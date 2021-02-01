@@ -9,7 +9,7 @@ namespace PSmash.Menus
         //Function as a Proxy to the method in Menus of CloseMenus
         public void PerformAction()
         {
-            transform.parent.parent.parent.parent.GetComponent<Menus>().CloseMenus();
+            GetComponentInParent<Menus>().CloseMenus();
         }
     }
 }

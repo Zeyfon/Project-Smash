@@ -8,7 +8,9 @@ namespace PSmash.Stats
     {
         Health,
         Damage,
-        Defense
+        Defense,
+        Potions,
+        HiddenSkill
     }
 
 }
