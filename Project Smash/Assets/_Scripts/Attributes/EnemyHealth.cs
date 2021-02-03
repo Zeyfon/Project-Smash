@@ -16,23 +16,26 @@ namespace PSmash.Attributes
         PlayMakerFSM pm;
         BaseStats baseStats;
 
+        float damagePenetrationPercentage;
+
         private void Awake()
         {
             baseStats = GetComponent<BaseStats>();
-            health = (int)baseStats.GetStat(StatsList.Health);
+            health = baseStats.GetStat(StatsList.Health);
             audioSource = GetComponent<AudioSource>();
             posture = GetComponent<EnemyPosture>();
         }
 
         //This method will always be called from the AIController
         //when entering a new state
-        public void SetCurrentState(PlayMakerFSM pm)
+        public void SetCurrentStateInfo(PlayMakerFSM pm, float damagePenetrationPercentage)
         {
             //print(fsm.FsmName + "  set in " + this);
             this.pm = pm;
+            this.damagePenetrationPercentage = damagePenetrationPercentage;
         }
 
-        public override void TakeDamage(Transform attacker, int damage)
+        public override void TakeDamage(Transform attacker, float damage)
         {
             if (isDead) 
                 return;
@@ -41,36 +44,37 @@ namespace PSmash.Attributes
                 Debug.LogWarning("No Enemy State set to return DAMAGE Event");
                 return;
             }
+            Damaged(damage);
             //print("Will Send DAMAGED Event with " + damage + " of damage to " + pm.FsmName + " State");
-            FsmEventData myfsmEventData = new FsmEventData();
-            myfsmEventData.IntData = damage;
-            myfsmEventData.GameObjectData = gameObject;
-            HutongGames.PlayMaker.Fsm.EventData = myfsmEventData;
-            print(pm.FsmName);
-            if(pm != null)
-                pm.Fsm.Event("DAMAGED");
+            //FsmEventData myfsmEventData = new FsmEventData();
+            //myfsmEventData.FloatData = damage;
+            //myfsmEventData.GameObjectData = gameObject;
+            //HutongGames.PlayMaker.Fsm.EventData = myfsmEventData;
+            //print(pm.FsmName);
+            //if(pm != null)
+            //    pm.Fsm.Event("DAMAGED");
         }
 
-        public void Damaged(int damage, int damagePenetrationPercentage)
+        public void Damaged(float damage)
         {
             onTakeDamage.Invoke(damage);
             print(gameObject.name + "  Damaged");
             if(posture != null)
             {
                 posture.posture = posture.SubstractDamageFromPosture(damage);
-                if (posture.posture <= 0 && pm.FsmName != "Stun")
+                if (posture.posture <= 0)
                 {
                     //print("POSTUREDEPLETED Event to the fsm " + pm.FsmName);
                     posture.OnStunStateStart();
                     DamageHealth(damage, 100);
-                    pm.SendEvent("POSTUREDEPLETED");
+                    pm.SendEvent("DAMAGED_POSTUREDEPLETED");
                     return;
                 }
                 else
                 {
                     //print("CONTINUE Event to the fsm " + pm.FsmName);
                     DamageHealth(damage, damagePenetrationPercentage);
-                    pm.SendEvent("CONTINUE");
+                    pm.SendEvent("DAMAGED_POSTURENOTDEPLETED");
                     return;
                 }
             }
@@ -78,26 +82,21 @@ namespace PSmash.Attributes
             {
                 //print("CONTINUE Event to the fsm " + pm.FsmName);
                 DamageHealth(damage, damagePenetrationPercentage);
-                pm.SendEvent("CONTINUE");
+                pm.SendEvent("DAMAGED_NOPOSTUREBAR");
                 return;
             }
         }
 
-        public void IsDeadCheck()
+        /// <summary>
+        /// This one is used by the States the entity is.
+        /// </summary>
+        /// <returns></returns>
+        public bool IsDeadCheck()
         {
-            if (isDead)
-            {
-                //print(pm.FsmName + "  DEAD Event");
-                pm.SendEvent("ISDEAD");
-            }
-            else
-            {
-                //print(pm.FsmName + "  DEAD Event");
-                pm.SendEvent("ISNOTDEAD");
-            }
+            return isDead;
         }
 
-        public void DamageHealth(int damage, int damagePenetrationPercentage)
+        public void DamageHealth(float damage, float damagePenetrationPercentage)
         {
             //print(damage + " being substract from Health");
             damage = damage * damagePenetrationPercentage / 100;
@@ -109,7 +108,7 @@ namespace PSmash.Attributes
             }
         }
 
-        private int SubstractDamageFromHealth(int damage, int health)
+        private float SubstractDamageFromHealth(float damage, float health)
         {
             if (isInvulnerable) return health;
             health -= damage;
@@ -132,12 +131,12 @@ namespace PSmash.Attributes
         }
 
         //The damage dealt by the player and the thrown away force of the impact
-        public void DeliverFinishingBlow(Vector3 attackerPosition, int damage)
+        public void DeliverFinishingBlow(Vector3 attackerPosition, float damage)
         {
             StartCoroutine(FinisherReaction(attackerPosition, damage));
         }
 
-        public IEnumerator FinisherReaction(Vector3 attackerPosition, int damage)
+        public IEnumerator FinisherReaction(Vector3 attackerPosition, float damage)
         {
             float x = 15;
             float y = 7;

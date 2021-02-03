@@ -6,7 +6,7 @@ namespace PSmash.Attributes
 {
     public interface IDamagable
     {
-        void TakeDamage(Transform attacker, int damage);
+        void TakeDamage(Transform attacker, float damage);
     }
 }
 

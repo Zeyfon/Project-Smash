@@ -81,7 +81,7 @@ namespace PSmash.Combat.Weapons
             this.owner = owner;
         }
 
-        public void TakeDamage(Transform attacker, int damage)
+        public void TakeDamage(Transform attacker, float damage)
         {
             print("Received the parry");
             skeletonAnim.AnimationState.SetAnimation(0, idleLoop, true);

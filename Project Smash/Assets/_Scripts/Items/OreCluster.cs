@@ -7,11 +7,11 @@ namespace PSmash.Items
 {
     public class OreCluster : MonoBehaviour, IDamagable
     {
-        [SerializeField] int health = 30;
+        [SerializeField] float health = 30;
         [SerializeField] AudioSource audioSource = null;
         [SerializeField] AudioClip damageSound = null;
         [SerializeField] GameObject drop = null;
-        public void TakeDamage(Transform attacker, int damage)
+        public void TakeDamage(Transform attacker, float damage)
         {
             print("Ore Damaged");
             health -= damage;

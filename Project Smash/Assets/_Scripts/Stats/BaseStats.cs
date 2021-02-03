@@ -13,6 +13,8 @@ namespace PSmash.Stats
         [SerializeField] float damage = 10;
         [Tooltip("The defense is a percentage")]
         [SerializeField] float defense = 10;
+        [SerializeField] float potionsUses = 1;
+
         [Header("Materials")]
         [SerializeField] int monsterRemains = 888;
         [SerializeField] int reapersEye = 777;
@@ -46,8 +48,21 @@ namespace PSmash.Stats
                     return defense;
                 case StatsList.Damage:
                     return damage;
+                case StatsList.Potions:
+                    return potionsUses;
                 default:
                     return 0;
+            }
+        }
+        public void SetStat(StatsList stat, float value)
+        {
+            switch (stat)
+            {
+                case StatsList.Potions:
+                     potionsUses = value;
+                    break;
+                default:
+                    break;
             }
         }
 

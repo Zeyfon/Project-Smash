@@ -7,7 +7,7 @@ namespace PSmash.Items
 {
     public class Blockage : MonoBehaviour, IDamagable
     {
-        [SerializeField] int health = 40;
+        [SerializeField] float health = 40;
         [SerializeField] AudioClip damagedSound = null;
         [SerializeField] AudioClip destroyedSound = null;
         [SerializeField] ParticleSystem particles;
@@ -23,7 +23,7 @@ namespace PSmash.Items
             audioSource = GetComponent<AudioSource>();
         }
 
-        public void TakeDamage(Transform attacker, int damage)
+        public void TakeDamage(Transform attacker, float damage)
         {
             if (health <= 0)
             {

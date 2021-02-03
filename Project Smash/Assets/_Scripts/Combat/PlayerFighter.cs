@@ -324,7 +324,7 @@ namespace PSmash.Combat
             SendDamage(transform, splashAttackAreaSize, splashDamage);
         }
 
-        private void SendDamage(Transform attackOriginPosition, Vector2 attackArea, int damage)
+        private void SendDamage(Transform attackOriginPosition, Vector2 attackArea, float damage)
         {
             //print("Looking to Damage Enemy");
 
@@ -345,6 +345,7 @@ namespace PSmash.Combat
                     damage *= 10;
                     //print("Enemy being Finished");
                 }
+                print("Player damaged the  " + coll.gameObject.name +  " by " + damage);
                 target.TakeDamage(transform, damage);
             }
         }

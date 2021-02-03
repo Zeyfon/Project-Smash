@@ -2176,12 +2176,14 @@ MonoBehaviour:
       actionData:
         actionNames:
         - HutongGames.PlayMaker.Actions.SetAnimatorInt
+        - HutongGames.PlayMaker.Actions.SetLayer
         customNames:
         - 
-        actionEnabled: 01
-        actionIsOpen: 01
-        actionStartIndex: 00000000
-        actionHashCodes: f9152503
+        - 
+        actionEnabled: 0101
+        actionIsOpen: 0101
+        actionStartIndex: 0000000005000000
+        actionHashCodes: f91525032f729000
         unityObjectParams: []
         fsmGameObjectParams: []
         fsmOwnerDefaultParams:
@@ -2193,6 +2195,14 @@ MonoBehaviour:
             showInInspector: 0
             networkSync: 0
             value: {fileID: 4261483652182790374}
+        - ownerOption: 0
+          gameObject:
+            useVariable: 0
+            name: 
+            tooltip: 
+            showInInspector: 0
+            networkSync: 0
+            value: {fileID: 0}
         animationCurveParams: []
         functionCallParams: []
         fsmTemplateControlParams: []
@@ -2225,20 +2235,22 @@ MonoBehaviour:
         fsmRectParams: []
         fsmQuaternionParams: []
         stringParams: []
-        byteData: 0000000000
+        byteData: 000000000016000000
         arrayParamSizes: 
         arrayParamTypes: []
         customTypeSizes: 
         customTypeNames: []
-        paramDataType: 1400000012000000100000000100000007000000
+        paramDataType: 14000000120000001000000001000000070000001400000000000000
         paramName:
         - gameObject
         - parameter
         - Value
         - everyFrame
         - everyFrameOption
-        paramDataPos: 0000000000000000000000000000000001000000
-        paramByteDataSize: 0000000000000000000000000100000004000000
+        - gameObject
+        - layer
+        paramDataPos: 00000000000000000000000000000000010000000100000005000000
+        paramByteDataSize: 00000000000000000000000001000000040000000000000004000000
     - name: Listener
       description: 
       colorIndex: 0
@@ -2263,14 +2275,16 @@ MonoBehaviour:
       actionData:
         actionNames:
         - HutongGames.PlayMaker.Actions.GetAnimatorInt
+        - HutongGames.PlayMaker.Actions.SetLayer
         - HutongGames.PlayMaker.Actions.IntCompare
         customNames:
         - 
         - 
-        actionEnabled: 0101
-        actionIsOpen: 0101
-        actionStartIndex: 0000000005000000
-        actionHashCodes: f915250309faa102
+        - 
+        actionEnabled: 010101
+        actionIsOpen: 010101
+        actionStartIndex: 000000000500000007000000
+        actionHashCodes: f91525032f72900009faa102
         unityObjectParams: []
         fsmGameObjectParams: []
         fsmOwnerDefaultParams:
@@ -2282,6 +2296,14 @@ MonoBehaviour:
             showInInspector: 0
             networkSync: 0
             value: {fileID: 4261483652182790374}
+        - ownerOption: 0
+          gameObject:
+            useVariable: 0
+            name: 
+            tooltip: 
+            showInInspector: 0
+            networkSync: 0
+            value: {fileID: 0}
         animationCurveParams: []
         functionCallParams: []
         fsmTemplateControlParams: []
@@ -2329,26 +2351,28 @@ MonoBehaviour:
         - ACTIONFINISHED
         - 
         - 
-        byteData: 010000000001
+        byteData: 01000000000a00000001
         arrayParamSizes: 
         arrayParamTypes: []
         customTypeSizes: 
         customTypeNames: []
-        paramDataType: 1400000012000000100000000100000007000000100000001000000017000000170000001700000001000000
+        paramDataType: 14000000120000001000000001000000070000001400000000000000100000001000000017000000170000001700000001000000
         paramName:
         - gameObject
         - parameter
         - result
         - everyFrame
         - everyFrameOption
+        - gameObject
+        - layer
         - integer1
         - integer2
         - equal
         - lessThan
         - greaterThan
         - everyFrame
-        paramDataPos: 0000000000000000000000000000000001000000010000000200000000000000010000000200000005000000
-        paramByteDataSize: 0000000000000000000000000100000004000000000000000000000000000000000000000000000001000000
+        paramDataPos: 00000000000000000000000000000000010000000100000005000000010000000200000000000000010000000200000009000000
+        paramByteDataSize: 00000000000000000000000001000000040000000000000004000000000000000000000000000000000000000000000001000000
     - name: Set Direction For the Projectile
       description: 
       colorIndex: 0
@@ -2924,7 +2948,7 @@ MonoBehaviour:
     locked: 0
     manualUpdate: 0
     keepDelayedEventsOnStateExit: 0
-    preprocessed: 1
+    preprocessed: 0
     ExposedEvents: []
     RestartOnEnable: 1
     EnableDebugFlow: 0
@@ -2950,7 +2974,7 @@ MonoBehaviour:
     handleJointBreak: 0
     handleJointBreak2D: 0
     handleOnGUI: 0
-    handleFixedUpdate: 1
+    handleFixedUpdate: 0
     handleLateUpdate: 0
     handleApplicationEvents: 0
     handleUiEvents: 0
@@ -3097,12 +3121,12 @@ MonoBehaviour:
         paramByteDataSize: 00000000000000000000000000000000000000000400000001000000000000000000000001000000
     - name: MOVING
       description: 
-      colorIndex: 0
+      colorIndex: 6
       position:
         serializedVersion: 2
-        x: 251.30469
-        y: 296.29688
-        width: 114
+        x: 240.3125
+        y: 296.26562
+        width: 199
         height: 48
       isBreakpoint: 0
       isSequence: 0
@@ -3117,10 +3141,10 @@ MonoBehaviour:
         linkConstraint: 0
         colorIndex: 0
       - fsmEvent:
-          name: DAMAGED
+          name: DAMAGED_NOPOSTUREBAR
           isSystemEvent: 0
           isGlobal: 0
-        toState: Damaged
+        toState: Damaged Sound 2
         linkStyle: 0
         linkConstraint: 0
         colorIndex: 0
@@ -3397,8 +3421,8 @@ MonoBehaviour:
       colorIndex: 0
       position:
         serializedVersion: 2
-        x: 447.10938
-        y: 286.9375
+        x: 515.4375
+        y: 298.29688
         width: 157
         height: 48
       isBreakpoint: 0
@@ -3535,8 +3559,8 @@ MonoBehaviour:
       colorIndex: 2
       position:
         serializedVersion: 2
-        x: 689.46094
-        y: 292.14844
+        x: 757.78906
+        y: 303.5078
         width: 100
         height: 16
       isBreakpoint: 0
@@ -3637,8 +3661,8 @@ MonoBehaviour:
       colorIndex: 2
       position:
         serializedVersion: 2
-        x: 683.8594
-        y: 337.3203
+        x: 752.1875
+        y: 348.6797
         width: 100
         height: 16
       isBreakpoint: 0
@@ -3779,7 +3803,7 @@ MonoBehaviour:
           tooltip: 
           showInInspector: 0
           networkSync: 0
-          value: SetCurrentState
+          value: SetCurrentStateInfo
         fsmObjectParams:
         - useVariable: 1
           name: health
@@ -3799,6 +3823,30 @@ MonoBehaviour:
           stringValue: 
           vector4Value: {x: 0, y: 0, z: 0, w: 0}
           objectReference: {fileID: 1040298865542371814}
+          arrayValue:
+            useVariable: 0
+            name: 
+            tooltip: 
+            showInInspector: 0
+            networkSync: 0
+            type: -1
+            objectTypeName: 
+            floatValues: []
+            intValues: 
+            boolValues: 
+            stringValues: []
+            vector4Values: []
+            objectReferences: []
+        - variableName: 
+          objectType: UnityEngine.Object
+          useVariable: 1
+          type: 0
+          floatValue: 0
+          intValue: 0
+          boolValue: 0
+          stringValue: 
+          vector4Value: {x: 0, y: 0, z: 0, w: 0}
+          objectReference: {fileID: 0}
           arrayValue:
             useVariable: 0
             name: 
@@ -3849,29 +3897,30 @@ MonoBehaviour:
         fsmQuaternionParams: []
         stringParams: []
         byteData: 0000
-        arrayParamSizes: 01000000
+        arrayParamSizes: 02000000
         arrayParamTypes:
         - HutongGames.PlayMaker.FsmVar
         customTypeSizes: 
         customTypeNames: []
-        paramDataType: 18000000120000000c00000027000000270000000100000001000000
+        paramDataType: 18000000120000000c0000002700000027000000270000000100000001000000
         paramName:
         - behaviour
         - methodName
         - parameters
         - 
+        - 
         - storeResult
         - everyFrame
         - manualUI
-        paramDataPos: 00000000000000000000000000000000010000000000000001000000
-        paramByteDataSize: 00000000000000000000000000000000000000000100000001000000
+        paramDataPos: 0000000000000000000000000000000001000000020000000000000001000000
+        paramByteDataSize: 0000000000000000000000000000000000000000000000000100000001000000
     - name: DEAD
       description: 
       colorIndex: 2
       position:
         serializedVersion: 2
-        x: 705.7344
-        y: 412.66406
+        x: 746.21094
+        y: 420.22656
         width: 100
         height: 16
       isBreakpoint: 0
@@ -3967,52 +4016,48 @@ MonoBehaviour:
         - everyFrame
         paramDataPos: 00000000000000000000000000000000
         paramByteDataSize: 00000000000000000000000001000000
-    - name: Damaged
+    - name: IsDead
       description: 
-      colorIndex: 0
+      colorIndex: 4
       position:
         serializedVersion: 2
-        x: 249.625
-        y: 401.4922
+        x: 516.84375
+        y: 399.875
         width: 100
-        height: 32
+        height: 48
       isBreakpoint: 0
       isSequence: 1
       hideUnused: 0
       transitions:
       - fsmEvent:
-          name: FINISHED
-          isSystemEvent: 1
+          name: NO
+          isSystemEvent: 0
           isGlobal: 0
-        toState: Damaged Sound
+        toState: CHECK NEXT ACTION
+        linkStyle: 0
+        linkConstraint: 0
+        colorIndex: 0
+      - fsmEvent:
+          name: YES
+          isSystemEvent: 0
+          isGlobal: 0
+        toState: DEAD
         linkStyle: 0
         linkConstraint: 0
         colorIndex: 0
       actionData:
         actionNames:
-        - HutongGames.PlayMaker.Actions.GetEventInfo
         - HutongGames.PlayMaker.Actions.CallMethod
+        - HutongGames.PlayMaker.Actions.BoolTest
         customNames:
         - 
         - 
         actionEnabled: 0101
         actionIsOpen: 0101
-        actionStartIndex: 000000000f000000
-        actionHashCodes: d9ade603ca51e900
+        actionStartIndex: 0000000006000000
+        actionHashCodes: ca51e900a4c8bf00
         unityObjectParams: []
-        fsmGameObjectParams:
-        - useVariable: 1
-          name: 
-          tooltip: 
-          showInInspector: 0
-          networkSync: 0
-          value: {fileID: 0}
-        - useVariable: 1
-          name: 
-          tooltip: 
-          showInInspector: 0
-          networkSync: 0
-          value: {fileID: 0}
+        fsmGameObjectParams: []
         fsmOwnerDefaultParams: []
         animationCurveParams: []
         functionCallParams: []
@@ -4021,46 +4066,13 @@ MonoBehaviour:
         fsmPropertyParams: []
         layoutOptionParams: []
         fsmStringParams:
-        - useVariable: 1
-          name: 
-          tooltip: 
-          showInInspector: 0
-          networkSync: 0
-          value: 
-        - useVariable: 1
-          name: 
-          tooltip: 
-          showInInspector: 0
-          networkSync: 0
-          value: 
         - useVariable: 0
           name: 
           tooltip: 
           showInInspector: 0
           networkSync: 0
-          value: Damaged
+          value: IsDeadCheck
         fsmObjectParams:
-        - useVariable: 1
-          name: 
-          tooltip: 
-          showInInspector: 0
-          networkSync: 0
-          typeName: 
-          value: {fileID: 0}
-        - useVariable: 1
-          name: 
-          tooltip: 
-          showInInspector: 0
-          networkSync: 0
-          typeName: 
-          value: {fileID: 0}
-        - useVariable: 1
-          name: 
-          tooltip: 
-          showInInspector: 0
-          networkSync: 0
-          typeName: 
-          value: {fileID: 0}
         - useVariable: 1
           name: health
           tooltip: 
@@ -4069,58 +4081,10 @@ MonoBehaviour:
           typeName: PSmash.Attributes.EnemyHealth
           value: {fileID: 3070385579913315234}
         fsmVarParams:
-        - variableName: damage
+        - variableName: isDead
           objectType: UnityEngine.Object
           useVariable: 1
-          type: 1
-          floatValue: 0
-          intValue: 0
-          boolValue: 0
-          stringValue: 
-          vector4Value: {x: 0, y: 0, z: 0, w: 0}
-          objectReference: {fileID: 0}
-          arrayValue:
-            useVariable: 0
-            name: 
-            tooltip: 
-            showInInspector: 0
-            networkSync: 0
-            type: -1
-            objectTypeName: 
-            floatValues: []
-            intValues: 
-            boolValues: 
-            stringValues: []
-            vector4Values: []
-            objectReferences: []
-        - variableName: damagePenetrationPercentage
-          objectType: UnityEngine.Object
-          useVariable: 1
-          type: 1
-          floatValue: 0
-          intValue: 100
-          boolValue: 0
-          stringValue: 
-          vector4Value: {x: 0, y: 0, z: 0, w: 0}
-          objectReference: {fileID: 0}
-          arrayValue:
-            useVariable: 0
-            name: 
-            tooltip: 
-            showInInspector: 0
-            networkSync: 0
-            type: -1
-            objectTypeName: 
-            floatValues: []
-            intValues: 
-            boolValues: 
-            stringValues: []
-            vector4Values: []
-            objectReferences: []
-        - variableName: 
-          objectType: 
-          useVariable: 0
-          type: -1
+          type: 2
           floatValue: 0
           intValue: 0
           boolValue: 0
@@ -4143,141 +4107,73 @@ MonoBehaviour:
             objectReferences: []
         fsmArrayParams: []
         fsmEnumParams: []
-        fsmFloatParams:
-        - useVariable: 1
-          name: 
-          tooltip: 
-          showInInspector: 0
-          networkSync: 0
-          value: 0
-        fsmIntParams:
-        - useVariable: 1
-          name: damage
-          tooltip: 
-          showInInspector: 0
-          networkSync: 0
-          value: 0
+        fsmFloatParams: []
+        fsmIntParams: []
         fsmBoolParams:
         - useVariable: 1
-          name: 
+          name: isDead
           tooltip: 
           showInInspector: 0
           networkSync: 0
           value: 0
-        fsmVector2Params:
-        - useVariable: 1
-          name: 
-          tooltip: 
-          showInInspector: 0
-          networkSync: 0
-          value: {x: 0, y: 0}
-        fsmVector3Params:
-        - useVariable: 1
-          name: 
-          tooltip: 
-          showInInspector: 0
-          networkSync: 0
-          value: {x: 0, y: 0, z: 0}
-        fsmColorParams:
-        - useVariable: 1
-          name: 
-          tooltip: 
-          showInInspector: 0
-          networkSync: 0
-          value: {r: 0, g: 0, b: 0, a: 1}
-        fsmRectParams:
-        - useVariable: 1
-          name: 
-          tooltip: 
-          showInInspector: 0
-          networkSync: 0
-          value:
-            serializedVersion: 2
-            x: 0
-            y: 0
-            width: 0
-            height: 0
-        fsmQuaternionParams:
-        - useVariable: 1
-          name: 
-          tooltip: 
-          showInInspector: 0
-          networkSync: 0
-          value: {x: 0, y: 0, z: 0, w: 0}
-        stringParams: []
-        byteData: 0000
-        arrayParamSizes: 02000000
+        fsmVector2Params: []
+        fsmVector3Params: []
+        fsmColorParams: []
+        fsmRectParams: []
+        fsmQuaternionParams: []
+        stringParams:
+        - YES
+        - NO
+        byteData: 000000
+        arrayParamSizes: 00000000
         arrayParamTypes:
         - HutongGames.PlayMaker.FsmVar
         customTypeSizes: 
         customTypeNames: []
-        paramDataType: 130000001200000011000000100000000f000000250000001c00000012000000130000001e000000230000002000000021000000190000001800000018000000120000000c0000002700000027000000270000000100000001000000
+        paramDataType: 18000000120000000c00000027000000010000000100000011000000170000001700000001000000
         paramName:
-        - sentByGameObject
-        - fsmName
-        - getBoolData
-        - getIntData
-        - getFloatData
-        - getVector2Data
-        - getVector3Data
-        - getStringData
-        - getGameObjectData
-        - getRectData
-        - getQuaternionData
-        - getMaterialData
-        - getTextureData
-        - getColorData
-        - getObjectData
         - behaviour
         - methodName
         - parameters
-        - 
-        - 
         - storeResult
         - everyFrame
         - manualUI
-        paramDataPos: 0000000000000000000000000000000000000000000000000000000001000000010000000000000000000000000000000100000000000000020000000300000002000000000000000000000001000000020000000000000001000000
-        paramByteDataSize: 0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000100000001000000
-    - name: Damaged Sound
+        - boolVariable
+        - isTrue
+        - isFalse
+        - everyFrame
+        paramDataPos: 00000000000000000000000000000000000000000100000000000000000000000100000002000000
+        paramByteDataSize: 00000000000000000000000000000000010000000100000000000000000000000000000001000000
+    - name: Damaged Sound 2
       description: 
       colorIndex: 4
       position:
         serializedVersion: 2
-        x: 444.78125
-        y: 383.51562
-        width: 127
-        height: 48
+        x: 226.47656
+        y: 396.71094
+        width: 137
+        height: 32
       isBreakpoint: 0
       isSequence: 1
       hideUnused: 0
       transitions:
       - fsmEvent:
-          name: ISNOTDEAD
-          isSystemEvent: 0
+          name: FINISHED
+          isSystemEvent: 1
           isGlobal: 0
-        toState: CHECK NEXT ACTION
-        linkStyle: 0
-        linkConstraint: 0
-        colorIndex: 0
-      - fsmEvent:
-          name: ISDEAD
-          isSystemEvent: 0
-          isGlobal: 0
-        toState: DEAD
+        toState: IsDead
         linkStyle: 0
         linkConstraint: 0
         colorIndex: 0
       actionData:
         actionNames:
         - HutongGames.PlayMaker.Actions.AudioPlay
-        - HutongGames.PlayMaker.Actions.CallMethod
         customNames:
         - 
-        - 
-        actionEnabled: 0101
-        actionIsOpen: 0101
-        actionStartIndex: 0000000005000000
-        actionHashCodes: 81294e04ca51e900
+        actionEnabled: 01
+        actionIsOpen: 01
+        actionStartIndex: 00000000
+        actionHashCodes: 81294e04
         unityObjectParams: []
         fsmGameObjectParams: []
         fsmOwnerDefaultParams:
@@ -4295,13 +4191,7 @@ MonoBehaviour:
         fsmEventTargetParams: []
         fsmPropertyParams: []
         layoutOptionParams: []
-        fsmStringParams:
-        - useVariable: 0
-          name: 
-          tooltip: 
-          showInInspector: 0
-          networkSync: 0
-          value: IsDeadCheck
+        fsmStringParams: []
         fsmObjectParams:
         - useVariable: 1
           name: damageSound
@@ -4310,38 +4200,7 @@ MonoBehaviour:
           networkSync: 0
           typeName: UnityEngine.AudioClip
           value: {fileID: 8300000, guid: a2c4afa4edc26494c9d118b432321eaa, type: 3}
-        - useVariable: 1
-          name: health
-          tooltip: 
-          showInInspector: 0
-          networkSync: 0
-          typeName: PSmash.Attributes.EnemyHealth
-          value: {fileID: 3070385579913315234}
-        fsmVarParams:
-        - variableName: 
-          objectType: 
-          useVariable: 0
-          type: -1
-          floatValue: 0
-          intValue: 0
-          boolValue: 0
-          stringValue: 
-          vector4Value: {x: 0, y: 0, z: 0, w: 0}
-          objectReference: {fileID: 0}
-          arrayValue:
-            useVariable: 0
-            name: 
-            tooltip: 
-            showInInspector: 0
-            networkSync: 0
-            type: -1
-            objectTypeName: 
-            floatValues: []
-            intValues: 
-            boolValues: 
-            stringValues: []
-            vector4Values: []
-            objectReferences: []
+        fsmVarParams: []
         fsmArrayParams: []
         fsmEnumParams: []
         fsmFloatParams:
@@ -4366,27 +4225,20 @@ MonoBehaviour:
         fsmQuaternionParams: []
         stringParams:
         - 
-        byteData: 0000
-        arrayParamSizes: 00000000
-        arrayParamTypes:
-        - HutongGames.PlayMaker.FsmVar
+        byteData: 
+        arrayParamSizes: 
+        arrayParamTypes: []
         customTypeSizes: 
         customTypeNames: []
-        paramDataType: 140000000f00000018000000110000001700000018000000120000000c000000270000000100000001000000
+        paramDataType: 140000000f000000180000001100000017000000
         paramName:
         - gameObject
         - volume
         - oneShotClip
         - WaitForEndOfClip
         - finishedEvent
-        - behaviour
-        - methodName
-        - parameters
-        - storeResult
-        - everyFrame
-        - manualUI
-        paramDataPos: 0000000000000000000000000000000000000000010000000000000000000000000000000000000001000000
-        paramByteDataSize: 0000000000000000000000000000000000000000000000000000000000000000000000000100000001000000
+        paramDataPos: 0000000000000000000000000000000000000000
+        paramByteDataSize: 0000000000000000000000000000000000000000
     events:
     - name: FINISHED
       isSystemEvent: 1
@@ -4400,19 +4252,22 @@ MonoBehaviour:
     - name: DAMAGED
       isSystemEvent: 0
       isGlobal: 0
+    - name: DAMAGED_NOPOSTUREBAR
+      isSystemEvent: 0
+      isGlobal: 0
     - name: FLEEING
+      isSystemEvent: 0
+      isGlobal: 0
+    - name: ISDEAD
+      isSystemEvent: 0
+      isGlobal: 0
+    - name: ISNOTDEAD
       isSystemEvent: 0
       isGlobal: 0
     - name: NO
       isSystemEvent: 0
       isGlobal: 0
     - name: YES
-      isSystemEvent: 0
-      isGlobal: 0
-    - name: ISNOTDEAD
-      isSystemEvent: 0
-      isGlobal: 0
-    - name: ISDEAD
       isSystemEvent: 0
       isGlobal: 0
     globalTransitions: []
@@ -4442,6 +4297,12 @@ MonoBehaviour:
         showInInspector: 1
         networkSync: 0
         value: 1
+      - useVariable: 1
+        name: damagePenetrationPercentage
+        tooltip: 
+        showInInspector: 1
+        networkSync: 0
+        value: 100
       intVariables:
       - useVariable: 1
         name: damage
@@ -4450,14 +4311,20 @@ MonoBehaviour:
         networkSync: 0
         value: 0
       - useVariable: 1
-        name: damagePenetrationPercentage
+        name: 
         tooltip: 
         showInInspector: 1
         networkSync: 0
-        value: 100
+        value: 0
       boolVariables:
       - useVariable: 1
         name: initialized
+        tooltip: 
+        showInInspector: 0
+        networkSync: 0
+        value: 0
+      - useVariable: 1
+        name: isDead
         tooltip: 
         showInInspector: 0
         networkSync: 0
@@ -4517,7 +4384,7 @@ MonoBehaviour:
       categories:
       - 
       - Exposed
-      variableCategoryIDs: 01000000010000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+      variableCategoryIDs: 010000000100000000000000000000000100000000000000000000000000000000000000000000000000000000000000000000000000000000000000
     description: 
     docUrl: 
     showStateLabel: 0
@@ -4527,7 +4394,7 @@ MonoBehaviour:
     locked: 0
     manualUpdate: 0
     keepDelayedEventsOnStateExit: 0
-    preprocessed: 1
+    preprocessed: 0
     ExposedEvents: []
     RestartOnEnable: 1
     EnableDebugFlow: 0
@@ -4553,7 +4420,7 @@ MonoBehaviour:
     handleJointBreak: 0
     handleJointBreak2D: 0
     handleOnGUI: 0
-    handleFixedUpdate: 1
+    handleFixedUpdate: 0
     handleLateUpdate: 0
     handleApplicationEvents: 0
     handleUiEvents: 0
@@ -4630,14 +4497,22 @@ MonoBehaviour:
       colorIndex: 0
       position:
         serializedVersion: 2
-        x: 324.70312
-        y: 108.97656
+        x: 108.41406
+        y: 101.4375
         width: 204
-        height: 16
+        height: 32
       isBreakpoint: 0
       isSequence: 0
       hideUnused: 0
-      transitions: []
+      transitions:
+      - fsmEvent:
+          name: FINISHED
+          isSystemEvent: 1
+          isGlobal: 0
+        toState: Listener
+        linkStyle: 0
+        linkConstraint: 0
+        colorIndex: 0
       actionData:
         actionNames:
         - HutongGames.PlayMaker.Actions.CallMethod
@@ -4662,7 +4537,7 @@ MonoBehaviour:
           tooltip: 
           showInInspector: 0
           networkSync: 0
-          value: SetCurrentState
+          value: SetCurrentStateInfo
         fsmObjectParams:
         - useVariable: 1
           name: health
@@ -4682,6 +4557,30 @@ MonoBehaviour:
           stringValue: 
           vector4Value: {x: 0, y: 0, z: 0, w: 0}
           objectReference: {fileID: 4988125895314352732}
+          arrayValue:
+            useVariable: 0
+            name: 
+            tooltip: 
+            showInInspector: 0
+            networkSync: 0
+            type: -1
+            objectTypeName: 
+            floatValues: []
+            intValues: 
+            boolValues: 
+            stringValues: []
+            vector4Values: []
+            objectReferences: []
+        - variableName: damagePenetrationPercentage
+          objectType: UnityEngine.Object
+          useVariable: 1
+          type: 0
+          floatValue: 100
+          intValue: 0
+          boolValue: 0
+          stringValue: 
+          vector4Value: {x: 0, y: 0, z: 0, w: 0}
+          objectReference: {fileID: 0}
           arrayValue:
             useVariable: 0
             name: 
@@ -4732,29 +4631,30 @@ MonoBehaviour:
         fsmQuaternionParams: []
         stringParams: []
         byteData: 0000
-        arrayParamSizes: 01000000
+        arrayParamSizes: 02000000
         arrayParamTypes:
         - HutongGames.PlayMaker.FsmVar
         customTypeSizes: 
         customTypeNames: []
-        paramDataType: 18000000120000000c00000027000000270000000100000001000000
+        paramDataType: 18000000120000000c0000002700000027000000270000000100000001000000
         paramName:
         - behaviour
         - methodName
         - parameters
         - 
+        - 
         - storeResult
         - everyFrame
         - manualUI
-        paramDataPos: 00000000000000000000000000000000010000000000000001000000
-        paramByteDataSize: 00000000000000000000000000000000000000000100000001000000
+        paramDataPos: 0000000000000000000000000000000001000000020000000000000001000000
+        paramByteDataSize: 0000000000000000000000000000000000000000000000000100000001000000
     - name: IsChargingAttack?
       description: 
       colorIndex: 0
       position:
         serializedVersion: 2
-        x: 256.79688
-        y: 238.47656
+        x: 67.171875
+        y: 303.4922
         width: 141
         height: 48
       isBreakpoint: 0
@@ -4835,8 +4735,8 @@ MonoBehaviour:
       colorIndex: 2
       position:
         serializedVersion: 2
-        x: 69.40625
-        y: 256.67188
+        x: 468.51562
+        y: 309.91406
         width: 100
         height: 16
       isBreakpoint: 0
@@ -4937,8 +4837,8 @@ MonoBehaviour:
       colorIndex: 2
       position:
         serializedVersion: 2
-        x: 56.75
-        y: 310.1875
+        x: 458.20312
+        y: 383.89844
         width: 107
         height: 16
       isBreakpoint: 0
@@ -4984,292 +4884,21 @@ MonoBehaviour:
         paramName: []
         paramDataPos: 
         paramByteDataSize: 
-    - name: STUNNED
+    - name: IsDead?
       description: 
       colorIndex: 0
       position:
         serializedVersion: 2
-        x: 460
-        y: 208.5
+        x: 249.16406
+        y: 392.59375
         width: 100
-        height: 32
-      isBreakpoint: 0
-      isSequence: 1
-      hideUnused: 0
-      transitions:
-      - fsmEvent:
-          name: CONTINUE
-          isSystemEvent: 0
-          isGlobal: 0
-        toState: IsChargingAttack?
-        linkStyle: 0
-        linkConstraint: 0
-        colorIndex: 0
-      actionData:
-        actionNames:
-        - HutongGames.PlayMaker.Actions.GetEventInfo
-        - HutongGames.PlayMaker.Actions.CallMethod
-        customNames:
-        - 
-        - 
-        actionEnabled: 0101
-        actionIsOpen: 0101
-        actionStartIndex: 000000000f000000
-        actionHashCodes: d9ade603ca51e900
-        unityObjectParams: []
-        fsmGameObjectParams:
-        - useVariable: 1
-          name: 
-          tooltip: 
-          showInInspector: 0
-          networkSync: 0
-          value: {fileID: 0}
-        - useVariable: 1
-          name: 
-          tooltip: 
-          showInInspector: 0
-          networkSync: 0
-          value: {fileID: 0}
-        fsmOwnerDefaultParams: []
-        animationCurveParams: []
-        functionCallParams: []
-        fsmTemplateControlParams: []
-        fsmEventTargetParams: []
-        fsmPropertyParams: []
-        layoutOptionParams: []
-        fsmStringParams:
-        - useVariable: 1
-          name: 
-          tooltip: 
-          showInInspector: 0
-          networkSync: 0
-          value: 
-        - useVariable: 1
-          name: 
-          tooltip: 
-          showInInspector: 0
-          networkSync: 0
-          value: 
-        - useVariable: 0
-          name: 
-          tooltip: 
-          showInInspector: 0
-          networkSync: 0
-          value: Damaged
-        fsmObjectParams:
-        - useVariable: 1
-          name: 
-          tooltip: 
-          showInInspector: 0
-          networkSync: 0
-          typeName: 
-          value: {fileID: 0}
-        - useVariable: 1
-          name: 
-          tooltip: 
-          showInInspector: 0
-          networkSync: 0
-          typeName: 
-          value: {fileID: 0}
-        - useVariable: 1
-          name: 
-          tooltip: 
-          showInInspector: 0
-          networkSync: 0
-          typeName: 
-          value: {fileID: 0}
-        - useVariable: 1
-          name: health
-          tooltip: 
-          showInInspector: 0
-          networkSync: 0
-          typeName: PSmash.Attributes.EnemyHealth
-          value: {fileID: 3070385579913315234}
-        fsmVarParams:
-        - variableName: damage
-          objectType: UnityEngine.Object
-          useVariable: 1
-          type: 1
-          floatValue: 0
-          intValue: 0
-          boolValue: 0
-          stringValue: 
-          vector4Value: {x: 0, y: 0, z: 0, w: 0}
-          objectReference: {fileID: 0}
-          arrayValue:
-            useVariable: 0
-            name: 
-            tooltip: 
-            showInInspector: 0
-            networkSync: 0
-            type: -1
-            objectTypeName: 
-            floatValues: []
-            intValues: 
-            boolValues: 
-            stringValues: []
-            vector4Values: []
-            objectReferences: []
-        - variableName: damagePenetrationPercentage
-          objectType: UnityEngine.Object
-          useVariable: 1
-          type: 1
-          floatValue: 0
-          intValue: 100
-          boolValue: 0
-          stringValue: 
-          vector4Value: {x: 0, y: 0, z: 0, w: 0}
-          objectReference: {fileID: 0}
-          arrayValue:
-            useVariable: 0
-            name: 
-            tooltip: 
-            showInInspector: 0
-            networkSync: 0
-            type: -1
-            objectTypeName: 
-            floatValues: []
-            intValues: 
-            boolValues: 
-            stringValues: []
-            vector4Values: []
-            objectReferences: []
-        - variableName: 
-          objectType: 
-          useVariable: 0
-          type: -1
-          floatValue: 0
-          intValue: 0
-          boolValue: 0
-          stringValue: 
-          vector4Value: {x: 0, y: 0, z: 0, w: 0}
-          objectReference: {fileID: 0}
-          arrayValue:
-            useVariable: 0
-            name: 
-            tooltip: 
-            showInInspector: 0
-            networkSync: 0
-            type: -1
-            objectTypeName: 
-            floatValues: []
-            intValues: 
-            boolValues: 
-            stringValues: []
-            vector4Values: []
-            objectReferences: []
-        fsmArrayParams: []
-        fsmEnumParams: []
-        fsmFloatParams:
-        - useVariable: 1
-          name: 
-          tooltip: 
-          showInInspector: 0
-          networkSync: 0
-          value: 0
-        fsmIntParams:
-        - useVariable: 1
-          name: damage
-          tooltip: 
-          showInInspector: 0
-          networkSync: 0
-          value: 0
-        fsmBoolParams:
-        - useVariable: 1
-          name: 
-          tooltip: 
-          showInInspector: 0
-          networkSync: 0
-          value: 0
-        fsmVector2Params:
-        - useVariable: 1
-          name: 
-          tooltip: 
-          showInInspector: 0
-          networkSync: 0
-          value: {x: 0, y: 0}
-        fsmVector3Params:
-        - useVariable: 1
-          name: 
-          tooltip: 
-          showInInspector: 0
-          networkSync: 0
-          value: {x: 0, y: 0, z: 0}
-        fsmColorParams:
-        - useVariable: 1
-          name: 
-          tooltip: 
-          showInInspector: 0
-          networkSync: 0
-          value: {r: 0, g: 0, b: 0, a: 1}
-        fsmRectParams:
-        - useVariable: 1
-          name: 
-          tooltip: 
-          showInInspector: 0
-          networkSync: 0
-          value:
-            serializedVersion: 2
-            x: 0
-            y: 0
-            width: 0
-            height: 0
-        fsmQuaternionParams:
-        - useVariable: 1
-          name: 
-          tooltip: 
-          showInInspector: 0
-          networkSync: 0
-          value: {x: 0, y: 0, z: 0, w: 0}
-        stringParams: []
-        byteData: 0000
-        arrayParamSizes: 02000000
-        arrayParamTypes:
-        - HutongGames.PlayMaker.FsmVar
-        customTypeSizes: 
-        customTypeNames: []
-        paramDataType: 130000001200000011000000100000000f000000250000001c00000012000000130000001e000000230000002000000021000000190000001800000018000000120000000c0000002700000027000000270000000100000001000000
-        paramName:
-        - sentByGameObject
-        - fsmName
-        - getBoolData
-        - getIntData
-        - getFloatData
-        - getVector2Data
-        - getVector3Data
-        - getStringData
-        - getGameObjectData
-        - getRectData
-        - getQuaternionData
-        - getMaterialData
-        - getTextureData
-        - getColorData
-        - getObjectData
-        - behaviour
-        - methodName
-        - parameters
-        - 
-        - 
-        - storeResult
-        - everyFrame
-        - manualUI
-        paramDataPos: 0000000000000000000000000000000000000000000000000000000001000000010000000000000000000000000000000100000000000000020000000300000002000000000000000000000001000000020000000000000001000000
-        paramByteDataSize: 0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000100000001000000
-    - name: Damaged Sound
-      description: 
-      colorIndex: 4
-      position:
-        serializedVersion: 2
-        x: 264.48438
-        y: 313.96875
-        width: 127
         height: 48
       isBreakpoint: 0
       isSequence: 1
       hideUnused: 0
       transitions:
       - fsmEvent:
-          name: ISNOTDEAD
+          name: NO
           isSystemEvent: 0
           isGlobal: 0
         toState: DO NOTHING
@@ -5277,7 +4906,7 @@ MonoBehaviour:
         linkConstraint: 0
         colorIndex: 0
       - fsmEvent:
-          name: ISDEAD
+          name: YES
           isSystemEvent: 0
           isGlobal: 0
         toState: DEAD
@@ -5286,26 +4915,18 @@ MonoBehaviour:
         colorIndex: 0
       actionData:
         actionNames:
-        - HutongGames.PlayMaker.Actions.AudioPlay
         - HutongGames.PlayMaker.Actions.CallMethod
+        - HutongGames.PlayMaker.Actions.BoolTest
         customNames:
         - 
         - 
         actionEnabled: 0101
         actionIsOpen: 0101
-        actionStartIndex: 0000000005000000
-        actionHashCodes: 81294e04ca51e900
+        actionStartIndex: 0000000006000000
+        actionHashCodes: ca51e900a4c8bf00
         unityObjectParams: []
         fsmGameObjectParams: []
-        fsmOwnerDefaultParams:
-        - ownerOption: 0
-          gameObject:
-            useVariable: 0
-            name: 
-            tooltip: 
-            showInInspector: 0
-            networkSync: 0
-            value: {fileID: 0}
+        fsmOwnerDefaultParams: []
         animationCurveParams: []
         functionCallParams: []
         fsmTemplateControlParams: []
@@ -5321,13 +4942,6 @@ MonoBehaviour:
           value: IsDeadCheck
         fsmObjectParams:
         - useVariable: 1
-          name: damageSound
-          tooltip: 
-          showInInspector: 1
-          networkSync: 0
-          typeName: UnityEngine.AudioClip
-          value: {fileID: 8300000, guid: a2c4afa4edc26494c9d118b432321eaa, type: 3}
-        - useVariable: 1
           name: health
           tooltip: 
           showInInspector: 0
@@ -5335,10 +4949,10 @@ MonoBehaviour:
           typeName: PSmash.Attributes.EnemyHealth
           value: {fileID: 3070385579913315234}
         fsmVarParams:
-        - variableName: 
-          objectType: 
-          useVariable: 0
-          type: -1
+        - variableName: isDead
+          objectType: UnityEngine.Object
+          useVariable: 1
+          type: 2
           floatValue: 0
           intValue: 0
           boolValue: 0
@@ -5361,17 +4975,11 @@ MonoBehaviour:
             objectReferences: []
         fsmArrayParams: []
         fsmEnumParams: []
-        fsmFloatParams:
-        - useVariable: 1
-          name: volume
-          tooltip: 
-          showInInspector: 1
-          networkSync: 0
-          value: 1
+        fsmFloatParams: []
         fsmIntParams: []
         fsmBoolParams:
-        - useVariable: 0
-          name: 
+        - useVariable: 1
+          name: isDead
           tooltip: 
           showInInspector: 0
           networkSync: 0
@@ -5382,35 +4990,35 @@ MonoBehaviour:
         fsmRectParams: []
         fsmQuaternionParams: []
         stringParams:
-        - 
-        byteData: 0000
+        - YES
+        - NO
+        byteData: 000000
         arrayParamSizes: 00000000
         arrayParamTypes:
         - HutongGames.PlayMaker.FsmVar
         customTypeSizes: 
         customTypeNames: []
-        paramDataType: 140000000f00000018000000110000001700000018000000120000000c000000270000000100000001000000
+        paramDataType: 18000000120000000c00000027000000010000000100000011000000170000001700000001000000
         paramName:
-        - gameObject
-        - volume
-        - oneShotClip
-        - WaitForEndOfClip
-        - finishedEvent
         - behaviour
         - methodName
         - parameters
         - storeResult
         - everyFrame
         - manualUI
-        paramDataPos: 0000000000000000000000000000000000000000010000000000000000000000000000000000000001000000
-        paramByteDataSize: 0000000000000000000000000000000000000000000000000000000000000000000000000100000001000000
+        - boolVariable
+        - isTrue
+        - isFalse
+        - everyFrame
+        paramDataPos: 00000000000000000000000000000000000000000100000000000000000000000100000002000000
+        paramByteDataSize: 00000000000000000000000000000000010000000100000000000000000000000000000001000000
     - name: DEAD
       description: 
       colorIndex: 2
       position:
         serializedVersion: 2
-        x: 56.515625
-        y: 362.29688
+        x: 457.96875
+        y: 436.0078
         width: 100
         height: 16
       isBreakpoint: 0
@@ -5506,37 +5114,259 @@ MonoBehaviour:
         - everyFrame
         paramDataPos: 00000000000000000000000000000000
         paramByteDataSize: 00000000000000000000000001000000
+    - name: Set Enemy To Enemy Layer
+      description: 
+      colorIndex: 0
+      position:
+        serializedVersion: 2
+        x: 79.9375
+        y: 248.92969
+        width: 188
+        height: 32
+      isBreakpoint: 0
+      isSequence: 0
+      hideUnused: 0
+      transitions:
+      - fsmEvent:
+          name: FINISHED
+          isSystemEvent: 1
+          isGlobal: 0
+        toState: IsChargingAttack?
+        linkStyle: 0
+        linkConstraint: 0
+        colorIndex: 0
+      actionData:
+        actionNames:
+        - HutongGames.PlayMaker.Actions.SetLayer
+        customNames:
+        - 
+        actionEnabled: 01
+        actionIsOpen: 01
+        actionStartIndex: 00000000
+        actionHashCodes: 2f729000
+        unityObjectParams: []
+        fsmGameObjectParams: []
+        fsmOwnerDefaultParams:
+        - ownerOption: 0
+          gameObject:
+            useVariable: 0
+            name: 
+            tooltip: 
+            showInInspector: 0
+            networkSync: 0
+            value: {fileID: 0}
+        animationCurveParams: []
+        functionCallParams: []
+        fsmTemplateControlParams: []
+        fsmEventTargetParams: []
+        fsmPropertyParams: []
+        layoutOptionParams: []
+        fsmStringParams: []
+        fsmObjectParams: []
+        fsmVarParams: []
+        fsmArrayParams: []
+        fsmEnumParams: []
+        fsmFloatParams: []
+        fsmIntParams: []
+        fsmBoolParams: []
+        fsmVector2Params: []
+        fsmVector3Params: []
+        fsmColorParams: []
+        fsmRectParams: []
+        fsmQuaternionParams: []
+        stringParams: []
+        byteData: 0a000000
+        arrayParamSizes: 
+        arrayParamTypes: []
+        customTypeSizes: 
+        customTypeNames: []
+        paramDataType: 1400000000000000
+        paramName:
+        - gameObject
+        - layer
+        paramDataPos: 0000000000000000
+        paramByteDataSize: 0000000004000000
+    - name: Damaged Sound
+      description: 
+      colorIndex: 4
+      position:
+        serializedVersion: 2
+        x: 59.984375
+        y: 382.89062
+        width: 127
+        height: 32
+      isBreakpoint: 0
+      isSequence: 0
+      hideUnused: 0
+      transitions:
+      - fsmEvent:
+          name: FINISHED
+          isSystemEvent: 1
+          isGlobal: 0
+        toState: IsDead?
+        linkStyle: 0
+        linkConstraint: 0
+        colorIndex: 0
+      actionData:
+        actionNames:
+        - HutongGames.PlayMaker.Actions.AudioPlay
+        customNames:
+        - 
+        actionEnabled: 01
+        actionIsOpen: 01
+        actionStartIndex: 00000000
+        actionHashCodes: 81294e04
+        unityObjectParams: []
+        fsmGameObjectParams: []
+        fsmOwnerDefaultParams:
+        - ownerOption: 0
+          gameObject:
+            useVariable: 0
+            name: 
+            tooltip: 
+            showInInspector: 0
+            networkSync: 0
+            value: {fileID: 0}
+        animationCurveParams: []
+        functionCallParams: []
+        fsmTemplateControlParams: []
+        fsmEventTargetParams: []
+        fsmPropertyParams: []
+        layoutOptionParams: []
+        fsmStringParams: []
+        fsmObjectParams:
+        - useVariable: 1
+          name: damageSound
+          tooltip: 
+          showInInspector: 1
+          networkSync: 0
+          typeName: UnityEngine.AudioClip
+          value: {fileID: 8300000, guid: a2c4afa4edc26494c9d118b432321eaa, type: 3}
+        fsmVarParams: []
+        fsmArrayParams: []
+        fsmEnumParams: []
+        fsmFloatParams:
+        - useVariable: 1
+          name: volume
+          tooltip: 
+          showInInspector: 1
+          networkSync: 0
+          value: 1
+        fsmIntParams: []
+        fsmBoolParams:
+        - useVariable: 0
+          name: 
+          tooltip: 
+          showInInspector: 0
+          networkSync: 0
+          value: 0
+        fsmVector2Params: []
+        fsmVector3Params: []
+        fsmColorParams: []
+        fsmRectParams: []
+        fsmQuaternionParams: []
+        stringParams:
+        - 
+        byteData: 
+        arrayParamSizes: 
+        arrayParamTypes: []
+        customTypeSizes: 
+        customTypeNames: []
+        paramDataType: 140000000f000000180000001100000017000000
+        paramName:
+        - gameObject
+        - volume
+        - oneShotClip
+        - WaitForEndOfClip
+        - finishedEvent
+        paramDataPos: 0000000000000000000000000000000000000000
+        paramByteDataSize: 0000000000000000000000000000000000000000
+    - name: Listener
+      description: 
+      colorIndex: 6
+      position:
+        serializedVersion: 2
+        x: 84.16406
+        y: 188.71875
+        width: 199
+        height: 32
+      isBreakpoint: 0
+      isSequence: 0
+      hideUnused: 0
+      transitions:
+      - fsmEvent:
+          name: DAMAGED_NOPOSTUREBAR
+          isSystemEvent: 0
+          isGlobal: 0
+        toState: Set Enemy To Enemy Layer
+        linkStyle: 0
+        linkConstraint: 0
+        colorIndex: 0
+      actionData:
+        actionNames: []
+        customNames: []
+        actionEnabled: 
+        actionIsOpen: 
+        actionStartIndex: 
+        actionHashCodes: 
+        unityObjectParams: []
+        fsmGameObjectParams: []
+        fsmOwnerDefaultParams: []
+        animationCurveParams: []
+        functionCallParams: []
+        fsmTemplateControlParams: []
+        fsmEventTargetParams: []
+        fsmPropertyParams: []
+        layoutOptionParams: []
+        fsmStringParams: []
+        fsmObjectParams: []
+        fsmVarParams: []
+        fsmArrayParams: []
+        fsmEnumParams: []
+        fsmFloatParams: []
+        fsmIntParams: []
+        fsmBoolParams: []
+        fsmVector2Params: []
+        fsmVector3Params: []
+        fsmColorParams: []
+        fsmRectParams: []
+        fsmQuaternionParams: []
+        stringParams: []
+        byteData: 
+        arrayParamSizes: 
+        arrayParamTypes: []
+        customTypeSizes: 
+        customTypeNames: []
+        paramDataType: 
+        paramName: []
+        paramDataPos: 
+        paramByteDataSize: 
     events:
+    - name: FINISHED
+      isSystemEvent: 1
+      isGlobal: 0
     - name: DAMAGED
       isSystemEvent: 0
       isGlobal: 0
-    - name: NO
-      isSystemEvent: 0
-      isGlobal: 0
-    - name: YES
-      isSystemEvent: 0
-      isGlobal: 0
-    - name: CONTINUE
-      isSystemEvent: 0
-      isGlobal: 0
-    - name: POSTUREDEPLETED
-      isSystemEvent: 0
-      isGlobal: 0
-    - name: ISNOTDEAD
+    - name: DAMAGED_NOPOSTUREBAR
       isSystemEvent: 0
       isGlobal: 0
     - name: ISDEAD
       isSystemEvent: 0
       isGlobal: 0
-    globalTransitions:
-    - fsmEvent:
-        name: DAMAGED
-        isSystemEvent: 0
-        isGlobal: 0
-      toState: STUNNED
-      linkStyle: 0
-      linkConstraint: 0
-      colorIndex: 0
+    - name: ISNOTDEAD
+      isSystemEvent: 0
+      isGlobal: 0
+    - name: NO
+      isSystemEvent: 0
+      isGlobal: 0
+    - name: NOPOSTUREBAR
+      isSystemEvent: 0
+      isGlobal: 0
+    - name: YES
+      isSystemEvent: 0
+      isGlobal: 0
+    globalTransitions: []
     variables:
       floatVariables:
       - useVariable: 1
@@ -5545,34 +5375,52 @@ MonoBehaviour:
         showInInspector: 1
         networkSync: 0
         value: 1
-      intVariables:
-      - useVariable: 1
-        name: damage
-        tooltip: 
-        showInInspector: 0
-        networkSync: 0
-        value: 0
       - useVariable: 1
         name: damagePenetrationPercentage
         tooltip: 
         showInInspector: 1
         networkSync: 0
         value: 100
+      intVariables:
       - useVariable: 1
-        name: damag
+        name: 
         tooltip: 
         showInInspector: 0
         networkSync: 0
         value: 0
       - useVariable: 1
-        name: damagePenetration
+        name: 
+        tooltip: 
+        showInInspector: 1
+        networkSync: 0
+        value: 0
+      - useVariable: 1
+        name: 
         tooltip: 
         showInInspector: 0
         networkSync: 0
-        value: 100
+        value: 0
+      - useVariable: 1
+        name: 
+        tooltip: 
+        showInInspector: 0
+        networkSync: 0
+        value: 0
+      - useVariable: 1
+        name: 
+        tooltip: 
+        showInInspector: 0
+        networkSync: 0
+        value: 0
       boolVariables:
       - useVariable: 1
         name: isCharging
+        tooltip: 
+        showInInspector: 0
+        networkSync: 0
+        value: 0
+      - useVariable: 1
+        name: isDead
         tooltip: 
         showInInspector: 0
         networkSync: 0
@@ -5612,7 +5460,7 @@ MonoBehaviour:
       enumVariables: []
       categories:
       - 
-      variableCategoryIDs: 000000000000000000000000000000000000000000000000000000000000000000000000
+      variableCategoryIDs: 000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
     description: 
     docUrl: 
     showStateLabel: 0
@@ -5622,7 +5470,7 @@ MonoBehaviour:
     locked: 0
     manualUpdate: 0
     keepDelayedEventsOnStateExit: 0
-    preprocessed: 1
+    preprocessed: 0
     ExposedEvents: []
     RestartOnEnable: 1
     EnableDebugFlow: 0
@@ -5673,15 +5521,15 @@ MonoBehaviour:
     dataVersion: 2
     usedInTemplate: {fileID: 0}
     name: StaggerState
-    startState: Already Initialized?
+    startState: Set FSM in Health Component
     states:
     - name: Set FSM in Health Component
       description: 
       colorIndex: 0
       position:
         serializedVersion: 2
-        x: 81.328125
-        y: 182.69531
+        x: 281.14844
+        y: 113.828125
         width: 204
         height: 32
       isBreakpoint: 0
@@ -5692,19 +5540,21 @@ MonoBehaviour:
           name: FINISHED
           isSystemEvent: 1
           isGlobal: 0
-        toState: Stagger Audio
+        toState: Already Initialized?
         linkStyle: 0
         linkConstraint: 0
         colorIndex: 0
       actionData:
         actionNames:
         - HutongGames.PlayMaker.Actions.CallMethod
+        - HutongGames.PlayMaker.Actions.SetBoolValue
         customNames:
         - 
-        actionEnabled: 01
-        actionIsOpen: 01
-        actionStartIndex: 00000000
-        actionHashCodes: ca51e900
+        - 
+        actionEnabled: 0101
+        actionIsOpen: 0101
+        actionStartIndex: 0000000008000000
+        actionHashCodes: ca51e90027fbe103
         unityObjectParams: []
         fsmGameObjectParams: []
         fsmOwnerDefaultParams: []
@@ -5720,7 +5570,7 @@ MonoBehaviour:
           tooltip: 
           showInInspector: 0
           networkSync: 0
-          value: SetCurrentState
+          value: SetCurrentStateInfo
         fsmObjectParams:
         - useVariable: 1
           name: health
@@ -5740,6 +5590,30 @@ MonoBehaviour:
           stringValue: 
           vector4Value: {x: 0, y: 0, z: 0, w: 0}
           objectReference: {fileID: 5733045224994822480}
+          arrayValue:
+            useVariable: 0
+            name: 
+            tooltip: 
+            showInInspector: 0
+            networkSync: 0
+            type: -1
+            objectTypeName: 
+            floatValues: []
+            intValues: 
+            boolValues: 
+            stringValues: []
+            vector4Values: []
+            objectReferences: []
+        - variableName: 
+          objectType: UnityEngine.Object
+          useVariable: 1
+          type: 0
+          floatValue: 0
+          intValue: 0
+          boolValue: 0
+          stringValue: 
+          vector4Value: {x: 0, y: 0, z: 0, w: 0}
+          objectReference: {fileID: 0}
           arrayValue:
             useVariable: 0
             name: 
@@ -5782,37 +5656,53 @@ MonoBehaviour:
         fsmEnumParams: []
         fsmFloatParams: []
         fsmIntParams: []
-        fsmBoolParams: []
+        fsmBoolParams:
+        - useVariable: 1
+          name: isAnimating
+          tooltip: 
+          showInInspector: 0
+          networkSync: 0
+          value: 0
+        - useVariable: 0
+          name: 
+          tooltip: 
+          showInInspector: 0
+          networkSync: 0
+          value: 0
         fsmVector2Params: []
         fsmVector3Params: []
         fsmColorParams: []
         fsmRectParams: []
         fsmQuaternionParams: []
         stringParams: []
-        byteData: 0000
-        arrayParamSizes: 01000000
+        byteData: 000000
+        arrayParamSizes: 02000000
         arrayParamTypes:
         - HutongGames.PlayMaker.FsmVar
         customTypeSizes: 
         customTypeNames: []
-        paramDataType: 18000000120000000c00000027000000270000000100000001000000
+        paramDataType: 18000000120000000c0000002700000027000000270000000100000001000000110000001100000001000000
         paramName:
         - behaviour
         - methodName
         - parameters
         - 
+        - 
         - storeResult
         - everyFrame
         - manualUI
-        paramDataPos: 00000000000000000000000000000000010000000000000001000000
-        paramByteDataSize: 00000000000000000000000000000000000000000100000001000000
+        - boolVariable
+        - boolValue
+        - everyFrame
+        paramDataPos: 0000000000000000000000000000000001000000020000000000000001000000000000000100000002000000
+        paramByteDataSize: 0000000000000000000000000000000000000000000000000100000001000000000000000000000001000000
     - name: DEAD
       description: 
       colorIndex: 2
       position:
         serializedVersion: 2
-        x: 528.6719
-        y: 272.03906
+        x: 742.5
+        y: 328.82812
         width: 100
         height: 16
       isBreakpoint: 0
@@ -5913,41 +5803,31 @@ MonoBehaviour:
       colorIndex: 4
       position:
         serializedVersion: 2
-        x: 74.75
-        y: 255.03906
+        x: 271.5703
+        y: 266.1875
         width: 115
-        height: 48
+        height: 32
       isBreakpoint: 0
       isSequence: 1
       hideUnused: 0
       transitions:
       - fsmEvent:
-          name: ISDEAD
-          isSystemEvent: 0
+          name: FINISHED
+          isSystemEvent: 1
           isGlobal: 0
-        toState: DEAD
-        linkStyle: 0
-        linkConstraint: 0
-        colorIndex: 0
-      - fsmEvent:
-          name: ISNOTDEAD
-          isSystemEvent: 0
-          isGlobal: 0
-        toState: StartAnimation
+        toState: IsDead
         linkStyle: 0
         linkConstraint: 0
         colorIndex: 0
       actionData:
         actionNames:
         - HutongGames.PlayMaker.Actions.AudioPlay
-        - HutongGames.PlayMaker.Actions.CallMethod
         customNames:
         - 
-        - 
-        actionEnabled: 0101
-        actionIsOpen: 0101
-        actionStartIndex: 0000000005000000
-        actionHashCodes: 81294e04ca51e900
+        actionEnabled: 01
+        actionIsOpen: 01
+        actionStartIndex: 00000000
+        actionHashCodes: 81294e04
         unityObjectParams: []
         fsmGameObjectParams: []
         fsmOwnerDefaultParams:
@@ -5965,13 +5845,7 @@ MonoBehaviour:
         fsmEventTargetParams: []
         fsmPropertyParams: []
         layoutOptionParams: []
-        fsmStringParams:
-        - useVariable: 0
-          name: 
-          tooltip: 
-          showInInspector: 0
-          networkSync: 0
-          value: IsDeadCheck
+        fsmStringParams: []
         fsmObjectParams:
         - useVariable: 1
           name: staggerSound
@@ -5980,38 +5854,7 @@ MonoBehaviour:
           networkSync: 0
           typeName: UnityEngine.AudioClip
           value: {fileID: 8300000, guid: 2829b78c6bb193e48a1d92f8f4da2dce, type: 3}
-        - useVariable: 1
-          name: health
-          tooltip: 
-          showInInspector: 0
-          networkSync: 0
-          typeName: PSmash.Attributes.EnemyHealth
-          value: {fileID: 3070385579913315234}
-        fsmVarParams:
-        - variableName: 
-          objectType: 
-          useVariable: 0
-          type: -1
-          floatValue: 0
-          intValue: 0
-          boolValue: 0
-          stringValue: 
-          vector4Value: {x: 0, y: 0, z: 0, w: 0}
-          objectReference: {fileID: 0}
-          arrayValue:
-            useVariable: 0
-            name: 
-            tooltip: 
-            showInInspector: 0
-            networkSync: 0
-            type: -1
-            objectTypeName: 
-            floatValues: []
-            intValues: 
-            boolValues: 
-            stringValues: []
-            vector4Values: []
-            objectReferences: []
+        fsmVarParams: []
         fsmArrayParams: []
         fsmEnumParams: []
         fsmFloatParams:
@@ -6036,34 +5879,27 @@ MonoBehaviour:
         fsmQuaternionParams: []
         stringParams:
         - 
-        byteData: 0000
-        arrayParamSizes: 00000000
-        arrayParamTypes:
-        - HutongGames.PlayMaker.FsmVar
+        byteData: 
+        arrayParamSizes: 
+        arrayParamTypes: []
         customTypeSizes: 
         customTypeNames: []
-        paramDataType: 140000000f00000018000000110000001700000018000000120000000c000000270000000100000001000000
+        paramDataType: 140000000f000000180000001100000017000000
         paramName:
         - gameObject
         - volume
         - oneShotClip
         - WaitForEndOfClip
         - finishedEvent
-        - behaviour
-        - methodName
-        - parameters
-        - storeResult
-        - everyFrame
-        - manualUI
-        paramDataPos: 0000000000000000000000000000000000000000010000000000000000000000000000000000000001000000
-        paramByteDataSize: 0000000000000000000000000000000000000000000000000000000000000000000000000100000001000000
+        paramDataPos: 0000000000000000000000000000000000000000
+        paramByteDataSize: 0000000000000000000000000000000000000000
     - name: StartAnimation
       description: 
       colorIndex: 0
       position:
         serializedVersion: 2
-        x: 67.99219
-        y: 345.9453
+        x: 259.9922
+        y: 393.9453
         width: 119
         height: 32
       isBreakpoint: 0
@@ -6080,13 +5916,17 @@ MonoBehaviour:
         colorIndex: 0
       actionData:
         actionNames:
+        - HutongGames.PlayMaker.Actions.BoolTest
         - HutongGames.PlayMaker.Actions.SetAnimatorInt
+        - HutongGames.PlayMaker.Actions.SetBoolValue
         customNames:
         - 
-        actionEnabled: 01
-        actionIsOpen: 01
-        actionStartIndex: 00000000
-        actionHashCodes: f9152503
+        - 
+        - 
+        actionEnabled: 010101
+        actionIsOpen: 010101
+        actionStartIndex: 000000000400000009000000
+        actionHashCodes: a4c8bf00f915250327fbe103
         unityObjectParams: []
         fsmGameObjectParams: []
         fsmOwnerDefaultParams:
@@ -6123,34 +5963,61 @@ MonoBehaviour:
           showInInspector: 0
           networkSync: 0
           value: 1
-        fsmBoolParams: []
+        fsmBoolParams:
+        - useVariable: 1
+          name: isAnimating
+          tooltip: 
+          showInInspector: 0
+          networkSync: 0
+          value: 0
+        - useVariable: 1
+          name: isAnimating
+          tooltip: 
+          showInInspector: 0
+          networkSync: 0
+          value: 0
+        - useVariable: 0
+          name: 
+          tooltip: 
+          showInInspector: 0
+          networkSync: 0
+          value: 1
         fsmVector2Params: []
         fsmVector3Params: []
         fsmColorParams: []
         fsmRectParams: []
         fsmQuaternionParams: []
-        stringParams: []
-        byteData: 0000000000
+        stringParams:
+        - FINISHED
+        - 
+        byteData: 00000000000000
         arrayParamSizes: 
         arrayParamTypes: []
         customTypeSizes: 
         customTypeNames: []
-        paramDataType: 1400000012000000100000000100000007000000
+        paramDataType: 110000001700000017000000010000001400000012000000100000000100000007000000110000001100000001000000
         paramName:
+        - boolVariable
+        - isTrue
+        - isFalse
+        - everyFrame
         - gameObject
         - parameter
         - Value
         - everyFrame
         - everyFrameOption
-        paramDataPos: 0000000000000000000000000000000001000000
-        paramByteDataSize: 0000000000000000000000000100000004000000
+        - boolVariable
+        - boolValue
+        - everyFrame
+        paramDataPos: 000000000000000001000000000000000000000000000000000000000100000002000000010000000200000006000000
+        paramByteDataSize: 000000000000000000000000010000000000000000000000000000000100000004000000000000000000000001000000
     - name: CHECK NEXT ACTION
       description: 
       colorIndex: 0
       position:
         serializedVersion: 2
-        x: 412.8047
-        y: 474.48438
+        x: 509.89844
+        y: 487.92188
         width: 157
         height: 48
       isBreakpoint: 0
@@ -6314,8 +6181,8 @@ MonoBehaviour:
       colorIndex: 2
       position:
         serializedVersion: 2
-        x: 666.5156
-        y: 478.5547
+        x: 741.8281
+        y: 479.29688
         width: 100
         height: 16
       isBreakpoint: 0
@@ -6416,8 +6283,8 @@ MonoBehaviour:
       colorIndex: 2
       position:
         serializedVersion: 2
-        x: 670.91406
-        y: 528.72656
+        x: 746.22656
+        y: 529.46875
         width: 100
         height: 16
       isBreakpoint: 0
@@ -6518,8 +6385,8 @@ MonoBehaviour:
       colorIndex: 0
       position:
         serializedVersion: 2
-        x: 89
-        y: 110.96094
+        x: 274.8203
+        y: 190.10938
         width: 142
         height: 48
       isBreakpoint: 0
@@ -6530,7 +6397,7 @@ MonoBehaviour:
           name: YES
           isSystemEvent: 0
           isGlobal: 0
-        toState: Set FSM in Health Component
+        toState: Stagger Audio
         linkStyle: 0
         linkConstraint: 0
         colorIndex: 0
@@ -6600,8 +6467,8 @@ MonoBehaviour:
       colorIndex: 0
       position:
         serializedVersion: 2
-        x: 341
-        y: 152
+        x: 62.789062
+        y: 173.89844
         width: 100
         height: 32
       isBreakpoint: 0
@@ -6672,297 +6539,26 @@ MonoBehaviour:
         - everyFrame
         paramDataPos: 000000000100000000000000
         paramByteDataSize: 000000000000000001000000
-    - name: Damaged
-      description: 
-      colorIndex: 0
-      position:
-        serializedVersion: 2
-        x: 280.2578
-        y: 430.26562
-        width: 100
-        height: 32
-      isBreakpoint: 0
-      isSequence: 1
-      hideUnused: 0
-      transitions:
-      - fsmEvent:
-          name: FINISHED
-          isSystemEvent: 1
-          isGlobal: 0
-        toState: Damaged Sound
-        linkStyle: 0
-        linkConstraint: 0
-        colorIndex: 0
-      actionData:
-        actionNames:
-        - HutongGames.PlayMaker.Actions.GetEventInfo
-        - HutongGames.PlayMaker.Actions.CallMethod
-        customNames:
-        - 
-        - 
-        actionEnabled: 0101
-        actionIsOpen: 0101
-        actionStartIndex: 000000000f000000
-        actionHashCodes: d9ade603ca51e900
-        unityObjectParams: []
-        fsmGameObjectParams:
-        - useVariable: 1
-          name: 
-          tooltip: 
-          showInInspector: 0
-          networkSync: 0
-          value: {fileID: 0}
-        - useVariable: 1
-          name: 
-          tooltip: 
-          showInInspector: 0
-          networkSync: 0
-          value: {fileID: 0}
-        fsmOwnerDefaultParams: []
-        animationCurveParams: []
-        functionCallParams: []
-        fsmTemplateControlParams: []
-        fsmEventTargetParams: []
-        fsmPropertyParams: []
-        layoutOptionParams: []
-        fsmStringParams:
-        - useVariable: 1
-          name: 
-          tooltip: 
-          showInInspector: 0
-          networkSync: 0
-          value: 
-        - useVariable: 1
-          name: 
-          tooltip: 
-          showInInspector: 0
-          networkSync: 0
-          value: 
-        - useVariable: 0
-          name: 
-          tooltip: 
-          showInInspector: 0
-          networkSync: 0
-          value: Damaged
-        fsmObjectParams:
-        - useVariable: 1
-          name: 
-          tooltip: 
-          showInInspector: 0
-          networkSync: 0
-          typeName: 
-          value: {fileID: 0}
-        - useVariable: 1
-          name: 
-          tooltip: 
-          showInInspector: 0
-          networkSync: 0
-          typeName: 
-          value: {fileID: 0}
-        - useVariable: 1
-          name: 
-          tooltip: 
-          showInInspector: 0
-          networkSync: 0
-          typeName: 
-          value: {fileID: 0}
-        - useVariable: 1
-          name: health
-          tooltip: 
-          showInInspector: 0
-          networkSync: 0
-          typeName: PSmash.Attributes.EnemyHealth
-          value: {fileID: 3070385579913315234}
-        fsmVarParams:
-        - variableName: damage
-          objectType: UnityEngine.Object
-          useVariable: 1
-          type: 1
-          floatValue: 0
-          intValue: 0
-          boolValue: 0
-          stringValue: 
-          vector4Value: {x: 0, y: 0, z: 0, w: 0}
-          objectReference: {fileID: 0}
-          arrayValue:
-            useVariable: 0
-            name: 
-            tooltip: 
-            showInInspector: 0
-            networkSync: 0
-            type: -1
-            objectTypeName: 
-            floatValues: []
-            intValues: 
-            boolValues: 
-            stringValues: []
-            vector4Values: []
-            objectReferences: []
-        - variableName: damagePenetrationPercentage
-          objectType: UnityEngine.Object
-          useVariable: 1
-          type: 1
-          floatValue: 0
-          intValue: 100
-          boolValue: 0
-          stringValue: 
-          vector4Value: {x: 0, y: 0, z: 0, w: 0}
-          objectReference: {fileID: 0}
-          arrayValue:
-            useVariable: 0
-            name: 
-            tooltip: 
-            showInInspector: 0
-            networkSync: 0
-            type: -1
-            objectTypeName: 
-            floatValues: []
-            intValues: 
-            boolValues: 
-            stringValues: []
-            vector4Values: []
-            objectReferences: []
-        - variableName: 
-          objectType: 
-          useVariable: 0
-          type: -1
-          floatValue: 0
-          intValue: 0
-          boolValue: 0
-          stringValue: 
-          vector4Value: {x: 0, y: 0, z: 0, w: 0}
-          objectReference: {fileID: 0}
-          arrayValue:
-            useVariable: 0
-            name: 
-            tooltip: 
-            showInInspector: 0
-            networkSync: 0
-            type: -1
-            objectTypeName: 
-            floatValues: []
-            intValues: 
-            boolValues: 
-            stringValues: []
-            vector4Values: []
-            objectReferences: []
-        fsmArrayParams: []
-        fsmEnumParams: []
-        fsmFloatParams:
-        - useVariable: 1
-          name: 
-          tooltip: 
-          showInInspector: 0
-          networkSync: 0
-          value: 0
-        fsmIntParams:
-        - useVariable: 1
-          name: damage
-          tooltip: 
-          showInInspector: 0
-          networkSync: 0
-          value: 0
-        fsmBoolParams:
-        - useVariable: 1
-          name: 
-          tooltip: 
-          showInInspector: 0
-          networkSync: 0
-          value: 0
-        fsmVector2Params:
-        - useVariable: 1
-          name: 
-          tooltip: 
-          showInInspector: 0
-          networkSync: 0
-          value: {x: 0, y: 0}
-        fsmVector3Params:
-        - useVariable: 1
-          name: 
-          tooltip: 
-          showInInspector: 0
-          networkSync: 0
-          value: {x: 0, y: 0, z: 0}
-        fsmColorParams:
-        - useVariable: 1
-          name: 
-          tooltip: 
-          showInInspector: 0
-          networkSync: 0
-          value: {r: 0, g: 0, b: 0, a: 1}
-        fsmRectParams:
-        - useVariable: 1
-          name: 
-          tooltip: 
-          showInInspector: 0
-          networkSync: 0
-          value:
-            serializedVersion: 2
-            x: 0
-            y: 0
-            width: 0
-            height: 0
-        fsmQuaternionParams:
-        - useVariable: 1
-          name: 
-          tooltip: 
-          showInInspector: 0
-          networkSync: 0
-          value: {x: 0, y: 0, z: 0, w: 0}
-        stringParams: []
-        byteData: 0000
-        arrayParamSizes: 02000000
-        arrayParamTypes:
-        - HutongGames.PlayMaker.FsmVar
-        customTypeSizes: 
-        customTypeNames: []
-        paramDataType: 130000001200000011000000100000000f000000250000001c00000012000000130000001e000000230000002000000021000000190000001800000018000000120000000c0000002700000027000000270000000100000001000000
-        paramName:
-        - sentByGameObject
-        - fsmName
-        - getBoolData
-        - getIntData
-        - getFloatData
-        - getVector2Data
-        - getVector3Data
-        - getStringData
-        - getGameObjectData
-        - getRectData
-        - getQuaternionData
-        - getMaterialData
-        - getTextureData
-        - getColorData
-        - getObjectData
-        - behaviour
-        - methodName
-        - parameters
-        - 
-        - 
-        - storeResult
-        - everyFrame
-        - manualUI
-        paramDataPos: 0000000000000000000000000000000000000000000000000000000001000000010000000000000000000000000000000100000000000000020000000300000002000000000000000000000001000000020000000000000001000000
-        paramByteDataSize: 0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000100000001000000
     - name: Listener
       description: 
-      colorIndex: 0
+      colorIndex: 6
       position:
         serializedVersion: 2
-        x: 64.71094
-        y: 420.9375
-        width: 132
+        x: 244.875
+        y: 460.67188
+        width: 199
         height: 48
       isBreakpoint: 0
       isSequence: 0
       hideUnused: 0
       transitions:
       - fsmEvent:
-          name: DAMAGED
+          name: DAMAGED_NOPOSTUREBAR
           isSystemEvent: 0
           isGlobal: 0
-        toState: Damaged
+        toState: Stagger Audio
         linkStyle: 0
-        linkConstraint: 0
+        linkConstraint: 1
         colorIndex: 0
       - fsmEvent:
           name: ACTIONFINISHED
@@ -7061,21 +6657,21 @@ MonoBehaviour:
         - everyFrame
         paramDataPos: 0000000000000000000000000000000001000000010000000200000000000000010000000200000005000000
         paramByteDataSize: 0000000000000000000000000100000004000000000000000000000000000000000000000000000001000000
-    - name: Damaged Sound
+    - name: IsDead
       description: 
       colorIndex: 4
       position:
         serializedVersion: 2
-        x: 276.6328
-        y: 354.96875
-        width: 127
+        x: 267.7578
+        y: 313.0078
+        width: 100
         height: 48
       isBreakpoint: 0
       isSequence: 1
       hideUnused: 0
       transitions:
       - fsmEvent:
-          name: ISDEAD
+          name: YES
           isSystemEvent: 0
           isGlobal: 0
         toState: DEAD
@@ -7083,35 +6679,27 @@ MonoBehaviour:
         linkConstraint: 0
         colorIndex: 0
       - fsmEvent:
-          name: ISNOTDEAD
+          name: NO
           isSystemEvent: 0
           isGlobal: 0
-        toState: Listener
+        toState: StartAnimation
         linkStyle: 0
         linkConstraint: 0
         colorIndex: 0
       actionData:
         actionNames:
-        - HutongGames.PlayMaker.Actions.AudioPlay
         - HutongGames.PlayMaker.Actions.CallMethod
+        - HutongGames.PlayMaker.Actions.BoolTest
         customNames:
         - 
         - 
         actionEnabled: 0101
         actionIsOpen: 0101
-        actionStartIndex: 0000000005000000
-        actionHashCodes: 81294e04ca51e900
+        actionStartIndex: 0000000006000000
+        actionHashCodes: ca51e900a4c8bf00
         unityObjectParams: []
         fsmGameObjectParams: []
-        fsmOwnerDefaultParams:
-        - ownerOption: 0
-          gameObject:
-            useVariable: 0
-            name: 
-            tooltip: 
-            showInInspector: 0
-            networkSync: 0
-            value: {fileID: 0}
+        fsmOwnerDefaultParams: []
         animationCurveParams: []
         functionCallParams: []
         fsmTemplateControlParams: []
@@ -7127,13 +6715,6 @@ MonoBehaviour:
           value: IsDeadCheck
         fsmObjectParams:
         - useVariable: 1
-          name: damageSound
-          tooltip: 
-          showInInspector: 1
-          networkSync: 0
-          typeName: UnityEngine.AudioClip
-          value: {fileID: 8300000, guid: a2c4afa4edc26494c9d118b432321eaa, type: 3}
-        - useVariable: 1
           name: health
           tooltip: 
           showInInspector: 0
@@ -7141,10 +6722,10 @@ MonoBehaviour:
           typeName: PSmash.Attributes.EnemyHealth
           value: {fileID: 3070385579913315234}
         fsmVarParams:
-        - variableName: 
-          objectType: 
-          useVariable: 0
-          type: -1
+        - variableName: isDead
+          objectType: UnityEngine.Object
+          useVariable: 1
+          type: 2
           floatValue: 0
           intValue: 0
           boolValue: 0
@@ -7167,17 +6748,11 @@ MonoBehaviour:
             objectReferences: []
         fsmArrayParams: []
         fsmEnumParams: []
-        fsmFloatParams:
-        - useVariable: 1
-          name: volume
-          tooltip: 
-          showInInspector: 1
-          networkSync: 0
-          value: 1
+        fsmFloatParams: []
         fsmIntParams: []
         fsmBoolParams:
-        - useVariable: 0
-          name: 
+        - useVariable: 1
+          name: isDead
           tooltip: 
           showInInspector: 0
           networkSync: 0
@@ -7188,28 +6763,28 @@ MonoBehaviour:
         fsmRectParams: []
         fsmQuaternionParams: []
         stringParams:
-        - 
-        byteData: 0000
+        - YES
+        - NO
+        byteData: 000000
         arrayParamSizes: 00000000
         arrayParamTypes:
         - HutongGames.PlayMaker.FsmVar
         customTypeSizes: 
         customTypeNames: []
-        paramDataType: 140000000f00000018000000110000001700000018000000120000000c000000270000000100000001000000
+        paramDataType: 18000000120000000c00000027000000010000000100000011000000170000001700000001000000
         paramName:
-        - gameObject
-        - volume
-        - oneShotClip
-        - WaitForEndOfClip
-        - finishedEvent
         - behaviour
         - methodName
         - parameters
         - storeResult
         - everyFrame
         - manualUI
-        paramDataPos: 0000000000000000000000000000000000000000010000000000000000000000000000000000000001000000
-        paramByteDataSize: 0000000000000000000000000000000000000000000000000000000000000000000000000100000001000000
+        - boolVariable
+        - isTrue
+        - isFalse
+        - everyFrame
+        paramDataPos: 00000000000000000000000000000000000000000100000000000000000000000100000002000000
+        paramByteDataSize: 00000000000000000000000000000000010000000100000000000000000000000000000001000000
     events:
     - name: FINISHED
       isSystemEvent: 1
@@ -7224,6 +6799,9 @@ MonoBehaviour:
       isSystemEvent: 0
       isGlobal: 0
     - name: DAMAGED
+      isSystemEvent: 0
+      isGlobal: 0
+    - name: DAMAGED_NOPOSTUREBAR
       isSystemEvent: 0
       isGlobal: 0
     - name: FLEEING
@@ -7266,46 +6844,39 @@ MonoBehaviour:
         networkSync: 0
         value: 5
       - useVariable: 1
-        name: time
+        name: 
         tooltip: 
         showInInspector: 0
         networkSync: 0
         value: 0
       - useVariable: 1
-        name: staggerAnimationTime
+        name: 
         tooltip: 
         showInInspector: 0
         networkSync: 0
         value: 0
       - useVariable: 1
-        name: maxAnimationTime
-        tooltip: 
-        showInInspector: 0
-        networkSync: 0
-        value: 1
-      - useVariable: 1
-        name: timeThreshold
+        name: 
         tooltip: 
         showInInspector: 0
         networkSync: 0
         value: 0
       - useVariable: 1
-        name: deltaTime
+        name: 
         tooltip: 
         showInInspector: 0
         networkSync: 0
         value: 0
       - useVariable: 1
-        name: volume
+        name: 
+        tooltip: 
+        showInInspector: 0
+        networkSync: 0
+        value: 0
+      - useVariable: 1
+        name: 
         tooltip: 
         showInInspector: 1
-        networkSync: 0
-        value: 1
-      intVariables:
-      - useVariable: 1
-        name: damage
-        tooltip: 
-        showInInspector: 0
         networkSync: 0
         value: 0
       - useVariable: 1
@@ -7314,18 +6885,31 @@ MonoBehaviour:
         showInInspector: 1
         networkSync: 0
         value: 100
+      intVariables:
       - useVariable: 1
-        name: damag
+        name: 
         tooltip: 
         showInInspector: 0
         networkSync: 0
         value: 0
       - useVariable: 1
-        name: damagePenetration
+        name: 
+        tooltip: 
+        showInInspector: 1
+        networkSync: 0
+        value: 0
+      - useVariable: 1
+        name: 
         tooltip: 
         showInInspector: 0
         networkSync: 0
-        value: 100
+        value: 0
+      - useVariable: 1
+        name: 
+        tooltip: 
+        showInInspector: 0
+        networkSync: 0
+        value: 0
       - useVariable: 1
         name: stagger
         tooltip: 
@@ -7335,6 +6919,18 @@ MonoBehaviour:
       boolVariables:
       - useVariable: 1
         name: isInitialized
+        tooltip: 
+        showInInspector: 0
+        networkSync: 0
+        value: 0
+      - useVariable: 1
+        name: isAnimating
+        tooltip: 
+        showInInspector: 0
+        networkSync: 0
+        value: 0
+      - useVariable: 1
+        name: isDead
         tooltip: 
         showInInspector: 0
         networkSync: 0
@@ -7375,12 +6971,12 @@ MonoBehaviour:
         typeName: UnityEngine.AudioClip
         value: {fileID: 8300000, guid: 2829b78c6bb193e48a1d92f8f4da2dce, type: 3}
       - useVariable: 1
-        name: damageSound
+        name: 
         tooltip: 
         showInInspector: 1
         networkSync: 0
-        typeName: UnityEngine.AudioClip
-        value: {fileID: 8300000, guid: a2c4afa4edc26494c9d118b432321eaa, type: 3}
+        typeName: 
+        value: {fileID: 0}
       materialVariables: []
       textureVariables: []
       arrayVariables: []
@@ -7388,7 +6984,7 @@ MonoBehaviour:
       categories:
       - 
       - Exposed
-      variableCategoryIDs: 0100000000000000010000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000100000000000000
+      variableCategoryIDs: 0100000000000000010000000000000000000000000000000000000000000000000000000100000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000100000000000000
     description: 
     docUrl: 
     showStateLabel: 0
@@ -7398,7 +6994,7 @@ MonoBehaviour:
     locked: 0
     manualUpdate: 0
     keepDelayedEventsOnStateExit: 0
-    preprocessed: 1
+    preprocessed: 0
     ExposedEvents: []
     RestartOnEnable: 1
     EnableDebugFlow: 0
@@ -7876,7 +7472,7 @@ MonoBehaviour:
           tooltip: 
           showInInspector: 0
           networkSync: 0
-          value: SetCurrentState
+          value: SetCurrentStateInfo
         fsmObjectParams:
         - useVariable: 1
           name: health
@@ -7896,6 +7492,30 @@ MonoBehaviour:
           stringValue: 
           vector4Value: {x: 0, y: 0, z: 0, w: 0}
           objectReference: {fileID: 6333847898779930481}
+          arrayValue:
+            useVariable: 0
+            name: 
+            tooltip: 
+            showInInspector: 0
+            networkSync: 0
+            type: -1
+            objectTypeName: 
+            floatValues: []
+            intValues: 
+            boolValues: 
+            stringValues: []
+            vector4Values: []
+            objectReferences: []
+        - variableName: 
+          objectType: UnityEngine.Object
+          useVariable: 0
+          type: 0
+          floatValue: 0
+          intValue: 0
+          boolValue: 0
+          stringValue: 
+          vector4Value: {x: 0, y: 0, z: 0, w: 0}
+          objectReference: {fileID: 0}
           arrayValue:
             useVariable: 0
             name: 
@@ -7946,22 +7566,23 @@ MonoBehaviour:
         fsmQuaternionParams: []
         stringParams: []
         byteData: 0000
-        arrayParamSizes: 01000000
+        arrayParamSizes: 02000000
         arrayParamTypes:
         - HutongGames.PlayMaker.FsmVar
         customTypeSizes: 
         customTypeNames: []
-        paramDataType: 18000000120000000c00000027000000270000000100000001000000
+        paramDataType: 18000000120000000c0000002700000027000000270000000100000001000000
         paramName:
         - behaviour
         - methodName
         - parameters
         - 
+        - 
         - storeResult
         - everyFrame
         - manualUI
-        paramDataPos: 00000000000000000000000000000000010000000000000001000000
-        paramByteDataSize: 00000000000000000000000000000000000000000100000001000000
+        paramDataPos: 0000000000000000000000000000000001000000020000000000000001000000
+        paramByteDataSize: 0000000000000000000000000000000000000000000000000100000001000000
     - name: Drop Monster Remains
       description: 
       colorIndex: 0
@@ -8465,7 +8086,7 @@ MonoBehaviour:
     locked: 0
     manualUpdate: 0
     keepDelayedEventsOnStateExit: 0
-    preprocessed: 1
+    preprocessed: 0
     ExposedEvents: []
     RestartOnEnable: 1
     EnableDebugFlow: 0
@@ -8523,8 +8144,8 @@ MonoBehaviour:
       colorIndex: 0
       position:
         serializedVersion: 2
-        x: 65
-        y: 223.35156
+        x: 52.9375
+        y: 211.5
         width: 100
         height: 32
       isBreakpoint: 0
@@ -8638,30 +8259,22 @@ MonoBehaviour:
         paramByteDataSize: 00000000000000000000000000000000000000000400000001000000000000000000000001000000
     - name: MOVING
       description: 
-      colorIndex: 0
+      colorIndex: 6
       position:
         serializedVersion: 2
-        x: 255.99219
+        x: 239.99219
         y: 297.09375
-        width: 100
+        width: 199
         height: 64
       isBreakpoint: 0
       isSequence: 0
       hideUnused: 0
       transitions:
       - fsmEvent:
-          name: ATTACK
+          name: DAMAGED_NOPOSTUREBAR
           isSystemEvent: 0
           isGlobal: 0
-        toState: ATTACK
-        linkStyle: 0
-        linkConstraint: 0
-        colorIndex: 0
-      - fsmEvent:
-          name: DAMAGED
-          isSystemEvent: 0
-          isGlobal: 0
-        toState: Damaged
+        toState: Damaged Sound 2
         linkStyle: 0
         linkConstraint: 0
         colorIndex: 0
@@ -8670,6 +8283,14 @@ MonoBehaviour:
           isSystemEvent: 0
           isGlobal: 0
         toState: MOVING 2
+        linkStyle: 0
+        linkConstraint: 0
+        colorIndex: 0
+      - fsmEvent:
+          name: ATTACK
+          isSystemEvent: 0
+          isGlobal: 0
+        toState: ATTACK
         linkStyle: 0
         linkConstraint: 0
         colorIndex: 0
@@ -9002,7 +8623,7 @@ MonoBehaviour:
       colorIndex: 0
       position:
         serializedVersion: 2
-        x: 262.09375
+        x: 246.09375
         y: 173
         width: 106
         height: 48
@@ -9084,8 +8705,8 @@ MonoBehaviour:
       colorIndex: 2
       position:
         serializedVersion: 2
-        x: 484.0625
-        y: 315.72656
+        x: 687.5078
+        y: 343.60938
         width: 100
         height: 16
       isBreakpoint: 0
@@ -9186,7 +8807,7 @@ MonoBehaviour:
       colorIndex: 0
       position:
         serializedVersion: 2
-        x: 281
+        x: 265
         y: 108.40625
         width: 204
         height: 32
@@ -9226,7 +8847,7 @@ MonoBehaviour:
           tooltip: 
           showInInspector: 0
           networkSync: 0
-          value: SetCurrentState
+          value: SetCurrentStateInfo
         fsmObjectParams:
         - useVariable: 1
           name: health
@@ -9246,6 +8867,30 @@ MonoBehaviour:
           stringValue: 
           vector4Value: {x: 0, y: 0, z: 0, w: 0}
           objectReference: {fileID: 6380085544928451285}
+          arrayValue:
+            useVariable: 0
+            name: 
+            tooltip: 
+            showInInspector: 0
+            networkSync: 0
+            type: -1
+            objectTypeName: 
+            floatValues: []
+            intValues: 
+            boolValues: 
+            stringValues: []
+            vector4Values: []
+            objectReferences: []
+        - variableName: damagePenetrationPercentage
+          objectType: UnityEngine.Object
+          useVariable: 1
+          type: 0
+          floatValue: 100
+          intValue: 0
+          boolValue: 0
+          stringValue: 
+          vector4Value: {x: 0, y: 0, z: 0, w: 0}
+          objectReference: {fileID: 0}
           arrayValue:
             useVariable: 0
             name: 
@@ -9296,29 +8941,30 @@ MonoBehaviour:
         fsmQuaternionParams: []
         stringParams: []
         byteData: 0000
-        arrayParamSizes: 01000000
+        arrayParamSizes: 02000000
         arrayParamTypes:
         - HutongGames.PlayMaker.FsmVar
         customTypeSizes: 
         customTypeNames: []
-        paramDataType: 18000000120000000c00000027000000270000000100000001000000
+        paramDataType: 18000000120000000c0000002700000027000000270000000100000001000000
         paramName:
         - behaviour
         - methodName
         - parameters
         - 
+        - 
         - storeResult
         - everyFrame
         - manualUI
-        paramDataPos: 00000000000000000000000000000000010000000000000001000000
-        paramByteDataSize: 00000000000000000000000000000000000000000100000001000000
+        paramDataPos: 0000000000000000000000000000000001000000020000000000000001000000
+        paramByteDataSize: 0000000000000000000000000000000000000000000000000100000001000000
     - name: DEAD
       description: 
       colorIndex: 2
       position:
         serializedVersion: 2
-        x: 479
-        y: 503.6875
+        x: 681.3828
+        y: 529.78125
         width: 100
         height: 16
       isBreakpoint: 0
@@ -9414,300 +9060,29 @@ MonoBehaviour:
         - everyFrame
         paramDataPos: 00000000000000000000000000000000
         paramByteDataSize: 00000000000000000000000001000000
-    - name: Damaged
+    - name: IsDead
       description: 
       colorIndex: 0
       position:
         serializedVersion: 2
-        x: 57.015625
-        y: 391.0703
+        x: 484.1797
+        y: 508.85938
         width: 100
-        height: 32
-      isBreakpoint: 0
-      isSequence: 1
-      hideUnused: 0
-      transitions:
-      - fsmEvent:
-          name: FINISHED
-          isSystemEvent: 1
-          isGlobal: 0
-        toState: Damaged Sound
-        linkStyle: 0
-        linkConstraint: 0
-        colorIndex: 0
-      actionData:
-        actionNames:
-        - HutongGames.PlayMaker.Actions.GetEventInfo
-        - HutongGames.PlayMaker.Actions.CallMethod
-        customNames:
-        - 
-        - 
-        actionEnabled: 0101
-        actionIsOpen: 0101
-        actionStartIndex: 000000000f000000
-        actionHashCodes: d9ade603ca51e900
-        unityObjectParams: []
-        fsmGameObjectParams:
-        - useVariable: 1
-          name: 
-          tooltip: 
-          showInInspector: 0
-          networkSync: 0
-          value: {fileID: 0}
-        - useVariable: 1
-          name: 
-          tooltip: 
-          showInInspector: 0
-          networkSync: 0
-          value: {fileID: 0}
-        fsmOwnerDefaultParams: []
-        animationCurveParams: []
-        functionCallParams: []
-        fsmTemplateControlParams: []
-        fsmEventTargetParams: []
-        fsmPropertyParams: []
-        layoutOptionParams: []
-        fsmStringParams:
-        - useVariable: 1
-          name: 
-          tooltip: 
-          showInInspector: 0
-          networkSync: 0
-          value: 
-        - useVariable: 1
-          name: 
-          tooltip: 
-          showInInspector: 0
-          networkSync: 0
-          value: 
-        - useVariable: 0
-          name: 
-          tooltip: 
-          showInInspector: 0
-          networkSync: 0
-          value: Damaged
-        fsmObjectParams:
-        - useVariable: 1
-          name: 
-          tooltip: 
-          showInInspector: 0
-          networkSync: 0
-          typeName: 
-          value: {fileID: 0}
-        - useVariable: 1
-          name: 
-          tooltip: 
-          showInInspector: 0
-          networkSync: 0
-          typeName: 
-          value: {fileID: 0}
-        - useVariable: 1
-          name: 
-          tooltip: 
-          showInInspector: 0
-          networkSync: 0
-          typeName: 
-          value: {fileID: 0}
-        - useVariable: 1
-          name: health
-          tooltip: 
-          showInInspector: 0
-          networkSync: 0
-          typeName: PSmash.Attributes.EnemyHealth
-          value: {fileID: 3070385579913315234}
-        fsmVarParams:
-        - variableName: damage
-          objectType: UnityEngine.Object
-          useVariable: 1
-          type: 1
-          floatValue: 0
-          intValue: 0
-          boolValue: 0
-          stringValue: 
-          vector4Value: {x: 0, y: 0, z: 0, w: 0}
-          objectReference: {fileID: 0}
-          arrayValue:
-            useVariable: 0
-            name: 
-            tooltip: 
-            showInInspector: 0
-            networkSync: 0
-            type: -1
-            objectTypeName: 
-            floatValues: []
-            intValues: 
-            boolValues: 
-            stringValues: []
-            vector4Values: []
-            objectReferences: []
-        - variableName: damagePenetrationPercentage
-          objectType: UnityEngine.Object
-          useVariable: 1
-          type: 1
-          floatValue: 0
-          intValue: 100
-          boolValue: 0
-          stringValue: 
-          vector4Value: {x: 0, y: 0, z: 0, w: 0}
-          objectReference: {fileID: 0}
-          arrayValue:
-            useVariable: 0
-            name: 
-            tooltip: 
-            showInInspector: 0
-            networkSync: 0
-            type: -1
-            objectTypeName: 
-            floatValues: []
-            intValues: 
-            boolValues: 
-            stringValues: []
-            vector4Values: []
-            objectReferences: []
-        - variableName: 
-          objectType: 
-          useVariable: 0
-          type: -1
-          floatValue: 0
-          intValue: 0
-          boolValue: 0
-          stringValue: 
-          vector4Value: {x: 0, y: 0, z: 0, w: 0}
-          objectReference: {fileID: 0}
-          arrayValue:
-            useVariable: 0
-            name: 
-            tooltip: 
-            showInInspector: 0
-            networkSync: 0
-            type: -1
-            objectTypeName: 
-            floatValues: []
-            intValues: 
-            boolValues: 
-            stringValues: []
-            vector4Values: []
-            objectReferences: []
-        fsmArrayParams: []
-        fsmEnumParams: []
-        fsmFloatParams:
-        - useVariable: 1
-          name: 
-          tooltip: 
-          showInInspector: 0
-          networkSync: 0
-          value: 0
-        fsmIntParams:
-        - useVariable: 1
-          name: damage
-          tooltip: 
-          showInInspector: 0
-          networkSync: 0
-          value: 0
-        fsmBoolParams:
-        - useVariable: 1
-          name: 
-          tooltip: 
-          showInInspector: 0
-          networkSync: 0
-          value: 0
-        fsmVector2Params:
-        - useVariable: 1
-          name: 
-          tooltip: 
-          showInInspector: 0
-          networkSync: 0
-          value: {x: 0, y: 0}
-        fsmVector3Params:
-        - useVariable: 1
-          name: 
-          tooltip: 
-          showInInspector: 0
-          networkSync: 0
-          value: {x: 0, y: 0, z: 0}
-        fsmColorParams:
-        - useVariable: 1
-          name: 
-          tooltip: 
-          showInInspector: 0
-          networkSync: 0
-          value: {r: 0, g: 0, b: 0, a: 1}
-        fsmRectParams:
-        - useVariable: 1
-          name: 
-          tooltip: 
-          showInInspector: 0
-          networkSync: 0
-          value:
-            serializedVersion: 2
-            x: 0
-            y: 0
-            width: 0
-            height: 0
-        fsmQuaternionParams:
-        - useVariable: 1
-          name: 
-          tooltip: 
-          showInInspector: 0
-          networkSync: 0
-          value: {x: 0, y: 0, z: 0, w: 0}
-        stringParams: []
-        byteData: 0000
-        arrayParamSizes: 02000000
-        arrayParamTypes:
-        - HutongGames.PlayMaker.FsmVar
-        customTypeSizes: 
-        customTypeNames: []
-        paramDataType: 130000001200000011000000100000000f000000250000001c00000012000000130000001e000000230000002000000021000000190000001800000018000000120000000c0000002700000027000000270000000100000001000000
-        paramName:
-        - sentByGameObject
-        - fsmName
-        - getBoolData
-        - getIntData
-        - getFloatData
-        - getVector2Data
-        - getVector3Data
-        - getStringData
-        - getGameObjectData
-        - getRectData
-        - getQuaternionData
-        - getMaterialData
-        - getTextureData
-        - getColorData
-        - getObjectData
-        - behaviour
-        - methodName
-        - parameters
-        - 
-        - 
-        - storeResult
-        - everyFrame
-        - manualUI
-        paramDataPos: 0000000000000000000000000000000000000000000000000000000001000000010000000000000000000000000000000100000000000000020000000300000002000000000000000000000001000000020000000000000001000000
-        paramByteDataSize: 0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000100000001000000
-    - name: Damaged Sound
-      description: 
-      colorIndex: 4
-      position:
-        serializedVersion: 2
-        x: 242.49219
-        y: 473.48438
-        width: 127
         height: 48
       isBreakpoint: 0
       isSequence: 1
       hideUnused: 0
       transitions:
       - fsmEvent:
-          name: ISNOTDEAD
+          name: NO
           isSystemEvent: 0
           isGlobal: 0
         toState: MOVING
         linkStyle: 0
-        linkConstraint: 0
+        linkConstraint: 1
         colorIndex: 0
       - fsmEvent:
-          name: ISDEAD
+          name: YES
           isSystemEvent: 0
           isGlobal: 0
         toState: DEAD
@@ -9716,26 +9091,18 @@ MonoBehaviour:
         colorIndex: 0
       actionData:
         actionNames:
-        - HutongGames.PlayMaker.Actions.AudioPlay
         - HutongGames.PlayMaker.Actions.CallMethod
+        - HutongGames.PlayMaker.Actions.BoolTest
         customNames:
         - 
         - 
         actionEnabled: 0101
         actionIsOpen: 0101
-        actionStartIndex: 0000000005000000
-        actionHashCodes: 81294e04ca51e900
+        actionStartIndex: 0000000006000000
+        actionHashCodes: ca51e900a4c8bf00
         unityObjectParams: []
         fsmGameObjectParams: []
-        fsmOwnerDefaultParams:
-        - ownerOption: 0
-          gameObject:
-            useVariable: 0
-            name: 
-            tooltip: 
-            showInInspector: 0
-            networkSync: 0
-            value: {fileID: 0}
+        fsmOwnerDefaultParams: []
         animationCurveParams: []
         functionCallParams: []
         fsmTemplateControlParams: []
@@ -9751,13 +9118,6 @@ MonoBehaviour:
           value: IsDeadCheck
         fsmObjectParams:
         - useVariable: 1
-          name: damageSound
-          tooltip: 
-          showInInspector: 1
-          networkSync: 0
-          typeName: UnityEngine.AudioClip
-          value: {fileID: 8300000, guid: a2c4afa4edc26494c9d118b432321eaa, type: 3}
-        - useVariable: 1
           name: health
           tooltip: 
           showInInspector: 0
@@ -9765,10 +9125,10 @@ MonoBehaviour:
           typeName: PSmash.Attributes.EnemyHealth
           value: {fileID: 3070385579913315234}
         fsmVarParams:
-        - variableName: 
-          objectType: 
-          useVariable: 0
-          type: -1
+        - variableName: IsDead
+          objectType: UnityEngine.Object
+          useVariable: 1
+          type: 2
           floatValue: 0
           intValue: 0
           boolValue: 0
@@ -9791,17 +9151,11 @@ MonoBehaviour:
             objectReferences: []
         fsmArrayParams: []
         fsmEnumParams: []
-        fsmFloatParams:
-        - useVariable: 1
-          name: volume
-          tooltip: 
-          showInInspector: 1
-          networkSync: 0
-          value: 1
+        fsmFloatParams: []
         fsmIntParams: []
         fsmBoolParams:
-        - useVariable: 0
-          name: 
+        - useVariable: 1
+          name: IsDead
           tooltip: 
           showInInspector: 0
           networkSync: 0
@@ -9812,34 +9166,34 @@ MonoBehaviour:
         fsmRectParams: []
         fsmQuaternionParams: []
         stringParams:
-        - 
-        byteData: 0000
+        - YES
+        - NO
+        byteData: 000000
         arrayParamSizes: 00000000
         arrayParamTypes:
         - HutongGames.PlayMaker.FsmVar
         customTypeSizes: 
         customTypeNames: []
-        paramDataType: 140000000f00000018000000110000001700000018000000120000000c000000270000000100000001000000
+        paramDataType: 18000000120000000c00000027000000010000000100000011000000170000001700000001000000
         paramName:
-        - gameObject
-        - volume
-        - oneShotClip
-        - WaitForEndOfClip
-        - finishedEvent
         - behaviour
         - methodName
         - parameters
         - storeResult
         - everyFrame
         - manualUI
-        paramDataPos: 0000000000000000000000000000000000000000010000000000000000000000000000000000000001000000
-        paramByteDataSize: 0000000000000000000000000000000000000000000000000000000000000000000000000100000001000000
+        - boolVariable
+        - isTrue
+        - isFalse
+        - everyFrame
+        paramDataPos: 00000000000000000000000000000000000000000100000000000000000000000100000002000000
+        paramByteDataSize: 00000000000000000000000000000000010000000100000000000000000000000000000001000000
     - name: Set Timers
       description: 
       colorIndex: 0
       position:
         serializedVersion: 2
-        x: 258.3203
+        x: 242.32031
         y: 241.78906
         width: 100
         height: 32
@@ -9851,7 +9205,7 @@ MonoBehaviour:
           name: FINISHED
           isSystemEvent: 1
           isGlobal: 0
-        toState: State 1
+        toState: MOVING
         linkStyle: 0
         linkConstraint: 0
         colorIndex: 0
@@ -9892,7 +9246,7 @@ MonoBehaviour:
           tooltip: 
           showInInspector: 1
           networkSync: 0
-          value: 3
+          value: 5
         - useVariable: 1
           name: time
           tooltip: 
@@ -9935,8 +9289,8 @@ MonoBehaviour:
       colorIndex: 2
       position:
         serializedVersion: 2
-        x: 481.9375
-        y: 424.10156
+        x: 680.96094
+        y: 424.0078
         width: 104
         height: 16
       isBreakpoint: 0
@@ -10034,15 +9388,15 @@ MonoBehaviour:
         paramByteDataSize: 00000000000000000000000001000000
     - name: MOVING 2
       description: 
-      colorIndex: 0
+      colorIndex: 6
       position:
         serializedVersion: 2
-        x: 254.76562
+        x: 238.76562
         y: 390.91406
-        width: 162
+        width: 199
         height: 64
       isBreakpoint: 0
-      isSequence: 0
+      isSequence: 1
       hideUnused: 0
       transitions:
       - fsmEvent:
@@ -10062,10 +9416,10 @@ MonoBehaviour:
         linkConstraint: 0
         colorIndex: 0
       - fsmEvent:
-          name: DAMAGED
+          name: DAMAGED_NOPOSTUREBAR
           isSystemEvent: 0
           isGlobal: 0
-        toState: Damaged
+        toState: Damaged Sound 2
         linkStyle: 0
         linkConstraint: 0
         colorIndex: 0
@@ -10082,8 +9436,8 @@ MonoBehaviour:
         - 
         - 
         - 
-        actionEnabled: 0101010101
-        actionIsOpen: 0101010101
+        actionEnabled: 0100010100
+        actionIsOpen: 0100010100
         actionStartIndex: 000000000700000012000000160000001d000000
         actionHashCodes: 5552ad056d61810336f094001bcdca041bcdca04
         unityObjectParams: []
@@ -10287,11 +9641,11 @@ MonoBehaviour:
           networkSync: 0
           value: 0
         - useVariable: 1
-          name: attackDistance
+          name: chaseRange
           tooltip: 
           showInInspector: 1
           networkSync: 0
-          value: 5
+          value: 15
         - useVariable: 0
           name: 
           tooltip: 
@@ -10305,11 +9659,11 @@ MonoBehaviour:
           networkSync: 0
           value: 0
         - useVariable: 1
-          name: chaseRange
+          name: attackDistance
           tooltip: 
           showInInspector: 1
           networkSync: 0
-          value: 9
+          value: 5
         - useVariable: 0
           name: 
           tooltip: 
@@ -10330,13 +9684,13 @@ MonoBehaviour:
         fsmRectParams: []
         fsmQuaternionParams: []
         stringParams:
+        - ATTACK
+        - ATTACK
+        - LOSTSIGHTOFPLAYER
         - 
         - ATTACK
         - 
-        - 
-        - 
-        - LOSTSIGHTOFPLAYER
-        byteData: 0000000001000102000000010101
+        byteData: 0000000000000102000000000000
         arrayParamSizes: 04000000
         arrayParamTypes:
         - HutongGames.PlayMaker.FsmVar
@@ -10382,37 +9736,47 @@ MonoBehaviour:
         - everyFrame
         paramDataPos: 0000000000000000000000000100000002000000000000000400000000000000000000000000000000000000010000000200000003000000040000000500000006000000070000000100000000000000030000000b0000000400000005000000060000000000000001000000020000000c0000000700000008000000090000000300000004000000050000000d000000
         paramByteDataSize: 000000000000000000000000000000000000000004000000010000000000000000000000000000000000000000000000000000000000000000000000010000000100000004000000000000000000000000000000010000000000000000000000000000000000000000000000000000000100000000000000000000000000000000000000000000000000000001000000
-    - name: State 1
+    - name: Damaged Sound 2
       description: 
-      colorIndex: 0
+      colorIndex: 4
       position:
         serializedVersion: 2
-        x: 458
-        y: 244
-        width: 100
+        x: 232.15625
+        y: 516.625
+        width: 137
         height: 32
       isBreakpoint: 0
-      isSequence: 0
+      isSequence: 1
       hideUnused: 0
       transitions:
       - fsmEvent:
           name: FINISHED
           isSystemEvent: 1
           isGlobal: 0
-        toState: MOVING
+        toState: IsDead
         linkStyle: 0
         linkConstraint: 0
         colorIndex: 0
       actionData:
-        actionNames: []
-        customNames: []
-        actionEnabled: 
-        actionIsOpen: 
-        actionStartIndex: 
-        actionHashCodes: 
+        actionNames:
+        - HutongGames.PlayMaker.Actions.AudioPlay
+        customNames:
+        - 
+        actionEnabled: 01
+        actionIsOpen: 01
+        actionStartIndex: 00000000
+        actionHashCodes: 81294e04
         unityObjectParams: []
         fsmGameObjectParams: []
-        fsmOwnerDefaultParams: []
+        fsmOwnerDefaultParams:
+        - ownerOption: 0
+          gameObject:
+            useVariable: 0
+            name: 
+            tooltip: 
+            showInInspector: 0
+            networkSync: 0
+            value: {fileID: 0}
         animationCurveParams: []
         functionCallParams: []
         fsmTemplateControlParams: []
@@ -10420,28 +9784,53 @@ MonoBehaviour:
         fsmPropertyParams: []
         layoutOptionParams: []
         fsmStringParams: []
-        fsmObjectParams: []
+        fsmObjectParams:
+        - useVariable: 1
+          name: damageSound
+          tooltip: 
+          showInInspector: 1
+          networkSync: 0
+          typeName: UnityEngine.AudioClip
+          value: {fileID: 8300000, guid: a2c4afa4edc26494c9d118b432321eaa, type: 3}
         fsmVarParams: []
         fsmArrayParams: []
         fsmEnumParams: []
-        fsmFloatParams: []
+        fsmFloatParams:
+        - useVariable: 1
+          name: volume
+          tooltip: 
+          showInInspector: 1
+          networkSync: 0
+          value: 1
         fsmIntParams: []
-        fsmBoolParams: []
+        fsmBoolParams:
+        - useVariable: 0
+          name: 
+          tooltip: 
+          showInInspector: 0
+          networkSync: 0
+          value: 0
         fsmVector2Params: []
         fsmVector3Params: []
         fsmColorParams: []
         fsmRectParams: []
         fsmQuaternionParams: []
-        stringParams: []
+        stringParams:
+        - 
         byteData: 
         arrayParamSizes: 
         arrayParamTypes: []
         customTypeSizes: 
         customTypeNames: []
-        paramDataType: 
-        paramName: []
-        paramDataPos: 
-        paramByteDataSize: 
+        paramDataType: 140000000f000000180000001100000017000000
+        paramName:
+        - gameObject
+        - volume
+        - oneShotClip
+        - WaitForEndOfClip
+        - finishedEvent
+        paramDataPos: 0000000000000000000000000000000000000000
+        paramByteDataSize: 0000000000000000000000000000000000000000
     events:
     - name: FINISHED
       isSystemEvent: 1
@@ -10455,19 +9844,13 @@ MonoBehaviour:
     - name: DAMAGED
       isSystemEvent: 0
       isGlobal: 0
-    - name: ISDEAD
-      isSystemEvent: 0
-      isGlobal: 0
-    - name: ISNOTDEAD
+    - name: DAMAGED_NOPOSTUREBAR
       isSystemEvent: 0
       isGlobal: 0
     - name: LOSTSIGHTOFPLAYER
       isSystemEvent: 0
       isGlobal: 0
     - name: NO
-      isSystemEvent: 0
-      isGlobal: 0
-    - name: PATROL
       isSystemEvent: 0
       isGlobal: 0
     - name: YES
@@ -10499,7 +9882,7 @@ MonoBehaviour:
         tooltip: 
         showInInspector: 1
         networkSync: 0
-        value: 1
+        value: 5
       - useVariable: 1
         name: time
         tooltip: 
@@ -10529,10 +9912,9 @@ MonoBehaviour:
         tooltip: 
         showInInspector: 1
         networkSync: 0
-        value: 9
-      intVariables:
+        value: 15
       - useVariable: 1
-        name: damage
+        name: 
         tooltip: 
         showInInspector: 0
         networkSync: 0
@@ -10543,9 +9925,28 @@ MonoBehaviour:
         showInInspector: 1
         networkSync: 0
         value: 100
+      intVariables:
+      - useVariable: 1
+        name: 
+        tooltip: 
+        showInInspector: 0
+        networkSync: 0
+        value: 0
+      - useVariable: 1
+        name: 
+        tooltip: 
+        showInInspector: 1
+        networkSync: 0
+        value: 0
       boolVariables:
       - useVariable: 1
         name: initialized
+        tooltip: 
+        showInInspector: 0
+        networkSync: 0
+        value: 0
+      - useVariable: 1
+        name: IsDead
         tooltip: 
         showInInspector: 0
         networkSync: 0
@@ -10611,7 +10012,7 @@ MonoBehaviour:
       categories:
       - 
       - Exposed
-      variableCategoryIDs: 01000000010000000000000001000000000000000000000000000000000000000100000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+      variableCategoryIDs: 01000000010000000000000001000000000000000000000000000000000000000100000000000000010000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
     description: 
     docUrl: 
     showStateLabel: 0
@@ -10621,7 +10022,7 @@ MonoBehaviour:
     locked: 0
     manualUpdate: 0
     keepDelayedEventsOnStateExit: 0
-    preprocessed: 1
+    preprocessed: 0
     ExposedEvents: []
     RestartOnEnable: 1
     EnableDebugFlow: 0
@@ -10647,7 +10048,7 @@ MonoBehaviour:
     handleJointBreak: 0
     handleJointBreak2D: 0
     handleOnGUI: 0
-    handleFixedUpdate: 1
+    handleFixedUpdate: 0
     handleLateUpdate: 0
     handleApplicationEvents: 0
     handleUiEvents: 0
@@ -12332,71 +11733,27 @@ MonoBehaviour:
     name: Suspicious State
     startState: SetCurrent FSM in Health
     states:
-    - name: State 1
+    - name: Listener
       description: 
-      colorIndex: 0
+      colorIndex: 6
       position:
         serializedVersion: 2
-        x: 50
-        y: 100
-        width: 100
-        height: 16
-      isBreakpoint: 0
-      isSequence: 0
-      hideUnused: 0
-      transitions: []
-      actionData:
-        actionNames: []
-        customNames: []
-        actionEnabled: 
-        actionIsOpen: 
-        actionStartIndex: 
-        actionHashCodes: 
-        unityObjectParams: []
-        fsmGameObjectParams: []
-        fsmOwnerDefaultParams: []
-        animationCurveParams: []
-        functionCallParams: []
-        fsmTemplateControlParams: []
-        fsmEventTargetParams: []
-        fsmPropertyParams: []
-        layoutOptionParams: []
-        fsmStringParams: []
-        fsmObjectParams: []
-        fsmVarParams: []
-        fsmArrayParams: []
-        fsmEnumParams: []
-        fsmFloatParams: []
-        fsmIntParams: []
-        fsmBoolParams: []
-        fsmVector2Params: []
-        fsmVector3Params: []
-        fsmColorParams: []
-        fsmRectParams: []
-        fsmQuaternionParams: []
-        stringParams: []
-        byteData: 
-        arrayParamSizes: 
-        arrayParamTypes: []
-        customTypeSizes: 
-        customTypeNames: []
-        paramDataType: 
-        paramName: []
-        paramDataPos: 
-        paramByteDataSize: 
-    - name: SuspiciosBehavior
-      description: 
-      colorIndex: 0
-      position:
-        serializedVersion: 2
-        x: 369.32812
-        y: 282.0625
-        width: 145
-        height: 32
+        x: 65.328125
+        y: 186.0625
+        width: 199
+        height: 48
       isBreakpoint: 0
       isSequence: 0
       hideUnused: 0
       transitions:
+      - fsmEvent:
+          name: DAMAGED_NOPOSTUREBAR
+          isSystemEvent: 0
+          isGlobal: 0
+        toState: CHASE
+        linkStyle: 0
+        linkConstraint: 0
+        colorIndex: 0
       - fsmEvent:
           name: RETURNTOPATROL
           isSystemEvent: 0
@@ -12490,8 +11847,8 @@ MonoBehaviour:
       colorIndex: 2
       position:
         serializedVersion: 2
-        x: 355.59375
-        y: 386.4453
+        x: 65.03125
+        y: 290.46094
         width: 100
         height: 16
       isBreakpoint: 0
@@ -12592,8 +11949,8 @@ MonoBehaviour:
       colorIndex: 2
       position:
         serializedVersion: 2
-        x: 592.28906
-        y: 312.58594
+        x: 350.54688
+        y: 195.79688
         width: 100
         height: 16
       isBreakpoint: 0
@@ -12689,284 +12046,13 @@ MonoBehaviour:
         - everyFrame
         paramDataPos: 00000000000000000000000000000000
         paramByteDataSize: 00000000000000000000000001000000
-    - name: Damaged
-      description: 
-      colorIndex: 0
-      position:
-        serializedVersion: 2
-        x: 790.28906
-        y: 217.58594
-        width: 100
-        height: 32
-      isBreakpoint: 0
-      isSequence: 1
-      hideUnused: 0
-      transitions:
-      - fsmEvent:
-          name: CONTINUE
-          isSystemEvent: 0
-          isGlobal: 0
-        toState: CHASE
-        linkStyle: 0
-        linkConstraint: 0
-        colorIndex: 0
-      actionData:
-        actionNames:
-        - HutongGames.PlayMaker.Actions.GetEventInfo
-        - HutongGames.PlayMaker.Actions.CallMethod
-        customNames:
-        - 
-        - 
-        actionEnabled: 0101
-        actionIsOpen: 0101
-        actionStartIndex: 000000000f000000
-        actionHashCodes: d9ade603ca51e900
-        unityObjectParams: []
-        fsmGameObjectParams:
-        - useVariable: 1
-          name: 
-          tooltip: 
-          showInInspector: 0
-          networkSync: 0
-          value: {fileID: 0}
-        - useVariable: 1
-          name: 
-          tooltip: 
-          showInInspector: 0
-          networkSync: 0
-          value: {fileID: 0}
-        fsmOwnerDefaultParams: []
-        animationCurveParams: []
-        functionCallParams: []
-        fsmTemplateControlParams: []
-        fsmEventTargetParams: []
-        fsmPropertyParams: []
-        layoutOptionParams: []
-        fsmStringParams:
-        - useVariable: 1
-          name: 
-          tooltip: 
-          showInInspector: 0
-          networkSync: 0
-          value: 
-        - useVariable: 1
-          name: 
-          tooltip: 
-          showInInspector: 0
-          networkSync: 0
-          value: 
-        - useVariable: 0
-          name: 
-          tooltip: 
-          showInInspector: 0
-          networkSync: 0
-          value: Damaged
-        fsmObjectParams:
-        - useVariable: 1
-          name: 
-          tooltip: 
-          showInInspector: 0
-          networkSync: 0
-          typeName: 
-          value: {fileID: 0}
-        - useVariable: 1
-          name: 
-          tooltip: 
-          showInInspector: 0
-          networkSync: 0
-          typeName: 
-          value: {fileID: 0}
-        - useVariable: 1
-          name: 
-          tooltip: 
-          showInInspector: 0
-          networkSync: 0
-          typeName: 
-          value: {fileID: 0}
-        - useVariable: 1
-          name: health
-          tooltip: 
-          showInInspector: 0
-          networkSync: 0
-          typeName: PSmash.Attributes.EnemyHealth
-          value: {fileID: 0}
-        fsmVarParams:
-        - variableName: damage
-          objectType: UnityEngine.Object
-          useVariable: 1
-          type: 1
-          floatValue: 0
-          intValue: 0
-          boolValue: 0
-          stringValue: 
-          vector4Value: {x: 0, y: 0, z: 0, w: 0}
-          objectReference: {fileID: 0}
-          arrayValue:
-            useVariable: 0
-            name: 
-            tooltip: 
-            showInInspector: 0
-            networkSync: 0
-            type: -1
-            objectTypeName: 
-            floatValues: []
-            intValues: 
-            boolValues: 
-            stringValues: []
-            vector4Values: []
-            objectReferences: []
-        - variableName: damagePenetrationPercentage
-          objectType: UnityEngine.Object
-          useVariable: 1
-          type: 1
-          floatValue: 0
-          intValue: 100
-          boolValue: 0
-          stringValue: 
-          vector4Value: {x: 0, y: 0, z: 0, w: 0}
-          objectReference: {fileID: 0}
-          arrayValue:
-            useVariable: 0
-            name: 
-            tooltip: 
-            showInInspector: 0
-            networkSync: 0
-            type: -1
-            objectTypeName: 
-            floatValues: []
-            intValues: 
-            boolValues: 
-            stringValues: []
-            vector4Values: []
-            objectReferences: []
-        - variableName: 
-          objectType: 
-          useVariable: 0
-          type: -1
-          floatValue: 0
-          intValue: 0
-          boolValue: 0
-          stringValue: 
-          vector4Value: {x: 0, y: 0, z: 0, w: 0}
-          objectReference: {fileID: 0}
-          arrayValue:
-            useVariable: 0
-            name: 
-            tooltip: 
-            showInInspector: 0
-            networkSync: 0
-            type: -1
-            objectTypeName: 
-            floatValues: []
-            intValues: 
-            boolValues: 
-            stringValues: []
-            vector4Values: []
-            objectReferences: []
-        fsmArrayParams: []
-        fsmEnumParams: []
-        fsmFloatParams:
-        - useVariable: 1
-          name: 
-          tooltip: 
-          showInInspector: 0
-          networkSync: 0
-          value: 0
-        fsmIntParams:
-        - useVariable: 1
-          name: damage
-          tooltip: 
-          showInInspector: 0
-          networkSync: 0
-          value: 0
-        fsmBoolParams:
-        - useVariable: 1
-          name: 
-          tooltip: 
-          showInInspector: 0
-          networkSync: 0
-          value: 0
-        fsmVector2Params:
-        - useVariable: 1
-          name: 
-          tooltip: 
-          showInInspector: 0
-          networkSync: 0
-          value: {x: 0, y: 0}
-        fsmVector3Params:
-        - useVariable: 1
-          name: 
-          tooltip: 
-          showInInspector: 0
-          networkSync: 0
-          value: {x: 0, y: 0, z: 0}
-        fsmColorParams:
-        - useVariable: 1
-          name: 
-          tooltip: 
-          showInInspector: 0
-          networkSync: 0
-          value: {r: 0, g: 0, b: 0, a: 1}
-        fsmRectParams:
-        - useVariable: 1
-          name: 
-          tooltip: 
-          showInInspector: 0
-          networkSync: 0
-          value:
-            serializedVersion: 2
-            x: 0
-            y: 0
-            width: 0
-            height: 0
-        fsmQuaternionParams:
-        - useVariable: 1
-          name: 
-          tooltip: 
-          showInInspector: 0
-          networkSync: 0
-          value: {x: 0, y: 0, z: 0, w: 0}
-        stringParams: []
-        byteData: 0000
-        arrayParamSizes: 02000000
-        arrayParamTypes:
-        - HutongGames.PlayMaker.FsmVar
-        customTypeSizes: 
-        customTypeNames: []
-        paramDataType: 130000001200000011000000100000000f000000250000001c00000012000000130000001e000000230000002000000021000000190000001800000018000000120000000c0000002700000027000000270000000100000001000000
-        paramName:
-        - sentByGameObject
-        - fsmName
-        - getBoolData
-        - getIntData
-        - getFloatData
-        - getVector2Data
-        - getVector3Data
-        - getStringData
-        - getGameObjectData
-        - getRectData
-        - getQuaternionData
-        - getMaterialData
-        - getTextureData
-        - getColorData
-        - getObjectData
-        - behaviour
-        - methodName
-        - parameters
-        - 
-        - 
-        - storeResult
-        - everyFrame
-        - manualUI
-        paramDataPos: 0000000000000000000000000000000000000000000000000000000001000000010000000000000000000000000000000100000000000000020000000300000002000000000000000000000001000000020000000000000001000000
-        paramByteDataSize: 0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000100000001000000
     - name: SetCurrent FSM in Health
       description: 
       colorIndex: 0
       position:
         serializedVersion: 2
-        x: 379.32812
-        y: 209.5625
+        x: 75.328125
+        y: 113.5625
         width: 178
         height: 32
       isBreakpoint: 0
@@ -12977,7 +12063,7 @@ MonoBehaviour:
           name: FINISHED
           isSystemEvent: 1
           isGlobal: 0
-        toState: SuspiciosBehavior
+        toState: Listener
         linkStyle: 0
         linkConstraint: 0
         colorIndex: 0
@@ -13005,7 +12091,7 @@ MonoBehaviour:
           tooltip: 
           showInInspector: 0
           networkSync: 0
-          value: SetCurrentState
+          value: SetCurrentStateInfo
         fsmObjectParams:
         - useVariable: 1
           name: health
@@ -13025,6 +12111,30 @@ MonoBehaviour:
           stringValue: 
           vector4Value: {x: 0, y: 0, z: 0, w: 0}
           objectReference: {fileID: 8054327728502592615}
+          arrayValue:
+            useVariable: 0
+            name: 
+            tooltip: 
+            showInInspector: 0
+            networkSync: 0
+            type: -1
+            objectTypeName: 
+            floatValues: []
+            intValues: 
+            boolValues: 
+            stringValues: []
+            vector4Values: []
+            objectReferences: []
+        - variableName: damagePenetrationPercentage
+          objectType: UnityEngine.Object
+          useVariable: 1
+          type: 0
+          floatValue: 100
+          intValue: 0
+          boolValue: 0
+          stringValue: 
+          vector4Value: {x: 0, y: 0, z: 0, w: 0}
+          objectReference: {fileID: 0}
           arrayValue:
             useVariable: 0
             name: 
@@ -13075,47 +12185,43 @@ MonoBehaviour:
         fsmQuaternionParams: []
         stringParams: []
         byteData: 0000
-        arrayParamSizes: 01000000
+        arrayParamSizes: 02000000
         arrayParamTypes:
         - HutongGames.PlayMaker.FsmVar
         customTypeSizes: 
         customTypeNames: []
-        paramDataType: 18000000120000000c00000027000000270000000100000001000000
+        paramDataType: 18000000120000000c0000002700000027000000270000000100000001000000
         paramName:
         - behaviour
         - methodName
         - parameters
         - 
+        - 
         - storeResult
         - everyFrame
         - manualUI
-        paramDataPos: 00000000000000000000000000000000010000000000000001000000
-        paramByteDataSize: 00000000000000000000000000000000000000000100000001000000
+        paramDataPos: 0000000000000000000000000000000001000000020000000000000001000000
+        paramByteDataSize: 0000000000000000000000000000000000000000000000000100000001000000
     events:
+    - name: FINISHED
+      isSystemEvent: 1
+      isGlobal: 0
+    - name: CONTINUE
+      isSystemEvent: 0
+      isGlobal: 0
     - name: DAMAGED
       isSystemEvent: 0
       isGlobal: 0
-    - name: RETURNTOPATROL
-      isSystemEvent: 0
-      isGlobal: 0
-    - name: CONTINUE
+    - name: DAMAGED_NOPOSTUREBAR
       isSystemEvent: 0
       isGlobal: 0
     - name: POSTUREDEPLETED
       isSystemEvent: 0
       isGlobal: 0
-    - name: FINISHED
-      isSystemEvent: 1
+    - name: RETURNTOPATROL
+      isSystemEvent: 0
       isGlobal: 0
-    globalTransitions:
-    - fsmEvent:
-        name: DAMAGED
-        isSystemEvent: 0
-        isGlobal: 0
-      toState: Damaged
-      linkStyle: 0
-      linkConstraint: 0
-      colorIndex: 0
+    globalTransitions: []
     variables:
       floatVariables:
       - useVariable: 1
@@ -13130,19 +12236,25 @@ MonoBehaviour:
         showInInspector: 0
         networkSync: 0
         value: 0
+      - useVariable: 1
+        name: damagePenetrationPercentage
+        tooltip: 
+        showInInspector: 1
+        networkSync: 0
+        value: 100
       intVariables:
       - useVariable: 1
-        name: damage
+        name: 
         tooltip: 
         showInInspector: 0
         networkSync: 0
         value: 0
       - useVariable: 1
-        name: damagePenetrationPercentage
+        name: 
         tooltip: 
-        showInInspector: 0
+        showInInspector: 1
         networkSync: 0
-        value: 100
+        value: 0
       boolVariables: []
       stringVariables: []
       vector2Variables: []
@@ -13173,7 +12285,7 @@ MonoBehaviour:
       categories:
       - 
       - Exposed
-      variableCategoryIDs: 010000000000000000000000000000000000000000000000
+      variableCategoryIDs: 01000000000000000100000000000000010000000000000000000000
     description: 
     docUrl: 
     showStateLabel: 0
@@ -13183,7 +12295,7 @@ MonoBehaviour:
     locked: 0
     manualUpdate: 0
     keepDelayedEventsOnStateExit: 0
-    preprocessed: 1
+    preprocessed: 0
     ExposedEvents: []
     RestartOnEnable: 1
     EnableDebugFlow: 0
@@ -13253,7 +12365,7 @@ MonoBehaviour:
           name: FINISHED
           isSystemEvent: 1
           isGlobal: 0
-        toState: State 1
+        toState: Set Timers
         linkStyle: 0
         linkConstraint: 0
         colorIndex: 0
@@ -13356,12 +12468,12 @@ MonoBehaviour:
         paramByteDataSize: 00000000000000000000000000000000000000000400000001000000000000000000000001000000
     - name: MOVING
       description: 
-      colorIndex: 0
+      colorIndex: 6
       position:
         serializedVersion: 2
         x: 250.63281
         y: 336.85938
-        width: 100
+        width: 199
         height: 48
       isBreakpoint: 0
       isSequence: 0
@@ -13376,7 +12488,7 @@ MonoBehaviour:
         linkConstraint: 0
         colorIndex: 0
       - fsmEvent:
-          name: DAMAGED
+          name: DAMAGED_NOPOSTUREBAR
           isSystemEvent: 0
           isGlobal: 0
         toState: Damaged
@@ -13874,7 +12986,7 @@ MonoBehaviour:
           name: YES
           isSystemEvent: 0
           isGlobal: 0
-        toState: State 1
+        toState: Set Timers
         linkStyle: 0
         linkConstraint: 0
         colorIndex: 0
@@ -13936,8 +13048,8 @@ MonoBehaviour:
       colorIndex: 2
       position:
         serializedVersion: 2
-        x: 587.59375
-        y: 354.34375
+        x: 564.1797
+        y: 353.27344
         width: 100
         height: 16
       isBreakpoint: 0
@@ -14078,7 +13190,7 @@ MonoBehaviour:
           tooltip: 
           showInInspector: 0
           networkSync: 0
-          value: SetCurrentState
+          value: SetCurrentStateInfo
         fsmObjectParams:
         - useVariable: 1
           name: health
@@ -14098,6 +13210,30 @@ MonoBehaviour:
           stringValue: 
           vector4Value: {x: 0, y: 0, z: 0, w: 0}
           objectReference: {fileID: 8890351270488729592}
+          arrayValue:
+            useVariable: 0
+            name: 
+            tooltip: 
+            showInInspector: 0
+            networkSync: 0
+            type: -1
+            objectTypeName: 
+            floatValues: []
+            intValues: 
+            boolValues: 
+            stringValues: []
+            vector4Values: []
+            objectReferences: []
+        - variableName: damagePenetration
+          objectType: UnityEngine.Object
+          useVariable: 1
+          type: 0
+          floatValue: 100
+          intValue: 0
+          boolValue: 0
+          stringValue: 
+          vector4Value: {x: 0, y: 0, z: 0, w: 0}
+          objectReference: {fileID: 0}
           arrayValue:
             useVariable: 0
             name: 
@@ -14148,23 +13284,24 @@ MonoBehaviour:
         fsmQuaternionParams: []
         stringParams: []
         byteData: 0000
-        arrayParamSizes: 01000000
+        arrayParamSizes: 02000000
         arrayParamTypes:
         - HutongGames.PlayMaker.FsmVar
         customTypeSizes: 
         customTypeNames: []
-        paramDataType: 18000000120000000c00000027000000270000000100000001000000
+        paramDataType: 18000000120000000c0000002700000027000000270000000100000001000000
         paramName:
         - behaviour
         - methodName
         - parameters
         - 
+        - 
         - storeResult
         - everyFrame
         - manualUI
-        paramDataPos: 00000000000000000000000000000000010000000000000001000000
-        paramByteDataSize: 00000000000000000000000000000000000000000100000001000000
-    - name: State 1
+        paramDataPos: 0000000000000000000000000000000001000000020000000000000001000000
+        paramByteDataSize: 0000000000000000000000000000000000000000000000000100000001000000
+    - name: Set Timers
       description: 
       colorIndex: 0
       position:
@@ -14260,29 +13397,29 @@ MonoBehaviour:
         - everyFrame
         paramDataPos: 0000000000000000040000000100000002000000050000000300000009000000
         paramByteDataSize: 0400000000000000010000000000000000000000040000000000000001000000
-    - name: Damaged Sound
+    - name: IsDead
       description: 
       colorIndex: 4
       position:
         serializedVersion: 2
-        x: 240.64062
-        y: 469.10156
-        width: 127
+        x: 223.54688
+        y: 545.6406
+        width: 100
         height: 48
       isBreakpoint: 0
       isSequence: 1
       hideUnused: 0
       transitions:
       - fsmEvent:
-          name: ISNOTDEAD
+          name: NO
           isSystemEvent: 0
           isGlobal: 0
         toState: MOVING
         linkStyle: 0
-        linkConstraint: 0
+        linkConstraint: 1
         colorIndex: 0
       - fsmEvent:
-          name: ISDEAD
+          name: YES
           isSystemEvent: 0
           isGlobal: 0
         toState: DEAD
@@ -14291,26 +13428,18 @@ MonoBehaviour:
         colorIndex: 0
       actionData:
         actionNames:
-        - HutongGames.PlayMaker.Actions.AudioPlay
         - HutongGames.PlayMaker.Actions.CallMethod
+        - HutongGames.PlayMaker.Actions.BoolTest
         customNames:
         - 
         - 
         actionEnabled: 0101
         actionIsOpen: 0101
-        actionStartIndex: 0000000005000000
-        actionHashCodes: 81294e04ca51e900
+        actionStartIndex: 0000000006000000
+        actionHashCodes: ca51e900a4c8bf00
         unityObjectParams: []
         fsmGameObjectParams: []
-        fsmOwnerDefaultParams:
-        - ownerOption: 0
-          gameObject:
-            useVariable: 0
-            name: 
-            tooltip: 
-            showInInspector: 0
-            networkSync: 0
-            value: {fileID: 0}
+        fsmOwnerDefaultParams: []
         animationCurveParams: []
         functionCallParams: []
         fsmTemplateControlParams: []
@@ -14326,13 +13455,6 @@ MonoBehaviour:
           value: IsDeadCheck
         fsmObjectParams:
         - useVariable: 1
-          name: damageSound
-          tooltip: 
-          showInInspector: 1
-          networkSync: 0
-          typeName: UnityEngine.AudioClip
-          value: {fileID: 8300000, guid: a2c4afa4edc26494c9d118b432321eaa, type: 3}
-        - useVariable: 1
           name: health
           tooltip: 
           showInInspector: 0
@@ -14340,10 +13462,10 @@ MonoBehaviour:
           typeName: PSmash.Attributes.EnemyHealth
           value: {fileID: 3070385579913315234}
         fsmVarParams:
-        - variableName: 
-          objectType: 
-          useVariable: 0
-          type: -1
+        - variableName: isDead
+          objectType: UnityEngine.Object
+          useVariable: 1
+          type: 2
           floatValue: 0
           intValue: 0
           boolValue: 0
@@ -14366,17 +13488,11 @@ MonoBehaviour:
             objectReferences: []
         fsmArrayParams: []
         fsmEnumParams: []
-        fsmFloatParams:
-        - useVariable: 1
-          name: volume
-          tooltip: 
-          showInInspector: 1
-          networkSync: 0
-          value: 1
+        fsmFloatParams: []
         fsmIntParams: []
         fsmBoolParams:
-        - useVariable: 0
-          name: 
+        - useVariable: 1
+          name: isDead
           tooltip: 
           showInInspector: 0
           networkSync: 0
@@ -14387,35 +13503,35 @@ MonoBehaviour:
         fsmRectParams: []
         fsmQuaternionParams: []
         stringParams:
-        - 
-        byteData: 0000
+        - YES
+        - NO
+        byteData: 000000
         arrayParamSizes: 00000000
         arrayParamTypes:
         - HutongGames.PlayMaker.FsmVar
         customTypeSizes: 
         customTypeNames: []
-        paramDataType: 140000000f00000018000000110000001700000018000000120000000c000000270000000100000001000000
+        paramDataType: 18000000120000000c00000027000000010000000100000011000000170000001700000001000000
         paramName:
-        - gameObject
-        - volume
-        - oneShotClip
-        - WaitForEndOfClip
-        - finishedEvent
         - behaviour
         - methodName
         - parameters
         - storeResult
         - everyFrame
         - manualUI
-        paramDataPos: 0000000000000000000000000000000000000000010000000000000000000000000000000000000001000000
-        paramByteDataSize: 0000000000000000000000000000000000000000000000000000000000000000000000000100000001000000
+        - boolVariable
+        - isTrue
+        - isFalse
+        - everyFrame
+        paramDataPos: 00000000000000000000000000000000000000000100000000000000000000000100000002000000
+        paramByteDataSize: 00000000000000000000000000000000010000000100000000000000000000000000000001000000
     - name: Damaged
       description: 
       colorIndex: 0
       position:
         serializedVersion: 2
-        x: 244.59375
-        y: 416.22656
+        x: 244.55469
+        y: 422.57812
         width: 100
         height: 32
       isBreakpoint: 0
@@ -14426,7 +13542,7 @@ MonoBehaviour:
           name: FINISHED
           isSystemEvent: 1
           isGlobal: 0
-        toState: Damaged Sound
+        toState: Damaged Sound 2
         linkStyle: 0
         linkConstraint: 0
         colorIndex: 0
@@ -14535,12 +13651,12 @@ MonoBehaviour:
             stringValues: []
             vector4Values: []
             objectReferences: []
-        - variableName: damagePenetration
-          objectType: UnityEngine.Object
-          useVariable: 1
-          type: 1
+        - variableName: 
+          objectType: 
+          useVariable: 0
+          type: -1
           floatValue: 0
-          intValue: 100
+          intValue: 0
           boolValue: 0
           stringValue: 
           vector4Value: {x: 0, y: 0, z: 0, w: 0}
@@ -14685,8 +13801,8 @@ MonoBehaviour:
       colorIndex: 2
       position:
         serializedVersion: 2
-        x: 572.2344
-        y: 516.33594
+        x: 565.84375
+        y: 569.5156
         width: 100
         height: 16
       isBreakpoint: 0
@@ -14782,6 +13898,101 @@ MonoBehaviour:
         - everyFrame
         paramDataPos: 00000000000000000000000000000000
         paramByteDataSize: 00000000000000000000000001000000
+    - name: Damaged Sound 2
+      description: 
+      colorIndex: 4
+      position:
+        serializedVersion: 2
+        x: 233.52344
+        y: 477.35156
+        width: 137
+        height: 32
+      isBreakpoint: 0
+      isSequence: 1
+      hideUnused: 0
+      transitions:
+      - fsmEvent:
+          name: FINISHED
+          isSystemEvent: 1
+          isGlobal: 0
+        toState: IsDead
+        linkStyle: 0
+        linkConstraint: 0
+        colorIndex: 0
+      actionData:
+        actionNames:
+        - HutongGames.PlayMaker.Actions.AudioPlay
+        customNames:
+        - 
+        actionEnabled: 01
+        actionIsOpen: 01
+        actionStartIndex: 00000000
+        actionHashCodes: 81294e04
+        unityObjectParams: []
+        fsmGameObjectParams: []
+        fsmOwnerDefaultParams:
+        - ownerOption: 0
+          gameObject:
+            useVariable: 0
+            name: 
+            tooltip: 
+            showInInspector: 0
+            networkSync: 0
+            value: {fileID: 0}
+        animationCurveParams: []
+        functionCallParams: []
+        fsmTemplateControlParams: []
+        fsmEventTargetParams: []
+        fsmPropertyParams: []
+        layoutOptionParams: []
+        fsmStringParams: []
+        fsmObjectParams:
+        - useVariable: 1
+          name: damageSound
+          tooltip: 
+          showInInspector: 1
+          networkSync: 0
+          typeName: UnityEngine.AudioClip
+          value: {fileID: 8300000, guid: a2c4afa4edc26494c9d118b432321eaa, type: 3}
+        fsmVarParams: []
+        fsmArrayParams: []
+        fsmEnumParams: []
+        fsmFloatParams:
+        - useVariable: 1
+          name: volume
+          tooltip: 
+          showInInspector: 1
+          networkSync: 0
+          value: 1
+        fsmIntParams: []
+        fsmBoolParams:
+        - useVariable: 0
+          name: 
+          tooltip: 
+          showInInspector: 0
+          networkSync: 0
+          value: 0
+        fsmVector2Params: []
+        fsmVector3Params: []
+        fsmColorParams: []
+        fsmRectParams: []
+        fsmQuaternionParams: []
+        stringParams:
+        - 
+        byteData: 
+        arrayParamSizes: 
+        arrayParamTypes: []
+        customTypeSizes: 
+        customTypeNames: []
+        paramDataType: 140000000f000000180000001100000017000000
+        paramName:
+        - gameObject
+        - volume
+        - oneShotClip
+        - WaitForEndOfClip
+        - finishedEvent
+        paramDataPos: 0000000000000000000000000000000000000000
+        paramByteDataSize: 0000000000000000000000000000000000000000
     events:
     - name: FINISHED
       isSystemEvent: 1
@@ -14793,6 +14004,9 @@ MonoBehaviour:
       isSystemEvent: 0
       isGlobal: 0
     - name: DAMAGED
+      isSystemEvent: 0
+      isGlobal: 0
+    - name: DAMAGED_NOPOSTUREBAR
       isSystemEvent: 0
       isGlobal: 0
     - name: ISDEAD
@@ -14823,7 +14037,7 @@ MonoBehaviour:
         networkSync: 0
         value: 5
       - useVariable: 1
-        name: deltaTime
+        name: 
         tooltip: 
         showInInspector: 0
         networkSync: 0
@@ -14864,6 +14078,12 @@ MonoBehaviour:
         showInInspector: 0
         networkSync: 0
         value: 0
+      - useVariable: 1
+        name: damagePenetration
+        tooltip: 
+        showInInspector: 1
+        networkSync: 0
+        value: 100
       intVariables:
       - useVariable: 1
         name: damag
@@ -14872,14 +14092,20 @@ MonoBehaviour:
         networkSync: 0
         value: 0
       - useVariable: 1
-        name: damagePenetration
+        name: 
         tooltip: 
         showInInspector: 0
         networkSync: 0
-        value: 100
+        value: 0
       boolVariables:
       - useVariable: 1
         name: initialized
+        tooltip: 
+        showInInspector: 0
+        networkSync: 0
+        value: 0
+      - useVariable: 1
+        name: isDead
         tooltip: 
         showInInspector: 0
         networkSync: 0
@@ -14958,7 +14184,7 @@ MonoBehaviour:
       categories:
       - 
       - Exposed
-      variableCategoryIDs: 000000000100000000000000000000000100000001000000000000000100000000000000000000000000000000000000000000000000000000000000000000000000000001000000000000000000000000000000
+      variableCategoryIDs: 0000000001000000000000000000000001000000010000000000000001000000000000000100000000000000000000000000000000000000000000000000000000000000000000000000000001000000000000000000000000000000
     description: 
     docUrl: 
     showStateLabel: 0
@@ -14968,7 +14194,7 @@ MonoBehaviour:
     locked: 0
     manualUpdate: 0
     keepDelayedEventsOnStateExit: 0
-    preprocessed: 1
+    preprocessed: 0
     ExposedEvents: []
     RestartOnEnable: 1
     EnableDebugFlow: 0
@@ -14994,7 +14220,7 @@ MonoBehaviour:
     handleJointBreak: 0
     handleJointBreak2D: 0
     handleOnGUI: 0
-    handleFixedUpdate: 1
+    handleFixedUpdate: 0
     handleLateUpdate: 0
     handleApplicationEvents: 0
     handleUiEvents: 0

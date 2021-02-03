@@ -26,12 +26,8 @@ namespace PSmash.Attributes
 
         private void Update()
         {
-            if (posture == 0) return;
-            //if (health.IsD ead() || health.IsStunned())
-            //{
-            //    posture = 0;
-            //    return;
-            //}
+            if (posture == 0) 
+                return;
             if( posture < initialPosture && timerCanRegen > timeToCanRegen)
             {
                 posture = RegenPosture();
@@ -41,7 +37,7 @@ namespace PSmash.Attributes
 
         private float RegenPosture()
         {
-            float percentage = (float)this.posture / (float)initialPosture;
+            float percentage = posture / initialPosture;
             percentage += Time.deltaTime / timeToFullyRegenGuard;
             if (percentage > 1) percentage = 1;
             percentage = percentage * initialPosture;
@@ -53,7 +49,7 @@ namespace PSmash.Attributes
             timerCanRegen += Time.deltaTime;
         }
 
-        public float SubstractDamageFromPosture(int damage)
+        public float SubstractDamageFromPosture(float damage)
         {
             float posture = this.posture;
             posture -= damage;

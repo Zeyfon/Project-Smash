@@ -8,7 +8,7 @@ namespace PSmash.Attributes
         [Header("General")]
         [SerializeField] protected TakeDamageEvent onTakeDamage;
 
-        protected int health;
+        protected float health;
         protected AudioSource audioSource;
         protected bool isDead = false;
         //protected int initialHealth;
@@ -18,7 +18,7 @@ namespace PSmash.Attributes
         {
 
         }
-        public virtual void TakeDamage(Transform attacker, int damage)
+        public virtual void TakeDamage(Transform attacker, float damage)
         {
             //Used by child class
         }
