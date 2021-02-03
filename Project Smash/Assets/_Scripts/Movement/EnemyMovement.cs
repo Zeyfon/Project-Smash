@@ -101,7 +101,7 @@ namespace PSmash.Movement
             SlopeCheck(transform.right.x);
             //print("Moving towards " + targetPosition);
             CheckWhereToFace(targetPosition, isMovingTowardsTarget);
-            if (IsPlayerAbove())
+            if (IsTargetAbove())
             {
                 print("Player is above");
                 MoveAwayFrom(targetPosition, 0.9f);
@@ -220,7 +220,7 @@ namespace PSmash.Movement
             return specialAttackRange > Vector3.Distance(transform.position, targetPosition);
         }
 
-        bool IsPlayerAbove()
+        bool IsTargetAbove()
         {
             RaycastHit2D hit = Physics2D.Raycast(transform.position, Vector2.up, 2.3f, whatIsPlayer);
             if (hit)

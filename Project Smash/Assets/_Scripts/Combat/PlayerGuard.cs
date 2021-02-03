@@ -25,12 +25,10 @@ namespace PSmash.Combat
             parryTimer += Time.deltaTime;
         }
 
-        public void TakeDamage(Transform attacker, int damage)
+        public void TakeDamage(Transform attacker, float damage)
         {
             if (canParry)
             {
-                
-                //attacker.GetComponent<EnemyHealth>().SetIsParried(true);
                 attacker.GetComponent<IDamagable>().TakeDamage(transform.parent, damage);
                 transform.parent.GetComponent<PlayerFighter>().StartParry();
                 PlaySound(parrySound);
@@ -51,14 +49,14 @@ namespace PSmash.Combat
         public void SetCanParry(bool canParry)
         {
             this.canParry = canParry;
-            if (this.canParry)
-            { 
-                //print("Started CanParry");
-            }
-            if (!this.canParry) 
-            { 
-                //print("Finished CanParry");
-            }
+            //if (this.canParry)
+            //{ 
+            //    //print("Started CanParry");
+            //}
+            //if (!this.canParry) 
+            //{ 
+            //    //print("Finished CanParry");
+            //}
         }
 
         public void EnableParry()

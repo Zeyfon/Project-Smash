@@ -105,6 +105,14 @@ public class @_Controller : IInputActionCollection, IDisposable
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """"
+                },
+                {
+                    ""name"": ""ItemUse"",
+                    ""type"": ""Button"",
+                    ""id"": ""86aa0802-bd60-4d0b-9066-bdc6a0d8b463"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
                 }
             ],
             ""bindings"": [
@@ -358,6 +366,28 @@ public class @_Controller : IInputActionCollection, IDisposable
                     ""processors"": """",
                     ""groups"": ""Gamepad"",
                     ""action"": ""LeftTrigger"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""f1050d73-bb35-4033-bf95-cf9479a2c9ac"",
+                    ""path"": ""<Gamepad>/dpad/up"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""ItemUse"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""a09d65b6-ed27-4290-b0d1-7d3ae22c8af7"",
+                    ""path"": ""<Keyboard>/1"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard&Mouse"",
+                    ""action"": ""ItemUse"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -898,6 +928,7 @@ public class @_Controller : IInputActionCollection, IDisposable
         m_Player_ButtonLB = m_Player.FindAction("ButtonLB", throwIfNotFound: true);
         m_Player_DPadLeft = m_Player.FindAction("DPadLeft", throwIfNotFound: true);
         m_Player_LeftTrigger = m_Player.FindAction("LeftTrigger", throwIfNotFound: true);
+        m_Player_ItemUse = m_Player.FindAction("ItemUse", throwIfNotFound: true);
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
         m_UI_Navigate = m_UI.FindAction("Navigate", throwIfNotFound: true);
@@ -976,6 +1007,7 @@ public class @_Controller : IInputActionCollection, IDisposable
     private readonly InputAction m_Player_ButtonLB;
     private readonly InputAction m_Player_DPadLeft;
     private readonly InputAction m_Player_LeftTrigger;
+    private readonly InputAction m_Player_ItemUse;
     public struct PlayerActions
     {
         private @_Controller m_Wrapper;
@@ -991,6 +1023,7 @@ public class @_Controller : IInputActionCollection, IDisposable
         public InputAction @ButtonLB => m_Wrapper.m_Player_ButtonLB;
         public InputAction @DPadLeft => m_Wrapper.m_Player_DPadLeft;
         public InputAction @LeftTrigger => m_Wrapper.m_Player_LeftTrigger;
+        public InputAction @ItemUse => m_Wrapper.m_Player_ItemUse;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -1033,6 +1066,9 @@ public class @_Controller : IInputActionCollection, IDisposable
                 @LeftTrigger.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnLeftTrigger;
                 @LeftTrigger.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnLeftTrigger;
                 @LeftTrigger.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnLeftTrigger;
+                @ItemUse.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnItemUse;
+                @ItemUse.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnItemUse;
+                @ItemUse.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnItemUse;
             }
             m_Wrapper.m_PlayerActionsCallbackInterface = instance;
             if (instance != null)
@@ -1070,6 +1106,9 @@ public class @_Controller : IInputActionCollection, IDisposable
                 @LeftTrigger.started += instance.OnLeftTrigger;
                 @LeftTrigger.performed += instance.OnLeftTrigger;
                 @LeftTrigger.canceled += instance.OnLeftTrigger;
+                @ItemUse.started += instance.OnItemUse;
+                @ItemUse.performed += instance.OnItemUse;
+                @ItemUse.canceled += instance.OnItemUse;
             }
         }
     }
@@ -1294,6 +1333,7 @@ public class @_Controller : IInputActionCollection, IDisposable
         void OnButtonLB(InputAction.CallbackContext context);
         void OnDPadLeft(InputAction.CallbackContext context);
         void OnLeftTrigger(InputAction.CallbackContext context);
+        void OnItemUse(InputAction.CallbackContext context);
     }
     public interface IUIActions
     {

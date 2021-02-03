@@ -101,6 +101,8 @@ namespace PSmash.InputSystem
             _controller.Player.ButtonRB.canceled += ctx => ButtonRBReleased();
             _controller.Player.ButtonLB.started += ctx => ButtonLBPressed();
             _controller.Player.ButtonLB.canceled += ctx => ButtonLBReleased();
+            _controller.Player.ItemUse.started += ctx => ItemButtonPressed();
+            _controller.Player.ItemUse.canceled += ctx => ItemButonReleased();
 
             _controller.Player.ButtonStart.started += ctx => ButtonStartPressed();
             //_controller.Player.Quit.performed += ctx => QuitKeyPressed();
@@ -130,6 +132,8 @@ namespace PSmash.InputSystem
             _controller.Player.ButtonRB.canceled -= ctx => ButtonRBReleased();
             _controller.Player.ButtonLB.started -= ctx => ButtonLBPressed();
             _controller.Player.ButtonLB.canceled -= ctx => ButtonLBReleased();
+            _controller.Player.ItemUse.started -= ctx => ItemButtonPressed();
+            _controller.Player.ItemUse.canceled -= ctx => ItemButonReleased();
 
             //_controller.Player.Quit.performed -= ctx => QuitKeyPressed();
             _controller.Player.ButtonStart.started -= ctx => ButtonStartPressed();
@@ -140,6 +144,17 @@ namespace PSmash.InputSystem
             PlayerMovement.EnablePlayerController -= EnablePlayerController;
             Trap.EnablePlayerController -= EnablePlayerController;
             Menus.Menus.OnMenusClosed -= EnablePlayerController;
+        }
+
+        private void ItemButonReleased()
+        {
+
+        }
+
+        private void ItemButtonPressed()
+        {
+            print("Wants to use an item");
+            currentPMState.SendEvent("ITEMUSE");
         }
 
         private void SetInitialCommandsToButtons()

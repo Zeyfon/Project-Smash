@@ -37,7 +37,7 @@ namespace PSmash.Attributes
         //The guard and parry states will be checked in the Enemy Attack's Script
         //to deliver the proper assessment
 
-        public override void TakeDamage(Transform attacker, int damage)
+        public override void TakeDamage(Transform attacker, float damage)
         {
             if (isDead) return;
             //print("Damage received");
@@ -75,7 +75,8 @@ namespace PSmash.Attributes
 
         public void ReplenishHealth(float health)
         {
-            this.health += (int)health;
+            print("Recovering " + health);
+            this.health += health;
         }
 
         IEnumerator DamageEffects()
