@@ -23,7 +23,7 @@ namespace PSmash.Items
             audioSource = GetComponent<AudioSource>();
         }
 
-        public void TakeDamage(Transform attacker, float damage)
+        public void TakeDamage(Transform attacker, WeaponList weapon, float damage)
         {
             if (health <= 0)
             {

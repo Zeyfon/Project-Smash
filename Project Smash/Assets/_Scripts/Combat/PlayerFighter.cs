@@ -16,6 +16,7 @@ namespace PSmash.Combat
         [SerializeField] GameObject subWeapon = null;
         [SerializeField] LayerMask whatIsDamagable;
         [SerializeField] LayerMask whatIsEnemy;
+        [SerializeField] WeaponList currentWeapon;
 
         [Header("Combo Attack")]
         [SerializeField] Transform attackTransform = null;
@@ -346,7 +347,7 @@ namespace PSmash.Combat
                     //print("Enemy being Finished");
                 }
                 print("Player damaged the  " + coll.gameObject.name +  " by " + damage);
-                target.TakeDamage(transform, damage);
+                target.TakeDamage(transform, currentWeapon, damage);
             }
         }
 

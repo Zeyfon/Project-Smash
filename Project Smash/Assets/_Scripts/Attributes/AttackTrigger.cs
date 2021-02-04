@@ -25,7 +25,7 @@ namespace PSmash.Attributes
             if (collision.CompareTag("Player"))
             {
                 print("Attack Trigger worked");
-                collision.GetComponent<IDamagable>().TakeDamage(transform.parent, damage);
+                collision.GetComponent<IDamagable>().TakeDamage(transform.parent, WeaponList.None, damage);
                 myAttackTrigger.enabled = false;
             }
         }

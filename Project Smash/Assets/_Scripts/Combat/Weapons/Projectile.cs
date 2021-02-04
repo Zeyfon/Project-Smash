@@ -81,7 +81,7 @@ namespace PSmash.Combat.Weapons
             this.owner = owner;
         }
 
-        public void TakeDamage(Transform attacker, float damage)
+        public void TakeDamage(Transform attacker, WeaponList weapon, float damage)
         {
             print("Received the parry");
             skeletonAnim.AnimationState.SetAnimation(0, idleLoop, true);
@@ -140,14 +140,14 @@ namespace PSmash.Combat.Weapons
                     Instantiate(enemyHitEffect, transform.position, Quaternion.identity);
                     NPCHitSound();
                     print("Attack from enemy colliding with player");
-                    ProjectileCollisionImpact(collision, impactOnNPC);
+                    ProjectileCollisionImpact(collision,impactOnNPC);
                 }
                 else if (collision.GetComponent<PlayerGuard>())
                 {
                     hasHit = true;
                     print("Attack from enemy colliding with guard");
                     Instantiate(enemyHitEffect, transform.position, Quaternion.identity);
-                    ProjectileCollisionImpact(collision, impactOnNPC);
+                    ProjectileCollisionImpact(collision,impactOnNPC);
                 }
                 else if (collision.CompareTag("Ground"))
                 {
@@ -177,7 +177,7 @@ namespace PSmash.Combat.Weapons
             skeletonAnim.AnimationState.SetAnimation(0, anim, false);
             IDamagable target = collision.GetComponent<IDamagable>();
             if(target != null)
-                target.TakeDamage(transform, damage);
+                target.TakeDamage(transform, WeaponList.None, damage);
         }
 
         private void OnSpineAnimationEnd(TrackEntry trackEntry)
