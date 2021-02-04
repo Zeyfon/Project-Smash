@@ -37,7 +37,7 @@ namespace PSmash.Attributes
         //The guard and parry states will be checked in the Enemy Attack's Script
         //to deliver the proper assessment
 
-        public override void TakeDamage(Transform attacker, float damage)
+        public override void TakeDamage(Transform attacker, WeaponList weapon, float damage)
         {
             if (isDead) return;
             //print("Damage received");

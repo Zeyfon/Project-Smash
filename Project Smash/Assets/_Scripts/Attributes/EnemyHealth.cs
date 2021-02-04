@@ -35,7 +35,7 @@ namespace PSmash.Attributes
             this.damagePenetrationPercentage = damagePenetrationPercentage;
         }
 
-        public override void TakeDamage(Transform attacker, float damage)
+        public override void TakeDamage(Transform attacker, WeaponList weapon, float damage)
         {
             if (isDead) 
                 return;

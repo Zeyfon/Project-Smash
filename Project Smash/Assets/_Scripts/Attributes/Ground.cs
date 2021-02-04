@@ -16,7 +16,7 @@ namespace PSmash.Attributes
             audioSource.clip = damageObjectSound;
             audioSource.playOnAwake = false;
         }
-        public void TakeDamage(Transform attacker, float damage)
+        public void TakeDamage(Transform attacker, WeaponList weapon, float damage)
         {
             audioSource.pitch = Random.Range(0.7f, 1);
             audioSource.Play();

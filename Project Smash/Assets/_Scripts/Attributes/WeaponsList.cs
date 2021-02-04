@@ -4,10 +4,12 @@ using UnityEngine;
 
 namespace PSmash.Attributes
 {
-    public interface IDamagable
+    public enum WeaponList
     {
-        void TakeDamage(Transform attacker, WeaponList weapon, float damage);
+        None,
+        Fists,
+        Saber,
+        Hookshot
     }
+
 }
-
-

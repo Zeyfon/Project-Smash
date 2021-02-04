@@ -54,7 +54,7 @@ namespace PSmash.Items.Doors
             EnablePlayerController(false);
         }
 
-        public void TakeDamage(Transform attacker, float damage)
+        public void TakeDamage(Transform attacker, WeaponList weapon, float damage)
         {
             audioSource.PlayOneShot(hitOnDoorSound);
         }
