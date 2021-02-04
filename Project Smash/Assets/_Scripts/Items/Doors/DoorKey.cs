@@ -1,6 +1,5 @@
 ﻿using PSmash.Core;
 using PSmash.Attributes;
-using PSmash.SceneManagement;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -13,6 +12,7 @@ namespace PSmash.Items.Doors
         [SerializeField] GameObject UnlockingDoorMomentKey;
         [SerializeField] int keysRequired = 0;
         [SerializeField] List<Transform> keyPositions = new List<Transform>();
+        [SerializeField] CanvasGroup canvasGroup = null;
 
         [Header("Force Option")]
         [SerializeField] bool panBothSides = false;
