@@ -1,5 +1,5 @@
 ﻿using PSmash.Attributes;
-using PSmash.SceneManagement;
+using PSmash.Core;
 using System.Collections;
 using UnityEngine;
 

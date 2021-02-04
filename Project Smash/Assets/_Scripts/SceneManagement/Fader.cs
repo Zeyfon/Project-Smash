@@ -2,22 +2,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace PSmash.SceneManagement
+namespace PSmash.Core
 {
     public class Fader : MonoBehaviour
     {
-        CanvasGroup canvasGroup;
-
-        private void Awake()
-        {
-            canvasGroup = GetComponent<CanvasGroup>();
-        }
-        public void FadeOutInmediate()
-        {
-            canvasGroup.alpha = 1;
-        }
-
-        public IEnumerator FadeOut(float time)
+        public IEnumerator FadeIn(CanvasGroup canvasGroup, float time)
         {
             while (canvasGroup.alpha < 1)
             {
@@ -28,6 +17,26 @@ namespace PSmash.SceneManagement
 
         public IEnumerator FadeIn(float time)
         {
+            CanvasGroup canvasGroup = GetComponent<CanvasGroup>();
+            while (canvasGroup.alpha < 1)
+            {
+                canvasGroup.alpha += 1 * (Time.deltaTime / time);
+                yield return null;
+            }
+        }
+
+        public IEnumerator FadeOut(CanvasGroup canvasGroup, float time)
+        {
+            while (canvasGroup.alpha > 0)
+            {
+                canvasGroup.alpha -= 1 * (Time.deltaTime / time);
+                yield return null;
+            }
+        }
+
+        public IEnumerator FadeOut(float time)
+        {
+            CanvasGroup canvasGroup = GetComponent<CanvasGroup>();
             while (canvasGroup.alpha > 0)
             {
                 canvasGroup.alpha -= 1 * (Time.deltaTime / time);
