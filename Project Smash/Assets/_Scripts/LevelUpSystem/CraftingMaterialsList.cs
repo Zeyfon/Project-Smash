@@ -11,7 +11,10 @@ namespace PSmash.LevelUpSystem
         RangerEye,
         SmashserEye,
         SpiderEye,
-        XXXXX
+        XXXXX,
+        Wood,
+        Rock
+
     }
 }
 

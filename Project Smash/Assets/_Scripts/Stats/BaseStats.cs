@@ -19,6 +19,11 @@ namespace PSmash.Stats
         [SerializeField] int monsterRemains = 888;
         [SerializeField] int reapersEye = 777;
         [SerializeField] int rangersEye = 666;
+        [SerializeField] int smasherEye = 0;
+        [SerializeField] int spiderEye = 0;
+        [SerializeField] int XXXXX = 0;
+        [SerializeField] int wood = 0;
+        [SerializeField] int rock = 0;
 
         PlayerHealth health;
 
@@ -96,6 +101,16 @@ namespace PSmash.Stats
                     return rangersEye;
                 case CraftingMaterialsList.ReaperEye:
                     return reapersEye;
+                case CraftingMaterialsList.SmashserEye:
+                    return smasherEye;
+                case CraftingMaterialsList.SpiderEye:
+                    return spiderEye;
+                case CraftingMaterialsList.XXXXX:
+                    return XXXXX;
+                case CraftingMaterialsList.Wood:
+                    return wood;
+                case CraftingMaterialsList.Rock:
+                    return rock;
                 default:
                     return 0 ;
             }
@@ -120,6 +135,21 @@ namespace PSmash.Stats
                     break;
                 case CraftingMaterialsList.ReaperEye:
                     reapersEye += value;
+                    break;
+                case CraftingMaterialsList.SmashserEye:
+                    smasherEye += value;
+                    break;
+                case CraftingMaterialsList.SpiderEye:
+                    spiderEye += value;
+                    break;
+                case CraftingMaterialsList.XXXXX:
+                    XXXXX += value ;
+                    break;
+                case CraftingMaterialsList.Wood:
+                    wood += value;
+                    break;
+                case CraftingMaterialsList.Rock:
+                    rock += value;
                     break;
                 default:
                     break;
