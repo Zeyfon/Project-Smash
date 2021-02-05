@@ -6,17 +6,13 @@ namespace PSmash.SceneManagement
 {
     public class BackgroundParallexEffect : MonoBehaviour
     {
-        [SerializeField] Transform center = null;
-        Transform cameraTransform;
-        Vector2 startPosition;
-
+        [SerializeField] Transform origin = null;
         [SerializeField] BackgroundLayers[] backgroundLayers = null;
 
-
+        Transform cameraTransform;
         private void Awake()
         {
             cameraTransform = Camera.main.transform;
-            startPosition = transform.position;
         }
 
         // Update is called once per frame
@@ -24,8 +20,8 @@ namespace PSmash.SceneManagement
         {
             foreach (BackgroundLayers backgroundLayer in backgroundLayers)
             {
-                float newPositionx = startPosition.x + ((cameraTransform.position.x - startPosition.x) * backgroundLayer.factorX);
-                float newPositiony = startPosition.y + ((cameraTransform.position.y - startPosition.y) * backgroundLayer.factorY);
+                float newPositionx = origin.position.x + ((cameraTransform.position.x - origin.position.x) * backgroundLayer.factorX);
+                float newPositiony = origin.position.y + ((cameraTransform.position.y - origin.position.y) * backgroundLayer.factorY);
                 backgroundLayer.transform.position = new Vector2(newPositionx, newPositiony);
             }
         }
