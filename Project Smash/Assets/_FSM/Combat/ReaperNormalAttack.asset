@@ -826,12 +826,36 @@ MonoBehaviour:
             stringValues: []
             vector4Values: []
             objectReferences: []
-        - variableName: damage
-          objectType: UnityEngine.Object
-          useVariable: 1
-          type: 1
+        - variableName: 
+          objectType: PSmash.Attributes.WeaponList
+          useVariable: 0
+          type: 14
           floatValue: 0
-          intValue: 10
+          intValue: 0
+          boolValue: 0
+          stringValue: 
+          vector4Value: {x: 0, y: 0, z: 0, w: 0}
+          objectReference: {fileID: 0}
+          arrayValue:
+            useVariable: 0
+            name: 
+            tooltip: 
+            showInInspector: 0
+            networkSync: 0
+            type: -1
+            objectTypeName: 
+            floatValues: []
+            intValues: 
+            boolValues: 
+            stringValues: []
+            vector4Values: []
+            objectReferences: []
+        - variableName: 
+          objectType: UnityEngine.Object
+          useVariable: 0
+          type: 0
+          floatValue: 10
+          intValue: 0
           boolValue: 0
           stringValue: 
           vector4Value: {x: 0, y: 0, z: 0, w: 0}
@@ -892,12 +916,12 @@ MonoBehaviour:
         fsmQuaternionParams: []
         stringParams: []
         byteData: 00000000
-        arrayParamSizes: 02000000
+        arrayParamSizes: 03000000
         arrayParamTypes:
         - HutongGames.PlayMaker.FsmVar
         customTypeSizes: 
         customTypeNames: []
-        paramDataType: 140000001200000012000000110000000100000014000000180000000100000018000000120000000c0000002700000027000000270000000100000001000000
+        paramDataType: 140000001200000012000000110000000100000014000000180000000100000018000000120000000c000000270000002700000027000000270000000100000001000000
         paramName:
         - gameObject
         - fsmName
@@ -912,11 +936,12 @@ MonoBehaviour:
         - parameters
         - 
         - 
+        - 
         - storeResult
         - everyFrame
         - manualUI
-        paramDataPos: 00000000000000000100000000000000000000000100000000000000010000000100000002000000000000000000000001000000020000000200000003000000
-        paramByteDataSize: 00000000000000000000000000000000010000000000000000000000010000000000000000000000000000000000000000000000000000000100000001000000
+        paramDataPos: 0000000000000000010000000000000000000000010000000000000001000000010000000200000000000000000000000100000002000000030000000200000003000000
+        paramByteDataSize: 0000000000000000000000000000000001000000000000000000000001000000000000000000000000000000000000000000000000000000000000000100000001000000
     - name: Hit Player
       description: 
       colorIndex: 0
@@ -1013,12 +1038,36 @@ MonoBehaviour:
             stringValues: []
             vector4Values: []
             objectReferences: []
-        - variableName: damage
-          objectType: UnityEngine.Object
-          useVariable: 1
-          type: 1
+        - variableName: 
+          objectType: PSmash.Attributes.WeaponList
+          useVariable: 0
+          type: 14
           floatValue: 0
-          intValue: 10
+          intValue: 0
+          boolValue: 0
+          stringValue: 
+          vector4Value: {x: 0, y: 0, z: 0, w: 0}
+          objectReference: {fileID: 0}
+          arrayValue:
+            useVariable: 0
+            name: 
+            tooltip: 
+            showInInspector: 0
+            networkSync: 0
+            type: -1
+            objectTypeName: 
+            floatValues: []
+            intValues: 
+            boolValues: 
+            stringValues: []
+            vector4Values: []
+            objectReferences: []
+        - variableName: 
+          objectType: UnityEngine.Object
+          useVariable: 0
+          type: 0
+          floatValue: 10
+          intValue: 0
           boolValue: 0
           stringValue: 
           vector4Value: {x: 0, y: 0, z: 0, w: 0}
@@ -1073,12 +1122,12 @@ MonoBehaviour:
         fsmQuaternionParams: []
         stringParams: []
         byteData: 000000
-        arrayParamSizes: 02000000
+        arrayParamSizes: 03000000
         arrayParamTypes:
         - HutongGames.PlayMaker.FsmVar
         customTypeSizes: 
         customTypeNames: []
-        paramDataType: 14000000180000000100000018000000120000000c0000002700000027000000270000000100000001000000
+        paramDataType: 14000000180000000100000018000000120000000c000000270000002700000027000000270000000100000001000000
         paramName:
         - gameObject
         - storeComponent
@@ -1088,11 +1137,12 @@ MonoBehaviour:
         - parameters
         - 
         - 
+        - 
         - storeResult
         - everyFrame
         - manualUI
-        paramDataPos: 0000000000000000000000000100000000000000000000000000000001000000020000000100000002000000
-        paramByteDataSize: 0000000000000000010000000000000000000000000000000000000000000000000000000100000001000000
+        paramDataPos: 000000000000000000000000010000000000000000000000000000000100000002000000030000000100000002000000
+        paramByteDataSize: 000000000000000001000000000000000000000000000000000000000000000000000000000000000100000001000000
     - name: Hit
       description: 
       colorIndex: 0
@@ -1562,7 +1612,7 @@ MonoBehaviour:
         tooltip: 
         showInInspector: 0
         networkSync: 0
-        typeName: 
+        typeName: UnityEngine.Object
         value: {fileID: 0}
       - useVariable: 1
         name: playerGuard
@@ -1597,7 +1647,7 @@ MonoBehaviour:
         tooltip: 
         showInInspector: 0
         networkSync: 0
-        typeName: 
+        typeName: UnityEngine.Object
         value: {fileID: 0}
       materialVariables: []
       textureVariables: []
