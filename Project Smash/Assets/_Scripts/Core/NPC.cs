@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using PSmash.SceneManagement;
+using PSmash.Core;
 
 
 namespace PSmash.Core
