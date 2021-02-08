@@ -81,7 +81,6 @@ namespace PSmash.Movement
             {
                 //print("NotGrounded");
             }
-
         }
 
 
@@ -127,6 +126,9 @@ namespace PSmash.Movement
                 //Debug.Break();
                 if (pm == null)
                     return;
+
+                print("SpecialAttack coming");
+                //Debug.Break();
                 pm.SendEvent("SPECIALATTACK");
             }
             else if (Mathf.Approximately(slopeNormalPerp.x,1))

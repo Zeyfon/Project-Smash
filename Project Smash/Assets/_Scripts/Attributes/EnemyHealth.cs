@@ -45,20 +45,11 @@ namespace PSmash.Attributes
                 return;
             }
             Damaged(damage);
-            //print("Will Send DAMAGED Event with " + damage + " of damage to " + pm.FsmName + " State");
-            //FsmEventData myfsmEventData = new FsmEventData();
-            //myfsmEventData.FloatData = damage;
-            //myfsmEventData.GameObjectData = gameObject;
-            //HutongGames.PlayMaker.Fsm.EventData = myfsmEventData;
-            //print(pm.FsmName);
-            //if(pm != null)
-            //    pm.Fsm.Event("DAMAGED");
         }
 
         public void Damaged(float damage)
         {
             onTakeDamage.Invoke(damage);
-            print(gameObject.name + "  Damaged");
             if(posture != null)
             {
                 posture.posture = posture.SubstractDamageFromPosture(damage);
@@ -72,6 +63,10 @@ namespace PSmash.Attributes
                 }
                 else
                 {
+
+                    FsmEventData myfsmEventData = new FsmEventData();
+                    myfsmEventData.FloatData = damage;
+                    HutongGames.PlayMaker.Fsm.EventData = myfsmEventData;
                     //print("CONTINUE Event to the fsm " + pm.FsmName);
                     DamageHealth(damage, damagePenetrationPercentage);
                     pm.SendEvent("DAMAGED_POSTURENOTDEPLETED");
@@ -98,7 +93,7 @@ namespace PSmash.Attributes
 
         public void DamageHealth(float damage, float damagePenetrationPercentage)
         {
-            //print(damage + " being substract from Health");
+            print(damage + " will be substracted from  " + health);
             damage = damage * damagePenetrationPercentage / 100;
             health = SubstractDamageFromHealth(damage, health);
             if (health <= 0)
@@ -106,6 +101,7 @@ namespace PSmash.Attributes
                 //print("Dead");
                 isDead = true;
             }
+                        print(gameObject.name + "  current health is : " + health );
         }
 
         private float SubstractDamageFromHealth(float damage, float health)
