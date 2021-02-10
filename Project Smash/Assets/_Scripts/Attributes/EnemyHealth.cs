@@ -163,7 +163,7 @@ namespace PSmash.Attributes
             return baseStats.GetStat(StatsList.Health);
         }
 
-        public bool IsDead()
+        public override bool IsDead()
         {
             return isDead;
         }

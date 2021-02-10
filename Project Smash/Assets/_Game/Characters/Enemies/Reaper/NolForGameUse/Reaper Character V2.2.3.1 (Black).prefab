@@ -1360,7 +1360,7 @@ MonoBehaviour:
           showInInspector: 0
           networkSync: 0
           typeName: PSmash.Movement.EnemyMovement
-          value: {fileID: 0}
+          value: {fileID: 1117208834559755000}
         fsmVarParams:
         - variableName: targetPosition
           objectType: UnityEngine.Object
@@ -1897,14 +1897,14 @@ MonoBehaviour:
         unityObjectParams: []
         fsmGameObjectParams: []
         fsmOwnerDefaultParams:
-        - ownerOption: 0
+        - ownerOption: 1
           gameObject:
             useVariable: 0
             name: 
             tooltip: 
             showInInspector: 0
             networkSync: 0
-            value: {fileID: 0}
+            value: {fileID: 6852413905604142772}
         animationCurveParams: []
         functionCallParams: []
         fsmTemplateControlParams: []
@@ -2335,12 +2335,36 @@ MonoBehaviour:
           typeName: PSmash.Attributes.PlayerHealth
           value: {fileID: 0}
         fsmVarParams:
-        - variableName: transform
+        - variableName: 
           objectType: UnityEngine.Transform
-          useVariable: 1
+          useVariable: 0
           type: 12
           floatValue: 0
           intValue: 0
+          boolValue: 0
+          stringValue: 
+          vector4Value: {x: 0, y: 0, z: 0, w: 0}
+          objectReference: {fileID: 6852413905604142774}
+          arrayValue:
+            useVariable: 0
+            name: 
+            tooltip: 
+            showInInspector: 0
+            networkSync: 0
+            type: -1
+            objectTypeName: 
+            floatValues: []
+            intValues: 
+            boolValues: 
+            stringValues: []
+            vector4Values: []
+            objectReferences: []
+        - variableName: 
+          objectType: PSmash.Attributes.WeaponList
+          useVariable: 0
+          type: 14
+          floatValue: 0
+          intValue: 1
           boolValue: 0
           stringValue: 
           vector4Value: {x: 0, y: 0, z: 0, w: 0}
@@ -2359,12 +2383,12 @@ MonoBehaviour:
             stringValues: []
             vector4Values: []
             objectReferences: []
-        - variableName: damage
+        - variableName: 
           objectType: UnityEngine.Object
-          useVariable: 1
-          type: 1
-          floatValue: 0
-          intValue: 45
+          useVariable: 0
+          type: 0
+          floatValue: 20
+          intValue: 0
           boolValue: 0
           stringValue: 
           vector4Value: {x: 0, y: 0, z: 0, w: 0}
@@ -2419,12 +2443,12 @@ MonoBehaviour:
         fsmQuaternionParams: []
         stringParams: []
         byteData: 000000
-        arrayParamSizes: 02000000
+        arrayParamSizes: 03000000
         arrayParamTypes:
         - HutongGames.PlayMaker.FsmVar
         customTypeSizes: 
         customTypeNames: []
-        paramDataType: 14000000180000000100000018000000120000000c0000002700000027000000270000000100000001000000
+        paramDataType: 14000000180000000100000018000000120000000c000000270000002700000027000000270000000100000001000000
         paramName:
         - gameObject
         - storeComponent
@@ -2434,11 +2458,12 @@ MonoBehaviour:
         - parameters
         - 
         - 
+        - 
         - storeResult
         - everyFrame
         - manualUI
-        paramDataPos: 0000000000000000000000000100000000000000000000000000000001000000020000000100000002000000
-        paramByteDataSize: 0000000000000000010000000000000000000000000000000000000000000000000000000100000001000000
+        paramDataPos: 000000000000000000000000010000000000000000000000000000000100000002000000030000000100000002000000
+        paramByteDataSize: 000000000000000001000000000000000000000000000000000000000000000000000000000000000100000001000000
     - name: Set Linear Drag
       description: 
       colorIndex: 0
@@ -3433,6 +3458,58 @@ MonoBehaviour:
         - realTime
         paramDataPos: 000000000000000000000000
         paramByteDataSize: 000000000000000001000000
+    - name: State 2
+      description: 
+      colorIndex: 0
+      position:
+        serializedVersion: 2
+        x: 671.95105
+        y: 460.97556
+        width: 100
+        height: 16
+      isBreakpoint: 0
+      isSequence: 0
+      hideUnused: 0
+      transitions: []
+      actionData:
+        actionNames: []
+        customNames: []
+        actionEnabled: 
+        actionIsOpen: 
+        actionStartIndex: 
+        actionHashCodes: 
+        unityObjectParams: []
+        fsmGameObjectParams: []
+        fsmOwnerDefaultParams: []
+        animationCurveParams: []
+        functionCallParams: []
+        fsmTemplateControlParams: []
+        fsmEventTargetParams: []
+        fsmPropertyParams: []
+        layoutOptionParams: []
+        fsmStringParams: []
+        fsmObjectParams: []
+        fsmVarParams: []
+        fsmArrayParams: []
+        fsmEnumParams: []
+        fsmFloatParams: []
+        fsmIntParams: []
+        fsmBoolParams: []
+        fsmVector2Params: []
+        fsmVector3Params: []
+        fsmColorParams: []
+        fsmRectParams: []
+        fsmQuaternionParams: []
+        stringParams: []
+        byteData: 
+        arrayParamSizes: 
+        arrayParamTypes: []
+        customTypeSizes: 
+        customTypeNames: []
+        paramDataType: 
+        paramName: []
+        paramDataPos: 
+        paramByteDataSize: 
     events:
     - name: FINISHED
       isSystemEvent: 1
@@ -18055,6 +18132,12 @@ PrefabInstance:
 --- !u!1 &6852413905604142772 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 8851278654538908373, guid: 587e06734df96fb45836c4df01ad03a7,
+    type: 3}
+  m_PrefabInstance: {fileID: 2724296443517035617}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &6852413905604142774 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 8851278654538908375, guid: 587e06734df96fb45836c4df01ad03a7,
     type: 3}
   m_PrefabInstance: {fileID: 2724296443517035617}
   m_PrefabAsset: {fileID: 0}
