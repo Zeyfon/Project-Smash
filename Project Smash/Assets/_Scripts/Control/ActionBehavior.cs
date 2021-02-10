@@ -45,7 +45,8 @@ namespace PSmash.Control
         override public void OnStateMachineExit(Animator animator, int stateMachinePathHash)
         {
             animator.SetInteger(action, 100);
-
+            //Debug.Break();
+            //print(action + " set to 0");
             //Next lines are for PlayMaker Use only
             //PlayMakerFSM fsm = animator.gameObject.GetComponent<PlayMakerFSM>();
             //if(fsm != null) 
