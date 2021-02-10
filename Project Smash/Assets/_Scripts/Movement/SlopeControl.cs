@@ -4,50 +4,26 @@ using UnityEngine;
 
 namespace PSmash.Movement
 {
-    public class SlopeControl : MonoBehaviour
+    public class SlopeControl 
     {
-        float slopeCheckDistance;
-        bool isOnSlope;
         float slopeSideAngle;
-        float maxSlopeAngle;
-        LayerMask whatIsSlope;
-        Vector2 slopeNormalPerp;
-        float slopeDownAngle;
         float slopeDownAngleOld;
-        bool canWalkOnSlope;
-        bool isPlayerReachable;
-
-        EnemyMovement movement;
-
-        private void Awake()
+        public bool IsOnSlope(Vector2 checkPos, Vector2 transformRight, float slopeCheckDistance, LayerMask whatIsGround)
         {
-            movement = GetComponent<EnemyMovement>();
-        }
-        public Vector2 SlopeCheck()
-        {
-            Vector2 checkPos = transform.position;
-            SlopeCheckVertical(checkPos);
-            SlopeCheckHorizontal(checkPos);
-            return slopeNormalPerp;
-        }
-        void SlopeCheckHorizontal(Vector2 checkPos)
-        {
-            RaycastHit2D slopeHitFront = Physics2D.Raycast(checkPos, transform.right, slopeCheckDistance, whatIsSlope);
-            RaycastHit2D slopeHitBack = Physics2D.Raycast(checkPos, -transform.right, slopeCheckDistance, whatIsSlope);
-            Debug.DrawRay(checkPos, transform.right * slopeCheckDistance, Color.blue);
-            Debug.DrawRay(checkPos, -transform.right * slopeCheckDistance, Color.blue);
-            if (slopeHitFront)
+            bool isOnSlope;
+            RaycastHit2D slopeHitFront = Physics2D.Raycast(checkPos, transformRight, slopeCheckDistance, whatIsGround);
+            RaycastHit2D slopeHitBack = Physics2D.Raycast(checkPos, -transformRight, slopeCheckDistance, whatIsGround);
+            Debug.DrawRay(checkPos, transformRight * slopeCheckDistance, Color.blue);
+            Debug.DrawRay(checkPos, -transformRight * slopeCheckDistance, Color.blue);
+            //print(slopeHitFront.normal);
+            if (slopeHitFront && !slopeHitFront.collider.CompareTag("LadderTop") && Mathf.Abs(slopeHitFront.normal.x) < 0.9f)
             {
-                //print("Slope In Front");
                 isOnSlope = true;
                 slopeSideAngle = Vector2.Angle(slopeHitFront.normal, Vector2.up);
-                //print(slopeSideAngle);
             }
-            else if (slopeHitBack)
+            else if (slopeHitBack && !slopeHitBack.collider.CompareTag("LadderTop") && Mathf.Abs(slopeHitBack.normal.x) < 0.9f)
             {
-                //print("SlopeInBack");
                 isOnSlope = true;
-                //slopeSideAngle = Vector2.Angle(slopeHitBack.normal, Vector2.up);
                 slopeSideAngle = 0.0f;
             }
             else
@@ -55,29 +31,44 @@ namespace PSmash.Movement
                 isOnSlope = false;
                 slopeSideAngle = 0.0f;
             }
+            if (isOnSlope)
+                return isOnSlope;
+            else
+            {
+                RaycastHit2D hit = Physics2D.Raycast(checkPos + new Vector2(0, .2f), Vector2.down, slopeCheckDistance, whatIsGround);
+                if (hit)
+                {
+                    float slopeDownAngle = Vector2.Angle(hit.normal, Vector2.up);
+                    if (slopeDownAngle != slopeDownAngleOld)
+                    {
+                        isOnSlope = true;
+                        slopeDownAngleOld = slopeDownAngle;
+                    }
+                    Debug.DrawRay(hit.point, hit.normal, Color.green);
+                }
+                return isOnSlope;
+            }
+
         }
-        void SlopeCheckVertical(Vector2 checkPos)
+
+        public bool CanWalkOnSlope(Vector2 checkPos, Vector2 transformRight, float slopeCheckDistance, float maxSlopeAngle, LayerMask whatIsGround)
         {
-            RaycastHit2D hit = Physics2D.Raycast(checkPos + new Vector2(0, 0.3f), Vector2.down, slopeCheckDistance, whatIsSlope);
+            bool canWalkOnSlope;
+            float slopeDownAngle = 0 ;
+            RaycastHit2D hit = Physics2D.Raycast(checkPos + new Vector2(0, .2f), Vector2.down, slopeCheckDistance, whatIsGround);
             if (hit)
             {
-                slopeNormalPerp = Vector2.Perpendicular(hit.normal).normalized;
-                //print(slopeNormalPerp);
+                Vector2 slopeNormalPerp = Vector2.Perpendicular(hit.normal).normalized * transformRight.x;
                 slopeDownAngle = Vector2.Angle(hit.normal, Vector2.up);
                 if (slopeDownAngle != slopeDownAngleOld)
                 {
-                    isOnSlope = true;
                     slopeDownAngleOld = slopeDownAngle;
                 }
                 Debug.DrawRay(hit.point, hit.normal, Color.green);
                 Debug.DrawRay(hit.point, slopeNormalPerp, Color.red);
-                //Debug.Break();
             }
-            //print(canWalkOnSlope + "  " + isOnSlope);
-            //print(slopeDownAngle+ "  " + slopeSideAngle);
             if (slopeDownAngle > maxSlopeAngle || slopeSideAngle > maxSlopeAngle)
             {
-                //print(slopeDownAngle + "  " + slopeSideAngle);
                 canWalkOnSlope = false;
             }
             else
@@ -85,25 +76,18 @@ namespace PSmash.Movement
                 canWalkOnSlope = true;
             }
 
-            if (!canWalkOnSlope && isOnSlope)
-            {
-                isPlayerReachable = false;
-                //Debug.Log("Player cannot be reached");
-            }
-            else
-            {
-                isPlayerReachable = true;
-            }
-            //print(canWalkOnSlope +" " + isOnSlope);
+            return canWalkOnSlope;
+        }
 
-            //if (isOnSlope && !isPlayerNear && canWalkOnSlope)
-            //{
-            //    rb.sharedMaterial = fullFriction;
-            //}
-            //else
-            //{
-            //    rb.sharedMaterial = lowFriction;
-            //}
+        public Vector2 GetSlopeNormalPerp(Vector2 checkPos, Vector2 transformRight, float slopeCheckDistance, float maxSlopeAngle, LayerMask whatIsGround)
+        {
+            RaycastHit2D hit = Physics2D.Raycast(checkPos + new Vector2(0, .2f), Vector2.down, slopeCheckDistance, whatIsGround);
+            if (hit)
+            {
+                Vector2 slopeNormalPerp = Vector2.Perpendicular(hit.normal).normalized * transformRight.x;
+                return slopeNormalPerp;
+            }
+            return new Vector2(0, 0);
         }
     }
 }
