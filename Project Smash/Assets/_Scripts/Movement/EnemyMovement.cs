@@ -223,7 +223,7 @@ namespace PSmash.Movement
 
         public void Flip()
         {
-            //print("Flipping");
+            print("Flipping");
             currentYAngle += 180;
             if (currentYAngle == 360) currentYAngle = 0;
             Quaternion currentRotation = new Quaternion(0, 0, 0, 0);

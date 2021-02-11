@@ -49,13 +49,15 @@ namespace PSmash.Attributes
 
         public void Damaged(float damage)
         {
+            //Unity Event to instantiate a object to show the damage in the screen
             onTakeDamage.Invoke(damage);
+
             if(posture != null)
             {
                 posture.posture = posture.SubstractDamageFromPosture(damage);
                 if (posture.posture <= 0)
                 {
-                    //print("POSTUREDEPLETED Event to the fsm " + pm.FsmName);
+                    print("POSTUREDEPLETED Event to the fsm " + pm.FsmName);
                     posture.OnStunStateStart();
                     DamageHealth(damage, 100);
                     pm.SendEvent("DAMAGED_POSTUREDEPLETED");
@@ -67,7 +69,7 @@ namespace PSmash.Attributes
                     FsmEventData myfsmEventData = new FsmEventData();
                     myfsmEventData.FloatData = damage;
                     HutongGames.PlayMaker.Fsm.EventData = myfsmEventData;
-                    //print("CONTINUE Event to the fsm " + pm.FsmName);
+                    print("DAMAGED_POSTURENOTDEPLETED Event to the fsm " + pm.FsmName);
                     DamageHealth(damage, damagePenetrationPercentage);
                     pm.SendEvent("DAMAGED_POSTURENOTDEPLETED");
                     return;
@@ -75,7 +77,7 @@ namespace PSmash.Attributes
             }
             else
             {
-                //print("CONTINUE Event to the fsm " + pm.FsmName);
+                print("DAMAGED_NOPOSTUREBAR Event to the fsm " + pm.FsmName);
                 DamageHealth(damage, damagePenetrationPercentage);
                 pm.SendEvent("DAMAGED_NOPOSTUREBAR");
                 return;
@@ -148,6 +150,7 @@ namespace PSmash.Attributes
                 GetComponent<Rigidbody2D>().velocity = new Vector2(x, y);
             }
             DamageHealth(damage, 100);
+            onTakeDamage.Invoke(damage);
             yield return null;
         }
 
