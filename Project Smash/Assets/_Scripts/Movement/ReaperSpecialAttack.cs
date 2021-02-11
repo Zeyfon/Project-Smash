@@ -101,11 +101,13 @@ namespace PSmash.Movement
             GetComponent<EnemyMovement>().SpecialAttackImpulse_Start(specialAttackSpeedFactor);
         }
 
-
-        void StopSpecialAttackImpulse()
+        //This method can be called via Anim Event and via SpecialAttack State in the PlayMaker
+        public void StopSpecialAttackImpulse()
         {
             print("Stop Special Attack Impulse");
             GetComponent<EnemyMovement>().SpecialAttackImpulse_Stop();
+            ReturnToOriginalTint();
+            //Debug.Break();
         }
         //Called from the Special Attack FSM
 
