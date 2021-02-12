@@ -27,6 +27,11 @@ namespace PSmash.Attributes
         {
             //Used by child class
         }
+
+        public virtual bool IsDead()
+        {
+            return isDead;
+        }
     }
 }
 

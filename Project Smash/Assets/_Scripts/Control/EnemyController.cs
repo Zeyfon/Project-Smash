@@ -24,7 +24,6 @@ namespace PSmash.Control
         EnemyFighter attack;
         EnemyHealth health;
         Vector3 originPosition;
-        ActionScheduler actionScheduler;
 
         float timeSinceLastSawPlayer = Mathf.Infinity;
         float timeSinceAggrevated = Mathf.Infinity;
@@ -35,7 +34,6 @@ namespace PSmash.Control
             movement = GetComponent<EnemyMovement>();
             attack = GetComponent<EnemyFighter>();
             health = GetComponent<EnemyHealth>();
-            actionScheduler = GetComponent<ActionScheduler>();
             player = GameObject.FindGameObjectWithTag("Player").transform;
         }
 
@@ -64,7 +62,6 @@ namespace PSmash.Control
             else if (timeSinceLastSawPlayer <= suspicionTime)
             {
                 //print("Suspicion Behavior");
-                SuspicionBehavior();
             }
             else
             {
@@ -98,12 +95,6 @@ namespace PSmash.Control
             //This only pass the transform to the Enemy Attack script
             //so that script "has seen" he player and will go after him
             //attack.StartFightBehavior(player.transform);
-        }
-
-        void SuspicionBehavior()
-        {
-            actionScheduler.CancelCurrentAction();
-            //attack.TargetLost();
         }
 
         void PatrolBehavior()

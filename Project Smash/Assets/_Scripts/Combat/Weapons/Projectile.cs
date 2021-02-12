@@ -112,12 +112,17 @@ namespace PSmash.Combat.Weapons
                 return;
             }
 
+
+
             string tag = owner.gameObject.tag;
             //Collision with the playe being the current owner of the projectile
             if (tag == "Player")
             {
+
                 if (collision.CompareTag("Enemy"))
                 {
+                    if (collision.GetComponent<Health>().IsDead())
+                        return;
                     hasHit = true;
                     print("Attack from Player colliding with enemy");
                     Instantiate(enemyHitEffect, transform.position, Quaternion.identity);
@@ -136,6 +141,8 @@ namespace PSmash.Combat.Weapons
             {
                 if (collision.CompareTag("Player"))
                 {
+                    if (collision.GetComponent<Health>().IsDead())
+                        return;
                     hasHit = true;
                     Instantiate(enemyHitEffect, transform.position, Quaternion.identity);
                     NPCHitSound();

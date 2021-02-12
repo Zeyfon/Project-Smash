@@ -43,9 +43,7 @@ namespace PSmash.Attributes
             //print("Damage received");
             isDamaged = true;
             if (coroutine != null) StopCoroutine(coroutine);
-            print(damage);
-            damage *= (1 - (int)baseStats.GetStat(StatsList.Defense)/100);
-            print(damage);
+            damage *= (1 - baseStats.GetStat(StatsList.Defense)/100);
             health -= damage;
             playerControllerPM.enabled = false;
             if (health <= 0)
@@ -122,7 +120,7 @@ namespace PSmash.Attributes
         {
             audioSource.PlayOneShot(deadSound);
         }
-        public bool IsDead()
+        public override bool IsDead()
         {
             return isDead;
         }
