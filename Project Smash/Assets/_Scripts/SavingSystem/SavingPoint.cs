@@ -20,6 +20,7 @@ namespace PSmash.Saving
 
         public void StartInteracting()
         {
+            print("Player is Interacting with " + gameObject.name);
             StartCoroutine(EnableSavingPointMenu());
         }
 
