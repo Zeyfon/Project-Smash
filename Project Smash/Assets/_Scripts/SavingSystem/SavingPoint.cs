@@ -8,15 +8,7 @@ namespace PSmash.Saving
 {
     public class SavingPoint : MonoBehaviour, IInteractable 
     {
-        UICraftingSystem craftingSystemMenu;
-
-
-        // Start is called before the first frame update
-        void Awake()
-        {
-            craftingSystemMenu =  FindObjectOfType<UICraftingSystem>();
-           // print(craftingSystemMenu);
-        }
+        CraftingSystem craftingSystemMenu;
 
         public void StartInteracting()
         {
@@ -32,8 +24,13 @@ namespace PSmash.Saving
         IEnumerator EnableSavingPointMenu()
         {
             yield return new WaitForEndOfFrame();
+            if(craftingSystemMenu == null)
+            {
+                craftingSystemMenu = FindObjectOfType<CraftingSystem>();
+                if (craftingSystemMenu == null)
+                    Debug.LogWarning("Crafting System Menu could not be found");
+            }
             craftingSystemMenu.EnableMenu();
-
         }
         /// <summary>
         /// These Trigger Events works setting the interactableCollider object in the InputHanlder of the player

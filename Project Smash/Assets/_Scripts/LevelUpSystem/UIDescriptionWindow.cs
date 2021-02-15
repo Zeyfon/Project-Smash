@@ -12,7 +12,7 @@ namespace PSmash.LevelUpSystem
         [SerializeField] CanvasGroup canvasGroup = null;
         [SerializeField] float timeToAppear = 5f;
         [SerializeField] float fadeInTime = 0.5f;
-        public UICraftingMaterial[] craftinMaterials;
+        public CraftingMaterialSlot[] craftinMaterials;
         /// <summary>
         /// Here are the methods used by the current skillSlot selected
         /// to show his information (Description, and material requirements) 
@@ -21,7 +21,7 @@ namespace PSmash.LevelUpSystem
         // Start is called before the first frame update
         void Awake()
         {
-            craftinMaterials = GetComponentsInChildren<UICraftingMaterial>();
+            craftinMaterials = GetComponentsInChildren<CraftingMaterialSlot>();
         }
 
         public void SetWindowAlphaToCero()

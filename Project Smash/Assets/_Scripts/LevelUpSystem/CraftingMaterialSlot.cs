@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 namespace PSmash.LevelUpSystem
 {
-    public class UICraftingMaterial : MonoBehaviour
+    public class CraftingMaterialSlot : MonoBehaviour
     {
         public CraftingMaterialsList material;
         [SerializeField] TextMeshProUGUI requiredQuantityText = null;
@@ -27,6 +27,12 @@ namespace PSmash.LevelUpSystem
 
         public void UpdateValue(int value)
         {
+            requiredQuantityText.text = value.ToString();
+        }
+
+        public void UpdateMaterialSlot(CraftingMaterialsList myMaterial, int value)
+        {
+            textName.text = myMaterial.ToString();
             requiredQuantityText.text = value.ToString();
         }
     }
