@@ -35,7 +35,7 @@ namespace PSmash.Menus
             UpdateSubMenus(initialSelection);
             foreach(MenuTab tab in menuTabs)
             {
-                print(tab.gameObject.name);
+                //print(tab.gameObject.name);
             }
         }
 

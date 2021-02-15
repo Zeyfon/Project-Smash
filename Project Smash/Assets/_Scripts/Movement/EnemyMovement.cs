@@ -134,7 +134,7 @@ namespace PSmash.Movement
 
         void Move(Vector2 slopeNormalPerp, float speedFactor )
         {
-            print("Moving");
+            //print("Moving");
             //print("Previous velocity " + rb.velocity);
             float speed = baseSpeed * speedFactor;
             float xVelocity = -1 * speed * slopeNormalPerp.x;
@@ -145,7 +145,7 @@ namespace PSmash.Movement
         }
         void DoNotMove()
         {
-            print("Not Moving");
+            //print("Not Moving");
                 rb.sharedMaterial = fullFriction;
             rb.velocity = new Vector2(0, rb.velocity.y);
         }
@@ -223,7 +223,7 @@ namespace PSmash.Movement
 
         public void Flip()
         {
-            print("Flipping");
+            //print("Flipping");
             currentYAngle += 180;
             if (currentYAngle == 360) currentYAngle = 0;
             Quaternion currentRotation = new Quaternion(0, 0, 0, 0);
