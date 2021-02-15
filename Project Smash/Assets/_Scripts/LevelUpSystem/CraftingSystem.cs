@@ -11,7 +11,7 @@ namespace PSmash.LevelUpSystem
     /// and the update of the corresponding variables in the BaseStats script
     /// of the player (Stats and materials-for now)
     /// </summary>
-    public class UICraftingSystem : MonoBehaviour
+    public class CraftingSystem : MonoBehaviour
     {
         [SerializeField] Material skillLockedMaterial = null;
         [SerializeField] Material skillUnlockableMaterial = null;
@@ -19,96 +19,46 @@ namespace PSmash.LevelUpSystem
         [SerializeField] AudioClip skillUnlockedSound = null;
         [SerializeField] AudioClip skillCannotBeUnlockedSound = null;
         [SerializeField] float volume = 1;
-        [SerializeField] GameObject initialMenuSelection = null;
+        public GameObject initialMenuSelection = null;
         [SerializeField] UIDescriptionWindow descriptionWindow = null;
 
         _Controller _controller;
-        GameObject previousMenuSelection;
-        EventSystem eventSystem;
         BaseStats playerStats;
         List<SkillSlot> unlockedSkillSlots = new List<SkillSlot>();
         SkillSlot[] skillSlots;
-        UICraftingMaterial[] uiMaterials;
+        CraftingMaterialSlot[] uiMaterials;
 
         private void Awake()
         {
-            previousMenuSelection = initialMenuSelection;
             _controller = new _Controller();
-            eventSystem = FindObjectOfType<EventSystem>();
             playerStats = GameObject.FindGameObjectWithTag("Player").GetComponent<BaseStats>();
+            skillSlots = transform.GetComponentsInChildren<SkillSlot>();
+            uiMaterials = transform.GetComponentsInChildren<CraftingMaterialSlot>();
         }
+
         // Start is called before the first frame update
         void Start()
         {
-            skillSlots = transform.GetComponentsInChildren<SkillSlot>();
-            uiMaterials = transform.GetComponentsInChildren<UICraftingMaterial>();
             UpdateUIVisuals();
-            descriptionWindow.gameObject.SetActive(false);
-            gameObject.SetActive(false);
+            EnableCraftingSystem(false);
         }
 
-        /// <summary>
-        /// The enable will enable the UI Input System and will disable the Input of the player
-        /// Also will enable the crafting UI with the last selection
-        /// </summary>
-        void OnEnable()
+        void EnableCraftingSystem(bool state)
         {
-            if (eventSystem != null)
+            for(int i = 0; i<transform.childCount; i++)
             {
-                if (initialMenuSelection != previousMenuSelection)
-                {
-                    eventSystem.SetSelectedGameObject(previousMenuSelection);
-                    UpdateDescriptionWindow(previousMenuSelection);
-                }
-
-                else
-                {
-                    eventSystem.SetSelectedGameObject(initialMenuSelection);
-                    UpdateDescriptionWindow(initialMenuSelection);
-
-                }
-
+                transform.GetChild(i).gameObject.SetActive(state);
             }
-            //print("Crafting Input Enabled");
-            _controller.UI.Enable();
-            _controller.UI.Cancel.performed += ctx => CancelAction();
-        }
-
-        void OnDisable()
-        {
-            //print("Craftin Input Disabled");
-            _controller.UI.Disable();
-            _controller.UI.Cancel.performed -= ctx => CancelAction();
+            descriptionWindow.gameObject.SetActive(state);
         }
 
         void CancelAction()
         {
             //print("Canceling Action");
-            descriptionWindow.gameObject.SetActive(false);
-            gameObject.SetActive(false);
+            EnableCraftingSystem(false);
             playerStats.transform.GetChild(0).GetComponent<InputHandler>().EnableInput(true);
-        }
-        /// <summary>
-        /// The Update will be checking and updating the current selections in the Event System for the UI
-        /// and will trigger the method of Updating the Description Window. Forcing it to update its values
-        /// and to start all over the show process(Waiting Time and Fade In Processes)
-        /// </summary>
-        private void Update()
-        {
-            if (eventSystem == null)
-                return;
-            if (previousMenuSelection != eventSystem.currentSelectedGameObject)
-            {
-                //print(eventSystem.currentSelectedGameObject);
-                previousMenuSelection = eventSystem.currentSelectedGameObject;
-                UpdateDescriptionWindow(previousMenuSelection);
-            }
-        }
-
-        private void UpdateDescriptionWindow(GameObject skillSlotGameObject)
-        {
-            descriptionWindow.gameObject.transform.position = eventSystem.currentSelectedGameObject.transform.position;
-            skillSlotGameObject.GetComponent<SkillSlot>().UpdateDescriptionWindow(descriptionWindow);
+            _controller.UI.Disable();
+            _controller.UI.Cancel.performed -= ctx => CancelAction();
         }
 
         /// <summary>
@@ -119,10 +69,10 @@ namespace PSmash.LevelUpSystem
         public void EnableMenu()
         {
             UpdateUIVisuals();
-            gameObject.SetActive(true);
-            descriptionWindow.gameObject.SetActive(true);
+            EnableCraftingSystem(true);
             playerStats.transform.GetChild(0).GetComponent<InputHandler>().EnableInput(false);
-
+            _controller.UI.Enable();
+            _controller.UI.Cancel.performed += ctx => CancelAction();
         }
 
         /// <summary>
@@ -218,7 +168,6 @@ namespace PSmash.LevelUpSystem
                 {
                     skillSlot.UpdateImageMaterial(null);
                     skillSlot.UpdateLinks("White"); ;
-
                 }
                 else
                 {
@@ -237,7 +186,7 @@ namespace PSmash.LevelUpSystem
             }
 
             //Update Values for the Crafting Materials owner showd in the UI Crafting System
-            foreach (UICraftingMaterial uiMaterial in uiMaterials)
+            foreach (CraftingMaterialSlot uiMaterial in uiMaterials)
             {
                 int value = playerStats.GetMaterialQuantity(uiMaterial.material);
                 //print(uiMaterial.material + "  "  + value);

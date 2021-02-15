@@ -27,7 +27,7 @@ namespace PSmash.LevelUpSystem
         /// </summary>
         public void TryToUnlockSkill()
         {
-            GetComponentInParent<UICraftingSystem>().TryToUnlockSkill(skill, this);
+            GetComponentInParent<CraftingSystem>().TryToUnlockSkill(skill, this);
         }
 
         /// <summary>
@@ -92,7 +92,7 @@ namespace PSmash.LevelUpSystem
             foreach (CraftingMaterialsList material in craftingMaterials.Keys)
             {
                 print(material);
-                playerStats.UpdateMaterialPossessedByPlayer(material, -craftingMaterials[material]);
+                playerStats.UpdateMyMaterials(material, -craftingMaterials[material]);
             }
             return true;
         }
@@ -105,7 +105,7 @@ namespace PSmash.LevelUpSystem
         public void UpdateDescriptionWindow(UIDescriptionWindow descriptionWindow)
         {
             //print("Updating Description Window");
-            foreach (UICraftingMaterial craftingMaterial in descriptionWindow.craftinMaterials)
+            foreach (CraftingMaterialSlot craftingMaterial in descriptionWindow.craftinMaterials)
             {
                 //print("Checking if is required  " + craftingMaterial.material.ToString());
                 bool isMaterial = false;
@@ -133,10 +133,8 @@ namespace PSmash.LevelUpSystem
                 //print("Stoping Coroutine");
                 //Debug.Break();
             }
-
             descriptionWindow.SetWindowAlphaToCero();
             coroutine = StartCoroutine(DescriptionWindowFadeIn(descriptionWindow));
-
         }
 
         IEnumerator DescriptionWindowFadeIn(UIDescriptionWindow descriptionWindow)
@@ -149,6 +147,20 @@ namespace PSmash.LevelUpSystem
             //print("FadeInComplete");
             coroutine = null;
             //cr_Running = false;
+        }
+
+
+        public Dictionary<CraftingMaterialsList,int> GetCraftingMaterialsRequirement()
+        {
+            Dictionary<CraftingMaterialsList, int> requiredMaterials = new Dictionary<CraftingMaterialsList, int>();
+
+            foreach(RequiredMaterial requiredMaterial in this.requiredMaterials)
+            {
+                print("Adding  " + requiredMaterial.material);
+                requiredMaterials.Add(requiredMaterial.material, requiredMaterial.quantity);
+            }
+            print("Got the Required Materials " + requiredMaterials); 
+            return requiredMaterials;
         }
 
 

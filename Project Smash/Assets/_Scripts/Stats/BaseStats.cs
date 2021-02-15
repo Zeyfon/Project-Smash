@@ -118,11 +118,11 @@ namespace PSmash.Stats
 
         private void CollectDrop(CraftingMaterialsList material)
         {
-            //print("Player collected  1 "  + material.ToString());
-            UpdateMaterialPossessedByPlayer(material, 1);
+            print("Player collected  1 "  + material.ToString());
+            UpdateMyMaterials(material, 1);
         }
 
-        public void UpdateMaterialPossessedByPlayer(CraftingMaterialsList material, int value)
+        public void UpdateMyMaterials(CraftingMaterialsList material, int value)
         {
             //print(material + "  value  " + value);
             switch (material)

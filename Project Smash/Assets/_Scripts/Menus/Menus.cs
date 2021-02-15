@@ -6,14 +6,19 @@ namespace PSmash.Menus
     public class Menus : MonoBehaviour
     {
         //[SerializeField] Transform weaponsTransform = null;
-        [SerializeField] GameObject status = null;        public delegate void MenusClosed(bool state);
+        [SerializeField] GameObject status = null;        
+        [SerializeField] GameObject craftingSystem = null;
+
+        public delegate void MenusClosed(bool state);
         public static event MenusClosed OnMenusClosed;
         GameObject statusMenuClone;
+        GameObject craftingSystemClone;
         _Controller _controller;
         // Start is called before the first frame update
         void Awake()
         {
             statusMenuClone = Instantiate(status, transform);
+            craftingSystemClone = Instantiate(craftingSystem, transform);
             _controller = new _Controller();
         }
 
