@@ -37,13 +37,13 @@ namespace PSmash.Items
 
         void Damage()
         {
-            print(gameObject.name + " received damage  " + " Counter is  " + counter);
+            //print(gameObject.name + " received damage  " + " Counter is  " + counter);
             damageAudioSource.Play();
         }
 
         void Destroy()
         {
-            print(gameObject.name + "  is destroyed");
+            //print(gameObject.name + "  is destroyed");
             destroyedAudioSource.Play();
             GameObject psClone = Instantiate(ps, transform.position, Quaternion.identity, transform);
             StartCoroutine(DestroyParticles(psClone));

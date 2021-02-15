@@ -130,7 +130,7 @@ namespace PSmash.LevelUpSystem
                 StopCoroutine(coroutine);
                 coroutine = null;
                 //cr_Running = false;
-                print("Stoping Coroutine");
+                //print("Stoping Coroutine");
                 //Debug.Break();
             }
 
@@ -142,11 +142,11 @@ namespace PSmash.LevelUpSystem
         IEnumerator DescriptionWindowFadeIn(UIDescriptionWindow descriptionWindow)
         {
             //cr_Running = true;
-            print("Wants to Fade In Description Window");
+            //print("Wants to Fade In Description Window");
             yield return descriptionWindow.WaitingToAppear();
             yield return descriptionWindow.FadeIn();
 
-            print("FadeInComplete");
+            //print("FadeInComplete");
             coroutine = null;
             //cr_Running = false;
         }

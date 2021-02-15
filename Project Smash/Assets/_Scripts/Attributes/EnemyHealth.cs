@@ -30,15 +30,19 @@ namespace PSmash.Attributes
         //when entering a new state
         public void SetCurrentStateInfo(PlayMakerFSM pm, float damagePenetrationPercentage)
         {
-            //print(fsm.FsmName + "  set in " + this);
+            print(gameObject.name + " set in " + pm.FsmName);
             this.pm = pm;
             this.damagePenetrationPercentage = damagePenetrationPercentage;
         }
 
         public override void TakeDamage(Transform attacker, WeaponList weapon, float damage)
         {
-            if (isDead) 
+            if (isDead)
+            {
+                print(gameObject.name + "  is invincible. You can't hurt him anymore");
                 return;
+            }
+
             if (pm == null) 
             {
                 Debug.LogWarning("No Enemy State set to return DAMAGE Event");
@@ -57,7 +61,7 @@ namespace PSmash.Attributes
                 posture.posture = posture.SubstractDamageFromPosture(damage);
                 if (posture.posture <= 0)
                 {
-                    print("POSTUREDEPLETED Event to the fsm " + pm.FsmName);
+                    //print("POSTUREDEPLETED Event to the fsm " + pm.FsmName);
                     posture.OnStunStateStart();
                     DamageHealth(damage, 100);
                     pm.SendEvent("DAMAGED_POSTUREDEPLETED");
@@ -69,7 +73,7 @@ namespace PSmash.Attributes
                     FsmEventData myfsmEventData = new FsmEventData();
                     myfsmEventData.FloatData = damage;
                     HutongGames.PlayMaker.Fsm.EventData = myfsmEventData;
-                    print("DAMAGED_POSTURENOTDEPLETED Event to the fsm " + pm.FsmName);
+                    //print("DAMAGED_POSTURENOTDEPLETED Event to the fsm " + pm.FsmName);
                     DamageHealth(damage, damagePenetrationPercentage);
                     pm.SendEvent("DAMAGED_POSTURENOTDEPLETED");
                     return;
@@ -77,7 +81,7 @@ namespace PSmash.Attributes
             }
             else
             {
-                print("DAMAGED_NOPOSTUREBAR Event to the fsm " + pm.FsmName);
+                //print("DAMAGED_NOPOSTUREBAR Event to the fsm " + pm.FsmName);
                 DamageHealth(damage, damagePenetrationPercentage);
                 pm.SendEvent("DAMAGED_NOPOSTUREBAR");
                 return;
@@ -95,7 +99,7 @@ namespace PSmash.Attributes
 
         public void DamageHealth(float damage, float damagePenetrationPercentage)
         {
-            print(damage + " will be substracted from  " + health);
+            //print(damage + " will be substracted from  " + health);
             damage = damage * damagePenetrationPercentage / 100;
             health = SubstractDamageFromHealth(damage, health);
             if (health <= 0)
@@ -103,7 +107,7 @@ namespace PSmash.Attributes
                 //print("Dead");
                 isDead = true;
             }
-                        print(gameObject.name + "  current health is : " + health );
+                        //print(gameObject.name + "  current health is : " + health );
         }
 
         private float SubstractDamageFromHealth(float damage, float health)
