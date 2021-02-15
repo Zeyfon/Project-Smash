@@ -194,12 +194,12 @@ namespace PSmash.Combat
         }
         IEnumerator FinisherTimer()
         {
-            print("Start to wait");
+            //print("Start to wait");
             timeManager.SlowTime();
             yield return new WaitForSecondsRealtime(3f);
             timeManager.SpeedUpTime();
 
-            print("Ended waiting");
+            //print("Ended waiting");
         }
 
         //Called from the ThrowDagger State in PlayMaker Components
@@ -346,7 +346,7 @@ namespace PSmash.Combat
                     damage *= 10;
                     //print("Enemy being Finished");
                 }
-                print("Player damaged the  " + coll.gameObject.name +  " by " + damage);
+                //print("Player damaged the  " + coll.gameObject.name +  " by " + damage);
                 target.TakeDamage(transform, currentWeapon, damage);
             }
         }
