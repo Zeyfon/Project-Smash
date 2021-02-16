@@ -37,17 +37,21 @@ namespace PSmash.Items.Traps
         }
         IEnumerator ReturnPlayerToLastPosition(Transform player)
         {
+
+            //Fader fader = FindObjectOfType<Fader>();
+            Fader fader = new Fader();
+            CanvasGroup canvasGroup = GetComponent<CanvasGroup>();
             print("ReturningPlayer");
             EnablePlayerController(false);
             print("1");
-            Fader fader = FindObjectOfType<Fader>();
-            yield return fader.FadeOut(fadeOutTime);
+
+            yield return fader.FadeOut(canvasGroup, fadeOutTime);
             print("1");
             player.position = lastPosition;
             print("1");
             yield return new WaitForSeconds(1);
             print("1");
-            yield return fader.FadeIn(fadeInTime);
+            yield return fader.FadeIn(canvasGroup, fadeInTime);
             print("1");
             EnablePlayerController(true);
         }

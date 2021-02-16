@@ -8,32 +8,26 @@ namespace PSmash.LevelUpSystem
 {
     public class CraftingMaterialSlot : MonoBehaviour
     {
-        public CraftingMaterialsList material;
         [SerializeField] TextMeshProUGUI requiredQuantityText = null;
-        [SerializeField] TextMeshProUGUI textName = null;
+        [SerializeField] TextMeshProUGUI playerQuantityText = null;
+        [SerializeField] TextMeshProUGUI middleSeparatorText = null;
         [SerializeField] Image image = null;
 
-        /// <summary>
-        /// Here only updates the required material current quantity
-        /// </summary>
-
-        private void Start()
+        public void UpdateCraftingMaterial(CraftingMaterial material, int requiredQuantity, int playerQuantity)
         {
-            if (image.sprite == null)
-            {
-                textName.text = material.ToString();
-            }
-        }
+            Color craftingColor;
+            //print(material.sprite.name);
+            image.sprite = material.sprite;
+            requiredQuantityText.text = requiredQuantity.ToString();
+            playerQuantityText.text = playerQuantity.ToString();
+            if (playerQuantity >= requiredQuantity)
+                craftingColor = Color.white;
+            else
+                craftingColor = Color.red;
 
-        public void UpdateValue(int value)
-        {
-            requiredQuantityText.text = value.ToString();
-        }
-
-        public void UpdateMaterialSlot(CraftingMaterialsList myMaterial, int value)
-        {
-            textName.text = myMaterial.ToString();
-            requiredQuantityText.text = value.ToString();
+            requiredQuantityText.color = craftingColor;
+            playerQuantityText.color = craftingColor;
+            middleSeparatorText.color = craftingColor;
         }
     }
 }

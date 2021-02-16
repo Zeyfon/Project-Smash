@@ -103,21 +103,21 @@ namespace PSmash.Items.Doors
         //during the moment of showing the door to the player
         IEnumerator ShowDoorMomentInmediateReturn()
         {
-            Fader fader = FindObjectOfType<Fader>();
+            //Fader fader = FindObjectOfType<Fader>();
+            Fader fader = new Fader();
             DisableAvatarControl();
             yield return new WaitForSeconds(1);
             myVirtualCamera.m_Priority = 100;
             yield return new WaitForSeconds(4);
-            yield return fader.FadeOut(fadeOutTime);
+            yield return fader.FadeOut(canvasGroup, fadeOutTime);
             myVirtualCamera.m_Priority = 0;
             yield return new WaitForSeconds(0.5f);
-            yield return fader.FadeIn(fadeInTime);
+            yield return fader.FadeIn(canvasGroup, fadeInTime);
             EnableAvatarControl();
         }
 
         IEnumerator ShowDoorMomentPanningBothSides()
         {
-            Fader fader = FindObjectOfType<Fader>();
             DisableAvatarControl();
             yield return new WaitForSeconds(1);
             myVirtualCamera.m_Priority = 100;

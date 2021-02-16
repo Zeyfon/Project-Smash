@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using PSmash.Stats;
 
 namespace PSmash.LevelUpSystem
 {
@@ -17,21 +18,30 @@ namespace PSmash.LevelUpSystem
     public class DescriptionWindowInfoHandler : MonoBehaviour
     {
         [SerializeField] CraftingMaterialSlot[] craftingMaterialsSlots;
+        MyCraftingMaterials playerMaterials;
 
-        public void SetRequiredMaterials(Dictionary<CraftingMaterialsList, int> requiredMaterials)
+        private void Awake()
         {
-            foreach(CraftingMaterialSlot craftingMaterialSlot in craftingMaterialsSlots)
+            playerMaterials = GameObject.FindGameObjectWithTag("Player").GetComponent<MyCraftingMaterials>();
+        }
+
+        public void SetCurrentSkillSlotMaterials(Dictionary<CraftingMaterial, int> requiredCraftingMaterials)
+        {
+            foreach (CraftingMaterialSlot craftingMaterialSlot in craftingMaterialsSlots)
             {
                 craftingMaterialSlot.gameObject.SetActive(true);
             }
-            print("Sending the info to each CraftingMaterialsSlot " );
+            //print("Sending the info to each CraftingMaterialsSlot ");
             int j = 0;
-            foreach(CraftingMaterialsList material in requiredMaterials.Keys)
+            foreach (CraftingMaterial material in requiredCraftingMaterials.Keys)
             {
-                craftingMaterialsSlots[j].UpdateMaterialSlot(material, requiredMaterials[material]);
+                int playerQuantity = playerMaterials.GetPlayerQuantityForThisMaterial(material);
+
+                //print("Will send to " + craftingMaterialsSlots[j].gameObject.name + " this " + material.material.ToString() + "  " + requiredCraftingMaterials[material] + "   " + playerQuantity);
+                craftingMaterialsSlots[j].UpdateCraftingMaterial(material, requiredCraftingMaterials[material], playerQuantity);
                 j++;
             }
-            for(int k = j; k < craftingMaterialsSlots.Length; k++)
+            for (int k = j; k < craftingMaterialsSlots.Length; k++)
             {
                 craftingMaterialsSlots[k].gameObject.SetActive(false);
             }

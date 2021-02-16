@@ -17,8 +17,10 @@ namespace PSmash.Temporal
 
         IEnumerator EndGame()
         {
-            Fader fader = FindObjectOfType<Fader>();
-            yield return fader.FadeOut(1);
+            //Fader fader = FindObjectOfType<Fader>();
+            Fader fader = new Fader();
+            CanvasGroup canvasGroup = GetComponent<CanvasGroup>();
+            yield return fader.FadeOut(canvasGroup, 1);
             Application.Quit();
         }
     }
