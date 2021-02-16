@@ -7,7 +7,6 @@ using PSmash.Core;
 
 namespace PSmash.Core
 {
-    [RequireComponent(typeof(Fader))]
     public class NPC : MonoBehaviour
     {
         [SerializeField] CanvasGroup canvasGroup;
@@ -33,7 +32,7 @@ namespace PSmash.Core
 
         IEnumerator ShowDialogue()
         {
-            Fader fader = GetComponent<Fader>();
+            Fader fader = new Fader();
             yield return fader.FadeIn(canvasGroup, 1);
         }
 
@@ -49,7 +48,7 @@ namespace PSmash.Core
 
         IEnumerator HideDialogue()
         {
-            Fader fader = GetComponent<Fader>();
+            Fader fader = new Fader();
             yield return fader.FadeOut(canvasGroup, 1);
         }
     }

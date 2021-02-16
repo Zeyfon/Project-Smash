@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 namespace PSmash.LevelUpSystem
 {
-    public class UICraftingSystemLink : MonoBehaviour
+    public class Link : MonoBehaviour
     {
         [SerializeField] Image image = null;
         bool isLinkSet = false;

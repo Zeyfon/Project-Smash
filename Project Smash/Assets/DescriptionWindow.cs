@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using PSmash.Core;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -7,6 +8,8 @@ namespace PSmash.LevelUpSystem
 {
     public class DescriptionWindow : MonoBehaviour
     {
+        [SerializeField] CanvasGroup canvasGroup = null;
+        [SerializeField] float fadeTime = 1;
         [SerializeField] DescriptionWindowInfoHandler requiredMaterialsUpdater = null;
         GameObject previousMenuSelection;
         GameObject initialMenuSelection;
@@ -15,24 +18,26 @@ namespace PSmash.LevelUpSystem
 
         private void Awake()
         {
-            //initialMenuSelection = FindObjectOfType<CraftingSystem>().initialMenuSelection;
-            //previousMenuSelection = initialMenuSelection;
             eventSystem = FindObjectOfType<EventSystem>();
-
+            initialMenuSelection = GetComponentInParent<CraftingSystem>().initialMenuSelection;
         }
 
         void OnEnable()
         {
             if (eventSystem != null)
             {
-                if (initialMenuSelection != null && initialMenuSelection != previousMenuSelection)
+                if (previousMenuSelection != null && initialMenuSelection != previousMenuSelection)
                 {
+                    //print("Set Previous Selection");
                     eventSystem.SetSelectedGameObject(previousMenuSelection);
                     UpdateDescriptionWindow(previousMenuSelection);
                 }
 
                 else
                 {
+                    //print("Set Initial Selection");
+                    if (initialMenuSelection == null)
+                        Debug.LogWarning("The skillSlot selected is empty");
                     eventSystem.SetSelectedGameObject(initialMenuSelection);
                     UpdateDescriptionWindow(initialMenuSelection);
                 }
@@ -54,37 +59,29 @@ namespace PSmash.LevelUpSystem
         {
             if (coroutine != null)
                 StopCoroutine(coroutine);
+            if (skillSlotGameObject == null)
+                Debug.LogWarning("The skillSlot selected is empty");
             coroutine = StartCoroutine(InfoUpdate(skillSlotGameObject));
-
         }
 
         IEnumerator InfoUpdate(GameObject skillSlotGameObject)
         {
-            yield return FadeOut();
+            Fader fader = new Fader();
+            yield return fader.FadeOut(canvasGroup, fadeTime);
             yield return InfoChange(skillSlotGameObject);
-            yield return FadeIn();
-        }
-
-        IEnumerator FadeOut()
-        {
-            yield return null;
+            yield return fader.FadeIn(canvasGroup, fadeTime);
         }
 
         IEnumerator InfoChange(GameObject skillSlotGameObject)
         {
-            print("Got the SkillSlot " + skillSlotGameObject.name);
+            if (skillSlotGameObject == null)
+                Debug.LogWarning("The skillSlot selected is empty");
+            //print("Got the SkillSlot " + skillSlotGameObject.name);
             transform.position = eventSystem.currentSelectedGameObject.transform.position;
-            //skillSlotGameObject.GetComponent<SkillSlot>().UpdateDescriptionWindow(GetComponent<UIDescriptionWindow>());
-            Dictionary<CraftingMaterialsList, int> requiredMaterials = new Dictionary<CraftingMaterialsList, int>();
-            requiredMaterials = skillSlotGameObject.GetComponent<SkillSlot>().GetCraftingMaterialsRequirement();
-            requiredMaterialsUpdater.SetRequiredMaterials(requiredMaterials);
-            yield return null;
-        }
-
-        IEnumerator FadeIn()
-        {
+            Dictionary<CraftingMaterial, int> requiredCraftingMaterials = new Dictionary<CraftingMaterial, int>();
+            requiredCraftingMaterials = skillSlotGameObject.GetComponent<SkillSlot>().GetCraftingMaterialsRequirement2();
+            requiredMaterialsUpdater.SetCurrentSkillSlotMaterials(requiredCraftingMaterials);
             yield return null;
         }
     }
-
 }
