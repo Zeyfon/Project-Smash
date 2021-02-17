@@ -2,7 +2,6 @@
 using PSmash.Stats;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.EventSystems;
 
 namespace PSmash.LevelUpSystem
 {
@@ -13,15 +12,11 @@ namespace PSmash.LevelUpSystem
     /// </summary>
     public class CraftingSystem : MonoBehaviour
     {
-        [SerializeField] Material skillLockedMaterial = null;
-        [SerializeField] Material skillUnlockableMaterial = null;
-        [SerializeField] Material saturationCeroMaterial = null;
         [SerializeField] AudioSource audioSource = null;
         [SerializeField] AudioClip skillUnlockedSound = null;
         [SerializeField] AudioClip skillCannotBeUnlockedSound = null;
         [SerializeField] float volume = 1;
-        public GameObject initialMenuSelection = null;
-        [SerializeField] DescriptionWindow descriptionWindow = null;
+        [SerializeField] SkillPanel skillPanel = null;
 
         _Controller _controller;
         BaseStats playerStats;
@@ -52,7 +47,6 @@ namespace PSmash.LevelUpSystem
             {
                 transform.GetChild(i).gameObject.SetActive(state);
             }
-            descriptionWindow.gameObject.SetActive(state);
         }
 
         void CancelAction()
@@ -92,22 +86,22 @@ namespace PSmash.LevelUpSystem
             //print(skill.name + "  " + skillSlot.gameObject.name);
             if (IsSkillUnlocked(skillSlot))
             {
-                CannotUnlockSkillEffects();
+                CannotUnlockSkill();
             }
             else
             {
-                if (IsAnySkillSlotUnlockableOptionsUnlocked(skillSlot) && HaveNecessaryMaterials(skillSlot))
+                if (IsAnySkillSlotPathUnlocked(skillSlot) && HaveNecessaryMaterials(skillSlot))
                 {
                     UnlockSkill(skill, skillSlot);
                 }
                 else
                 {
-                    CannotUnlockSkillEffects();
+                    CannotUnlockSkill();
                 }
             }
         }
 
-        bool IsSkillUnlocked(SkillSlot skillSlot)
+        public bool IsSkillUnlocked(SkillSlot skillSlot)
         {
             if (unlockedSkillSlots.Contains(skillSlot))
                 return true;
@@ -115,7 +109,7 @@ namespace PSmash.LevelUpSystem
                 return false;
         }
 
-        private bool IsAnySkillSlotUnlockableOptionsUnlocked(SkillSlot skillSlot)
+        public bool IsAnySkillSlotPathUnlocked(SkillSlot skillSlot)
         {
             SkillSlot[] skillSlotsUnlockingOptions = skillSlot.GetSkillSlotsUnlockingOptions();
             //print(skillSlot.gameObject.name + " needs that the " + tempSkillSlot + "  is unlocked to unlock ");
@@ -145,7 +139,7 @@ namespace PSmash.LevelUpSystem
             return skillSlot.HaveNecessaryMaterials(playerMaterials);
         }
 
-        private void CannotUnlockSkillEffects()
+        private void CannotUnlockSkill()
         {
             audioSource.PlayOneShot(skillCannotBeUnlockedSound, volume);
         }
@@ -171,42 +165,20 @@ namespace PSmash.LevelUpSystem
             {
                 if (IsSkillUnlocked(skillSlot))
                 {
-                    SetSkillSlotAsUnlocked(skillSlot);
+                    skillPanel.SetSkillSlotAsUnlocked(skillSlot);
                 }
                 else
                 {
-                    if (IsAnySkillSlotUnlockableOptionsUnlocked(skillSlot))
+                    if (IsAnySkillSlotPathUnlocked(skillSlot))
                     {
-                        SetSkillSlotAsUnlockable(skillSlot);
+                        skillPanel.SetSkillSlotAsUnlockable(skillSlot);
                     }
                     else
                     {
-                        SetSkillSlotAsLocked(skillSlot);
-
+                        skillPanel.SetSkillSlotAsLocked(skillSlot);
                     }
                 }
             }
-        }
-
-        private void SetSkillSlotAsLocked(SkillSlot skillSlot)
-        {
-            //Saturation 0
-            skillSlot.UpdateSkillSlotVisualState(saturationCeroMaterial, false);
-            skillSlot.UpdateLinks("Dark");
-        }
-
-        private void SetSkillSlotAsUnlockable(SkillSlot skillSlot)
-        {
-            //Saturation 0 with White Ring
-            skillSlot.UpdateSkillSlotVisualState(saturationCeroMaterial, true);
-            skillSlot.UpdateLinks("Dark");
-        }
-
-        private static void SetSkillSlotAsUnlocked(SkillSlot skillSlot)
-        {
-            //Saturation 1
-            skillSlot.UpdateSkillSlotVisualState(null, false);
-            skillSlot.UpdateLinks("White");
         }
     }
 }

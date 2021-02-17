@@ -369,12 +369,12 @@ namespace PSmash.InputSystem
         {
             if (state)
             {
-                print("Enabling input handler");
+                //print("Enabling input handler");
                 _controller.Player.Enable();
             }
             else
             {
-                print("Disabling input handler");
+                //print("Disabling input handler");
                 _controller.Player.Disable();
                 movement = new Vector2(0, 0);
             }
