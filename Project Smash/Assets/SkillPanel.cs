@@ -1,68 +1,90 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System;
 using UnityEngine;
-using UnityEngine.EventSystems;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
 
-public class SkillPanel : MonoBehaviour
+namespace PSmash.LevelUpSystem
 {
-    // Start is called before the first frame update
-    [SerializeField] Material yellowMaterial = null;
-    GameObject currentSkillSelected;
-    GameObject previousSkillSelected;
-
-    EventSystem eventSystem;
-    void Start()
+    public class SkillPanel : MonoBehaviour
     {
-        eventSystem = FindObjectOfType<EventSystem>();
-    }
+        [SerializeField] Material saturationCeroMaterial = null;
+        [SerializeField] Material yellowSelectorMaterial = null;
+        [SerializeField] CraftingSystem craftingSystem = null;
+        
+        EventSystem eventSystem;
 
-    // Update is called once per frame
-    void OnEnable()
-    {
-        if (eventSystem != null)
+        void Awake()
         {
-            if (previousSkillSelected != null && currentSkillSelected != previousSkillSelected)
-            {
-                print("Set Previous Selection");
-                eventSystem.SetSelectedGameObject(previousSkillSelected);
-                SetSelectorRing(previousSkillSelected, null);
-            }
+            eventSystem = FindObjectOfType<EventSystem>();
+        }
+        public void SetSkillSlotAsLocked(SkillSlot skillSlot)
+        {
+            //Saturation 0
+            skillSlot.UpdateSkillSlotVisualState(saturationCeroMaterial);
+            SetThisSkillSlotRingBasedOnState(skillSlot.gameObject);
+            skillSlot.UpdateLinks("Dark");
+        }
 
+        public void SetSkillSlotAsUnlockable(SkillSlot skillSlot)
+        {
+            //Saturation 0 with White Ring
+            skillSlot.UpdateSkillSlotVisualState(saturationCeroMaterial);
+            SetThisSkillSlotRingBasedOnState(skillSlot.gameObject);
+
+            skillSlot.UpdateLinks("Dark");
+        }
+
+        public void SetSkillSlotAsUnlocked(SkillSlot skillSlot)
+        {
+            //Saturation 1
+            skillSlot.UpdateSkillSlotVisualState(null);
+            SetThisSkillSlotRingBasesOnSelection(skillSlot.gameObject);
+            skillSlot.UpdateLinks("White");
+        }
+
+        private void SetThisSkillSlotRingBasesOnSelection(GameObject gameObject)
+        {
+            if (gameObject == eventSystem.currentSelectedGameObject)
+                SetThisSkillSlotRingToYellow(gameObject);
             else
             {
-                print("Set Initial Selection");
-                if (currentSkillSelected == null)
-                    Debug.LogWarning("The skillSlot selected is empty");
-                eventSystem.SetSelectedGameObject(currentSkillSelected);
-                SetSelectorRing(currentSkillSelected, previousSkillSelected);
+                Image skillSlotImage = gameObject.GetComponentInChildren<Image>();
+                skillSlotImage.enabled = false;
             }
         }
-    }
 
-    private void Update()
-    {
-        if (eventSystem == null)
-            return;
-        if (previousSkillSelected != eventSystem.currentSelectedGameObject)
+        public void SetRingsForTheseGameObjects(GameObject currentSelection, GameObject previousSelection)
         {
-            SetSelectorRing(eventSystem.currentSelectedGameObject, previousSkillSelected);
-            previousSkillSelected = eventSystem.currentSelectedGameObject;
+            SetThisSkillSlotRingToYellow(currentSelection);
+            if (previousSelection == null || currentSelection == previousSelection)
+                return;
+            SetThisSkillSlotRingBasedOnState(previousSelection);
+        }
+
+        private void SetThisSkillSlotRingToYellow(GameObject skillSlotSelection)
+        {
+            //print("Yellow ring enabled for " + skillSlotSelection.name);
+            Image currentSkillSlotImage = skillSlotSelection.GetComponentInChildren<Image>();
+            currentSkillSlotImage.material = yellowSelectorMaterial;
+            currentSkillSlotImage.enabled = true;
+        }
+
+        void SetThisSkillSlotRingBasedOnState(GameObject skillSlotSelection)
+        {
+            
+            Image previousSkillSlotImage = skillSlotSelection.GetComponentInChildren<Image>();
+            SkillSlot skillSlot = skillSlotSelection.GetComponent<SkillSlot>();
+            if (!craftingSystem.IsAnySkillSlotPathUnlocked(skillSlot) || craftingSystem.IsSkillUnlocked(skillSlot))
+            {
+                //print("Disabling Ring for " + skillSlotSelection.name);
+                previousSkillSlotImage.enabled = false;
+            }
+            else
+            {
+                previousSkillSlotImage.enabled = true;
+            }
+            previousSkillSlotImage.material = null;
         }
     }
-
-    void SetSelectorRing(GameObject currentSelection, GameObject previousSelection)
-    {
-        print("Updating current " + currentSelection.name);
-        Image currentSkillSlotImage = currentSelection.GetComponentInChildren<Image>();
-        currentSkillSlotImage.material = yellowMaterial;
-        currentSkillSlotImage.enabled = true;
-        if (previousSelection == null)
-            return;
-        //if skillSlot is unlockable get the white ring
-        //else
-            //disable rign
-        previousSelection.GetComponentInChildren<Image>().material = null;
-
-    }
 }
+

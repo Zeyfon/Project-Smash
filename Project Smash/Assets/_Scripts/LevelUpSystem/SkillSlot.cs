@@ -15,7 +15,7 @@ namespace PSmash.LevelUpSystem
         [SerializeField] SkillSlot[] UnlockableBySkillSlots;
         [SerializeField] RequiredCraftingMaterial[] requiredCraftingMaterials;
         [SerializeField] UnlockableSkillPath[] availablePathsOnceUnlocked;
-        [SerializeField] Image ringImage = null;
+        //[SerializeField] Image ringImage = null;
 
         // Start is called before the first frame update
         void Start()
@@ -50,11 +50,10 @@ namespace PSmash.LevelUpSystem
             skillSlotImage.material = material;
         }
 
-        public void UpdateSkillSlotVisualState(Material material, bool isRingEnabled)
+        public void UpdateSkillSlotVisualState(Material material)
         {
             skillSlotImage.material = material;
-            ringImage.enabled = isRingEnabled;
-
+            //ringImage.enabled = isRingEnabled;
         }
 
         /// <summary>
