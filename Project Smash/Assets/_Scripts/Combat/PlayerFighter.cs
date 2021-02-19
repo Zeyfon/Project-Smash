@@ -205,22 +205,22 @@ namespace PSmash.Combat
         //Called from the ThrowDagger State in PlayMaker Components
         public void ThrowItemAttack(bool isButtonPressed)
         {
-            isAttacking = true;
-            movement.StopMovement();
+            //isAttacking = true;
+            //movement.StopMovement();
             StartCoroutine(RunThisAnimation("Attack", 30));
             //print(this.name + "  Throwing item");
         }
 
-        public void SpawnItem(GameObject spawnItem)
-        {
-            if (currentItemQuantity <= 0) return;
-            GameObject itemClone = Instantiate(spawnItem, attackTransform.position, Quaternion.identity);
-            itemClone.GetComponent<Projectile>().SetOwner(health);
-            if(!movement.GetIsLookingRight())
-                itemClone.transform.eulerAngles = new Vector3(0, 180, 0);
-            currentItemQuantity--;
-            onItemThrown(currentItemQuantity);
-        }
+        //public void SpawnItem(GameObject spawnItem)
+        //{
+        //    if (currentItemQuantity <= 0) return;
+        //    GameObject itemClone = Instantiate(spawnItem, attackTransform.position, Quaternion.identity);
+        //    itemClone.GetComponent<Projectile>().SetOwner(health);
+        //    if(!movement.GetIsLookingRight())
+        //        itemClone.transform.eulerAngles = new Vector3(0, 180, 0);
+        //    currentItemQuantity--;
+        //    onItemThrown(currentItemQuantity);
+        //}
 
         #region Guard/Parry
         public void Guard(bool isGuardButtonPressed)

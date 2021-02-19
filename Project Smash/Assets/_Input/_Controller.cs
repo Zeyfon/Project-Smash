@@ -113,6 +113,22 @@ public class @_Controller : IInputActionCollection, IDisposable
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """"
+                },
+                {
+                    ""name"": ""ItemChangeRight"",
+                    ""type"": ""Button"",
+                    ""id"": ""d6a55b6c-7563-43bb-bd39-f24127da8c57"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
+                },
+                {
+                    ""name"": ""ItemChangeLeft"",
+                    ""type"": ""Button"",
+                    ""id"": ""e9d609dd-e035-491c-93f7-ca4dd4ef0b7b"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
                 }
             ],
             ""bindings"": [
@@ -388,6 +404,28 @@ public class @_Controller : IInputActionCollection, IDisposable
                     ""processors"": """",
                     ""groups"": ""Keyboard&Mouse"",
                     ""action"": ""ItemUse"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""67c3e0b6-41ac-4ad1-89e5-7d78539d525b"",
+                    ""path"": ""<Keyboard>/e"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard&Mouse"",
+                    ""action"": ""ItemChangeRight"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""a06140be-077a-45d4-a073-8888f9fff660"",
+                    ""path"": ""<Keyboard>/q"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard&Mouse"",
+                    ""action"": ""ItemChangeLeft"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -929,6 +967,8 @@ public class @_Controller : IInputActionCollection, IDisposable
         m_Player_DPadLeft = m_Player.FindAction("DPadLeft", throwIfNotFound: true);
         m_Player_LeftTrigger = m_Player.FindAction("LeftTrigger", throwIfNotFound: true);
         m_Player_ItemUse = m_Player.FindAction("ItemUse", throwIfNotFound: true);
+        m_Player_ItemChangeRight = m_Player.FindAction("ItemChangeRight", throwIfNotFound: true);
+        m_Player_ItemChangeLeft = m_Player.FindAction("ItemChangeLeft", throwIfNotFound: true);
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
         m_UI_Navigate = m_UI.FindAction("Navigate", throwIfNotFound: true);
@@ -1008,6 +1048,8 @@ public class @_Controller : IInputActionCollection, IDisposable
     private readonly InputAction m_Player_DPadLeft;
     private readonly InputAction m_Player_LeftTrigger;
     private readonly InputAction m_Player_ItemUse;
+    private readonly InputAction m_Player_ItemChangeRight;
+    private readonly InputAction m_Player_ItemChangeLeft;
     public struct PlayerActions
     {
         private @_Controller m_Wrapper;
@@ -1024,6 +1066,8 @@ public class @_Controller : IInputActionCollection, IDisposable
         public InputAction @DPadLeft => m_Wrapper.m_Player_DPadLeft;
         public InputAction @LeftTrigger => m_Wrapper.m_Player_LeftTrigger;
         public InputAction @ItemUse => m_Wrapper.m_Player_ItemUse;
+        public InputAction @ItemChangeRight => m_Wrapper.m_Player_ItemChangeRight;
+        public InputAction @ItemChangeLeft => m_Wrapper.m_Player_ItemChangeLeft;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -1069,6 +1113,12 @@ public class @_Controller : IInputActionCollection, IDisposable
                 @ItemUse.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnItemUse;
                 @ItemUse.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnItemUse;
                 @ItemUse.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnItemUse;
+                @ItemChangeRight.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnItemChangeRight;
+                @ItemChangeRight.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnItemChangeRight;
+                @ItemChangeRight.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnItemChangeRight;
+                @ItemChangeLeft.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnItemChangeLeft;
+                @ItemChangeLeft.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnItemChangeLeft;
+                @ItemChangeLeft.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnItemChangeLeft;
             }
             m_Wrapper.m_PlayerActionsCallbackInterface = instance;
             if (instance != null)
@@ -1109,6 +1159,12 @@ public class @_Controller : IInputActionCollection, IDisposable
                 @ItemUse.started += instance.OnItemUse;
                 @ItemUse.performed += instance.OnItemUse;
                 @ItemUse.canceled += instance.OnItemUse;
+                @ItemChangeRight.started += instance.OnItemChangeRight;
+                @ItemChangeRight.performed += instance.OnItemChangeRight;
+                @ItemChangeRight.canceled += instance.OnItemChangeRight;
+                @ItemChangeLeft.started += instance.OnItemChangeLeft;
+                @ItemChangeLeft.performed += instance.OnItemChangeLeft;
+                @ItemChangeLeft.canceled += instance.OnItemChangeLeft;
             }
         }
     }
@@ -1334,6 +1390,8 @@ public class @_Controller : IInputActionCollection, IDisposable
         void OnDPadLeft(InputAction.CallbackContext context);
         void OnLeftTrigger(InputAction.CallbackContext context);
         void OnItemUse(InputAction.CallbackContext context);
+        void OnItemChangeRight(InputAction.CallbackContext context);
+        void OnItemChangeLeft(InputAction.CallbackContext context);
     }
     public interface IUIActions
     {
