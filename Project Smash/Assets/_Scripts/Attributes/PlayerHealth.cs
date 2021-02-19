@@ -71,10 +71,15 @@ namespace PSmash.Attributes
             return health;
         }
 
-        public void ReplenishHealth(float health)
+        public void RestoreHealth(float health)
         {
-            print("Recovering " + health);
+            //print("Replenished " + health);
             this.health += health;
+            if(this.health> GetMaxHealthPoints())
+            {
+                //print("Setting health to max health");
+                this.health = GetMaxHealthPoints();
+            }
         }
 
         IEnumerator DamageEffects()

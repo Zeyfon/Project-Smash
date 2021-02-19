@@ -2,7 +2,6 @@
 using PSmash.Stats;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.EventSystems;
 
 namespace PSmash.LevelUpSystem
 {
@@ -13,33 +12,32 @@ namespace PSmash.LevelUpSystem
     /// </summary>
     public class CraftingSystem : MonoBehaviour
     {
-        [SerializeField] Material skillLockedMaterial = null;
-        [SerializeField] Material skillUnlockableMaterial = null;
         [SerializeField] AudioSource audioSource = null;
         [SerializeField] AudioClip skillUnlockedSound = null;
         [SerializeField] AudioClip skillCannotBeUnlockedSound = null;
         [SerializeField] float volume = 1;
-        public GameObject initialMenuSelection = null;
-        [SerializeField] UIDescriptionWindow descriptionWindow = null;
+        [SerializeField] SkillPanel skillPanel = null;
 
         _Controller _controller;
         BaseStats playerStats;
+        MyCraftingMaterials playerMaterials;
+
         List<SkillSlot> unlockedSkillSlots = new List<SkillSlot>();
         SkillSlot[] skillSlots;
-        CraftingMaterialSlot[] uiMaterials;
 
         private void Awake()
         {
             _controller = new _Controller();
             playerStats = GameObject.FindGameObjectWithTag("Player").GetComponent<BaseStats>();
+            playerMaterials = GameObject.FindGameObjectWithTag("Player").GetComponent<MyCraftingMaterials>();
+
             skillSlots = transform.GetComponentsInChildren<SkillSlot>();
-            uiMaterials = transform.GetComponentsInChildren<CraftingMaterialSlot>();
         }
 
         // Start is called before the first frame update
         void Start()
         {
-            UpdateUIVisuals();
+            UpdateSkillPanel();
             EnableCraftingSystem(false);
         }
 
@@ -49,7 +47,6 @@ namespace PSmash.LevelUpSystem
             {
                 transform.GetChild(i).gameObject.SetActive(state);
             }
-            descriptionWindow.gameObject.SetActive(state);
         }
 
         void CancelAction()
@@ -68,7 +65,7 @@ namespace PSmash.LevelUpSystem
         /// </summary>
         public void EnableMenu()
         {
-            UpdateUIVisuals();
+            UpdateSkillPanel();
             EnableCraftingSystem(true);
             playerStats.transform.GetChild(0).GetComponent<InputHandler>().EnableInput(false);
             _controller.UI.Enable();
@@ -89,22 +86,22 @@ namespace PSmash.LevelUpSystem
             //print(skill.name + "  " + skillSlot.gameObject.name);
             if (IsSkillUnlocked(skillSlot))
             {
-                CannotUnlockSkillEffects();
+                CannotUnlockSkill();
             }
             else
             {
-                if (IsAnySkillSlotUnlockableOptionsUnlocked(skillSlot) && HaveNecessaryMaterials(skillSlot))
+                if (IsAnySkillSlotPathUnlocked(skillSlot) && HaveNecessaryMaterials(skillSlot))
                 {
                     UnlockSkill(skill, skillSlot);
                 }
                 else
                 {
-                    CannotUnlockSkillEffects();
+                    CannotUnlockSkill();
                 }
             }
         }
 
-        bool IsSkillUnlocked(SkillSlot skillSlot)
+        public bool IsSkillUnlocked(SkillSlot skillSlot)
         {
             if (unlockedSkillSlots.Contains(skillSlot))
                 return true;
@@ -112,7 +109,7 @@ namespace PSmash.LevelUpSystem
                 return false;
         }
 
-        private bool IsAnySkillSlotUnlockableOptionsUnlocked(SkillSlot skillSlot)
+        public bool IsAnySkillSlotPathUnlocked(SkillSlot skillSlot)
         {
             SkillSlot[] skillSlotsUnlockingOptions = skillSlot.GetSkillSlotsUnlockingOptions();
             //print(skillSlot.gameObject.name + " needs that the " + tempSkillSlot + "  is unlocked to unlock ");
@@ -139,10 +136,10 @@ namespace PSmash.LevelUpSystem
         private bool HaveNecessaryMaterials(SkillSlot skillSlot)
         {
             //print("Checking if having necessary materials in the Crafting System ");
-            return skillSlot.HaveNecessaryMaterials(playerStats);
+            return skillSlot.HaveNecessaryMaterials(playerMaterials);
         }
 
-        private void CannotUnlockSkillEffects()
+        private void CannotUnlockSkill()
         {
             audioSource.PlayOneShot(skillCannotBeUnlockedSound, volume);
         }
@@ -151,46 +148,36 @@ namespace PSmash.LevelUpSystem
         {
             unlockedSkillSlots.Add(skillSlot);
             playerStats.UnlockSkill(skill);
-            UpdateUIVisuals();
+            UpdateSkillPanel();
             audioSource.PlayOneShot(skillUnlockedSound, volume);
+            //UpdatePlayerMaterialsInDescriptionWindow());
         }
+
 
         /// <summary>
         /// If a skill is  unlocked the visuals of the Crafting System UI will be updated all over again
         /// making the necessary changes to the crafting materials in the main window, skillSlots and links to reflex the new options
         /// </summary>
-        void UpdateUIVisuals()
+        void UpdateSkillPanel()
         {
             //Update the material in each skillSlot
             foreach (SkillSlot skillSlot in skillSlots)
             {
                 if (IsSkillUnlocked(skillSlot))
                 {
-                    skillSlot.UpdateImageMaterial(null);
-                    skillSlot.UpdateLinks("White"); ;
+                    skillPanel.SetSkillSlotAsUnlocked(skillSlot);
                 }
                 else
                 {
-                    if (IsAnySkillSlotUnlockableOptionsUnlocked(skillSlot))
+                    if (IsAnySkillSlotPathUnlocked(skillSlot))
                     {
-                        skillSlot.UpdateImageMaterial(skillUnlockableMaterial);
-                        skillSlot.UpdateLinks("Dark"); ;
+                        skillPanel.SetSkillSlotAsUnlockable(skillSlot);
                     }
                     else
                     {
-                        skillSlot.UpdateImageMaterial(skillLockedMaterial);
-                        skillSlot.UpdateLinks("Dark"); ;
-
+                        skillPanel.SetSkillSlotAsLocked(skillSlot);
                     }
                 }
-            }
-
-            //Update Values for the Crafting Materials owner showd in the UI Crafting System
-            foreach (CraftingMaterialSlot uiMaterial in uiMaterials)
-            {
-                int value = playerStats.GetMaterialQuantity(uiMaterial.material);
-                //print(uiMaterial.material + "  "  + value);
-                uiMaterial.UpdateValue(value);
             }
         }
     }

@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using System;
 
 namespace PSmash.LevelUpSystem
 {
@@ -10,16 +11,16 @@ namespace PSmash.LevelUpSystem
     {
 
         [SerializeField] Skill skill = null;
-        [SerializeField] Image image = null;
-        [SerializeField] SkillSlot[] skillSlotsUnlockableOptions;
-        [SerializeField] RequiredMaterial[] requiredMaterials;
-        [SerializeField] UnlockableSkillPath[] unlockableSkillPaths;
+        [SerializeField] Image skillSlotImage = null;
+        [SerializeField] SkillSlot[] UnlockableBySkillSlots;
+        [SerializeField] RequiredCraftingMaterial[] requiredCraftingMaterials;
+        [SerializeField] UnlockableSkillPath[] availablePathsOnceUnlocked;
+        //[SerializeField] Image ringImage = null;
 
-        static Coroutine coroutine;
         // Start is called before the first frame update
         void Start()
         {
-            image.sprite = skill.sprite;
+            skillSlotImage.sprite = skill.sprite;
         }
 
         /// <summary>
@@ -36,7 +37,7 @@ namespace PSmash.LevelUpSystem
         /// <returns></returns>
         public SkillSlot[] GetSkillSlotsUnlockingOptions()
         {
-            return skillSlotsUnlockableOptions;
+            return UnlockableBySkillSlots;
         }
 
         /// <summary>
@@ -46,7 +47,13 @@ namespace PSmash.LevelUpSystem
         /// <param name="material"></param>
         public void UpdateImageMaterial(Material material)
         {
-            image.material = material;
+            skillSlotImage.material = material;
+        }
+
+        public void UpdateSkillSlotVisualState(Material material)
+        {
+            skillSlotImage.material = material;
+            //ringImage.enabled = isRingEnabled;
         }
 
         /// <summary>
@@ -56,31 +63,29 @@ namespace PSmash.LevelUpSystem
         /// <param name="state"></param>
         public void UpdateLinks(string state)
         {
-            foreach (UnlockableSkillPath unlockableSkillPath in unlockableSkillPaths)
+            foreach (UnlockableSkillPath unlockableSkillPath in availablePathsOnceUnlocked)
             {
                 unlockableSkillPath.link.UpdateColor(state);
             }
         }
 
-        /// <summary>
-        /// This method is to inform with a yes or no the Crafting System about having the necessary materials
-        /// to be able to unlock
-        /// if it does have the materials, it will first do the update of them and then inform the Crafting System
-        /// about being able to do it.
-        /// </summary>
-        /// <param name="playerStats"></param>
-        /// <returns></returns>
-        public bool HaveNecessaryMaterials(BaseStats playerStats)
+        public bool HaveNecessaryMaterials(MyCraftingMaterials playerMaterials)
         {
+            //Return a true of false depending on if the player has all the required materials to unlock this skill
+
+            //Create the dictionary where the info will be stored to substract the quantity from the Player's Materials in case it will be unlocked
             Dictionary<CraftingMaterialsList, int> craftingMaterials = new Dictionary<CraftingMaterialsList, int>();
-            //print("Checking if having necessary materials in Skill Slot");
-            foreach (RequiredMaterial requiredMaterial in requiredMaterials)
+
+            //Add the CraftingMaterialList enum to the dictionary with its requiredquantity to unlock
+            //In case the player does not meet the requirements of any material it will return a false inmediately
+            //In contrary case the foreach loop will end with the dictionary completed
+            foreach (RequiredCraftingMaterial requiredMaterial in requiredCraftingMaterials)
             {
                 //print("The required material " + requiredMaterial.material);
-                int materialQuantityPossesedByPlayer = playerStats.GetMaterialQuantity(requiredMaterial.material);
-                if (materialQuantityPossesedByPlayer >= requiredMaterial.quantity)
+                int quantityInPlayersPossession = playerMaterials.GetPlayerQuantityForThisMaterial(requiredMaterial.material);
+                if (quantityInPlayersPossession >= requiredMaterial.quantity)
                 {
-                    craftingMaterials.Add(requiredMaterial.material, requiredMaterial.quantity);
+                    craftingMaterials.Add(requiredMaterial.material.material, requiredMaterial.quantity);
                     continue;
                 }
                 else
@@ -88,93 +93,41 @@ namespace PSmash.LevelUpSystem
                     return false;
                 }
             }
+
+            //With the dictionary completed it will send the CraftingMaterialList enum with the required material 
+            //to the MyCraftingMaterials to substract the required ammount from the current posesed by the player
             //print("The Player has all the required materials ");
             foreach (CraftingMaterialsList material in craftingMaterials.Keys)
             {
-                print(material);
-                playerStats.UpdateMyMaterials(material, -craftingMaterials[material]);
+                playerMaterials.UpdateMyMaterials(material, -craftingMaterials[material]);
             }
             return true;
         }
 
-        /// <summary>
-        /// This will update the Description Window with the information about this skillSlot
-        /// (Description, the materials needed and the quantity for them to be unlocked
-        /// </summary>
-        /// <param name="descriptionWindow"></param>
-        public void UpdateDescriptionWindow(UIDescriptionWindow descriptionWindow)
+        public Dictionary<CraftingMaterial, int> GetCraftingMaterialsRequirement2()
         {
-            //print("Updating Description Window");
-            foreach (CraftingMaterialSlot craftingMaterial in descriptionWindow.craftinMaterials)
+            Dictionary<CraftingMaterial, int> requiredMaterials = new Dictionary<CraftingMaterial, int>();
+
+            foreach (RequiredCraftingMaterial requiredCraftingMaterial in requiredCraftingMaterials)
             {
-                //print("Checking if is required  " + craftingMaterial.material.ToString());
-                bool isMaterial = false;
-                foreach (RequiredMaterial requiredMaterial in requiredMaterials)
-                {
-                    if (craftingMaterial.material == requiredMaterial.material)
-                    {
-                        isMaterial = true;
-                        craftingMaterial.gameObject.SetActive(true);
-                        craftingMaterial.UpdateValue(requiredMaterial.quantity);
-                    }
-                }
-                if (!isMaterial)
-                {
-                    //print("It does not require  " + craftingMaterial.material.ToString());
-                    craftingMaterial.gameObject.SetActive(false);
-                }
+                //print("Adding  " + requiredCraftingMaterial.material);
+                requiredMaterials.Add(requiredCraftingMaterial.material, requiredCraftingMaterial.quantity);
             }
-            descriptionWindow.text.text = skill.description;
-            if (coroutine != null)
-            {
-                StopCoroutine(coroutine);
-                coroutine = null;
-                //cr_Running = false;
-                //print("Stoping Coroutine");
-                //Debug.Break();
-            }
-            descriptionWindow.SetWindowAlphaToCero();
-            coroutine = StartCoroutine(DescriptionWindowFadeIn(descriptionWindow));
-        }
-
-        IEnumerator DescriptionWindowFadeIn(UIDescriptionWindow descriptionWindow)
-        {
-            //cr_Running = true;
-            //print("Wants to Fade In Description Window");
-            yield return descriptionWindow.WaitingToAppear();
-            yield return descriptionWindow.FadeIn();
-
-            //print("FadeInComplete");
-            coroutine = null;
-            //cr_Running = false;
-        }
-
-
-        public Dictionary<CraftingMaterialsList,int> GetCraftingMaterialsRequirement()
-        {
-            Dictionary<CraftingMaterialsList, int> requiredMaterials = new Dictionary<CraftingMaterialsList, int>();
-
-            foreach(RequiredMaterial requiredMaterial in this.requiredMaterials)
-            {
-                print("Adding  " + requiredMaterial.material);
-                requiredMaterials.Add(requiredMaterial.material, requiredMaterial.quantity);
-            }
-            print("Got the Required Materials " + requiredMaterials); 
+            //print("Got the Required Materials " + requiredMaterials);
             return requiredMaterials;
         }
 
-
         [System.Serializable]
-        public class RequiredMaterial
+        public class RequiredCraftingMaterial
         {
-            public CraftingMaterialsList material;
+            public CraftingMaterial material;
             public int quantity;
         }
 
         [System.Serializable]
         public class UnlockableSkillPath
         {
-            public UICraftingSystemLink link;
+            public Link link;
         }
 
     }

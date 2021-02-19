@@ -13,34 +13,13 @@ namespace PSmash.Stats
         [SerializeField] float damage = 10;
         [Tooltip("The defense is a percentage")]
         [SerializeField] float defense = 10;
-        [SerializeField] float potionsUses = 1;
-
-        [Header("Materials")]
-        [SerializeField] int monsterRemains = 888;
-        [SerializeField] int reapersEye = 777;
-        [SerializeField] int rangersEye = 666;
-        [SerializeField] int smasherEye = 0;
-        [SerializeField] int spiderEye = 0;
-        [SerializeField] int XXXXX = 0;
-        [SerializeField] int wood = 0;
-        [SerializeField] int rock = 0;
+        [SerializeField] float potions = 1;
 
         PlayerHealth health;
 
         private void Start()
         {
             health = GetComponent<PlayerHealth>();
-        }
-
-        private void OnEnable()
-        {
-            EnemyDrop.onDropCollected += CollectDrop;
-        }
-
-        private void OnDisable()
-        {
-            EnemyDrop.onDropCollected -= CollectDrop;
-
         }
 
         public float GetStat(StatsList stat)
@@ -54,7 +33,7 @@ namespace PSmash.Stats
                 case StatsList.Damage:
                     return damage;
                 case StatsList.Potions:
-                    return potionsUses;
+                    return potions;
                 default:
                     return 0;
             }
@@ -64,7 +43,7 @@ namespace PSmash.Stats
             switch (stat)
             {
                 case StatsList.Potions:
-                     potionsUses = value;
+                    potions = value;
                     break;
                 default:
                     break;
@@ -78,7 +57,7 @@ namespace PSmash.Stats
                 case StatsList.Health:
                     float extraHealthValue = Mathf.Round(healthValue*(skill.value / 100));
                     healthValue += extraHealthValue;
-                    health.ReplenishHealth(extraHealthValue);
+                    health.RestoreHealth(extraHealthValue);
                     //print(healthValue);
                     break;
                 case StatsList.Damage:
@@ -86,70 +65,14 @@ namespace PSmash.Stats
                     damage = damage + extraDamage;
                     //print(damage);
                     break;
-                default:
+                case StatsList.Defense:
+                    float extraDefense = Mathf.Round(defense * (skill.value / 100));
+                    defense = defense + extraDefense;
+                    //print(damage);
                     break;
-            }
-        }
-
-        public int GetMaterialQuantity(CraftingMaterialsList material)
-        {
-            switch (material)
-            {
-                case CraftingMaterialsList.MonsterRemains:
-                    return monsterRemains;
-                case CraftingMaterialsList.RangerEye:
-                    return rangersEye;
-                case CraftingMaterialsList.ReaperEye:
-                    return reapersEye;
-                case CraftingMaterialsList.SmashserEye:
-                    return smasherEye;
-                case CraftingMaterialsList.SpiderEye:
-                    return spiderEye;
-                case CraftingMaterialsList.XXXXX:
-                    return XXXXX;
-                case CraftingMaterialsList.Wood:
-                    return wood;
-                case CraftingMaterialsList.Rock:
-                    return rock;
-                default:
-                    return 0 ;
-            }
-        }
-
-        private void CollectDrop(CraftingMaterialsList material)
-        {
-            print("Player collected  1 "  + material.ToString());
-            UpdateMyMaterials(material, 1);
-        }
-
-        public void UpdateMyMaterials(CraftingMaterialsList material, int value)
-        {
-            //print(material + "  value  " + value);
-            switch (material)
-            {
-                case CraftingMaterialsList.MonsterRemains:
-                    monsterRemains +=value;
-                    break;
-                case CraftingMaterialsList.RangerEye:
-                    rangersEye +=value;
-                    break;
-                case CraftingMaterialsList.ReaperEye:
-                    reapersEye += value;
-                    break;
-                case CraftingMaterialsList.SmashserEye:
-                    smasherEye += value;
-                    break;
-                case CraftingMaterialsList.SpiderEye:
-                    spiderEye += value;
-                    break;
-                case CraftingMaterialsList.XXXXX:
-                    XXXXX += value ;
-                    break;
-                case CraftingMaterialsList.Wood:
-                    wood += value;
-                    break;
-                case CraftingMaterialsList.Rock:
-                    rock += value;
+                case StatsList.Potions:
+                    potions += skill.value;
+                    //print(damage);
                     break;
                 default:
                     break;
