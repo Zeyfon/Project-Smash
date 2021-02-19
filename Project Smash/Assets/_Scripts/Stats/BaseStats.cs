@@ -57,7 +57,7 @@ namespace PSmash.Stats
                 case StatsList.Health:
                     float extraHealthValue = Mathf.Round(healthValue*(skill.value / 100));
                     healthValue += extraHealthValue;
-                    health.ReplenishHealth(extraHealthValue);
+                    health.RestoreHealth(extraHealthValue);
                     //print(healthValue);
                     break;
                 case StatsList.Damage:

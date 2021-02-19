@@ -2,6 +2,7 @@
 using PSmash.Control;
 using PSmash.Items.Doors;
 using PSmash.Items.Traps;
+using PSmash.Items;
 using PSmash.Movement;
 using System;
 using System.Collections.Generic;
@@ -15,6 +16,7 @@ namespace PSmash.InputSystem
     public class InputHandler : MonoBehaviour
     {
         [SerializeField] PlayerMovement pMovement = null;
+        [SerializeField] ItemHandler itemsHandler = null;
 
         Collider2D interactableCollider;
         PlayMakerFSM pmPlayerController = null;
@@ -36,6 +38,7 @@ namespace PSmash.InputSystem
         _Controller _controller;
 
         Vector2 movement;
+        float itemSelect;
         bool jumpButtonState = false;
         bool guardButtonState = false;
 
@@ -55,6 +58,24 @@ namespace PSmash.InputSystem
             SetInitialCommandsToButtons();
             SetCommandList();
             //SetButtonsInControllerMenu();
+        }
+
+        //private void Update()
+        //{
+        //    ItemChange();
+        //}
+
+        private void ItemChange()
+        {
+            print("Button pressed");
+            if (Mathf.Approximately(itemSelect, 1))
+            {
+                itemsHandler.ChangeItem(true);
+            }
+            else if (Mathf.Approximately(itemSelect, -1))
+            {
+                itemsHandler.ChangeItem(false);
+            }
         }
 
         public _Controller GetController()
@@ -103,6 +124,9 @@ namespace PSmash.InputSystem
             _controller.Player.ButtonLB.canceled += ctx => ButtonLBReleased();
             _controller.Player.ItemUse.started += ctx => ItemButtonPressed();
             _controller.Player.ItemUse.canceled += ctx => ItemButonReleased();
+            _controller.Player.ItemChangeRight.performed += ctx => ItemChangeRight();
+            _controller.Player.ItemChangeLeft.performed += ctx => ItemChangeLeft();
+
 
             _controller.Player.ButtonStart.started += ctx => ButtonStartPressed();
             //_controller.Player.Quit.performed += ctx => QuitKeyPressed();
@@ -114,6 +138,16 @@ namespace PSmash.InputSystem
             PlayerMovement.EnablePlayerController += EnablePlayerController;
             Trap.EnablePlayerController += EnablePlayerController;
             Menus.Menus.OnMenusClosed += EnablePlayerController;
+        }
+
+        private void ItemChangeLeft()
+        {
+            itemsHandler.ChangeItem(false);
+        }
+
+        private void ItemChangeRight()
+        {
+            itemsHandler.ChangeItem(true);
         }
 
         private void OnDisable()
@@ -154,7 +188,7 @@ namespace PSmash.InputSystem
         private void ItemButtonPressed()
         {
             print("Wants to use an item");
-            currentPMState.SendEvent("ITEMUSE");
+            currentPMState.SendEvent("USEITEM");
         }
 
         private void SetInitialCommandsToButtons()
