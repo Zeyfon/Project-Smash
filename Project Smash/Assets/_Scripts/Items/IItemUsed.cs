@@ -7,7 +7,6 @@ namespace PSmash.Items
     public interface IItemUsed
     {
         void ItemUsed(Item item);
-        
     }
 }
 

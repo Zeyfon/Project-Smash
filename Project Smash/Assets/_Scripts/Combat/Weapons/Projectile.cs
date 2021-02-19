@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace PSmash.Combat.Weapons
 {
-    public class Projectile : MonoBehaviour, IDamagable
+    public class Projectile : UsableItem, IDamagable
     {
         [Header("General")]
         [SerializeField] Rigidbody2D rb = null;
@@ -33,7 +33,7 @@ namespace PSmash.Combat.Weapons
         [SerializeField] AnimationReferenceAsset impactOnNPC = null;
         [SerializeField] AnimationReferenceAsset impactOnWall = null;
 
-        Health owner;
+        //Health owner;
         Transform parabolicMovementTarget;
         bool hasHit = false;
 
@@ -71,15 +71,15 @@ namespace PSmash.Combat.Weapons
             skeletonAnim.AnimationState.Complete -= OnSpineAnimationEnd;
         }
 
-        /// <summary>
-        /// Function called by all the characters that can throw a projectile
-        /// This is in order to know who spawned this so the Trigger events look for the correct target
-        /// </summary>
-        /// <param name="owner"></param>
-        public void SetOwner(Health owner)
-        {
-            this.owner = owner;
-        }
+        ///// <summary>
+        ///// Function called by all the characters that can throw a projectile
+        ///// This is in order to know who spawned this so the Trigger events look for the correct target
+        ///// </summary>
+        ///// <param name="owner"></param>
+        //public void SetOwner(Health owner)
+        //{
+        //    this.owner = owner;
+        //}
 
         public void TakeDamage(Transform attacker, WeaponList weapon, float damage)
         {
