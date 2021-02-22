@@ -49,6 +49,12 @@ namespace PSmash.Combat
         [SerializeField] AudioClip currentToolSound=null;
         public event Action AirSmashAttackEffect;
 
+        public static event Action onCameraShake;
+
+
+        public delegate void FinisherCamera(bool enableFinisherCamera);
+        public static event FinisherCamera onFinisherCamera;
+
         public delegate void ThrowItem(int quantity);
         public event ThrowItem onItemThrown;
 
@@ -107,7 +113,7 @@ namespace PSmash.Combat
         {
             SetEnemyStateToFinisher();
             //isFinishinAnEnemy = true;
-            movement.StopMovement();
+            //movement.StopMovement();
             gameObject.layer = LayerMask.NameToLayer("PlayerGhost");
             print("Player is doing Finisher Move");
             RaycastHit2D hit = Physics2D.Raycast(transform.position + new Vector3(0, 1), transform.right, 2, whatIsEnemy);
@@ -121,8 +127,10 @@ namespace PSmash.Combat
                 //Player is at left side of enemy
                 GetComponent<Rigidbody2D>().MovePosition(hit.transform.position + new Vector3(-1, 0, 0));
             }
+            onFinisherCamera(true);
             targetTransform = hit.transform;
             StartCoroutine(StartPlayerAndTargetFinisherAnimations());
+
             //isFinishinAnEnemy = false;
             yield return null;
         }
@@ -135,11 +143,18 @@ namespace PSmash.Combat
         IEnumerator StartPlayerAndTargetFinisherAnimations()
         {
             animator.SetInteger("Attack", 80);
-            while (animator.GetInteger("Attack")!= 81)
+            while (animator.GetInteger("Attack") != 81)
             {
                 yield return null;
             }
             targetTransform.GetComponent<EnemyHealth>().StartFinisherAnimation();
+            yield return null;
+        }
+
+        public void EndingFinisherMove()
+        {
+            onFinisherCamera(false);
+
         }
 
         //Anim Event
@@ -166,6 +181,9 @@ namespace PSmash.Combat
         {
             if (targetTransform == null) return;
             targetTransform.GetComponent<EnemyHealth>().DeliverFinishingBlow(transform.position, (int)baseStats.GetStat(StatsList.Damage) * finisherAttackFactor);
+            //Camera Shake
+            print("Camera Effect");
+            onCameraShake();
         }
 
         //Anim Event

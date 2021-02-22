@@ -30,7 +30,7 @@ namespace PSmash.Attributes
         //when entering a new state
         public void SetCurrentStateInfo(PlayMakerFSM pm, float damagePenetrationPercentage)
         {
-            print(gameObject.name + " set in " + pm.FsmName);
+            //print(gameObject.name + " set in " + pm.FsmName);
             this.pm = pm;
             this.damagePenetrationPercentage = damagePenetrationPercentage;
         }

@@ -172,7 +172,7 @@ namespace PSmash.Items.Doors
                 yield return new WaitForEndOfFrame();
             }
             audioSource.PlayOneShot(keysLandingSound);
-            followCamera.GetComponent<FollowCamera>().CameraShake();
+            followCamera.GetComponent<CameraBrain>().CameraShake();
             yield return null;
         }
 
