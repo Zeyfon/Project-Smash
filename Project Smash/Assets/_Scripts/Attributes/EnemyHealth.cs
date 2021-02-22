@@ -1,5 +1,6 @@
 ﻿using HutongGames.PlayMaker;
 using PSmash.Stats;
+using System;
 using System.Collections;
 using UnityEngine;
 
@@ -7,6 +8,7 @@ namespace PSmash.Attributes
 {
     public class EnemyHealth : Health
     {
+        [SerializeField] bool canPostureBarBeDisabled = false;
         [Header("TestMode")]
         [SerializeField] bool isInvulnerable = true;
         [Header("Extras")]
@@ -54,17 +56,15 @@ namespace PSmash.Attributes
         public void Damaged(float damage)
         {
             //Unity Event to instantiate a object to show the damage in the screen
-            onTakeDamage.Invoke(damage);
-
-            if(posture != null)
+            if(posture != null && posture.enabled)
             {
                 posture.posture = posture.SubstractDamageFromPosture(damage);
                 if (posture.posture <= 0)
                 {
-                    //print("POSTUREDEPLETED Event to the fsm " + pm.FsmName);
+                    print("DAMAGED_STUNNED Event to the fsm " + pm.FsmName);
                     posture.OnStunStateStart();
                     DamageHealth(damage, 100);
-                    pm.SendEvent("DAMAGED_POSTUREDEPLETED");
+                    pm.SendEvent("DAMAGED_STUNNED");
                     return;
                 }
                 else
@@ -73,17 +73,17 @@ namespace PSmash.Attributes
                     FsmEventData myfsmEventData = new FsmEventData();
                     myfsmEventData.FloatData = damage;
                     HutongGames.PlayMaker.Fsm.EventData = myfsmEventData;
-                    //print("DAMAGED_POSTURENOTDEPLETED Event to the fsm " + pm.FsmName);
+                    print("DAMAGED_NOSTUNNED Event to the fsm " + pm.FsmName);
                     DamageHealth(damage, damagePenetrationPercentage);
-                    pm.SendEvent("DAMAGED_POSTURENOTDEPLETED");
+                    pm.SendEvent("DAMAGED_NOSTUNNED");
                     return;
                 }
             }
             else
             {
-                //print("DAMAGED_NOPOSTUREBAR Event to the fsm " + pm.FsmName);
+                print("DAMAGED_NOSTUNNED Event to the fsm " + pm.FsmName);
                 DamageHealth(damage, damagePenetrationPercentage);
-                pm.SendEvent("DAMAGED_NOPOSTUREBAR");
+                pm.SendEvent("DAMAGED_NOSTUNNED");
                 return;
             }
         }
@@ -100,8 +100,11 @@ namespace PSmash.Attributes
         public void DamageHealth(float damage, float damagePenetrationPercentage)
         {
             //print(damage + " will be substracted from  " + health);
-            damage = damage * damagePenetrationPercentage / 100;
+            //damage = damage * damagePenetrationPercentage / 100;
+            damage *= (1 - baseStats.GetStat(StatsList.Defense) / 100);
+
             health = SubstractDamageFromHealth(damage, health);
+            onTakeDamage.Invoke(damage);
             if (health <= 0)
             {
                 //print("Dead");
@@ -155,6 +158,12 @@ namespace PSmash.Attributes
             }
             DamageHealth(damage, 100);
             onTakeDamage.Invoke(damage);
+            if (canPostureBarBeDisabled)
+            {
+                posture.DisablePostureBar();
+                GetComponent<BaseStats>().SetStat(StatsList.Defense, 0);
+            }
+
             yield return null;
         }
 

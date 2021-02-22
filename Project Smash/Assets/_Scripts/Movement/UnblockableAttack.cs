@@ -5,7 +5,7 @@ using Spine.Unity;
 
 namespace PSmash.Movement
 {
-    public class ReaperSpecialAttack : MonoBehaviour
+    public class UnblockableAttack : MonoBehaviour
     {
 
         [Header("Special Attack Condition")]
@@ -41,7 +41,8 @@ namespace PSmash.Movement
         #region Special Attack Conditions
         /// <summary>
         /// This part will be in charge of checking specific conditions for this attack to take place
-        /// Besides the other conditions placed in the Chase State
+        /// Besides the other conditions placed in the Chase State.
+        /// It is called by a state fsm inside Playmaker of the current gameObject
         /// </summary>
         /// <param name="pm"></param>
         public void CanDoSpecialMovement(PlayMakerFSM pm)
@@ -98,7 +99,7 @@ namespace PSmash.Movement
         {
             print("StartSpecial Attack Impulse");
 
-            GetComponent<EnemyMovement>().SpecialAttackImpulse_Start(specialAttackSpeedFactor);
+            //GetComponent<EnemyMovement>().SpecialAttackImpulse_Start(specialAttackSpeedFactor);
         }
 
         //This method can be called via Anim Event and via SpecialAttack State in the PlayMaker
@@ -113,12 +114,12 @@ namespace PSmash.Movement
 
         public void TintMaterialToRed()
         {
-
             SkeletonRenderer skeletonRenderer = GetComponent<SkeletonRenderer>();
             if (addedMaterial != null)
             {
                 skeletonRenderer.CustomMaterialOverride.Remove(defaultMaterial);
             }
+            print("Tinting red");
             skeletonRenderer.CustomMaterialOverride.Add(defaultMaterial, redTintMaterial);
         }
 
