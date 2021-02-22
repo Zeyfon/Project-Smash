@@ -146,15 +146,15 @@ MonoBehaviour:
         serializedVersion: 2
         x: 60.007812
         y: 358.84375
-        width: 100
+        width: 132
         height: 32
       isBreakpoint: 0
       isSequence: 0
       hideUnused: 0
       transitions:
       - fsmEvent:
-          name: FINISHED
-          isSystemEvent: 1
+          name: ACTIONFINISHED
+          isSystemEvent: 0
           isGlobal: 0
         toState: Waiting
         linkStyle: 0
@@ -226,7 +226,7 @@ MonoBehaviour:
         fsmRectParams: []
         fsmQuaternionParams: []
         stringParams:
-        - FINISHED
+        - ACTIONFINISHED
         - 
         - 
         byteData: 010000000001
@@ -701,8 +701,8 @@ MonoBehaviour:
       colorIndex: 0
       position:
         serializedVersion: 2
-        x: 433.20312
-        y: 466.28125
+        x: 434.45312
+        y: 470.17188
         width: 100
         height: 16
       isBreakpoint: 0
@@ -1942,6 +1942,9 @@ MonoBehaviour:
     events:
     - name: FINISHED
       isSystemEvent: 1
+      isGlobal: 0
+    - name: ACTIONFINISHED
+      isSystemEvent: 0
       isGlobal: 0
     - name: HIT
       isSystemEvent: 0

@@ -49,6 +49,15 @@ namespace PSmash.Attributes
                 renderer.color = new Color(renderer.color.r, renderer.color.g, renderer.color.b, alpha);
             }
         }
+
+        public void DisablePostureBar()
+        {
+            Transform transforms = GetComponentInChildren<Transform>();
+                foreach(Transform transform in transforms)
+            {
+                transform.gameObject.SetActive(false);
+            }
+        }
     }
 }
 

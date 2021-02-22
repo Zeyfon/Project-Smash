@@ -14,6 +14,7 @@ namespace PSmash.Attributes
         [SerializeField] float timeToFullyRegenGuard = 60f;
         [SerializeField] UnityEvent onStunStateStart;
         [SerializeField] UnityEvent onStunStateEnded;
+        [SerializeField] UnityEvent onDisablePostureBar;
 
 
         float timerCanRegen = 0;
@@ -78,6 +79,13 @@ namespace PSmash.Attributes
             //print("Posture Fully Restored");
             posture = initialPosture;
             onStunStateEnded.Invoke();
+        }
+
+        internal void DisablePostureBar()
+        {
+            print("Disabling Posture Bar");
+            onDisablePostureBar.Invoke();
+            this.enabled = false;
         }
     }
 
