@@ -16,8 +16,12 @@ namespace PSmash.Attributes
         [SerializeField] AudioClip damagedSound = null;
         [SerializeField] AudioClip deadSound = null;
         [SerializeField] float timeToRecoverControlAfterDamage = 0.35f;
-        public delegate void PlayerisDamaged(float health, float initialHealth);
-        public event PlayerisDamaged UpdateUIHealth;
+
+        public delegate void PlayerDamaged();
+        public event PlayerDamaged onDamaged;
+
+        public delegate void PlayerHealed();
+        public event PlayerHealed onHealed;
 
         Coroutine coroutine;
         Animator animator;
@@ -57,8 +61,8 @@ namespace PSmash.Attributes
                 coroutine = StartCoroutine(DamageEffects());
                 StartCoroutine(ControlReset());
             }
-            
             onTakeDamage.Invoke(damage);
+            onDamaged();
         }
 
         public float GetMaxHealthPoints()
@@ -80,6 +84,7 @@ namespace PSmash.Attributes
                 //print("Setting health to max health");
                 this.health = GetMaxHealthPoints();
             }
+            onHealed();
         }
 
         IEnumerator DamageEffects()
