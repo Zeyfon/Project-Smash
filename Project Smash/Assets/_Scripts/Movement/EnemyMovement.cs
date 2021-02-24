@@ -186,7 +186,7 @@ namespace PSmash.Movement
             RaycastHit2D hit = Physics2D.Raycast(transform.position + new Vector3(0, 1), transform.right, distanceCheckForObstacles, whatIsObstacle);
             if (hit && (hit.collider.gameObject != gameObject && !hit.collider.CompareTag("Ladder")))
             {
-                print(hit.collider.gameObject.name);
+                //print(hit.collider.gameObject.name);
                 //print("There is an obstacle between the target and me");
                 return true;
             }

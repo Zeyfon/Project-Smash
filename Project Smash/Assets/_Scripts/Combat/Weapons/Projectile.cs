@@ -36,6 +36,8 @@ namespace PSmash.Combat.Weapons
         //Health owner;
         Transform parabolicMovementTarget;
         bool hasHit = false;
+        float timeToDie = 10f;
+        float timer = 0;
 
         /// <summary>
         /// This scripts controls the projectile movement as the animations from spine
@@ -46,6 +48,15 @@ namespace PSmash.Combat.Weapons
             skeletonAnim.AnimationState.SetAnimation(0, spawn, false);
             skeletonAnim.AnimationState.AddAnimation(0, idleLoop, true, 0.2f);
             skeletonAnim.AnimationState.Complete += OnSpineAnimationEnd;
+        }
+
+        void Update()
+        {
+            timer += Time.deltaTime;
+            if (timer > timeToDie)
+            {
+                Destroy(gameObject);
+            }
         }
 
         // Update is called once per frame
@@ -83,6 +94,7 @@ namespace PSmash.Combat.Weapons
 
         public void TakeDamage(Transform attacker, WeaponList weapon, float damage)
         {
+            timer = 0;
             print("Received the parry");
             skeletonAnim.AnimationState.SetAnimation(0, idleLoop, true);
             float zRotation = Random.Range(-10, 25);
@@ -131,6 +143,7 @@ namespace PSmash.Combat.Weapons
                 }
                 else if (collision.CompareTag("Ground"))
                 {
+                    Debug.Break();
                     hasHit = true;
                     print("Attack from player colliding with ground");
                     HitGround(collision);
@@ -139,6 +152,7 @@ namespace PSmash.Combat.Weapons
             //Collision with the enemy being the current owner of the projectile
             else
             {
+
                 if (collision.CompareTag("Player"))
                 {
                     if (collision.GetComponent<Health>().IsDead())
@@ -158,6 +172,7 @@ namespace PSmash.Combat.Weapons
                 }
                 else if (collision.CompareTag("Ground"))
                 {
+                    //Debug.Break();
                     hasHit = true;
                     print("Attack from enemy colliding with ground");
                     HitGround(collision);

@@ -27,6 +27,11 @@ namespace PSmash.UI
             health = FindObjectOfType<PlayerHealth>();
         }
 
+        private void Start()
+        {
+            UpdateText();
+        }
+
 
         private void Update()
         {
