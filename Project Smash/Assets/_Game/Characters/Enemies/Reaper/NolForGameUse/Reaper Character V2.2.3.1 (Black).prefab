@@ -1059,14 +1059,14 @@ MonoBehaviour:
         serializedVersion: 2
         x: 54.359375
         y: 168.16406
-        width: 244
+        width: 176
         height: 48
       isBreakpoint: 0
       isSequence: 0
       hideUnused: 0
       transitions:
       - fsmEvent:
-          name: DAMAGED_POSTUREDEPLETED
+          name: DAMAGED_STUNNED
           isSystemEvent: 0
           isGlobal: 0
         toState: STUN
@@ -1074,7 +1074,7 @@ MonoBehaviour:
         linkConstraint: 0
         colorIndex: 0
       - fsmEvent:
-          name: DAMAGED_POSTURENOTDEPLETED
+          name: DAMAGED_NOSTUNNED
           isSystemEvent: 0
           isGlobal: 0
         toState: IsAttacking?
@@ -1124,10 +1124,10 @@ MonoBehaviour:
     - name: FINISHED
       isSystemEvent: 1
       isGlobal: 0
-    - name: DAMAGED_POSTUREDEPLETED
+    - name: DAMAGED_NOSTUNNED
       isSystemEvent: 0
       isGlobal: 0
-    - name: DAMAGED_POSTURENOTDEPLETED
+    - name: DAMAGED_STUNNED
       isSystemEvent: 0
       isGlobal: 0
     - name: NO
@@ -7266,14 +7266,14 @@ MonoBehaviour:
         serializedVersion: 2
         x: 289.27344
         y: 268.42188
-        width: 244
+        width: 176
         height: 48
       isBreakpoint: 0
       isSequence: 1
       hideUnused: 0
       transitions:
       - fsmEvent:
-          name: DAMAGED_POSTURENOTDEPLETED
+          name: DAMAGED_NOSTUNNED
           isSystemEvent: 0
           isGlobal: 0
         toState: BLOCK
@@ -7281,7 +7281,7 @@ MonoBehaviour:
         linkConstraint: 0
         colorIndex: 0
       - fsmEvent:
-          name: DAMAGED_POSTUREDEPLETED
+          name: DAMAGED_STUNNED
           isSystemEvent: 0
           isGlobal: 0
         toState: STUN
@@ -8057,10 +8057,10 @@ MonoBehaviour:
     - name: FINISHED
       isSystemEvent: 1
       isGlobal: 0
-    - name: DAMAGED_POSTUREDEPLETED
+    - name: DAMAGED_NOSTUNNED
       isSystemEvent: 0
       isGlobal: 0
-    - name: DAMAGED_POSTURENOTDEPLETED
+    - name: DAMAGED_STUNNED
       isSystemEvent: 0
       isGlobal: 0
     - name: NO
@@ -8341,14 +8341,14 @@ MonoBehaviour:
         serializedVersion: 2
         x: 65.578125
         y: 371.6328
-        width: 244
+        width: 176
         height: 64
       isBreakpoint: 0
       isSequence: 0
       hideUnused: 0
       transitions:
       - fsmEvent:
-          name: DAMAGED_POSTURENOTDEPLETED
+          name: DAMAGED_NOSTUNNED
           isSystemEvent: 0
           isGlobal: 0
         toState: BLOCK
@@ -8356,7 +8356,7 @@ MonoBehaviour:
         linkConstraint: 0
         colorIndex: 0
       - fsmEvent:
-          name: DAMAGED_POSTUREDEPLETED
+          name: DAMAGED_STUNNED
           isSystemEvent: 0
           isGlobal: 0
         toState: STUN
@@ -9251,10 +9251,10 @@ MonoBehaviour:
     - name: FINISHED
       isSystemEvent: 1
       isGlobal: 0
-    - name: DAMAGED_POSTUREDEPLETED
+    - name: DAMAGED_NOSTUNNED
       isSystemEvent: 0
       isGlobal: 0
-    - name: DAMAGED_POSTURENOTDEPLETED
+    - name: DAMAGED_STUNNED
       isSystemEvent: 0
       isGlobal: 0
     - name: NO
@@ -9554,14 +9554,14 @@ MonoBehaviour:
         serializedVersion: 2
         x: 322
         y: 399.5078
-        width: 218
+        width: 158
         height: 48
       isBreakpoint: 0
       isSequence: 0
       hideUnused: 0
       transitions:
       - fsmEvent:
-          name: DAMAGED_POSTUREDEPLETED
+          name: DAMAGED_STUNNED
           isSystemEvent: 0
           isGlobal: 0
         toState: Damage Only Audio
@@ -10599,7 +10599,7 @@ MonoBehaviour:
     - name: FINISHED
       isSystemEvent: 1
       isGlobal: 0
-    - name: DAMAGED_POSTUREDEPLETED
+    - name: DAMAGED_STUNNED
       isSystemEvent: 0
       isGlobal: 0
     - name: FINISHER
@@ -10801,19 +10801,19 @@ MonoBehaviour:
     states:
     - name: Chasing Player
       description: Can lost sight of him
-      colorIndex: 0
+      colorIndex: 6
       position:
         serializedVersion: 2
         x: 62.101562
         y: 526.1172
-        width: 244
+        width: 184
         height: 96
       isBreakpoint: 0
       isSequence: 0
       hideUnused: 0
       transitions:
       - fsmEvent:
-          name: DAMAGED_POSTURENOTDEPLETED
+          name: DAMAGED_NOSTUNNED
           isSystemEvent: 0
           isGlobal: 0
         toState: BLOCK
@@ -10821,7 +10821,7 @@ MonoBehaviour:
         linkConstraint: 0
         colorIndex: 0
       - fsmEvent:
-          name: DAMAGED_POSTUREDEPLETED
+          name: DAMAGED_STUNNED
           isSystemEvent: 0
           isGlobal: 0
         toState: STUN
@@ -10928,7 +10928,7 @@ MonoBehaviour:
           tooltip: 
           showInInspector: 0
           networkSync: 0
-          typeName: PSmash.Movement.Reaper
+          typeName: PSmash.Movement.UnblockableAttack
           value: {fileID: 5698365038011637547}
         fsmVarParams:
         - variableName: playerCurrentPosition
@@ -11237,19 +11237,19 @@ MonoBehaviour:
         paramByteDataSize: 000000000000000000000000010000000000000000000000000000000000000000000000000000000100000000000000000000000000000000000000000000000000000001000000000000000000000000000000000000000000000004000000010000000000000000000000000000000000000000000000000000000000000000000000010000000100000000000000000000000000000000000000000000000100000001000000
     - name: Chasing Player (Aggrevated)
       description: Cannot lost sight of him
-      colorIndex: 0
+      colorIndex: 6
       position:
         serializedVersion: 2
         x: 66.53906
         y: 377.3047
-        width: 244
+        width: 202
         height: 96
       isBreakpoint: 0
       isSequence: 0
       hideUnused: 0
       transitions:
       - fsmEvent:
-          name: DAMAGED_POSTURENOTDEPLETED
+          name: DAMAGED_NOSTUNNED
           isSystemEvent: 0
           isGlobal: 0
         toState: BLOCK
@@ -11257,7 +11257,7 @@ MonoBehaviour:
         linkConstraint: 0
         colorIndex: 0
       - fsmEvent:
-          name: DAMAGED_POSTUREDEPLETED
+          name: DAMAGED_STUNNED
           isSystemEvent: 0
           isGlobal: 0
         toState: STUN
@@ -11366,7 +11366,7 @@ MonoBehaviour:
           tooltip: 
           showInInspector: 0
           networkSync: 0
-          typeName: PSmash.Movement.Reaper
+          typeName: PSmash.Movement.UnblockableAttack
           value: {fileID: 5698365038011637547}
         fsmVarParams:
         - variableName: playerCurrentPosition
@@ -12655,10 +12655,10 @@ MonoBehaviour:
     - name: FINISHED
       isSystemEvent: 1
       isGlobal: 0
-    - name: DAMAGED_POSTUREDEPLETED
+    - name: DAMAGED_NOSTUNNED
       isSystemEvent: 0
       isGlobal: 0
-    - name: DAMAGED_POSTURENOTDEPLETED
+    - name: DAMAGED_STUNNED
       isSystemEvent: 0
       isGlobal: 0
     - name: LOSTSIGHTOFPLAYER
@@ -12833,7 +12833,7 @@ MonoBehaviour:
         tooltip: 
         showInInspector: 0
         networkSync: 0
-        typeName: PSmash.Movement.ReaperSpecialAttack
+        typeName: PSmash.Movement.UnblockableAttack
         value: {fileID: 5698365038011637547}
       materialVariables: []
       textureVariables: []
@@ -12923,6 +12923,9 @@ MonoBehaviour:
   onStunStateEnded:
     m_PersistentCalls:
       m_Calls: []
+  onDisablePostureBar:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!114 &5698365038011637547
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -12968,19 +12971,19 @@ MonoBehaviour:
     states:
     - name: SuspiciosBehavior
       description: 
-      colorIndex: 0
+      colorIndex: 6
       position:
         serializedVersion: 2
         x: 59.5
         y: 183.5
-        width: 244
+        width: 176
         height: 64
       isBreakpoint: 0
       isSequence: 0
       hideUnused: 0
       transitions:
       - fsmEvent:
-          name: DAMAGED_POSTURENOTDEPLETED
+          name: DAMAGED_NOSTUNNED
           isSystemEvent: 0
           isGlobal: 0
         toState: BLOCK
@@ -12988,7 +12991,7 @@ MonoBehaviour:
         linkConstraint: 0
         colorIndex: 0
       - fsmEvent:
-          name: DAMAGED_POSTUREDEPLETED
+          name: DAMAGED_STUNNED
           isSystemEvent: 0
           isGlobal: 0
         toState: STUN
@@ -13549,10 +13552,10 @@ MonoBehaviour:
     - name: FINISHED
       isSystemEvent: 1
       isGlobal: 0
-    - name: DAMAGED_POSTUREDEPLETED
+    - name: DAMAGED_NOSTUNNED
       isSystemEvent: 0
       isGlobal: 0
-    - name: DAMAGED_POSTURENOTDEPLETED
+    - name: DAMAGED_STUNNED
       isSystemEvent: 0
       isGlobal: 0
     - name: RETURNTOPATROL
@@ -13794,14 +13797,14 @@ MonoBehaviour:
         serializedVersion: 2
         x: 73.50781
         y: 530.2422
-        width: 244
+        width: 176
         height: 64
       isBreakpoint: 0
       isSequence: 0
       hideUnused: 0
       transitions:
       - fsmEvent:
-          name: DAMAGED_POSTURENOTDEPLETED
+          name: DAMAGED_NOSTUNNED
           isSystemEvent: 0
           isGlobal: 0
         toState: BLOCK AUDIO
@@ -13809,7 +13812,7 @@ MonoBehaviour:
         linkConstraint: 1
         colorIndex: 0
       - fsmEvent:
-          name: DAMAGED_POSTUREDEPLETED
+          name: DAMAGED_STUNNED
           isSystemEvent: 0
           isGlobal: 0
         toState: STUN
@@ -15179,10 +15182,10 @@ MonoBehaviour:
     - name: ANIMATIONENDED
       isSystemEvent: 0
       isGlobal: 0
-    - name: DAMAGED_POSTUREDEPLETED
+    - name: DAMAGED_NOSTUNNED
       isSystemEvent: 0
       isGlobal: 0
-    - name: DAMAGED_POSTURENOTDEPLETED
+    - name: DAMAGED_STUNNED
       isSystemEvent: 0
       isGlobal: 0
     - name: NO
@@ -15439,7 +15442,7 @@ MonoBehaviour:
         serializedVersion: 2
         x: 76.78906
         y: 161.85938
-        width: 244
+        width: 176
         height: 64
       isBreakpoint: 0
       isSequence: 1
@@ -15454,7 +15457,7 @@ MonoBehaviour:
         linkConstraint: 0
         colorIndex: 0
       - fsmEvent:
-          name: DAMAGED_POSTUREDEPLETED
+          name: DAMAGED_STUNNED
           isSystemEvent: 0
           isGlobal: 0
         toState: Stop Movement
@@ -15462,7 +15465,7 @@ MonoBehaviour:
         linkConstraint: 0
         colorIndex: 0
       - fsmEvent:
-          name: DAMAGED_POSTURENOTDEPLETED
+          name: DAMAGED_NOSTUNNED
           isSystemEvent: 0
           isGlobal: 0
         toState: Get Damage Quantity
@@ -17412,28 +17415,22 @@ MonoBehaviour:
     - name: FINISHED
       isSystemEvent: 1
       isGlobal: 0
-    - name: CONTINUESTATE
-      isSystemEvent: 0
-      isGlobal: 0
     - name: DAMAGEDATTACKING
       isSystemEvent: 0
       isGlobal: 0
     - name: DAMAGEDNOTATTACKING
       isSystemEvent: 0
       isGlobal: 0
-    - name: DAMAGED_POSTUREDEPLETED
+    - name: DAMAGED_NOSTUNNED
       isSystemEvent: 0
       isGlobal: 0
-    - name: DAMAGED_POSTURENOTDEPLETED
+    - name: DAMAGED_STUNNED
       isSystemEvent: 0
       isGlobal: 0
     - name: NO
       isSystemEvent: 0
       isGlobal: 0
     - name: SPECIALATTACKSOUND
-      isSystemEvent: 0
-      isGlobal: 0
-    - name: STAGGERED
       isSystemEvent: 0
       isGlobal: 0
     - name: YES
@@ -19131,6 +19128,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  canPostureBarBeDisabled: 0
   isInvulnerable: 0
   dropItem: {fileID: 1441679831736908636, guid: a0cf1166c4b4a1448a7c27f2fe7949d6,
     type: 3}
