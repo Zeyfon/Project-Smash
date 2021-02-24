@@ -8,7 +8,8 @@ namespace PSmash.Items
 {
     public class EnemyDrop : MonoBehaviour
     {
-        [SerializeField] CraftingMaterialsList myMaterial;
+        //[SerializeField] CraftingMaterialsList myMaterial;
+        [SerializeField] CraftingMaterial myMaterial2;
 
         public delegate void DropCollected(CraftingMaterialsList material);
         public static event DropCollected onDropCollected;
@@ -28,6 +29,7 @@ namespace PSmash.Items
         {
             GameObject player = GameObject.FindGameObjectWithTag("Player");
             ps.trigger.SetCollider(10, player.GetComponent<Collider2D>());
+            ps.textureSheetAnimation.SetSprite(0, myMaterial2.sprite);
         }
 
         void Update()
@@ -50,7 +52,7 @@ namespace PSmash.Items
                 p.remainingLifetime = 0;
                 inside[i] = p;
                 if(!audioSource.isPlaying) audioSource.Play();
-                onDropCollected(myMaterial);
+                onDropCollected(myMaterial2.material);
                 //OnCurrencyCollected();
             }
             ps.SetTriggerParticles(ParticleSystemTriggerEventType.Enter, inside);
