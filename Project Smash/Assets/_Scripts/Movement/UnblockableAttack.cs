@@ -98,8 +98,7 @@ namespace PSmash.Movement
         void StartSpecialAttackImpulse()
         {
             print("StartSpecial Attack Impulse");
-
-            //GetComponent<EnemyMovement>().SpecialAttackImpulse_Start(specialAttackSpeedFactor);
+            GetComponent<EnemyMovement>().SpecialAttackImpulse_Start(specialAttackSpeedFactor);
         }
 
         //This method can be called via Anim Event and via SpecialAttack State in the PlayMaker

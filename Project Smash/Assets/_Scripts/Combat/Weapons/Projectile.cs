@@ -3,6 +3,7 @@ using Spine;
 using Spine.Unity;
 using System.Collections;
 using UnityEngine;
+using PSmash.Items;
 
 namespace PSmash.Combat.Weapons
 {
