@@ -45,6 +45,9 @@ namespace PSmash.Stats
                 case StatsList.Potions:
                     potions = value;
                     break;
+                case StatsList.Defense:
+                    defense = value;
+                    break;
                 default:
                     break;
             }

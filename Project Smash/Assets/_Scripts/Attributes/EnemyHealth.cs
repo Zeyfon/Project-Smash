@@ -8,7 +8,7 @@ namespace PSmash.Attributes
 {
     public class EnemyHealth : Health
     {
-        [SerializeField] bool canPostureBarBeDisabled = false;
+        [SerializeField] bool isArmorEnabled = false;
         [Header("TestMode")]
         [SerializeField] bool isInvulnerable = true;
         [Header("Extras")]
@@ -156,14 +156,13 @@ namespace PSmash.Attributes
             {
                 GetComponent<Rigidbody2D>().velocity = new Vector2(x, y);
             }
-            DamageHealth(damage, 100);
-            onTakeDamage.Invoke(damage);
-            if (canPostureBarBeDisabled)
+            if (isArmorEnabled)
             {
                 posture.DisablePostureBar();
                 GetComponent<BaseStats>().SetStat(StatsList.Defense, 0);
             }
-
+            DamageHealth(damage, 100);
+            onTakeDamage.Invoke(damage);
             yield return null;
         }
 
