@@ -2,12 +2,13 @@
 using System.Collections.Generic;
 using UnityEngine;
 using Spine.Unity;
+using Spine;
 
 namespace PSmash.Movement
 {
     public class UnblockableAttack : MonoBehaviour
     {
-
+        [SpineSkin] [SerializeField] string skin;
         [Header("Special Attack Condition")]
         [SerializeField] float specialAttackRange;
         [SerializeField] float distanceCheckForObstacles;
@@ -163,6 +164,20 @@ namespace PSmash.Movement
             }
         }
 
+        #endregion
+
+
+        #region ChangeSkin
+
+        public void ChangeSkin()
+        {
+            print("Changed Skin");
+            //GetComponent<SkeletonRenderer>().skeleton.SetSkin("default");
+            Skeleton skeleton = GetComponent<SkeletonMecanim>().Skeleton;
+            print(skeleton.Skin);
+            skeleton.SetSkin(skin);
+            print(skeleton.Skin);
+        }
         #endregion
 
     }

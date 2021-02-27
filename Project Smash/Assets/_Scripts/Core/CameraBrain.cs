@@ -24,7 +24,7 @@ namespace PSmash.Core
 
         IEnumerator CameraShakeCO()
         {
-            print("Splash Effects On");
+            //print("Splash Effects On");
             CinemachineVirtualCamera cam = GetComponent<CinemachineVirtualCamera>();
             CinemachineBasicMultiChannelPerlin noise = cam.GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>();
             noise.m_AmplitudeGain = 2;
@@ -34,11 +34,11 @@ namespace PSmash.Core
             print(amplitude);
             while (noise.m_AmplitudeGain > 0)
             {
-                print("Noise");
+                //print("Noise");
                 amplitude -= Time.deltaTime/shakeTime;
                 if (amplitude <= 0) amplitude = 0;
                 noise.m_AmplitudeGain = amplitude;
-                print(amplitude);
+                //print(amplitude);
                 yield return new WaitForEndOfFrame();
             }
         }

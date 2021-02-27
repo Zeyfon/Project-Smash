@@ -1,18 +1,5 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &4646735505274559315
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6285349636030742712}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: -1043544612, guid: e743331561ef77147ae48cda9bcb8209, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  TargetFSMs: []
 --- !u!33 &3805381120273904507
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -79,6 +66,25 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &-5371569141288857639
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6852413905604142772}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 26947ae098a8447408d80c0c86e35b48, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  skeletonRenderer: {fileID: 7298461018611916293}
+  customSlotMaterials: []
+  customMaterialOverrides:
+  - overrideDisabled: 1
+    originalMaterial: {fileID: 2100000, guid: 646213186a0cc1b419fd20b05eee613e, type: 2}
+    replacementMaterial: {fileID: 2100000, guid: 7d15d934a6d0c0b4ea859eb7c33f04e5,
+      type: 2}
 --- !u!114 &902659467410435149
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11587,7 +11593,7 @@ MonoBehaviour:
     m_Bits: 1024
   specialAttackSpeedFactor: 5
   defaultMaterial: {fileID: 2100000, guid: 646213186a0cc1b419fd20b05eee613e, type: 2}
-  redTintMaterial: {fileID: 2100000, guid: 8fc20065ec3045f43aaec2522ff212ca, type: 2}
+  redTintMaterial: {fileID: 2100000, guid: ad58c70791839a648acc67bc704c8bf8, type: 2}
   addedMaterial: {fileID: 0}
   fadeIntTime: 0.5
 --- !u!114 &5760737432983970200
@@ -15294,6 +15300,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3aa6bf3de29008b419bcdfbd9577c1a6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &4646735505274559315
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6285349636030742712}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1043544612, guid: e743331561ef77147ae48cda9bcb8209, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  TargetFSMs: []
 --- !u!1001 &2724296443517035617
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -15319,7 +15338,7 @@ PrefabInstance:
     - target: {fileID: 8851278654538908373, guid: 587e06734df96fb45836c4df01ad03a7,
         type: 3}
       propertyPath: m_Name
-      value: SmasherCharacter_01
+      value: ShaderTester
       objectReference: {fileID: 0}
     - target: {fileID: 8851278654538908375, guid: 587e06734df96fb45836c4df01ad03a7,
         type: 3}
