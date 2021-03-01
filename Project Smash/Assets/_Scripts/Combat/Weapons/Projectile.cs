@@ -144,7 +144,7 @@ namespace PSmash.Combat.Weapons
                 }
                 else if (collision.CompareTag("Ground"))
                 {
-                    Debug.Break();
+                    //Debug.Break();
                     hasHit = true;
                     print("Attack from player colliding with ground");
                     HitGround(collision);

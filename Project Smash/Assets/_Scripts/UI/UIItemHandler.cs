@@ -39,7 +39,7 @@ namespace PSmash.UI
             UpdateCurrentItem(currentItem, quantity);
             if (previousItem != null && previousItem != currentItem)
             {
-                print(previousItem.name + "  " + currentItem.name);
+                print("Previous Item   " + previousItem.name + "  Current Item " + currentItem.name);
                 UpdateCurrentItem(previousItem);
             }
             previousItem = currentItem;

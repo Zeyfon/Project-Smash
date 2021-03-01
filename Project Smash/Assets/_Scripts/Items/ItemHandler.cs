@@ -27,11 +27,12 @@ namespace PSmash.Items
 
         public void ChangeItem(bool isMovingRight)
         {
+            print("Here " + this + " item changed");
             if (isMovingRight)
             {
                 itemIndex++;
-                
-                if(itemIndex > System.Enum.GetValues(typeof(ItemList)).Length-1)
+                print("Moving right  " + itemIndex);
+                if (itemIndex > System.Enum.GetValues(typeof(ItemList)).Length-1)
                 {
                     itemIndex = 0;
                 }
@@ -39,6 +40,7 @@ namespace PSmash.Items
             else
             {
                 itemIndex--;
+                print("Moving Left  " + itemIndex);
                 if (itemIndex < 0)
                 {
                     itemIndex = System.Enum.GetValues(typeof(ItemList)).Length-1;
