@@ -60,24 +60,6 @@ namespace PSmash.InputSystem
             //SetButtonsInControllerMenu();
         }
 
-        //private void Update()
-        //{
-        //    ItemChange();
-        //}
-
-        private void ItemChange()
-        {
-            print("Button pressed");
-            if (Mathf.Approximately(itemSelect, 1))
-            {
-                itemsHandler.ChangeItem(true);
-            }
-            else if (Mathf.Approximately(itemSelect, -1))
-            {
-                itemsHandler.ChangeItem(false);
-            }
-        }
-
         public _Controller GetController()
         {
             return _controller;
@@ -142,11 +124,13 @@ namespace PSmash.InputSystem
 
         private void ItemChangeLeft()
         {
+            print("Item Pressed Left");
             itemsHandler.ChangeItem(false);
         }
 
         private void ItemChangeRight()
         {
+            print("Item Pressed Right");
             itemsHandler.ChangeItem(true);
         }
 
@@ -168,6 +152,8 @@ namespace PSmash.InputSystem
             _controller.Player.ButtonLB.canceled -= ctx => ButtonLBReleased();
             _controller.Player.ItemUse.started -= ctx => ItemButtonPressed();
             _controller.Player.ItemUse.canceled -= ctx => ItemButonReleased();
+            _controller.Player.ItemChangeRight.performed -= ctx => ItemChangeRight();
+            _controller.Player.ItemChangeLeft.performed -= ctx => ItemChangeLeft();
 
             //_controller.Player.Quit.performed -= ctx => QuitKeyPressed();
             _controller.Player.ButtonStart.started -= ctx => ButtonStartPressed();
@@ -375,6 +361,7 @@ namespace PSmash.InputSystem
 
         void EnablePlayerController(bool state)
         {
+            print("Setting Input Controller");
             if (!state)
             {
                 //playerController.SetEnable(false);
@@ -403,12 +390,12 @@ namespace PSmash.InputSystem
         {
             if (state)
             {
-                //print("Enabling input handler");
+                print("Enabling input handler");
                 _controller.Player.Enable();
             }
             else
             {
-                //print("Disabling input handler");
+                print("Disabling input handler");
                 _controller.Player.Disable();
                 movement = new Vector2(0, 0);
             }

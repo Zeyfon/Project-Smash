@@ -4,12 +4,13 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using PSmash.Attributes;
+using PSmash.InputSystem;
 
 namespace PSmash.Menus
 {
     public class GameMenu : MonoBehaviour
     {
-        [SerializeField] _Controller _controller;
+        _Controller _controller;
         public bool menuIsOpened = false;
         PlayerInput playerInput;
         EventManager eventManager;
@@ -17,6 +18,7 @@ namespace PSmash.Menus
         bool canInteractWithMenu = true;
         private void Awake()
         {
+            _controller = FindObjectOfType<InputHandler>().GetController();
             eventManager = FindObjectOfType<EventManager>();
             playerInput = FindObjectOfType<PlayerInput>();
         }

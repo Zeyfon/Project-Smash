@@ -19,7 +19,9 @@ namespace PSmash.Menus
         {
             statusMenuClone = Instantiate(status, transform);
             craftingSystemClone = Instantiate(craftingSystem, transform);
-            _controller = new _Controller();
+            _controller = FindObjectOfType<InputHandler>().GetController();
+            if (_controller == null) Debug.LogWarning("Controller was not found");
+            //_controller = new _Controller();
         }
 
         private void OnEnable()
@@ -63,10 +65,13 @@ namespace PSmash.Menus
 
         public  void CloseMenus()
         {
+            //OnMenusClosed(true);
+
             _controller.UI.Disable();
-            statusMenuClone.transform.GetChild(0).gameObject.SetActive(false);
-            OnMenusClosed(true);
             Time.timeScale = 1;
+
+            statusMenuClone.transform.GetChild(0).gameObject.SetActive(false);
+
         }
     }
 }

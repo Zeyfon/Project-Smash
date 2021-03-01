@@ -27,7 +27,9 @@ namespace PSmash.LevelUpSystem
 
         private void Awake()
         {
-            _controller = new _Controller();
+            _controller = FindObjectOfType<InputHandler>().GetController();
+
+            //_controller = new _Controller();
             playerStats = GameObject.FindGameObjectWithTag("Player").GetComponent<BaseStats>();
             playerMaterials = GameObject.FindGameObjectWithTag("Player").GetComponent<MyCraftingMaterials>();
 
@@ -51,11 +53,12 @@ namespace PSmash.LevelUpSystem
 
         void CancelAction()
         {
-            //print("Canceling Action");
+            print("Canceling Action");
             EnableCraftingSystem(false);
             playerStats.transform.GetChild(0).GetComponent<InputHandler>().EnableInput(true);
-            _controller.UI.Disable();
+
             _controller.UI.Cancel.performed -= ctx => CancelAction();
+            _controller.UI.Disable();
         }
 
         /// <summary>

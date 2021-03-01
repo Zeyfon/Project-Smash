@@ -98,7 +98,7 @@ LightmapSettings:
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
   m_LightingDataAsset: {fileID: 0}
-  m_UseShadowmask: 1
+  m_UseShadowmask: 0
 --- !u!196 &4
 NavMeshSettings:
   serializedVersion: 2
@@ -4410,25 +4410,10 @@ PrefabInstance:
       propertyPath: initialSkinName
       value: Armor
       objectReference: {fileID: 0}
-    - target: {fileID: 2280872425398670050, guid: 9d08459e932f20b42b312c6640e4dcb6,
-        type: 3}
-      propertyPath: isArmorEnabled
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 2694202590794842112, guid: 9d08459e932f20b42b312c6640e4dcb6,
         type: 3}
       propertyPath: skin
       value: default
-      objectReference: {fileID: 0}
-    - target: {fileID: 2754086757622706657, guid: 9d08459e932f20b42b312c6640e4dcb6,
-        type: 3}
-      propertyPath: posture
-      value: 200
-      objectReference: {fileID: 0}
-    - target: {fileID: 5790336116265987678, guid: 9d08459e932f20b42b312c6640e4dcb6,
-        type: 3}
-      propertyPath: healthValue
-      value: 150
       objectReference: {fileID: 0}
     - target: {fileID: 6441106915545228066, guid: 9d08459e932f20b42b312c6640e4dcb6,
         type: 3}
@@ -4524,6 +4509,26 @@ PrefabInstance:
         type: 3}
       propertyPath: m_IsActive
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7417980764561060710, guid: 9d08459e932f20b42b312c6640e4dcb6,
+        type: 3}
+      propertyPath: fsm.variables.objectVariables.Array.data[0].typeName
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 7417980764561060710, guid: 9d08459e932f20b42b312c6640e4dcb6,
+        type: 3}
+      propertyPath: fsm.variables.objectVariables.Array.data[1].typeName
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 7417980764561060710, guid: 9d08459e932f20b42b312c6640e4dcb6,
+        type: 3}
+      propertyPath: fsm.variables.objectVariables.Array.data[2].typeName
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 7417980764561060710, guid: 9d08459e932f20b42b312c6640e4dcb6,
+        type: 3}
+      propertyPath: fsm.variables.objectVariables.Array.data[3].typeName
+      value: 
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9d08459e932f20b42b312c6640e4dcb6, type: 3}
