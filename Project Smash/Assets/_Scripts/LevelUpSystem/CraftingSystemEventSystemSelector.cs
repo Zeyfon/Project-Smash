@@ -3,7 +3,7 @@ using UnityEngine.EventSystems;
 
 namespace PSmash.LevelUpSystem
 {
-    public class EventSystemSelector : MonoBehaviour
+    public class CraftingSystemEventSystemSelector : MonoBehaviour
     {
 
         [SerializeField] DescriptionWindow descriptionWindow = null;

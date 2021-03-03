@@ -1,123 +1,59 @@
-﻿using System.Collections;
-using UnityEngine;
-using UnityEngine.EventSystems;
+﻿using UnityEngine;
 
 namespace PSmash.Menus
 {
     public class MainMenu : MonoBehaviour
     {
-        [SerializeField] GameObject initialSelection =  null; 
-        [SerializeField] MenuTab[] menuTabs;
-        
-        //This variable is used by different UI elements that need to know
-        //the previous eventSystem.currentGameObjectSelected in order
-        //to compare themselves with the current eventSyste.currentGameobjectSelected
-        //to perform their diverse actions.
-        public GameObject previousGameObject;
+        // Start is called before the first frame update
+        _Controller _controller;
 
-        EventSystem eventSystem;
-
-        int currentStarsQuantity = 0;
+        public delegate void MainMenuAction(bool isEnabled);
+        public static event MainMenuAction OnMenuAction;
 
         private void Awake()
         {
-            eventSystem = GameObject.FindObjectOfType<EventSystem>();
+            _controller = new _Controller();
         }
         void Start()
         {
-            if (gameObject.activeInHierarchy) gameObject.SetActive(false);
+            EnableMainMenu(false);
         }
 
         private void OnEnable()
         {
-            if (eventSystem == null) return;
-            StartCoroutine(SetInitialGeneralMenuSelection());
-            UpdateSubMenus(initialSelection);
-            foreach(MenuTab tab in menuTabs)
-            {
-                //print(tab.gameObject.name);
-            }
+            _controller.Player.Enable();
+            _controller.Player.ButtonStart.started += ctx => SwitchMainMenuState();
         }
 
-        private void Update()
+        private void OnDisable()
         {
-            //Will Perform the rest of the code only when a change in the eventSystem.curentSelectedGameObject has ocurred
-            if (!HasMenuSelectionChanged())
-                return;
-
-            //The new selection is a Tab
-            //Do according to this condition
-            if (IsNewSelectionATab())
-            {
-                UpdateSubMenus(eventSystem.currentSelectedGameObject);
-            }
-            //The new selection is a button insside a subMenu
-            //Do according to this condition
-            else if(previousGameObject != null && previousGameObject.GetComponent<MenuTab>())
-            {
-                DisableInteractionWithRestOfTabs(previousGameObject);
-            }
-            previousGameObject = eventSystem.currentSelectedGameObject;
+            _controller.Player.Disable();
+            _controller.Player.ButtonStart.started += ctx => SwitchMainMenuState();
         }
 
-        bool HasMenuSelectionChanged()
+        public void SwitchMainMenuState()
         {
-            if (eventSystem.currentSelectedGameObject == null || previousGameObject != eventSystem.currentSelectedGameObject)
-                return true;
+            if (transform.GetChild(0).gameObject.activeInHierarchy == true)
+            {
+                EnableMainMenu(false);
+                OnMenuAction(true);
+            }
             else
-                return false;
-        }
-
-        bool IsNewSelectionATab()
-        {
-            foreach (MenuTab tab in menuTabs)
             {
-                if (eventSystem.currentSelectedGameObject == tab.gameObject) return true;
-            }
-            return false;
-        }
-
-        void UpdateSubMenus(GameObject selectedTab)
-        {
-            foreach(MenuTab tab in menuTabs)
-            {
-                tab.DisableSubMenu();
-                tab.SetInteractionCapacity(true);
-            }
-            foreach(MenuTab tab in menuTabs)
-            {
-                if (selectedTab == tab.gameObject)
-                {
-                    tab.EnableSubMenu();
-                }
+                EnableMainMenu(true);
+                OnMenuAction(false);
             }
         }
 
-        void DisableInteractionWithRestOfTabs(GameObject subMenuTab)
+        private void EnableMainMenu(bool isEnabled)
         {
-            foreach(MenuTab tab in menuTabs)
+            for (int i = 0; i < transform.childCount; i++)
             {
-                if (tab != subMenuTab.GetComponent<MenuTab>())
-                {
-                    tab.SetInteractionCapacity(false);
-                    //print("Disabling " + tab.gameObject.name + " interaction capacity");
-                }
-
+                transform.GetChild(i).gameObject.SetActive(isEnabled);
             }
-        }
-
-        IEnumerator SetInitialGeneralMenuSelection()
-        {
-            eventSystem.SetSelectedGameObject(null);
-            yield return null;
-            eventSystem.SetSelectedGameObject(initialSelection);
-            //print("General Tab Activated");
-        }
-
-        public void StarCollected()
-        {
-            currentStarsQuantity += 1;
         }
     }
+
+
 }
 

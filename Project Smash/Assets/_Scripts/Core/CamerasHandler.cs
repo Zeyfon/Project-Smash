@@ -19,15 +19,15 @@ namespace PSmash.Core
 
         private void OnEnable()
         {
-            PlayerFighter.onFinisherCamera += CameraSet;
-            PlayerFighter.onCameraShake += CameraShake;
+            PlayerFighter.OnFinisherCamera += CameraSet;
+            PlayerFighter.OnCameraShake += CameraShake;
         }
 
 
         private void OnDisable()
         {
-            PlayerFighter.onFinisherCamera -= CameraSet;
-            PlayerFighter.onCameraShake -= CameraShake;
+            PlayerFighter.OnFinisherCamera -= CameraSet;
+            PlayerFighter.OnCameraShake -= CameraShake;
 
         }
 

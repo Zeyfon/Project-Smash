@@ -9,11 +9,9 @@ namespace PSmash.Menus
         [SerializeField] Image image = null;
         
         EventSystem eventSystem;
-        MainMenu mainMenu;
 
         private void Awake()
         {
-            mainMenu = transform.parent.GetComponent<MainMenu>();
             eventSystem = GameObject.FindObjectOfType<EventSystem>();
         }
         
@@ -21,11 +19,11 @@ namespace PSmash.Menus
         //to disable the image from the layouts
         void Update()
         {
-            if (mainMenu.previousGameObject != eventSystem.currentSelectedGameObject &&
-                eventSystem.currentSelectedGameObject == gameObject)
+            bool isCurrentSelectionMyGameObject = eventSystem.currentSelectedGameObject == gameObject;
+
+            if (isCurrentSelectionMyGameObject)
             {
                 image.enabled = false;
-                print("Disable Image");
             }
         }
     }

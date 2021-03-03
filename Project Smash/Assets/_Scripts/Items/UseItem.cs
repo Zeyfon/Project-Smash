@@ -23,9 +23,7 @@ namespace PSmash.Items
         //Called by the UseItemState FSM in Playmaker
         public void UseEquippedItem()
         {
-            //print("Animator value  " + currentEquippedItem.animatorIntValue);
             GetComponent<Animator>().SetInteger("UseItem", currentEquippedItem.animatorIntValue);
-            //GetComponent<PlayerItems>().SetItemQuantity(currentEquippedItem.item);
         }
 
         //AnimEvent
@@ -43,9 +41,7 @@ namespace PSmash.Items
             itemClone.GetComponent<UsableItem>().SetOwner(GetComponent<Health>());
             if (transform.right.x <0)
                 itemClone.transform.eulerAngles = new Vector3(0, 180, 0);
-            //print(transform.right.x);
             GetComponentInChildren<IItemUsed>().ItemUsed(currentEquippedItem);
-            //Debug.Break();
         }
     }
 

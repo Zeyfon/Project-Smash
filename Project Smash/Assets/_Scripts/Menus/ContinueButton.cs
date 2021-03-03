@@ -6,11 +6,6 @@ namespace PSmash.Menus
 {
     public class ContinueButton : MonoBehaviour
     {
-        //Function as a Proxy to the method in Menus of CloseMenus
-        public void PerformAction()
-        {
-            GetComponentInParent<Menus>().CloseMenus();
-        }
     }
 }
 

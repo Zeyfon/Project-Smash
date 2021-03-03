@@ -704,11 +704,19 @@ MonoBehaviour:
         x: 434.45312
         y: 518.1719
         width: 100
-        height: 16
+        height: 32
       isBreakpoint: 0
       isSequence: 1
       hideUnused: 0
-      transitions: []
+      transitions:
+      - fsmEvent:
+          name: FINISHED
+          isSystemEvent: 1
+          isGlobal: 0
+        toState: Listener
+        linkStyle: 0
+        linkConstraint: 0
+        colorIndex: 0
       actionData:
         actionNames:
         - HutongGames.PlayMaker.Actions.SetFsmBool
@@ -2353,7 +2361,7 @@ MonoBehaviour:
         tooltip: 
         showInInspector: 0
         networkSync: 0
-        typeName: UnityEngine.Object
+        typeName: 
         value: {fileID: 0}
       - useVariable: 1
         name: 

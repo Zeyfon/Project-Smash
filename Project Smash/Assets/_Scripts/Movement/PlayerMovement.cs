@@ -1,6 +1,6 @@
 ﻿using HutongGames.PlayMaker;
 using PSmash.Attributes;
-using PSmash.Combat;
+//using PSmash.Combat;
 using Spine.Unity;
 using System.Collections;
 using UnityEngine;
@@ -68,14 +68,12 @@ namespace PSmash.Movement
 
         #endregion
 
-        public delegate void PlayerController(bool state);
-        public static event PlayerController EnablePlayerController;
         public delegate void PlayerOnWall(bool state);
         public event PlayerOnWall OnPlayerWallState;
 
         PlayMakerFSM pm;
         GameObject oneWayPlatform;
-        PlayerFighter fighter;
+        //PlayerFighter fighter;
         Rigidbody2D rb;
         Animator animator;
         AudioSource audioSource;
@@ -101,7 +99,6 @@ namespace PSmash.Movement
         bool jumpButtonWasPressed = false;
         bool cr_running = false;
         bool isWallDetected = false;
-        bool isThrowDaggerButtonJustPressed = false;
         bool toolButtonState = false;
         bool isJumpButtonPressed = false;
 
@@ -115,7 +112,6 @@ namespace PSmash.Movement
             animator = GetComponent<Animator>();
             audioSource = GetComponent<AudioSource>();
             health = GetComponent<PlayerHealth>();
-            fighter = GetComponent<PlayerFighter>();
         }
 
         public void SetCurrentStateFSM(PlayMakerFSM pm)
@@ -177,24 +173,12 @@ namespace PSmash.Movement
         {
             JumpCheck(input,false);
             SlopeCheck(input.x);
-            if (toolButtonState && CanEnemyBeFinished())
-                pm.SendEvent("FINISHER");
-            if (isThrowDaggerButtonJustPressed)
-                pm.SendEvent("THROWDAGGER");
             if (toolButtonState && isWallDetected)
                 pm.SendEvent("WALLMOVEMENT");
             float currentSpeed = maxSpeed * input.x;
             if (isGuarding)
                 animator.SetFloat("guardSpeed", Mathf.Abs(input.x));
             MovementType(currentSpeed);
-        }
-
-        bool CanEnemyBeFinished()
-        {
-            if (fighter.IsEnemyStunned())
-                return true;
-            else
-                return false;
         }
 
         void MovementType(float currentSpeed)
@@ -224,12 +208,6 @@ namespace PSmash.Movement
             {
                 //print("NotMoving");
             }
-        }
-
-        public void ThrowDaggerButtonJustPressed(bool isThrowDaggerButtonJustPressed)
-        {
-            print("Wants to Throw a Dagger");
-            this.isThrowDaggerButtonJustPressed = isThrowDaggerButtonJustPressed;
         }
 
         public void StopMovement()
@@ -498,6 +476,7 @@ namespace PSmash.Movement
             return Physics2D.Raycast(wallCheckMiddle.position, transform.right, 0.7f, whatIsGround);
         }
 
+        //Used by the Movement FSM State in PlayMaker
         public void ClimbingLedge(Vector2 ledge)
         {
             gameObject.layer = LayerMask.NameToLayer("PlayerGhost");
@@ -542,39 +521,26 @@ namespace PSmash.Movement
 
             if (isCollidingWithOneWayPlatform && yInput < -0.9f)
             {
-                //print("Start At Upper Part of Ladder");
                 oneWayPlatform.GetComponent<OneWayPlatform>().RotatePlatform();
                 pm.SendEvent("LADDERCLIMB");
-                //StartLadderMovement();
-
             }
             else if (!isGrounded && Mathf.Abs(yInput) > 0.9f)
             {
-                //print("Start at middle of Ladder");
-                //StartLadderMovement();
                 pm.SendEvent("LADDERCLIMB");
-
             }
 
             else if (isGrounded && !isCollidingWithOneWayPlatform && yInput > 0.8f)
             {
-                //print("Start at bottom of Ladder");
-                //StartLadderMovement();
                 pm.SendEvent("LADDERCLIMB");
-
             }
         }
 
         public void StartLadderMovement()
         {
-            //StartCoroutine(LadderMovementFixedUpdated());
-            //print("Started LadderMovement");
             rb.velocity = new Vector2(0, 0);
             GravityScale(0);
             rb.position = new Vector3(ladderPositionX, transform.position.y, 0);
             canDoubleJump = true;
-            //isMovingOnLadder = true;
-            //animator.SetTrigger("climbLadder");
             StartCoroutine(TimerToGetOffLadder());
         }
 
@@ -634,7 +600,6 @@ namespace PSmash.Movement
             rb.velocity = new Vector2(0, 0);
             //print("Climbing Animation");
             animator.SetInteger("LadderMovement", 5);
-            //EnablePlayerController(false);
             StartCoroutine(CheckExitLadder());
         }
 
@@ -682,8 +647,8 @@ namespace PSmash.Movement
                 tempInput = new Vector2(-1, 0);
             JumpCheck(input, false);
             SlopeCheck(input.x);
-            if (isThrowDaggerButtonJustPressed)
-                pm.SendEvent("THROWDAGGER");
+            //if (isThrowDaggerButtonJustPressed)
+            //    pm.SendEvent("THROWDAGGER");
             float currentSpeed = maxSpeed * tempInput.x;
             MovementType(currentSpeed);
         }
