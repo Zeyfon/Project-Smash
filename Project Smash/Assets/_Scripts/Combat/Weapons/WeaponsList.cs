@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace PSmash.Attributes
+namespace PSmash.Combat.Weapons
 {
     public enum WeaponList
     {

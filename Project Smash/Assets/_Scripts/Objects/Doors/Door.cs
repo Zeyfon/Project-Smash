@@ -2,6 +2,7 @@
 using Cinemachine;
 using PSmash.Combat;
 using PSmash.Attributes;
+using PSmash.Combat.Weapons;
 
 namespace PSmash.Items.Doors
 {
@@ -54,7 +55,7 @@ namespace PSmash.Items.Doors
             EnablePlayerController(false);
         }
 
-        public void TakeDamage(Transform attacker, WeaponList weapon, float damage)
+        public void TakeDamage(Transform attacker, Weapon weapon, float damage)
         {
             audioSource.PlayOneShot(hitOnDoorSound);
         }

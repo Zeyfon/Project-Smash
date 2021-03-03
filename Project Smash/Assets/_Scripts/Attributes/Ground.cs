@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using PSmash.Combat.Weapons;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -16,7 +17,7 @@ namespace PSmash.Attributes
             audioSource.clip = damageObjectSound;
             audioSource.playOnAwake = false;
         }
-        public void TakeDamage(Transform attacker, WeaponList weapon, float damage)
+        public void TakeDamage(Transform attacker, Weapon weapon, float damage)
         {
             audioSource.pitch = Random.Range(0.7f, 1);
             audioSource.Play();

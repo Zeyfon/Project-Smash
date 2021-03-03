@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using PSmash.Attributes;
+using PSmash.Combat.Weapons;
 
 namespace PSmash.Tools
 {
@@ -9,10 +10,10 @@ namespace PSmash.Tools
     {
         [SerializeField] AudioSource noDamageAudio = null;
         [SerializeField] AudioSource damageAudio = null;
-        public void TakeDamage(Transform attacker, WeaponList weapon, float damage)
+        public void TakeDamage(Transform attacker, Weapon weapon, float damage)
         {
             print("Attacker  " + attacker + "  weapon   " + weapon + "  damage  " + damage);
-            switch (weapon)
+            switch (weapon.weapon)
             {
                 case WeaponList.Saber:
                     DoDamage();

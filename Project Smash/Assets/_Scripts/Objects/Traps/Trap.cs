@@ -1,4 +1,5 @@
 ﻿using PSmash.Attributes;
+using PSmash.Combat.Weapons;
 using PSmash.Core;
 using System.Collections;
 using UnityEngine;
@@ -14,13 +15,14 @@ namespace PSmash.Items.Traps
         public delegate void PlayerController(bool state);
         public static event PlayerController EnablePlayerController;
         Vector3 lastPosition;
+        Weapon weapon;
 
         private void OnCollisionEnter2D(Collision2D collision)
         {
             if (collision.collider.CompareTag("Player"))
             {
                 IDamagable target = collision.collider.GetComponent<IDamagable>();
-                target.TakeDamage(transform, WeaponList.None, damage);
+                target.TakeDamage(transform, weapon, damage);
                 StartCoroutine(ReturnPlayerToLastPosition(collision.transform));
             }
             if (collision.collider.CompareTag("Enemy"))

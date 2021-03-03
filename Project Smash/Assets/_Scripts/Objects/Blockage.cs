@@ -1,4 +1,5 @@
 ﻿using PSmash.Attributes;
+using PSmash.Combat.Weapons;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.Events;
@@ -23,7 +24,7 @@ namespace PSmash.Items
             audioSource = GetComponent<AudioSource>();
         }
 
-        public void TakeDamage(Transform attacker, WeaponList weapon, float damage)
+        public void TakeDamage(Transform attacker, Weapon weapon, float damage)
         {
             if (health <= 0)
             {

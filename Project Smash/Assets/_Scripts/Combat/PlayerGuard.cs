@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using PSmash.Attributes;
+using PSmash.Combat.Weapons;
 
 namespace PSmash.Combat
 {
@@ -26,7 +27,7 @@ namespace PSmash.Combat
             parryTimer += Time.deltaTime;
         }
 
-        public void TakeDamage(Transform attacker, WeaponList weapon, float damage)
+        public void TakeDamage(Transform attacker, Weapon weapon, float damage)
         {
             if (canParry)
             {

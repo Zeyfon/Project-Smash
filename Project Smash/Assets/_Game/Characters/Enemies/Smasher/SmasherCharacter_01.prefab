@@ -1361,36 +1361,12 @@ MonoBehaviour:
           typeName: PSmash.Attributes.PlayerHealth
           value: {fileID: 0}
         fsmVarParams:
-        - variableName: 
+        - variableName: transform
           objectType: UnityEngine.Transform
-          useVariable: 0
+          useVariable: 1
           type: 12
           floatValue: 0
           intValue: 0
-          boolValue: 0
-          stringValue: 
-          vector4Value: {x: 0, y: 0, z: 0, w: 0}
-          objectReference: {fileID: 6852413905604142774}
-          arrayValue:
-            useVariable: 0
-            name: 
-            tooltip: 
-            showInInspector: 0
-            networkSync: 0
-            type: -1
-            objectTypeName: 
-            floatValues: []
-            intValues: 
-            boolValues: 
-            stringValues: []
-            vector4Values: []
-            objectReferences: []
-        - variableName: 
-          objectType: PSmash.Attributes.WeaponList
-          useVariable: 0
-          type: 14
-          floatValue: 0
-          intValue: 1
           boolValue: 0
           stringValue: 
           vector4Value: {x: 0, y: 0, z: 0, w: 0}
@@ -1410,10 +1386,35 @@ MonoBehaviour:
             vector4Values: []
             objectReferences: []
         - variableName: 
+          objectType: PSmash.Combat.Weapons.Weapon
+          useVariable: 0
+          type: 12
+          floatValue: 0
+          intValue: 0
+          boolValue: 0
+          stringValue: 
+          vector4Value: {x: 0, y: 0, z: 0, w: 0}
+          objectReference: {fileID: 11400000, guid: 64db6b6578a245d4bac698204dae8102,
+            type: 2}
+          arrayValue:
+            useVariable: 0
+            name: 
+            tooltip: 
+            showInInspector: 0
+            networkSync: 0
+            type: -1
+            objectTypeName: 
+            floatValues: []
+            intValues: 
+            boolValues: 
+            stringValues: []
+            vector4Values: []
+            objectReferences: []
+        - variableName: 
           objectType: UnityEngine.Object
           useVariable: 0
           type: 0
-          floatValue: 20
+          floatValue: 10
           intValue: 0
           boolValue: 0
           stringValue: 
@@ -3189,34 +3190,10 @@ MonoBehaviour:
           typeName: PSmash.Attributes.PlayerHealth
           value: {fileID: 0}
         fsmVarParams:
-        - variableName: 
+        - variableName: transform
           objectType: UnityEngine.Transform
-          useVariable: 0
+          useVariable: 1
           type: 12
-          floatValue: 0
-          intValue: 0
-          boolValue: 0
-          stringValue: 
-          vector4Value: {x: 0, y: 0, z: 0, w: 0}
-          objectReference: {fileID: 6852413905604142774}
-          arrayValue:
-            useVariable: 0
-            name: 
-            tooltip: 
-            showInInspector: 0
-            networkSync: 0
-            type: -1
-            objectTypeName: 
-            floatValues: []
-            intValues: 
-            boolValues: 
-            stringValues: []
-            vector4Values: []
-            objectReferences: []
-        - variableName: 
-          objectType: PSmash.Attributes.WeaponList
-          useVariable: 0
-          type: 14
           floatValue: 0
           intValue: 0
           boolValue: 0
@@ -3238,10 +3215,35 @@ MonoBehaviour:
             vector4Values: []
             objectReferences: []
         - variableName: 
+          objectType: PSmash.Combat.Weapons.Weapon
+          useVariable: 0
+          type: 12
+          floatValue: 0
+          intValue: 0
+          boolValue: 0
+          stringValue: 
+          vector4Value: {x: 0, y: 0, z: 0, w: 0}
+          objectReference: {fileID: 11400000, guid: 64db6b6578a245d4bac698204dae8102,
+            type: 2}
+          arrayValue:
+            useVariable: 0
+            name: 
+            tooltip: 
+            showInInspector: 0
+            networkSync: 0
+            type: -1
+            objectTypeName: 
+            floatValues: []
+            intValues: 
+            boolValues: 
+            stringValues: []
+            vector4Values: []
+            objectReferences: []
+        - variableName: 
           objectType: UnityEngine.Object
           useVariable: 0
           type: 0
-          floatValue: 20
+          floatValue: 10
           intValue: 0
           boolValue: 0
           stringValue: 
@@ -4265,7 +4267,7 @@ MonoBehaviour:
         tooltip: 
         showInInspector: 0
         networkSync: 0
-        typeName: UnityEngine.Object
+        typeName: 
         value: {fileID: 0}
       - useVariable: 1
         name: 
@@ -4351,7 +4353,7 @@ MonoBehaviour:
     locked: 0
     manualUpdate: 0
     keepDelayedEventsOnStateExit: 0
-    preprocessed: 1
+    preprocessed: 0
     ExposedEvents: []
     RestartOnEnable: 1
     EnableDebugFlow: 0
@@ -11563,7 +11565,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e6b5989744ae94d4db2b4709317931c3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  skin: 
+  skin: Armor
   specialAttackRange: 4
   distanceCheckForObstacles: 1
   whatIsGround:
@@ -15381,12 +15383,6 @@ PrefabInstance:
 --- !u!1 &6852413905604142772 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 8851278654538908373, guid: 587e06734df96fb45836c4df01ad03a7,
-    type: 3}
-  m_PrefabInstance: {fileID: 2724296443517035617}
-  m_PrefabAsset: {fileID: 0}
---- !u!4 &6852413905604142774 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 8851278654538908375, guid: 587e06734df96fb45836c4df01ad03a7,
     type: 3}
   m_PrefabInstance: {fileID: 2724296443517035617}
   m_PrefabAsset: {fileID: 0}
