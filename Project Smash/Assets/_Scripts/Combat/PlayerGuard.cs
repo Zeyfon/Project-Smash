@@ -15,6 +15,7 @@ namespace PSmash.Combat
 
         bool canParry=false;
         float parryTimer = 0;
+        PlayMakerFSM pm;
 
         void Update()
         {
@@ -30,7 +31,7 @@ namespace PSmash.Combat
             if (canParry)
             {
                 attacker.GetComponent<IDamagable>().TakeDamage(transform.parent, weapon, damage);
-                transform.parent.GetComponent<PlayerFighter>().StartParry();
+                pm.SendEvent("PARRY");
                 PlaySound(parrySound);
             }
             else
@@ -51,8 +52,9 @@ namespace PSmash.Combat
             this.canParry = canParry;
         }
 
-        public void EnableParry()
+        public void EnableParryWindow(PlayMakerFSM pm)
         {
+            this.pm = pm;
             parryTimer = 0;
         }
     }
