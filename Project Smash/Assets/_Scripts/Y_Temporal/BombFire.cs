@@ -2,6 +2,7 @@
 using UnityEngine;
 using PSmash.Combat;
 using PSmash.Attributes;
+using PSmash.Combat.Weapons;
 
 namespace PSmash.Temporal
 {
@@ -15,6 +16,7 @@ namespace PSmash.Temporal
         [SerializeField] float fadeInTime = 0.5f;
         AudioSource audioSource;
         float timer = 0;
+        Weapon weapon;
         // Start is called before the first frame update
         void Start()
         {
@@ -49,7 +51,7 @@ namespace PSmash.Temporal
                 foreach (Collider2D coll in colls)
                 {
                     target = coll.GetComponent<EnemyHealth>();
-                    if (target != null) coll.GetComponent<IDamagable>().TakeDamage(null, WeaponList.None, damage);
+                    if (target != null) coll.GetComponent<IDamagable>().TakeDamage(null, weapon, damage);
                 }
                 timer += damageInterval;
                 yield return new WaitForSeconds(damageInterval);

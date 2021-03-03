@@ -814,10 +814,10 @@ MonoBehaviour:
             stringValues: []
             vector4Values: []
             objectReferences: []
-        - variableName: 
-          objectType: PSmash.Attributes.WeaponList
-          useVariable: 0
-          type: 14
+        - variableName: weapon
+          objectType: PSmash.Combat.Weapons.Weapon
+          useVariable: 1
+          type: 12
           floatValue: 0
           intValue: 0
           boolValue: 0
@@ -838,11 +838,11 @@ MonoBehaviour:
             stringValues: []
             vector4Values: []
             objectReferences: []
-        - variableName: 
+        - variableName: damage
           objectType: UnityEngine.Object
-          useVariable: 0
+          useVariable: 1
           type: 0
-          floatValue: 10
+          floatValue: 0
           intValue: 0
           boolValue: 0
           stringValue: 
@@ -1026,10 +1026,10 @@ MonoBehaviour:
             stringValues: []
             vector4Values: []
             objectReferences: []
-        - variableName: 
-          objectType: PSmash.Attributes.WeaponList
-          useVariable: 0
-          type: 14
+        - variableName: weapon
+          objectType: PSmash.Combat.Weapons.Weapon
+          useVariable: 1
+          type: 12
           floatValue: 0
           intValue: 0
           boolValue: 0
@@ -1050,11 +1050,11 @@ MonoBehaviour:
             stringValues: []
             vector4Values: []
             objectReferences: []
-        - variableName: 
+        - variableName: damage
           objectType: UnityEngine.Object
-          useVariable: 0
+          useVariable: 1
           type: 0
-          floatValue: 10
+          floatValue: 0
           intValue: 0
           boolValue: 0
           stringValue: 
@@ -2274,6 +2274,12 @@ MonoBehaviour:
         showInInspector: 0
         networkSync: 0
         value: 0
+      - useVariable: 1
+        name: damage
+        tooltip: 
+        showInInspector: 1
+        networkSync: 0
+        value: 0
       intVariables:
       - useVariable: 1
         name: attack
@@ -2282,11 +2288,11 @@ MonoBehaviour:
         networkSync: 0
         value: 0
       - useVariable: 1
-        name: damage
+        name: 
         tooltip: 
         showInInspector: 1
         networkSync: 0
-        value: 10
+        value: 0
       boolVariables:
       - useVariable: 1
         name: 
@@ -2426,6 +2432,13 @@ MonoBehaviour:
         networkSync: 0
         typeName: PSmash.Movement.EnemyMovement
         value: {fileID: 0}
+      - useVariable: 1
+        name: weapon
+        tooltip: 
+        showInInspector: 1
+        networkSync: 0
+        typeName: PSmash.Combat.Weapons.Weapon
+        value: {fileID: 0}
       materialVariables: []
       textureVariables: []
       arrayVariables: []
@@ -2433,7 +2446,7 @@ MonoBehaviour:
       categories:
       - 
       - Exposed
-      variableCategoryIDs: 00000000000000000000000000000000000000000000000001000000000000000000000000000000010000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000100000000000000000000000000000000000000
+      variableCategoryIDs: 000000000000000000000000000000000000000000000000010000000000000000000000010000000000000001000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000010000000000000000000000000000000000000001000000
     description: 'Normal Attack State
 
       This FSM is the one in charge of the

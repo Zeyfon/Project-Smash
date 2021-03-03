@@ -13,14 +13,15 @@ namespace PSmash.Combat
         [Header("General Info")]
         [SerializeField] LayerMask whatIsDamagable;
         [SerializeField] LayerMask whatIsEnemy;
-        [SerializeField] WeaponList currentWeapon;
 
         [Header("Combo Attack")]
         [SerializeField] Transform attackTransform = null;
         [SerializeField] Vector2 comboAttackArea = new Vector2(1.5f, 1.5f);
         [SerializeField] AudioClip attackSound1 = null;
+        [SerializeField] Weapon fists = null;
 
         [Header("Tool Attack")]
+        [SerializeField] Weapon mace = null;
         [SerializeField] AudioClip toolAttackSound = null;
 
         [Header("Finishing Move")]
@@ -180,8 +181,7 @@ namespace PSmash.Combat
         void LightAttackDamage(int comboAttackNumber)
         {
             //print("NormalAttack");
-            float damage = baseStats.GetStat(StatsList.Damage) * 1.1f;
-            SendDamage(attackTransform, comboAttackArea, damage);
+            Attack(attackTransform, comboAttackArea, fists);
         }
 
         void LightAttackSound()
@@ -198,19 +198,19 @@ namespace PSmash.Combat
         void ToolAttack()
         {
             //print("NormalAttack");
-            float damage = baseStats.GetStat(StatsList.Damage) * 3f;
-            SendDamage(attackTransform, comboAttackArea, damage);
+            Attack(attackTransform, comboAttackArea, mace);
         }
 
         //AnimEvent
         void ToolAttackSound()
         {
-            audioSource.PlayOneShot(toolAttackSound);
+            audioSource.pitch = UnityEngine.Random.Range(0.75f, 1.1f);
+            audioSource.PlayOneShot(attackSound1);
         }
 
         #endregion
 
-        private void SendDamage(Transform attackOriginPosition, Vector2 attackArea, float damage)
+        private void Attack(Transform attackOriginPosition, Vector2 attackArea, Weapon currentWeapon)
         {
             //print("Looking to Damage Enemy");
             Collider2D[] colls = Physics2D.OverlapBoxAll(attackOriginPosition.position, attackArea, 0, whatIsDamagable);
@@ -225,13 +225,7 @@ namespace PSmash.Combat
                 IDamagable target = coll.GetComponent<IDamagable>();
                 if (target == null || coll.GetComponent<Projectile>())
                     continue;
-                //if (isFinishinAnEnemy)
-                //{
-                //    damage *= 10;
-                //    //print("Enemy being Finished");
-                //}
-                //print("Player damaged the  " + coll.gameObject.name +  " by " + damage);
-                target.TakeDamage(transform, currentWeapon, damage);
+                target.TakeDamage(transform, currentWeapon, baseStats.GetStat(StatsList.Damage));
             }
         }
 

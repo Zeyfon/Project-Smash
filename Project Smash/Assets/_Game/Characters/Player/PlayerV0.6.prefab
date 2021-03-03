@@ -11883,7 +11883,25 @@ MonoBehaviour:
         showInInspector: 0
         networkSync: 0
         value: 0
-      boolVariables: []
+      boolVariables:
+      - useVariable: 1
+        name: toolButtonState
+        tooltip: 
+        showInInspector: 0
+        networkSync: 0
+        value: 0
+      - useVariable: 1
+        name: jumpButtonState
+        tooltip: 
+        showInInspector: 0
+        networkSync: 0
+        value: 0
+      - useVariable: 1
+        name: guardButtonState
+        tooltip: 
+        showInInspector: 0
+        networkSync: 0
+        value: 0
       stringVariables:
       - useVariable: 1
         name: myFSMName
@@ -11931,7 +11949,8 @@ MonoBehaviour:
       enumVariables: []
       categories:
       - 
-      variableCategoryIDs: 00000000000000000000000000000000000000000000000000000000
+      - InputProxy
+      variableCategoryIDs: 00000000000000000100000001000000010000000000000000000000000000000000000000000000
     description: 
     docUrl: 
     showStateLabel: 0
@@ -14657,10 +14676,11 @@ MonoBehaviour:
   whatIsEnemy:
     serializedVersion: 2
     m_Bits: 1024
-  currentWeapon: 1
   attackTransform: {fileID: 5414759444693801845}
   comboAttackArea: {x: 1.5, y: 1.5}
   attackSound1: {fileID: 8300000, guid: 8b4ce328585956a4b9ec272d27420fc9, type: 3}
+  fists: {fileID: 11400000, guid: 4f5a62eb98476b5489ec89fe9540806d, type: 2}
+  mace: {fileID: 0}
   toolAttackSound: {fileID: 0}
   finisherAttackFactor: 10
   finisherSound: {fileID: 8300000, guid: 981fc22d720df8f41bcd71e67ed4c6fc, type: 3}
@@ -15549,7 +15569,7 @@ MonoBehaviour:
         stringParams:
         - GUARD
         - 
-        byteData: 0000020000000100010200000001000000
+        byteData: 0001020000000100010200000001000100
         arrayParamSizes: 02000000010000000200000001000000
         arrayParamTypes:
         - HutongGames.PlayMaker.FsmVar

@@ -7,6 +7,7 @@ using UnityEngine.Analytics;
 using UnityEngine.SceneManagement;
 using UnityEngine.Events;
 using PSmash.Stats;
+using PSmash.Combat.Weapons;
 
 namespace PSmash.Attributes
 {
@@ -41,7 +42,7 @@ namespace PSmash.Attributes
         //The guard and parry states will be checked in the Enemy Attack's Script
         //to deliver the proper assessment
 
-        public override void TakeDamage(Transform attacker, WeaponList weapon, float damage)
+        public override void TakeDamage(Transform attacker, Weapon weapon, float damage)
         {
             if (isDead) return;
             //print("Damage received");

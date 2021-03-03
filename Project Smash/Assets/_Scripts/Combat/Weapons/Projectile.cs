@@ -4,6 +4,7 @@ using Spine.Unity;
 using System.Collections;
 using UnityEngine;
 using PSmash.Items;
+using PSmash.Stats;
 
 namespace PSmash.Combat.Weapons
 {
@@ -16,8 +17,6 @@ namespace PSmash.Combat.Weapons
         [Header("Independent Object Values")]
         [Tooltip("The initial speed at which it will start moving")]
         [SerializeField] float speed = 1;
-        [Tooltip("The damage with what the projectile is created")]
-        [SerializeField] int damage = 10;
         [Tooltip("The rotation speed that will have for the angular velocity in the RigidBody. Only works when the projectile is parried")]
         [SerializeField] float rotateSpeed = 5;
         [Tooltip("The factor at which the speed will increase once parried")]
@@ -33,6 +32,9 @@ namespace PSmash.Combat.Weapons
         [SerializeField] AnimationReferenceAsset idleLoop = null;
         [SerializeField] AnimationReferenceAsset impactOnNPC = null;
         [SerializeField] AnimationReferenceAsset impactOnWall = null;
+
+        [Header("Weapon")]
+        [SerializeField] Weapon weapon;
 
         //Health owner;
         Transform parabolicMovementTarget;
@@ -63,7 +65,7 @@ namespace PSmash.Combat.Weapons
         // Update is called once per frame
         void FixedUpdate()
         {
-            if (hasHit) 
+            if (hasHit)
                 return;
 
             //print("Moving");
@@ -75,7 +77,7 @@ namespace PSmash.Combat.Weapons
                 float rotateAmount = Vector3.Cross(direction, transform.right).z;
                 rb.angularVelocity = -rotateAmount * rotateSpeed;
             }
-                rb.velocity = transform.right * speed;
+            rb.velocity = transform.right * speed;
         }
 
         void OnDisable()
@@ -83,6 +85,11 @@ namespace PSmash.Combat.Weapons
             skeletonAnim.AnimationState.Complete -= OnSpineAnimationEnd;
         }
 
+
+        public void SetWeapon(Weapon weapon)
+        {
+            this.weapon = weapon;
+        }
         ///// <summary>
         ///// Function called by all the characters that can throw a projectile
         ///// This is in order to know who spawned this so the Trigger events look for the correct target
@@ -93,7 +100,7 @@ namespace PSmash.Combat.Weapons
         //    this.owner = owner;
         //}
 
-        public void TakeDamage(Transform attacker, WeaponList weapon, float damage)
+        public void TakeDamage(Transform attacker, Weapon weapon, float damage)
         {
             timer = 0;
             print("Received the parry");
@@ -162,14 +169,14 @@ namespace PSmash.Combat.Weapons
                     Instantiate(enemyHitEffect, transform.position, Quaternion.identity);
                     NPCHitSound();
                     print("Attack from enemy colliding with player");
-                    ProjectileCollisionImpact(collision,impactOnNPC);
+                    ProjectileCollisionImpact(collision, impactOnNPC);
                 }
                 else if (collision.GetComponent<PlayerGuard>())
                 {
                     hasHit = true;
                     print("Attack from enemy colliding with guard");
                     Instantiate(enemyHitEffect, transform.position, Quaternion.identity);
-                    ProjectileCollisionImpact(collision,impactOnNPC);
+                    ProjectileCollisionImpact(collision, impactOnNPC);
                 }
                 else if (collision.CompareTag("Ground"))
                 {
@@ -199,8 +206,11 @@ namespace PSmash.Combat.Weapons
             rb.angularVelocity = 0;
             skeletonAnim.AnimationState.SetAnimation(0, anim, false);
             IDamagable target = collision.GetComponent<IDamagable>();
-            if(target != null)
-                target.TakeDamage(transform, WeaponList.None, damage);
+            if (target != null)
+            {
+                float damage = owner.GetComponent<BaseStats>().GetStat(StatsList.Damage);
+                target.TakeDamage(transform, weapon, damage);
+            }
         }
 
         private void OnSpineAnimationEnd(TrackEntry trackEntry)
@@ -232,6 +242,7 @@ namespace PSmash.Combat.Weapons
             audioSource.pitch = Random.Range(0.8f, 1f);
             audioSource.Play();
         }
+
     }
 }
 

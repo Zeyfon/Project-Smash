@@ -1,4 +1,5 @@
 ﻿using HutongGames.PlayMaker;
+using PSmash.Combat.Weapons;
 using PSmash.Stats;
 using System;
 using System.Collections;
@@ -37,7 +38,7 @@ namespace PSmash.Attributes
             this.damagePenetrationPercentage = damagePenetrationPercentage;
         }
 
-        public override void TakeDamage(Transform attacker, WeaponList weapon, float damage)
+        public override void TakeDamage(Transform attacker, Weapon weapon, float damage)
         {
             if (isDead)
             {
@@ -50,15 +51,18 @@ namespace PSmash.Attributes
                 Debug.LogWarning("No Enemy State set to return DAMAGE Event");
                 return;
             }
-            Damaged(damage);
+            Damaged(weapon, damage);
         }
 
-        public void Damaged(float damage)
+        public void Damaged(Weapon weapon, float damage)
         {
+            float healthDamage = damage + weapon.damage;
+            float totalPenetrationPercentage = damagePenetrationPercentage + weapon.damagePenetrationValue;
             //Unity Event to instantiate a object to show the damage in the screen
-            if(posture != null && posture.enabled)
+            if (posture != null && posture.enabled)
             {
-                posture.posture = posture.SubstractDamageFromPosture(damage);
+                float postureDamage = damage + weapon.damage;
+                posture.posture = posture.SubstractDamageFromPosture(postureDamage);
                 if (posture.posture <= 0)
                 {
                     print("DAMAGED_STUNNED Event to the fsm " + pm.FsmName);
@@ -74,7 +78,7 @@ namespace PSmash.Attributes
                     myfsmEventData.FloatData = damage;
                     HutongGames.PlayMaker.Fsm.EventData = myfsmEventData;
                     print("DAMAGED_NOSTUNNED Event to the fsm " + pm.FsmName);
-                    DamageHealth(damage, damagePenetrationPercentage);
+                    DamageHealth(damage, totalPenetrationPercentage);
                     pm.SendEvent("DAMAGED_NOSTUNNED");
                     return;
                 }
@@ -82,7 +86,7 @@ namespace PSmash.Attributes
             else
             {
                 print("DAMAGED_NOSTUNNED Event to the fsm " + pm.FsmName);
-                DamageHealth(damage, damagePenetrationPercentage);
+                DamageHealth(healthDamage, totalPenetrationPercentage);
                 pm.SendEvent("DAMAGED_NOSTUNNED");
                 return;
             }
