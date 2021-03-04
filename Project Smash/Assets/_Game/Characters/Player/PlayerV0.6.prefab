@@ -7055,8 +7055,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: df98579554662804088b2e1cbf548cf0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  potion: {fileID: 11400000, guid: ed79b4110489ed6458cb2c219a74881b, type: 2}
-  dagger: {fileID: 11400000, guid: b6d3eccf1983a1b44aff75904e2fa1ad, type: 2}
 --- !u!114 &74025874873900810
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7069,8 +7067,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1a6cbf34fe33d54438c6ac663dca41f5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  potions: 2
-  daggers: 3
+  items:
+  - item: {fileID: 11400000, guid: ed79b4110489ed6458cb2c219a74881b, type: 2}
+    quantity: 4
+  - item: {fileID: 11400000, guid: b6d3eccf1983a1b44aff75904e2fa1ad, type: 2}
+    quantity: 10
 --- !u!1 &7632115962595694742
 GameObject:
   m_ObjectHideFlags: 0
@@ -14680,7 +14681,7 @@ MonoBehaviour:
   comboAttackArea: {x: 1.5, y: 1.5}
   attackSound1: {fileID: 8300000, guid: 8b4ce328585956a4b9ec272d27420fc9, type: 3}
   fists: {fileID: 11400000, guid: 4f5a62eb98476b5489ec89fe9540806d, type: 2}
-  mace: {fileID: 0}
+  mace: {fileID: 11400000, guid: 64db6b6578a245d4bac698204dae8102, type: 2}
   toolAttackSound: {fileID: 0}
   finisherAttackFactor: 10
   finisherSound: {fileID: 8300000, guid: 981fc22d720df8f41bcd71e67ed4c6fc, type: 3}
@@ -23834,8 +23835,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1a6cbf34fe33d54438c6ac663dca41f5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  potions: 2
-  daggers: 20
+  items: []
 --- !u!114 &6844167345181034694
 MonoBehaviour:
   m_ObjectHideFlags: 0

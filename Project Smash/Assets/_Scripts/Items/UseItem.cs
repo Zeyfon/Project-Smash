@@ -10,38 +10,34 @@ namespace PSmash.Items
         [SerializeField] Transform spawner = null;
         [SerializeField] AudioSource audioSource = null;
 
-        Item currentEquippedItem;
-        bool canUseCurrentItem = true;
-
-        public void SetCurrentEquippedItem(Item item, bool canUseCurrentItem)
-        {
-            currentEquippedItem = item;
-            this.canUseCurrentItem = canUseCurrentItem;
-            //print("Current item equipped is  " + currentEquippedItem);
-        }
-
         //Called by the UseItemState FSM in Playmaker
         public void UseEquippedItem()
         {
-            GetComponent<Animator>().SetInteger("UseItem", currentEquippedItem.animatorIntValue);
+            InventoryItems.Items item = GetComponentInChildren<ItemHandler>().GetEquippedItem();
+            GetComponent<Animator>().SetInteger("UseItem", item.item.animatorIntValue);
         }
 
         //AnimEvent
         public void SpawnItem()
         {
-            if (!canUseCurrentItem)
+            InventoryItems.Items item = GetComponentInChildren<ItemHandler>().GetEquippedItem();
+            int quantity = item.quantity;
+            if (quantity<=0)
             {
                 print("Cannot spawn item");
                 return;
             }
+
             print("Spawning Item");
-            audioSource.clip = currentEquippedItem.useItemAudioClip;
+            audioSource.clip = item.item.useItemAudioClip;
             audioSource.Play();
-            GameObject itemClone =  Instantiate(currentEquippedItem.gameObject, spawner.position, Quaternion.identity);
+            GameObject itemClone =  Instantiate(item.item.gameObject, spawner.position, Quaternion.identity);
             itemClone.GetComponent<UsableItem>().SetOwner(GetComponent<Health>());
             if (transform.right.x <0)
                 itemClone.transform.eulerAngles = new Vector3(0, 180, 0);
-            GetComponentInChildren<IItemUsed>().ItemUsed(currentEquippedItem);
+            quantity -= 1;
+            print(quantity);
+            GetComponentInChildren<ItemHandler>().ItemUsed(item, quantity);
         }
     }
 

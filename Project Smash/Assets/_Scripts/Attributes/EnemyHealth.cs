@@ -42,7 +42,7 @@ namespace PSmash.Attributes
         {
             if (isDead)
             {
-                print(gameObject.name + "  is invincible. You can't hurt him anymore");
+                Debug.LogWarning(gameObject.name + "  is invincible. You can't hurt him anymore");
                 return;
             }
 
@@ -67,7 +67,7 @@ namespace PSmash.Attributes
                 {
                     print("DAMAGED_STUNNED Event to the fsm " + pm.FsmName);
                     posture.OnStunStateStart();
-                    DamageHealth(damage, 100);
+                    DamageHealth(healthDamage, 100);
                     pm.SendEvent("DAMAGED_STUNNED");
                     return;
                 }
@@ -78,7 +78,7 @@ namespace PSmash.Attributes
                     myfsmEventData.FloatData = damage;
                     HutongGames.PlayMaker.Fsm.EventData = myfsmEventData;
                     print("DAMAGED_NOSTUNNED Event to the fsm " + pm.FsmName);
-                    DamageHealth(damage, totalPenetrationPercentage);
+                    DamageHealth(healthDamage, totalPenetrationPercentage);
                     pm.SendEvent("DAMAGED_NOSTUNNED");
                     return;
                 }
