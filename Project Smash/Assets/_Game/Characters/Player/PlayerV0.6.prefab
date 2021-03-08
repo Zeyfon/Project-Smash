@@ -7373,7 +7373,7 @@ Animator:
   m_GameObject: {fileID: 6581303975160096547}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 03682a78203cda24f81bd930e2896f10, type: 2}
+  m_Controller: {fileID: 9100000, guid: 4c2d89a30ac011844a7c5c6790843801, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 1
   m_ApplyRootMotion: 0
@@ -10610,7 +10610,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f9db98c60740638449864eb028fbe7ad, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  skeletonDataAsset: {fileID: 11400000, guid: da56e6b1d965d5f42bb019bb95fb51ef, type: 2}
+  skeletonDataAsset: {fileID: 11400000, guid: c16c6f7b9667f284e9e855680d2ab522, type: 2}
   initialSkinName: 
   initialFlipX: 0
   initialFlipY: 0
@@ -14679,10 +14679,10 @@ MonoBehaviour:
     m_Bits: 1024
   attackTransform: {fileID: 5414759444693801845}
   comboAttackArea: {x: 1.5, y: 1.5}
-  attackSound1: {fileID: 8300000, guid: 8b4ce328585956a4b9ec272d27420fc9, type: 3}
+  attackSound: {fileID: 8300000, guid: 8b4ce328585956a4b9ec272d27420fc9, type: 3}
   fists: {fileID: 11400000, guid: 4f5a62eb98476b5489ec89fe9540806d, type: 2}
-  mace: {fileID: 11400000, guid: 64db6b6578a245d4bac698204dae8102, type: 2}
-  toolAttackSound: {fileID: 0}
+  mace: {fileID: 11400000, guid: a63eaa56cbdb77d4f82bfd1334520dfa, type: 2}
+  toolAttackSound: {fileID: 8300000, guid: 86cd8d06ba31e3f48908229a918bdd97, type: 3}
   finisherAttackFactor: 10
   finisherSound: {fileID: 8300000, guid: 981fc22d720df8f41bcd71e67ed4c6fc, type: 3}
   steamTransform: {fileID: 3565808292064092890}
@@ -23823,19 +23823,6 @@ MonoBehaviour:
     handleAnimatorIK: 0
   fsmTemplate: {fileID: 0}
   eventHandlerComponentsAdded: 1
---- !u!114 &6843627334006869047
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6581303975160096547}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1a6cbf34fe33d54438c6ac663dca41f5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  items: []
 --- !u!114 &6844167345181034694
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -25209,6 +25196,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 75561d9801edb4b48ad9e5f43cea3d05, type: 3}
+--- !u!4 &6581303975160096540 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 3784079572925901896, guid: 75561d9801edb4b48ad9e5f43cea3d05,
+    type: 3}
+  m_PrefabInstance: {fileID: 8058836708823124820}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &6581303975160096547 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 3784079572925901943, guid: 75561d9801edb4b48ad9e5f43cea3d05,
@@ -25227,9 +25220,3 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b4a54fc1155d7dd4fb94090c8dc41bea, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!4 &6581303975160096540 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 3784079572925901896, guid: 75561d9801edb4b48ad9e5f43cea3d05,
-    type: 3}
-  m_PrefabInstance: {fileID: 8058836708823124820}
-  m_PrefabAsset: {fileID: 0}

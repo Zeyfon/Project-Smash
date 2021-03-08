@@ -14,6 +14,13 @@ namespace PSmash.Attributes
         [SerializeField] bool isInvulnerable = true;
         [Header("Extras")]
         [SerializeField] GameObject dropItem = null;
+        [SerializeField] Weapon weaknessWeapon = null;
+        [SerializeField] float weaknessFactor = 3;
+        [SerializeField] AudioClip protectedDamageAudio = null;
+        [SerializeField] AudioClip fleshDamageAudio = null;
+        [SerializeField] AudioClip stunnedAudio = null;
+        [SerializeField] AudioClip staggerAuduio = null;
+        [SerializeField] float volume = 1;
 
         EnemyPosture posture;
         PlayMakerFSM pm;
@@ -33,7 +40,7 @@ namespace PSmash.Attributes
         //when entering a new state
         public void SetCurrentStateInfo(PlayMakerFSM pm, float damagePenetrationPercentage)
         {
-            //print(gameObject.name + " set in " + pm.FsmName);
+            print(gameObject.name + " set in " + pm.FsmName);
             this.pm = pm;
             this.damagePenetrationPercentage = damagePenetrationPercentage;
         }
@@ -54,14 +61,34 @@ namespace PSmash.Attributes
             Damaged(weapon, damage);
         }
 
-        public void Damaged(Weapon weapon, float damage)
+        public void Damaged(Weapon attackedWeapon, float damage)
         {
-            float healthDamage = damage + weapon.damage;
-            float totalPenetrationPercentage = damagePenetrationPercentage + weapon.damagePenetrationValue;
+            float healthDamage;
+            float totalPenetrationPercentage;
+            if (weaknessWeapon == attackedWeapon)
+            {
+                healthDamage = (damage + attackedWeapon.damage) * weaknessFactor ;
+                totalPenetrationPercentage = damagePenetrationPercentage + attackedWeapon.damagePenetrationValue * weaknessFactor;
+            }
+            else
+            {
+                healthDamage = (damage + attackedWeapon.damage);
+                totalPenetrationPercentage = damagePenetrationPercentage + attackedWeapon.damagePenetrationValue;
+            }
+
             //Unity Event to instantiate a object to show the damage in the screen
             if (posture != null && posture.enabled)
-            {
-                float postureDamage = damage + weapon.damage;
+            { 
+                float postureDamage;
+                if (weaknessWeapon == attackedWeapon)
+                {
+                    postureDamage = (damage + attackedWeapon.damage) * weaknessFactor;
+                }
+
+                else
+                {
+                    postureDamage = damage + attackedWeapon.damage;
+                }
                 posture.posture = posture.SubstractDamageFromPosture(postureDamage);
                 if (posture.posture <= 0)
                 {
@@ -170,7 +197,38 @@ namespace PSmash.Attributes
             yield return null;
         }
 
+        public void ProtectedDamageSound()
+        {
+            if (isArmorEnabled && !posture.isActiveAndEnabled)
+            {
+                FleshDamageSound();
+                return;
+            }
+            //print("Protected Audio");
+            audioSource.clip = protectedDamageAudio;
+            audioSource.Play();
+        }
 
+        public void FleshDamageSound()
+        {
+            //print("Flesh Audio");
+            audioSource.clip = fleshDamageAudio;
+            audioSource.Play();
+        }
+
+        public void StunnedAudio()
+        {
+            //print("Stunned Audio");
+            audioSource.clip = stunnedAudio;
+            audioSource.Play();
+        }
+
+        public void StaggerAudio()
+        {
+            //print("Stagger Audio");
+            audioSource.clip = staggerAuduio;
+            audioSource.Play();
+        }
         #region ExternalUse
         public float GetHealthValue()
         {
@@ -186,8 +244,6 @@ namespace PSmash.Attributes
         {
             return isDead;
         }
-
-
 
         public bool IsStunned()
         {

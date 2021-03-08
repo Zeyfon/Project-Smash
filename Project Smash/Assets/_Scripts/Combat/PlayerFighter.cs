@@ -17,7 +17,7 @@ namespace PSmash.Combat
         [Header("Combo Attack")]
         [SerializeField] Transform attackTransform = null;
         [SerializeField] Vector2 comboAttackArea = new Vector2(1.5f, 1.5f);
-        [SerializeField] AudioClip attackSound1 = null;
+        [SerializeField] AudioClip attackSound = null;
         [SerializeField] Weapon fists = null;
 
         [Header("Tool Attack")]
@@ -187,7 +187,7 @@ namespace PSmash.Combat
         void LightAttackSound()
         {
             audioSource.pitch = UnityEngine.Random.Range(0.75f, 1.1f);
-            audioSource.PlayOneShot(attackSound1);
+            audioSource.PlayOneShot(attackSound);
         }
 
         #endregion
@@ -205,7 +205,7 @@ namespace PSmash.Combat
         void ToolAttackSound()
         {
             audioSource.pitch = UnityEngine.Random.Range(0.75f, 1.1f);
-            audioSource.PlayOneShot(attackSound1);
+            audioSource.PlayOneShot(toolAttackSound);
         }
 
         #endregion
