@@ -12,16 +12,13 @@ namespace PSmash.UI
         [SerializeField] TextMeshProUGUI text = null;
         [SerializeField] Image image = null;
 
-        public void UpdateItemInfo(Item item, int value)
+        public void UpdateItemInfo(InventoryItems.Items item)
         {
-            image.sprite = item.sprite;
+            image.sprite = item.item.sprite;
+            if (text == null)
+                return;
             text.enabled = true;
-            text.text = value.ToString();
-        }
-        public void UpdateItemInfo(Item item)
-        {
-            image.sprite = item.sprite;
-            //text.enabled = false;
+            text.text = item.quantity.ToString();
         }
     }
 

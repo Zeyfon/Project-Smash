@@ -173,10 +173,10 @@ namespace PSmash.Movement
         {
             print("Changed Skin");
             //GetComponent<SkeletonRenderer>().skeleton.SetSkin("default");
-            Skeleton skeleton = GetComponent<SkeletonMecanim>().Skeleton;
-            print(skeleton.Skin);
-            skeleton.SetSkin(skin);
-            print(skeleton.Skin);
+            SkeletonMecanim skeleton = GetComponent<SkeletonMecanim>();
+            skeleton.skeleton.SetSkin(skin);
+            skeleton.skeleton.SetSlotsToSetupPose();
+            print(skeleton.skeleton.Skin);
         }
         #endregion
 

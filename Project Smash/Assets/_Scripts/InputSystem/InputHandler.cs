@@ -184,6 +184,8 @@ namespace PSmash.InputSystem
             return jumpButtonState;
         }
 
+
+
         private void ButtonXPressed()
         {
             if (buttonX == null) return;

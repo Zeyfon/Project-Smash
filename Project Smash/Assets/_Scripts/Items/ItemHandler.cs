@@ -1,90 +1,93 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 namespace PSmash.Items
 {
-    public class ItemHandler : MonoBehaviour, IItemUsed
+    /// <summary>
+    /// Will be in charge of receiveng the Inputs, and looking for all the items in the Inventory System.
+    /// Send to the UseItem the curren equipped item for the player to use it.
+    /// Send to the UI the only 2 items that will be displayed in the correct order.
+    /// </summary>
+    public class ItemHandler : MonoBehaviour
     {
-        [SerializeField] Item potion;
-        [SerializeField] Item dagger;
-
-        public delegate void ItemChange(Item item, int quantity);
+        public delegate void ItemChange(InventoryItems.Items[] items);
         public event ItemChange onItemChange;
 
-        int itemIndex;
+        int currentIndex = 0;
 
         // Start is called before the first frame update
         void Start()
         {
-            SetCurrentItem(potion);
+            UpdateItems(0);
         }
 
-        public Item GetDagger()
+        public InventoryItems.Items GetEquippedItem()
         {
-            return dagger;
+            InventoryItems.Items[] items = GetComponent<InventoryItems>().GetItems();
+            return items[currentIndex];
         }
 
         public void ChangeItem(bool isMovingRight)
         {
-            print("Here " + this + " item changed");
+            InventoryItems.Items[] items = GetComponent<InventoryItems>().GetItems();
+            print(currentIndex);
             if (isMovingRight)
             {
-                itemIndex++;
-                print("Moving right  " + itemIndex);
-                if (itemIndex > System.Enum.GetValues(typeof(ItemList)).Length-1)
+                currentIndex++;
+                print("Moving right" + currentIndex);
+                if (currentIndex > items.Length -1)
                 {
-                    itemIndex = 0;
+                    currentIndex = 0;
                 }
+                print(currentIndex);
             }
             else
             {
-                itemIndex--;
-                print("Moving Left  " + itemIndex);
-                if (itemIndex < 0)
+                currentIndex--;
+                if (currentIndex < 0)
                 {
-                    itemIndex = System.Enum.GetValues(typeof(ItemList)).Length-1;
+                    currentIndex = items.Length - 1;
                 }
             }
-
-            //print("ItemHandler item  " + itemIndex);
-            switch (itemIndex) 
-            {
-                case 0:
-                    SetCurrentItem(potion);
-                    break;
-                case 1:
-                    SetCurrentItem(dagger);
-                    break;
-            }
-
+            UpdateItems(currentIndex);
         }
 
-        void SetCurrentItem(Item item)
+        internal void ItemUsed(InventoryItems.Items item, int quantity)
         {
-            int quantity = GetComponentInParent<PlayerItems>().GetItemQuantity(item.item);
-            print(item.name + "  " + quantity);
-            bool canUseItem;
-            if (quantity <= 0)
+            GetComponent<InventoryItems>().UpdateItem(item.item, quantity);
+            UpdateUI(currentIndex);
+        }
+
+        /// <summary>
+        /// Used to call both UseItem.cs and UI Update
+        /// </summary>
+        /// <param name="items"></param>
+        void UpdateItems(int index)
+        {
+            UpdateUI(index);
+        }
+
+
+        void UpdateUI(int index)
+        {
+            InventoryItems.Items[] items = GetComponent<InventoryItems>().GetItems();
+            InventoryItems.Items[] uIItems = new InventoryItems.Items[2];
+            int previousIndex;
+            if (index == 0)
             {
-                canUseItem = false;
+                previousIndex = items.Length - 1;
             }
             else
             {
-                canUseItem = true;
+                previousIndex = index - 1;
             }
 
-            //Set Current item for Player Use
-            GetComponentInParent<UseItem>().SetCurrentEquippedItem(item, canUseItem);
+            uIItems[0] = items[previousIndex];
+            uIItems[1] = items[index];
 
-            //Set Current item in UI;
-            onItemChange(item,quantity);
-        }
-
-        public void ItemUsed(Item item)
-        {
-            GetComponentInParent<PlayerItems>().DecreaseThisItemQuantity(item.item);
-            SetCurrentItem(item);
+            onItemChange(uIItems);
         }
     }
 }
