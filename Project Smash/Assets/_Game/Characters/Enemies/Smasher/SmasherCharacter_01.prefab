@@ -1,5 +1,18 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!114 &4646735505274559315
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6285349636030742712}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1043544612, guid: e743331561ef77147ae48cda9bcb8209, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  TargetFSMs: []
 --- !u!33 &3805381120273904507
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -10692,6 +10705,7 @@ MonoBehaviour:
   skin: default
   specialAttackRange: 1.5
   distanceCheckForObstacles: 1
+  dragForImpulse: 6
   whatIsGround:
     serializedVersion: 2
     m_Bits: 2097408
@@ -14635,7 +14649,18 @@ MonoBehaviour:
   volume: 1
   onFinisherAttackReceived:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 5698365038011637547}
+        m_MethodName: TakeArmorOff
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &8812637445953361711
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -14648,19 +14673,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3aa6bf3de29008b419bcdfbd9577c1a6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &4646735505274559315
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6285349636030742712}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: -1043544612, guid: e743331561ef77147ae48cda9bcb8209, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  TargetFSMs: []
 --- !u!1001 &2724296443517035617
 PrefabInstance:
   m_ObjectHideFlags: 0
