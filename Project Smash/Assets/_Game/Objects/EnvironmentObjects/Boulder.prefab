@@ -130,7 +130,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 4808533767565104295}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5d6154c5cab63cb47a784784c3818fdc, type: 3}
+  m_Script: {fileID: 11500000, guid: 60b4899d7eae5a44b9bcc8e25acda651, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   interactiveWeapon: {fileID: 11400000, guid: a63eaa56cbdb77d4f82bfd1334520dfa, type: 2}
@@ -140,11 +140,11 @@ MonoBehaviour:
   maxAngularVelocity: 350
   audioSource: {fileID: 4808533769028020958}
   correctHit: {fileID: 8300000, guid: 5956c1cf7eba24a41b5c28e678d4db8d, type: 3}
-  incorrectHit: {fileID: 8300000, guid: 1ea5b8f49d605194dabd9dce208ffb42, type: 3}
+  incorrectHit: {fileID: 8300000, guid: 150d0370936b1024e9cfcf307fe6d58b, type: 3}
   rotatingBoulder: {fileID: 8300000, guid: 9548ae3f821d8424c8feb5d7e985c699, type: 3}
   impactAudio: {fileID: 8300000, guid: 84e55a63c7f028c418d0d60b5d778be0, type: 3}
-  dust: {fileID: 521532591801471142}
-  damage: 60
+  dust: {fileID: 4586567550389531386, guid: af0efb186c4c0054d86b59558a91b4bc, type: 3}
+  damage: 100
 --- !u!1 &4808533767771163539
 GameObject:
   m_ObjectHideFlags: 0
@@ -434,12 +434,6 @@ PrefabInstance:
 --- !u!4 &3260205618110481279 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8036044892761083756, guid: 001ea6bdf39d3784bbd7b1bf3a97ec9a,
-    type: 3}
-  m_PrefabInstance: {fileID: 4808533768369900563}
-  m_PrefabAsset: {fileID: 0}
---- !u!198 &521532591801471142 stripped
-ParticleSystem:
-  m_CorrespondingSourceObject: {fileID: 5010127992818834613, guid: 001ea6bdf39d3784bbd7b1bf3a97ec9a,
     type: 3}
   m_PrefabInstance: {fileID: 4808533768369900563}
   m_PrefabAsset: {fileID: 0}
