@@ -197,7 +197,7 @@ namespace PSmash.Combat
         //Anim Event
         void ToolAttack()
         {
-            //print("NormalAttack");
+            //print("ToolAttack");
             Attack(attackTransform, comboAttackArea, mace);
         }
 
@@ -221,11 +221,12 @@ namespace PSmash.Combat
             }
             foreach (Collider2D coll in colls)
             {
-
                 IDamagable target = coll.GetComponent<IDamagable>();
                 if (target == null || coll.GetComponent<Projectile>())
                     continue;
                 target.TakeDamage(transform, currentWeapon, baseStats.GetStat(StatsList.Damage));
+                print("Sendingdamage from player to  " + target);
+
             }
         }
 
