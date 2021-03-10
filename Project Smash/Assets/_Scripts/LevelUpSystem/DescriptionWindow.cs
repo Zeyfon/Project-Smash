@@ -15,7 +15,7 @@ namespace PSmash.LevelUpSystem
         bool isInitialized = false;
         public void UpdateDescriptionWindow(GameObject skillSlotGameObject)
         {
-            print("Wants to Update Description Window");
+            //print("Wants to Update Description Window");
 
             if (coroutine != null)
                 StopCoroutine(coroutine);
@@ -31,7 +31,7 @@ namespace PSmash.LevelUpSystem
 
         IEnumerator InfoUpdate(GameObject skillSlotGameObject)
         {
-            print("Updating Description Window");
+            //print("Updating Description Window");
             Fader fader = new Fader();
             yield return fader.FadeOut(canvasGroup, fadeTime);
             yield return InfoChange(skillSlotGameObject);

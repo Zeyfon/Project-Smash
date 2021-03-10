@@ -76,6 +76,7 @@ namespace PSmash.Attributes
                 totalPenetrationPercentage = damagePenetrationPercentage + attackedWeapon.damagePenetrationValue;
             }
 
+            bool disablePostureBar = false;
             //Unity Event to instantiate a object to show the damage in the screen
             if (posture != null && posture.enabled)
             { 
@@ -83,6 +84,10 @@ namespace PSmash.Attributes
                 if (weaknessWeapon == attackedWeapon)
                 {
                     postureDamage = (damage + attackedWeapon.damage) * weaknessFactor;
+                    if(posture.posture < postureDamage)
+                    {
+                        disablePostureBar = true;
+                    }
                 }
 
                 else
@@ -96,7 +101,6 @@ namespace PSmash.Attributes
                     posture.OnStunStateStart();
                     DamageHealth(healthDamage, 100);
                     pm.SendEvent("DAMAGED_STUNNED");
-                    return;
                 }
                 else
                 {
@@ -107,7 +111,6 @@ namespace PSmash.Attributes
                     print("DAMAGED_NOSTUNNED Event to the fsm " + pm.FsmName);
                     DamageHealth(healthDamage, totalPenetrationPercentage);
                     pm.SendEvent("DAMAGED_NOSTUNNED");
-                    return;
                 }
             }
             else
@@ -115,7 +118,10 @@ namespace PSmash.Attributes
                 print("DAMAGED_NOSTUNNED Event to the fsm " + pm.FsmName);
                 DamageHealth(healthDamage, totalPenetrationPercentage);
                 pm.SendEvent("DAMAGED_NOSTUNNED");
-                return;
+            }
+            if (disablePostureBar)
+            {
+                DisablePostureBar();
             }
         }
 
@@ -141,7 +147,6 @@ namespace PSmash.Attributes
                 //print("Dead");
                 isDead = true;
             }
-                        //print(gameObject.name + "  current health is : " + health );
         }
 
         private float SubstractDamageFromHealth(float damage, float health)
@@ -189,12 +194,17 @@ namespace PSmash.Attributes
             }
             if (isArmorEnabled)
             {
-                posture.DisablePostureBar();
-                GetComponent<BaseStats>().SetStat(StatsList.Defense, 0);
+                DisablePostureBar();
             }
             DamageHealth(damage, 100);
             onTakeDamage.Invoke(damage);
             yield return null;
+        }
+
+        private void DisablePostureBar()
+        {
+            posture.DisablePostureBar();
+            GetComponent<BaseStats>().SetStat(StatsList.Defense, 0);
         }
 
         public void ProtectedDamageSound()

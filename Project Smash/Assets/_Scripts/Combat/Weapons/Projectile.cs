@@ -149,7 +149,7 @@ namespace PSmash.Combat.Weapons
                     NPCHitSound();
                     ProjectileCollisionImpact(collision, impactOnNPC);
                 }
-                else if (collision.CompareTag("Ground"))
+                else /*if (collision.CompareTag("Ground"))*/
                 {
                     //Debug.Break();
                     hasHit = true;
