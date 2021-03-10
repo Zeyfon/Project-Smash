@@ -172,7 +172,6 @@ namespace PSmash.Movement
         public void ChangeSkin()
         {
             print("Changed Skin");
-            //GetComponent<SkeletonRenderer>().skeleton.SetSkin("default");
             SkeletonMecanim skeleton = GetComponent<SkeletonMecanim>();
             skeleton.skeleton.SetSkin(skin);
             skeleton.skeleton.SetSlotsToSetupPose();
