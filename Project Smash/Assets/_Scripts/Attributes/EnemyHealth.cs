@@ -4,6 +4,7 @@ using PSmash.Stats;
 using System;
 using System.Collections;
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace PSmash.Attributes
 {
@@ -21,6 +22,7 @@ namespace PSmash.Attributes
         [SerializeField] AudioClip stunnedAudio = null;
         [SerializeField] AudioClip staggerAuduio = null;
         [SerializeField] float volume = 1;
+        [SerializeField] UnityEvent onFinisherAttackReceived;
 
         EnemyPosture posture;
         PlayMakerFSM pm;
@@ -58,10 +60,10 @@ namespace PSmash.Attributes
                 Debug.LogWarning("No Enemy State set to return DAMAGE Event");
                 return;
             }
-            Damaged(weapon, damage);
+            Damaged(attacker, weapon, damage);
         }
 
-        public void Damaged(Weapon attackedWeapon, float damage)
+        public void Damaged(Transform attacker, Weapon attackedWeapon, float damage)
         {
             float healthDamage;
             float totalPenetrationPercentage;
@@ -76,7 +78,7 @@ namespace PSmash.Attributes
                 totalPenetrationPercentage = damagePenetrationPercentage + attackedWeapon.damagePenetrationValue;
             }
 
-            bool disablePostureBar = false;
+            bool armorDestroyed = false;
             //Unity Event to instantiate a object to show the damage in the screen
             if (posture != null && posture.enabled)
             { 
@@ -86,7 +88,7 @@ namespace PSmash.Attributes
                     postureDamage = (damage + attackedWeapon.damage) * weaknessFactor;
                     if(posture.posture < postureDamage)
                     {
-                        disablePostureBar = true;
+                        armorDestroyed = true;
                     }
                 }
 
@@ -119,10 +121,15 @@ namespace PSmash.Attributes
                 DamageHealth(healthDamage, totalPenetrationPercentage);
                 pm.SendEvent("DAMAGED_NOSTUNNED");
             }
-            if (disablePostureBar)
+            if (armorDestroyed)
             {
-                DisablePostureBar();
+                onFinisherAttackReceived.Invoke();
             }
+        }
+
+        public void TakeArmorOff()
+        {
+            onFinisherAttackReceived.Invoke();
         }
 
         /// <summary>
@@ -192,19 +199,9 @@ namespace PSmash.Attributes
             {
                 GetComponent<Rigidbody2D>().velocity = new Vector2(x, y);
             }
-            if (isArmorEnabled)
-            {
-                DisablePostureBar();
-            }
             DamageHealth(damage, 100);
             onTakeDamage.Invoke(damage);
             yield return null;
-        }
-
-        private void DisablePostureBar()
-        {
-            posture.DisablePostureBar();
-            GetComponent<BaseStats>().SetStat(StatsList.Defense, 0);
         }
 
         public void ProtectedDamageSound()

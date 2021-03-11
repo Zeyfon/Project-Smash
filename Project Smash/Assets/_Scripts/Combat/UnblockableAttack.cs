@@ -3,8 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 using Spine.Unity;
 using Spine;
+using PSmash.Attributes;
+using PSmash.Stats;
+using PSmash.Movement;
 
-namespace PSmash.Movement
+namespace PSmash.Combat
 {
     public class UnblockableAttack : MonoBehaviour
     {
@@ -12,6 +15,7 @@ namespace PSmash.Movement
         [Header("Special Attack Condition")]
         [SerializeField] float specialAttackRange;
         [SerializeField] float distanceCheckForObstacles;
+        [SerializeField] float dragForImpulse = 6;
         [SerializeField] LayerMask whatIsGround;
         [SerializeField] LayerMask whatIsEnemy;
 
@@ -28,6 +32,8 @@ namespace PSmash.Movement
         [SerializeField] Material addedMaterial = null;
         [SerializeField] float fadeIntTime = 0.5f;
 
+        float currentDrag;
+
         private void Awake()
         {
             playerTransform = GameObject.FindGameObjectWithTag("Player").transform;
@@ -36,6 +42,7 @@ namespace PSmash.Movement
                 GetComponent<SkeletonRenderer>().CustomMaterialOverride.Add(defaultMaterial, addedMaterial);
                 //defaultMaterial = addedMaterial;
             }
+            currentDrag = GetComponent<Rigidbody2D>().drag;
         }
 
 
@@ -102,12 +109,18 @@ namespace PSmash.Movement
             GetComponent<EnemyMovement>().SpecialAttackImpulse_Start(specialAttackSpeedFactor);
         }
 
+        public void SetUnblockableAttackData()
+        {
+            GetComponent<Rigidbody2D>().drag = dragForImpulse;
+        }
+
         //This method can be called via Anim Event and via SpecialAttack State in the PlayMaker
         public void StopSpecialAttackImpulse()
         {
             print("Stop Special Attack Impulse");
             GetComponent<EnemyMovement>().SpecialAttackImpulse_Stop();
             ReturnToOriginalTint();
+            GetComponent<Rigidbody2D>().drag = currentDrag;
             //Debug.Break();
         }
         //Called from the Special Attack FSM
@@ -169,6 +182,16 @@ namespace PSmash.Movement
 
         #region ChangeSkin
 
+        public void TakeArmorOff()
+        {
+            ChangeSkin();
+            GetComponent<EnemyPosture>().DisablePostureBar();
+            GetComponent<BaseStats>().SetStat(StatsList.Defense, 0); 
+                   
+        }
+
+        ////AnimEvent
+        ///Called from the Finisher 
         public void ChangeSkin()
         {
             print("Changed Skin");

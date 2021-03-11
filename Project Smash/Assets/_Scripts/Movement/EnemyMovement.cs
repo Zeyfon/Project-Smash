@@ -68,15 +68,26 @@ namespace PSmash.Movement
             animator.SetFloat("xVelocity", xVelocity);
         }
 
+        public void SetFullFrictionMaterial()
+        {
+            rb.sharedMaterial = fullFriction;
+        }
+
         //MoveTo and MoveAwayFrom must be combined in the future
         public void MoveTo(Vector3 targetPosition, float speedFactor, bool isMovingTowardsTarget, PlayMakerFSM pm)
         {
             //print("MOVING TO");
-            if(isGrounded)
-                rb.sharedMaterial = lowFriction;
+
 
             if (Mathf.Abs(targetPosition.x - transform.position.x) < 0.5f)
+            {
+                rb.sharedMaterial = fullFriction;
                 return;
+            }
+
+
+            if (isGrounded)
+                rb.sharedMaterial = lowFriction;
             CheckWhereToFace(targetPosition, isMovingTowardsTarget);
             if (IsTargetAbove())
             {
