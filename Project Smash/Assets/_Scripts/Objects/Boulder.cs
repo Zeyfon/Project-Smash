@@ -8,9 +8,9 @@ public class Boulder : MonoBehaviour, IDamagable
 {
     [SerializeField] Weapon interactiveWeapon = null;
     [SerializeField] Rigidbody2D rb;
-    [SerializeField] float value = 0.2f;
-    [SerializeField] float applyForcetime = 2;
-    [SerializeField] float maxAngularVelocity = 150;
+    [SerializeField] float value = 15f;
+    [SerializeField] float applyForcetime = 0.5f;
+    [SerializeField] float maxAngularVelocity = 350;
     [SerializeField] AudioSource audioSource = null;
     [SerializeField] AudioClip correctHit = null;
     [SerializeField] AudioClip incorrectHit = null;
@@ -125,7 +125,7 @@ public class Boulder : MonoBehaviour, IDamagable
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.CompareTag("Enemy"))
+        if (isMoving && collision.CompareTag("Enemy"))
         {
             collision.GetComponent<IDamagable>().TakeDamage(transform, interactiveWeapon, damage);
         }
