@@ -13,8 +13,8 @@ namespace PSmash.Combat
     {
         [SpineSkin] [SerializeField] string skin;
         [Header("Special Attack Condition")]
-        [SerializeField] float specialAttackRange;
-        [SerializeField] float distanceCheckForObstacles;
+        [SerializeField] float specialAttackRange=5;
+        [SerializeField] float distanceCheckForObstacles = 1;
         [SerializeField] float dragForImpulse = 6;
         [SerializeField] LayerMask whatIsGround;
         [SerializeField] LayerMask whatIsEnemy;
@@ -22,7 +22,7 @@ namespace PSmash.Combat
 
         [Header("Special Attack")]
         [Tooltip("This factor will multiply the base speed the entity has")]
-        [SerializeField] float specialAttackSpeedFactor;
+        [SerializeField] float specialAttackSpeedFactor = 6;
 
         Transform playerTransform;
 

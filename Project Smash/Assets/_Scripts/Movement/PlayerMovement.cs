@@ -4,6 +4,7 @@ using PSmash.Attributes;
 using Spine.Unity;
 using System.Collections;
 using UnityEngine;
+using PSmash.SceneManagement;
 
 namespace PSmash.Movement
 {
@@ -731,6 +732,11 @@ namespace PSmash.Movement
                 isLadderDetected = true;
                 ladderPositionX = collision.transform.position.x;
             }
+
+            if (collision.CompareTag("VirtualCamera"))
+            {
+                collision.GetComponent<IChangeVCamera>().EnterCamArea();
+            }
         }
 
         private void OnTriggerExit2D(Collider2D collision)
@@ -740,6 +746,11 @@ namespace PSmash.Movement
                 //print("Ladder is not detected");
                 isLadderDetected = false;
                 ladderPositionX = 0;
+            }
+
+            if (collision.CompareTag("VirtualCamera"))
+            {
+                collision.GetComponent<IChangeVCamera>().ExtiCamArea();
             }
         }
 
