@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using PSmash.Saving;
 using PSmash.Menus;
+using PSmash.LevelUpSystem;
 
 namespace PSmash.InputSystem
 {
@@ -100,9 +101,12 @@ namespace PSmash.InputSystem
             _controller.Player.ItemUse.canceled += ctx => ItemButonReleased();
             _controller.Player.ItemChangeRight.performed += ctx => ItemChangeRight();
             _controller.Player.ItemChangeLeft.performed += ctx => ItemChangeLeft();
+            _controller.Player.ButtonStart.started += ctx => ButtonStartPressed();
+
             //_controller.Player.Quit.performed += ctx => QuitKeyPressed();
-
-
+            CraftingSystem.OnMenuClose += EnablePlayerInput;
+            MainMenu.OnMenuClose += EnablePlayerInput;
+            TentMenu.OnMenuClose += EnablePlayerInput;
             EventManager.PauseGame += PauseGame;
             EventManager.UnpauseGame += UnpauseGame;
             EventManager.PlayerGotBoots += PlayerGotBoots;
@@ -154,9 +158,11 @@ namespace PSmash.InputSystem
 
         private void ButtonAPressed()
         {
-            if (interactableCollider != null)
+            Collider2D interactableObject = transform.parent.GetComponent<InteractableElements>().GetInteractableObject();
+            if (interactableObject != null)
             {
-                interactableCollider.GetComponent<IInteractable>().StartInteracting();
+                interactableObject.GetComponent<IInteractable>().Interact();
+                EnableInput(false);
                 return;
             }
             if (action1 == null) return;
@@ -284,11 +290,9 @@ namespace PSmash.InputSystem
             if (OnPlayerStartButtonPressed != null)
             {
                 print("Player will open menu");
-                //input.currentActionMap = _controller.UI;
                 _controller.Player.Disable();
                 OnPlayerStartButtonPressed();
-                //_controller.UI.Enable();
-                IsPlayerInputEnabled(false);
+                EnableInput(false);
             }
         }
 
@@ -343,9 +347,14 @@ namespace PSmash.InputSystem
             this.interactableCollider = interactableCollider;
         }
 
-        public void EnableInput(bool state)
+        void EnablePlayerInput()
         {
-            if (state)
+            EnableInput(true);
+        }
+
+        public void EnableInput(bool isEnabled)
+        {
+            if (isEnabled)
             {
                 print("Enabling input handler");
                 _controller.Player.Enable();
@@ -356,7 +365,7 @@ namespace PSmash.InputSystem
                 _controller.Player.Disable();
                 movement = new Vector2(0, 0);
             }
-            this.enabled = state;
+            this.enabled = isEnabled;
         }
 
         #endregion

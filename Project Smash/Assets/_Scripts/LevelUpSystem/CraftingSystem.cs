@@ -1,5 +1,6 @@
 ﻿using PSmash.InputSystem;
 using PSmash.Stats;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -18,62 +19,98 @@ namespace PSmash.LevelUpSystem
         [SerializeField] float volume = 1;
         [SerializeField] SkillPanel skillPanel = null;
 
-        _Controller _controller;
+        public static event Action OnMenuClose;
+
         BaseStats playerStats;
         MyCraftingMaterials playerMaterials;
 
         List<SkillSlot> unlockedSkillSlots = new List<SkillSlot>();
         SkillSlot[] skillSlots;
+        _Controller _controller;
+        TentMenu tentMenu;
 
         private void Awake()
         {
-            _controller = FindObjectOfType<InputHandler>().GetController();
-
-            //_controller = new _Controller();
+            _controller = new _Controller();
             playerStats = GameObject.FindGameObjectWithTag("Player").GetComponent<BaseStats>();
             playerMaterials = GameObject.FindGameObjectWithTag("Player").GetComponent<MyCraftingMaterials>();
-
             skillSlots = transform.GetComponentsInChildren<SkillSlot>();
         }
 
         // Start is called before the first frame update
         void Start()
         {
+            tentMenu = FindObjectOfType<TentMenu>();
             UpdateSkillPanel();
-            EnableCraftingSystem(false);
+            CloseMenu();
         }
 
-        void EnableCraftingSystem(bool state)
+        private void OnEnable()
         {
-            for(int i = 0; i<transform.childCount; i++)
+            TentMenu.OnMenuOpen += OpenMenu;
+        }
+
+        void OpenMenu()
+        {
+            print("Open Crafting Menu");
+            SetChildObjects(true);
+            UpdateSkillPanel();
+            _controller.UI.Enable();
+            _controller.UI.Cancel.performed += ctx => BacktrackMenu();
+            _controller.UI.ButtonStart.performed += ctx => CloseAllMenus();
+        }
+
+        private void CloseAllMenus()
+        {
+            if(OnMenuClose != null)
             {
-                transform.GetChild(i).gameObject.SetActive(state);
+                OnMenuClose();
             }
-        }
-
-        void CancelAction()
-        {
-            print("Canceling Action");
-            EnableCraftingSystem(false);
-            playerStats.transform.GetChild(0).GetComponent<InputHandler>().EnableInput(true);
-
-            _controller.UI.Cancel.performed -= ctx => CancelAction();
+            CloseMenu();
+            _controller.UI.Cancel.performed -= ctx => BacktrackMenu();
             _controller.UI.Disable();
         }
 
+
         /// <summary>
-        /// This method is the one that starts and enables the Crafting System.
-        /// This one is triggered by the SavingPoint once the player is inside its trigger.
-        /// This method es enabled by the Button A / Space Key from the Input Handler of the player
+        /// This method is looped
         /// </summary>
-        public void EnableMenu()
+        void BacktrackMenu()
         {
-            UpdateSkillPanel();
-            EnableCraftingSystem(true);
-            playerStats.transform.GetChild(0).GetComponent<InputHandler>().EnableInput(false);
-            _controller.UI.Enable();
-            _controller.UI.Cancel.performed += ctx => CancelAction();
+            print("Backtracking Menu ");
+            CloseMenu();
+            tentMenu.OpenTentMenu();
+            _controller.UI.Cancel.performed -= ctx => BacktrackMenu();
+            _controller.UI.Disable();
         }
+
+        void CloseMenu()
+        {
+        SetChildObjects(false);
+        }
+
+        void SetChildObjects(bool isEnabled)
+        {
+            for(int i = 0; i<transform.childCount; i++)
+            {
+                transform.GetChild(i).gameObject.SetActive(isEnabled);
+            }
+        }
+
+        ///// <summary>
+        ///// This method is the one that starts and enables the Crafting System.
+        ///// This one is triggered by the SavingPoint once the player is inside its trigger.
+        ///// This method es enabled by the Button A / Space Key from the Input Handler of the player
+        ///// </summary>
+        //public void EnableMenu()
+        //{
+        //    print("Enable Menu");
+        //    UpdateSkillPanel();
+        //    OpenMenu();
+        //    _Controller _controller = new _Controller();
+        //    _controller.UI.Enable();
+        //    _controller.UI.Cancel.performed += ctx => BacktrackMenu();
+        //}
 
         /// <summary>
         /// This method is triggered by the SkillSlot once is being presses in the UI.

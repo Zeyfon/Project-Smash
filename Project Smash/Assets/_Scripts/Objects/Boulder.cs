@@ -117,7 +117,7 @@ public class Boulder : MonoBehaviour, IDamagable
     {
         if (collision.collider.CompareTag("Ground"))
         {
-            print("Contacting with ground");
+            //print("Contacting with ground");
             dust.transform.position = collision.GetContact(0).point;
             dust.transform.rotation = Quaternion.FromToRotation(new Vector3(0,0,0),collision.GetContact(0).normal);
         }
