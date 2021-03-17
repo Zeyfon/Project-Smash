@@ -6,7 +6,7 @@ namespace PSmash.Saving
 {
     public interface IInteractable
     {
-        void StartInteracting();
+        void Interact();
     }
 
 }

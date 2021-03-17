@@ -1,4 +1,6 @@
 ﻿using UnityEngine;
+using PSmash.InputSystem;
+using System;
 
 namespace PSmash.Menus
 {
@@ -10,42 +12,55 @@ namespace PSmash.Menus
         public delegate void MainMenuAction(bool isEnabled);
         public static event MainMenuAction OnMenuAction;
 
+        public static event Action OnMenuClose;
+
         private void Awake()
         {
             _controller = new _Controller();
         }
         void Start()
         {
-            EnableMainMenu(false);
+            SetChildObjects(false);
         }
 
         private void OnEnable()
         {
-            _controller.Player.Enable();
-            _controller.Player.ButtonStart.started += ctx => SwitchMainMenuState();
+            InputHandler.OnPlayerStartButtonPressed += OpenMainMenu;
         }
-
         private void OnDisable()
         {
-            _controller.Player.Disable();
-            _controller.Player.ButtonStart.started += ctx => SwitchMainMenuState();
+            InputHandler.OnPlayerStartButtonPressed -= OpenMainMenu;
         }
 
-        public void SwitchMainMenuState()
+        public void CloseMainMenu()
         {
-            if (transform.GetChild(0).gameObject.activeInHierarchy == true)
+            CloseMenu();
+            if(OnMenuClose != null)
             {
-                EnableMainMenu(false);
-                OnMenuAction(true);
+                OnMenuClose();
             }
-            else
-            {
-                EnableMainMenu(true);
-                OnMenuAction(false);
-            }
+            _controller.UI.Disable();
+            _controller.UI.ButtonStart.started -= ctx => CloseMainMenu();
         }
 
-        private void EnableMainMenu(bool isEnabled)
+        void OpenMainMenu()
+        {
+            _controller.UI.Enable();
+            _controller.UI.ButtonStart.started += ctx => CloseMainMenu();
+            OpenMenu();
+        }
+
+        void OpenMenu()
+        {
+            SetChildObjects(true);
+        }
+
+        void CloseMenu()
+        {
+            SetChildObjects(false);
+        }
+
+        private void SetChildObjects(bool isEnabled)
         {
             for (int i = 0; i < transform.childCount; i++)
             {
