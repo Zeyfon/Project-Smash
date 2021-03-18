@@ -604,7 +604,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pMovement: {fileID: 8235024681204614677}
-  itemsHandler: {fileID: 2870767619328165408}
+  inventory: {fileID: 74025874873900810}
 --- !u!114 &6419905940629892989
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2266,10 +2266,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4777263600279586053}
-  - component: {fileID: 2870767619328165408}
   - component: {fileID: 74025874873900810}
   m_Layer: 11
-  m_Name: ItemHandler
+  m_Name: Inventory
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2289,18 +2288,6 @@ Transform:
   m_Father: {fileID: 6581303975160096540}
   m_RootOrder: 14
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &2870767619328165408
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7221192543426091170}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: df98579554662804088b2e1cbf548cf0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &74025874873900810
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2315,9 +2302,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   items:
   - item: {fileID: 11400000, guid: ed79b4110489ed6458cb2c219a74881b, type: 2}
-    quantity: 4
   - item: {fileID: 11400000, guid: b6d3eccf1983a1b44aff75904e2fa1ad, type: 2}
-    quantity: 10
 --- !u!1 &7632115962595694742
 GameObject:
   m_ObjectHideFlags: 0
@@ -9868,6 +9853,18 @@ MonoBehaviour:
     handleAnimatorIK: 0
   fsmTemplate: {fileID: 0}
   eventHandlerComponentsAdded: 1
+--- !u!114 &3119960637006077705
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6581303975160096547}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: da1b39bfed4ab9b41aadb9e2317b04d5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &3522705847713719238
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9883,7 +9880,6 @@ MonoBehaviour:
   healthValue: 100
   damage: 10
   defense: 10
-  potions: 1
 --- !u!114 &4876046648499560663
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -20218,18 +20214,6 @@ MonoBehaviour:
     handleAnimatorIK: 0
   fsmTemplate: {fileID: 0}
   eventHandlerComponentsAdded: 1
---- !u!114 &3119960637006077705
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6581303975160096547}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: da1b39bfed4ab9b41aadb9e2317b04d5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &8767948832343416620
 GameObject:
   m_ObjectHideFlags: 0
@@ -20530,15 +20514,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 75561d9801edb4b48ad9e5f43cea3d05, type: 3}
---- !u!4 &6581303975160096540 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 3784079572925901896, guid: 75561d9801edb4b48ad9e5f43cea3d05,
-    type: 3}
-  m_PrefabInstance: {fileID: 8058836708823124820}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &6581303975160096547 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 3784079572925901943, guid: 75561d9801edb4b48ad9e5f43cea3d05,
+    type: 3}
+  m_PrefabInstance: {fileID: 8058836708823124820}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &6581303975160096540 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 3784079572925901896, guid: 75561d9801edb4b48ad9e5f43cea3d05,
     type: 3}
   m_PrefabInstance: {fileID: 8058836708823124820}
   m_PrefabAsset: {fileID: 0}

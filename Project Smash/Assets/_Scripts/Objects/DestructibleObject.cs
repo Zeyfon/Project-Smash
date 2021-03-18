@@ -67,6 +67,12 @@ namespace PSmash.Items
             }
             Destroy(psClone);
         }
+
+        public void Respawn()
+        {
+            counter = 0;
+            spriteRender.enabled = true;
+        }
     }
 }
 

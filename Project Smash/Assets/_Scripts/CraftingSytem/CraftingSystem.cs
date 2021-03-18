@@ -1,8 +1,8 @@
-﻿using PSmash.InputSystem;
-using PSmash.Stats;
+﻿using PSmash.Stats;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using PSmash.Menus;
 
 namespace PSmash.LevelUpSystem
 {
@@ -79,7 +79,7 @@ namespace PSmash.LevelUpSystem
         {
             print("Backtracking Menu ");
             CloseMenu();
-            tentMenu.OpenTentMenu();
+            tentMenu.OpenMenu();
             _controller.UI.Cancel.performed -= ctx => BacktrackMenu();
             _controller.UI.Disable();
         }

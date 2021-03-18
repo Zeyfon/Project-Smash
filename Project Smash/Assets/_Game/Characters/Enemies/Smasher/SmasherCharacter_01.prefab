@@ -7366,14 +7366,14 @@ MonoBehaviour:
         serializedVersion: 2
         x: 322
         y: 431.5078
-        width: 158
+        width: 176
         height: 48
       isBreakpoint: 0
       isSequence: 0
       hideUnused: 0
       transitions:
       - fsmEvent:
-          name: DAMAGED_STUNNED
+          name: DAMAGED_NOSTUNNED
           isSystemEvent: 0
           isGlobal: 0
         toState: Damage Only Audio
@@ -8539,7 +8539,7 @@ MonoBehaviour:
     - name: FINISHED
       isSystemEvent: 1
       isGlobal: 0
-    - name: DAMAGED_STUNNED
+    - name: DAMAGED_NOSTUNNED
       isSystemEvent: 0
       isGlobal: 0
     - name: FINISHER

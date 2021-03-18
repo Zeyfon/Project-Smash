@@ -15,7 +15,7 @@ namespace PSmash.InputSystem
     public class InputHandler : MonoBehaviour
     {
         [SerializeField] PlayerMovement pMovement = null;
-        [SerializeField] ItemHandler itemsHandler = null;
+        [SerializeField] Inventory inventory = null;
 
         Collider2D interactableCollider;
         PlayMakerFSM pmPlayerController = null;
@@ -276,13 +276,13 @@ namespace PSmash.InputSystem
         private void ItemChangeLeft()
         {
             print("Item Pressed Left");
-            itemsHandler.ChangeItem(false);
+            inventory.ChangeItem(false);
         }
 
         private void ItemChangeRight()
         {
             print("Item Pressed Right");
-            itemsHandler.ChangeItem(true);
+            inventory.ChangeItem(true);
         }
 
         private void ButtonStartPressed()

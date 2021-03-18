@@ -28,9 +28,9 @@ namespace PSmash.Stats
 
         }
 
-        public int GetPlayerQuantityForThisMaterial(CraftingMaterial material)
+        public int GetPlayerQuantityForThisMaterial(LevelUpSystem.CraftingMaterial material)
         {
-            return GetMaterialQuantity(material.material);
+            return GetMaterialQuantity(CraftingMaterialsList.RangerEye);
         }
 
         public int GetMaterialQuantity(CraftingMaterialsList material)
