@@ -10,9 +10,14 @@ namespace PSmash.Items
         [SerializeField] int number = 0;
 
 
-        public void IncreaseNumber( int number)
+        public void UpdateNumberByThisValue( int number)
         {
             this.number+=number;
+        }
+
+        public int GetNumber()
+        {
+            return number;
         }
     }
 }

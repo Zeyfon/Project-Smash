@@ -58,7 +58,7 @@ namespace PSmash.Items
             {
                 if(item == craftingItem)
                 {
-                    item.IncreaseNumber(1);
+                    item.UpdateNumberByThisValue(1);
                     print(item + " was collected");
                 }
             }
@@ -80,6 +80,31 @@ namespace PSmash.Items
         public ActionableItem GetEquippedActionableItem()
         {
             return actionableItems[currentIndex];
+        }
+
+        public int GetThisCraftingItemNumber(CraftingItem craftingItem) 
+        {
+            foreach(CraftingItem item in craftingItems)
+            {
+                if(craftingItem == item)
+                {
+                    return item.GetNumber();
+                }
+            }
+            return 0;
+        }
+
+
+        public void UpdateThisCraftingItem(CraftingItem craftingItem, int number)
+        {
+            foreach(CraftingItem item in craftingItems)
+            {
+                if(item == craftingItem)
+                {
+                    item.UpdateNumberByThisValue(-number);
+                    break;
+                }
+            }
         }
 
         public void ChangeItem(bool isMovingRight)
@@ -126,6 +151,7 @@ namespace PSmash.Items
             GameObject player = GameObject.FindGameObjectWithTag("Player");
             return player.GetComponentInChildren<Inventory>();
         }
+
         public List<ActionableItem> GetActionableItems()
         {
             return actionableItems;

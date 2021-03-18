@@ -2,6 +2,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using PSmash.Items;
+using PSmash.UI;
 
 namespace PSmash.LevelUpSystem
 {
@@ -43,9 +45,10 @@ namespace PSmash.LevelUpSystem
             if (skillSlotGameObject == null)
                 Debug.LogWarning("The skillSlot selected is empty");
             transform.position = skillSlotGameObject.transform.position;
-            Dictionary<CraftingMaterial, int> requiredCraftingMaterials = new Dictionary<CraftingMaterial, int>();
-            requiredCraftingMaterials = skillSlotGameObject.GetComponent<SkillSlot>().GetCraftingMaterialsRequirement2();
-            requiredMaterialsUpdater.SetCurrentSkillSlotMaterials(requiredCraftingMaterials);
+            Dictionary<CraftingItem, int> requiredCraftingMaterials;
+            requiredCraftingMaterials = skillSlotGameObject.GetComponent<SkillSlot>().GetCraftingItemsRequirement();
+            //print(requiredCraftingMaterials.Count);
+            requiredMaterialsUpdater.SetSkillSlotInfo(requiredCraftingMaterials);
             yield return null;
         }
     }

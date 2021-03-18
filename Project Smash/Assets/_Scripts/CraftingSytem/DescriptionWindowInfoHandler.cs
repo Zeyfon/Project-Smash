@@ -2,8 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 using PSmash.Stats;
+using PSmash.Items;
 
-namespace PSmash.LevelUpSystem
+namespace PSmash.UI
 {
 
     /// <summary>
@@ -17,33 +18,36 @@ namespace PSmash.LevelUpSystem
     /// </summary>
     public class DescriptionWindowInfoHandler : MonoBehaviour
     {
-        [SerializeField] CraftingMaterialSlot[] craftingMaterialsSlots;
-        MyCraftingMaterials playerMaterials;
+        [SerializeField] CraftingItemSlotsUI[] craftingItemSlots;
+        //MyCraftingMaterials playerMaterials;
 
+        Inventory inventory;
         private void Awake()
         {
-            playerMaterials = GameObject.FindGameObjectWithTag("Player").GetComponent<MyCraftingMaterials>();
+
+            inventory = Inventory.GetPlayerInventory();
+            //playerMaterials = GameObject.FindGameObjectWithTag("Player").GetComponent<MyCraftingMaterials>();
         }
 
-        public void SetCurrentSkillSlotMaterials(Dictionary<CraftingMaterial, int> requiredCraftingMaterials)
+        public void SetSkillSlotInfo(Dictionary<CraftingItem, int> requiredCraftingMaterials)
         {
-            foreach (CraftingMaterialSlot craftingMaterialSlot in craftingMaterialsSlots)
+            foreach (CraftingItemSlotsUI craftingItemSlot in craftingItemSlots)
             {
-                craftingMaterialSlot.gameObject.SetActive(true);
+                craftingItemSlot.gameObject.SetActive(true);
             }
             //print("Sending the info to each CraftingMaterialsSlot ");
             int j = 0;
-            foreach (CraftingMaterial material in requiredCraftingMaterials.Keys)
+            foreach (CraftingItem craftingItem in requiredCraftingMaterials.Keys)
             {
-                int playerQuantity = playerMaterials.GetPlayerQuantityForThisMaterial(material);
+                int playerQuantity = inventory.GetThisCraftingItemNumber(craftingItem);
 
                 //print("Will send to " + craftingMaterialsSlots[j].gameObject.name + " this " + material.material.ToString() + "  " + requiredCraftingMaterials[material] + "   " + playerQuantity);
-                craftingMaterialsSlots[j].UpdateCraftingMaterial(material, requiredCraftingMaterials[material], playerQuantity);
+                craftingItemSlots[j].UpdateCraftingItem(craftingItem, requiredCraftingMaterials[craftingItem], playerQuantity);
                 j++;
             }
-            for (int k = j; k < craftingMaterialsSlots.Length; k++)
+            for (int k = j; k < craftingItemSlots.Length; k++)
             {
-                craftingMaterialsSlots[k].gameObject.SetActive(false);
+                craftingItemSlots[k].gameObject.SetActive(false);
             }
         }
     }

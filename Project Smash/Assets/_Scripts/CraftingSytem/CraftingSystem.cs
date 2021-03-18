@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 using PSmash.Menus;
+using PSmash.Items;
 
 namespace PSmash.LevelUpSystem
 {
@@ -22,7 +23,9 @@ namespace PSmash.LevelUpSystem
         public static event Action OnMenuClose;
 
         BaseStats playerStats;
-        MyCraftingMaterials playerMaterials;
+        //MyCraftingMaterials playerMaterials;
+        List<CraftingItem> craftingItems;
+        Inventory inventory;
 
         List<SkillSlot> unlockedSkillSlots = new List<SkillSlot>();
         SkillSlot[] skillSlots;
@@ -33,7 +36,8 @@ namespace PSmash.LevelUpSystem
         {
             _controller = new _Controller();
             playerStats = GameObject.FindGameObjectWithTag("Player").GetComponent<BaseStats>();
-            playerMaterials = GameObject.FindGameObjectWithTag("Player").GetComponent<MyCraftingMaterials>();
+            inventory = Inventory.GetPlayerInventory();
+            //playerMaterials = GameObject.FindGameObjectWithTag("Player").GetComponent<MyCraftingMaterials>();
             skillSlots = transform.GetComponentsInChildren<SkillSlot>();
         }
 
@@ -71,10 +75,6 @@ namespace PSmash.LevelUpSystem
             _controller.UI.Disable();
         }
 
-
-        /// <summary>
-        /// This method is looped
-        /// </summary>
         void BacktrackMenu()
         {
             print("Backtracking Menu ");
@@ -96,21 +96,6 @@ namespace PSmash.LevelUpSystem
                 transform.GetChild(i).gameObject.SetActive(isEnabled);
             }
         }
-
-        ///// <summary>
-        ///// This method is the one that starts and enables the Crafting System.
-        ///// This one is triggered by the SavingPoint once the player is inside its trigger.
-        ///// This method es enabled by the Button A / Space Key from the Input Handler of the player
-        ///// </summary>
-        //public void EnableMenu()
-        //{
-        //    print("Enable Menu");
-        //    UpdateSkillPanel();
-        //    OpenMenu();
-        //    _Controller _controller = new _Controller();
-        //    _controller.UI.Enable();
-        //    _controller.UI.Cancel.performed += ctx => BacktrackMenu();
-        //}
 
         /// <summary>
         /// This method is triggered by the SkillSlot once is being presses in the UI.
@@ -176,7 +161,7 @@ namespace PSmash.LevelUpSystem
         private bool HaveNecessaryMaterials(SkillSlot skillSlot)
         {
             //print("Checking if having necessary materials in the Crafting System ");
-            return skillSlot.HaveNecessaryMaterials(playerMaterials);
+            return skillSlot.HaveNecessaryMaterials(inventory);
         }
 
         private void CannotUnlockSkill()

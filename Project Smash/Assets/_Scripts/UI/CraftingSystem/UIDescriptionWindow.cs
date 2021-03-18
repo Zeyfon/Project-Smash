@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using PSmash.UI;
 
 namespace PSmash.LevelUpSystem
 {
@@ -12,7 +13,7 @@ namespace PSmash.LevelUpSystem
         [SerializeField] CanvasGroup canvasGroup = null;
         [SerializeField] float timeToAppear = 5f;
         [SerializeField] float fadeInTime = 0.5f;
-        public CraftingMaterialSlot[] craftinMaterials;
+        public CraftingItemSlotsUI[] craftinMaterials;
         /// <summary>
         /// Here are the methods used by the current skillSlot selected
         /// to show his information (Description, and material requirements) 
@@ -21,7 +22,7 @@ namespace PSmash.LevelUpSystem
         // Start is called before the first frame update
         void Awake()
         {
-            craftinMaterials = GetComponentsInChildren<CraftingMaterialSlot>();
+            craftinMaterials = GetComponentsInChildren<CraftingItemSlotsUI>();
         }
 
         public void SetWindowAlphaToCero()

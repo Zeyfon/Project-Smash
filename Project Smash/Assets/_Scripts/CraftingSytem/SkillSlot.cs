@@ -1,9 +1,7 @@
-﻿using PSmash.Stats;
-using System.Collections;
+﻿using PSmash.Items;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using System;
 
 namespace PSmash.LevelUpSystem
 {
@@ -13,7 +11,7 @@ namespace PSmash.LevelUpSystem
         [SerializeField] Skill skill = null;
         [SerializeField] Image skillSlotImage = null;
         [SerializeField] SkillSlot[] UnlockableBySkillSlots;
-        [SerializeField] RequiredCraftingMaterial[] requiredCraftingMaterials;
+        [SerializeField] RequiredCraftingItems[] requiredCraftingMaterials;
         [SerializeField] UnlockableSkillPath[] availablePathsOnceUnlocked;
         //[SerializeField] Image ringImage = null;
 
@@ -69,23 +67,23 @@ namespace PSmash.LevelUpSystem
             }
         }
 
-        public bool HaveNecessaryMaterials(MyCraftingMaterials playerMaterials)
+        public bool HaveNecessaryMaterials(Inventory inventory)
         {
             //Return a true of false depending on if the player has all the required materials to unlock this skill
 
             //Create the dictionary where the info will be stored to substract the quantity from the Player's Materials in case it will be unlocked
-            Dictionary<CraftingMaterialsList, int> craftingMaterials = new Dictionary<CraftingMaterialsList, int>();
+            Dictionary<CraftingItem, int> craftingItems = new Dictionary<CraftingItem, int>();
 
             //Add the CraftingMaterialList enum to the dictionary with its requiredquantity to unlock
             //In case the player does not meet the requirements of any material it will return a false inmediately
             //In contrary case the foreach loop will end with the dictionary completed
-            foreach (RequiredCraftingMaterial requiredMaterial in requiredCraftingMaterials)
+            foreach (RequiredCraftingItems requiredItems in requiredCraftingMaterials)
             {
                 //print("The required material " + requiredMaterial.material);
-                int quantityInPlayersPossession = playerMaterials.GetPlayerQuantityForThisMaterial(requiredMaterial.material);
-                if (quantityInPlayersPossession >= requiredMaterial.quantity)
+                int myCraftingItemNumber = inventory.GetThisCraftingItemNumber(requiredItems.item);
+                if (myCraftingItemNumber >= requiredItems.number)
                 {
-                    craftingMaterials.Add(requiredMaterial.material.material, requiredMaterial.quantity);
+                    craftingItems.Add(requiredItems.item, requiredItems.number);
                     continue;
                 }
                 else
@@ -94,34 +92,37 @@ namespace PSmash.LevelUpSystem
                 }
             }
 
+            int requiredNumberToUnlock = 0;
             //With the dictionary completed it will send the CraftingMaterialList enum with the required material 
             //to the MyCraftingMaterials to substract the required ammount from the current posesed by the player
             //print("The Player has all the required materials ");
-            foreach (CraftingMaterialsList material in craftingMaterials.Keys)
+            foreach (CraftingItem material in craftingItems.Keys)
             {
-                playerMaterials.UpdateMyMaterials(material, -craftingMaterials[material]);
+                requiredNumberToUnlock = craftingItems[material];
+                inventory.UpdateThisCraftingItem(material, -requiredNumberToUnlock);
             }
             return true;
         }
 
-        public Dictionary<CraftingMaterial, int> GetCraftingMaterialsRequirement2()
+        public Dictionary<CraftingItem, int> GetCraftingItemsRequirement()
         {
-            Dictionary<CraftingMaterial, int> requiredMaterials = new Dictionary<CraftingMaterial, int>();
+            Dictionary<CraftingItem, int> requiredCraftingItems = new Dictionary<CraftingItem, int>();
 
-            foreach (RequiredCraftingMaterial requiredCraftingMaterial in requiredCraftingMaterials)
+            foreach (RequiredCraftingItems requiredCraftingMaterial in requiredCraftingMaterials)
             {
                 //print("Adding  " + requiredCraftingMaterial.material);
-                requiredMaterials.Add(requiredCraftingMaterial.material, requiredCraftingMaterial.quantity);
+                requiredCraftingItems.Add(requiredCraftingMaterial.item, requiredCraftingMaterial.number);
             }
+            //print(requiredCraftingItems.Count);
             //print("Got the Required Materials " + requiredMaterials);
-            return requiredMaterials;
+            return requiredCraftingItems;
         }
 
         [System.Serializable]
-        public class RequiredCraftingMaterial
+        public class RequiredCraftingItems
         {
-            public CraftingMaterial material;
-            public int quantity;
+            public CraftingItem item;
+            public int number;
         }
 
         [System.Serializable]
