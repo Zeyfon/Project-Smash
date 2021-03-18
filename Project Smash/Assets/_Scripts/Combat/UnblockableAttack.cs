@@ -1,9 +1,6 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using Spine.Unity;
-using Spine;
-using PSmash.Attributes;
 using PSmash.Stats;
 using PSmash.Movement;
 
@@ -19,12 +16,9 @@ namespace PSmash.Combat
         [SerializeField] LayerMask whatIsGround;
         [SerializeField] LayerMask whatIsEnemy;
 
-
         [Header("Special Attack")]
         [Tooltip("This factor will multiply the base speed the entity has")]
         [SerializeField] float specialAttackSpeedFactor = 6;
-
-        Transform playerTransform;
 
         [Header("Color Tint")]
         [SerializeField] Material defaultMaterial = null;
@@ -32,6 +26,7 @@ namespace PSmash.Combat
         [SerializeField] Material addedMaterial = null;
         [SerializeField] float fadeIntTime = 0.5f;
 
+        Transform playerTransform;
         float currentDrag;
 
         private void Awake()
@@ -40,7 +35,6 @@ namespace PSmash.Combat
             if (addedMaterial != null)
             {
                 GetComponent<SkeletonRenderer>().CustomMaterialOverride.Add(defaultMaterial, addedMaterial);
-                //defaultMaterial = addedMaterial;
             }
             currentDrag = GetComponent<Rigidbody2D>().drag;
         }
@@ -184,19 +178,23 @@ namespace PSmash.Combat
 
         public void TakeArmorOff()
         {
-            ChangeSkin();
-            GetComponent<EnemyPosture>().DisablePostureBar();
-            GetComponent<BaseStats>().SetStat(StatsList.Defense, 0); 
-                   
+            ChangeSkin("default");
+            GetComponent<BaseStats>().SetStat(StatsList.Defense, 0);         
+        }
+
+        public void PutBackArmorOn()
+        {
+            ChangeSkin("Armor");
+            GetComponent<BaseStats>().SetStat(StatsList.Defense, 90);
         }
 
         ////AnimEvent
         ///Called from the Finisher 
-        public void ChangeSkin()
+        public void ChangeSkin(string skinName)
         {
             print("Changed Skin");
             SkeletonMecanim skeleton = GetComponent<SkeletonMecanim>();
-            skeleton.skeleton.SetSkin(skin);
+            skeleton.skeleton.SetSkin(skinName);
             skeleton.skeleton.SetSlotsToSetupPose();
             print(skeleton.skeleton.Skin);
         }
