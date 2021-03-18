@@ -9856,7 +9856,7 @@ MonoBehaviour:
           tooltip: 
           showInInspector: 0
           networkSync: 0
-          value: FullyRegenPosture
+          value: StunEnded
         - useVariable: 0
           name: 
           tooltip: 
@@ -9865,12 +9865,12 @@ MonoBehaviour:
           value: guard
         fsmObjectParams:
         - useVariable: 1
-          name: posture
+          name: health
           tooltip: 
           showInInspector: 0
           networkSync: 0
-          typeName: PSmash.Attributes.EnemyPosture
-          value: {fileID: 5498729551461002954}
+          typeName: PSmash.Attributes.EnemyHealth
+          value: {fileID: 8489385723318554057}
         fsmVarParams:
         - variableName: 
           objectType: 
@@ -10893,17 +10893,17 @@ MonoBehaviour:
         networkSync: 0
         value: 0
       - useVariable: 1
-        name: damageOnlyVolume
+        name: 
         tooltip: 
         showInInspector: 1
         networkSync: 0
-        value: 1
+        value: 0
       - useVariable: 1
-        name: stunVolume
+        name: 
         tooltip: 
         showInInspector: 1
         networkSync: 0
-        value: 1
+        value: 0
       - useVariable: 1
         name: 
         tooltip: 
@@ -10957,12 +10957,12 @@ MonoBehaviour:
       gameObjectVariables: []
       objectVariables:
       - useVariable: 1
-        name: damageOnlySound
+        name: 
         tooltip: 
         showInInspector: 1
         networkSync: 0
-        typeName: UnityEngine.AudioClip
-        value: {fileID: 8300000, guid: a2c4afa4edc26494c9d118b432321eaa, type: 3}
+        typeName: 
+        value: {fileID: 0}
       - useVariable: 1
         name: health
         tooltip: 
@@ -10985,12 +10985,12 @@ MonoBehaviour:
         typeName: PSmash.Attributes.EnemyPosture
         value: {fileID: 5498729551461002954}
       - useVariable: 1
-        name: stunSound
+        name: 
         tooltip: 
         showInInspector: 1
         networkSync: 0
-        typeName: UnityEngine.AudioClip
-        value: {fileID: 8300000, guid: ce6bb6c365c9a1247bef6188f1e4517f, type: 3}
+        typeName: 
+        value: {fileID: 0}
       - useVariable: 1
         name: movement
         tooltip: 
@@ -11017,7 +11017,7 @@ MonoBehaviour:
     locked: 0
     manualUpdate: 0
     keepDelayedEventsOnStateExit: 0
-    preprocessed: 1
+    preprocessed: 0
     ExposedEvents: []
     RestartOnEnable: 1
     EnableDebugFlow: 0
@@ -19778,6 +19778,7 @@ MonoBehaviour:
   fleshDamageAudio: {fileID: 8300000, guid: a2c4afa4edc26494c9d118b432321eaa, type: 3}
   stunnedAudio: {fileID: 8300000, guid: ce6bb6c365c9a1247bef6188f1e4517f, type: 3}
   staggerAuduio: {fileID: 8300000, guid: 2829b78c6bb193e48a1d92f8f4da2dce, type: 3}
+  stunEndAudio: {fileID: 8300000, guid: f3c2f312bf5e78242ad3f1edf5d3f3ff, type: 3}
   volume: 1
   onFinisherAttackReceived:
     m_PersistentCalls:

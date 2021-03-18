@@ -13,7 +13,6 @@ namespace PSmash.Stats
         [SerializeField] float damage = 10;
         [Tooltip("The defense is a percentage")]
         [SerializeField] float defense = 10;
-        [SerializeField] float potions = 1;
 
         PlayerHealth health;
 
@@ -32,8 +31,6 @@ namespace PSmash.Stats
                     return defense;
                 case StatsList.Damage:
                     return damage;
-                case StatsList.Potions:
-                    return potions;
                 default:
                     return 0;
             }
@@ -42,9 +39,6 @@ namespace PSmash.Stats
         {
             switch (stat)
             {
-                case StatsList.Potions:
-                    potions = value;
-                    break;
                 case StatsList.Defense:
                     defense = value;
                     break;
@@ -71,10 +65,6 @@ namespace PSmash.Stats
                 case StatsList.Defense:
                     float extraDefense = Mathf.Round(defense * (skill.value / 100));
                     defense = defense + extraDefense;
-                    //print(damage);
-                    break;
-                case StatsList.Potions:
-                    potions += skill.value;
                     //print(damage);
                     break;
                 default:

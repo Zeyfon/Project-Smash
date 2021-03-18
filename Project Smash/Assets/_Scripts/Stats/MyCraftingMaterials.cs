@@ -19,18 +19,18 @@ namespace PSmash.Stats
 
         private void OnEnable()
         {
-            EnemyDrop.onDropCollected += CollectDrop;
+            //EnemyDrop.onDropCollected += CollectDrop;
         }
 
         private void OnDisable()
         {
-            EnemyDrop.onDropCollected -= CollectDrop;
+            //EnemyDrop.onDropCollected -= CollectDrop;
 
         }
 
-        public int GetPlayerQuantityForThisMaterial(CraftingMaterial material)
+        public int GetPlayerQuantityForThisMaterial(LevelUpSystem.CraftingMaterial material)
         {
-            return GetMaterialQuantity(material.material);
+            return GetMaterialQuantity(CraftingMaterialsList.RangerEye);
         }
 
         public int GetMaterialQuantity(CraftingMaterialsList material)

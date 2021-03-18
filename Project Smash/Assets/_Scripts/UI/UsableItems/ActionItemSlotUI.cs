@@ -7,18 +7,20 @@ using UnityEngine.UI;
 
 namespace PSmash.UI
 {
-    public class UIItem : MonoBehaviour
+    public class ActionItemSlotUI : MonoBehaviour
     {
         [SerializeField] TextMeshProUGUI text = null;
         [SerializeField] Image image = null;
 
-        public void UpdateItemInfo(InventoryItems.Items item)
+        public void UpdateItemInfo(ActionableItem actionableItem)
         {
-            image.sprite = item.item.sprite;
+            //print(actionableItem.name);
+            //print(actionableItem.GetNumber());
+            image.sprite = actionableItem.GetSprite();
             if (text == null)
                 return;
             text.enabled = true;
-            text.text = item.quantity.ToString();
+            text.text = actionableItem.GetNumber().ToString();
         }
     }
 

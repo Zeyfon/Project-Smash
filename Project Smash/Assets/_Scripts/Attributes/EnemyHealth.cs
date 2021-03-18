@@ -5,6 +5,7 @@ using System;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.Events;
+using PSmash.Combat;
 
 namespace PSmash.Attributes
 {
@@ -21,17 +22,19 @@ namespace PSmash.Attributes
         [SerializeField] AudioClip fleshDamageAudio = null;
         [SerializeField] AudioClip stunnedAudio = null;
         [SerializeField] AudioClip staggerAuduio = null;
+        [SerializeField] AudioClip stunEndAudio = null;
         [SerializeField] float volume = 1;
-        [SerializeField] UnityEvent onFinisherAttackReceived;
 
         EnemyPosture posture;
         PlayMakerFSM pm;
         BaseStats baseStats;
+        Vector3 initialPosition;
 
         float damagePenetrationPercentage;
 
         private void Awake()
         {
+            initialPosition = transform.position;
             baseStats = GetComponent<BaseStats>();
             health = baseStats.GetStat(StatsList.Health);
             audioSource = GetComponent<AudioSource>();
@@ -42,10 +45,11 @@ namespace PSmash.Attributes
         //when entering a new state
         public void SetCurrentStateInfo(PlayMakerFSM pm, float damagePenetrationPercentage)
         {
-            print(gameObject.name + " set in " + pm.FsmName);
             this.pm = pm;
             this.damagePenetrationPercentage = damagePenetrationPercentage;
         }
+
+        #region Damaged
 
         public override void TakeDamage(Transform attacker, Weapon weapon, float damage)
         {
@@ -86,7 +90,7 @@ namespace PSmash.Attributes
                 if (weaknessWeapon == attackedWeapon)
                 {
                     postureDamage = (damage + attackedWeapon.damage) * weaknessFactor;
-                    if(posture.posture < postureDamage)
+                    if(posture.GetInitialPosture() < postureDamage)
                     {
                         armorDestroyed = true;
                     }
@@ -123,35 +127,19 @@ namespace PSmash.Attributes
             }
             if (armorDestroyed)
             {
-                onFinisherAttackReceived.Invoke();
+                TakeArmorOff();
             }
-        }
-
-        public void TakeArmorOff()
-        {
-            onFinisherAttackReceived.Invoke();
-        }
-
-        /// <summary>
-        /// This one is used by the States the entity is.
-        /// </summary>
-        /// <returns></returns>
-        public bool IsDeadCheck()
-        {
-            return isDead;
         }
 
         public void DamageHealth(float damage, float damagePenetrationPercentage)
         {
             //print(damage + " will be substracted from  " + health);
-            //damage = damage * damagePenetrationPercentage / 100;
             damage *= (1 - baseStats.GetStat(StatsList.Defense) / 100);
 
             health = SubstractDamageFromHealth(damage, health);
             onTakeDamage.Invoke(damage);
             if (health <= 0)
             {
-                //print("Dead");
                 isDead = true;
             }
         }
@@ -164,7 +152,39 @@ namespace PSmash.Attributes
             return health;
         }
 
+        public void Respawn()
+        {
+            print(gameObject.name + "  Respawned");
+            transform.parent.gameObject.SetActive(true);
+            health = baseStats.GetStat(StatsList.Health);
+            isDead = false;
+            gameObject.layer = LayerMask.NameToLayer("Enemies");
+            transform.position = initialPosition;
+            if (posture == null)
+                return;
+            if (!posture.enabled)
+            {
+                posture.enabled = true;
+                PutArmorOn();
+            }
+            posture.FullyRegenPosture();
+        }
 
+        public void PutArmorOn()
+        {
+            GetComponent<UnblockableAttack>().PutBackArmorOn();
+            posture.EnablePostureBar();
+        }
+
+        public void TakeArmorOff()
+        {
+            GetComponent<UnblockableAttack>().TakeArmorOff();
+            posture.DisablePostureBar();
+        }
+        #endregion
+
+
+        #region Finisher
         //Inform the AI that the NPC is being Finished
         public void SetStateToFinisher()
         {
@@ -204,6 +224,10 @@ namespace PSmash.Attributes
             yield return null;
         }
 
+        #endregion
+
+        #region Sounds
+
         public void ProtectedDamageSound()
         {
             if (isArmorEnabled && !posture.isActiveAndEnabled)
@@ -236,6 +260,9 @@ namespace PSmash.Attributes
             audioSource.clip = staggerAuduio;
             audioSource.Play();
         }
+
+        #endregion
+
         #region ExternalUse
         public float GetHealthValue()
         {
@@ -265,19 +292,32 @@ namespace PSmash.Attributes
             }
         }
 
-        #endregion
+        /// <summary>
+        /// This one is used by the States the entity is.
+        /// </summary>
+        /// <returns></returns>
+        public bool IsDeadCheck()
+        {
+            return isDead;
+        }
+
+        /// <summary>
+        /// Used by the Stun State PlayMaker
+        /// </summary>
+        public void StunEnded()
+        {
+
+            audioSource.PlayOneShot(stunEndAudio);
+            posture.FullyRegenPosture();
+        }
 
         //Anim Event
         void DropItem()
         {
-            Instantiate(dropItem, transform.position + new Vector3(0,1), Quaternion.identity);
+            Instantiate(dropItem, transform.position + new Vector3(0, 1), Quaternion.identity);
         }
 
-        //AnimEvent
-        void Destroy()
-        {
-            Destroy(transform.parent.gameObject);
-        }
+        #endregion
     }
 }
 

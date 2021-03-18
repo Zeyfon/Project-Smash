@@ -8,6 +8,7 @@ using UnityEngine.SceneManagement;
 using UnityEngine.Events;
 using PSmash.Stats;
 using PSmash.Combat.Weapons;
+using PSmash.Saving;
 
 namespace PSmash.Attributes
 {
@@ -24,6 +25,8 @@ namespace PSmash.Attributes
         public delegate void PlayerHealed();
         public event PlayerHealed onHealed;
 
+
+
         Coroutine coroutine;
         Animator animator;
         BaseStats baseStats;
@@ -38,6 +41,17 @@ namespace PSmash.Attributes
             health = (int)baseStats.GetStat(StatsList.Health);
         }
 
+        private void OnEnable()
+        {
+            Tent.OnTentMenuOpen += RestorePlayer;
+        }
+
+
+        void RestorePlayer()
+        {
+            health = GetComponent<BaseStats>().GetStat(StatsList.Health);
+            onHealed();
+        }
         //Take damage will always be to damage the player
         //The guard and parry states will be checked in the Enemy Attack's Script
         //to deliver the proper assessment

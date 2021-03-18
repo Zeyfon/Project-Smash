@@ -13,15 +13,15 @@ namespace PSmash.Items
         //Called by the UseItemState FSM in Playmaker
         public void UseEquippedItem()
         {
-            InventoryItems.Items item = GetComponentInChildren<ItemHandler>().GetEquippedItem();
-            GetComponent<Animator>().SetInteger("UseItem", item.item.animatorIntValue);
+            ActionableItem item = GetComponentInChildren<Inventory>().GetEquippedActionableItem();
+            GetComponent<Animator>().SetInteger("UseItem", item.GetAnimatorInt());
         }
 
         //AnimEvent
         public void SpawnItem()
         {
-            InventoryItems.Items item = GetComponentInChildren<ItemHandler>().GetEquippedItem();
-            int quantity = item.quantity;
+            ActionableItem item = GetComponentInChildren<Inventory>().GetEquippedActionableItem();
+            int quantity = (int)item.GetNumber();
             if (quantity<=0)
             {
                 print("Cannot spawn item");
@@ -29,15 +29,15 @@ namespace PSmash.Items
             }
 
             print("Spawning Item");
-            audioSource.clip = item.item.useItemAudioClip;
+            audioSource.clip = item.GetAudioClip();
             audioSource.Play();
-            GameObject itemClone =  Instantiate(item.item.gameObject, spawner.position, Quaternion.identity);
+            GameObject itemClone =  Instantiate(item.GetGameObject(), spawner.position, Quaternion.identity);
             itemClone.GetComponent<UsableItem>().SetOwner(GetComponent<Health>());
             if (transform.right.x <0)
                 itemClone.transform.eulerAngles = new Vector3(0, 180, 0);
             quantity -= 1;
             print(quantity);
-            GetComponentInChildren<ItemHandler>().ItemUsed(item, quantity);
+            GetComponentInChildren<Inventory>().ItemUsed(item, quantity);
         }
     }
 

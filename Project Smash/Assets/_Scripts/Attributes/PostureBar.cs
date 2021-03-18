@@ -26,13 +26,12 @@ namespace PSmash.Attributes
 
         public void FullyRegenPosture()
         {
-            StartCoroutine(GuardBarEffect());
+            StartCoroutine(FullyRegenBarVisualEffect());
         }
 
-        IEnumerator GuardBarEffect()
+        IEnumerator FullyRegenBarVisualEffect()
         {
             SpriteRenderer renderer = effectTransform.GetComponent<SpriteRenderer>();
-            GetComponent<AudioSource>().PlayOneShot(guardBarRecoveredSound);
             float alpha = renderer.color.a;
             while(alpha < 1)
             {
@@ -56,6 +55,15 @@ namespace PSmash.Attributes
                 foreach(Transform transform in transforms)
             {
                 transform.gameObject.SetActive(false);
+            }
+        }
+
+        public void EnablePostureBar()
+        {
+            Transform transforms = GetComponentInChildren<Transform>();
+            foreach (Transform transform in transforms)
+            {
+                transform.gameObject.SetActive(true);
             }
         }
     }

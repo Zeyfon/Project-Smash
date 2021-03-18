@@ -43,12 +43,6 @@ namespace PSmash.UI
                     damageBar.fillAmount -= Time.deltaTime / fillSpeed;
                 }
             }
-
-            //text.text = String.Format("{0:0}/{1:0}", health.GetHealthPoints(), health.GetMaxHealthPoints());
-            //if(healthBar.localScale <)
-            //healthBar.localScale = new Vector2(health.GetHealth() / health.GetMaxHealthPoints(), transform.localScale.y);
-            //currentHealthText.text = health.GetHealth().ToString();
-            //maxHealthText.text = health.GetMaxHealthPoints().ToString();
         }
 
         private void OnEnable()
