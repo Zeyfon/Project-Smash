@@ -14,8 +14,8 @@ namespace PSmash.UI
 
         public void UpdateItemInfo(ActionableItem actionableItem)
         {
-            print(actionableItem.name);
-            print(actionableItem.GetNumber());
+            //print(actionableItem.name);
+            //print(actionableItem.GetNumber());
             image.sprite = actionableItem.GetSprite();
             if (text == null)
                 return;

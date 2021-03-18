@@ -19,12 +19,12 @@ namespace PSmash.Stats
 
         private void OnEnable()
         {
-            EnemyDrop.onDropCollected += CollectDrop;
+            //EnemyDrop.onDropCollected += CollectDrop;
         }
 
         private void OnDisable()
         {
-            EnemyDrop.onDropCollected -= CollectDrop;
+            //EnemyDrop.onDropCollected -= CollectDrop;
 
         }
 

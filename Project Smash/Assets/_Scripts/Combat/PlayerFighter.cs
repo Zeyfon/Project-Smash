@@ -212,11 +212,11 @@ namespace PSmash.Combat
 
         private void Attack(Transform attackOriginPosition, Vector2 attackArea, Weapon currentWeapon)
         {
-            print("Looking to Damage Enemy");
+            //print("Looking to Damage Enemy");
             Collider2D[] colls = Physics2D.OverlapBoxAll(attackOriginPosition.position, attackArea, 0, whatIsDamagable);
             if (colls.Length == 0)
             {
-                print("Nothing was damaged");
+                //print("Nothing was damaged");
                 return;
             }
             foreach (Collider2D coll in colls)
@@ -225,7 +225,7 @@ namespace PSmash.Combat
                 if (target == null || coll.GetComponent<Projectile>())
                     continue;
                 target.TakeDamage(transform, currentWeapon, baseStats.GetStat(StatsList.Damage));
-                print("Sendingdamage from player to  " + target);
+                //print("Sendingdamage from player to  " + target);
 
             }
         }

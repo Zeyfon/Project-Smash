@@ -12,6 +12,7 @@ namespace PSmash.Items
         //[SerializeField] Items[] items;
         List<Item> inventoryItems = new List<Item>();
         List<ActionableItem> actionableItems = new List<ActionableItem>();
+        List<CraftingItem> craftingItems = new List<CraftingItem>();
 
         public delegate void ItemChange(int index);
         public event ItemChange onEquippedActionItemChange;
@@ -21,11 +22,12 @@ namespace PSmash.Items
         // Start is called before the first frame update
         void Start()
         {
+            //Get All items in of the project
             foreach (Item item in Resources.LoadAll<Item>(""))
             {
                 inventoryItems.Add(item);
             }
-
+            //Get the actionable items within the previous gotten list
             foreach(Item item in inventoryItems)
             {
                 if(item is ActionableItem)
@@ -33,24 +35,41 @@ namespace PSmash.Items
                     actionableItems.Add(item as ActionableItem);
                 }
             }
+            //Get the crafting items within the previous gotten list
             foreach (Item item in inventoryItems)
             {
-                print(item.name);
+                if (item is CraftingItem)
+                {
+                    craftingItems.Add(item as CraftingItem);
+                }
             }
-            ReplenishItems();
+            ReplenishActionableItems();
         }
 
         private void OnEnable()
         {
-            Tent.OnTentMenuOpen += ReplenishItems;
+            Tent.OnTentMenuOpen += ReplenishActionableItems;
+            EnemyDrop.onDropCollected += CraftingItemCollected;
+        }
+
+        private void CraftingItemCollected(CraftingItem craftingItem)
+        {
+            foreach(CraftingItem item in craftingItems)
+            {
+                if(item == craftingItem)
+                {
+                    item.IncreaseNumber(1);
+                    print(item + " was collected");
+                }
+            }
         }
 
         /// <summary>
-        /// Set the quantity of each item back to max
+        /// Set the quantity of each actionable item back to max
         /// </summary>
-        void ReplenishItems()
+        void ReplenishActionableItems()
         {
-            print("Replenishing Items");
+            //print("Replenishing Items");
             foreach(ActionableItem item in actionableItems)
             {
                 item.SetNumber(item.GetMaxNumber());

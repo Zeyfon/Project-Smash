@@ -23,8 +23,6 @@ namespace PSmash.Saving
             List<Respawner> newList = new List<Respawner>();
             for (int i = 0; i < transform.childCount; i++)
             {
-                print(transform.GetChild(i).gameObject.name);
-
                 Respawner enemiesInfo = new Respawner
                 {
                     gameObject = transform.GetChild(i).gameObject,

@@ -28,7 +28,7 @@ namespace PSmash.UI
 
         private void EquippedActionItemChange(int index)
         {
-            print("Update Action Items UI ");
+            //print("Update Action Items UI ");
             List<ActionableItem> items = playerInventory.GetActionableItems();
 
             int previousIndex = GetPreviousItem(items, index);

@@ -9,9 +9,9 @@ namespace PSmash.Items
     public class EnemyDrop : MonoBehaviour
     {
         //[SerializeField] CraftingMaterialsList myMaterial;
-        [SerializeField] CraftingItem myMaterial2;
+        [SerializeField] CraftingItem crafingItem;
 
-        public delegate void DropCollected(CraftingMaterialsList material);
+        public delegate void DropCollected(CraftingItem material);
         public static event DropCollected onDropCollected;
 
         public static event Action OnCurrencyCollected;
@@ -29,7 +29,7 @@ namespace PSmash.Items
         {
             GameObject player = GameObject.FindGameObjectWithTag("Player");
             ps.trigger.SetCollider(10, player.GetComponent<Collider2D>());
-            ps.textureSheetAnimation.SetSprite(0, myMaterial2.GetSprite());
+            ps.textureSheetAnimation.SetSprite(0, crafingItem.GetSprite());
         }
 
         void Update()
@@ -43,17 +43,14 @@ namespace PSmash.Items
         private void OnParticleTrigger()
         {
             List<ParticleSystem.Particle> inside = new List<ParticleSystem.Particle>();
-            //print(inside.Count.ToString());
             int numInside = ps.GetTriggerParticles(ParticleSystemTriggerEventType.Enter, inside);
-            //print(myMaterial.ToString() + "  checking for  " + numInside);
             for (int i = 0; i < numInside; i++)
             {
                 ParticleSystem.Particle p = inside[i];
                 p.remainingLifetime = 0;
                 inside[i] = p;
                 if(!audioSource.isPlaying) audioSource.Play();
-                //TODO
-                //onDropCollected(myMaterial2.material);
+                onDropCollected(crafingItem);
             }
             ps.SetTriggerParticles(ParticleSystemTriggerEventType.Enter, inside);
         }

@@ -142,6 +142,7 @@ namespace PSmash.Items
 
         public void Respawn()
         {
+            StopMovement();
             transform.position = initialPosition;
         }
     }
