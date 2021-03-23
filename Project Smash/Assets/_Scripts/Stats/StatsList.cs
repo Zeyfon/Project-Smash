@@ -3,11 +3,8 @@
     public enum StatsList
     {
         Health,
-        Damage,
+        Attack,
         Defense,
-        PotionsQuantity,
-        DaggersQuantity,
-        HiddenSkill
     }
 
 }

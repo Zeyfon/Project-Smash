@@ -604,7 +604,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pMovement: {fileID: 8235024681204614677}
-  inventory: {fileID: 74025874873900810}
+  equipment: {fileID: 1064467200191827894}
 --- !u!114 &6419905940629892989
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2300,9 +2300,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1a6cbf34fe33d54438c6ac663dca41f5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  items:
-  - item: {fileID: 11400000, guid: ed79b4110489ed6458cb2c219a74881b, type: 2}
-  - item: {fileID: 11400000, guid: b6d3eccf1983a1b44aff75904e2fa1ad, type: 2}
+  craftingslot:
+  - item: {fileID: 11400000, guid: 7aa794c54aa9b6b428d6a363f087fd4b, type: 2}
+    number: 10
+  - item: {fileID: 11400000, guid: 7cc9cc63e17b09749b66d358ac6efb68, type: 2}
+    number: 20
+  - item: {fileID: 11400000, guid: 430fbc27d52c0b64f986665a62ac2348, type: 2}
+    number: 30
+  - item: {fileID: 11400000, guid: ef5c83cf50670864b9832e31d4313b59, type: 2}
+    number: 40
+  - item: {fileID: 11400000, guid: e05106b0e3211d24fa0dca1609423611, type: 2}
+    number: 50
 --- !u!1 &7632115962595694742
 GameObject:
   m_ObjectHideFlags: 0
@@ -7227,6 +7235,25 @@ MonoBehaviour:
     handleAnimatorIK: 0
   fsmTemplate: {fileID: 0}
   eventHandlerComponentsAdded: 1
+--- !u!114 &1064467200191827894
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6581303975160096547}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0ed952e31975bee4ba64642e68e7e612, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  slots:
+  - item: {fileID: 11400000, guid: 20791c78f215dea4e849db578b965826, type: 2}
+    number: 1
+    maxNumber: 0
+  - item: {fileID: 11400000, guid: e16a8b6a7a9d1a2439060f13fe20fea9, type: 2}
+    number: 3
+    maxNumber: 0
 --- !u!114 &1451262971914643979
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9877,9 +9904,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 24a03d575fcbe764fbfff6203d61b643, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  healthValue: 100
-  damage: 10
-  defense: 10
+  slots:
+  - item: {fileID: 11400000, guid: f6d5b0bb049753748a6d2fcd4968c234, type: 2}
+    number: 10
+  - item: {fileID: 11400000, guid: 40494b20521f9344b9e7fa6fa2f2c8fd, type: 2}
+    number: 10
+  - item: {fileID: 11400000, guid: b8490e4718e947449b152b937d635607, type: 2}
+    number: 100
 --- !u!114 &4876046648499560663
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -13175,26 +13206,6 @@ MonoBehaviour:
     handleAnimatorIK: 0
   fsmTemplate: {fileID: 0}
   eventHandlerComponentsAdded: 1
---- !u!114 &5487335321921196278
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6581303975160096547}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6110cc39514e4184b8b26e6e2f0cb32b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  monsterRemains: 40
-  reapersEye: 10
-  rangersEye: 100
-  smasherEye: 0
-  spiderEye: 0
-  XXXXX: 0
-  wood: 0
-  rock: 0
 --- !u!114 &5898523237326450535
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -54,7 +54,7 @@ namespace PSmash.UI
 
         private void OnHealed()
         {
-            print("UI Health Healed");
+            //print("UI Health Healed");
             healthBar.fillAmount = health.GetHealth() / health.GetMaxHealthPoints();
             damageBar.fillAmount = healthBar.fillAmount;
             UpdateText();
@@ -62,7 +62,7 @@ namespace PSmash.UI
 
         private void OnDamaged()
         {
-            print("UI Health Damaged");
+            //print("UI Health Damaged");
             damageTimer = timeToDecrease;
             healthBar.fillAmount =  health.GetHealth() / health.GetMaxHealthPoints();
             UpdateText();

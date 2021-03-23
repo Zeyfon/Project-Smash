@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 7566768074057994490}
   - component: {fileID: 1500270271531644467}
   - component: {fileID: 5273876300143806364}
+  - component: {fileID: 8879608171423203023}
   m_Layer: 0
   m_Name: SkillSlot
   m_TagString: Untagged
@@ -71,8 +72,8 @@ MonoBehaviour:
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
     m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
-    m_PressedColor: {r: 0.085172676, g: 0.32717848, b: 0.6226415, a: 1}
-    m_SelectedColor: {r: 0.4339623, g: 0.4073514, b: 0.4073514, a: 1}
+    m_PressedColor: {r: 1, g: 1, b: 1, a: 0}
+    m_SelectedColor: {r: 1, g: 0.86289185, b: 0, a: 1}
     m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
@@ -88,12 +89,12 @@ MonoBehaviour:
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
   m_Interactable: 1
-  m_TargetGraphic: {fileID: 3610161178061119575}
+  m_TargetGraphic: {fileID: 3225985908252156274}
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 5273876300143806364}
-        m_MethodName: TryToUnlockSkill
+      - m_Target: {fileID: 8879608171423203023}
+        m_MethodName: TryToUnlockThisSkill
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -145,10 +146,24 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   skill: {fileID: 0}
   skillSlotImage: {fileID: 3610161178061119575}
-  UnlockableBySkillSlots: []
-  requiredCraftingMaterials: []
+  unlockableBySkillSlots: []
+  requiredCraftingItems: []
   availablePathsOnceUnlocked: []
-  ringImage: {fileID: 3225985908252156274}
+  saturationCeroMaterial: {fileID: 2100000, guid: d08fe1830ef8dbb4bb8e568928d56086,
+    type: 2}
+  isUnlocked: 0
+--- !u!114 &8879608171423203023
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2911572937517322362}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 74183f312d5a5904fa19660ef9f6a7b3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &6968928970517921352
 GameObject:
   m_ObjectHideFlags: 0

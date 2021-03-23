@@ -1,21 +1,21 @@
 ﻿using PSmash.Attributes;
 using PSmash.Items.Doors;
 using PSmash.Items.Traps;
-using PSmash.Items;
+using PSmash.Inventories;
 using PSmash.Movement;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
 using PSmash.Saving;
 using PSmash.Menus;
-using PSmash.LevelUpSystem;
+using PSmash.CraftingSystem;
 
 namespace PSmash.InputSystem
 {
     public class InputHandler : MonoBehaviour
     {
         [SerializeField] PlayerMovement pMovement = null;
-        [SerializeField] Inventory inventory = null;
+        [SerializeField] Equipment equipment = null;
 
         Collider2D interactableCollider;
         PlayMakerFSM pmPlayerController = null;
@@ -104,7 +104,7 @@ namespace PSmash.InputSystem
             _controller.Player.ButtonStart.started += ctx => ButtonStartPressed();
 
             //_controller.Player.Quit.performed += ctx => QuitKeyPressed();
-            CraftingSystem.OnMenuClose += EnablePlayerInput;
+            CraftingSystem.CraftingSystem.OnMenuClose += EnablePlayerInput;
             MainMenu.OnMenuClose += EnablePlayerInput;
             TentMenu.OnMenuClose += EnablePlayerInput;
             EventManager.PauseGame += PauseGame;
@@ -276,13 +276,13 @@ namespace PSmash.InputSystem
         private void ItemChangeLeft()
         {
             print("Item Pressed Left");
-            inventory.ChangeItem(false);
+            equipment.ChangeItem(false);
         }
 
         private void ItemChangeRight()
         {
             print("Item Pressed Right");
-            inventory.ChangeItem(true);
+            equipment.ChangeItem(true);
         }
 
         private void ButtonStartPressed()

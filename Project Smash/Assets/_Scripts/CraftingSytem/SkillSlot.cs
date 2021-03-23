@@ -1,43 +1,58 @@
-﻿using PSmash.Stats;
-using System.Collections;
+﻿using PSmash.Inventories;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using System;
+using PSmash.UI.CraftingSytem;
 
-namespace PSmash.LevelUpSystem
+namespace PSmash.CraftingSystem
 {
     public class SkillSlot : MonoBehaviour
     {
-
+        [Header("CONFIG")]
         [SerializeField] Skill skill = null;
         [SerializeField] Image skillSlotImage = null;
-        [SerializeField] SkillSlot[] UnlockableBySkillSlots;
-        [SerializeField] RequiredCraftingMaterial[] requiredCraftingMaterials;
+        [SerializeField] SkillSlot[] unlockableBySkillSlots;
+        [SerializeField] CraftingItemSlot[] requiredCraftingItems;
         [SerializeField] UnlockableSkillPath[] availablePathsOnceUnlocked;
-        //[SerializeField] Image ringImage = null;
 
+        [SerializeField] Material saturationCeroMaterial = null;
+
+        [Header("STATE")]
+        [SerializeField]bool isUnlocked = false;
         // Start is called before the first frame update
         void Start()
         {
-            skillSlotImage.sprite = skill.sprite;
+            skillSlotImage.sprite = skill.GetSprite();
         }
 
-        /// <summary>
-        /// Method used by the Button component in the same gameObject
-        /// </summary>
-        public void TryToUnlockSkill()
+        public Item GetItem()
         {
-            GetComponentInParent<CraftingSystem>().TryToUnlockSkill(skill, this);
+            return skill.GetItem();
         }
 
+        public Skill GetSkill()
+        {
+            return skill;
+        }
+
+
+        public void Unlock()
+        {
+            isUnlocked = true;
+        }
+
+        public CraftingItemSlot[] GetRequiredCraftingItems()
+        {
+            //print(requiredCraftingItems.Length);
+            return requiredCraftingItems;
+        }
         /// <summary>
         /// Inform about the options to be able to unlock
         /// </summary>
         /// <returns></returns>
         public SkillSlot[] GetSkillSlotsUnlockingOptions()
         {
-            return UnlockableBySkillSlots;
+            return unlockableBySkillSlots;
         }
 
         /// <summary>
@@ -56,6 +71,120 @@ namespace PSmash.LevelUpSystem
             //ringImage.enabled = isRingEnabled;
         }
 
+        public Dictionary<CraftingItem, int> GetCraftingItemsRequirement()
+        {
+            Dictionary<CraftingItem, int> requiredCraftingItems = new Dictionary<CraftingItem, int>();
+
+            foreach (CraftingItemSlot requiredCraftingMaterial in this.requiredCraftingItems)
+            {
+                //print("Adding  " + requiredCraftingMaterial.material);
+                requiredCraftingItems.Add(requiredCraftingMaterial.item, requiredCraftingMaterial.number);
+            }
+            //print(requiredCraftingItems.Count);
+            //print("Got the Required Materials " + requiredMaterials);
+            return requiredCraftingItems;
+        }
+
+        [System.Serializable]
+        public class CraftingItemSlot
+        {
+            public CraftingItem item;
+            public int number;
+        }
+
+        [System.Serializable]
+        public class UnlockableSkillPath
+        {
+            public Link link;
+        }
+
+
+
+        //////////////// UI//////////////////////////////////////////
+        public void UpdateUI()
+        {
+            if (IsUnlocked())
+            {
+                UpdateLinks("White");
+                Unlocked();
+            }
+            else if (IsUnlockable())
+            {
+                UpdateLinks("White");
+                Unlockable();
+            }
+            else
+            {
+                UpdateLinks("Dark");
+                Locked();
+            }
+        }
+
+        /// <summary>
+        /// Checks if the skillSlot has been unlocked
+        /// </summary>
+        /// <returns></returns>
+        public bool IsUnlocked()
+        {
+            return isUnlocked;
+        }
+
+        /// <summary>
+        /// Checks if the skillSlot is unlockable
+        /// </summary>
+        /// <returns></returns>
+        bool IsUnlockable()
+        {
+            foreach (SkillSlot slot in unlockableBySkillSlots)
+            {
+                if (slot.IsUnlocked())
+                {
+                    return true;
+                }
+            }
+            if (unlockableBySkillSlots.Length == 0)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+        /// <summary>
+        /// The Update in the UI bases on the state of the skillSlot.
+        /// Saturation 1
+        /// </summary>
+        void Unlocked()
+        {
+            print(skill.name + "  is unlocked");
+            UpdateSkillSlotVisualState(null);
+            UpdateLinks("White");
+        }
+        /// <summary>
+        /// The Update in the UI bases on the state of the skillSlot.
+        /// Saturation 0 with White Ring
+        /// </summary>
+        void Unlockable()
+        {
+            print(skill.name + " is unlockable");
+            UpdateSkillSlotVisualState(saturationCeroMaterial);
+            UpdateLinks("Dark");
+            EnableWhiteRing();
+        }
+
+        /// <summary>
+        /// The Update in the UI bases on the state of the skillSlot.
+        /// Saturation 0 without White Ring
+        /// </summary>
+        void Locked()
+        {
+            print(skill.name + " is locked");
+            UpdateSkillSlotVisualState(saturationCeroMaterial);
+            UpdateLinks("Dark");
+            DisableWhiteRing();
+        }
+
         /// <summary>
         /// To update the visuals of the links between Grey and White
         /// once it sets to white the links will not go back to dark again
@@ -65,69 +194,35 @@ namespace PSmash.LevelUpSystem
         {
             foreach (UnlockableSkillPath unlockableSkillPath in availablePathsOnceUnlocked)
             {
-                unlockableSkillPath.link.UpdateColor(state);
-            }
-        }
-
-        public bool HaveNecessaryMaterials(MyCraftingMaterials playerMaterials)
-        {
-            //Return a true of false depending on if the player has all the required materials to unlock this skill
-
-            //Create the dictionary where the info will be stored to substract the quantity from the Player's Materials in case it will be unlocked
-            Dictionary<CraftingMaterialsList, int> craftingMaterials = new Dictionary<CraftingMaterialsList, int>();
-
-            //Add the CraftingMaterialList enum to the dictionary with its requiredquantity to unlock
-            //In case the player does not meet the requirements of any material it will return a false inmediately
-            //In contrary case the foreach loop will end with the dictionary completed
-            foreach (RequiredCraftingMaterial requiredMaterial in requiredCraftingMaterials)
-            {
-                //print("The required material " + requiredMaterial.material);
-                int quantityInPlayersPossession = playerMaterials.GetPlayerQuantityForThisMaterial(requiredMaterial.material);
-                if (quantityInPlayersPossession >= requiredMaterial.quantity)
+                //unlockableSkillPath.link.UpdateColor(state);
+                if (state == "White")
                 {
-                    craftingMaterials.Add(requiredMaterial.material.material, requiredMaterial.quantity);
-                    continue;
+                    unlockableSkillPath.link.GetComponent<Image>().color = Color.white;
                 }
                 else
                 {
-                    return false;
+                    unlockableSkillPath.link.GetComponent<Image>().color = new Color(0.3f, 0.3f, 0.3f, 0.3f);
                 }
             }
-
-            //With the dictionary completed it will send the CraftingMaterialList enum with the required material 
-            //to the MyCraftingMaterials to substract the required ammount from the current posesed by the player
-            //print("The Player has all the required materials ");
-            foreach (CraftingMaterialsList material in craftingMaterials.Keys)
-            {
-                playerMaterials.UpdateMyMaterials(material, -craftingMaterials[material]);
-            }
-            return true;
         }
 
-        public Dictionary<CraftingMaterial, int> GetCraftingMaterialsRequirement2()
+        void DisableWhiteRing()
         {
-            Dictionary<CraftingMaterial, int> requiredMaterials = new Dictionary<CraftingMaterial, int>();
-
-            foreach (RequiredCraftingMaterial requiredCraftingMaterial in requiredCraftingMaterials)
-            {
-                //print("Adding  " + requiredCraftingMaterial.material);
-                requiredMaterials.Add(requiredCraftingMaterial.material, requiredCraftingMaterial.quantity);
-            }
-            //print("Got the Required Materials " + requiredMaterials);
-            return requiredMaterials;
+            GetComponentInChildren<Image>().enabled = false ;
         }
 
-        [System.Serializable]
-        public class RequiredCraftingMaterial
+        void EnableWhiteRing()
         {
-            public CraftingMaterial material;
-            public int quantity;
+            GetComponentInChildren<Image>().enabled = true;
+
         }
 
-        [System.Serializable]
-        public class UnlockableSkillPath
+
+        public void SetRingMaterial(Material yellowMaterial)
         {
-            public Link link;
+            Image image = transform.GetChild(0).GetComponent<Image>();
+            image.enabled = true;
+            image.material = yellowMaterial;
         }
 
     }

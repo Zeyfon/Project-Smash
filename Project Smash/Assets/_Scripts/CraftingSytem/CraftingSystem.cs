@@ -3,8 +3,11 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 using PSmash.Menus;
+using PSmash.Inventories;
+using PSmash.UI.CraftingSytem;
 
-namespace PSmash.LevelUpSystem
+
+namespace PSmash.CraftingSystem
 {
     /// <summary>
     /// This Class is in charge of the general process of the Crafting System
@@ -17,33 +20,35 @@ namespace PSmash.LevelUpSystem
         [SerializeField] AudioClip skillUnlockedSound = null;
         [SerializeField] AudioClip skillCannotBeUnlockedSound = null;
         [SerializeField] float volume = 1;
-        [SerializeField] SkillPanel skillPanel = null;
 
         public static event Action OnMenuClose;
+        public static event Action OnSkillPanelUpdate;
 
-        BaseStats playerStats;
-        MyCraftingMaterials playerMaterials;
-
-        List<SkillSlot> unlockedSkillSlots = new List<SkillSlot>();
-        SkillSlot[] skillSlots;
+        //BaseStats playerStats;
+        Inventory inventory;
         _Controller _controller;
         TentMenu tentMenu;
+
+        //Create the dictionary where the info will be stored to substract the quantity from the Player's Materials in case it will be unlocked
+        //Dictionary<CraftingItem, int> requiredCraftingItems = new Dictionary<CraftingItem, int>();
+
 
         private void Awake()
         {
             _controller = new _Controller();
-            playerStats = GameObject.FindGameObjectWithTag("Player").GetComponent<BaseStats>();
-            playerMaterials = GameObject.FindGameObjectWithTag("Player").GetComponent<MyCraftingMaterials>();
-            skillSlots = transform.GetComponentsInChildren<SkillSlot>();
+            inventory = Inventory.GetPlayerInventory();
+            //TODO the unlocked skill slots will need to be reasigned when the save system begins to run.
         }
 
         // Start is called before the first frame update
         void Start()
         {
             tentMenu = FindObjectOfType<TentMenu>();
-            UpdateSkillPanel();
+            OnSkillPanelUpdate();
             CloseMenu();
         }
+
+        ///////////////////////////////////////MENU MANAGEMENENT///////////////////
 
         private void OnEnable()
         {
@@ -54,7 +59,7 @@ namespace PSmash.LevelUpSystem
         {
             print("Open Crafting Menu");
             SetChildObjects(true);
-            UpdateSkillPanel();
+            OnSkillPanelUpdate();
             _controller.UI.Enable();
             _controller.UI.Cancel.performed += ctx => BacktrackMenu();
             _controller.UI.ButtonStart.performed += ctx => CloseAllMenus();
@@ -71,10 +76,6 @@ namespace PSmash.LevelUpSystem
             _controller.UI.Disable();
         }
 
-
-        /// <summary>
-        /// This method is looped
-        /// </summary>
         void BacktrackMenu()
         {
             print("Backtracking Menu ");
@@ -97,21 +98,10 @@ namespace PSmash.LevelUpSystem
             }
         }
 
-        ///// <summary>
-        ///// This method is the one that starts and enables the Crafting System.
-        ///// This one is triggered by the SavingPoint once the player is inside its trigger.
-        ///// This method es enabled by the Button A / Space Key from the Input Handler of the player
-        ///// </summary>
-        //public void EnableMenu()
-        //{
-        //    print("Enable Menu");
-        //    UpdateSkillPanel();
-        //    OpenMenu();
-        //    _Controller _controller = new _Controller();
-        //    _controller.UI.Enable();
-        //    _controller.UI.Cancel.performed += ctx => BacktrackMenu();
-        //}
 
+
+        /////////////////////////CRAFTING SYSTEM//////////////////////////////////////////////////
+        
         /// <summary>
         /// This method is triggered by the SkillSlot once is being presses in the UI.
         /// This method will try to unlock the skill, but will check first if it has already been unlodked
@@ -121,7 +111,7 @@ namespace PSmash.LevelUpSystem
         /// </summary>
         /// <param name="skill"></param>
         /// <param name="skillSlot"></param>
-        public void TryToUnlockSkill(Skill skill, SkillSlot skillSlot)
+        public void TryToUnlockSkill(SkillSlot skillSlot)
         {
             //print(skill.name + "  " + skillSlot.gameObject.name);
             if (IsSkillUnlocked(skillSlot))
@@ -130,9 +120,10 @@ namespace PSmash.LevelUpSystem
             }
             else
             {
-                if (IsAnySkillSlotPathUnlocked(skillSlot) && HaveNecessaryMaterials(skillSlot))
+                Dictionary<CraftingItem, int> craftingItemsRequired = DoIHaveTheNecessaryItemNumbersToUnlockThisSkill(skillSlot);
+                if (IsThisSkillSlotAvailableToUnlock(skillSlot) && craftingItemsRequired != null)
                 {
-                    UnlockSkill(skill, skillSlot);
+                    UnlockSkill(skillSlot, craftingItemsRequired);
                 }
                 else
                 {
@@ -141,15 +132,25 @@ namespace PSmash.LevelUpSystem
             }
         }
 
-        public bool IsSkillUnlocked(SkillSlot skillSlot)
+        /// <summary>
+        /// Checks if the skillSlot has already been unlocked
+        /// </summary>
+        /// <param name="skillSlot"></param>
+        /// <returns></returns>
+        bool IsSkillUnlocked(SkillSlot skillSlot)
         {
-            if (unlockedSkillSlots.Contains(skillSlot))
+            if (skillSlot.IsUnlocked())
                 return true;
             else
                 return false;
         }
 
-        public bool IsAnySkillSlotPathUnlocked(SkillSlot skillSlot)
+        /// <summary>
+        /// Checks if the skill tree has reached this skillslot.
+        /// </summary>
+        /// <param name="skillSlot"></param>
+        /// <returns></returns>
+        bool IsThisSkillSlotAvailableToUnlock(SkillSlot skillSlot)
         {
             SkillSlot[] skillSlotsUnlockingOptions = skillSlot.GetSkillSlotsUnlockingOptions();
             //print(skillSlot.gameObject.name + " needs that the " + tempSkillSlot + "  is unlocked to unlock ");
@@ -157,68 +158,87 @@ namespace PSmash.LevelUpSystem
                 return true;
             else
             {
-                bool isUnlockableOptionsUnlocked = false;
-                foreach (SkillSlot unlockableSkillSlotOptions in skillSlotsUnlockingOptions)
+                foreach (SkillSlot unlockableSkillSlotOption in skillSlotsUnlockingOptions)
                 {
-                    if (unlockedSkillSlots.Contains(unlockableSkillSlotOptions))
+                    if (unlockableSkillSlotOption.IsUnlocked())
                     {
-                        isUnlockableOptionsUnlocked = true;
-                        break;
+                        print(skillSlot.name + "  can be unlock. There is an unlocked option");
+                        return true;
                     }
                 }
-                if (isUnlockableOptionsUnlocked)
-                    return true;
-                else
-                    return false;
+                print(skillSlot.name +  "  cannot be unlocked. There is no unlocked option");
+                return false;
             }
         }
 
-        private bool HaveNecessaryMaterials(SkillSlot skillSlot)
+        /// <summary>
+        /// Checks if you have the required materials to unlock this skill
+        /// </summary>
+        /// <param name="skillSlot"></param>
+        /// <returns></returns>
+        Dictionary<CraftingItem,int> DoIHaveTheNecessaryItemNumbersToUnlockThisSkill(SkillSlot skillSlot)
         {
-            //print("Checking if having necessary materials in the Crafting System ");
-            return skillSlot.HaveNecessaryMaterials(playerMaterials);
+            print(skillSlot);
+            SkillSlot.CraftingItemSlot[] slots = skillSlot.GetRequiredCraftingItems();
+            Dictionary<CraftingItem, int> itemsNeeded = new Dictionary<CraftingItem, int>();
+            //print(craftingItemRequirements.Length);
+            //Add the CraftingMaterialList enum to the dictionary with its requiredquantity to unlock
+            //In case the player does not meet the requirements of any material it will return a false inmediately
+            //In contrary case the foreach loop will end with the dictionary completed
+            foreach (SkillSlot.CraftingItemSlot slot in slots)
+            {
+                //print(itemRequirement.item + "  " + inventory);
+                int numberNeeded = inventory.GetThisCraftingItemNumber(slot.item);
+                if (numberNeeded >= slot.number)
+                {
+                    itemsNeeded.Add(slot.item, slot.number);
+                    continue;
+                }
+                else
+                {
+                    print("Items Criteria is not fulfilled to unlock skill");
+                    return null;
+                }
+            }
+            print("Items criteria is fullfilled to unlock skill");
+            return itemsNeeded;        
         }
 
-        private void CannotUnlockSkill()
+        /// <summary>
+        /// Effects telling you that this skill cannot be unlocked.
+        /// </summary>
+        void CannotUnlockSkill()
         {
             audioSource.PlayOneShot(skillCannotBeUnlockedSound, volume);
         }
 
-        private void UnlockSkill(Skill skill, SkillSlot skillSlot)
+        /// <summary>
+        /// The process to unlock the skill
+        /// </summary>
+        /// <param name="skill"></param>
+        /// <param name="skillSlot"></param>
+        void UnlockSkill(SkillSlot skillSlot, Dictionary<CraftingItem,int> craftingItemsRequired)
         {
-            unlockedSkillSlots.Add(skillSlot);
-            playerStats.UnlockSkill(skill);
-            UpdateSkillPanel();
+            print(inventory);
+            inventory.UnlockSkill(skillSlot.GetItem());
+            SubstractItemsFromInventory(craftingItemsRequired);
+            skillSlot.Unlock();
             audioSource.PlayOneShot(skillUnlockedSound, volume);
-            //UpdatePlayerMaterialsInDescriptionWindow());
+            OnSkillPanelUpdate();
         }
 
-
-        /// <summary>
-        /// If a skill is  unlocked the visuals of the Crafting System UI will be updated all over again
-        /// making the necessary changes to the crafting materials in the main window, skillSlots and links to reflex the new options
-        /// </summary>
-        void UpdateSkillPanel()
+        void SubstractItemsFromInventory(Dictionary<CraftingItem,int> craftingItemsRequired)
         {
-            //Update the material in each skillSlot
-            foreach (SkillSlot skillSlot in skillSlots)
+            int requiredNumberToUnlock;
+
+            //With the dictionary completed it will send the CraftingMaterialList enum with the required material 
+            //to the MyCraftingMaterials to substract the required ammount from the current posesed by the player
+            foreach (CraftingItem item in craftingItemsRequired.Keys)
             {
-                if (IsSkillUnlocked(skillSlot))
-                {
-                    skillPanel.SetSkillSlotAsUnlocked(skillSlot);
-                }
-                else
-                {
-                    if (IsAnySkillSlotPathUnlocked(skillSlot))
-                    {
-                        skillPanel.SetSkillSlotAsUnlockable(skillSlot);
-                    }
-                    else
-                    {
-                        skillPanel.SetSkillSlotAsLocked(skillSlot);
-                    }
-                }
+                requiredNumberToUnlock = craftingItemsRequired[item];
+                inventory.UpdateThisCraftingItem(item, requiredNumberToUnlock);
             }
         }
+
     }
 }

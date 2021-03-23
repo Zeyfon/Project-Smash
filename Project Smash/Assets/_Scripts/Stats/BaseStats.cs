@@ -1,19 +1,15 @@
 ﻿using UnityEngine;
 using PSmash.Attributes;
-using PSmash.LevelUpSystem;
-using PSmash.Items;
+using PSmash.CraftingSystem;
+using PSmash.Inventories;
 using System;
 
 namespace PSmash.Stats
 {
     public class BaseStats : MonoBehaviour
     {
-        [Header("Stats")]
-        [SerializeField] float healthValue = 100;
-        [SerializeField] float damage = 10;
-        [Tooltip("The defense is a percentage")]
-        [SerializeField] float defense = 10;
 
+        [SerializeField] StatSlot[] slots;
         PlayerHealth health;
 
         private void Start()
@@ -23,53 +19,49 @@ namespace PSmash.Stats
 
         public float GetStat(StatsList stat)
         {
-            switch (stat)
+            foreach(StatSlot slot in slots)
             {
-                case StatsList.Health:
-                    return healthValue;
-                case StatsList.Defense:
-                    return defense;
-                case StatsList.Damage:
-                    return damage;
-                default:
-                    return 0;
+                if(slot.item.GetMyEnumID() == stat)
+                {
+                    return slot.number;
+                }
             }
+            return 0;
         }
         public void SetStat(StatsList stat, float value)
         {
-            switch (stat)
+            foreach(StatSlot slot in slots)
             {
-                case StatsList.Defense:
-                    defense = value;
-                    break;
-                default:
-                    break;
+                if(slot.item.GetMyEnumID() == stat)
+                {
+                    slot.number = value;
+                }
             }
         }
 
-        public void UnlockSkill(Skill skill)
+        public void UnlockSkill(StatusItem stat)
         {
-            switch (skill.stat)
+            print("Unlocking a skill of  " + stat);
+            foreach(StatSlot slot in slots)
             {
-                case StatsList.Health:
-                    float extraHealthValue = Mathf.Round(healthValue*(skill.value / 100));
-                    healthValue += extraHealthValue;
-                    health.RestoreHealth(extraHealthValue);
-                    //print(healthValue);
-                    break;
-                case StatsList.Damage:
-                    float extraDamage = Mathf.Round(damage * (skill.value / 100));
-                    damage = damage + extraDamage;
-                    //print(damage);
-                    break;
-                case StatsList.Defense:
-                    float extraDefense = Mathf.Round(defense * (skill.value / 100));
-                    defense = defense + extraDefense;
-                    //print(damage);
-                    break;
-                default:
-                    break;
+                if(slot.item == stat)
+                {
+                    float extraHealthValue = Mathf.Round(slot.number * (stat.GetNumber() / 100));
+                    slot.number += extraHealthValue;
+                    if(slot.item.name == "Health")
+                    {
+                        health.RestoreHealth(extraHealthValue);
+                    }
+                    return;
+                }
             }
+        }
+
+        [System.Serializable]
+        public class StatSlot
+        {
+            public StatusItem item;
+            public float number;
         }
     }
 
