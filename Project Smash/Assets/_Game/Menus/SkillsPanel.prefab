@@ -167,11 +167,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5c0b20984f98d5e45ac1df3326bcf3ae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  saturationCeroMaterial: {fileID: 2100000, guid: d08fe1830ef8dbb4bb8e568928d56086,
-    type: 2}
-  yellowSelectorMaterial: {fileID: 2100000, guid: 24400cf2c1ca1324a8e5db0a0337615e,
-    type: 2}
-  craftingSystem: {fileID: 0}
+  initialSkillSlot: {fileID: 6194021397736183865}
+  yellowMaterial: {fileID: 2100000, guid: 24400cf2c1ca1324a8e5db0a0337615e, type: 2}
 --- !u!1001 &13297841136107092
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -193,7 +190,7 @@ PrefabInstance:
         type: 3}
       propertyPath: skill
       value: 
-      objectReference: {fileID: 11400000, guid: 26696a140fd9ee6418c80440a9d636bc,
+      objectReference: {fileID: 11400000, guid: 43036220bfe4ad340a61abb15ec9a1b2,
         type: 2}
     - target: {fileID: 5273876300143806364, guid: 225c521a3349a2f4b91efa91e51ec003,
         type: 3}
@@ -204,6 +201,11 @@ PrefabInstance:
         type: 3}
       propertyPath: unlockableSkillPaths.Array.size
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5273876300143806364, guid: 225c521a3349a2f4b91efa91e51ec003,
+        type: 3}
+      propertyPath: requiredCraftingItems.Array.size
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 5273876300143806364, guid: 225c521a3349a2f4b91efa91e51ec003,
         type: 3}
@@ -230,6 +232,24 @@ PrefabInstance:
       propertyPath: unlockableSkillPaths.Array.data[2].link
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 5273876300143806364, guid: 225c521a3349a2f4b91efa91e51ec003,
+        type: 3}
+      propertyPath: requiredCraftingItems.Array.data[0].item
+      value: 
+      objectReference: {fileID: 11400000, guid: 7aa794c54aa9b6b428d6a363f087fd4b,
+        type: 2}
+    - target: {fileID: 5273876300143806364, guid: 225c521a3349a2f4b91efa91e51ec003,
+        type: 3}
+      propertyPath: requiredCraftingItems.Array.data[1].item
+      value: 
+      objectReference: {fileID: 11400000, guid: ef5c83cf50670864b9832e31d4313b59,
+        type: 2}
+    - target: {fileID: 5273876300143806364, guid: 225c521a3349a2f4b91efa91e51ec003,
+        type: 3}
+      propertyPath: requiredCraftingItems.Array.data[2].item
+      value: 
+      objectReference: {fileID: 11400000, guid: e05106b0e3211d24fa0dca1609423611,
+        type: 2}
     - target: {fileID: 5273876300143806364, guid: 225c521a3349a2f4b91efa91e51ec003,
         type: 3}
       propertyPath: requiredMaterials.Array.data[0].quantity
@@ -274,6 +294,21 @@ PrefabInstance:
         type: 3}
       propertyPath: skillSlotsUnlockableOptions.Array.data[1]
       value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 5273876300143806364, guid: 225c521a3349a2f4b91efa91e51ec003,
+        type: 3}
+      propertyPath: requiredCraftingItems.Array.data[0].number
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5273876300143806364, guid: 225c521a3349a2f4b91efa91e51ec003,
+        type: 3}
+      propertyPath: requiredCraftingItems.Array.data[1].number
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 5273876300143806364, guid: 225c521a3349a2f4b91efa91e51ec003,
+        type: 3}
+      propertyPath: requiredCraftingItems.Array.data[2].number
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 5273876300143806364, guid: 225c521a3349a2f4b91efa91e51ec003,
         type: 3}
@@ -611,6 +646,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: SkillSlot_Attack (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 3225985908252156274, guid: 225c521a3349a2f4b91efa91e51ec003,
+        type: 3}
+      propertyPath: m_Material
+      value: 
+      objectReference: {fileID: 2100000, guid: 24400cf2c1ca1324a8e5db0a0337615e, type: 2}
     - target: {fileID: 5273876300143806364, guid: 225c521a3349a2f4b91efa91e51ec003,
         type: 3}
       propertyPath: image
@@ -620,7 +660,7 @@ PrefabInstance:
         type: 3}
       propertyPath: skill
       value: 
-      objectReference: {fileID: 11400000, guid: 32a06f86018918b4bae788f9fa6dc142,
+      objectReference: {fileID: 11400000, guid: 8d3ee261d86fe3641b647ba3b97834a1,
         type: 2}
     - target: {fileID: 5273876300143806364, guid: 225c521a3349a2f4b91efa91e51ec003,
         type: 3}
@@ -631,6 +671,11 @@ PrefabInstance:
         type: 3}
       propertyPath: unlockableSkillPaths.Array.size
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5273876300143806364, guid: 225c521a3349a2f4b91efa91e51ec003,
+        type: 3}
+      propertyPath: requiredCraftingItems.Array.size
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 5273876300143806364, guid: 225c521a3349a2f4b91efa91e51ec003,
         type: 3}
@@ -657,6 +702,18 @@ PrefabInstance:
       propertyPath: unlockableSkillPaths.Array.data[2].link
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 5273876300143806364, guid: 225c521a3349a2f4b91efa91e51ec003,
+        type: 3}
+      propertyPath: requiredCraftingItems.Array.data[0].item
+      value: 
+      objectReference: {fileID: 11400000, guid: 7aa794c54aa9b6b428d6a363f087fd4b,
+        type: 2}
+    - target: {fileID: 5273876300143806364, guid: 225c521a3349a2f4b91efa91e51ec003,
+        type: 3}
+      propertyPath: requiredCraftingItems.Array.data[1].item
+      value: 
+      objectReference: {fileID: 11400000, guid: 7cc9cc63e17b09749b66d358ac6efb68,
+        type: 2}
     - target: {fileID: 5273876300143806364, guid: 225c521a3349a2f4b91efa91e51ec003,
         type: 3}
       propertyPath: requiredMaterials.Array.data[0].quantity
@@ -691,6 +748,16 @@ PrefabInstance:
         type: 3}
       propertyPath: skillSlotsUnlockableOptions.Array.data[1]
       value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 5273876300143806364, guid: 225c521a3349a2f4b91efa91e51ec003,
+        type: 3}
+      propertyPath: requiredCraftingItems.Array.data[0].number
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5273876300143806364, guid: 225c521a3349a2f4b91efa91e51ec003,
+        type: 3}
+      propertyPath: requiredCraftingItems.Array.data[1].number
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 5273876300143806364, guid: 225c521a3349a2f4b91efa91e51ec003,
         type: 3}
@@ -1181,7 +1248,7 @@ PrefabInstance:
         type: 3}
       propertyPath: skill
       value: 
-      objectReference: {fileID: 11400000, guid: 01fc8cc5aad1a0b45bc56443aad1e881,
+      objectReference: {fileID: 11400000, guid: 6fc8710de61df0149ba5570c67a64be1,
         type: 2}
     - target: {fileID: 5273876300143806364, guid: 225c521a3349a2f4b91efa91e51ec003,
         type: 3}
@@ -1191,6 +1258,11 @@ PrefabInstance:
     - target: {fileID: 5273876300143806364, guid: 225c521a3349a2f4b91efa91e51ec003,
         type: 3}
       propertyPath: unlockableSkillPaths.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5273876300143806364, guid: 225c521a3349a2f4b91efa91e51ec003,
+        type: 3}
+      propertyPath: requiredCraftingItems.Array.size
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5273876300143806364, guid: 225c521a3349a2f4b91efa91e51ec003,
@@ -1220,6 +1292,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5273876300143806364, guid: 225c521a3349a2f4b91efa91e51ec003,
         type: 3}
+      propertyPath: requiredCraftingItems.Array.data[0].item
+      value: 
+      objectReference: {fileID: 11400000, guid: 430fbc27d52c0b64f986665a62ac2348,
+        type: 2}
+    - target: {fileID: 5273876300143806364, guid: 225c521a3349a2f4b91efa91e51ec003,
+        type: 3}
       propertyPath: requiredMaterials.Array.data[0].quantity
       value: 45
       objectReference: {fileID: 0}
@@ -1242,6 +1320,11 @@ PrefabInstance:
         type: 3}
       propertyPath: skillSlotsUnlockableOptions.Array.data[1]
       value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 5273876300143806364, guid: 225c521a3349a2f4b91efa91e51ec003,
+        type: 3}
+      propertyPath: requiredCraftingItems.Array.data[0].number
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 5273876300143806364, guid: 225c521a3349a2f4b91efa91e51ec003,
         type: 3}
@@ -1420,7 +1503,7 @@ PrefabInstance:
         type: 3}
       propertyPath: skill
       value: 
-      objectReference: {fileID: 11400000, guid: d3ab2bb8ebffdda44b79a9afbce5d888,
+      objectReference: {fileID: 11400000, guid: e6db793d2cad21246bf53d3babd8dc0a,
         type: 2}
     - target: {fileID: 5273876300143806364, guid: 225c521a3349a2f4b91efa91e51ec003,
         type: 3}
@@ -1432,6 +1515,31 @@ PrefabInstance:
       propertyPath: unlockableSkillPaths.Array.size
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5273876300143806364, guid: 225c521a3349a2f4b91efa91e51ec003,
+        type: 3}
+      propertyPath: requiredCraftingItems.Array.size
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 5273876300143806364, guid: 225c521a3349a2f4b91efa91e51ec003,
+        type: 3}
+      propertyPath: UnlockableBySkillSlots.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 5273876300143806364, guid: 225c521a3349a2f4b91efa91e51ec003,
+        type: 3}
+      propertyPath: UnlockableBySkillSlots.Array.data[0]
+      value: 
+      objectReference: {fileID: 5269120156019079624}
+    - target: {fileID: 5273876300143806364, guid: 225c521a3349a2f4b91efa91e51ec003,
+        type: 3}
+      propertyPath: UnlockableBySkillSlots.Array.data[1]
+      value: 
+      objectReference: {fileID: 3289860151698298134}
+    - target: {fileID: 5273876300143806364, guid: 225c521a3349a2f4b91efa91e51ec003,
+        type: 3}
+      propertyPath: UnlockableBySkillSlots.Array.data[2]
+      value: 
+      objectReference: {fileID: 6194021397736183865}
     - target: {fileID: 5273876300143806364, guid: 225c521a3349a2f4b91efa91e51ec003,
         type: 3}
       propertyPath: requiredCraftingMaterials.Array.size
@@ -1457,6 +1565,36 @@ PrefabInstance:
       propertyPath: unlockableSkillPaths.Array.data[2].link
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 5273876300143806364, guid: 225c521a3349a2f4b91efa91e51ec003,
+        type: 3}
+      propertyPath: requiredCraftingItems.Array.data[0].item
+      value: 
+      objectReference: {fileID: 11400000, guid: 7aa794c54aa9b6b428d6a363f087fd4b,
+        type: 2}
+    - target: {fileID: 5273876300143806364, guid: 225c521a3349a2f4b91efa91e51ec003,
+        type: 3}
+      propertyPath: requiredCraftingItems.Array.data[1].item
+      value: 
+      objectReference: {fileID: 11400000, guid: 7cc9cc63e17b09749b66d358ac6efb68,
+        type: 2}
+    - target: {fileID: 5273876300143806364, guid: 225c521a3349a2f4b91efa91e51ec003,
+        type: 3}
+      propertyPath: requiredCraftingItems.Array.data[2].item
+      value: 
+      objectReference: {fileID: 11400000, guid: 430fbc27d52c0b64f986665a62ac2348,
+        type: 2}
+    - target: {fileID: 5273876300143806364, guid: 225c521a3349a2f4b91efa91e51ec003,
+        type: 3}
+      propertyPath: requiredCraftingItems.Array.data[3].item
+      value: 
+      objectReference: {fileID: 11400000, guid: ef5c83cf50670864b9832e31d4313b59,
+        type: 2}
+    - target: {fileID: 5273876300143806364, guid: 225c521a3349a2f4b91efa91e51ec003,
+        type: 3}
+      propertyPath: requiredCraftingItems.Array.data[4].item
+      value: 
+      objectReference: {fileID: 11400000, guid: e05106b0e3211d24fa0dca1609423611,
+        type: 2}
     - target: {fileID: 5273876300143806364, guid: 225c521a3349a2f4b91efa91e51ec003,
         type: 3}
       propertyPath: requiredMaterials.Array.data[0].material
@@ -1522,6 +1660,31 @@ PrefabInstance:
       propertyPath: skillSlotsUnlockableOptions.Array.data[2]
       value: 
       objectReference: {fileID: 5269120156019079624}
+    - target: {fileID: 5273876300143806364, guid: 225c521a3349a2f4b91efa91e51ec003,
+        type: 3}
+      propertyPath: requiredCraftingItems.Array.data[0].number
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5273876300143806364, guid: 225c521a3349a2f4b91efa91e51ec003,
+        type: 3}
+      propertyPath: requiredCraftingItems.Array.data[1].number
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5273876300143806364, guid: 225c521a3349a2f4b91efa91e51ec003,
+        type: 3}
+      propertyPath: requiredCraftingItems.Array.data[2].number
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5273876300143806364, guid: 225c521a3349a2f4b91efa91e51ec003,
+        type: 3}
+      propertyPath: requiredCraftingItems.Array.data[3].number
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5273876300143806364, guid: 225c521a3349a2f4b91efa91e51ec003,
+        type: 3}
+      propertyPath: requiredCraftingItems.Array.data[4].number
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 5273876300143806364, guid: 225c521a3349a2f4b91efa91e51ec003,
         type: 3}
       propertyPath: requiredCraftingMaterials.Array.data[0].item

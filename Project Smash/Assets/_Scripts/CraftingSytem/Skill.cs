@@ -1,17 +1,32 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using PSmash.Stats;
+using PSmash.Inventories;
 
-namespace PSmash.LevelUpSystem
+namespace PSmash.CraftingSystem
 {
-    [CreateAssetMenu(fileName = "New Skill", menuName = "Skills")]
+    [CreateAssetMenu(menuName = "Skills/ Skill")]
+
     public class Skill : ScriptableObject
     {
-        public Sprite sprite;
-        public StatsList stat;
-        public float value;
-        public string description;
-    }
-}
+        [SerializeField] Item item = null;
+        [SerializeField] Sprite sprite = null;
+        [SerializeField] [TextArea] string description = null;
+        
+        public Item GetItem()
+        {
+            return item;
+        }
+         
+        public Sprite GetSprite()
+        {
+            return sprite;
+        }
 
+        public string GetDescription()
+        {
+            return description;
+        }
+    }
+
+}

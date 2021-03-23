@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
-using PSmash.Items;
+using PSmash.Inventories;
 
-namespace PSmash.UI
+namespace PSmash.UI.CraftingSytem
 {
     public class CraftingItemSlotsUI : MonoBehaviour
     {

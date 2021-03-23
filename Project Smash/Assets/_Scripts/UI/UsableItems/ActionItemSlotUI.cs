@@ -1,8 +1,6 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using PSmash.Inventories;
 using TMPro;
-using PSmash.Items;
+using UnityEngine;
 using UnityEngine.UI;
 
 namespace PSmash.UI
@@ -12,15 +10,15 @@ namespace PSmash.UI
         [SerializeField] TextMeshProUGUI text = null;
         [SerializeField] Image image = null;
 
-        public void UpdateItemInfo(ActionableItem actionableItem)
+        public void UpdateItemInfo(Equipment.EquipmentSlots slot)
         {
             //print(actionableItem.name);
             //print(actionableItem.GetNumber());
-            image.sprite = actionableItem.GetSprite();
+            image.sprite = slot.item.GetSprite();
             if (text == null)
                 return;
             text.enabled = true;
-            text.text = actionableItem.GetNumber().ToString();
+            text.text = slot.number.ToString();
         }
     }
 

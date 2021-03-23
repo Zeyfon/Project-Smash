@@ -1,4 +1,4 @@
-﻿using PSmash.Items;
+﻿using PSmash.Inventories;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -9,40 +9,41 @@ namespace PSmash.UI
         [SerializeField] ActionItemSlotUI centerItem = null;
         [SerializeField] ActionItemSlotUI leftItem = null;
 
-        Inventory playerInventory;
+        Equipment playerEquipment;
         private void Awake()
         {
-            playerInventory = Inventory.GetPlayerInventory();
+            playerEquipment = Inventory.GetPlayerInventory().GetComponentInParent<Equipment>();
             //print(playerInventory);
         }
 
         private void OnEnable()
         {
-            playerInventory.onEquippedActionItemChange += EquippedActionItemChange;
+            playerEquipment.onEquippedActionItemChange += EquippedActionItemChange;
         }
 
         private void OnDisable()
         {
-            playerInventory.onEquippedActionItemChange -= EquippedActionItemChange;
+            playerEquipment.onEquippedActionItemChange -= EquippedActionItemChange;
         }
 
         private void EquippedActionItemChange(int index)
         {
             //print("Update Action Items UI ");
-            List<ActionableItem> items = playerInventory.GetActionableItems();
+            //List<ActionableItem> items = playerInventory.GetActionableItems();
+            Equipment.EquipmentSlots[] slots = playerEquipment.GetActionableItems();
 
-            int previousIndex = GetPreviousItem(items, index);
+            int previousIndex = GetPreviousItem(slots, index);
 
-            leftItem.UpdateItemInfo(items[previousIndex]);
-            centerItem.UpdateItemInfo(items[index]);
+            leftItem.UpdateItemInfo(slots[previousIndex]);
+            centerItem.UpdateItemInfo(slots[index]);
         }
 
-        int GetPreviousItem(List<ActionableItem> items, int index)
+        int GetPreviousItem(Equipment.EquipmentSlots[] slots, int index)
         {
             int newIndex;
             if (index == 0)
             {
-                newIndex = items.Count - 1;
+                newIndex = slots.Length - 1;
             }
             else
             {

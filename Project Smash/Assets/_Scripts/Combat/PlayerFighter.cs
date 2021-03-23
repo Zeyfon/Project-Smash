@@ -3,6 +3,7 @@ using System;
 using System.Collections;
 using UnityEngine;
 using PSmash.Combat.Weapons;
+using PSmash.Inventories;
 using PSmash.Stats;
 
 namespace PSmash.Combat
@@ -152,7 +153,7 @@ namespace PSmash.Combat
         void FinisherAttack()
         {
             if (targetTransform == null) return;
-            targetTransform.GetComponent<EnemyHealth>().DeliverFinishingBlow(transform.position, (int)baseStats.GetStat(StatsList.Damage) * finisherAttackFactor);
+            targetTransform.GetComponent<EnemyHealth>().DeliverFinishingBlow(transform.position, (int)baseStats.GetStat(StatsList.Attack) * finisherAttackFactor);
             //Camera Shake
             print("Camera Effect");
             OnCameraShake();
@@ -224,7 +225,7 @@ namespace PSmash.Combat
                 IDamagable target = coll.GetComponent<IDamagable>();
                 if (target == null || coll.GetComponent<Projectile>())
                     continue;
-                target.TakeDamage(transform, currentWeapon, baseStats.GetStat(StatsList.Damage));
+                target.TakeDamage(transform, currentWeapon, baseStats.GetStat(StatsList.Attack));
                 //print("Sendingdamage from player to  " + target);
 
             }
