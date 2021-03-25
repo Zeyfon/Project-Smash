@@ -1,21 +1,29 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using PSmash.Core;
 namespace PSmash.SceneManagement
 {
     public class UIFader : MonoBehaviour
     {
-        // Start is called before the first frame update
-        void Start()
-        {
+        [SerializeField] CanvasGroup canvasGroup = null;
 
+        public IEnumerator FadeOut(float time)
+        {
+            Fader fader = new Fader();
+            yield return fader.FadeOut(canvasGroup, time);
         }
 
-        // Update is called once per frame
-        void Update()
+        public IEnumerator FadeIn(float time)
         {
+            Fader fader = new Fader();
+            yield return fader.FadeIn(canvasGroup, time);
+        }
 
+        public void FadeOutInmediate()
+        {
+            Fader fader = new Fader();
+            fader.InstantFadeOut(canvasGroup);
         }
     }
 

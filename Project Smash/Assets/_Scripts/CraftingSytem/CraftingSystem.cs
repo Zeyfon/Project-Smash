@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using PSmash.Menus;
 using PSmash.Inventories;
-using PSmash.UI.CraftingSytem;
 
 
 namespace PSmash.CraftingSystem
@@ -52,7 +51,12 @@ namespace PSmash.CraftingSystem
 
         private void OnEnable()
         {
-            TentMenu.OnMenuOpen += OpenMenu;
+            TentMenu.OnNextMenuOpen += OpenMenu;
+        }
+
+        private void OnDisable()
+        {
+            TentMenu.OnNextMenuOpen -= OpenMenu;
         }
 
         void OpenMenu()
@@ -80,7 +84,7 @@ namespace PSmash.CraftingSystem
         {
             print("Backtracking Menu ");
             CloseMenu();
-            tentMenu.OpenMenu();
+            tentMenu.OpenTentMenuAndDoCheckpoint();
             _controller.UI.Cancel.performed -= ctx => BacktrackMenu();
             _controller.UI.Disable();
         }

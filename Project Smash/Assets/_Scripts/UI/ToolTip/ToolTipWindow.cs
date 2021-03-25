@@ -25,6 +25,11 @@ namespace PSmash.UI
             CraftingSystemUI.onSelectionChange += UpdateToolTipInfo;
         }
 
+        private void OnDisable()
+        {
+            CraftingSystemUI.onSelectionChange -= UpdateToolTipInfo;
+        }
+
 
         public void UpdateToolTipInfo(SkillSlot skillSlot)
         {

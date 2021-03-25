@@ -21,6 +21,14 @@ namespace PSmash.Items
         [SerializeField] Sprite destroyedSprite = null;
         [SerializeField] GameObject dropItem = null;
 
+        [SerializeField] ObjectType objectType;
+
+        public enum ObjectType
+        {
+            barrel,
+            crate,
+            rock
+        }
 
         int counter = 0;
 
@@ -68,10 +76,9 @@ namespace PSmash.Items
             Destroy(psClone);
         }
 
-        public void Respawn()
+        public ObjectType GetObjectType()
         {
-            counter = 0;
-            spriteRender.enabled = true;
+            return objectType;
         }
     }
 }

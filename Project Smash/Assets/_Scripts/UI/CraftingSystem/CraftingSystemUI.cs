@@ -18,7 +18,7 @@ namespace PSmash.UI.CraftingSytem
         EventSystem eventSystem;
         GameObject previousGameObject;
 
-        private void Awake()
+        private void Start()
         {
             eventSystem = FindObjectOfType<EventSystem>();
         }

@@ -1,14 +1,15 @@
 ﻿using HutongGames.PlayMaker;
 using PSmash.Attributes;
+using PSmash.Saving;
+using PSmash.SceneManagement;
 //using PSmash.Combat;
 using Spine.Unity;
 using System.Collections;
 using UnityEngine;
-using PSmash.SceneManagement;
 
 namespace PSmash.Movement
 {
-    public class PlayerMovement : MonoBehaviour
+    public class PlayerMovement : MonoBehaviour, ISaveable
     {
 
         #region Inspector
@@ -754,12 +755,28 @@ namespace PSmash.Movement
             }
         }
 
+        public void CaptureState()
+        {
+            ES3.Save("playerPosition", transform.position);
+        }
+        public void RestoreState()
+        {
+            if (ES3.KeyExists("playerPosition"))
+            {
+                Vector3 position = (Vector3)ES3.Load("playerPosition");
+                rb.MovePosition(position);
+            }
+
+
+        }
 
 
         private void OnDrawGizmosSelected()
         {
             Gizmos.DrawWireSphere(groundCheck.position, groundCheckRadius);
         }
+
+
     }
 
 }

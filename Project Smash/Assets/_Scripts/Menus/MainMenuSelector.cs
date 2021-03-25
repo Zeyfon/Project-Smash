@@ -18,9 +18,13 @@ namespace PSmash.Menus
 
         int currentStarsQuantity = 0;
 
-        private void Awake()
+        private void Start()
         {
             eventSystem = GameObject.FindObjectOfType<EventSystem>();
+            if(eventSystem == null)
+            {
+                Debug.LogWarning("Main Menu did not find an eventSystem");
+            }
         }
 
         private void OnEnable()

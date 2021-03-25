@@ -17,7 +17,10 @@ namespace PSmash.Inventories
 
 
         //PUBLIC
-
+        public string GetID()
+        {
+            return itemID;
+        }
         public Sprite GetSprite()
         {
             return sprite;

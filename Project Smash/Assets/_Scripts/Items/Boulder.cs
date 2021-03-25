@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace PSmash.Items
 {
-    public class Boulder : MonoBehaviour, IDamagable, IRespawn
+    public class Boulder : MonoBehaviour, IDamagable
     {
         [SerializeField] Weapon interactiveWeapon = null;
         [SerializeField] Rigidbody2D rb;
@@ -138,12 +138,6 @@ namespace PSmash.Items
             {
                 collision.GetComponent<IDamagable>().TakeDamage(transform, interactiveWeapon, damage);
             }
-        }
-
-        public void Respawn()
-        {
-            StopMovement();
-            transform.position = initialPosition;
         }
     }
 

@@ -157,7 +157,7 @@ namespace PSmash.CraftingSystem
         /// </summary>
         void Unlocked()
         {
-            print(skill.name + "  is unlocked");
+            //print(skill.name + "  is unlocked");
             UpdateSkillSlotVisualState(null);
             UpdateLinks("White");
         }
@@ -167,7 +167,7 @@ namespace PSmash.CraftingSystem
         /// </summary>
         void Unlockable()
         {
-            print(skill.name + " is unlockable");
+            //print(skill.name + " is unlockable");
             UpdateSkillSlotVisualState(saturationCeroMaterial);
             UpdateLinks("Dark");
             EnableWhiteRing();
@@ -179,7 +179,7 @@ namespace PSmash.CraftingSystem
         /// </summary>
         void Locked()
         {
-            print(skill.name + " is locked");
+            //print(skill.name + " is locked");
             UpdateSkillSlotVisualState(saturationCeroMaterial);
             UpdateLinks("Dark");
             DisableWhiteRing();
