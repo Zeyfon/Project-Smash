@@ -11,7 +11,7 @@ namespace PSmash.Temporal
 
         EventSystem eventSystem;
 
-        private void Awake()
+        private void Start()
         {
             eventSystem = GameObject.FindObjectOfType<EventSystem>();
         }

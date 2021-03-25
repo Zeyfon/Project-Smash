@@ -43,12 +43,6 @@ namespace PSmash.UI
                     damageBar.fillAmount -= Time.deltaTime / fillSpeed;
                 }
             }
-
-            //text.text = String.Format("{0:0}/{1:0}", health.GetHealthPoints(), health.GetMaxHealthPoints());
-            //if(healthBar.localScale <)
-            //healthBar.localScale = new Vector2(health.GetHealth() / health.GetMaxHealthPoints(), transform.localScale.y);
-            //currentHealthText.text = health.GetHealth().ToString();
-            //maxHealthText.text = health.GetMaxHealthPoints().ToString();
         }
 
         private void OnEnable()
@@ -60,7 +54,7 @@ namespace PSmash.UI
 
         private void OnHealed()
         {
-            print("UI Health Healed");
+            //print("UI Health Healed");
             healthBar.fillAmount = health.GetHealth() / health.GetMaxHealthPoints();
             damageBar.fillAmount = healthBar.fillAmount;
             UpdateText();
@@ -68,7 +62,7 @@ namespace PSmash.UI
 
         private void OnDamaged()
         {
-            print("UI Health Damaged");
+            //print("UI Health Damaged");
             damageTimer = timeToDecrease;
             healthBar.fillAmount =  health.GetHealth() / health.GetMaxHealthPoints();
             UpdateText();

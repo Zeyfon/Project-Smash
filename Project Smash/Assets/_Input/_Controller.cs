@@ -940,6 +940,71 @@ public class @_Controller : IInputActionCollection, IDisposable
                     ""isPartOfComposite"": false
                 }
             ]
+        },
+        {
+            ""name"": ""GameManagement"",
+            ""id"": ""49ec662b-2cc2-4633-bfb5-cbce482367fc"",
+            ""actions"": [
+                {
+                    ""name"": ""Save"",
+                    ""type"": ""Button"",
+                    ""id"": ""d28b7b44-9255-4f60-87f7-52fc7d0bdac4"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
+                },
+                {
+                    ""name"": ""Load"",
+                    ""type"": ""Button"",
+                    ""id"": ""06fe26ce-ce28-4830-b24c-c4772b2e22a9"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
+                },
+                {
+                    ""name"": ""Delete"",
+                    ""type"": ""Button"",
+                    ""id"": ""21087661-25b9-4e0b-8a6e-bdc3a73cbf14"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""debd36a1-93a2-4b95-89ea-ed9dacf497ba"",
+                    ""path"": ""<Keyboard>/j"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard&Mouse"",
+                    ""action"": ""Save"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""b52367cd-d73d-4a92-a635-cb7d235dac6c"",
+                    ""path"": ""<Keyboard>/k"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Load"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""fc27302d-cb73-47f3-9d8e-a9f1b7eaff05"",
+                    ""path"": ""<Keyboard>/delete"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard&Mouse"",
+                    ""action"": ""Delete"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                }
+            ]
         }
     ],
     ""controlSchemes"": [
@@ -1040,6 +1105,11 @@ public class @_Controller : IInputActionCollection, IDisposable
         m_WeaponSelection_DPadRight = m_WeaponSelection.FindAction("DPadRight", throwIfNotFound: true);
         m_WeaponSelection_DPadDown = m_WeaponSelection.FindAction("DPadDown", throwIfNotFound: true);
         m_WeaponSelection_DPadLeft = m_WeaponSelection.FindAction("DPadLeft", throwIfNotFound: true);
+        // GameManagement
+        m_GameManagement = asset.FindActionMap("GameManagement", throwIfNotFound: true);
+        m_GameManagement_Save = m_GameManagement.FindAction("Save", throwIfNotFound: true);
+        m_GameManagement_Load = m_GameManagement.FindAction("Load", throwIfNotFound: true);
+        m_GameManagement_Delete = m_GameManagement.FindAction("Delete", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -1392,6 +1462,55 @@ public class @_Controller : IInputActionCollection, IDisposable
         }
     }
     public WeaponSelectionActions @WeaponSelection => new WeaponSelectionActions(this);
+
+    // GameManagement
+    private readonly InputActionMap m_GameManagement;
+    private IGameManagementActions m_GameManagementActionsCallbackInterface;
+    private readonly InputAction m_GameManagement_Save;
+    private readonly InputAction m_GameManagement_Load;
+    private readonly InputAction m_GameManagement_Delete;
+    public struct GameManagementActions
+    {
+        private @_Controller m_Wrapper;
+        public GameManagementActions(@_Controller wrapper) { m_Wrapper = wrapper; }
+        public InputAction @Save => m_Wrapper.m_GameManagement_Save;
+        public InputAction @Load => m_Wrapper.m_GameManagement_Load;
+        public InputAction @Delete => m_Wrapper.m_GameManagement_Delete;
+        public InputActionMap Get() { return m_Wrapper.m_GameManagement; }
+        public void Enable() { Get().Enable(); }
+        public void Disable() { Get().Disable(); }
+        public bool enabled => Get().enabled;
+        public static implicit operator InputActionMap(GameManagementActions set) { return set.Get(); }
+        public void SetCallbacks(IGameManagementActions instance)
+        {
+            if (m_Wrapper.m_GameManagementActionsCallbackInterface != null)
+            {
+                @Save.started -= m_Wrapper.m_GameManagementActionsCallbackInterface.OnSave;
+                @Save.performed -= m_Wrapper.m_GameManagementActionsCallbackInterface.OnSave;
+                @Save.canceled -= m_Wrapper.m_GameManagementActionsCallbackInterface.OnSave;
+                @Load.started -= m_Wrapper.m_GameManagementActionsCallbackInterface.OnLoad;
+                @Load.performed -= m_Wrapper.m_GameManagementActionsCallbackInterface.OnLoad;
+                @Load.canceled -= m_Wrapper.m_GameManagementActionsCallbackInterface.OnLoad;
+                @Delete.started -= m_Wrapper.m_GameManagementActionsCallbackInterface.OnDelete;
+                @Delete.performed -= m_Wrapper.m_GameManagementActionsCallbackInterface.OnDelete;
+                @Delete.canceled -= m_Wrapper.m_GameManagementActionsCallbackInterface.OnDelete;
+            }
+            m_Wrapper.m_GameManagementActionsCallbackInterface = instance;
+            if (instance != null)
+            {
+                @Save.started += instance.OnSave;
+                @Save.performed += instance.OnSave;
+                @Save.canceled += instance.OnSave;
+                @Load.started += instance.OnLoad;
+                @Load.performed += instance.OnLoad;
+                @Load.canceled += instance.OnLoad;
+                @Delete.started += instance.OnDelete;
+                @Delete.performed += instance.OnDelete;
+                @Delete.canceled += instance.OnDelete;
+            }
+        }
+    }
+    public GameManagementActions @GameManagement => new GameManagementActions(this);
     private int m_KeyboardMouseSchemeIndex = -1;
     public InputControlScheme KeyboardMouseScheme
     {
@@ -1474,5 +1593,11 @@ public class @_Controller : IInputActionCollection, IDisposable
         void OnDPadRight(InputAction.CallbackContext context);
         void OnDPadDown(InputAction.CallbackContext context);
         void OnDPadLeft(InputAction.CallbackContext context);
+    }
+    public interface IGameManagementActions
+    {
+        void OnSave(InputAction.CallbackContext context);
+        void OnLoad(InputAction.CallbackContext context);
+        void OnDelete(InputAction.CallbackContext context);
     }
 }

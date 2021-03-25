@@ -1,21 +1,21 @@
 ﻿using PSmash.Attributes;
 using PSmash.Items.Doors;
 using PSmash.Items.Traps;
-using PSmash.Items;
+using PSmash.Inventories;
 using PSmash.Movement;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
 using PSmash.Saving;
 using PSmash.Menus;
-using PSmash.LevelUpSystem;
+using PSmash.CraftingSystem;
 
 namespace PSmash.InputSystem
 {
     public class InputHandler : MonoBehaviour
     {
         [SerializeField] PlayerMovement pMovement = null;
-        [SerializeField] ItemHandler itemsHandler = null;
+        [SerializeField] Equipment equipment = null;
 
         Collider2D interactableCollider;
         PlayMakerFSM pmPlayerController = null;
@@ -95,18 +95,15 @@ namespace PSmash.InputSystem
             _controller.Player.ButtonY.canceled += ctx => ButtonYReleased();
             _controller.Player.ButtonRB.started += cx => ButtonRBPressed();
             _controller.Player.ButtonRB.canceled += ctx => ButtonRBReleased();
-            //_controller.Player.ButtonLB.started += ctx => ButtonLBPressed();
-            //_controller.Player.ButtonLB.canceled += ctx => ButtonLBReleased();
             _controller.Player.ItemUse.started += ctx => ItemButtonPressed();
             _controller.Player.ItemUse.canceled += ctx => ItemButonReleased();
             _controller.Player.ItemChangeRight.performed += ctx => ItemChangeRight();
             _controller.Player.ItemChangeLeft.performed += ctx => ItemChangeLeft();
             _controller.Player.ButtonStart.started += ctx => ButtonStartPressed();
 
-            //_controller.Player.Quit.performed += ctx => QuitKeyPressed();
-            CraftingSystem.OnMenuClose += EnablePlayerInput;
+            CraftingSystem.CraftingSystem.OnMenuClose += EnablePlayerInput;
             MainMenu.OnMenuClose += EnablePlayerInput;
-            TentMenu.OnMenuClose += EnablePlayerInput;
+            TentMenu.OnTentMenuClose += EnablePlayerInput;
             EventManager.PauseGame += PauseGame;
             EventManager.UnpauseGame += UnpauseGame;
             EventManager.PlayerGotBoots += PlayerGotBoots;
@@ -139,7 +136,9 @@ namespace PSmash.InputSystem
             //_controller.Player.Quit.performed -= ctx => QuitKeyPressed();
             _controller.Player.ButtonStart.started -= ctx => ButtonStartPressed();
 
-
+            CraftingSystem.CraftingSystem.OnMenuClose -= EnablePlayerInput;
+            MainMenu.OnMenuClose -= EnablePlayerInput;
+            TentMenu.OnTentMenuClose -= EnablePlayerInput;
             EventManager.PauseGame -= PauseGame;
             EventManager.UnpauseGame -= UnpauseGame;
             EventManager.PlayerGotBoots -= PlayerGotBoots;
@@ -276,13 +275,13 @@ namespace PSmash.InputSystem
         private void ItemChangeLeft()
         {
             print("Item Pressed Left");
-            itemsHandler.ChangeItem(false);
+            equipment.ChangeItem(false);
         }
 
         private void ItemChangeRight()
         {
             print("Item Pressed Right");
-            itemsHandler.ChangeItem(true);
+            equipment.ChangeItem(true);
         }
 
         private void ButtonStartPressed()
@@ -365,7 +364,6 @@ namespace PSmash.InputSystem
                 _controller.Player.Disable();
                 movement = new Vector2(0, 0);
             }
-            this.enabled = isEnabled;
         }
 
         #endregion

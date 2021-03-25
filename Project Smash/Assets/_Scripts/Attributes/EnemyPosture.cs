@@ -15,6 +15,7 @@ namespace PSmash.Attributes
         [SerializeField] UnityEvent onStunStateStart;
         [SerializeField] UnityEvent onStunStateEnded;
         [SerializeField] UnityEvent onDisablePostureBar;
+        [SerializeField] UnityEvent onEnablePostureBar;
 
 
         float timerCanRegen = 0;
@@ -81,11 +82,18 @@ namespace PSmash.Attributes
             onStunStateEnded.Invoke();
         }
 
-        internal void DisablePostureBar()
+        public void DisablePostureBar()
         {
             print("Disabling Posture Bar");
             onDisablePostureBar.Invoke();
             this.enabled = false;
+        }
+
+        public void EnablePostureBar()
+        {
+            print("Disabling Posture Bar");
+            onEnablePostureBar.Invoke();
+            this.enabled = true;
         }
     }
 

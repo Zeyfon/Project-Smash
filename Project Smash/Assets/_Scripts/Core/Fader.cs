@@ -22,6 +22,12 @@ namespace PSmash.Core
                 yield return null;
             }
         }
+
+        public IEnumerator InstantFadeOut(CanvasGroup canvasGroup)
+        {
+            canvasGroup.alpha = 0;
+            yield return null;
+        }
     }
 }
 
