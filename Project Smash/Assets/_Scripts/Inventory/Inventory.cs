@@ -2,13 +2,14 @@
 using PSmash.Stats;
 using System.Collections.Generic;
 using UnityEngine;
+using PSmash.Saving;
 
 namespace PSmash.Inventories
 {
-    public class Inventory : MonoBehaviour
+    public class Inventory : MonoBehaviour, ISaveable
     {
         //CONFIG
-        [SerializeField] CraftingSlot[] craftingslot;
+        [SerializeField] CraftingSlot[] slots;
 
         List<Item> inventoryItems = new List<Item>();
 
@@ -20,23 +21,6 @@ namespace PSmash.Inventories
             {
                 inventoryItems.Add(item);
             }
-            //Get the actionable items within the previous gotten list
-            //foreach(Item item in inventoryItems)
-            //{
-            //    if(item is ActionableItem)
-            //    {
-            //        actionableItems.Add(item as ActionableItem);
-            //    }
-            //}
-            //Get the crafting items within the previous gotten list
-            //foreach (Item item in inventoryItems)
-            //{
-            //    if (item is CraftingItem)
-            //    {
-            //        craftingItems.Add(item as CraftingItem);
-            //    }
-            //}
-            //ReplenishActionableItems();
         }
 
         private void OnEnable()
@@ -44,21 +28,27 @@ namespace PSmash.Inventories
             EnemyDrop.onDropCollected += CraftingItemCollected;
         }
 
+        void OnDisable()
+        {
+            EnemyDrop.onDropCollected -= CraftingItemCollected;
+        }
+
         private void CraftingItemCollected(CraftingItem craftingItem)
         {
-            foreach(CraftingSlot item in craftingslot)
+            print("Crafting item Collected");
+            foreach(CraftingSlot slot in slots)
             {
-                if(item.item == craftingItem)
+                if(slot.item == craftingItem)
                 {
-                    item.item.UpdateNumberByThisValue(1);
-                    print(item + " was collected");
+                    slot.number ++;
+                    print(slot + " was collected");
                 }
             }
         }
 
         public int GetThisCraftingItemNumber(CraftingItem craftingItem) 
         {
-            foreach(CraftingSlot slot in craftingslot)
+            foreach(CraftingSlot slot in slots)
             {
                 if(craftingItem == slot.item)
                 {
@@ -71,7 +61,7 @@ namespace PSmash.Inventories
 
         public void UpdateThisCraftingItem(CraftingItem craftingItem, int number)
         {
-            foreach(CraftingSlot slot in craftingslot)
+            foreach(CraftingSlot slot in slots)
             {
                 if(slot.item == craftingItem)
                 {
@@ -106,6 +96,36 @@ namespace PSmash.Inventories
                 GetComponentInParent<BaseStats>().UnlockSkill(skill as StatusItem);
             }
         }
-    }
 
+        public void CaptureState()
+        {
+            print("Inventory being captured");
+            Dictionary<string, int> inventoryState = new Dictionary<string, int>();
+            foreach (CraftingSlot slot in slots)
+            {
+                inventoryState.Add(slot.item.GetID(), slot.number);
+            }
+
+            ES3.Save("inventory", inventoryState);
+        }
+
+        public void RestoreState()
+        {
+            if (ES3.KeyExists("inventory"))
+            {
+                print("Inventory being restored");
+                Dictionary<string, int> inventoryState = (Dictionary<string, int>)ES3.Load("inventory");
+                foreach (string itemName in inventoryState.Keys)
+                {
+                    foreach (CraftingSlot slot in slots)
+                    {
+                        if (slot.item.GetID() == itemName)
+                        {
+                            slot.number = inventoryState[itemName];
+                        }
+                    }
+                }
+            }
+        }
+    }
 }

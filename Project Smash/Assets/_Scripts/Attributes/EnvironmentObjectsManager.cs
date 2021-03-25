@@ -1,33 +1,66 @@
-﻿using System.Collections;
+﻿using PSmash.Items;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using PSmash.Saving;
 
-namespace PSmash.Attributes
+namespace PSmash.Checkpoints
 {
     public class EnvironmentObjectsManager : MonoBehaviour
     {
-        List<IRespawn> respawns = new List<IRespawn>();
-    // Start is called before the first frame update
-        void Start()
+        [SerializeField] GameObject boulderPrefab = null;
+
+        struct ObjectSlot
         {
-            foreach(IRespawn respawn in GetComponentsInChildren<IRespawn>())
+            public GameObject prefab;
+            public Vector2 position;
+        }
+
+        List<ObjectSlot> slots = new List<ObjectSlot>();
+        // Start is called before the first frame update
+        void Awake()
+        {
+            foreach (Boulder obj in GetComponentsInChildren<Boulder>())
             {
-                respawns.Add(respawn);
+
+                ObjectSlot slot = new ObjectSlot();
+                slot.prefab = boulderPrefab;
+                slot.position = obj.transform.position;
+                print(slot.prefab.name);
+                slots.Add(slot);
             }
         }
 
         private void OnEnable()
         {
-            Tent.OnTentMenuOpen += RespawnObjects;
+            Checkpoint.onCheckpointPerformed += RespawnAllBoulders;
         }
 
-        void RespawnObjects()
+        private void OnDisable()
         {
-            foreach(IRespawn respawn in respawns)
+            Checkpoint.onCheckpointPerformed -= RespawnAllBoulders;
+
+        }
+
+        void RespawnAllBoulders()
+        {
+            StartCoroutine(RespawnBoulders());
+
+        }
+
+        IEnumerator RespawnBoulders()
+        {
+            foreach (Boulder boulderInstance in GetComponentsInChildren<Boulder>())
             {
-                respawn.Respawn();
+                Destroy(boulderInstance.gameObject);
             }
+            print("Enemies destroyed");
+            foreach (ObjectSlot slot in slots)
+            {
+                Instantiate(slot.prefab, slot.position, Quaternion.identity, transform);
+                
+            }
+            print("Enemies respawned");
+            yield return null;
         }
     }
 

@@ -1,14 +1,12 @@
 ﻿using PSmash.Analytics;
-using System;
+using PSmash.Combat.Weapons;
+using PSmash.Checkpoints;
+using PSmash.Stats;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Analytics;
 using UnityEngine.SceneManagement;
-using UnityEngine.Events;
-using PSmash.Stats;
-using PSmash.Combat.Weapons;
-using PSmash.Saving;
 
 namespace PSmash.Attributes
 {
@@ -43,13 +41,22 @@ namespace PSmash.Attributes
 
         private void OnEnable()
         {
+            //print("Enabled");
             Tent.OnTentMenuOpen += RestorePlayer;
+        }
+
+        private void OnDisable()
+        {
+            //print("Disabled");
+            Tent.OnTentMenuOpen -= RestorePlayer;
         }
 
 
         void RestorePlayer()
         {
-            health = GetComponent<BaseStats>().GetStat(StatsList.Health);
+            //print(this.gameObject);
+            BaseStats baseStats = GetComponent<BaseStats>();
+            health = baseStats.GetStat(StatsList.Health);
             onHealed();
         }
         //Take damage will always be to damage the player

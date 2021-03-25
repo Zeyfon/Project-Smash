@@ -103,7 +103,7 @@ namespace PSmash.Attributes
                 posture.posture = posture.SubstractDamageFromPosture(postureDamage);
                 if (posture.posture <= 0)
                 {
-                    print("DAMAGED_STUNNED Event to the fsm " + pm.FsmName);
+                    //print("DAMAGED_STUNNED Event to the fsm " + pm.FsmName);
                     posture.OnStunStateStart();
                     DamageHealth(healthDamage, 100);
                     pm.SendEvent("DAMAGED_STUNNED");
@@ -114,14 +114,14 @@ namespace PSmash.Attributes
                     FsmEventData myfsmEventData = new FsmEventData();
                     myfsmEventData.FloatData = damage;
                     HutongGames.PlayMaker.Fsm.EventData = myfsmEventData;
-                    print("DAMAGED_NOSTUNNED Event to the fsm " + pm.FsmName);
+                    //print("DAMAGED_NOSTUNNED Event to the fsm " + pm.FsmName);
                     DamageHealth(healthDamage, totalPenetrationPercentage);
                     pm.SendEvent("DAMAGED_NOSTUNNED");
                 }
             }
             else
             {
-                print("DAMAGED_NOSTUNNED Event to the fsm " + pm.FsmName);
+                //print("DAMAGED_NOSTUNNED Event to the fsm " + pm.FsmName);
                 DamageHealth(healthDamage, totalPenetrationPercentage);
                 pm.SendEvent("DAMAGED_NOSTUNNED");
             }
@@ -154,7 +154,7 @@ namespace PSmash.Attributes
 
         public void Respawn()
         {
-            print(gameObject.name + "  Respawned");
+            //print(gameObject.name + "  Respawned");
             transform.parent.gameObject.SetActive(true);
             health = baseStats.GetStat(StatsList.Health);
             isDead = false;

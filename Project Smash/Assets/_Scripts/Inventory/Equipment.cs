@@ -1,8 +1,5 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using PSmash.Checkpoints;
 using UnityEngine;
-using PSmash.Saving;
-using System;
 
 namespace PSmash.Inventories
 {
@@ -26,6 +23,11 @@ namespace PSmash.Inventories
         private void OnEnable()
         {
             Tent.OnTentMenuOpen += ReplenishActionableItems;
+        }
+
+        private void OnDisable()
+        {
+            Tent.OnTentMenuOpen -= ReplenishActionableItems;
         }
 
         void ReplenishActionableItems()
