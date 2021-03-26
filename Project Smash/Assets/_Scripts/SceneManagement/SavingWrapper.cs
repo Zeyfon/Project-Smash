@@ -39,6 +39,11 @@ namespace PSmash.SceneManagement
             //yield return fader.FadeIn(fadeInTime);
         }
 
+        public void LoadLastScene2()
+        {
+            StartCoroutine(GetComponent<SavingSystem>().LoadLastScene(defaultSaveFile));
+        }
+
         public void Save()
         {
             GetComponent<SavingSystem>().Save(defaultSaveFile);

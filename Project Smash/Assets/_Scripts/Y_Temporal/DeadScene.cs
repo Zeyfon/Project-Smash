@@ -1,12 +1,13 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SceneManagement;
+using PSmash.SceneManagement;
 
 namespace PSmash.Temporal
 {
-    public class StartScene : MonoBehaviour
+    public class DeadScene : MonoBehaviour
     {
+
         // Start is called before the first frame update
         void Start()
         {
@@ -16,7 +17,7 @@ namespace PSmash.Temporal
         IEnumerator TestStarter()
         {
             yield return new WaitForSeconds(1);
-            SceneManager.LoadScene(1);
+            FindObjectOfType<SavingWrapper>().LoadLastScene2();
         }
         // Update is called once per fram
     }
