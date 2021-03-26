@@ -12,7 +12,7 @@ namespace PSmash.Saving
         {
             if (collision.GetComponent<IInteractable>() != null)
             {
-                print("Entered tent");
+                //print("Entered tent");
                 interactableObject = collision;
             }
         }

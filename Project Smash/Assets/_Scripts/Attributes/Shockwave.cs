@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
-namespace PSmash.Attribute
+namespace PSmash.Attributes
 {
     public class Shockwave : MonoBehaviour
     {

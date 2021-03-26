@@ -2,7 +2,7 @@
 using PSmash.Stats;
 using System.Collections.Generic;
 using UnityEngine;
-using PSmash.Saving;
+using GameDevTV.Saving;
 
 namespace PSmash.Inventories
 {
@@ -35,13 +35,13 @@ namespace PSmash.Inventories
 
         private void CraftingItemCollected(CraftingItem craftingItem)
         {
-            print("Crafting item Collected");
+            //print("Crafting item Collected");
             foreach(CraftingSlot slot in slots)
             {
                 if(slot.item == craftingItem)
                 {
                     slot.number ++;
-                    print(slot + " was collected");
+                    //print(slot + " was collected");
                 }
             }
         }
@@ -86,7 +86,7 @@ namespace PSmash.Inventories
 
         public void UnlockSkill(Item skill)
         {
-            print("In Inventory unlocking the skill  " + skill.name);
+            //print("In Inventory unlocking the skill  " + skill.name);
             if(skill is ActionableItem)
             {
                 GetComponentInParent<Equipment>().UpgradeStock(skill);
@@ -97,24 +97,23 @@ namespace PSmash.Inventories
             }
         }
 
-        public void CaptureState()
+        public object CaptureState()
         {
-            print("Inventory being captured");
+            //print("Inventory being captured");
             Dictionary<string, int> inventoryState = new Dictionary<string, int>();
             foreach (CraftingSlot slot in slots)
             {
                 inventoryState.Add(slot.item.GetID(), slot.number);
             }
-
-            ES3.Save("inventory", inventoryState);
+            return inventoryState;
         }
 
-        public void RestoreState()
+        public void RestoreState(object state)
         {
             if (ES3.KeyExists("inventory"))
             {
-                print("Inventory being restored");
-                Dictionary<string, int> inventoryState = (Dictionary<string, int>)ES3.Load("inventory");
+                //print("Inventory being restored");
+                Dictionary<string, int> inventoryState = (Dictionary<string, int>)state;
                 foreach (string itemName in inventoryState.Keys)
                 {
                     foreach (CraftingSlot slot in slots)

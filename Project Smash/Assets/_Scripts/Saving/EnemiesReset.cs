@@ -1,9 +1,8 @@
-﻿using System;
+﻿using PSmash.Checkpoints;
+using PSmash.Core;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using PSmash.Attributes;
-using PSmash.Checkpoints;
-using System.Collections;
 
 namespace PSmash.Saving
 {
@@ -44,7 +43,7 @@ namespace PSmash.Saving
                 slot.prefab = enemy;
                 slot.position = id.transform.position;
                 slot.isLookingRight = true;
-                print(slot.prefab.name);
+                //print(slot.prefab.name);
                 slots.Add(slot);
             }
         }
@@ -72,12 +71,12 @@ namespace PSmash.Saving
             {
                 Destroy(entity.gameObject);
             }
-            print("Enemies destroyed");
+            //print("Enemies destroyed");
             foreach (EnemySlot slot in slots)
             {
                 Instantiate(slot.prefab, slot.position, Quaternion.identity, transform);
             }
-            print("Enemies respawned");
+            //print("Enemies respawned");
             yield return null;
         }
     }

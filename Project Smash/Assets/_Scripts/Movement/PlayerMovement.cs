@@ -1,8 +1,7 @@
 ﻿using HutongGames.PlayMaker;
 using PSmash.Attributes;
-using PSmash.Saving;
+using GameDevTV.Saving;
 using PSmash.SceneManagement;
-//using PSmash.Combat;
 using Spine.Unity;
 using System.Collections;
 using UnityEngine;
@@ -755,19 +754,16 @@ namespace PSmash.Movement
             }
         }
 
-        public void CaptureState()
+        public object CaptureState()
         {
-            ES3.Save("playerPosition", transform.position);
+            SerializableVector3 position = new SerializableVector3(transform.position);
+            return position;
         }
-        public void RestoreState()
+        public void RestoreState(object state)
         {
-            if (ES3.KeyExists("playerPosition"))
-            {
-                Vector3 position = (Vector3)ES3.Load("playerPosition");
-                rb.MovePosition(position);
-            }
-
-
+            SerializableVector3 position = (SerializableVector3)state;
+            Vector3 newPosition = position.ToVector();
+            rb.MovePosition(newPosition);
         }
 
 
