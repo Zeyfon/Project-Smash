@@ -6,9 +6,11 @@ using System.Runtime.Serialization.Formatters.Binary;
 using System.Text;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.Events;
 
 namespace GameDevTV.Saving
 {
+
     /// <summary>
     /// This component provides the interface to the saving system. It provides
     /// methods to save and restore a scene.
@@ -17,6 +19,8 @@ namespace GameDevTV.Saving
     /// </summary>
     public class SavingSystem : MonoBehaviour
     {
+        [SerializeField] UnityEvent onSaveStart;
+        [SerializeField] UnityEvent OnSaveEnds;
         /// <summary>
         /// Will load the last scene that was saved and restore the state. This
         /// must be run as a coroutine.
@@ -32,6 +36,7 @@ namespace GameDevTV.Saving
             }
             yield return SceneManager.LoadSceneAsync(buildIndex);
             RestoreState(state);
+            OnSaveEnds.Invoke();
         }
 
         /// <summary>
@@ -39,9 +44,11 @@ namespace GameDevTV.Saving
         /// </summary>
         public void Save(string saveFile)
         {
+            onSaveStart.Invoke();
             Dictionary<string, object> state = LoadFile(saveFile);
             CaptureState(state);
             SaveFile(saveFile, state);
+            OnSaveEnds.Invoke();
         }
 
         /// <summary>
