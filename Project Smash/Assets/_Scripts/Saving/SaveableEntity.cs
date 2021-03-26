@@ -20,7 +20,7 @@ namespace PSmash.Saving
     {
         // CONFIG DATA
         [Tooltip("The unique ID is automatically generated in a scene file if " +
-        "left empty. Do not set in a prefab unless you want all instances to " + 
+        "left empty. Do not set in a prefab unless you want all instances to " +
         "be linked.")]
         [SerializeField] string uniqueIdentifier = "";
 
@@ -39,10 +39,13 @@ namespace PSmash.Saving
         /// </summary>
         public void CaptureState()
         {
+            Dictionary<string, object> state = new Dictionary<string, object>();
             foreach (ISaveable saveable in GetComponents<ISaveable>())
             {
-                saveable.CaptureState();
+                state[saveable.GetType().ToString()] = saveable.CaptureState();
             }
+            print(" The Unique Identifier is " + GetUniqueIdentifier());
+            ES3.Save(GetUniqueIdentifier(), state);
         }
 
         /// <summary>
@@ -53,22 +56,34 @@ namespace PSmash.Saving
         /// </param>
         public void RestoreState()
         {
-            foreach (ISaveable saveable in GetComponents<ISaveable>())
+            if (ES3.FileExists())
             {
-                saveable.RestoreState();
+                print(GetUniqueIdentifier());
+                Dictionary<string, object> stateDict = ES3.Load<Dictionary<string,object>>(GetUniqueIdentifier());
+                foreach (ISaveable saveable in GetComponents<ISaveable>())
+                {
+                    string typeString = saveable.GetType().ToString();
+                    print(typeString);
+                    if (stateDict.ContainsKey(typeString))
+                    {
+                        saveable.RestoreState(stateDict[typeString]);
+                    }
+                }
             }
+
         }
 
         // PRIVATE
 
 #if UNITY_EDITOR
-        private void Update() {
+        private void Update()
+        {
             if (Application.IsPlaying(gameObject)) return;
             if (string.IsNullOrEmpty(gameObject.scene.path)) return;
 
             SerializedObject serializedObject = new SerializedObject(this);
             SerializedProperty property = serializedObject.FindProperty("uniqueIdentifier");
-            
+
             if (string.IsNullOrEmpty(property.stringValue) || !IsUnique(property.stringValue))
             {
                 property.stringValue = System.Guid.NewGuid().ToString();

@@ -1,18 +1,18 @@
-﻿using UnityEngine;
+﻿using GameDevTV.Saving;
 using PSmash.Attributes;
-using PSmash.CraftingSystem;
 using PSmash.Inventories;
-using System;
+using System.Collections.Generic;
+using UnityEngine;
 
 namespace PSmash.Stats
 {
-    public class BaseStats : MonoBehaviour
+    public class BaseStats : MonoBehaviour, ISaveable
     {
 
         [SerializeField] StatSlot[] slots;
         PlayerHealth health;
 
-        private void Start()
+        private void Awake()
         {
             health = GetComponent<PlayerHealth>();
         }
@@ -55,6 +55,32 @@ namespace PSmash.Stats
                     return;
                 }
             }
+        }
+
+        public object CaptureState()
+        {
+            Dictionary<string, float> data = new Dictionary<string, float>();
+            foreach(StatSlot slot in slots)
+            {
+                data.Add(slot.item.GetID(), slot.number);
+            }
+            return data;
+        }
+
+        public void RestoreState(object state)
+        {
+            Dictionary<string, float> data = (Dictionary<string, float>)state;
+            foreach(string itemID in data.Keys)
+            {
+                foreach(StatSlot slot in slots)
+                {
+                    if(slot.item.GetID() == itemID)
+                    {
+                        slot.number = data[itemID];
+                    }
+                }
+            }
+            health.RestoreHealth(999);
         }
 
         [System.Serializable]

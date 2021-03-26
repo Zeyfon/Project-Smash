@@ -2,20 +2,24 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using PSmash.Saving;
+using GameDevTV.Saving;
 
 
 namespace PSmash.SceneManagement
 {
     public class SavingWrapper : MonoBehaviour
     {
-        const string defaultSaveFile = "SaveFile.es3";
+        const string defaultSaveFile = "PSmashSaveFile" ;
         [SerializeField] float fadeInTime = 0.2f;
 
         _Controller _controller;
         private void Awake()
         {
             _controller = new _Controller();
+        }
+
+        private void Start()
+        {
             StartCoroutine(LoadLastScene());
         }
 
@@ -37,19 +41,16 @@ namespace PSmash.SceneManagement
 
         public void Save()
         {
-            print("Saving");
             GetComponent<SavingSystem>().Save(defaultSaveFile);
         }
 
         public void Load()
         {
-            print("Loading");
             GetComponent<SavingSystem>().Load(defaultSaveFile);
         }
 
         public void Delete()
         {
-            print("Deleting file");
             GetComponent<SavingSystem>().Delete(defaultSaveFile);
         }
     }

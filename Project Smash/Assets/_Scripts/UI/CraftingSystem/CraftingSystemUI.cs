@@ -71,7 +71,7 @@ namespace PSmash.UI.CraftingSytem
         {
             foreach(SkillSlot slot in GetComponentsInChildren<SkillSlot>())
             {
-                slot.UpdateUI();
+                slot.VisualUpdate();
             }
         }
     }

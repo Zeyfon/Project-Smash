@@ -12,7 +12,7 @@ namespace PSmash.Saving
         /// Return a `System.Serializable` object that represents the state of the
         /// component.
         /// </returns>
-        void CaptureState();
+        object CaptureState();
 
         /// <summary>
         /// Called when restoring the state of a scene.
@@ -21,6 +21,6 @@ namespace PSmash.Saving
         /// The same `System.Serializable` object that was returned by
         /// CaptureState when saving.
         /// </param>
-        void RestoreState();
+        void RestoreState(object state);
     }
 }

@@ -1,10 +1,10 @@
-﻿using PSmash.Stats;
+﻿using PSmash.Inventories;
+using PSmash.Menus;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
-using PSmash.Menus;
-using PSmash.Inventories;
-
+using PSmash.SceneManagement;
+using GameDevTV.Saving;
 
 namespace PSmash.CraftingSystem
 {
@@ -13,7 +13,7 @@ namespace PSmash.CraftingSystem
     /// and the update of the corresponding variables in the BaseStats script
     /// of the player (Stats and materials-for now)
     /// </summary>
-    public class CraftingSystem : MonoBehaviour
+    public class CraftingSystem : MonoBehaviour, ISaveable
     {
         [SerializeField] AudioSource audioSource = null;
         [SerializeField] AudioClip skillUnlockedSound = null;
@@ -61,7 +61,7 @@ namespace PSmash.CraftingSystem
 
         void OpenMenu()
         {
-            print("Open Crafting Menu");
+            //print("Open Crafting Menu");
             SetChildObjects(true);
             OnSkillPanelUpdate();
             _controller.UI.Enable();
@@ -76,14 +76,16 @@ namespace PSmash.CraftingSystem
                 OnMenuClose();
             }
             CloseMenu();
+            FindObjectOfType<SavingWrapper>().Save();
             _controller.UI.Cancel.performed -= ctx => BacktrackMenu();
             _controller.UI.Disable();
         }
 
         void BacktrackMenu()
         {
-            print("Backtracking Menu ");
+            //print("Backtracking Menu ");
             CloseMenu();
+            FindObjectOfType<SavingWrapper>().Save();
             tentMenu.OpenTentMenuAndDoCheckpoint();
             _controller.UI.Cancel.performed -= ctx => BacktrackMenu();
             _controller.UI.Disable();
@@ -91,7 +93,7 @@ namespace PSmash.CraftingSystem
 
         void CloseMenu()
         {
-        SetChildObjects(false);
+            SetChildObjects(false);
         }
 
         void SetChildObjects(bool isEnabled)
@@ -143,7 +145,7 @@ namespace PSmash.CraftingSystem
         /// <returns></returns>
         bool IsSkillUnlocked(SkillSlot skillSlot)
         {
-            if (skillSlot.IsUnlocked())
+            if (skillSlot.GetIsUnlocked())
                 return true;
             else
                 return false;
@@ -164,13 +166,13 @@ namespace PSmash.CraftingSystem
             {
                 foreach (SkillSlot unlockableSkillSlotOption in skillSlotsUnlockingOptions)
                 {
-                    if (unlockableSkillSlotOption.IsUnlocked())
+                    if (unlockableSkillSlotOption.GetIsUnlocked())
                     {
                         print(skillSlot.name + "  can be unlock. There is an unlocked option");
                         return true;
                     }
                 }
-                print(skillSlot.name +  "  cannot be unlocked. There is no unlocked option");
+                //print(skillSlot.name +  "  cannot be unlocked. There is no unlocked option");
                 return false;
             }
         }
@@ -182,7 +184,7 @@ namespace PSmash.CraftingSystem
         /// <returns></returns>
         Dictionary<CraftingItem,int> DoIHaveTheNecessaryItemNumbersToUnlockThisSkill(SkillSlot skillSlot)
         {
-            print(skillSlot);
+            //print(skillSlot);
             SkillSlot.CraftingItemSlot[] slots = skillSlot.GetRequiredCraftingItems();
             Dictionary<CraftingItem, int> itemsNeeded = new Dictionary<CraftingItem, int>();
             //print(craftingItemRequirements.Length);
@@ -200,11 +202,11 @@ namespace PSmash.CraftingSystem
                 }
                 else
                 {
-                    print("Items Criteria is not fulfilled to unlock skill");
+                    //print("Items Criteria is not fulfilled to unlock skill");
                     return null;
                 }
             }
-            print("Items criteria is fullfilled to unlock skill");
+            //print("Items criteria is fullfilled to unlock skill");
             return itemsNeeded;        
         }
 
@@ -244,5 +246,28 @@ namespace PSmash.CraftingSystem
             }
         }
 
+        public object CaptureState()
+        {
+            Dictionary<int, bool> state = new Dictionary<int, bool>();
+            int i = 0;
+            foreach(SkillSlot slot in transform.GetChild(0).GetChild(1).GetComponentsInChildren<SkillSlot>())
+            {
+
+                state.Add(i, slot.GetIsUnlocked());
+                    i++;
+            }
+            return state;
+        }
+
+        public void RestoreState(object state)
+        {
+
+            Dictionary<int, bool> obj = (Dictionary<int, bool>)state;
+            SkillSlot[] slots = transform.GetComponentsInChildren<SkillSlot>();
+            for( int i = 0; i<slots.Length; i++)
+            {
+                slots[i].SetIsUnlocked(obj[i]);
+            }
+        }
     }
 }

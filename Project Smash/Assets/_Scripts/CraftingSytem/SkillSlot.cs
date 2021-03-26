@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using PSmash.UI.CraftingSytem;
 
+
 namespace PSmash.CraftingSystem
 {
     public class SkillSlot : MonoBehaviour
@@ -101,9 +102,9 @@ namespace PSmash.CraftingSystem
 
 
         //////////////// UI//////////////////////////////////////////
-        public void UpdateUI()
+        public void VisualUpdate()
         {
-            if (IsUnlocked())
+            if (GetIsUnlocked())
             {
                 UpdateLinks("White");
                 Unlocked();
@@ -124,9 +125,14 @@ namespace PSmash.CraftingSystem
         /// Checks if the skillSlot has been unlocked
         /// </summary>
         /// <returns></returns>
-        public bool IsUnlocked()
+        public bool GetIsUnlocked()
         {
             return isUnlocked;
+        }
+
+        public void SetIsUnlocked(bool isUnlocked)
+        {
+            this.isUnlocked = isUnlocked;
         }
 
         /// <summary>
@@ -137,7 +143,7 @@ namespace PSmash.CraftingSystem
         {
             foreach (SkillSlot slot in unlockableBySkillSlots)
             {
-                if (slot.IsUnlocked())
+                if (slot.GetIsUnlocked())
                 {
                     return true;
                 }
@@ -225,6 +231,16 @@ namespace PSmash.CraftingSystem
             image.material = yellowMaterial;
         }
 
+        //public object CaptureState()
+        //{
+        //    return IsUnlocked();
+        //}
+
+        //public void RestoreState(object state)
+        //{
+        //    isUnlocked = (bool)state;
+        //    VisualUpdate();
+        //}
     }
 
 }

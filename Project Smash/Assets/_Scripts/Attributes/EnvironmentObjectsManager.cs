@@ -25,7 +25,7 @@ namespace PSmash.Checkpoints
                 ObjectSlot slot = new ObjectSlot();
                 slot.prefab = boulderPrefab;
                 slot.position = obj.transform.position;
-                print(slot.prefab.name);
+                //print(slot.prefab.name);
                 slots.Add(slot);
             }
         }
@@ -53,13 +53,13 @@ namespace PSmash.Checkpoints
             {
                 Destroy(boulderInstance.gameObject);
             }
-            print("Enemies destroyed");
+            //print("Enemies destroyed");
             foreach (ObjectSlot slot in slots)
             {
                 Instantiate(slot.prefab, slot.position, Quaternion.identity, transform);
                 
             }
-            print("Enemies respawned");
+            //print("Enemies respawned");
             yield return null;
         }
     }
