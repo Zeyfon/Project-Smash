@@ -4,8 +4,8 @@ using UnityEngine;
 
 namespace PSmash.Inventories
 {
-    [CreateAssetMenu(menuName = "Items/Action Item")]
-    public class ActionableItem : Item
+    [CreateAssetMenu(menuName = "Items/Tool Item")]
+    public class ToolItem : Item
     {
         [SerializeField] GameObject gameObject = null;
         [SerializeField] int animatorIntValue = 0;

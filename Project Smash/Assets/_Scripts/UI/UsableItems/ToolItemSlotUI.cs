@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 namespace PSmash.UI
 {
-    public class ActionItemSlotUI : MonoBehaviour
+    public class ToolItemSlotUI : MonoBehaviour
     {
         [SerializeField] TextMeshProUGUI text = null;
         [SerializeField] Image image = null;

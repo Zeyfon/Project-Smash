@@ -101,6 +101,7 @@ namespace PSmash.InputSystem
             _controller.Player.ItemChangeLeft.performed += ctx => ItemChangeLeft();
             _controller.Player.ButtonStart.started += ctx => ButtonStartPressed();
 
+            Mace.onObjectTaken += EnableInput;
             CraftingSystem.CraftingSystem.OnMenuClose += EnablePlayerInput;
             MainMenu.OnMenuClose += EnablePlayerInput;
             TentMenu.OnTentMenuClose += EnablePlayerInput;
@@ -135,6 +136,8 @@ namespace PSmash.InputSystem
             _controller.Player.ItemChangeLeft.performed -= ctx => ItemChangeLeft();
             //_controller.Player.Quit.performed -= ctx => QuitKeyPressed();
             _controller.Player.ButtonStart.started -= ctx => ButtonStartPressed();
+
+            Mace.onObjectTaken -= EnableInput;
 
             CraftingSystem.CraftingSystem.OnMenuClose -= EnablePlayerInput;
             MainMenu.OnMenuClose -= EnablePlayerInput;

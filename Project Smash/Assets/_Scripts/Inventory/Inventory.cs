@@ -87,7 +87,7 @@ namespace PSmash.Inventories
         public void UnlockSkill(Item skill)
         {
             //print("In Inventory unlocking the skill  " + skill.name);
-            if(skill is ActionableItem)
+            if(skill is SubWeaponItem)
             {
                 GetComponentInParent<Equipment>().UpgradeStock(skill);
             }

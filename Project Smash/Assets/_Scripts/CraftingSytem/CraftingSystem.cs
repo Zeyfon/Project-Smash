@@ -23,7 +23,6 @@ namespace PSmash.CraftingSystem
         public static event Action OnMenuClose;
         public static event Action OnSkillPanelUpdate;
 
-        //BaseStats playerStats;
         Inventory inventory;
         _Controller _controller;
         TentMenu tentMenu;
@@ -61,7 +60,6 @@ namespace PSmash.CraftingSystem
 
         void OpenMenu()
         {
-            //print("Open Crafting Menu");
             SetChildObjects(true);
             OnSkillPanelUpdate();
             _controller.UI.Enable();
