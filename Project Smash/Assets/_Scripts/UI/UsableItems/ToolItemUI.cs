@@ -1,13 +1,12 @@
 ﻿using PSmash.Inventories;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace PSmash.UI
 {
-    public class ActionItemUI : MonoBehaviour
+    public class ToolItemUI : MonoBehaviour
     {
-        [SerializeField] ActionItemSlotUI centerItem = null;
-        [SerializeField] ActionItemSlotUI leftItem = null;
+        [SerializeField] ToolItemSlotUI centerItem = null;
+        [SerializeField] ToolItemSlotUI leftItem = null;
 
         Equipment playerEquipment;
         private void Awake()

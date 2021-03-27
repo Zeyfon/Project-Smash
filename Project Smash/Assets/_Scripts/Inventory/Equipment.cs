@@ -1,11 +1,14 @@
 ﻿using PSmash.Checkpoints;
 using UnityEngine;
+using GameDevTV.Saving;
 
 namespace PSmash.Inventories
 {
     public class Equipment : MonoBehaviour
     {
         [SerializeField] EquipmentSlots[] slots;
+
+        SubWeaponItem subWeapon;
 
         public delegate void ItemChange(int index);
         public event ItemChange onEquippedActionItemChange;
@@ -28,6 +31,16 @@ namespace PSmash.Inventories
         private void OnDisable()
         {
             Tent.OnTentMenuOpen -= ReplenishActionableItems;
+        }
+
+        public void SetSubWeapon(SubWeaponItem subWeapon)
+        {
+            this.subWeapon = subWeapon; 
+        }
+
+        public SubWeaponItem GetSubWeapon()
+        {
+            return subWeapon;
         }
 
         void ReplenishActionableItems()
@@ -84,7 +97,7 @@ namespace PSmash.Inventories
         [System.Serializable]
         public class EquipmentSlots
         {
-            public ActionableItem item;
+            public ToolItem item;
             public int number;
             public int maxNumber;
         }

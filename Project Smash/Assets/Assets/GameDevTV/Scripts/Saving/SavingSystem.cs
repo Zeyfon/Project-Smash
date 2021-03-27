@@ -56,7 +56,9 @@ namespace GameDevTV.Saving
         /// </summary>
         public void Delete(string saveFile)
         {
-            File.Delete(GetPathFromSaveFile(saveFile));
+            string path = GetPathFromSaveFile(saveFile);
+            print("Deleting from  " + path);
+            File.Delete(path);
         }
 
 
@@ -97,6 +99,7 @@ namespace GameDevTV.Saving
         {
             foreach (SaveableEntity saveable in FindObjectsOfType<SaveableEntity>())
             {
+                print("Saving the  " + saveable.gameObject.name);
                 state[saveable.GetUniqueIdentifier()] = saveable.CaptureState();
             }
 

@@ -1,6 +1,5 @@
 ﻿using HutongGames.PlayMaker;
 using PSmash.Attributes;
-using GameDevTV.Saving;
 using PSmash.SceneManagement;
 using Spine.Unity;
 using System.Collections;
@@ -8,7 +7,7 @@ using UnityEngine;
 
 namespace PSmash.Movement
 {
-    public class PlayerMovement : MonoBehaviour, ISaveable
+    public class PlayerMovement : MonoBehaviour
     {
 
         #region Inspector
@@ -753,19 +752,6 @@ namespace PSmash.Movement
                 collision.GetComponent<IChangeVCamera>().ExtiCamArea();
             }
         }
-
-        public object CaptureState()
-        {
-            SerializableVector3 position = new SerializableVector3(transform.position);
-            return position;
-        }
-        public void RestoreState(object state)
-        {
-            SerializableVector3 position = (SerializableVector3)state;
-            Vector3 newPosition = position.ToVector();
-            rb.MovePosition(newPosition);
-        }
-
 
         private void OnDrawGizmosSelected()
         {
