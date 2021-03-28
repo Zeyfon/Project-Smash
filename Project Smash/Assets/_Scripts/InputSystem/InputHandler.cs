@@ -9,6 +9,7 @@ using UnityEngine;
 using PSmash.Saving;
 using PSmash.Menus;
 using PSmash.CraftingSystem;
+using PSmash.Core;
 
 namespace PSmash.InputSystem
 {
