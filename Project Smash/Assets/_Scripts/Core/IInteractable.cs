@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace PSmash.Saving
+namespace PSmash.Core
 {
     public interface IInteractable
     {

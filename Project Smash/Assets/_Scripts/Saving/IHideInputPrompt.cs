@@ -2,7 +2,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public interface IHideInputPrompt
+namespace PSmash.Saving
 {
-    void HideInputPrompt();
+    public interface IHideInputPrompt
+    {
+        void HideInputPrompt();
+    }
+
 }
