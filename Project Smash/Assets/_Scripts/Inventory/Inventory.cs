@@ -9,7 +9,9 @@ namespace PSmash.Inventories
     public class Inventory : MonoBehaviour, ISaveable
     {
         //CONFIG
+        [SerializeField] AudioSource dropAudioSource = null;
         [SerializeField] CraftingSlot[] slots;
+
 
         List<Item> inventoryItems = new List<Item>();
 
@@ -25,12 +27,12 @@ namespace PSmash.Inventories
 
         private void OnEnable()
         {
-            EnemyDrop.onDropCollected += CraftingItemCollected;
+            Drop.onDropCollected += CraftingItemCollected;
         }
 
         void OnDisable()
         {
-            EnemyDrop.onDropCollected -= CraftingItemCollected;
+            Drop.onDropCollected -= CraftingItemCollected;
         }
 
         private void CraftingItemCollected(CraftingItem craftingItem)
@@ -41,6 +43,7 @@ namespace PSmash.Inventories
                 if(slot.item == craftingItem)
                 {
                     slot.number ++;
+                    dropAudioSource.Play();
                     //print(slot + " was collected");
                 }
             }
