@@ -1,9 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using PSmash.Core;
 
-namespace PSmash.Saving
+namespace PSmash.Core
 {
     public class InteractableElements : MonoBehaviour
     {
