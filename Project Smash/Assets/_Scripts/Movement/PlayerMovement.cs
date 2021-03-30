@@ -126,7 +126,6 @@ namespace PSmash.Movement
         public void SetCurrentStateFSM(PlayMakerFSM pm)
         {
             this.pm = pm;
-            //print("Current State in Player is " + this.pm.FsmName);
         }
 
         public void GroundCheck()
@@ -178,10 +177,7 @@ namespace PSmash.Movement
         //Used by Guarding/Parrying
         void SetMovement(Vector2 input, float maxSpeed, bool isGuarding)
         {
-            //JumpCheck(input,false);
             SlopeCheck(input.x);
-            //if (toolButtonState && isWallDetected)
-            //    pm.SendEvent("WALLMOVEMENT");
             float currentSpeed = maxSpeed * input.x;
             if (isGuarding)
                 animator.SetFloat("guardSpeed", Mathf.Abs(input.x));
@@ -420,11 +416,9 @@ namespace PSmash.Movement
         }
         public void WallMovement(Vector2 input, float maxWallMovementSpeed)
         {
-           //JumpCheck(input, true);
             if (!isWallDetected)
                 pm.SendEvent("TOOLACTION");
             canDoubleJump = true;
-            //The gravity is set to 0 and to the initial value inside the IsMovingOnWall property
             animator.SetFloat("climbingSpeed", (Mathf.Sqrt(input.x * input.x + input.y * input.y)));
             rb.velocity = new Vector2(input.x, input.y) * maxWallMovementSpeed;
         }
@@ -460,49 +454,6 @@ namespace PSmash.Movement
             }
             return false;
         }
-        //private void JumpCheck(Vector2 input, bool isClimbing)
-        //{
-        //    //print("Jump is being checked " + isJumpButtonPressed);
-        //    if (isJumpButtonPressed)
-        //    {
-        //        if (CanJump(isClimbing))
-        //        {
-        //            pm.SendEvent("JUMP");
-        //            //print("Wants To Jump");
-        //        }
-        //    }
-        //}
-        //public bool CanJump(bool isClimbing)
-        //{
-
-        //    if (isGrounded && canWalkOnSlope && rb.velocity.y < 0.5f)
-        //    {
-        //        //print("Ground Jump");
-        //        jumpButtonWasPressed = false;
-        //        return true;
-        //    }
-        //    else if (jumpButtonWasPressed && canDoubleJump)
-        //    {
-        //       // print("Mid Air Jump");
-        //        if (!isClimbing)
-        //            canDoubleJump = false;
-        //        jumpButtonWasPressed = false;
-        //        return true;
-        //    }
-        //    return false;
-        //}
-
-        //public void SetJumpButtonPress()
-        //{
-        //    //print("Jump Button was pressed");
-        //    jumpButtonWasPressed = true;
-        //}
-
-        //public void SetJumpButtonState(bool isJumpButtonPressed)
-        //{
-        //    this.isJumpButtonPressed = isJumpButtonPressed;
-        //    //print(this.isJumpButtonPressed);
-        //}
 
         public void ApplyJump(PhysicsMaterial2D noFriction, float jumpSpeed)
         {
@@ -747,10 +698,7 @@ namespace PSmash.Movement
                 tempInput = new Vector2(1, 0);
             else
                 tempInput = new Vector2(-1, 0);
-            //JumpCheck(input, false);
             SlopeCheck(input.x);
-            //if (isThrowDaggerButtonJustPressed)
-            //    pm.SendEvent("THROWDAGGER");
             float currentSpeed = maxSpeed * tempInput.x;
             Move(currentSpeed);
         }
