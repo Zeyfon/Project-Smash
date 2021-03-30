@@ -15,7 +15,6 @@ namespace PSmash.Attributes
         [Header("TestMode")]
         [SerializeField] bool isInvulnerable = true;
         [Header("Extras")]
-        [SerializeField] GameObject dropItem = null;
         [SerializeField] Weapon weaknessWeapon = null;
         [SerializeField] float weaknessFactor = 3;
         [SerializeField] AudioClip protectedDamageAudio = null;
@@ -309,12 +308,6 @@ namespace PSmash.Attributes
 
             audioSource.PlayOneShot(stunEndAudio);
             posture.FullyRegenPosture();
-        }
-
-        //Anim Event
-        void DropItem()
-        {
-            Instantiate(dropItem, transform.position + new Vector3(0, 1), Quaternion.identity);
         }
 
         #endregion

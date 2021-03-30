@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using PSmash.Attributes;
 using PSmash.Combat.Weapons;
+using PSmash.Inventories;
 
 namespace PSmash.Items
 {
@@ -19,7 +20,6 @@ namespace PSmash.Items
         [SerializeField] GameObject ps = null;
         [SerializeField] SpriteRenderer spriteRender = null;
         [SerializeField] Sprite destroyedSprite = null;
-        [SerializeField] GameObject dropItem = null;
 
         [SerializeField] ObjectType objectType;
 
@@ -63,7 +63,7 @@ namespace PSmash.Items
             {
                 spriteRender.sprite = destroyedSprite;
             }
-            Instantiate(dropItem, transform.position, Quaternion.identity);
+            GetComponent<ItemDropper>().RandomDrop();
         }
 
         IEnumerator DestroyParticles(GameObject psClone)

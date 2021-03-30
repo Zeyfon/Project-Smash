@@ -25,6 +25,12 @@ namespace PSmash.Inventories
         {
             return sprite;
         }
+
+        public void SpawnItem(Vector3 spawnLocation, int number)
+        {
+
+        }
+
         /// <summary>
         /// Get the inventory item instance from its UUID.
         /// </summary>
