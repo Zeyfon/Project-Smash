@@ -15,7 +15,8 @@ namespace PSmash.UI
         [SerializeField] float fadeOutTime = 0.25f;
         [SerializeField] float fadeInTime = 1;
         [SerializeField] ToolTipCraftingItemsHandler requiredMaterialsUpdater = null;
-        [SerializeField] TextMeshProUGUI text = null;
+        [SerializeField] TextMeshProUGUI descriptionText = null;
+        [SerializeField] TextMeshProUGUI nameText = null;
 
         Coroutine coroutine;
         bool isInitialized = false;
@@ -63,7 +64,8 @@ namespace PSmash.UI
             transform.position = skillSlot.transform.position;
             Dictionary<CraftingItem, int> requiredCraftingMaterials;
             requiredCraftingMaterials = skillSlot.GetCraftingItemsRequirement();
-            text.text = skillSlot.GetSkill().GetDescription();
+            descriptionText.text = skillSlot.GetSkill().GetDescription();
+            nameText.text = skillSlot.GetSkill().GetItem().GetDisplayName();
             requiredMaterialsUpdater.SetSkillSlotInfo(requiredCraftingMaterials);
             yield return null;
         }
