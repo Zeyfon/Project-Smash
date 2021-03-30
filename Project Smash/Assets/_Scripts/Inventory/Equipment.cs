@@ -7,8 +7,7 @@ namespace PSmash.Inventories
     public class Equipment : MonoBehaviour
     {
         [SerializeField] EquipmentSlots[] slots;
-
-        SubWeaponItem subWeapon;
+        [SerializeField] SubWeaponItem subWeapon;
 
         public delegate void ItemChange(int index);
         public event ItemChange onEquippedActionItemChange;
@@ -58,18 +57,18 @@ namespace PSmash.Inventories
             return slots[currentIndex];
         }
 
-        public void ChangeItem(bool isMovingRight)
+        public void ChangeItem(float movementDirection)
         {
-            print(currentIndex);
-            if (isMovingRight)
+            //print(currentIndex);
+            if (movementDirection==1)
             {
                 currentIndex++;
-                print("Moving right" + currentIndex);
+                //print("Moving right" + currentIndex);
                 if (currentIndex > slots.Length - 1)
                 {
                     currentIndex = 0;
                 }
-                print(currentIndex);
+                //print(currentIndex);
             }
             else
             {

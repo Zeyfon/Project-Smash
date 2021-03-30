@@ -157,6 +157,133 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!1 &994778493389950486
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5237735918943710293}
+  - component: {fileID: 4002905014334357631}
+  m_Layer: 0
+  m_Name: DropCollected
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5237735918943710293
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 994778493389950486}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 7323806940443173584}
+  m_RootOrder: 6
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!82 &4002905014334357631
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 994778493389950486}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 8300000, guid: da11ccde18763ea479755ebd274b64ae, type: 3}
+  m_PlayOnAwake: 0
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!1 &1045756966646326050
 GameObject:
   m_ObjectHideFlags: 0
@@ -324,15 +451,8 @@ GameObject:
   m_Component:
   - component: {fileID: 4103293583250425879}
   - component: {fileID: 4456879624522101086}
-  - component: {fileID: 7142352707370225178}
-  - component: {fileID: 9037406259522812750}
-  - component: {fileID: 1334943314186940025}
   - component: {fileID: 8540863619128468569}
-  - component: {fileID: 6419905940629892989}
-  - component: {fileID: 8599444798389424449}
-  - component: {fileID: 414026774759417515}
-  - component: {fileID: 62473110213224172}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Controller
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -552,45 +672,6 @@ MonoBehaviour:
   m_DefaultActionMap: Player
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}
---- !u!114 &7142352707370225178
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2796500828864873445}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2e09f8f076d7b8942bb9c61ba3b29389, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  myButton: 0
---- !u!114 &9037406259522812750
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2796500828864873445}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e54002f249979e2419194eda527cf56c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  myButton: 0
---- !u!114 &1334943314186940025
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2796500828864873445}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3452deb7b52b0054f9702804e444b0f7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  myButton: 2
 --- !u!114 &8540863619128468569
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -605,783 +686,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   pMovement: {fileID: 8235024681204614677}
   equipment: {fileID: 1064467200191827894}
---- !u!114 &6419905940629892989
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2796500828864873445}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a2c17fca8bb5238438ce57faad35f641, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  myButton: 1
---- !u!114 &8599444798389424449
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2796500828864873445}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a36db5e0094b79c4682570cbb9c84e91, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  myButton: 4
---- !u!114 &414026774759417515
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2796500828864873445}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c7d1d4428bccc464b9633431203c3aea, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  myButton: 5
---- !u!114 &62473110213224172
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2796500828864873445}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 1384774831, guid: e743331561ef77147ae48cda9bcb8209, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  fsm:
-    dataVersion: 2
-    usedInTemplate: {fileID: 0}
-    name: InputProxy
-    startState: State 2
-    states:
-    - name: Get Buttons Info
-      description: Jump and Guard Buttons
-      colorIndex: 0
-      position:
-        serializedVersion: 2
-        x: 81
-        y: 154
-        width: 150.5
-        height: 32
-      isBreakpoint: 0
-      isSequence: 0
-      hideUnused: 0
-      transitions:
-      - fsmEvent:
-          name: FINISHED
-          isSystemEvent: 1
-          isGlobal: 0
-        toState: Set Info into CurrentState
-        linkStyle: 0
-        linkConstraint: 0
-        colorIndex: 0
-      actionData:
-        actionNames:
-        - HutongGames.PlayMaker.Actions.CallMethod
-        - HutongGames.PlayMaker.Actions.CallMethod
-        - HutongGames.PlayMaker.Actions.CallMethod
-        - HutongGames.PlayMaker.Actions.CallMethod
-        customNames:
-        - 
-        - 
-        - 
-        - 
-        actionEnabled: 01010101
-        actionIsOpen: 01010101
-        actionStartIndex: 00000000060000000c00000012000000
-        actionHashCodes: ca51e900ca51e900ca51e900ca51e900
-        unityObjectParams: []
-        fsmGameObjectParams: []
-        fsmOwnerDefaultParams: []
-        animationCurveParams: []
-        functionCallParams: []
-        fsmTemplateControlParams: []
-        fsmEventTargetParams: []
-        fsmPropertyParams: []
-        layoutOptionParams: []
-        fsmStringParams:
-        - useVariable: 0
-          name: 
-          tooltip: 
-          showInInspector: 0
-          networkSync: 0
-          value: GetMovementInfo
-        - useVariable: 0
-          name: 
-          tooltip: 
-          showInInspector: 0
-          networkSync: 0
-          value: GetJumpButtonState
-        - useVariable: 0
-          name: 
-          tooltip: 
-          showInInspector: 0
-          networkSync: 0
-          value: GetToolButtonState
-        - useVariable: 0
-          name: 
-          tooltip: 
-          showInInspector: 0
-          networkSync: 0
-          value: GetGuardButtonState
-        fsmObjectParams:
-        - useVariable: 1
-          name: inputHandler
-          tooltip: 
-          showInInspector: 0
-          networkSync: 0
-          typeName: PSmash.InputSystem.InputHandler
-          value: {fileID: 8540863619128468569}
-        - useVariable: 1
-          name: inputHandler
-          tooltip: 
-          showInInspector: 0
-          networkSync: 0
-          typeName: PSmash.InputSystem.InputHandler
-          value: {fileID: 8540863619128468569}
-        - useVariable: 1
-          name: inputHandler
-          tooltip: 
-          showInInspector: 0
-          networkSync: 0
-          typeName: PSmash.InputSystem.InputHandler
-          value: {fileID: 8540863619128468569}
-        - useVariable: 1
-          name: inputHandler
-          tooltip: 
-          showInInspector: 0
-          networkSync: 0
-          typeName: PSmash.InputSystem.InputHandler
-          value: {fileID: 8540863619128468569}
-        fsmVarParams:
-        - variableName: input
-          objectType: UnityEngine.Object
-          useVariable: 1
-          type: 5
-          floatValue: 0
-          intValue: 0
-          boolValue: 0
-          stringValue: 
-          vector4Value: {x: 0, y: 0, z: 0, w: 0}
-          objectReference: {fileID: 0}
-          arrayValue:
-            useVariable: 0
-            name: 
-            tooltip: 
-            showInInspector: 0
-            networkSync: 0
-            type: -1
-            objectTypeName: 
-            floatValues: []
-            intValues: 
-            boolValues: 
-            stringValues: []
-            vector4Values: []
-            objectReferences: []
-        - variableName: jumpButtonState
-          objectType: UnityEngine.Object
-          useVariable: 1
-          type: 2
-          floatValue: 0
-          intValue: 0
-          boolValue: 0
-          stringValue: 
-          vector4Value: {x: 0, y: 0, z: 0, w: 0}
-          objectReference: {fileID: 0}
-          arrayValue:
-            useVariable: 0
-            name: 
-            tooltip: 
-            showInInspector: 0
-            networkSync: 0
-            type: -1
-            objectTypeName: 
-            floatValues: []
-            intValues: 
-            boolValues: 
-            stringValues: []
-            vector4Values: []
-            objectReferences: []
-        - variableName: toolButtonState
-          objectType: UnityEngine.Object
-          useVariable: 1
-          type: 2
-          floatValue: 0
-          intValue: 0
-          boolValue: 0
-          stringValue: 
-          vector4Value: {x: 0, y: 0, z: 0, w: 0}
-          objectReference: {fileID: 0}
-          arrayValue:
-            useVariable: 0
-            name: 
-            tooltip: 
-            showInInspector: 0
-            networkSync: 0
-            type: -1
-            objectTypeName: 
-            floatValues: []
-            intValues: 
-            boolValues: 
-            stringValues: []
-            vector4Values: []
-            objectReferences: []
-        - variableName: guardButtonState
-          objectType: UnityEngine.Object
-          useVariable: 1
-          type: 2
-          floatValue: 0
-          intValue: 0
-          boolValue: 0
-          stringValue: 
-          vector4Value: {x: 0, y: 0, z: 0, w: 0}
-          objectReference: {fileID: 0}
-          arrayValue:
-            useVariable: 0
-            name: 
-            tooltip: 
-            showInInspector: 0
-            networkSync: 0
-            type: -1
-            objectTypeName: 
-            floatValues: []
-            intValues: 
-            boolValues: 
-            stringValues: []
-            vector4Values: []
-            objectReferences: []
-        fsmArrayParams: []
-        fsmEnumParams: []
-        fsmFloatParams: []
-        fsmIntParams: []
-        fsmBoolParams: []
-        fsmVector2Params: []
-        fsmVector3Params: []
-        fsmColorParams: []
-        fsmRectParams: []
-        fsmQuaternionParams: []
-        stringParams: []
-        byteData: 0000000000000000
-        arrayParamSizes: 00000000000000000000000000000000
-        arrayParamTypes:
-        - HutongGames.PlayMaker.FsmVar
-        - HutongGames.PlayMaker.FsmVar
-        - HutongGames.PlayMaker.FsmVar
-        - HutongGames.PlayMaker.FsmVar
-        customTypeSizes: 
-        customTypeNames: []
-        paramDataType: 18000000120000000c00000027000000010000000100000018000000120000000c00000027000000010000000100000018000000120000000c00000027000000010000000100000018000000120000000c000000270000000100000001000000
-        paramName:
-        - behaviour
-        - methodName
-        - parameters
-        - storeResult
-        - everyFrame
-        - manualUI
-        - behaviour
-        - methodName
-        - parameters
-        - storeResult
-        - everyFrame
-        - manualUI
-        - behaviour
-        - methodName
-        - parameters
-        - storeResult
-        - everyFrame
-        - manualUI
-        - behaviour
-        - methodName
-        - parameters
-        - storeResult
-        - everyFrame
-        - manualUI
-        paramDataPos: 000000000000000000000000000000000000000001000000010000000100000001000000010000000200000003000000020000000200000002000000020000000400000005000000030000000300000003000000030000000600000007000000
-        paramByteDataSize: 000000000000000000000000000000000100000001000000000000000000000000000000000000000100000001000000000000000000000000000000000000000100000001000000000000000000000000000000000000000100000001000000
-    - name: Set Info into CurrentState
-      description: 
-      colorIndex: 0
-      position:
-        serializedVersion: 2
-        x: 63
-        y: 234
-        width: 180
-        height: 32
-      isBreakpoint: 0
-      isSequence: 0
-      hideUnused: 0
-      transitions:
-      - fsmEvent:
-          name: FINISHED
-          isSystemEvent: 1
-          isGlobal: 0
-        toState: Waiting for Next Frame
-        linkStyle: 0
-        linkConstraint: 0
-        colorIndex: 0
-      actionData:
-        actionNames:
-        - HutongGames.PlayMaker.Actions.SetFsmVector2
-        - HutongGames.PlayMaker.Actions.SetFsmBool
-        - HutongGames.PlayMaker.Actions.SetFsmBool
-        - HutongGames.PlayMaker.Actions.SetFsmBool
-        customNames:
-        - 
-        - 
-        - 
-        - 
-        actionEnabled: 01010101
-        actionIsOpen: 01010101
-        actionStartIndex: 00000000050000000a0000000f000000
-        actionHashCodes: d23c850468fece0568fece0568fece05
-        unityObjectParams: []
-        fsmGameObjectParams: []
-        fsmOwnerDefaultParams:
-        - ownerOption: 1
-          gameObject:
-            useVariable: 0
-            name: 
-            tooltip: 
-            showInInspector: 0
-            networkSync: 0
-            value: {fileID: 6581303975160096547}
-        - ownerOption: 1
-          gameObject:
-            useVariable: 0
-            name: 
-            tooltip: 
-            showInInspector: 0
-            networkSync: 0
-            value: {fileID: 6581303975160096547}
-        - ownerOption: 1
-          gameObject:
-            useVariable: 0
-            name: 
-            tooltip: 
-            showInInspector: 0
-            networkSync: 0
-            value: {fileID: 6581303975160096547}
-        - ownerOption: 1
-          gameObject:
-            useVariable: 0
-            name: 
-            tooltip: 
-            showInInspector: 0
-            networkSync: 0
-            value: {fileID: 6581303975160096547}
-        animationCurveParams: []
-        functionCallParams: []
-        fsmTemplateControlParams: []
-        fsmEventTargetParams: []
-        fsmPropertyParams: []
-        layoutOptionParams: []
-        fsmStringParams:
-        - useVariable: 1
-          name: currentStateName
-          tooltip: 
-          showInInspector: 1
-          networkSync: 0
-          value: 
-        - useVariable: 0
-          name: 
-          tooltip: 
-          showInInspector: 0
-          networkSync: 0
-          value: input
-        - useVariable: 1
-          name: currentStateName
-          tooltip: 
-          showInInspector: 1
-          networkSync: 0
-          value: 
-        - useVariable: 0
-          name: 
-          tooltip: 
-          showInInspector: 0
-          networkSync: 0
-          value: jumpButtonState
-        - useVariable: 1
-          name: currentStateName
-          tooltip: 
-          showInInspector: 1
-          networkSync: 0
-          value: 
-        - useVariable: 0
-          name: 
-          tooltip: 
-          showInInspector: 0
-          networkSync: 0
-          value: guardButtonState
-        - useVariable: 1
-          name: currentStateName
-          tooltip: 
-          showInInspector: 1
-          networkSync: 0
-          value: 
-        - useVariable: 0
-          name: 
-          tooltip: 
-          showInInspector: 0
-          networkSync: 0
-          value: toolButtonState
-        fsmObjectParams: []
-        fsmVarParams: []
-        fsmArrayParams: []
-        fsmEnumParams: []
-        fsmFloatParams: []
-        fsmIntParams: []
-        fsmBoolParams:
-        - useVariable: 1
-          name: jumpButtonState
-          tooltip: 
-          showInInspector: 1
-          networkSync: 0
-          value: 0
-        - useVariable: 1
-          name: guardButtonState
-          tooltip: 
-          showInInspector: 1
-          networkSync: 0
-          value: 0
-        - useVariable: 1
-          name: toolButtonState
-          tooltip: 
-          showInInspector: 1
-          networkSync: 0
-          value: 0
-        fsmVector2Params:
-        - useVariable: 1
-          name: input
-          tooltip: 
-          showInInspector: 1
-          networkSync: 0
-          value: {x: 0, y: 0}
-        fsmVector3Params: []
-        fsmColorParams: []
-        fsmRectParams: []
-        fsmQuaternionParams: []
-        stringParams: []
-        byteData: 00000000
-        arrayParamSizes: 
-        arrayParamTypes: []
-        customTypeSizes: 
-        customTypeNames: []
-        paramDataType: 1400000012000000120000002500000001000000140000001200000012000000110000000100000014000000120000001200000011000000010000001400000012000000120000001100000001000000
-        paramName:
-        - gameObject
-        - fsmName
-        - variableName
-        - setValue
-        - everyFrame
-        - gameObject
-        - fsmName
-        - variableName
-        - setValue
-        - everyFrame
-        - gameObject
-        - fsmName
-        - variableName
-        - setValue
-        - everyFrame
-        - gameObject
-        - fsmName
-        - variableName
-        - setValue
-        - everyFrame
-        paramDataPos: 0000000000000000010000000000000000000000010000000200000003000000000000000100000002000000040000000500000001000000020000000300000006000000070000000200000003000000
-        paramByteDataSize: 0000000000000000000000000000000001000000000000000000000000000000000000000100000000000000000000000000000000000000010000000000000000000000000000000000000001000000
-    - name: Waiting for Next Frame
-      description: 
-      colorIndex: 0
-      position:
-        serializedVersion: 2
-        x: 348
-        y: 191
-        width: 166
-        height: 32
-      isBreakpoint: 0
-      isSequence: 0
-      hideUnused: 0
-      transitions:
-      - fsmEvent:
-          name: FINISHED
-          isSystemEvent: 1
-          isGlobal: 0
-        toState: Get Buttons Info
-        linkStyle: 0
-        linkConstraint: 0
-        colorIndex: 0
-      actionData:
-        actionNames:
-        - HutongGames.PlayMaker.Actions.NextFrameEvent
-        customNames:
-        - 
-        actionEnabled: 01
-        actionIsOpen: 01
-        actionStartIndex: 00000000
-        actionHashCodes: 88611604
-        unityObjectParams: []
-        fsmGameObjectParams: []
-        fsmOwnerDefaultParams: []
-        animationCurveParams: []
-        functionCallParams: []
-        fsmTemplateControlParams: []
-        fsmEventTargetParams: []
-        fsmPropertyParams: []
-        layoutOptionParams: []
-        fsmStringParams: []
-        fsmObjectParams: []
-        fsmVarParams: []
-        fsmArrayParams: []
-        fsmEnumParams: []
-        fsmFloatParams: []
-        fsmIntParams: []
-        fsmBoolParams: []
-        fsmVector2Params: []
-        fsmVector3Params: []
-        fsmColorParams: []
-        fsmRectParams: []
-        fsmQuaternionParams: []
-        stringParams:
-        - FINISHED
-        byteData: 
-        arrayParamSizes: 
-        arrayParamTypes: []
-        customTypeSizes: 
-        customTypeNames: []
-        paramDataType: 17000000
-        paramName:
-        - sendEvent
-        paramDataPos: 00000000
-        paramByteDataSize: 00000000
-    - name: State 2
-      description: 
-      colorIndex: 0
-      position:
-        serializedVersion: 2
-        x: 99
-        y: 106.97656
-        width: 100
-        height: 32
-      isBreakpoint: 0
-      isSequence: 0
-      hideUnused: 0
-      transitions:
-      - fsmEvent:
-          name: FINISHED
-          isSystemEvent: 1
-          isGlobal: 0
-        toState: Get Buttons Info
-        linkStyle: 0
-        linkConstraint: 0
-        colorIndex: 0
-      actionData:
-        actionNames:
-        - HutongGames.PlayMaker.Actions.NextFrameEvent
-        customNames:
-        - 
-        actionEnabled: 01
-        actionIsOpen: 01
-        actionStartIndex: 00000000
-        actionHashCodes: 88611604
-        unityObjectParams: []
-        fsmGameObjectParams: []
-        fsmOwnerDefaultParams: []
-        animationCurveParams: []
-        functionCallParams: []
-        fsmTemplateControlParams: []
-        fsmEventTargetParams: []
-        fsmPropertyParams: []
-        layoutOptionParams: []
-        fsmStringParams: []
-        fsmObjectParams: []
-        fsmVarParams: []
-        fsmArrayParams: []
-        fsmEnumParams: []
-        fsmFloatParams: []
-        fsmIntParams: []
-        fsmBoolParams: []
-        fsmVector2Params: []
-        fsmVector3Params: []
-        fsmColorParams: []
-        fsmRectParams: []
-        fsmQuaternionParams: []
-        stringParams:
-        - FINISHED
-        byteData: 
-        arrayParamSizes: 
-        arrayParamTypes: []
-        customTypeSizes: 
-        customTypeNames: []
-        paramDataType: 17000000
-        paramName:
-        - sendEvent
-        paramDataPos: 00000000
-        paramByteDataSize: 00000000
-    events:
-    - name: FINISHED
-      isSystemEvent: 1
-      isGlobal: 0
-    - name: GETMOVEMENTDATA
-      isSystemEvent: 0
-      isGlobal: 0
-    - name: YES
-      isSystemEvent: 0
-      isGlobal: 0
-    globalTransitions: []
-    variables:
-      floatVariables:
-      - useVariable: 1
-        name: 
-        tooltip: 
-        showInInspector: 0
-        networkSync: 0
-        value: 0
-      - useVariable: 1
-        name: 
-        tooltip: 
-        showInInspector: 0
-        networkSync: 0
-        value: 0
-      intVariables: []
-      boolVariables:
-      - useVariable: 1
-        name: 
-        tooltip: 
-        showInInspector: 0
-        networkSync: 0
-        value: 0
-      - useVariable: 1
-        name: guardButtonState
-        tooltip: 
-        showInInspector: 1
-        networkSync: 0
-        value: 0
-      - useVariable: 1
-        name: jumpButtonState
-        tooltip: 
-        showInInspector: 1
-        networkSync: 0
-        value: 0
-      - useVariable: 1
-        name: toolButtonState
-        tooltip: 
-        showInInspector: 1
-        networkSync: 0
-        value: 0
-      stringVariables:
-      - useVariable: 1
-        name: currentStateName
-        tooltip: 
-        showInInspector: 1
-        networkSync: 0
-        value: 
-      vector2Variables:
-      - useVariable: 1
-        name: input
-        tooltip: 
-        showInInspector: 1
-        networkSync: 0
-        value: {x: 0, y: 0}
-      vector3Variables: []
-      colorVariables: []
-      rectVariables: []
-      quaternionVariables: []
-      gameObjectVariables:
-      - useVariable: 1
-        name: 
-        tooltip: 
-        showInInspector: 0
-        networkSync: 0
-        value: {fileID: 0}
-      objectVariables:
-      - useVariable: 1
-        name: 
-        tooltip: 
-        showInInspector: 0
-        networkSync: 0
-        typeName: 
-        value: {fileID: 0}
-      - useVariable: 1
-        name: inputHandler
-        tooltip: 
-        showInInspector: 0
-        networkSync: 0
-        typeName: PSmash.InputSystem.InputHandler
-        value: {fileID: 8540863619128468569}
-      materialVariables: []
-      textureVariables: []
-      arrayVariables:
-      - useVariable: 1
-        name: 
-        tooltip: 
-        showInInspector: 0
-        networkSync: 0
-        type: 2
-        objectTypeName: UnityEngine.Object
-        floatValues: []
-        intValues: 
-        boolValues: 
-        stringValues: []
-        vector4Values: []
-        objectReferences: []
-      enumVariables: []
-      categories:
-      - 
-      - ButtonsToPass
-      variableCategoryIDs: 000000000000000000000000010000000100000001000000000000000000000000000000000000000000000000000000
-    description: 
-    docUrl: 
-    showStateLabel: 0
-    maxLoopCount: 0
-    watermark: 
-    password: 
-    locked: 0
-    manualUpdate: 0
-    keepDelayedEventsOnStateExit: 0
-    preprocessed: 1
-    ExposedEvents: []
-    RestartOnEnable: 1
-    EnableDebugFlow: 0
-    EnableBreakpoints: 1
-    editorFlags: 3
-    activeStateName: 
-    mouseEvents: 0
-    handleLevelLoaded: 0
-    handleTriggerEnter2D: 0
-    handleTriggerExit2D: 0
-    handleTriggerStay2D: 0
-    handleCollisionEnter2D: 0
-    handleCollisionExit2D: 0
-    handleCollisionStay2D: 0
-    handleTriggerEnter: 0
-    handleTriggerExit: 0
-    handleTriggerStay: 0
-    handleCollisionEnter: 0
-    handleCollisionExit: 0
-    handleCollisionStay: 0
-    handleParticleCollision: 0
-    handleControllerColliderHit: 0
-    handleJointBreak: 0
-    handleJointBreak2D: 0
-    handleOnGUI: 0
-    handleFixedUpdate: 0
-    handleLateUpdate: 0
-    handleApplicationEvents: 0
-    handleUiEvents: 0
-    handleLegacyNetworking: 0
-    handleAnimatorMove: 0
-    handleAnimatorIK: 0
-  fsmTemplate: {fileID: 0}
-  eventHandlerComponentsAdded: 1
 --- !u!1 &2902188987779616707
 GameObject:
   m_ObjectHideFlags: 0
@@ -2324,7 +1628,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3ea9374b509b70f4bba37e4a2ca8cf00, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  uniqueIdentifier: 
+  uniqueIdentifier: 4814f100-9623-43f5-9362-b5c79e38f274
 --- !u!1 &7632115962595694742
 GameObject:
   m_ObjectHideFlags: 0
@@ -2358,6 +1662,7 @@ Transform:
   - {fileID: 6160213669076702481}
   - {fileID: 2562515063808682428}
   - {fileID: 4724804338471578795}
+  - {fileID: 5237735918943710293}
   m_Father: {fileID: 6581303975160096540}
   m_RootOrder: 13
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -2778,7 +2083,7 @@ MonoBehaviour:
           name: LADDERCLIMB
           isSystemEvent: 0
           isGlobal: 0
-        toState: CLIMBINGSTATE
+        toState: CLIMBINGLADDERSTATE
         linkStyle: 0
         linkConstraint: 0
         colorIndex: 0
@@ -2818,7 +2123,7 @@ MonoBehaviour:
           name: USEITEM
           isSystemEvent: 0
           isGlobal: 0
-        toState: USEITEMSTATE
+        toState: ITEM STATE
         linkStyle: 0
         linkConstraint: 0
         colorIndex: 0
@@ -2831,10 +2136,10 @@ MonoBehaviour:
         linkConstraint: 0
         colorIndex: 0
       - fsmEvent:
-          name: TOOLATTACK
+          name: SUBWEAPON
           isSystemEvent: 0
           isGlobal: 0
-        toState: TOOLATTACK STATE
+        toState: SUBWEAPON STATE
         linkStyle: 0
         linkConstraint: 0
         colorIndex: 0
@@ -3116,7 +2421,7 @@ MonoBehaviour:
           name: TOOLATTACK
           isSystemEvent: 0
           isGlobal: 0
-        toState: TOOLATTACK STATE
+        toState: SUBWEAPON STATE
         linkStyle: 0
         linkConstraint: 0
         colorIndex: 0
@@ -3483,24 +2788,24 @@ MonoBehaviour:
         - resetOnExit
         paramDataPos: 00000000000000000000000001000000
         paramByteDataSize: 00000000000000000000000000000000
-    - name: CLIMBINGSTATE
+    - name: CLIMBINGLADDERSTATE
       description: 
       colorIndex: 0
       position:
         serializedVersion: 2
         x: 74.83594
         y: 246.88281
-        width: 134
+        width: 178
         height: 80
       isBreakpoint: 0
       isSequence: 0
       hideUnused: 0
       transitions:
       - fsmEvent:
-          name: TOOLATTACK
+          name: SUBWEAPON
           isSystemEvent: 0
           isGlobal: 0
-        toState: TOOLATTACK STATE
+        toState: SUBWEAPON STATE
         linkStyle: 0
         linkConstraint: 0
         colorIndex: 0
@@ -3604,8 +2909,8 @@ MonoBehaviour:
       colorIndex: 0
       position:
         serializedVersion: 2
-        x: 353.47656
-        y: 633.10156
+        x: 653.47656
+        y: 547.7344
         width: 182
         height: 48
       isBreakpoint: 0
@@ -3791,7 +3096,7 @@ MonoBehaviour:
         - resetOnExit
         paramDataPos: 00000000000000000000000001000000
         paramByteDataSize: 00000000000000000000000000000000
-    - name: USEITEMSTATE
+    - name: ITEM STATE
       description: 
       colorIndex: 0
       position:
@@ -3844,7 +3149,7 @@ MonoBehaviour:
           tooltip: 
           showInInspector: 0
           networkSync: 0
-          value: UseItemState
+          value: ItemState
         fsmObjectParams: []
         fsmVarParams: []
         fsmArrayParams: []
@@ -3883,14 +3188,14 @@ MonoBehaviour:
         - resetOnExit
         paramDataPos: 00000000000000000000000001000000
         paramByteDataSize: 00000000000000000000000000000000
-    - name: TOOLATTACK STATE
+    - name: SUBWEAPON STATE
       description: 
       colorIndex: 0
       position:
         serializedVersion: 2
         x: 55.46875
         y: 584.46094
-        width: 157
+        width: 152
         height: 32
       isBreakpoint: 0
       isSequence: 0
@@ -3936,7 +3241,7 @@ MonoBehaviour:
           tooltip: 
           showInInspector: 0
           networkSync: 0
-          value: ToolAttackState
+          value: SubweaponState
         fsmObjectParams: []
         fsmVarParams: []
         fsmArrayParams: []
@@ -4004,6 +3309,9 @@ MonoBehaviour:
       isSystemEvent: 0
       isGlobal: 0
     - name: ROLL
+      isSystemEvent: 0
+      isGlobal: 0
+    - name: SUBWEAPON
       isSystemEvent: 0
       isGlobal: 0
     - name: THROWDAGGER
@@ -4106,7 +3414,7 @@ MonoBehaviour:
     locked: 0
     manualUpdate: 0
     keepDelayedEventsOnStateExit: 0
-    preprocessed: 1
+    preprocessed: 0
     ExposedEvents: []
     RestartOnEnable: 1
     EnableDebugFlow: 0
@@ -4176,7 +3484,7 @@ MonoBehaviour:
           name: FINISHED
           isSystemEvent: 1
           isGlobal: 0
-        toState: Set Current State in Input Proxy
+        toState: Set this FSM in Movement
         linkStyle: 0
         linkConstraint: 0
         colorIndex: 0
@@ -4880,7 +4188,7 @@ MonoBehaviour:
           tooltip: 
           showInInspector: 0
           networkSync: 0
-          value: ConstantInputMovement
+          value: ControlledMovement
         - useVariable: 0
           name: 
           tooltip: 
@@ -4896,7 +4204,7 @@ MonoBehaviour:
           typeName: PSmash.Movement.PlayerMovement
           value: {fileID: 8235024681204614677}
         fsmVarParams:
-        - variableName: input
+        - variableName: movementInput
           objectType: UnityEngine.Object
           useVariable: 1
           type: 5
@@ -5029,7 +4337,7 @@ MonoBehaviour:
           value: 0
         fsmVector2Params:
         - useVariable: 1
-          name: input
+          name: movementInput
           tooltip: 
           showInInspector: 0
           networkSync: 0
@@ -5730,19 +5038,19 @@ MonoBehaviour:
         value: 0
       boolVariables:
       - useVariable: 1
-        name: guardButtonState
+        name: 
         tooltip: 
         showInInspector: 0
         networkSync: 0
         value: 0
       - useVariable: 1
-        name: jumpButtonState
+        name: 
         tooltip: 
         showInInspector: 0
         networkSync: 0
         value: 0
       - useVariable: 1
-        name: toolButtonState
+        name: 
         tooltip: 
         showInInspector: 0
         networkSync: 0
@@ -5756,7 +5064,7 @@ MonoBehaviour:
         value: 
       vector2Variables:
       - useVariable: 1
-        name: input
+        name: 
         tooltip: 
         showInInspector: 0
         networkSync: 0
@@ -5789,12 +5097,12 @@ MonoBehaviour:
         typeName: PlayMakerFSM
         value: {fileID: 578391038514376506}
       - useVariable: 1
-        name: attack
+        name: 
         tooltip: 
         showInInspector: 0
         networkSync: 0
-        typeName: PSmash.Combat.PlayerFighter
-        value: {fileID: 4936791561473078065}
+        typeName: 
+        value: {fileID: 0}
       materialVariables: []
       textureVariables: []
       arrayVariables: []
@@ -5816,7 +5124,7 @@ MonoBehaviour:
     locked: 0
     manualUpdate: 0
     keepDelayedEventsOnStateExit: 0
-    preprocessed: 1
+    preprocessed: 0
     ExposedEvents: []
     RestartOnEnable: 1
     EnableDebugFlow: 0
@@ -5842,7 +5150,7 @@ MonoBehaviour:
     handleJointBreak: 0
     handleJointBreak2D: 0
     handleOnGUI: 0
-    handleFixedUpdate: 1
+    handleFixedUpdate: 0
     handleLateUpdate: 0
     handleApplicationEvents: 0
     handleUiEvents: 0
@@ -5906,7 +5214,7 @@ MonoBehaviour:
   fsm:
     dataVersion: 2
     usedInTemplate: {fileID: 0}
-    name: ToolAttackState
+    name: SubweaponState
     startState: Player has subweapon?
     states:
     - name: Set Current State in Input Proxy
@@ -6156,7 +5464,7 @@ MonoBehaviour:
           name: FINISHED
           isSystemEvent: 1
           isGlobal: 0
-        toState: Set Current State in Input Proxy
+        toState: Set this FSM in Movement
         linkStyle: 0
         linkConstraint: 0
         colorIndex: 0
@@ -7031,7 +6339,7 @@ MonoBehaviour:
         fsmBoolParams: []
         fsmVector2Params:
         - useVariable: 1
-          name: input
+          name: movementInput
           tooltip: 
           showInInspector: 0
           networkSync: 0
@@ -7452,19 +6760,19 @@ MonoBehaviour:
         value: 0
       boolVariables:
       - useVariable: 1
-        name: toolButtonState
+        name: 
         tooltip: 
         showInInspector: 0
         networkSync: 0
         value: 0
       - useVariable: 1
-        name: jumpButtonState
+        name: 
         tooltip: 
         showInInspector: 0
         networkSync: 0
         value: 0
       - useVariable: 1
-        name: guardButtonState
+        name: 
         tooltip: 
         showInInspector: 0
         networkSync: 0
@@ -7478,7 +6786,7 @@ MonoBehaviour:
         value: 
       vector2Variables:
       - useVariable: 1
-        name: input
+        name: 
         tooltip: 
         showInInspector: 0
         networkSync: 0
@@ -7595,6 +6903,7 @@ MonoBehaviour:
   - item: {fileID: 11400000, guid: e16a8b6a7a9d1a2439060f13fe20fea9, type: 2}
     number: 3
     maxNumber: 0
+  subWeapon: {fileID: 11400000, guid: f26cc9669b050f146b1798d88f66919a, type: 2}
 --- !u!114 &1451262971914643979
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7610,7 +6919,7 @@ MonoBehaviour:
   fsm:
     dataVersion: 2
     usedInTemplate: {fileID: 0}
-    name: UseItemState
+    name: ItemState
     startState: Set this FSM in Input Handler
     states:
     - name: Set this FSM in Movement
@@ -7991,7 +7300,7 @@ MonoBehaviour:
           name: FINISHED
           isSystemEvent: 1
           isGlobal: 0
-        toState: Set Current State in Input Proxy
+        toState: Set this FSM in Movement
         linkStyle: 0
         linkConstraint: 0
         colorIndex: 0
@@ -8604,19 +7913,19 @@ MonoBehaviour:
         networkSync: 0
         value: 0
       - useVariable: 1
-        name: guardButtonState
+        name: 
         tooltip: 
         showInInspector: 0
         networkSync: 0
         value: 0
       - useVariable: 1
-        name: jumpButtonState
+        name: 
         tooltip: 
         showInInspector: 0
         networkSync: 0
         value: 0
       - useVariable: 1
-        name: toolButtonState
+        name: 
         tooltip: 
         showInInspector: 0
         networkSync: 0
@@ -8630,7 +7939,7 @@ MonoBehaviour:
         value: 
       vector2Variables:
       - useVariable: 1
-        name: input
+        name: 
         tooltip: 
         showInInspector: 0
         networkSync: 0
@@ -8647,12 +7956,11 @@ MonoBehaviour:
         networkSync: 0
         value: {fileID: 0}
       - useVariable: 1
-        name: dagger
+        name: 
         tooltip: 
         showInInspector: 1
         networkSync: 0
-        value: {fileID: 5957079273200037511, guid: 8f39d9b2e2704ed4497033d0a664d483,
-          type: 3}
+        value: {fileID: 0}
       objectVariables:
       - useVariable: 1
         name: inputHandler
@@ -8704,12 +8012,12 @@ MonoBehaviour:
         typeName: UnityEngine.Object
         value: {fileID: 0}
       - useVariable: 1
-        name: attackObject
+        name: 
         tooltip: 
         showInInspector: 0
         networkSync: 0
-        typeName: PSmash.Combat.PlayerFighter
-        value: {fileID: 4936791561473078065}
+        typeName: 
+        value: {fileID: 0}
       - useVariable: 1
         name: 
         tooltip: 
@@ -8748,7 +8056,7 @@ MonoBehaviour:
     locked: 0
     manualUpdate: 0
     keepDelayedEventsOnStateExit: 0
-    preprocessed: 1
+    preprocessed: 0
     ExposedEvents: []
     RestartOnEnable: 1
     EnableDebugFlow: 0
@@ -9209,7 +8517,7 @@ MonoBehaviour:
           name: FINISHED
           isSystemEvent: 1
           isGlobal: 0
-        toState: Set Current State in Input Proxy
+        toState: Set this FSM in Movement
         linkStyle: 0
         linkConstraint: 0
         colorIndex: 0
@@ -9380,7 +8688,7 @@ MonoBehaviour:
           typeName: PSmash.Movement.PlayerMovement
           value: {fileID: 8235024681204614677}
         fsmVarParams:
-        - variableName: input
+        - variableName: movementInput
           objectType: UnityEngine.Object
           useVariable: 1
           type: 5
@@ -9555,7 +8863,7 @@ MonoBehaviour:
           typeName: PSmash.Movement.PlayerMovement
           value: {fileID: 8235024681204614677}
         fsmVarParams:
-        - variableName: input
+        - variableName: movementInput
           objectType: UnityEngine.Object
           useVariable: 1
           type: 5
@@ -10104,25 +9412,25 @@ MonoBehaviour:
       intVariables: []
       boolVariables:
       - useVariable: 1
-        name: guardButtonState
+        name: 
         tooltip: 
         showInInspector: 0
         networkSync: 0
         value: 0
       - useVariable: 1
-        name: jumpButtonState
+        name: 
         tooltip: 
         showInInspector: 0
         networkSync: 0
         value: 0
       - useVariable: 1
-        name: jumpCheck
+        name: 
         tooltip: 
         showInInspector: 0
         networkSync: 0
         value: 0
       - useVariable: 1
-        name: toolButtonState
+        name: 
         tooltip: 
         showInInspector: 0
         networkSync: 0
@@ -10136,7 +9444,7 @@ MonoBehaviour:
         value: 
       vector2Variables:
       - useVariable: 1
-        name: input
+        name: 
         tooltip: 
         showInInspector: 0
         networkSync: 0
@@ -10186,7 +9494,7 @@ MonoBehaviour:
     locked: 0
     manualUpdate: 0
     keepDelayedEventsOnStateExit: 0
-    preprocessed: 1
+    preprocessed: 0
     ExposedEvents: []
     RestartOnEnable: 1
     EnableDebugFlow: 0
@@ -10212,7 +9520,7 @@ MonoBehaviour:
     handleJointBreak: 0
     handleJointBreak2D: 0
     handleOnGUI: 0
-    handleFixedUpdate: 1
+    handleFixedUpdate: 0
     handleLateUpdate: 0
     handleApplicationEvents: 0
     handleUiEvents: 0
@@ -10699,7 +10007,7 @@ MonoBehaviour:
     locked: 0
     manualUpdate: 0
     keepDelayedEventsOnStateExit: 0
-    preprocessed: 1
+    preprocessed: 0
     ExposedEvents: []
     RestartOnEnable: 1
     EnableDebugFlow: 0
@@ -10725,7 +10033,7 @@ MonoBehaviour:
     handleJointBreak: 0
     handleJointBreak2D: 0
     handleOnGUI: 0
-    handleFixedUpdate: 1
+    handleFixedUpdate: 0
     handleLateUpdate: 0
     handleApplicationEvents: 0
     handleUiEvents: 0
@@ -10757,19 +10065,19 @@ MonoBehaviour:
       colorIndex: 0
       position:
         serializedVersion: 2
-        x: 314
+        x: 330
         y: 427
-        width: 136
-        height: 176
+        width: 215
+        height: 192
       isBreakpoint: 0
       isSequence: 0
       hideUnused: 0
       transitions:
       - fsmEvent:
-          name: JUMP
+          name: JUMPBUTTONPRESSED
           isSystemEvent: 0
           isGlobal: 0
-        toState: JUMP
+        toState: Can Jump?
         linkStyle: 0
         linkConstraint: 0
         colorIndex: 0
@@ -10782,7 +10090,7 @@ MonoBehaviour:
         linkConstraint: 0
         colorIndex: 0
       - fsmEvent:
-          name: NORMALATTACK
+          name: ATTACKBUTTONPRESSED
           isSystemEvent: 0
           isGlobal: 0
         toState: NORMALATTACK
@@ -10798,14 +10106,6 @@ MonoBehaviour:
         linkConstraint: 0
         colorIndex: 0
       - fsmEvent:
-          name: EVASION
-          isSystemEvent: 0
-          isGlobal: 0
-        toState: Decide Which evasion movmenet
-        linkStyle: 0
-        linkConstraint: 0
-        colorIndex: 0
-      - fsmEvent:
           name: WALLMOVEMENT
           isSystemEvent: 0
           isGlobal: 0
@@ -10814,7 +10114,7 @@ MonoBehaviour:
         linkConstraint: 0
         colorIndex: 0
       - fsmEvent:
-          name: GUARD
+          name: GUARDBUTTONPRESSED
           isSystemEvent: 0
           isGlobal: 0
         toState: GUARD
@@ -10830,38 +10130,48 @@ MonoBehaviour:
         linkConstraint: 0
         colorIndex: 0
       - fsmEvent:
-          name: USEITEM
+          name: ITEMBUTTONPRESSED
           isSystemEvent: 0
           isGlobal: 0
-        toState: USEITEM
+        toState: ITEM
         linkStyle: 0
         linkConstraint: 0
         colorIndex: 0
       - fsmEvent:
-          name: TOOLATTACK
+          name: SUBWEAPONBUTTONPRESSED
           isSystemEvent: 0
           isGlobal: 0
-        toState: TOOL ATTACK
+        toState: SUBWEAPON
+        linkStyle: 0
+        linkConstraint: 0
+        colorIndex: 0
+      - fsmEvent:
+          name: BACKJUMP
+          isSystemEvent: 0
+          isGlobal: 0
+        toState: BACKJUMP
+        linkStyle: 0
+        linkConstraint: 0
+        colorIndex: 0
+      - fsmEvent:
+          name: ROLL
+          isSystemEvent: 0
+          isGlobal: 0
+        toState: ROLL
         linkStyle: 0
         linkConstraint: 0
         colorIndex: 0
       actionData:
         actionNames:
         - HutongGames.PlayMaker.Actions.CallMethodAdvanced
-        - HutongGames.PlayMaker.Actions.BoolTest
         - HutongGames.PlayMaker.Actions.CallMethodAdvanced
-        - HutongGames.PlayMaker.Actions.CallMethod
-        - HutongGames.PlayMaker.Actions.CallMethod
         customNames:
         - 
         - 
-        - 
-        - 
-        - 
-        actionEnabled: 0101010101
-        actionIsOpen: 0101010101
-        actionStartIndex: 00000000090000000d000000150000001d000000
-        actionHashCodes: 6d618103a4c8bf006d618103ca51e900ca51e900
+        actionEnabled: 0101
+        actionIsOpen: 0101
+        actionStartIndex: 000000000a000000
+        actionHashCodes: 6d6181036d618103
         unityObjectParams: []
         fsmGameObjectParams: []
         fsmOwnerDefaultParams: []
@@ -10883,19 +10193,7 @@ MonoBehaviour:
           tooltip: 
           showInInspector: 0
           networkSync: 0
-          value: LadderMovementCheck
-        - useVariable: 0
-          name: 
-          tooltip: 
-          showInInspector: 0
-          networkSync: 0
-          value: CheckToolButtonState
-        - useVariable: 0
-          name: 
-          tooltip: 
-          showInInspector: 0
-          networkSync: 0
-          value: CanJump
+          value: CheckForLadder
         fsmObjectParams:
         - useVariable: 1
           name: movement
@@ -10911,22 +10209,8 @@ MonoBehaviour:
           networkSync: 0
           typeName: PSmash.Movement.PlayerMovement
           value: {fileID: 8235024681204614677}
-        - useVariable: 1
-          name: fighter
-          tooltip: 
-          showInInspector: 0
-          networkSync: 0
-          typeName: PSmash.Combat.PlayerFighter
-          value: {fileID: 4936791561473078065}
-        - useVariable: 1
-          name: movement
-          tooltip: 
-          showInInspector: 0
-          networkSync: 0
-          typeName: PSmash.Movement.PlayerMovement
-          value: {fileID: 8235024681204614677}
         fsmVarParams:
-        - variableName: input
+        - variableName: movementInput
           objectType: UnityEngine.Object
           useVariable: 1
           type: 5
@@ -10975,6 +10259,30 @@ MonoBehaviour:
             vector4Values: []
             objectReferences: []
         - variableName: 
+          objectType: UnityEngine.Object
+          useVariable: 0
+          type: 2
+          floatValue: 0
+          intValue: 0
+          boolValue: 0
+          stringValue: 
+          vector4Value: {x: 0, y: 0, z: 0, w: 0}
+          objectReference: {fileID: 0}
+          arrayValue:
+            useVariable: 0
+            name: 
+            tooltip: 
+            showInInspector: 0
+            networkSync: 0
+            type: -1
+            objectTypeName: 
+            floatValues: []
+            intValues: 
+            boolValues: 
+            stringValues: []
+            vector4Values: []
+            objectReferences: []
+        - variableName: 
           objectType: 
           useVariable: 0
           type: -1
@@ -10998,7 +10306,7 @@ MonoBehaviour:
             stringValues: []
             vector4Values: []
             objectReferences: []
-        - variableName: input
+        - variableName: movementInput
           objectType: UnityEngine.Object
           useVariable: 1
           type: 5
@@ -11023,129 +10331,9 @@ MonoBehaviour:
             vector4Values: []
             objectReferences: []
         - variableName: 
-          objectType: UnityEngine.Object
-          useVariable: 1
-          type: -1
-          floatValue: 0
-          intValue: 0
-          boolValue: 0
-          stringValue: 
-          vector4Value: {x: 0, y: 0, z: 0, w: 0}
-          objectReference: {fileID: 0}
-          arrayValue:
-            useVariable: 0
-            name: 
-            tooltip: 
-            showInInspector: 0
-            networkSync: 0
-            type: -1
-            objectTypeName: 
-            floatValues: []
-            intValues: 
-            boolValues: 
-            stringValues: []
-            vector4Values: []
-            objectReferences: []
-        - variableName: myFSM
-          objectType: PlayMakerFSM
-          useVariable: 1
-          type: 12
-          floatValue: 0
-          intValue: 0
-          boolValue: 0
-          stringValue: 
-          vector4Value: {x: 0, y: 0, z: 0, w: 0}
-          objectReference: {fileID: 5240833402420041602}
-          arrayValue:
-            useVariable: 0
-            name: 
-            tooltip: 
-            showInInspector: 0
-            networkSync: 0
-            type: -1
-            objectTypeName: 
-            floatValues: []
-            intValues: 
-            boolValues: 
-            stringValues: []
-            vector4Values: []
-            objectReferences: []
-        - variableName: toolButtonState
-          objectType: UnityEngine.Object
-          useVariable: 1
-          type: 2
-          floatValue: 0
-          intValue: 0
-          boolValue: 0
-          stringValue: 
-          vector4Value: {x: 0, y: 0, z: 0, w: 0}
-          objectReference: {fileID: 0}
-          arrayValue:
-            useVariable: 0
-            name: 
-            tooltip: 
-            showInInspector: 0
-            networkSync: 0
-            type: -1
-            objectTypeName: 
-            floatValues: []
-            intValues: 
-            boolValues: 
-            stringValues: []
-            vector4Values: []
-            objectReferences: []
-        - variableName: 
           objectType: 
           useVariable: 0
           type: -1
-          floatValue: 0
-          intValue: 0
-          boolValue: 0
-          stringValue: 
-          vector4Value: {x: 0, y: 0, z: 0, w: 0}
-          objectReference: {fileID: 0}
-          arrayValue:
-            useVariable: 0
-            name: 
-            tooltip: 
-            showInInspector: 0
-            networkSync: 0
-            type: -1
-            objectTypeName: 
-            floatValues: []
-            intValues: 
-            boolValues: 
-            stringValues: []
-            vector4Values: []
-            objectReferences: []
-        - variableName: 
-          objectType: UnityEngine.Object
-          useVariable: 0
-          type: 2
-          floatValue: 0
-          intValue: 0
-          boolValue: 0
-          stringValue: 
-          vector4Value: {x: 0, y: 0, z: 0, w: 0}
-          objectReference: {fileID: 0}
-          arrayValue:
-            useVariable: 0
-            name: 
-            tooltip: 
-            showInInspector: 0
-            networkSync: 0
-            type: -1
-            objectTypeName: 
-            floatValues: []
-            intValues: 
-            boolValues: 
-            stringValues: []
-            vector4Values: []
-            objectReferences: []
-        - variableName: 
-          objectType: UnityEngine.Object
-          useVariable: 1
-          type: 2
           floatValue: 0
           intValue: 0
           boolValue: 0
@@ -11170,48 +10358,27 @@ MonoBehaviour:
         fsmEnumParams: []
         fsmFloatParams: []
         fsmIntParams: []
-        fsmBoolParams:
-        - useVariable: 1
-          name: guardButtonState
-          tooltip: 
-          showInInspector: 0
-          networkSync: 0
-          value: 0
+        fsmBoolParams: []
         fsmVector2Params: []
         fsmVector3Params: []
         fsmColorParams: []
         fsmRectParams: []
         fsmQuaternionParams: []
-        stringParams:
-        - GUARD
-        - 
-        byteData: 0001020000000100010200000001000100
-        arrayParamSizes: 02000000010000000200000001000000
+        stringParams: []
+        byteData: 000102000000000102000000
+        arrayParamSizes: 0300000001000000
         arrayParamTypes:
-        - HutongGames.PlayMaker.FsmVar
-        - HutongGames.PlayMaker.FsmVar
         - HutongGames.PlayMaker.FsmVar
         - HutongGames.PlayMaker.FsmVar
         customTypeSizes: 
         customTypeNames: []
-        paramDataType: 18000000120000000c0000002700000027000000270000000100000001000000070000001100000017000000170000000100000018000000120000000c000000270000002700000001000000010000000700000018000000120000000c000000270000002700000027000000010000000100000018000000120000000c00000027000000270000000100000001000000
+        paramDataType: 18000000120000000c0000002700000027000000270000002700000001000000010000000700000018000000120000000c0000002700000027000000010000000100000007000000
         paramName:
         - behaviour
         - methodName
         - parameters
         - 
         - 
-        - storeResult
-        - manualUI
-        - everyFrame
-        - updateType
-        - boolVariable
-        - isTrue
-        - isFalse
-        - everyFrame
-        - behaviour
-        - methodName
-        - parameters
         - 
         - storeResult
         - manualUI
@@ -11221,26 +10388,19 @@ MonoBehaviour:
         - methodName
         - parameters
         - 
-        - 
         - storeResult
-        - everyFrame
         - manualUI
-        - behaviour
-        - methodName
-        - parameters
-        - 
-        - storeResult
         - everyFrame
-        - manualUI
-        paramDataPos: 0000000000000000000000000000000001000000020000000000000001000000020000000000000000000000010000000600000001000000010000000100000003000000040000000700000008000000090000000200000002000000020000000500000006000000070000000d0000000e00000003000000030000000300000008000000090000000f00000010000000
-        paramByteDataSize: 000000000000000000000000000000000000000000000000010000000100000004000000000000000000000000000000010000000000000000000000000000000000000000000000010000000100000004000000000000000000000000000000000000000000000000000000010000000100000000000000000000000000000000000000000000000100000001000000
+        - updateType
+        paramDataPos: 000000000000000000000000000000000100000002000000030000000000000001000000020000000100000001000000010000000400000005000000060000000700000008000000
+        paramByteDataSize: 000000000000000000000000000000000000000000000000000000000100000001000000040000000000000000000000000000000000000000000000010000000100000004000000
     - name: NORMALATTACK
       description: 
       colorIndex: 2
       position:
         serializedVersion: 2
-        x: 872.4219
-        y: 492.79688
+        x: 791.4219
+        y: 476.79688
         width: 134
         height: 16
       isBreakpoint: 0
@@ -11336,135 +10496,13 @@ MonoBehaviour:
         - everyFrame
         paramDataPos: 00000000000000000000000000000000
         paramByteDataSize: 00000000000000000000000001000000
-    - name: Decide Which evasion movmenet
-      description: 
-      colorIndex: 0
-      position:
-        serializedVersion: 2
-        x: 612.03906
-        y: 578.53125
-        width: 223
-        height: 48
-      isBreakpoint: 0
-      isSequence: 1
-      hideUnused: 0
-      transitions:
-      - fsmEvent:
-          name: BACKJUMP
-          isSystemEvent: 0
-          isGlobal: 0
-        toState: BACKJUMP
-        linkStyle: 0
-        linkConstraint: 0
-        colorIndex: 0
-      - fsmEvent:
-          name: ROLL
-          isSystemEvent: 0
-          isGlobal: 0
-        toState: ROLL
-        linkStyle: 0
-        linkConstraint: 0
-        colorIndex: 0
-      actionData:
-        actionNames:
-        - HutongGames.PlayMaker.Actions.GetVector2XY
-        - HutongGames.PlayMaker.Actions.FloatCompare
-        customNames:
-        - 
-        - 
-        actionEnabled: 0101
-        actionIsOpen: 0101
-        actionStartIndex: 0000000004000000
-        actionHashCodes: 8ed11d051bcdca04
-        unityObjectParams: []
-        fsmGameObjectParams: []
-        fsmOwnerDefaultParams: []
-        animationCurveParams: []
-        functionCallParams: []
-        fsmTemplateControlParams: []
-        fsmEventTargetParams: []
-        fsmPropertyParams: []
-        layoutOptionParams: []
-        fsmStringParams: []
-        fsmObjectParams: []
-        fsmVarParams: []
-        fsmArrayParams: []
-        fsmEnumParams: []
-        fsmFloatParams:
-        - useVariable: 1
-          name: xInput
-          tooltip: 
-          showInInspector: 0
-          networkSync: 0
-          value: 0
-        - useVariable: 1
-          name: 
-          tooltip: 
-          showInInspector: 0
-          networkSync: 0
-          value: 0
-        - useVariable: 1
-          name: xInput
-          tooltip: 
-          showInInspector: 0
-          networkSync: 0
-          value: 0
-        - useVariable: 0
-          name: 
-          tooltip: 
-          showInInspector: 0
-          networkSync: 0
-          value: 0
-        - useVariable: 0
-          name: 
-          tooltip: 
-          showInInspector: 0
-          networkSync: 0
-          value: 0.01
-        fsmIntParams: []
-        fsmBoolParams: []
-        fsmVector2Params:
-        - useVariable: 1
-          name: input
-          tooltip: 
-          showInInspector: 0
-          networkSync: 0
-          value: {x: 0, y: 0}
-        fsmVector3Params: []
-        fsmColorParams: []
-        fsmRectParams: []
-        fsmQuaternionParams: []
-        stringParams:
-        - BACKJUMP
-        - ROLL
-        - ROLL
-        byteData: 0000
-        arrayParamSizes: 
-        arrayParamTypes: []
-        customTypeSizes: 
-        customTypeNames: []
-        paramDataType: 250000000f0000000f000000010000000f0000000f0000000f00000017000000170000001700000001000000
-        paramName:
-        - vector2Variable
-        - storeX
-        - storeY
-        - everyFrame
-        - float1
-        - float2
-        - tolerance
-        - equal
-        - lessThan
-        - greaterThan
-        - everyFrame
-        paramDataPos: 0000000000000000010000000000000002000000030000000400000000000000010000000200000001000000
-        paramByteDataSize: 0000000000000000000000000100000000000000000000000000000000000000000000000000000001000000
     - name: BACKJUMP
       description: 
       colorIndex: 2
       position:
         serializedVersion: 2
-        x: 924.25
-        y: 585.9922
+        x: 771.71875
+        y: 612.7578
         width: 100
         height: 16
       isBreakpoint: 0
@@ -11565,8 +10603,8 @@ MonoBehaviour:
       colorIndex: 2
       position:
         serializedVersion: 2
-        x: 918.875
-        y: 612.0703
+        x: 766.34375
+        y: 638.83594
         width: 100
         height: 16
       isBreakpoint: 0
@@ -11668,7 +10706,7 @@ MonoBehaviour:
       colorIndex: 0
       position:
         serializedVersion: 2
-        x: 336.14844
+        x: 352.14844
         y: 200.65625
         width: 361
         height: 32
@@ -11897,7 +10935,7 @@ MonoBehaviour:
       colorIndex: 0
       position:
         serializedVersion: 2
-        x: 341.98438
+        x: 357.98438
         y: 110.578125
         width: 305
         height: 32
@@ -11909,7 +10947,7 @@ MonoBehaviour:
           name: FINISHED
           isSystemEvent: 1
           isGlobal: 0
-        toState: Set Current State in Input Proxy
+        toState: Set this FSM in Movement
         linkStyle: 0
         linkConstraint: 0
         colorIndex: 0
@@ -12028,8 +11066,8 @@ MonoBehaviour:
       colorIndex: 2
       position:
         serializedVersion: 2
-        x: 605.2422
-        y: 441.58594
+        x: 790.3906
+        y: 427.1797
         width: 100
         height: 16
       isBreakpoint: 0
@@ -12130,7 +11168,7 @@ MonoBehaviour:
       colorIndex: 0
       position:
         serializedVersion: 2
-        x: 327.1172
+        x: 343.1172
         y: 280.51562
         width: 296.5
         height: 32
@@ -12261,7 +11299,7 @@ MonoBehaviour:
       colorIndex: 0
       position:
         serializedVersion: 2
-        x: 315.28125
+        x: 331.28125
         y: 363.39844
         width: 100
         height: 32
@@ -12325,8 +11363,8 @@ MonoBehaviour:
       colorIndex: 2
       position:
         serializedVersion: 2
-        x: 913.0078
-        y: 529.71875
+        x: 788.0078
+        y: 514.71875
         width: 120
         height: 16
       isBreakpoint: 0
@@ -12427,7 +11465,7 @@ MonoBehaviour:
       colorIndex: 0
       position:
         serializedVersion: 2
-        x: 94
+        x: 110
         y: 441
         width: 132
         height: 32
@@ -12775,8 +11813,8 @@ MonoBehaviour:
       colorIndex: 2
       position:
         serializedVersion: 2
-        x: 62.210938
-        y: 595.59375
+        x: 56.664062
+        y: 524.6797
         width: 110
         height: 16
       isBreakpoint: 0
@@ -12877,8 +11915,8 @@ MonoBehaviour:
       colorIndex: 2
       position:
         serializedVersion: 2
-        x: 475.83594
-        y: 708.3281
+        x: 787.83594
+        y: 566.3281
         width: 100
         height: 16
       isBreakpoint: 0
@@ -12979,8 +12017,8 @@ MonoBehaviour:
       colorIndex: 2
       position:
         serializedVersion: 2
-        x: 85.9375
-        y: 639.375
+        x: 80.390625
+        y: 568.46094
         width: 100
         height: 16
       isBreakpoint: 0
@@ -13076,13 +12114,13 @@ MonoBehaviour:
         - everyFrame
         paramDataPos: 00000000000000000000000000000000
         paramByteDataSize: 00000000000000000000000001000000
-    - name: USEITEM
+    - name: ITEM
       description: 
       colorIndex: 2
       position:
         serializedVersion: 2
-        x: 95.453125
-        y: 696.02344
+        x: 89.90625
+        y: 625.1094
         width: 100
         height: 16
       isBreakpoint: 0
@@ -13178,14 +12216,14 @@ MonoBehaviour:
         - everyFrame
         paramDataPos: 00000000000000000000000000000000
         paramByteDataSize: 00000000000000000000000001000000
-    - name: TOOL ATTACK
+    - name: SUBWEAPON
       description: 
       colorIndex: 2
       position:
         serializedVersion: 2
-        x: 103.94531
-        y: 750.0078
-        width: 117
+        x: 98.39844
+        y: 679.09375
+        width: 109
         height: 16
       isBreakpoint: 0
       isSequence: 0
@@ -13247,7 +12285,7 @@ MonoBehaviour:
           tooltip: 
           showInInspector: 0
           networkSync: 0
-          value: TOOLATTACK
+          value: SUBWEAPON
         fsmObjectParams: []
         fsmVarParams: []
         fsmArrayParams: []
@@ -13280,11 +12318,143 @@ MonoBehaviour:
         - everyFrame
         paramDataPos: 00000000000000000000000000000000
         paramByteDataSize: 00000000000000000000000001000000
+    - name: Can Jump?
+      description: 
+      colorIndex: 0
+      position:
+        serializedVersion: 2
+        x: 592.5781
+        y: 424.4453
+        width: 100
+        height: 48
+      isBreakpoint: 0
+      isSequence: 1
+      hideUnused: 0
+      transitions:
+      - fsmEvent:
+          name: YES
+          isSystemEvent: 0
+          isGlobal: 0
+        toState: JUMP
+        linkStyle: 0
+        linkConstraint: 0
+        colorIndex: 0
+      - fsmEvent:
+          name: NO
+          isSystemEvent: 0
+          isGlobal: 0
+        toState: Moving
+        linkStyle: 0
+        linkConstraint: 0
+        colorIndex: 0
+      actionData:
+        actionNames:
+        - HutongGames.PlayMaker.Actions.CallMethodAdvanced
+        - HutongGames.PlayMaker.Actions.BoolTest
+        customNames:
+        - 
+        - 
+        actionEnabled: 0101
+        actionIsOpen: 0101
+        actionStartIndex: 0000000007000000
+        actionHashCodes: 6d618103a4c8bf00
+        unityObjectParams: []
+        fsmGameObjectParams: []
+        fsmOwnerDefaultParams: []
+        animationCurveParams: []
+        functionCallParams: []
+        fsmTemplateControlParams: []
+        fsmEventTargetParams: []
+        fsmPropertyParams: []
+        layoutOptionParams: []
+        fsmStringParams:
+        - useVariable: 0
+          name: 
+          tooltip: 
+          showInInspector: 0
+          networkSync: 0
+          value: CanJump
+        fsmObjectParams:
+        - useVariable: 1
+          name: movement
+          tooltip: 
+          showInInspector: 0
+          networkSync: 0
+          typeName: PSmash.Movement.PlayerMovement
+          value: {fileID: 8235024681204614677}
+        fsmVarParams:
+        - variableName: canJump
+          objectType: UnityEngine.Object
+          useVariable: 1
+          type: 2
+          floatValue: 0
+          intValue: 0
+          boolValue: 0
+          stringValue: 
+          vector4Value: {x: 0, y: 0, z: 0, w: 0}
+          objectReference: {fileID: 0}
+          arrayValue:
+            useVariable: 0
+            name: 
+            tooltip: 
+            showInInspector: 0
+            networkSync: 0
+            type: -1
+            objectTypeName: 
+            floatValues: []
+            intValues: 
+            boolValues: 
+            stringValues: []
+            vector4Values: []
+            objectReferences: []
+        fsmArrayParams: []
+        fsmEnumParams: []
+        fsmFloatParams: []
+        fsmIntParams: []
+        fsmBoolParams:
+        - useVariable: 1
+          name: canJump
+          tooltip: 
+          showInInspector: 0
+          networkSync: 0
+          value: 0
+        fsmVector2Params: []
+        fsmVector3Params: []
+        fsmColorParams: []
+        fsmRectParams: []
+        fsmQuaternionParams: []
+        stringParams:
+        - YES
+        - NO
+        byteData: 00000000000000
+        arrayParamSizes: 00000000
+        arrayParamTypes:
+        - HutongGames.PlayMaker.FsmVar
+        customTypeSizes: 
+        customTypeNames: []
+        paramDataType: 18000000120000000c0000002700000001000000010000000700000011000000170000001700000001000000
+        paramName:
+        - behaviour
+        - methodName
+        - parameters
+        - storeResult
+        - manualUI
+        - everyFrame
+        - updateType
+        - boolVariable
+        - isTrue
+        - isFalse
+        - everyFrame
+        paramDataPos: 0000000000000000000000000000000000000000010000000200000000000000000000000100000006000000
+        paramByteDataSize: 0000000000000000000000000000000001000000010000000400000000000000000000000000000001000000
     events:
     - name: FINISHED
       isSystemEvent: 1
       isGlobal: 0
     - name: ACTIONFINISHED
+      isSystemEvent: 0
+      isGlobal: 0
+    - name: ATTACKBUTTONPRESSED
       isSystemEvent: 0
       isGlobal: 0
     - name: BACKJUMP
@@ -13302,16 +12472,34 @@ MonoBehaviour:
     - name: GUARD
       isSystemEvent: 0
       isGlobal: 0
+    - name: GUARDBUTTONPRESSED
+      isSystemEvent: 0
+      isGlobal: 0
+    - name: ITEMBUTTONPRESSED
+      isSystemEvent: 0
+      isGlobal: 0
     - name: JUMP
       isSystemEvent: 0
       isGlobal: 0
+    - name: JUMPBUTTONPRESSED
+      isSystemEvent: 0
+      isGlobal: 0
+    - name: JUMPBUTTONRELEASED
+      isSystemEvent: 0
+      isGlobal: 0
     - name: LADDERCLIMB
+      isSystemEvent: 0
+      isGlobal: 0
+    - name: NO
       isSystemEvent: 0
       isGlobal: 0
     - name: NORMALATTACK
       isSystemEvent: 0
       isGlobal: 0
     - name: ROLL
+      isSystemEvent: 0
+      isGlobal: 0
+    - name: SUBWEAPONBUTTONPRESSED
       isSystemEvent: 0
       isGlobal: 0
     - name: THROWDAGGER
@@ -13324,6 +12512,9 @@ MonoBehaviour:
       isSystemEvent: 0
       isGlobal: 0
     - name: WALLMOVEMENT
+      isSystemEvent: 0
+      isGlobal: 0
+    - name: YES
       isSystemEvent: 0
       isGlobal: 0
     globalTransitions: []
@@ -13372,7 +12563,7 @@ MonoBehaviour:
         networkSync: 0
         value: 8
       - useVariable: 1
-        name: xInput
+        name: 
         tooltip: 
         showInInspector: 0
         networkSync: 0
@@ -13398,25 +12589,31 @@ MonoBehaviour:
         networkSync: 0
         value: 0
       - useVariable: 1
-        name: canDoWallMovement
+        name: 
         tooltip: 
         showInInspector: 0
         networkSync: 0
         value: 0
       - useVariable: 1
-        name: guardButtonState
+        name: 
         tooltip: 
         showInInspector: 0
         networkSync: 0
         value: 0
       - useVariable: 1
-        name: jumpButtonState
+        name: 
         tooltip: 
         showInInspector: 0
         networkSync: 0
         value: 0
       - useVariable: 1
-        name: toolButtonState
+        name: 
+        tooltip: 
+        showInInspector: 0
+        networkSync: 0
+        value: 0
+      - useVariable: 1
+        name: canJump
         tooltip: 
         showInInspector: 0
         networkSync: 0
@@ -13430,7 +12627,7 @@ MonoBehaviour:
         value: 
       vector2Variables:
       - useVariable: 1
-        name: input
+        name: 
         tooltip: 
         showInInspector: 0
         networkSync: 0
@@ -13488,12 +12685,12 @@ MonoBehaviour:
         typeName: 
         value: {fileID: 0}
       - useVariable: 1
-        name: fighter
+        name: 
         tooltip: 
         showInInspector: 0
         networkSync: 0
-        typeName: PSmash.Combat.PlayerFighter
-        value: {fileID: 4936791561473078065}
+        typeName: 
+        value: {fileID: 0}
       materialVariables: []
       textureVariables: []
       arrayVariables: []
@@ -13502,7 +12699,7 @@ MonoBehaviour:
       - 
       - Exposed
       - InputProxy
-      variableCategoryIDs: 00000000000000000000000000000000000000000000000001000000000000000000000000000000000000000000000002000000020000000200000000000000020000000000000000000000000000000000000000000000000000000000000000000000
+      variableCategoryIDs: 0000000000000000000000000000000000000000000000000100000000000000000000000000000000000000000000000200000002000000020000000000000000000000020000000000000000000000000000000000000000000000000000000000000000000000
     description: 
     docUrl: 
     showStateLabel: 0
@@ -13512,7 +12709,7 @@ MonoBehaviour:
     locked: 0
     manualUpdate: 0
     keepDelayedEventsOnStateExit: 0
-    preprocessed: 1
+    preprocessed: 0
     ExposedEvents: []
     RestartOnEnable: 1
     EnableDebugFlow: 0
@@ -13538,7 +12735,7 @@ MonoBehaviour:
     handleJointBreak: 0
     handleJointBreak2D: 0
     handleOnGUI: 0
-    handleFixedUpdate: 1
+    handleFixedUpdate: 0
     handleLateUpdate: 0
     handleApplicationEvents: 0
     handleUiEvents: 0
@@ -13559,7 +12756,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3ea9374b509b70f4bba37e4a2ca8cf00, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  uniqueIdentifier: 
+  uniqueIdentifier: 8fd37ef4-b99a-45b0-a1b4-5f0b25d01676
 --- !u!114 &5898523237326450535
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -13825,7 +13022,7 @@ MonoBehaviour:
           name: FINISHED
           isSystemEvent: 1
           isGlobal: 0
-        toState: Set Current State in Input Proxy
+        toState: Set this FSM in Movement
         linkStyle: 0
         linkConstraint: 0
         colorIndex: 0
@@ -14130,7 +13327,7 @@ MonoBehaviour:
           typeName: PSmash.Movement.PlayerMovement
           value: {fileID: 8235024681204614677}
         fsmVarParams:
-        - variableName: input
+        - variableName: movementInput
           objectType: UnityEngine.Object
           useVariable: 1
           type: 5
@@ -14154,11 +13351,11 @@ MonoBehaviour:
             stringValues: []
             vector4Values: []
             objectReferences: []
-        - variableName: 
+        - variableName: maxLadderMovementSpeed
           objectType: UnityEngine.Object
           useVariable: 1
           type: 0
-          floatValue: 0
+          floatValue: 2
           intValue: 0
           boolValue: 0
           stringValue: 
@@ -14482,7 +13679,7 @@ MonoBehaviour:
         serializedVersion: 2
         x: 63.828125
         y: 489.1953
-        width: 137
+        width: 171
         height: 64
       isBreakpoint: 0
       isSequence: 0
@@ -14497,7 +13694,7 @@ MonoBehaviour:
         linkConstraint: 0
         colorIndex: 0
       - fsmEvent:
-          name: JUMP
+          name: JUMPBUTTONPRESSED
           isSystemEvent: 0
           isGlobal: 0
         toState: JUMP
@@ -14546,7 +13743,7 @@ MonoBehaviour:
           typeName: PSmash.Movement.PlayerMovement
           value: {fileID: 8235024681204614677}
         fsmVarParams:
-        - variableName: input
+        - variableName: movementInput
           objectType: UnityEngine.Object
           useVariable: 1
           type: 5
@@ -14923,13 +14120,16 @@ MonoBehaviour:
     - name: JUMP
       isSystemEvent: 0
       isGlobal: 0
+    - name: JUMPBUTTONPRESSED
+      isSystemEvent: 0
+      isGlobal: 0
+    - name: NO
+      isSystemEvent: 0
+      isGlobal: 0
     - name: NORMALATTACK
       isSystemEvent: 0
       isGlobal: 0
     - name: YES
-      isSystemEvent: 0
-      isGlobal: 0
-    - name: NO
       isSystemEvent: 0
       isGlobal: 0
     globalTransitions: []
@@ -14950,25 +14150,25 @@ MonoBehaviour:
       intVariables: []
       boolVariables:
       - useVariable: 1
-        name: guardButtonState
+        name: 
         tooltip: 
         showInInspector: 0
         networkSync: 0
         value: 0
       - useVariable: 1
-        name: jumpButtonState
+        name: 
         tooltip: 
         showInInspector: 0
         networkSync: 0
         value: 0
       - useVariable: 1
-        name: jumpCheck
+        name: 
         tooltip: 
         showInInspector: 0
         networkSync: 0
         value: 0
       - useVariable: 1
-        name: toolButtonState
+        name: 
         tooltip: 
         showInInspector: 0
         networkSync: 0
@@ -14982,7 +14182,7 @@ MonoBehaviour:
         value: 
       vector2Variables:
       - useVariable: 1
-        name: input
+        name: 
         tooltip: 
         showInInspector: 0
         networkSync: 0
@@ -15031,7 +14231,7 @@ MonoBehaviour:
     locked: 0
     manualUpdate: 0
     keepDelayedEventsOnStateExit: 0
-    preprocessed: 1
+    preprocessed: 0
     ExposedEvents: []
     RestartOnEnable: 1
     EnableDebugFlow: 0
@@ -15057,7 +14257,7 @@ MonoBehaviour:
     handleJointBreak: 0
     handleJointBreak2D: 0
     handleOnGUI: 0
-    handleFixedUpdate: 1
+    handleFixedUpdate: 0
     handleLateUpdate: 0
     handleApplicationEvents: 0
     handleUiEvents: 0
@@ -15361,7 +14561,7 @@ MonoBehaviour:
         linkConstraint: 0
         colorIndex: 0
       - fsmEvent:
-          name: NORMALATTACK
+          name: ATTACKBUTTONPRESSED
           isSystemEvent: 0
           isGlobal: 0
         toState: Start Attack Animation
@@ -15526,7 +14726,7 @@ MonoBehaviour:
           name: FINISHED
           isSystemEvent: 1
           isGlobal: 0
-        toState: Set Current State in Input Proxy
+        toState: Set this FSM in Movement
         linkStyle: 0
         linkConstraint: 0
         colorIndex: 0
@@ -16143,7 +15343,7 @@ MonoBehaviour:
         fsmBoolParams: []
         fsmVector2Params:
         - useVariable: 1
-          name: input
+          name: movementInput
           tooltip: 
           showInInspector: 0
           networkSync: 0
@@ -16314,6 +15514,9 @@ MonoBehaviour:
     - name: FINISHED
       isSystemEvent: 1
       isGlobal: 0
+    - name: ATTACKBUTTONPRESSED
+      isSystemEvent: 0
+      isGlobal: 0
     - name: COMBOWINDOWDISABLED
       isSystemEvent: 0
       isGlobal: 0
@@ -16365,19 +15568,19 @@ MonoBehaviour:
         value: 0
       boolVariables:
       - useVariable: 1
-        name: guardButtonState
+        name: 
         tooltip: 
         showInInspector: 0
         networkSync: 0
         value: 0
       - useVariable: 1
-        name: jumpButtonState
+        name: 
         tooltip: 
         showInInspector: 0
         networkSync: 0
         value: 0
       - useVariable: 1
-        name: toolButtonState
+        name: 
         tooltip: 
         showInInspector: 0
         networkSync: 0
@@ -16391,7 +15594,7 @@ MonoBehaviour:
         value: 
       vector2Variables:
       - useVariable: 1
-        name: input
+        name: 
         tooltip: 
         showInInspector: 0
         networkSync: 0
@@ -16447,7 +15650,7 @@ MonoBehaviour:
     locked: 0
     manualUpdate: 0
     keepDelayedEventsOnStateExit: 0
-    preprocessed: 1
+    preprocessed: 0
     ExposedEvents: []
     RestartOnEnable: 1
     EnableDebugFlow: 0
@@ -16473,7 +15676,7 @@ MonoBehaviour:
     handleJointBreak: 0
     handleJointBreak2D: 0
     handleOnGUI: 0
-    handleFixedUpdate: 1
+    handleFixedUpdate: 0
     handleLateUpdate: 0
     handleApplicationEvents: 0
     handleUiEvents: 0
@@ -16684,7 +15887,7 @@ MonoBehaviour:
         serializedVersion: 2
         x: 63.289062
         y: 470.375
-        width: 134
+        width: 171
         height: 64
       isBreakpoint: 0
       isSequence: 0
@@ -16699,10 +15902,10 @@ MonoBehaviour:
         linkConstraint: 0
         colorIndex: 0
       - fsmEvent:
-          name: JUMP
+          name: JUMPBUTTONPRESSED
           isSystemEvent: 0
           isGlobal: 0
-        toState: JUMP
+        toState: Can Jump?
         linkStyle: 0
         linkConstraint: 0
         colorIndex: 0
@@ -16766,7 +15969,7 @@ MonoBehaviour:
           typeName: PSmash.Movement.PlayerMovement
           value: {fileID: 8235024681204614677}
         fsmVarParams:
-        - variableName: input
+        - variableName: movementInput
           objectType: UnityEngine.Object
           useVariable: 1
           type: 5
@@ -17128,7 +16331,7 @@ MonoBehaviour:
           name: FINISHED
           isSystemEvent: 1
           isGlobal: 0
-        toState: Set Current State in Input Proxy
+        toState: Set this FSM in Movement
         linkStyle: 0
         linkConstraint: 0
         colorIndex: 0
@@ -17477,8 +16680,8 @@ MonoBehaviour:
       colorIndex: 2
       position:
         serializedVersion: 2
-        x: 316.2578
-        y: 502.6875
+        x: 468.2578
+        y: 511.6875
         width: 100
         height: 16
       isBreakpoint: 0
@@ -17865,11 +17068,142 @@ MonoBehaviour:
         - manualUI
         paramDataPos: 00000000000000000000000000000000010000000000000001000000
         paramByteDataSize: 00000000000000000000000000000000000000000100000001000000
+    - name: Can Jump?
+      description: 
+      colorIndex: 0
+      position:
+        serializedVersion: 2
+        x: 317
+        y: 491
+        width: 100
+        height: 48
+      isBreakpoint: 0
+      isSequence: 1
+      hideUnused: 0
+      transitions:
+      - fsmEvent:
+          name: YES
+          isSystemEvent: 0
+          isGlobal: 0
+        toState: JUMP
+        linkStyle: 0
+        linkConstraint: 0
+        colorIndex: 0
+      - fsmEvent:
+          name: NO
+          isSystemEvent: 0
+          isGlobal: 0
+        toState: Listener
+        linkStyle: 0
+        linkConstraint: 0
+        colorIndex: 0
+      actionData:
+        actionNames:
+        - HutongGames.PlayMaker.Actions.CallMethod
+        - HutongGames.PlayMaker.Actions.BoolTest
+        customNames:
+        - 
+        - 
+        actionEnabled: 0101
+        actionIsOpen: 0101
+        actionStartIndex: 0000000006000000
+        actionHashCodes: ca51e900a4c8bf00
+        unityObjectParams: []
+        fsmGameObjectParams: []
+        fsmOwnerDefaultParams: []
+        animationCurveParams: []
+        functionCallParams: []
+        fsmTemplateControlParams: []
+        fsmEventTargetParams: []
+        fsmPropertyParams: []
+        layoutOptionParams: []
+        fsmStringParams:
+        - useVariable: 0
+          name: 
+          tooltip: 
+          showInInspector: 0
+          networkSync: 0
+          value: CanJump
+        fsmObjectParams:
+        - useVariable: 1
+          name: movement
+          tooltip: 
+          showInInspector: 0
+          networkSync: 0
+          typeName: PSmash.Movement.PlayerMovement
+          value: {fileID: 8235024681204614677}
+        fsmVarParams:
+        - variableName: canJump
+          objectType: UnityEngine.Object
+          useVariable: 1
+          type: 2
+          floatValue: 0
+          intValue: 0
+          boolValue: 0
+          stringValue: 
+          vector4Value: {x: 0, y: 0, z: 0, w: 0}
+          objectReference: {fileID: 0}
+          arrayValue:
+            useVariable: 0
+            name: 
+            tooltip: 
+            showInInspector: 0
+            networkSync: 0
+            type: -1
+            objectTypeName: 
+            floatValues: []
+            intValues: 
+            boolValues: 
+            stringValues: []
+            vector4Values: []
+            objectReferences: []
+        fsmArrayParams: []
+        fsmEnumParams: []
+        fsmFloatParams: []
+        fsmIntParams: []
+        fsmBoolParams:
+        - useVariable: 1
+          name: canJump
+          tooltip: 
+          showInInspector: 0
+          networkSync: 0
+          value: 0
+        fsmVector2Params: []
+        fsmVector3Params: []
+        fsmColorParams: []
+        fsmRectParams: []
+        fsmQuaternionParams: []
+        stringParams:
+        - YES
+        - NO
+        byteData: 000000
+        arrayParamSizes: 00000000
+        arrayParamTypes:
+        - HutongGames.PlayMaker.FsmVar
+        customTypeSizes: 
+        customTypeNames: []
+        paramDataType: 18000000120000000c00000027000000010000000100000011000000170000001700000001000000
+        paramName:
+        - behaviour
+        - methodName
+        - parameters
+        - storeResult
+        - everyFrame
+        - manualUI
+        - boolVariable
+        - isTrue
+        - isFalse
+        - everyFrame
+        paramDataPos: 00000000000000000000000000000000000000000100000000000000000000000100000002000000
+        paramByteDataSize: 00000000000000000000000000000000010000000100000000000000000000000000000001000000
     events:
     - name: FINISHED
       isSystemEvent: 1
       isGlobal: 0
     - name: JUMP
+      isSystemEvent: 0
+      isGlobal: 0
+    - name: JUMPBUTTONPRESSED
       isSystemEvent: 0
       isGlobal: 0
     - name: NO
@@ -17929,25 +17263,31 @@ MonoBehaviour:
         value: 0
       boolVariables:
       - useVariable: 1
-        name: guardButtonState
+        name: 
         tooltip: 
         showInInspector: 0
         networkSync: 0
         value: 0
       - useVariable: 1
-        name: jumpButtonState
+        name: 
         tooltip: 
         showInInspector: 0
         networkSync: 0
         value: 0
       - useVariable: 1
-        name: jumpCheck
+        name: 
         tooltip: 
         showInInspector: 0
         networkSync: 0
         value: 0
       - useVariable: 1
-        name: toolButtonState
+        name: 
+        tooltip: 
+        showInInspector: 0
+        networkSync: 0
+        value: 0
+      - useVariable: 1
+        name: canJump
         tooltip: 
         showInInspector: 0
         networkSync: 0
@@ -18032,7 +17372,7 @@ MonoBehaviour:
       - 
       - Exposed
       - InputProxy
-      variableCategoryIDs: 000000000000000001000000000000000000000000000000000000000200000002000000000000000200000000000000000000000200000000000000000000000000000000000000000000000000000000000000
+      variableCategoryIDs: 00000000000000000100000000000000000000000000000000000000020000000200000000000000020000000000000000000000000000000200000000000000000000000000000000000000000000000000000000000000
     description: 
     docUrl: 
     showStateLabel: 0
@@ -18042,7 +17382,7 @@ MonoBehaviour:
     locked: 0
     manualUpdate: 0
     keepDelayedEventsOnStateExit: 0
-    preprocessed: 1
+    preprocessed: 0
     ExposedEvents: []
     RestartOnEnable: 1
     EnableDebugFlow: 0
@@ -18068,7 +17408,7 @@ MonoBehaviour:
     handleJointBreak: 0
     handleJointBreak2D: 0
     handleOnGUI: 0
-    handleFixedUpdate: 1
+    handleFixedUpdate: 0
     handleLateUpdate: 0
     handleApplicationEvents: 0
     handleUiEvents: 0
@@ -18675,7 +18015,7 @@ MonoBehaviour:
           name: FINISHED
           isSystemEvent: 1
           isGlobal: 0
-        toState: Set Current State in Input Proxy
+        toState: Set this FSM in Movement
         linkStyle: 0
         linkConstraint: 0
         colorIndex: 0
@@ -19273,19 +18613,19 @@ MonoBehaviour:
         value: 0
       boolVariables:
       - useVariable: 1
-        name: guardButtonState
+        name: 
         tooltip: 
         showInInspector: 0
         networkSync: 0
         value: 0
       - useVariable: 1
-        name: jumpButtonState
+        name: 
         tooltip: 
         showInInspector: 0
         networkSync: 0
         value: 0
       - useVariable: 1
-        name: toolButtonState
+        name: 
         tooltip: 
         showInInspector: 0
         networkSync: 0
@@ -19323,7 +18663,7 @@ MonoBehaviour:
         networkSync: 0
         value: {x: 0, y: 0}
       - useVariable: 1
-        name: input
+        name: 
         tooltip: 
         showInInspector: 0
         networkSync: 0
@@ -19396,7 +18736,7 @@ MonoBehaviour:
     locked: 0
     manualUpdate: 0
     keepDelayedEventsOnStateExit: 0
-    preprocessed: 1
+    preprocessed: 0
     ExposedEvents: []
     RestartOnEnable: 1
     EnableDebugFlow: 0
@@ -19773,7 +19113,7 @@ MonoBehaviour:
           name: FINISHED
           isSystemEvent: 1
           isGlobal: 0
-        toState: Set Current State in Input Proxy
+        toState: Set this FSM in Movement
         linkStyle: 0
         linkConstraint: 0
         colorIndex: 0
@@ -20462,19 +19802,19 @@ MonoBehaviour:
         value: 0
       boolVariables:
       - useVariable: 1
-        name: guardButtonState
+        name: 
         tooltip: 
         showInInspector: 0
         networkSync: 0
         value: 0
       - useVariable: 1
-        name: jumpButtonState
+        name: 
         tooltip: 
         showInInspector: 0
         networkSync: 0
         value: 0
       - useVariable: 1
-        name: toolButtonState
+        name: 
         tooltip: 
         showInInspector: 0
         networkSync: 0
@@ -20488,7 +19828,7 @@ MonoBehaviour:
         value: 
       vector2Variables:
       - useVariable: 1
-        name: input
+        name: 
         tooltip: 
         showInInspector: 0
         networkSync: 0
@@ -20544,7 +19884,7 @@ MonoBehaviour:
     locked: 0
     manualUpdate: 0
     keepDelayedEventsOnStateExit: 0
-    preprocessed: 1
+    preprocessed: 0
     ExposedEvents: []
     RestartOnEnable: 1
     EnableDebugFlow: 0
@@ -20570,7 +19910,7 @@ MonoBehaviour:
     handleJointBreak: 0
     handleJointBreak2D: 0
     handleOnGUI: 0
-    handleFixedUpdate: 1
+    handleFixedUpdate: 0
     handleLateUpdate: 0
     handleApplicationEvents: 0
     handleUiEvents: 0
@@ -20879,6 +20219,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 75561d9801edb4b48ad9e5f43cea3d05, type: 3}
+--- !u!1 &6581303975160096547 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3784079572925901943, guid: 75561d9801edb4b48ad9e5f43cea3d05,
+    type: 3}
+  m_PrefabInstance: {fileID: 8058836708823124820}
+  m_PrefabAsset: {fileID: 0}
 --- !u!114 &1354962760599718964 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 9014929069135497056, guid: 75561d9801edb4b48ad9e5f43cea3d05,
@@ -20891,12 +20237,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b4a54fc1155d7dd4fb94090c8dc41bea, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!1 &6581303975160096547 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 3784079572925901943, guid: 75561d9801edb4b48ad9e5f43cea3d05,
-    type: 3}
-  m_PrefabInstance: {fileID: 8058836708823124820}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &6581303975160096540 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3784079572925901896, guid: 75561d9801edb4b48ad9e5f43cea3d05,

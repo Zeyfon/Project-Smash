@@ -1,15 +1,12 @@
 ﻿using PSmash.Attributes;
+using PSmash.Inventories;
 using PSmash.Items.Doors;
 using PSmash.Items.Traps;
-using PSmash.Inventories;
+using PSmash.Menus;
 using PSmash.Movement;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
-using PSmash.Saving;
-using PSmash.Menus;
-using PSmash.CraftingSystem;
-using PSmash.Core;
 
 namespace PSmash.InputSystem
 {
@@ -21,26 +18,35 @@ namespace PSmash.InputSystem
         Collider2D interactableCollider;
         PlayMakerFSM pmPlayerController = null;
 
-
         public static event Action OnPlayerStartButtonPressed;
         public List<ICommand> commandList = new List<ICommand>();
 
-        ICommand action1;
-        ICommand buttonB;
-        ICommand buttonX;
-        ICommand buttonY;
-        ICommand buttonRB;
-        ICommand buttonLB;
-        //ICommand dPadRight;
+        Command action0;
+        Command action1;
+        Command action2;
+        Command action3;
+        Command action4;
+        Command action5;
+        Command action6;
+        Command action7;
+        
+
+        Vector2 action0State = new Vector2(0, 0);
+        float action1State = 0;
+        float action2State = 0;
+        float action3State = 0;
+        float action4State = 0;
+        float action5State = 0;
+        float action7State = 0;
 
         PlayMakerFSM currentPMState;
         _Controller _controller;
 
         Vector2 movement;
-        float itemSelect;
         bool jumpButtonState = false;
         bool toolButtonState = false;
         bool guardButtonState = false;
+        bool guardTest = false;
 
         private void Awake()
         {
@@ -62,17 +68,14 @@ namespace PSmash.InputSystem
 
         private void SetInitialCommandsToButtons()
         {
-            action1 = GetComponent<JumpCommand>();
-            buttonX = GetComponent<LightAttackCommand>();
-            buttonB = GetComponent<EvadeCommand>();
-            buttonY = GetComponent<ToolCommand>();
-            buttonRB = GetComponent<GuardCommand>();
-            buttonLB = GetComponent<ThrowableItemsCommand>();
-        }
-
-        public _Controller GetController()
-        {
-            return _controller;
+            action0 = new MoveCommand();
+            action1 = new JumpCommand();
+            action2 = new AttackCommand();
+            action3 = new EvadeCommand();
+            action4 = new SubweaponCommand();
+            action5 = new GuardCommand();
+            action6 = new ToolCommand();
+            action7 = new ToolSelectionCommand();
         }
 
         //Method used by each state in PlayMaker to inform to which state the inputs will be sent
@@ -86,20 +89,18 @@ namespace PSmash.InputSystem
         {
             _controller.Player.Enable();
             _controller.Player.Move.performed += ctx => movement = ctx.ReadValue<Vector2>();
-            _controller.Player.ButtonA.started += ctx => ButtonAPressed();
-            _controller.Player.ButtonA.canceled += ctx => ButtonAReleased();
-            _controller.Player.ButtonB.started += ctx => ButtonBPressed();
-            _controller.Player.ButtonB.canceled += ctx => ButtonBReleased();
-            _controller.Player.ButtonX.started += ctx => ButtonXPressed();
-            _controller.Player.ButtonX.canceled += ctx => ButtonXReleased();
-            _controller.Player.ButtonY.started += ctx => ButtonYPressed();
-            _controller.Player.ButtonY.canceled += ctx => ButtonYReleased();
-            _controller.Player.ButtonRB.started += cx => ButtonRBPressed();
-            _controller.Player.ButtonRB.canceled += ctx => ButtonRBReleased();
-            _controller.Player.ItemUse.started += ctx => ItemButtonPressed();
-            _controller.Player.ItemUse.canceled += ctx => ItemButonReleased();
-            _controller.Player.ItemChangeRight.performed += ctx => ItemChangeRight();
-            _controller.Player.ItemChangeLeft.performed += ctx => ItemChangeLeft();
+            _controller.Player.Action1.started += ctx => Action1Pressed();
+            _controller.Player.Action1.canceled += ctx => Action1Released();
+            _controller.Player.Action2.started += ctx => Action2Pressed();
+            _controller.Player.Action2.canceled += ctx => Action2Released();
+            _controller.Player.Action3.started += ctx => Action3Pressed();
+            _controller.Player.Action3.canceled += ctx => Action3Released();
+            _controller.Player.Action4.started += ctx => Action4Pressed();
+            _controller.Player.Action4.canceled += ctx => Action4Released();
+            _controller.Player.Action6.started += ctx => Action6Pressed();
+            _controller.Player.Action6.canceled += ctx => Action6Released();
+
+            _controller.Player.Quit.performed += ctx => QuitKeyPressed();
             _controller.Player.ButtonStart.started += ctx => ButtonStartPressed();
 
             Mace.onObjectTaken += EnableInput;
@@ -119,23 +120,19 @@ namespace PSmash.InputSystem
         {
             _controller.Player.Disable();
             _controller.Player.Move.performed -= ctx => movement = ctx.ReadValue<Vector2>();
-            _controller.Player.ButtonA.started -= ctx => ButtonAPressed();
-            _controller.Player.ButtonA.canceled -= ctx => ButtonAReleased();
-            _controller.Player.ButtonB.started -= ctx => ButtonBPressed();
-            _controller.Player.ButtonB.canceled -= ctx => ButtonBReleased();
-            _controller.Player.ButtonX.started -= ctx => ButtonXPressed();
-            _controller.Player.ButtonX.canceled -= ctx => ButtonXReleased();
-            _controller.Player.ButtonY.started -= ctx => ButtonYPressed();
-            _controller.Player.ButtonY.canceled -= ctx => ButtonYReleased();
-            _controller.Player.ButtonRB.started -= cx => ButtonRBPressed();
-            _controller.Player.ButtonRB.canceled -= ctx => ButtonRBReleased();
-          //  _controller.Player.ButtonLB.started -= ctx => ButtonLBPressed();
-           // _controller.Player.ButtonLB.canceled -= ctx => ButtonLBReleased();
-            _controller.Player.ItemUse.started -= ctx => ItemButtonPressed();
-            _controller.Player.ItemUse.canceled -= ctx => ItemButonReleased();
-            _controller.Player.ItemChangeRight.performed -= ctx => ItemChangeRight();
-            _controller.Player.ItemChangeLeft.performed -= ctx => ItemChangeLeft();
-            //_controller.Player.Quit.performed -= ctx => QuitKeyPressed();
+            _controller.Player.Action1.started -= ctx => Action1Pressed();
+            _controller.Player.Action1.canceled -= ctx => Action1Released();
+            _controller.Player.Action2.started -= ctx => Action2Pressed();
+            _controller.Player.Action2.canceled -= ctx => Action2Released();
+            _controller.Player.Action3.started -= ctx => Action3Pressed();
+            _controller.Player.Action3.canceled -= ctx => Action3Released();
+            _controller.Player.Action4.started -= ctx => Action4Pressed();
+            _controller.Player.Action4.canceled -= ctx => Action4Released();
+            _controller.Player.Action6.started -= ctx => Action6Pressed();
+            _controller.Player.Action6.canceled -= ctx => Action6Released();
+
+
+            _controller.Player.Quit.performed -= ctx => QuitKeyPressed();
             _controller.Player.ButtonStart.started -= ctx => ButtonStartPressed();
 
             Mace.onObjectTaken -= EnableInput;
@@ -151,142 +148,68 @@ namespace PSmash.InputSystem
             MainMenu.OnMenuAction += IsPlayerInputEnabled;
         }
 
-
-        //Used by the Input Proxy FSM of PlayMaker
-        public Vector2 GetMovementInfo()
+        private void Update()
         {
-            //print(movement);
-            return movement;
+            action5State = _controller.Player.Action5.ReadValue<float>();
+            action0State = _controller.Player.Move.ReadValue<Vector2>();
+            action7State = _controller.Player.Action7.ReadValue<float>();
+            action5.ButtonPressed(transform, this, currentPMState, movement, action5State);
+            action0.ButtonPressed(transform, this, currentPMState, movement, action5State);
+            action7.ButtonPressed(transform, this, currentPMState, movement, action7State);
         }
 
-        private void ButtonAPressed()
+        private void Action1Pressed()
         {
-            Collider2D interactableObject = transform.parent.GetComponent<InteractableElements>().GetInteractableObject();
-            if (interactableObject != null)
-            {
-                interactableObject.GetComponent<IInteractable>().Interact();
-                EnableInput(false);
-                return;
-            }
-            if (action1 == null) return;
-            //action1.Execute(true);
-            jumpButtonState = true;
-            pMovement.SetJumpButtonState(true);
-            SetJumpButtonStateOnMovement(jumpButtonState);
+            action1.ButtonPressed(transform,this,currentPMState, movement, action5State);
         }
-        private void ButtonAReleased()
+        private void Action1Released()
         {
-            if (action1 == null) return;
-            //action1.Execute(false);
-            jumpButtonState = false;
-            pMovement.SetJumpButtonState(false);
-            SetJumpButtonStateOnMovement(jumpButtonState);
-        }
-        private void SetJumpButtonStateOnMovement(bool jumpState)
-        {
-            if (!!this.jumpButtonState && jumpState) pMovement.SetJumpButtonPress();
-        }
-
-        //Used by the Input Proxy FSM of PlayMaker
-        public bool GetJumpButtonState()
-        {
-            return jumpButtonState;
+            action1.ButtonReleased(transform, this, currentPMState, movement, action5State);
         }
 
 
-
-        private void ButtonXPressed()
+        private void Action2Pressed()
         {
-            if (buttonX == null) return;
-            //print("Sending NORMALATTACK event to " + currentPMState.FsmName);
-            currentPMState.SendEvent("NORMALATTACK");
-            //buttonX.Execute(true);
+            action2.ButtonPressed(transform, this, currentPMState, movement, action5State);
         }
-        private void ButtonXReleased()
+        private void Action2Released()
         {
-            if (buttonX == null) return;
-            //buttonX.Execute(false);
+            action2.ButtonReleased(transform, this, currentPMState, movement, action5State);
         }
 
 
-
-        private void ButtonBPressed()
+        private void Action3Pressed()
         {
-            if (buttonB == null) return;
-            //print("Sending EVADE event to " + currentPMState.FsmName);
-            currentPMState.SendEvent("EVASION");
-            //buttonB.Execute(true);
+            action3.ButtonPressed(transform, this, currentPMState, movement, action5State);
+        }
+        private void Action3Released()
+        {
+            action3.ButtonPressed(transform, this, currentPMState, movement, action5State);
         }
 
-        private void ButtonBReleased()
+
+        private void Action4Pressed()
         {
-            if (buttonB == null) return;
-            //buttonB.Execute(false);
+            action4.ButtonPressed(transform, this, currentPMState, movement, action5State);
+        }
+        private void Action4Released()
+        {
+            action4.ButtonReleased(transform, this, currentPMState, movement, action5State);
         }
 
-        private void ButtonYPressed()
+        private void Action6Released()
         {
-            if (buttonY == null) return;
-            //buttonY.Execute(true);
-            toolButtonState = true;
-            //pMovement.ToolButtonPressedStatus(true);
-            //currentPMState.SendEvent("TOOLACTION");
-        }
-        private void ButtonYReleased()
-        {
-            if (buttonY == null) return;
-            //buttonY.Execute(false);
-            toolButtonState = false;
-            //pMovement.ToolButtonPressedStatus(false);
+            action6.ButtonReleased(transform, this, currentPMState, movement, action5State);
         }
 
-        private void ButtonRBPressed()
+        private void Action6Pressed()
         {
-            if (buttonRB == null) return;
-            //buttonRB.Execute(true);
-            guardButtonState = true;
+            action6.ButtonPressed(transform, this, currentPMState, movement, action5State);
         }
 
-        private void ButtonRBReleased()
-        {
-            if (buttonRB == null) return;
-            //buttonRB.Execute(false);
-            guardButtonState = false;
-        }
-        //Used by the Input Proxy FSM of PlayMaker
-        public bool GetGuardButtonState()
-        {
-            return guardButtonState;
-        }
 
-        //Used by the Input Proxy FSM of PlayMaker
-        public bool GetToolButtonState()
-        {
-            return toolButtonState;
-        }
 
-        private void ItemButonReleased()
-        {
 
-        }
-
-        private void ItemButtonPressed()
-        {
-            print("Wants to use an item");
-            currentPMState.SendEvent("USEITEM");
-        }
-
-        private void ItemChangeLeft()
-        {
-            print("Item Pressed Left");
-            equipment.ChangeItem(false);
-        }
-
-        private void ItemChangeRight()
-        {
-            print("Item Pressed Right");
-            equipment.ChangeItem(true);
-        }
 
         private void ButtonStartPressed()
         {

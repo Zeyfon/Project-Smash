@@ -30,7 +30,7 @@ namespace PSmash.Menus
                     {
                         if (com is JumpCommand)
                         {
-                            SetButton((com as JumpCommand).myButton);
+                            //SetButton((com as JumpCommand).myButton);
                         }
                     }
                     break;

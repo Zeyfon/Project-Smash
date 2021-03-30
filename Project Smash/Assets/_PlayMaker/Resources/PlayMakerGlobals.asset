@@ -15,9 +15,21 @@ MonoBehaviour:
   variables:
     floatVariables: []
     intVariables: []
-    boolVariables: []
+    boolVariables:
+    - useVariable: 1
+      name: guardButtonState
+      tooltip: 
+      showInInspector: 0
+      networkSync: 0
+      value: 0
     stringVariables: []
-    vector2Variables: []
+    vector2Variables:
+    - useVariable: 1
+      name: movementInput
+      tooltip: 
+      showInInspector: 0
+      networkSync: 0
+      value: {x: 0, y: 0}
     vector3Variables: []
     colorVariables: []
     rectVariables: []
@@ -30,5 +42,5 @@ MonoBehaviour:
     enumVariables: []
     categories:
     - 
-    variableCategoryIDs: 
+    variableCategoryIDs: 0000000000000000
   events: []
