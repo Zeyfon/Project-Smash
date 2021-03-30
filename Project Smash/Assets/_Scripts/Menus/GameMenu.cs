@@ -18,7 +18,7 @@ namespace PSmash.Menus
         bool canInteractWithMenu = true;
         private void Awake()
         {
-            _controller = FindObjectOfType<InputHandler>().GetController();
+            //_controller = FindObjectOfType<InputHandler>().GetController();
             eventManager = FindObjectOfType<EventManager>();
             playerInput = FindObjectOfType<PlayerInput>();
         }
