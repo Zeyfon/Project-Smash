@@ -13,19 +13,18 @@ namespace PSmash.UI.Inventories
         int number = 0;
         private void OnEnable()
         {
-            Drop.onDropCollected += ShowItemCollected;
+            Pickup.onDropCollected += ShowItemCollected;
         }
 
         private void OnDisable()
         {
-            Drop.onDropCollected -= ShowItemCollected;
+            Pickup.onDropCollected -= ShowItemCollected;
         }
 
-        private void ShowItemCollected(CraftingItem item)
+        private void ShowItemCollected(Pickup.ItemSlot pickupSlot)
         {
-            GameObject slotClone = Instantiate(slot.gameObject, transform);
-            slotClone.GetComponent<ItemCollecteSlotUI>().Setup(item, number);
-            number++;
+            ItemCollecteSlotUI slotClone = Instantiate(slot, transform);
+            slotClone.Setup(pickupSlot);
         }
     }
 

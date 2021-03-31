@@ -97,7 +97,7 @@ namespace PSmash.InputSystem
     public class GuardCommand : Command
     {
         float prevButtonState = 0;
-        bool guardButton = false;
+        //bool guardButton = false;
         FsmBool guardButtonState = FsmVariables.GlobalVariables.FindFsmBool("guardButtonState");
         public override void ButtonPressed(Transform transform, InputHandler inputHandler, PlayMakerFSM pm, Vector2 input, float buttonState)
         {
@@ -105,19 +105,19 @@ namespace PSmash.InputSystem
             {
                 Debug.Log("Button was pressed");
                 pm.SendEvent("GUARDBUTTONPRESSED");
-                guardButton = true;
+                guardButtonState.Value = true;
             }
             else if(buttonState ==0 && buttonState!= prevButtonState)
             {
                 Debug.Log("Button was released");
                 pm.SendEvent("GUARDBUTTONRELEASED");
-                guardButton = false;
+                guardButtonState.Value = false;
             }
 
 
             if (prevButtonState == 1)
             {
-                guardButtonState.Value = guardButton;
+                //guardButtonState.Value = guardButton;
             }
 
             prevButtonState = buttonState;
