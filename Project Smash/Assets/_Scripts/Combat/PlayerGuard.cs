@@ -13,10 +13,22 @@ namespace PSmash.Combat
         [SerializeField] AudioClip parrySound = null;
         [SerializeField] AudioClip guardSound = null;
         [SerializeField] float parryTime = 1;
-
+        
+        PlayMakerFSM guardFSM = null;
         bool canParry=false;
         float parryTimer = 0;
-        PlayMakerFSM pm;
+
+        void Awake()
+        {
+            foreach(PlayMakerFSM pm in GetComponentsInParent<PlayMakerFSM>())
+            {
+                if(pm.FsmName == "GuardParryState")
+                {
+                    print("Found guard fsm");
+                    guardFSM = pm;
+                }
+            }
+        }
 
         void Update()
         {
@@ -32,7 +44,7 @@ namespace PSmash.Combat
             if (canParry)
             {
                 attacker.GetComponent<IDamagable>().TakeDamage(transform.parent, weapon, damage);
-                pm.SendEvent("PARRY");
+                guardFSM.SendEvent("PARRY");
                 PlaySound(parrySound);
             }
             else
@@ -41,22 +53,16 @@ namespace PSmash.Combat
             }
         }
 
-        private void PlaySound(AudioClip sound)
+        public void EnableParryWindow()
+        {
+            parryTimer = 0;
+        }
+
+        void PlaySound(AudioClip sound)
         {
             audioSource.clip = sound;
             audioSource.pitch = Random.Range(0.7f, 1);
             audioSource.Play();
-        }
-
-        public void SetCanParry(bool canParry)
-        {
-            this.canParry = canParry;
-        }
-
-        public void EnableParryWindow(PlayMakerFSM pm)
-        {
-            this.pm = pm;
-            parryTimer = 0;
         }
     }
 }
