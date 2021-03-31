@@ -13,13 +13,15 @@ namespace PSmash.UI.Inventories
     {
         [SerializeField] CanvasGroup canvasGroup = null;
         [SerializeField] Image image = null;
-        [SerializeField] TextMeshProUGUI text = null;
+        [SerializeField] TextMeshProUGUI nameText = null;
+        [SerializeField] TextMeshProUGUI numberText = null;
 
-        internal void Setup(CraftingItem item, int number)
+        internal void Setup(Pickup.ItemSlot slot)
         {
             canvasGroup.alpha = 0;
-            image.sprite = item.GetSprite();
-            text.text = item.name;
+            image.sprite = slot.item.GetSprite();
+            nameText.text = slot.item.GetDisplayName();
+            numberText.text = slot.number.ToString();
             transform.SetAsFirstSibling();
             StartCoroutine(ShowAndHide());
         }
