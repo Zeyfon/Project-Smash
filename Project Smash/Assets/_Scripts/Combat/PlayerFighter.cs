@@ -5,6 +5,7 @@ using UnityEngine;
 using PSmash.Combat.Weapons;
 using PSmash.Inventories;
 using PSmash.Stats;
+using PSmash.Movement;
 
 namespace PSmash.Combat
 {
@@ -20,6 +21,7 @@ namespace PSmash.Combat
         [SerializeField] Vector2 comboAttackArea = new Vector2(1.5f, 1.5f);
         [SerializeField] AudioClip attackSound = null;
         [SerializeField] Weapon fists = null;
+        [SerializeField] float attackImpulse = 10f; 
 
         [Header("Tool Attack")]
         [SerializeField] Weapon mace = null;
@@ -57,19 +59,19 @@ namespace PSmash.Combat
 
         #region Finisher
 
-        public void CheckToolButtonState(PlayMakerFSM pm, bool toolButtonState)
-        {
-            if (!toolButtonState)
-                return;
-            if (IsEnemyStunned())
-            {
-                pm.SendEvent("FINISHER");
-            }
-            else
-            {
-                pm.SendEvent("TOOLATTACK");
-            }
-        }
+        //public void CheckToolButtonState(PlayMakerFSM pm, bool toolButtonState)
+        //{
+        //    if (!toolButtonState)
+        //        return;
+        //    if (IsEnemyStunned())
+        //    {
+        //        pm.SendEvent("FINISHER");
+        //    }
+        //    else
+        //    {
+        //        pm.SendEvent("TOOLATTACK");
+        //    }
+        //}
 
         public bool IsEnemyStunned()
         {
@@ -183,6 +185,15 @@ namespace PSmash.Combat
         {
             //print("NormalAttack");
             Attack(attackTransform, comboAttackArea, fists);
+        }
+
+        /// <summary>
+        /// AnimEvent for Attacks
+        /// </summary>
+        /// <returns></returns>
+        void AttackImpulse()
+        {
+            GetComponent<PlayerMovement>().MovementImpulse(attackImpulse);
         }
 
         void LightAttackSound()

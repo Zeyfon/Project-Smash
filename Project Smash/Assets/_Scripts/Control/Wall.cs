@@ -16,7 +16,7 @@ namespace PSmash.Control
             if (collision.CompareTag("Player"))
             {
                 //print("Player inside Wall");
-                collision.GetComponent<PlayerMovement>().IsWallDetected(true);
+                //collision.GetComponent<PlayerMovement>().IsWallDetected(true);
                 //SecondaryWeaponSystem weapons = collision.GetComponent<SecondaryWeaponSystem>();
                 //if (weapons != null) weapons.CanMoveOnWall(true);
                 //ToolSystem tools = collision.GetComponent<ToolSystem>();
@@ -28,7 +28,7 @@ namespace PSmash.Control
             if (collision.CompareTag("Player"))
             {
                 //print("Player outside wall");
-                collision.GetComponent<PlayerMovement>().IsWallDetected(false);
+                //collision.GetComponent<PlayerMovement>().IsWallDetected(false);
 
                 // SecondaryWeaponSystem weapons = collision.GetComponent<SecondaryWeaponSystem>();
                 //if (weapons != null) weapons.CanMoveOnWall(false);
