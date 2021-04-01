@@ -25,15 +25,17 @@ namespace PSmash.Movement
 
         [Header("Ladder")]
         //[SerializeField] float maxLadderMovementSpeed = 3;
+        [SerializeField] float climbingLadderSpeedFactor = 0.4f;
         [SerializeField] float checkLadderDistance = 1;
         [SerializeField] LayerMask whatIsLadder;
         [SerializeField] LayerMask whatIsLadderTop;
         [SerializeField] Transform ladderCheck = null;
         [SerializeField] AudioClip climbingLadderSound = null;
         [SerializeField] AudioClip climbingWallSound = null;
-        
+
 
         [Header("Movement")]
+        [SerializeField] float baseSpeed = 7;
         [SerializeField] float maxRunningSpeed = 5;
         //[SerializeField] float maxWallSpeed = 2;
         [SerializeField] float maxInteractingSpeed = 2;
@@ -71,34 +73,27 @@ namespace PSmash.Movement
         public delegate void PlayerOnWall(bool state);
         public event PlayerOnWall OnPlayerWallState;
 
+        SlopeControl slope = new SlopeControl();
         PlayMakerFSM pm;
         GameObject oneWayPlatform;
         Rigidbody2D rb;
         Animator animator;
         AudioSource audioSource;
         PlayerHealth health;
-        Vector2 slopeNormalPerp;
         Vector2 colliderSize;
         Vector2 finalPosition;
-        float slopeDownAngle;
-        float slopeDownAngleOld;
-        float slopeSideAngle;
         float gravityScale;
         float ladderPositionX;
+        float jumpTimer = 0;
         bool isFalling = false;
         bool isLookingRight = true;
-        bool isOnSlope = false;
         bool isGrounded;
         bool isJumping;
         bool canWalkOnSlope;
-        bool canFlip = true;
         bool isCollidingWithOneWayPlatform = false;
         bool isPlayerOverLadder = false;
         bool canGetOffLadder = true;
-        bool jumpButtonWasPressed = false;
         bool cr_running = false;
-        bool isWallDetected = false;
-        bool toolButtonState = false;
         //bool isJumpButtonPressed = false;
 
 
@@ -121,9 +116,20 @@ namespace PSmash.Movement
          void FixedUpdate()
         {
             GroundCheck();
+            SetVelocityInAnimator();
+            jumpTimer += Time.deltaTime;
         }
 
+        private void SetVelocityInAnimator()
+        {
 
+            //if (animator == null) return;
+            float xVelocity = (transform.right.x * rb.velocity.x);// / baseSpeed;
+            float yVelocity = rb.velocity.y;// / baseSpeed;
+            animator.SetFloat("xVelocity", xVelocity);
+            animator.SetFloat("yVelocity", yVelocity);
+
+        }
         ////////////////////////////////////////////////////////////////////////////PUBLIC ///////////////////////////////////////////////////////////////////////////////////////
 
         /// <summary>
@@ -141,15 +147,14 @@ namespace PSmash.Movement
         /// </summary>
         /// <param name="input"></param>
         /// <param name="maxSpeed"></param>
-        public void ControlledMovement(Vector2 input, float maxSpeed, bool isGuarding)
+        public void ControlledMovement(Vector2 input, float speedFactor, bool isGuarding)
         {
-            animator.SetFloat("yVelocity", rb.velocity.y);
             if (!isGuarding)
             {
                 ClimbingLedgeCheck();
                 Flip(input.x);
             }
-            SetMovement(input, maxSpeed, isGuarding);
+            SetMovement(input, speedFactor);
         }
 
         /// <summary>
@@ -222,6 +227,7 @@ namespace PSmash.Movement
         /// <param name="jumpSpeed"></param>
         public void ApplyJump(PhysicsMaterial2D noFriction, float jumpSpeed)
         {
+            jumpTimer = 0;
             rb.gravityScale = gravityScale;
             rb.sharedMaterial = noFriction;
             rb.velocity = new Vector2(rb.velocity.x, jumpSpeed);
@@ -272,22 +278,23 @@ namespace PSmash.Movement
             if (canGetOffLadder) CheckToExitLadder(input.y);
         }
 
-        public void DashMovement(Vector2 input, float maxSpeed)
+        public void RollMovement(float inputX, float speedFactor)
         {
-            Vector2 tempInput;
-            if (isLookingRight)
-                tempInput = new Vector2(1, 0);
-            else
-                tempInput = new Vector2(-1, 0);
-            SlopeCheck(input.x);
-            float currentSpeed = maxSpeed * tempInput.x;
-            Move(currentSpeed);
+            Vector2 input = new Vector2(inputX, 0);
+            Move(input, speedFactor);
         }
 
-        public void SetPhysicsAttack(PhysicsMaterial2D fullFriction)
+        public void SetPhysicsAttack(PhysicsMaterial2D physicsMaterial)
         {
             rb.gravityScale = gravityScale;
-            rb.sharedMaterial = fullFriction;
+            rb.sharedMaterial = physicsMaterial;
+        }
+
+        public void MovementImpulse(float attackimpulse)
+        {
+            Vector2 direction = slope.GetSlopeNormalPerp(transform.position, transform.right, slopeCheckDistance, maxSlopeAngle, whatIsGround);
+            direction *= -1;
+            rb.velocity = new Vector2(direction.x * attackimpulse, direction.y * attackimpulse);
         }
 
         //////////////////////////////////////////////////////////////////////////////////////PRIVATE/////////////////////////////////////////////////////////////////////////////////////
@@ -299,6 +306,7 @@ namespace PSmash.Movement
         {
             isGrounded = Physics2D.OverlapCircle(groundCheck.position, groundCheckRadius, whatIsGround);
             animator.SetBool("Grounded", isGrounded);
+            canWalkOnSlope = slope.CanWalkOnSlope(transform.position, transform.right, slopeCheckDistance, maxSlopeAngle, whatIsGround);
             if (isGrounded && canWalkOnSlope)
             {
                 canDoubleJump = true;
@@ -323,69 +331,76 @@ namespace PSmash.Movement
 
         //Used by Moving State(From ControlledMovement)
         //Used by Guarding/Parrying
-        void SetMovement(Vector2 input, float maxSpeed, bool isGuarding)
+        void SetMovement(Vector2 input, float speedFactor)
         {
-            SlopeCheck(input.x);
-            float currentSpeed = maxSpeed * input.x;
-            if (isGuarding)
-                animator.SetFloat("guardSpeed", Mathf.Abs(input.x));
-            Move(currentSpeed);
+            Move(input, speedFactor);
         }
 
-        void Move(float currentSpeed)
+        void Move(Vector2 input, float speedFactor)
         {
-            //print("Moving");
-            if (isGrounded && !isOnSlope)
+            if (isGrounded & jumpTimer >0.25f)
             {
-                //print("Grounded not over slope");
-                GroundedMoverNotOverSlope(currentSpeed);
-            }
-            else if (isGrounded && isOnSlope && canWalkOnSlope)
-            {
-                //print("Grounded over slope");
-                GroundedMoveOverSlope(currentSpeed);
-            }
-            else if (!isGrounded)
-            {
-                //print("Not Grounded");
-                MoveInAir(currentSpeed);
+                
+                if (slope.IsOnSlope(transform.position, transform.right, slopeCheckDistance, whatIsGround))
+                {
+                    if (slope.CanWalkOnSlope(transform.position, transform.right, slopeCheckDistance, maxSlopeAngle, whatIsGround))
+                    {
+                        GroundMovement(input, speedFactor);
+                    }
+                    else
+                    {
+                        DoNotMove();
+                    }
+                }
+                else
+                {
+                    GroundMovement(input, speedFactor);
+                }
             }
             else
             {
-                //Not Controlled Movement
+                MoveInAir(input, speedFactor);
             }
+
+        } 
+
+        void GroundMovement(Vector2 input, float speedFactor)
+        {
+            //print("Grounded Movement");
+            rb.sharedMaterial = noFriction;
+            if (input.magnitude == 0)
+            {
+                //print("input = 0");
+                rb.sharedMaterial = lowFriction;
+            }
+            Vector2 direction = slope.GetSlopeNormalPerp(transform.position, transform.right, slopeCheckDistance, maxSlopeAngle, whatIsGround);
+            
+            if(direction.sqrMagnitude == 0)
+            {
+                MoveInAir(input, speedFactor);
+                return;
+            }
+            float speed = baseSpeed * Mathf.Abs(input.x) * speedFactor;
+            float xVelocity = -1 * speed * direction.x;
+            float yVelocity = -1 * speed * direction.y;
+            rb.velocity = new Vector2(xVelocity, yVelocity);
         }
+
+        void DoNotMove()
+        {
+            //print("Uncontrolled Movement");
+            rb.sharedMaterial = noFriction;
+        }
+
         /// <summary>
         /// Grounded Movement without a Slope
         /// </summary>
-        /// <param name="currentSpeed"></param>
-        void MoveInAir(float currentSpeed)
+        /// <param name="speedFactor"></param>
+        void MoveInAir(Vector2 input, float speedFactor)
         {
-            rb.velocity = new Vector2(currentSpeed, rb.velocity.y);
+            //print("Not Grounded Movement");
+            rb.velocity = new Vector2(input.x * speedFactor * baseSpeed, rb.velocity.y);
             rb.sharedMaterial = noFriction;
-            animator.SetFloat("xVelocity", Mathf.Abs(currentSpeed));
-        }
-
-        /// <summary>
-        /// Grounded Movement with a Slope
-        /// </summary>
-        /// <param name="currentSpeed"></param>
-        void GroundedMoveOverSlope(float currentSpeed)
-        {
-            float xVelocity = -1 * currentSpeed * slopeNormalPerp.x;
-            float yVelocity = -1 * currentSpeed * slopeNormalPerp.y;
-            rb.velocity = new Vector2(xVelocity, yVelocity);
-            animator.SetFloat("xVelocity", Mathf.Abs(xVelocity));
-        }
-
-        /// <summary>
-        /// Movement in the air
-        /// </summary>
-        /// <param name="currentSpeed"></param>
-        void GroundedMoverNotOverSlope(float currentSpeed)
-        {
-            rb.velocity = new Vector2(currentSpeed, rb.velocity.y);
-            animator.SetFloat("xVelocity", Mathf.Abs(currentSpeed));
         }
 
         void CreateDust()
@@ -434,69 +449,6 @@ namespace PSmash.Movement
             pm.Fsm.Event("CLIMBINGLEDGE");
         }
 
-        void SlopeCheck(float xInput)
-        {
-            Vector2 checkPos = transform.position;
-            SlopeCheckVertical(checkPos, xInput);
-            SlopeCheckHorizontal(checkPos);
-        }
-        void SlopeCheckHorizontal(Vector2 checkPos)
-        {
-            RaycastHit2D slopeHitFront = Physics2D.Raycast(checkPos, transform.right, slopeCheckDistance, whatIsGround);
-            RaycastHit2D slopeHitBack = Physics2D.Raycast(checkPos, -transform.right, slopeCheckDistance, whatIsGround);
-            Debug.DrawRay(checkPos, transform.right * slopeCheckDistance, Color.blue);
-            Debug.DrawRay(checkPos, -transform.right * slopeCheckDistance, Color.blue);
-
-            if (slopeHitFront && !slopeHitFront.collider.CompareTag("LadderTop") && Mathf.Abs(slopeHitFront.normal.x) < 0.9f)
-            {
-                isOnSlope = true;
-                slopeSideAngle = Vector2.Angle(slopeHitFront.normal, Vector2.up);
-            }
-            else if (slopeHitBack && !slopeHitBack.collider.CompareTag("LadderTop") && Mathf.Abs(slopeHitBack.normal.x) < 0.9f)
-            {
-                isOnSlope = true;
-                slopeSideAngle = 0.0f;
-            }
-            else
-            {
-                isOnSlope = false;
-                slopeSideAngle = 0.0f;
-            }
-        }
-        void SlopeCheckVertical(Vector2 checkPos, float xInput)
-        {
-            RaycastHit2D hit = Physics2D.Raycast(checkPos, Vector2.down, slopeCheckDistance, whatIsGround);
-            if (hit)
-            {
-                slopeNormalPerp = Vector2.Perpendicular(hit.normal).normalized;
-                slopeDownAngle = Vector2.Angle(hit.normal, Vector2.up);
-                if (slopeDownAngle != slopeDownAngleOld)
-                {
-                    isOnSlope = true;
-                    slopeDownAngleOld = slopeDownAngle;
-                }
-                Debug.DrawRay(hit.point, hit.normal, Color.green);
-                Debug.DrawRay(hit.point, slopeNormalPerp, Color.red);
-            }
-            if (slopeDownAngle > maxSlopeAngle || slopeSideAngle > maxSlopeAngle)
-            {
-                canWalkOnSlope = false;
-            }
-            else
-            {
-                canWalkOnSlope = true;
-            }
-
-            if (isOnSlope && xInput == 0.0f && canWalkOnSlope)
-            {
-                rb.sharedMaterial = fullFriction;
-            }
-            else
-            {
-                rb.sharedMaterial = lowFriction;
-            }
-        }
-
         //Anim Event
         void RollSound()
         {
@@ -514,11 +466,6 @@ namespace PSmash.Movement
         void JumpSound()
         {
             audioSource.PlayOneShot(jumpSound);
-        }
-
-        public void MovementImpulse(float attackimpulse)
-        {
-            rb.velocity = new Vector2(transform.right.x * attackimpulse, rb.velocity.y);
         }
 
         RaycastHit2D GetIsTouchingUpperWall()
@@ -562,7 +509,6 @@ namespace PSmash.Movement
             {
                 pm.SendEvent("LADDERCLIMB");
             }
-
             else if (isGrounded && !isCollidingWithOneWayPlatform && yInput > 0.8f)
             {
                 pm.SendEvent("LADDERCLIMB");

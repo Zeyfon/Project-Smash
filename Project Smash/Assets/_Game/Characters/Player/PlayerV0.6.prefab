@@ -1503,7 +1503,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3ea9374b509b70f4bba37e4a2ca8cf00, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  uniqueIdentifier: 4814f100-9623-43f5-9362-b5c79e38f274
+  uniqueIdentifier: eddf5a1d-ce23-4e2a-af05-26b9b764417c
 --- !u!1 &7632115962595694742
 GameObject:
   m_ObjectHideFlags: 0
@@ -1629,7 +1629,7 @@ Rigidbody2D:
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
   m_Mass: 15
-  m_LinearDrag: 1
+  m_LinearDrag: 1.5
   m_AngularDrag: 0.05
   m_GravityScale: 1.8
   m_Material: {fileID: 0}
@@ -1957,7 +1957,7 @@ MonoBehaviour:
           name: LADDERCLIMB
           isSystemEvent: 0
           isGlobal: 0
-        toState: CLIMBINGLADDER
+        toState: CLIMBINGLADDEr
         linkStyle: 0
         linkConstraint: 0
         colorIndex: 0
@@ -2662,14 +2662,14 @@ MonoBehaviour:
         - resetOnExit
         paramDataPos: 00000000000000000000000001000000
         paramByteDataSize: 00000000000000000000000000000000
-    - name: CLIMBINGLADDER
+    - name: CLIMBINGLADDEr
       description: 
       colorIndex: 0
       position:
         serializedVersion: 2
         x: 74.83594
         y: 246.88281
-        width: 138
+        width: 135
         height: 80
       isBreakpoint: 0
       isSequence: 0
@@ -7614,21 +7614,21 @@ MonoBehaviour:
         tooltip: 
         showInInspector: 1
         networkSync: 0
-        typeName: UnityEngine.Object
+        typeName: 
         value: {fileID: 0}
       - useVariable: 1
         name: 
         tooltip: 
         showInInspector: 0
         networkSync: 0
-        typeName: UnityEngine.Object
+        typeName: 
         value: {fileID: 0}
       - useVariable: 1
         name: 
         tooltip: 
         showInInspector: 0
         networkSync: 0
-        typeName: UnityEngine.Object
+        typeName: 
         value: {fileID: 0}
       - useVariable: 1
         name: 
@@ -7649,7 +7649,7 @@ MonoBehaviour:
         tooltip: 
         showInInspector: 0
         networkSync: 0
-        typeName: UnityEngine.Object
+        typeName: 
         value: {fileID: 0}
       - useVariable: 1
         name: useItem
@@ -8681,7 +8681,7 @@ MonoBehaviour:
   comboAttackArea: {x: 1.5, y: 1.5}
   attackSound: {fileID: 8300000, guid: 8b4ce328585956a4b9ec272d27420fc9, type: 3}
   fists: {fileID: 11400000, guid: 4f5a62eb98476b5489ec89fe9540806d, type: 2}
-  attackImpulse: 20
+  attackImpulse: 1.5
   mace: {fileID: 11400000, guid: a63eaa56cbdb77d4f82bfd1334520dfa, type: 2}
   toolAttackSound: {fileID: 8300000, guid: 86cd8d06ba31e3f48908229a918bdd97, type: 3}
   finisherAttackFactor: 10
@@ -9316,7 +9316,7 @@ MonoBehaviour:
           objectType: UnityEngine.Object
           useVariable: 1
           type: 0
-          floatValue: 8
+          floatValue: 1
           intValue: 0
           boolValue: 0
           stringValue: 
@@ -10382,7 +10382,7 @@ MonoBehaviour:
         width: 100
         height: 32
       isBreakpoint: 0
-      isSequence: 0
+      isSequence: 1
       hideUnused: 0
       transitions:
       - fsmEvent:
@@ -10395,13 +10395,15 @@ MonoBehaviour:
         colorIndex: 0
       actionData:
         actionNames:
+        - HutongGames.PlayMaker.Actions.CallMethod
         - HutongGames.PlayMaker.Actions.NextFrameEvent
         customNames:
         - 
-        actionEnabled: 01
-        actionIsOpen: 01
-        actionStartIndex: 00000000
-        actionHashCodes: 88611604
+        - 
+        actionEnabled: 0101
+        actionIsOpen: 0101
+        actionStartIndex: 0000000007000000
+        actionHashCodes: ca51e90088611604
         unityObjectParams: []
         fsmGameObjectParams: []
         fsmOwnerDefaultParams: []
@@ -10411,9 +10413,71 @@ MonoBehaviour:
         fsmEventTargetParams: []
         fsmPropertyParams: []
         layoutOptionParams: []
-        fsmStringParams: []
-        fsmObjectParams: []
-        fsmVarParams: []
+        fsmStringParams:
+        - useVariable: 0
+          name: 
+          tooltip: 
+          showInInspector: 0
+          networkSync: 0
+          value: SetPhysicsAttack
+        fsmObjectParams:
+        - useVariable: 1
+          name: movement
+          tooltip: 
+          showInInspector: 0
+          networkSync: 0
+          typeName: PSmash.Movement.PlayerMovement
+          value: {fileID: 8235024681204614677}
+        fsmVarParams:
+        - variableName: 
+          objectType: UnityEngine.PhysicsMaterial2D
+          useVariable: 0
+          type: 12
+          floatValue: 0
+          intValue: 0
+          boolValue: 0
+          stringValue: 
+          vector4Value: {x: 0, y: 0, z: 0, w: 0}
+          objectReference: {fileID: 6200000, guid: 65236b81a583a484aa33d4c136233544,
+            type: 2}
+          arrayValue:
+            useVariable: 0
+            name: 
+            tooltip: 
+            showInInspector: 0
+            networkSync: 0
+            type: -1
+            objectTypeName: 
+            floatValues: []
+            intValues: 
+            boolValues: 
+            stringValues: []
+            vector4Values: []
+            objectReferences: []
+        - variableName: 
+          objectType: 
+          useVariable: 0
+          type: -1
+          floatValue: 0
+          intValue: 0
+          boolValue: 0
+          stringValue: 
+          vector4Value: {x: 0, y: 0, z: 0, w: 0}
+          objectReference: {fileID: 0}
+          arrayValue:
+            useVariable: 0
+            name: 
+            tooltip: 
+            showInInspector: 0
+            networkSync: 0
+            type: -1
+            objectTypeName: 
+            floatValues: []
+            intValues: 
+            boolValues: 
+            stringValues: []
+            vector4Values: []
+            objectReferences: []
         fsmArrayParams: []
         fsmEnumParams: []
         fsmFloatParams: []
@@ -10426,16 +10490,24 @@ MonoBehaviour:
         fsmQuaternionParams: []
         stringParams:
         - FINISHED
-        byteData: 
-        arrayParamSizes: 
-        arrayParamTypes: []
+        byteData: 0000
+        arrayParamSizes: 01000000
+        arrayParamTypes:
+        - HutongGames.PlayMaker.FsmVar
         customTypeSizes: 
         customTypeNames: []
-        paramDataType: 17000000
+        paramDataType: 18000000120000000c0000002700000027000000010000000100000017000000
         paramName:
+        - behaviour
+        - methodName
+        - parameters
+        - 
+        - storeResult
+        - everyFrame
+        - manualUI
         - sendEvent
-        paramDataPos: 00000000
-        paramByteDataSize: 00000000
+        paramDataPos: 0000000000000000000000000000000001000000000000000100000000000000
+        paramByteDataSize: 0000000000000000000000000000000000000000010000000100000000000000
     - name: LADDER CLIMB
       description: 
       colorIndex: 2
@@ -11639,7 +11711,7 @@ MonoBehaviour:
         tooltip: 
         showInInspector: 1
         networkSync: 0
-        value: 8
+        value: 1
       - useVariable: 1
         name: 
         tooltip: 
@@ -11767,7 +11839,7 @@ MonoBehaviour:
         tooltip: 
         showInInspector: 0
         networkSync: 0
-        typeName: 
+        typeName: UnityEngine.Object
         value: {fileID: 0}
       materialVariables: []
       textureVariables: []
@@ -11777,7 +11849,7 @@ MonoBehaviour:
       - 
       - Exposed
       - InputProxy
-      variableCategoryIDs: 0000000000000000000000000000000000000000000000000100000000000000000000000000000000000000000000000200000002000000020000000000000000000000020000000000000000000000000000000000000000000000000000000000000000000000
+      variableCategoryIDs: 0000000000000000000000000000000000000000000000000100000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
     description: 
     docUrl: 
     showStateLabel: 0
@@ -11787,12 +11859,12 @@ MonoBehaviour:
     locked: 0
     manualUpdate: 0
     keepDelayedEventsOnStateExit: 0
-    preprocessed: 1
+    preprocessed: 0
     ExposedEvents: []
     RestartOnEnable: 1
     EnableDebugFlow: 0
     EnableBreakpoints: 1
-    editorFlags: 0
+    editorFlags: 2
     activeStateName: 
     mouseEvents: 0
     handleLevelLoaded: 0
@@ -11813,7 +11885,7 @@ MonoBehaviour:
     handleJointBreak: 0
     handleJointBreak2D: 0
     handleOnGUI: 0
-    handleFixedUpdate: 1
+    handleFixedUpdate: 0
     handleLateUpdate: 0
     handleApplicationEvents: 0
     handleUiEvents: 0
@@ -11834,7 +11906,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3ea9374b509b70f4bba37e4a2ca8cf00, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  uniqueIdentifier: 8fd37ef4-b99a-45b0-a1b4-5f0b25d01676
+  uniqueIdentifier: f2d8b9c5-9422-461f-b9f1-d483ac911155
 --- !u!114 &5898523237326450535
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -14212,7 +14284,7 @@ MonoBehaviour:
           boolValue: 0
           stringValue: 
           vector4Value: {x: 0, y: 0, z: 0, w: 0}
-          objectReference: {fileID: 6200000, guid: 4b501e885db70b54faf1caa7979b5f5f,
+          objectReference: {fileID: 6200000, guid: 65236b81a583a484aa33d4c136233544,
             type: 2}
           arrayValue:
             useVariable: 0
@@ -14728,7 +14800,7 @@ MonoBehaviour:
     locked: 0
     manualUpdate: 0
     keepDelayedEventsOnStateExit: 0
-    preprocessed: 1
+    preprocessed: 0
     ExposedEvents: []
     RestartOnEnable: 1
     EnableDebugFlow: 0
@@ -14754,7 +14826,7 @@ MonoBehaviour:
     handleJointBreak: 0
     handleJointBreak2D: 0
     handleOnGUI: 0
-    handleFixedUpdate: 1
+    handleFixedUpdate: 0
     handleLateUpdate: 0
     handleApplicationEvents: 0
     handleUiEvents: 0
@@ -14786,8 +14858,8 @@ MonoBehaviour:
       colorIndex: 0
       position:
         serializedVersion: 2
-        x: 70.53125
-        y: 393.79688
+        x: 58.0625
+        y: 406.73438
         width: 122
         height: 32
       isBreakpoint: 0
@@ -14809,6 +14881,7 @@ MonoBehaviour:
         - HutongGames.PlayMaker.Actions.TransformDirection
         - HutongGames.PlayMaker.Actions.GetVector3XYZ
         - HutongGames.PlayMaker.Actions.SetLayer
+        - HutongGames.PlayMaker.Actions.GetVector2XY
         - HutongGames.PlayMaker.Actions.NextFrameEvent
         customNames:
         - 
@@ -14817,10 +14890,11 @@ MonoBehaviour:
         - 
         - 
         - 
-        actionEnabled: 010101010101
-        actionIsOpen: 010101010101
-        actionStartIndex: 0000000003000000080000000c0000001100000013000000
-        actionHashCodes: 603dd905f9152503afd8b2026f1d0b042f72900088611604
+        - 
+        actionEnabled: 01010101010101
+        actionIsOpen: 01010101010101
+        actionStartIndex: 0000000003000000080000000c000000110000001300000017000000
+        actionHashCodes: 603dd905f9152503afd8b2026f1d0b042f7290008ed11d0588611604
         unityObjectParams: []
         fsmGameObjectParams: []
         fsmOwnerDefaultParams:
@@ -14884,6 +14958,18 @@ MonoBehaviour:
           showInInspector: 0
           networkSync: 0
           value: 0
+        - useVariable: 1
+          name: directionX
+          tooltip: 
+          showInInspector: 0
+          networkSync: 0
+          value: 0
+        - useVariable: 1
+          name: 
+          tooltip: 
+          showInInspector: 0
+          networkSync: 0
+          value: 0
         fsmIntParams:
         - useVariable: 1
           name: evade
@@ -14904,7 +14990,13 @@ MonoBehaviour:
           networkSync: 0
           value: 0
         fsmBoolParams: []
-        fsmVector2Params: []
+        fsmVector2Params:
+        - useVariable: 1
+          name: movementInput
+          tooltip: 
+          showInInspector: 0
+          networkSync: 0
+          value: {x: 0, y: 0}
         fsmVector3Params:
         - useVariable: 0
           name: 
@@ -14929,12 +15021,12 @@ MonoBehaviour:
         fsmQuaternionParams: []
         stringParams:
         - FINISHED
-        byteData: 00000000000000000c000000
+        byteData: 00000000000000000c00000000
         arrayParamSizes: 
         arrayParamTypes: []
         customTypeSizes: 
         customTypeNames: []
-        paramDataType: 1000000010000000010000001400000012000000100000000100000007000000140000001c0000001c000000010000001c0000000f0000000f0000000f00000001000000140000000000000017000000
+        paramDataType: 1000000010000000010000001400000012000000100000000100000007000000140000001c0000001c000000010000001c0000000f0000000f0000000f000000010000001400000000000000250000000f0000000f0000000100000017000000
         paramName:
         - intVariable
         - intValue
@@ -14955,16 +15047,20 @@ MonoBehaviour:
         - everyFrame
         - gameObject
         - layer
+        - vector2Variable
+        - storeX
+        - storeY
+        - everyFrame
         - sendEvent
-        paramDataPos: 0000000001000000000000000000000000000000020000000100000002000000010000000000000001000000060000000200000000000000010000000200000007000000020000000800000000000000
-        paramByteDataSize: 0000000000000000010000000000000000000000000000000100000004000000000000000000000000000000010000000000000000000000000000000000000001000000000000000400000000000000
+        paramDataPos: 000000000100000000000000000000000000000002000000010000000200000001000000000000000100000006000000020000000000000001000000020000000700000002000000080000000000000003000000040000000c00000000000000
+        paramByteDataSize: 000000000000000001000000000000000000000000000000010000000400000000000000000000000000000001000000000000000000000000000000000000000100000000000000040000000000000000000000000000000100000000000000
     - name: Listener
       description: 
       colorIndex: 0
       position:
         serializedVersion: 2
-        x: 63.289062
-        y: 470.375
+        x: 54.351562
+        y: 482.14062
         width: 171
         height: 64
       isBreakpoint: 0
@@ -15031,7 +15127,7 @@ MonoBehaviour:
           tooltip: 
           showInInspector: 0
           networkSync: 0
-          value: DashMovement
+          value: RollMovement
         - useVariable: 0
           name: 
           tooltip: 
@@ -15047,10 +15143,10 @@ MonoBehaviour:
           typeName: PSmash.Movement.PlayerMovement
           value: {fileID: 8235024681204614677}
         fsmVarParams:
-        - variableName: movementInput
+        - variableName: directionX
           objectType: UnityEngine.Object
           useVariable: 1
-          type: 5
+          type: 0
           floatValue: 0
           intValue: 0
           boolValue: 0
@@ -15075,7 +15171,7 @@ MonoBehaviour:
           objectType: UnityEngine.Object
           useVariable: 1
           type: 0
-          floatValue: 15
+          floatValue: 2
           intValue: 0
           boolValue: 0
           stringValue: 
@@ -15186,7 +15282,7 @@ MonoBehaviour:
       colorIndex: 2
       position:
         serializedVersion: 2
-        x: 330.34375
+        x: 314.34375
         y: 443.7422
         width: 135
         height: 16
@@ -15300,8 +15396,8 @@ MonoBehaviour:
       colorIndex: 0
       position:
         serializedVersion: 2
-        x: 71.703125
-        y: 346.6953
+        x: 62.765625
+        y: 353.7578
         width: 127
         height: 32
       isBreakpoint: 0
@@ -15397,7 +15493,7 @@ MonoBehaviour:
       colorIndex: 0
       position:
         serializedVersion: 2
-        x: 97.203125
+        x: 81.203125
         y: 113.14844
         width: 305
         height: 32
@@ -15529,7 +15625,7 @@ MonoBehaviour:
       colorIndex: 0
       position:
         serializedVersion: 2
-        x: 91.36719
+        x: 75.36719
         y: 203.21875
         width: 361
         height: 32
@@ -15758,7 +15854,7 @@ MonoBehaviour:
       colorIndex: 2
       position:
         serializedVersion: 2
-        x: 468.2578
+        x: 452.2578
         y: 511.6875
         width: 100
         height: 16
@@ -15872,7 +15968,7 @@ MonoBehaviour:
       colorIndex: 2
       position:
         serializedVersion: 2
-        x: 297.4375
+        x: 281.4375
         y: 554.0781
         width: 137
         height: 16
@@ -16020,7 +16116,7 @@ MonoBehaviour:
       colorIndex: 0
       position:
         serializedVersion: 2
-        x: 80.14844
+        x: 64.14844
         y: 278.67188
         width: 296.5
         height: 32
@@ -16151,7 +16247,7 @@ MonoBehaviour:
       colorIndex: 0
       position:
         serializedVersion: 2
-        x: 317
+        x: 301
         y: 491
         width: 100
         height: 48
@@ -16313,7 +16409,7 @@ MonoBehaviour:
         tooltip: 
         showInInspector: 1
         networkSync: 0
-        value: 15
+        value: 2
       - useVariable: 1
         name: 
         tooltip: 
@@ -16385,7 +16481,13 @@ MonoBehaviour:
         networkSync: 0
         value: {x: 0, y: 0}
       - useVariable: 1
-        name: input
+        name: 
+        tooltip: 
+        showInInspector: 0
+        networkSync: 0
+        value: {x: 0, y: 0}
+      - useVariable: 1
+        name: 
         tooltip: 
         showInInspector: 0
         networkSync: 0
@@ -16450,7 +16552,7 @@ MonoBehaviour:
       - 
       - Exposed
       - InputProxy
-      variableCategoryIDs: 00000000000000000100000000000000000000000000000000000000020000000200000000000000020000000000000000000000000000000200000000000000000000000000000000000000000000000000000000000000
+      variableCategoryIDs: 0000000000000000010000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000020000000000000000000000000000000000000000000000000000000000000000000000
     description: 
     docUrl: 
     showStateLabel: 0
@@ -16460,12 +16562,12 @@ MonoBehaviour:
     locked: 0
     manualUpdate: 0
     keepDelayedEventsOnStateExit: 0
-    preprocessed: 1
+    preprocessed: 0
     ExposedEvents: []
     RestartOnEnable: 1
     EnableDebugFlow: 0
     EnableBreakpoints: 1
-    editorFlags: 0
+    editorFlags: 2
     activeStateName: 
     mouseEvents: 0
     handleLevelLoaded: 0
@@ -16486,7 +16588,7 @@ MonoBehaviour:
     handleJointBreak: 0
     handleJointBreak2D: 0
     handleOnGUI: 0
-    handleFixedUpdate: 1
+    handleFixedUpdate: 0
     handleLateUpdate: 0
     handleApplicationEvents: 0
     handleUiEvents: 0
@@ -17862,7 +17964,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   spawner: {fileID: 5414759444693801845}
-  audioSource: {fileID: 0}
+  audioSource: {fileID: 5182340456630765313}
 --- !u!114 &7620525308625398330
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -17895,11 +17997,12 @@ MonoBehaviour:
   whatIsGround:
     serializedVersion: 2
     m_Bits: 1048832
-  groundCheckRadius: 0.23
+  groundCheckRadius: 0.245
   groundCheck: {fileID: 5443774675299684673}
   footStepAudioSource: {fileID: 7923322884189893466}
   climbingLegeAudioSource: {fileID: 6980760019153880000}
   landingSound: {fileID: 8300000, guid: 6ea10d94283298640bf22da6945ea8c1, type: 3}
+  climbingLadderSpeedFactor: 0.4
   checkLadderDistance: 1.2
   whatIsLadder:
     serializedVersion: 2
@@ -17910,6 +18013,7 @@ MonoBehaviour:
   ladderCheck: {fileID: 261638900147641167}
   climbingLadderSound: {fileID: 8300000, guid: a3feb468145941246b56f9f29283c063, type: 3}
   climbingWallSound: {fileID: 8300000, guid: a3feb468145941246b56f9f29283c063, type: 3}
+  baseSpeed: 8
   maxRunningSpeed: 8
   maxInteractingSpeed: 2
   raycastFrameInterval: 10
