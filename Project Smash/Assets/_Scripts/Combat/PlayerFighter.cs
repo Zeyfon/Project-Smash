@@ -59,20 +59,6 @@ namespace PSmash.Combat
 
         #region Finisher
 
-        //public void CheckToolButtonState(PlayMakerFSM pm, bool toolButtonState)
-        //{
-        //    if (!toolButtonState)
-        //        return;
-        //    if (IsEnemyStunned())
-        //    {
-        //        pm.SendEvent("FINISHER");
-        //    }
-        //    else
-        //    {
-        //        pm.SendEvent("TOOLATTACK");
-        //    }
-        //}
-
         public bool IsEnemyStunned()
         {
             RaycastHit2D hit = Physics2D.Raycast(transform.position + new Vector3(0, 1), transform.right, 2, whatIsEnemy);
@@ -193,6 +179,7 @@ namespace PSmash.Combat
         /// <returns></returns>
         void AttackImpulse()
         {
+            //print("AttackImpulse");
             GetComponent<PlayerMovement>().MovementImpulse(attackImpulse);
         }
 
@@ -222,7 +209,7 @@ namespace PSmash.Combat
 
         #endregion
 
-        private void Attack(Transform attackOriginPosition, Vector2 attackArea, Weapon currentWeapon)
+        void Attack(Transform attackOriginPosition, Vector2 attackArea, Weapon currentWeapon)
         {
             //print("Looking to Damage Enemy");
             Collider2D[] colls = Physics2D.OverlapBoxAll(attackOriginPosition.position, attackArea, 0, whatIsDamagable);
@@ -242,7 +229,7 @@ namespace PSmash.Combat
             }
         }
 
-        private void OnDrawGizmosSelected()
+        void OnDrawGizmosSelected()
         {
             Gizmos.DrawWireCube(attackTransform.position, comboAttackArea);
 

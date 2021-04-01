@@ -1,7 +1,7 @@
-﻿using System.Collections;
+﻿
 using System.Collections.Generic;
 using UnityEngine;
-using PSmash.Stats;
+
 
 namespace PSmash.Inventories
 {
@@ -17,17 +17,28 @@ namespace PSmash.Inventories
 
         public void RandomDrop()
         {
-            print("Random Drops from " + gameObject.name);
+            //print("Random Drops from " + gameObject.name);
             //int level = GetComponent<BaseStats>().GetLevel();
             int level = 1;
             var drops = dropLibrary.GetRandomDrops(level);
-            if (drops == null)
-                return;
-            DropItems(drops);
-            //foreach (var drop in drops)
-            //{
-            //    DropItem(drop.item, drop.number);
-            //}
+            if(HasDrops(drops))
+                DropItems(drops);
+        }
+
+        bool HasDrops(IEnumerable<DropLibrary.Dropped> drops)
+        {
+            foreach(DropLibrary.Dropped drop in drops)
+            {
+                if (drop.item != null)
+                {
+                   // print("Has Drops");
+                    //print(drop.item.name);
+                    return true;
+                }
+            }
+
+            //print("Does not have drops");
+            return false;
         }
 
         void DropItems(IEnumerable<DropLibrary.Dropped> drops)
@@ -41,16 +52,6 @@ namespace PSmash.Inventories
             clonePickup.Setup(drops);
         }
 
-        //void DropItems(Item item, int number)
-        //{
-        //    SpawnPickup(item, GetDropLocation(), number);
-        //}
-
-        //void SpawnPickup(Item item, Vector2 spawnLocation, int number)
-        //{
-        //    Instantiate((item as CraftingItem).GetGameObject(), spawnLocation, Quaternion.identity);
-        //}
-
         Vector2 GetDropLocation()
         {
             for (int i = 0; i <= ATTEMPTS; i++)
@@ -62,7 +63,7 @@ namespace PSmash.Inventories
                     return hit.point;
                 }
             }
-            print("Randomness not applied");
+            //print("Randomness not applied");
             return transform.position;
 
         }
