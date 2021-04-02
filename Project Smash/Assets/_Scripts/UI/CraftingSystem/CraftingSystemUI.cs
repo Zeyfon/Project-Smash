@@ -35,7 +35,6 @@ namespace PSmash.UI.CraftingSytem
                     skillSlot = initialSkillSlot;
                     eventSystem.SetSelectedGameObject(skillSlot.gameObject);
                 }
-                //print(skillSlot);
                 UpdateRing(skillSlot);
             }
         }
@@ -43,7 +42,7 @@ namespace PSmash.UI.CraftingSytem
         private void OnEnable()
         {
             CraftingSystem.CraftingSystem.OnSkillPanelUpdate += UpdateSkillPanel;
-            UpdateRing(initialSkillSlot);     
+            UpdateRing(initialSkillSlot);
         }
 
         private void OnDisable()
@@ -54,16 +53,18 @@ namespace PSmash.UI.CraftingSytem
 
         void UpdateRing(SkillSlot skillSlot)
         {
-            if(previousGameObject != null && previousGameObject != skillSlot.gameObject)
+            if (previousGameObject != null && previousGameObject != skillSlot.gameObject)
             {
                 previousGameObject.GetComponent<SkillSlot>().SetRingMaterial(null);
                 UpdateSkillPanel();
+
             }
-            skillSlot.SetRingMaterial(yellowMaterial);
-            if(onSelectionChange!= null)
+            if (onSelectionChange != null)
             {
                 onSelectionChange(skillSlot);
             }
+            skillSlot.SetRingMaterial(yellowMaterial);
+
             previousGameObject = skillSlot.gameObject;
         }
 
