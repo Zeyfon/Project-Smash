@@ -91,15 +91,6 @@ namespace PSmash.Inventories
         {
             this.weapon = weapon;
         }
-        ///// <summary>
-        ///// Function called by all the characters that can throw a projectile
-        ///// This is in order to know who spawned this so the Trigger events look for the correct target
-        ///// </summary>
-        ///// <param name="owner"></param>
-        //public void SetOwner(Health owner)
-        //{
-        //    this.owner = owner;
-        //}
 
         public void TakeDamage(Transform attacker, Weapon weapon, float damage)
         {
@@ -123,6 +114,8 @@ namespace PSmash.Inventories
 
         private void OnTriggerEnter2D(Collider2D collision)
         {
+            if (collision.CompareTag("Destructible"))
+                return;
             if (hasHit)
                 return;
 
