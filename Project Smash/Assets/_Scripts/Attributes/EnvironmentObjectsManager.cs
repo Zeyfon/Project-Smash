@@ -19,7 +19,7 @@ namespace PSmash.Checkpoints
         // Start is called before the first frame update
         void Awake()
         {
-            foreach (Boulder obj in GetComponentsInChildren<Boulder>())
+            foreach (Boulder obj in FindObjectsOfType<Boulder>())
             {
 
                 ObjectSlot slot = new ObjectSlot();
@@ -49,7 +49,7 @@ namespace PSmash.Checkpoints
 
         IEnumerator RespawnBoulders()
         {
-            foreach (Boulder boulderInstance in GetComponentsInChildren<Boulder>())
+            foreach (Boulder boulderInstance in FindObjectsOfType<Boulder>())
             {
                 Destroy(boulderInstance.gameObject);
             }
