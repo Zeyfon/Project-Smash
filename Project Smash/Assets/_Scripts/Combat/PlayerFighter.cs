@@ -67,6 +67,7 @@ namespace PSmash.Combat
             return hit.transform.GetComponent<EnemyHealth>().IsStunned();
         }
 
+
         public void FinisherMove()
         {
             StartCoroutine(DoFinisherMove());
