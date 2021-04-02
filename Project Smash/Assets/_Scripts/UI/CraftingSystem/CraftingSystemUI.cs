@@ -35,7 +35,7 @@ namespace PSmash.UI.CraftingSytem
                     skillSlot = initialSkillSlot;
                     eventSystem.SetSelectedGameObject(skillSlot.gameObject);
                 }
-                print(skillSlot);
+                //print(skillSlot);
                 UpdateRing(skillSlot);
             }
         }
