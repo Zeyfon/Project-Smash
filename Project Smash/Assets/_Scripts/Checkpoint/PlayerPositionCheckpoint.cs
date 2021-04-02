@@ -32,28 +32,26 @@ namespace PSmash.Checkpoints
 
         public object CaptureState()
         {
-            SerializableVector3 position = new SerializableVector3(transform.position);
-            return position;
+            if (canSavePosition)
+            {
+                print(gameObject.name + "  capturing player position");
+                SerializableVector3 position = new SerializableVector3(transform.position);
+                return position;
+            }
+
+            return null;
         }
+
+        
         public void RestoreState(object state)
         {
             SerializableVector3 position = (SerializableVector3)state;
+            if (position == null)
+                return;
             Vector3 newPosition = position.ToVector();
-            FindObjectOfType<PlayerMovement>().GetComponent<Rigidbody2D>().MovePosition(newPosition);
-        }
-
-
-
-        // Start is called before the first frame update
-        void Start()
-        {
-
-        }
-
-        // Update is called once per frame
-        void Update()
-        {
-
+            FindObjectOfType<PlayerMovement>().transform.position = newPosition;
+            print(gameObject.name + "  restoring player position");
+            //FindObjectOfType<PlayerMovement>().GetComponent<Rigidbody2D>().MovePosition(newPosition);
         }
     }
 }

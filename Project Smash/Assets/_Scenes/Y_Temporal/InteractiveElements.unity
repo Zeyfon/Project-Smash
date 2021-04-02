@@ -98,7 +98,7 @@ LightmapSettings:
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
   m_LightingDataAsset: {fileID: 0}
-  m_UseShadowmask: 0
+  m_UseShadowmask: 1
 --- !u!196 &4
 NavMeshSettings:
   serializedVersion: 2
@@ -212,6 +212,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Ranger01_01
+      objectReference: {fileID: 0}
+    - target: {fileID: 6967242623932699408, guid: 1d7a2d03514ea2944b20e6181545be4b,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6967242623932699409, guid: 1d7a2d03514ea2944b20e6181545be4b,
         type: 3}
@@ -718,7 +723,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &791118731
 Transform:
   m_ObjectHideFlags: 0
@@ -7062,6 +7067,11 @@ PrefabInstance:
         type: 3}
       propertyPath: currentWeapon
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 637741161917655640, guid: 0c292b7de4920264087b71a5ce9ec610,
+        type: 3}
+      propertyPath: fsm.variables.objectVariables.Array.data[4].typeName
+      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 649933146603716140, guid: 0c292b7de4920264087b71a5ce9ec610,
         type: 3}
