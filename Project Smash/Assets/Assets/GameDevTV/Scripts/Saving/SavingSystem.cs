@@ -29,12 +29,19 @@ namespace GameDevTV.Saving
         public IEnumerator LoadLastScene(string saveFile)
         {
             Dictionary<string, object> state = LoadFile(saveFile);
-            int buildIndex = SceneManager.GetActiveScene().buildIndex;
+            int buildIndex = SceneManager.GetActiveScene().buildIndex + 1;
             if (state.ContainsKey("lastSceneBuildIndex"))
             {
                 buildIndex = (int)state["lastSceneBuildIndex"];
             }
-            yield return SceneManager.LoadSceneAsync(buildIndex);
+            if(buildIndex > SceneManager.sceneCountInBuildSettings)
+            {
+                yield return null;
+            }
+            else
+            {
+                yield return SceneManager.LoadSceneAsync(buildIndex);
+            }
             RestoreState(state);
             OnSaveEnds.Invoke();
         }

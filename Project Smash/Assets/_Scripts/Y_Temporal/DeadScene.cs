@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using PSmash.SceneManagement;
 
 namespace PSmash.Temporal
@@ -17,7 +18,15 @@ namespace PSmash.Temporal
         IEnumerator TestStarter()
         {
             yield return new WaitForSeconds(1);
-            FindObjectOfType<SavingWrapper>().LoadLastScene2();
+            SavingWrapper savingWrapper = FindObjectOfType<SavingWrapper>();
+            if (savingWrapper)
+            {
+                savingWrapper.LoadLastScene2();
+            }
+            else
+            {
+                SceneManager.LoadScene(1);
+            }
         }
         // Update is called once per fram
     }
