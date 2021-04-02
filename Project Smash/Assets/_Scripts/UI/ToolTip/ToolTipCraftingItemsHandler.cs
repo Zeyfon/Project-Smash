@@ -16,7 +16,7 @@ namespace PSmash.UI
     /// </summary>
     public class ToolTipCraftingItemsHandler : MonoBehaviour
     {
-        [SerializeField] CraftingItemSlotsUI[] craftingItemSlots;
+        [SerializeField] ToolTipWindowItemSlot[] craftingItemSlots;
 
         Inventory inventory;
         private void Awake()
@@ -26,7 +26,7 @@ namespace PSmash.UI
 
         public void SetSkillSlotInfo(Dictionary<CraftingItem, int> requiredCraftingMaterials)
         {
-            foreach (CraftingItemSlotsUI craftingItemSlot in craftingItemSlots)
+            foreach (ToolTipWindowItemSlot craftingItemSlot in craftingItemSlots)
             {
                 craftingItemSlot.gameObject.SetActive(true);
             }

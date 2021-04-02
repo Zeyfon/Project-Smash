@@ -3,7 +3,6 @@ using PSmash.Inventories;
 using PSmash.Items.Doors;
 using PSmash.Items.Traps;
 using PSmash.Menus;
-using PSmash.Movement;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
@@ -12,8 +11,6 @@ namespace PSmash.InputSystem
 {
     public class InputHandler : MonoBehaviour
     {
-        [SerializeField] PlayerMovement pMovement = null;
-        [SerializeField] Equipment equipment = null;
 
         Collider2D interactableCollider;
         PlayMakerFSM pmPlayerController = null;
