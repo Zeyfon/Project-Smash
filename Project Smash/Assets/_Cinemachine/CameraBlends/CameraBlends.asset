@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 36baaa8bdcb9d8b49b9199833965d2c3, type: 3}
-  m_Name: Door Blend
+  m_Name: CameraBlends
   m_EditorClassIdentifier: 
   m_CustomBlends:
   - m_From: '**ANY CAMERA**'
@@ -29,6 +29,17 @@ MonoBehaviour:
     m_Blend:
       m_Style: 2
       m_Time: 1.5
+      m_CustomCurve:
+        serializedVersion: 2
+        m_Curve: []
+        m_PreInfinity: 0
+        m_PostInfinity: 0
+        m_RotationOrder: 0
+  - m_From: FollowCamera2D
+    m_To: FinisherCamera2D
+    m_Blend:
+      m_Style: 1
+      m_Time: 0.4
       m_CustomCurve:
         serializedVersion: 2
         m_Curve: []
