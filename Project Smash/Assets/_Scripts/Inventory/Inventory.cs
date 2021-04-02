@@ -17,7 +17,7 @@ namespace PSmash.Inventories
         List<Item> inventoryItems = new List<Item>();
 
         // Start is called before the first frame update
-        void Start()
+        void Awake()
         {
             //Get All items in of the project
             foreach (Item item in Resources.LoadAll<Item>(""))
@@ -89,8 +89,8 @@ namespace PSmash.Inventories
 
         public void UnlockSkill(Item skill)
         {
-            //print("In Inventory unlocking the skill  " + skill.name);
-            if(skill is SubWeaponItem)
+            print("In Inventory unlocking the skill  " + skill.name);
+            if(skill is ToolItem)
             {
                 GetComponentInParent<Equipment>().UpgradeStock(skill);
             }

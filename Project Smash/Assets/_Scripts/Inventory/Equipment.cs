@@ -1,10 +1,12 @@
 ﻿using PSmash.Checkpoints;
 using UnityEngine;
 using GameDevTV.Saving;
+using GameDevTV.Saving;
+using System.Collections.Generic;
 
 namespace PSmash.Inventories
 {
-    public class Equipment : MonoBehaviour
+    public class Equipment : MonoBehaviour, ISaveable
     {
         [SerializeField] EquipmentSlots[] slots;
         [SerializeField] SubWeaponItem subWeapon;
@@ -15,10 +17,6 @@ namespace PSmash.Inventories
         int currentIndex = 0;
         private void Start()
         {
-            foreach(EquipmentSlots slot in slots)
-            {
-                slot.maxNumber = slot.number;
-            }
             ReplenishActionableItems();
         }
 
@@ -114,6 +112,39 @@ namespace PSmash.Inventories
                 }
             }
 
+        }
+
+        public object CaptureState()
+        {
+            Dictionary<string, int> toolsForSerialization = new Dictionary<string, int>();
+            foreach(EquipmentSlots slot in slots)
+            {
+                toolsForSerialization.Add(slot.item.GetID(), slot.number);
+            }
+            return toolsForSerialization;
+        }
+
+        public void RestoreState(object state)
+        {
+
+            var equippedItemsForSerialization = (Dictionary<string, int>)state;
+
+            foreach (string name in equippedItemsForSerialization.Keys)
+            {
+                var item = (ToolItem)Item.GetFromID(name);
+                if (item != null)
+                {
+                    foreach(EquipmentSlots slot in slots)
+                    {
+                        if(item == slot.item)
+                        {
+                            print(slot.item.name + "  got  " + equippedItemsForSerialization[name]);
+                            slot.maxNumber = equippedItemsForSerialization[name];
+                        }
+                    }
+                }
+            }
+            //ReplenishActionableItems();
         }
     }
 }
