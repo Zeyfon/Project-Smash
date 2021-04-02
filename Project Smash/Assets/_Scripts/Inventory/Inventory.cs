@@ -113,18 +113,14 @@ namespace PSmash.Inventories
 
         public void RestoreState(object state)
         {
-            if (ES3.KeyExists("inventory"))
+            Dictionary<string, int> inventoryState = (Dictionary<string, int>)state;
+            foreach (string itemName in inventoryState.Keys)
             {
-                //print("Inventory being restored");
-                Dictionary<string, int> inventoryState = (Dictionary<string, int>)state;
-                foreach (string itemName in inventoryState.Keys)
+                foreach (CraftingSlot slot in slots)
                 {
-                    foreach (CraftingSlot slot in slots)
+                    if (slot.item.GetID() == itemName)
                     {
-                        if (slot.item.GetID() == itemName)
-                        {
-                            slot.number = inventoryState[itemName];
-                        }
+                        slot.number = inventoryState[itemName];
                     }
                 }
             }
