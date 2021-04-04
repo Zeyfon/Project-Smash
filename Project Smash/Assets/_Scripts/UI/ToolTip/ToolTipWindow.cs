@@ -20,22 +20,38 @@ namespace PSmash.UI
 
         Coroutine coroutine;
         bool isInitialized = false;
-
-        private void OnEnable()
+        private void Awake()
         {
             CraftingSystemUI.onSelectionChange += UpdateToolTipInfo;
+
         }
 
-        private void OnDisable()
+        //private void Start()
+        //{
+        //    gameObject.SetActive(false);
+        //}
+
+        private void OnDestroy()
         {
             CraftingSystemUI.onSelectionChange -= UpdateToolTipInfo;
+
         }
+        private void OnEnable()
+        {
+            //canvasGroup.alpha = 0;
+            //print("Enabled");
+            //CraftingSystemUI.onSelectionChange += UpdateToolTipInfo;
+        }
+
+        //private void OnDisable()
+        //{
+        //    CraftingSystemUI.onSelectionChange -= UpdateToolTipInfo;
+        //}
 
 
         public void UpdateToolTipInfo(SkillSlot skillSlot)
         {
             //print("Wants to Update Description Window");
-
             if (coroutine != null)
                 StopCoroutine(coroutine);
             if (skillSlot == null)
@@ -52,7 +68,8 @@ namespace PSmash.UI
         {
             //print("Updating Description Window");
             Fader fader = new Fader();
-            yield return fader.FadeOut(canvasGroup, fadeInTime);
+            yield return fader.FadeOut(canvasGroup, fadeOutTime);
+
             yield return InfoChange(skillSlotGameObject);
             yield return fader.FadeIn(canvasGroup, fadeInTime);
         }
