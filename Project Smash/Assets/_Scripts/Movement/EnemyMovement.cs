@@ -145,13 +145,17 @@ namespace PSmash.Movement
 
         void Move(Vector2 slopeNormalPerp, float speedFactor )
         {
-            //print("Moving");
-            //print("Previous velocity " + rb.velocity);
             float speed = baseSpeed * speedFactor;
             float xVelocity = -1 * speed * slopeNormalPerp.x;
             float yVelocity = -1 * speed * slopeNormalPerp.y;
 
             rb.velocity = new Vector2(xVelocity, yVelocity);
+            if(rb.velocity.magnitude > baseSpeed * speedFactor)
+            {
+                Vector2 newVelocity = rb.velocity;
+                newVelocity = newVelocity.normalized * baseSpeed * speedFactor;
+                rb.velocity = newVelocity;
+            }
             //print("Post velocity " + rb.velocity);
         }
         void DoNotMove()

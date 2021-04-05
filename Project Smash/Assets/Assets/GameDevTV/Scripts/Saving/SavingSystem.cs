@@ -29,6 +29,7 @@ namespace GameDevTV.Saving
         public IEnumerator LoadLastScene(string saveFile)
         {
             Dictionary<string, object> state = LoadFile(saveFile);
+
             int buildIndex = SceneManager.GetActiveScene().buildIndex + 1;
             if (state.ContainsKey("lastSceneBuildIndex"))
             {

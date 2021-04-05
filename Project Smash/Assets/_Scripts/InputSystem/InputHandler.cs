@@ -7,6 +7,7 @@ using PSmash.Movement;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using HutongGames.PlayMaker;
 
 namespace PSmash.InputSystem
 {
@@ -40,6 +41,7 @@ namespace PSmash.InputSystem
         float action7State = 0;
 
         PlayMakerFSM currentPMState;
+        FsmObject currentFSM;
         _Controller _controller;
 
         Vector2 movement;
@@ -61,6 +63,7 @@ namespace PSmash.InputSystem
         }
         private void Start()
         {
+            currentFSM = FsmVariables.GlobalVariables.FindFsmObject("currentFSM");
             SetInitialCommandsToButtons();
             //SetCommandList();
             //SetButtonsInControllerMenu();
@@ -156,6 +159,7 @@ namespace PSmash.InputSystem
             action5.ButtonPressed(transform, this, currentPMState, movement, action5State);
             action0.ButtonPressed(transform, this, currentPMState, movement, action5State);
             action7.ButtonPressed(transform, this, currentPMState, movement, action7State);
+            //print(currentFSM.Value);
         }
 
         private void Action1Pressed()

@@ -3304,7 +3304,7 @@ MonoBehaviour:
     locked: 0
     manualUpdate: 0
     keepDelayedEventsOnStateExit: 0
-    preprocessed: 1
+    preprocessed: 0
     ExposedEvents: []
     RestartOnEnable: 1
     EnableDebugFlow: 0
@@ -10040,12 +10040,14 @@ MonoBehaviour:
       actionData:
         actionNames:
         - HutongGames.PlayMaker.Actions.CallMethod
+        - HutongGames.PlayMaker.Actions.SetObjectValue
         customNames:
         - 
-        actionEnabled: 01
-        actionIsOpen: 01
-        actionStartIndex: 00000000
-        actionHashCodes: ca51e900
+        - 
+        actionEnabled: 0101
+        actionIsOpen: 0101
+        actionStartIndex: 0000000007000000
+        actionHashCodes: ca51e9001bc10e04
         unityObjectParams: []
         fsmGameObjectParams: []
         fsmOwnerDefaultParams: []
@@ -10070,6 +10072,20 @@ MonoBehaviour:
           networkSync: 0
           typeName: PSmash.InputSystem.InputHandler
           value: {fileID: 8540863619128468569}
+        - useVariable: 1
+          name: currentFSM
+          tooltip: 
+          showInInspector: 0
+          networkSync: 0
+          typeName: PlayMakerFSM
+          value: {fileID: 0}
+        - useVariable: 1
+          name: myFSM
+          tooltip: 
+          showInInspector: 0
+          networkSync: 0
+          typeName: PlayMakerFSM
+          value: {fileID: 5240833402420041602}
         fsmVarParams:
         - variableName: myFSM
           objectType: PlayMakerFSM
@@ -10130,13 +10146,13 @@ MonoBehaviour:
         fsmRectParams: []
         fsmQuaternionParams: []
         stringParams: []
-        byteData: 0000
+        byteData: 000000
         arrayParamSizes: 01000000
         arrayParamTypes:
         - HutongGames.PlayMaker.FsmVar
         customTypeSizes: 
         customTypeNames: []
-        paramDataType: 18000000120000000c00000027000000270000000100000001000000
+        paramDataType: 18000000120000000c00000027000000270000000100000001000000180000001800000001000000
         paramName:
         - behaviour
         - methodName
@@ -10145,8 +10161,11 @@ MonoBehaviour:
         - storeResult
         - everyFrame
         - manualUI
-        paramDataPos: 00000000000000000000000000000000010000000000000001000000
-        paramByteDataSize: 00000000000000000000000000000000000000000100000001000000
+        - objectVariable
+        - objectValue
+        - everyFrame
+        paramDataPos: 00000000000000000000000000000000010000000000000001000000010000000200000002000000
+        paramByteDataSize: 00000000000000000000000000000000000000000100000001000000000000000000000001000000
     - name: JUMP
       description: 
       colorIndex: 2
@@ -12008,7 +12027,7 @@ MonoBehaviour:
     locked: 0
     manualUpdate: 0
     keepDelayedEventsOnStateExit: 0
-    preprocessed: 1
+    preprocessed: 0
     ExposedEvents: []
     RestartOnEnable: 1
     EnableDebugFlow: 0
@@ -12034,7 +12053,7 @@ MonoBehaviour:
     handleJointBreak: 0
     handleJointBreak2D: 0
     handleOnGUI: 0
-    handleFixedUpdate: 1
+    handleFixedUpdate: 0
     handleLateUpdate: 0
     handleApplicationEvents: 0
     handleUiEvents: 0
