@@ -24,6 +24,8 @@ namespace PSmash.Attributes
         [SerializeField] AudioClip stunEndAudio = null;
         [SerializeField] float volume = 1;
 
+        public static event Action onEnemyDead;
+
         EnemyPosture posture;
         PlayMakerFSM pm;
         BaseStats baseStats;
@@ -66,7 +68,7 @@ namespace PSmash.Attributes
             Damaged(attacker, weapon, damage);
         }
 
-        public void Damaged(Transform attacker, Weapon attackedWeapon, float damage)
+        void Damaged(Transform attacker, Weapon attackedWeapon, float damage)
         {
             float healthDamage;
             float totalPenetrationPercentage;
@@ -130,7 +132,7 @@ namespace PSmash.Attributes
             }
         }
 
-        public void DamageHealth(float damage, float damagePenetrationPercentage)
+        void DamageHealth(float damage, float damagePenetrationPercentage)
         {
             //print(damage + " will be substracted from  " + health);
             damage *= (1 - baseStats.GetStat(StatsList.Defense) / 100);
@@ -140,10 +142,11 @@ namespace PSmash.Attributes
             if (health <= 0)
             {
                 isDead = true;
+                onEnemyDead();
             }
         }
 
-        private float SubstractDamageFromHealth(float damage, float health)
+        float SubstractDamageFromHealth(float damage, float health)
         {
             if (isInvulnerable) return health;
             health -= damage;

@@ -10,12 +10,11 @@ namespace PSmash.Core
     public class EnemySpawner : MonoBehaviour
     {
         [SerializeField] GameObject enemy = null;
-        [SerializeField] GameObject spawnParticles = null;
         // Start is called before the first frame update
 
-        public EnemyHealth SpawnEnemyEnableAutoAttackAndGetHealth()
+        public EnemyHealth SpawnEnemyEnableAutoAttackAndGetHealth(ParticleSystem spawnParticles)
         {
-            SpawneParticles();
+            SpawneParticles(spawnParticles);
             GameObject enemyClone = SpawnAndGetEnemy();
             return enemyClone.GetComponentInChildren<EnemyHealth>();
         }
@@ -23,23 +22,23 @@ namespace PSmash.Core
         private GameObject SpawnAndGetEnemy()
         {
             GameObject enemyClone = Instantiate(enemy,transform.position,Quaternion.identity, transform);
+            print(enemyClone);
             return enemyClone;
         }
 
-        private void SpawneParticles()
+        private void SpawneParticles(ParticleSystem spawnParticles)
         {
-            GameObject psClone = Instantiate(spawnParticles, transform.position, Quaternion.identity);
-            ParticleSystem ps = psClone.GetComponent<ParticleSystem>();
-            StartCoroutine(ParticlesTracker(ps));
+            ParticleSystem spawnParticlesClone = Instantiate(spawnParticles, transform.position, Quaternion.identity);
+            StartCoroutine(ParticlesTracker(spawnParticlesClone));
         }
 
-        IEnumerator ParticlesTracker(ParticleSystem ps)
+        IEnumerator ParticlesTracker(ParticleSystem spawnParticles)
         {
-            while (ps.IsAlive())
+            while (spawnParticles.IsAlive())
             {
                 yield return null;
             }
-            Destroy(ps.gameObject);
+            Destroy(spawnParticles.gameObject);
         }
     }
 

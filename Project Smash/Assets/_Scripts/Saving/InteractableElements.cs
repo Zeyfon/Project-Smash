@@ -6,29 +6,40 @@ namespace PSmash.Core
 {
     public class InteractableElements : MonoBehaviour
     {
-        Collider2D interactableObject;
+        IManualInteraction manualInteractableObject;
 
         private void OnTriggerEnter2D(Collider2D collision)
         {
-            if (collision.GetComponent<IInteractable>() != null)
+            if (!collision.CompareTag("Interactable"))
+                return;
+            print(collision.gameObject.name +  "  is trying to interact with the player");
+            if (collision.GetComponent<IManualInteraction>() != null)
             {
-                //print("Entered tent");
-                interactableObject = collision;
+                manualInteractableObject = collision.GetComponent<IManualInteraction>();
+            }
+            else if(collision.GetComponentInParent<IAutomaticInteraction>()!= null)
+            {
+                print(collision.gameObject.name);
+                collision.GetComponentInParent<IAutomaticInteraction>().Interact();
+            }
+            else
+            {
+                Debug.LogWarning("No interaction was possible with interactable element");
             }
         }
 
         private void OnTriggerExit2D(Collider2D collision)
         {
-            if (collision.GetComponent<IInteractable>() != null)
+            if (collision.GetComponent<IManualInteraction>() != null)
             {
-                interactableObject = null;
+                manualInteractableObject = null;
             }
         }
 
-        public Collider2D GetInteractableObject()
+        public IManualInteraction GetInteractableObject()
         {
             //print(interactableObject);
-            return interactableObject;
+            return manualInteractableObject;
         }
     }
 
