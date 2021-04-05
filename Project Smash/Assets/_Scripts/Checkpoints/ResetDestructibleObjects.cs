@@ -22,7 +22,7 @@ namespace PSmash.Checkpoints
     // Start is called before the first frame update
         void Awake()
         {
-            foreach (DestructibleObject obj in GetComponentsInChildren<DestructibleObject>())
+            foreach (DestructibleObject obj in FindObjectsOfType<DestructibleObject>())
             {
                 GameObject tempObj = null;
                 if (obj.GetObjectType() == DestructibleObject.ObjectType.barrel)
@@ -64,7 +64,7 @@ namespace PSmash.Checkpoints
 
         IEnumerator RespawnEnemies()
         {
-            foreach (DestructibleObject entity in GetComponentsInChildren<DestructibleObject>())
+            foreach (DestructibleObject entity in FindObjectsOfType<DestructibleObject>())
             {
                 Destroy(entity.gameObject);
             }

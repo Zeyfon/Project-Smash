@@ -12,12 +12,8 @@ namespace PSmash.Checkpoints
         // Start is called before the first frame update
 
         public static event Action onCheckpointPerformed;
-        void Start()
-        {
 
-        }
-
-        private void OnEnable()
+        void OnEnable()
         {
             Tent.OnTentMenuOpen += PerformCheckpoint;
         }
@@ -26,20 +22,12 @@ namespace PSmash.Checkpoints
         void PerformCheckpoint()
         {
             onCheckpointPerformed();
-            //DoCheckpointSound();oint
-            //ResetInteractables();
-            //ResetDestructibleObjects();
         }
 
 
         void DoCheckpointSound()
         {
             audioSource.Play();
-        }
-
-        void ResetInteractables()
-        {
-
         }
     }
 

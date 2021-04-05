@@ -8,21 +8,10 @@ namespace PSmash.Inventories
     public class CraftingItem : Item
     {
         [SerializeField] GameObject gameObject = null;
-        [SerializeField] int number = 0;
 
         public GameObject GetGameObject()
         {
             return gameObject;
-        }
-
-        public void UpdateNumberByThisValue( int number)
-        {
-            this.number+=number;
-        }
-
-        public int GetNumber()
-        {
-            return number;
         }
     }
 }

@@ -1,14 +1,15 @@
 ﻿using PSmash.Checkpoints;
 using UnityEngine;
 using GameDevTV.Saving;
+using GameDevTV.Saving;
+using System.Collections.Generic;
 
 namespace PSmash.Inventories
 {
-    public class Equipment : MonoBehaviour
+    public class Equipment : MonoBehaviour, ISaveable
     {
         [SerializeField] EquipmentSlots[] slots;
-
-        SubWeaponItem subWeapon;
+        [SerializeField] SubWeaponItem subWeapon;
 
         public delegate void ItemChange(int index);
         public event ItemChange onEquippedActionItemChange;
@@ -16,10 +17,6 @@ namespace PSmash.Inventories
         int currentIndex = 0;
         private void Start()
         {
-            foreach(EquipmentSlots slot in slots)
-            {
-                slot.maxNumber = slot.number;
-            }
             ReplenishActionableItems();
         }
 
@@ -58,18 +55,18 @@ namespace PSmash.Inventories
             return slots[currentIndex];
         }
 
-        public void ChangeItem(bool isMovingRight)
+        public void ChangeItem(float movementDirection)
         {
-            print(currentIndex);
-            if (isMovingRight)
+            //print(currentIndex);
+            if (movementDirection==1)
             {
                 currentIndex++;
-                print("Moving right" + currentIndex);
+                //print("Moving right" + currentIndex);
                 if (currentIndex > slots.Length - 1)
                 {
                     currentIndex = 0;
                 }
-                print(currentIndex);
+                //print(currentIndex);
             }
             else
             {
@@ -115,6 +112,39 @@ namespace PSmash.Inventories
                 }
             }
 
+        }
+
+        public object CaptureState()
+        {
+            Dictionary<string, int> toolsForSerialization = new Dictionary<string, int>();
+            foreach(EquipmentSlots slot in slots)
+            {
+                toolsForSerialization.Add(slot.item.GetID(), slot.number);
+            }
+            return toolsForSerialization;
+        }
+
+        public void RestoreState(object state)
+        {
+
+            var equippedItemsForSerialization = (Dictionary<string, int>)state;
+
+            foreach (string name in equippedItemsForSerialization.Keys)
+            {
+                var item = (ToolItem)Item.GetFromID(name);
+                if (item != null)
+                {
+                    foreach(EquipmentSlots slot in slots)
+                    {
+                        if(item == slot.item)
+                        {
+                            print(slot.item.name + "  got  " + equippedItemsForSerialization[name]);
+                            slot.maxNumber = equippedItemsForSerialization[name];
+                        }
+                    }
+                }
+            }
+            //ReplenishActionableItems();
         }
     }
 }

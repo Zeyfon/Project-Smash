@@ -9,6 +9,7 @@ namespace PSmash.Inventories
         //CONFIG
         [Header("CONFIG")]
         [SerializeField] Sprite sprite;
+        [SerializeField] string displayName;
         [SerializeField][TextArea] string description;
         [SerializeField] string itemID = " ";
         
@@ -25,10 +26,10 @@ namespace PSmash.Inventories
         {
             return sprite;
         }
-
-        public void SpawnItem(Vector3 spawnLocation, int number)
+        
+        public string GetDisplayName()
         {
-
+            return displayName;
         }
 
         /// <summary>

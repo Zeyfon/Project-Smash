@@ -24,7 +24,7 @@ namespace PSmash.Saving
         // Start is called before the first frame update
         void Awake()
         {
-            foreach(EnemyID id in GetComponentsInChildren<EnemyID>())
+            foreach(EnemyID id in FindObjectsOfType<EnemyID>())
             {
                 GameObject enemy = null;
                 if(id.GetEnemyType() == EnemyID.EnemyType.Ranger)
@@ -67,7 +67,7 @@ namespace PSmash.Saving
 
         IEnumerator RespawnEnemies()
         {
-            foreach (EnemyID entity in GetComponentsInChildren<EnemyID>())
+            foreach (EnemyID entity in FindObjectsOfType<EnemyID>())
             {
                 Destroy(entity.gameObject);
             }

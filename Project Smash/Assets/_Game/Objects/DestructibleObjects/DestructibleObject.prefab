@@ -46,7 +46,7 @@ GameObject:
   - component: {fileID: 6229331684472962080}
   m_Layer: 16
   m_Name: DestructibleObject
-  m_TagString: Untagged
+  m_TagString: Destructible
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -85,7 +85,6 @@ MonoBehaviour:
   ps: {fileID: 0}
   spriteRender: {fileID: 1991507803509251302}
   destroyedSprite: {fileID: 0}
-  dropItem: {fileID: 0}
   objectType: 0
 --- !u!61 &924131029081943836
 BoxCollider2D:
@@ -127,6 +126,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   scatterDistance: 1
   dropLibrary: {fileID: 0}
+  pickup: {fileID: 4253175448236660597, guid: 0e1bb90d44ba9fe4fa458d5f5d6a3b11, type: 3}
 --- !u!1 &1991507803509251296
 GameObject:
   m_ObjectHideFlags: 0

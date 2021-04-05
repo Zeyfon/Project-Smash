@@ -9,14 +9,15 @@ namespace PSmash.Inventories
     public class Inventory : MonoBehaviour, ISaveable
     {
         //CONFIG
-        [SerializeField] AudioSource dropAudioSource = null;
+        [SerializeField] AudioSource collectedDropAudioSource = null;
+        [SerializeField] AudioClip collectedDrop = null;
         [SerializeField] CraftingSlot[] slots;
 
 
         List<Item> inventoryItems = new List<Item>();
 
         // Start is called before the first frame update
-        void Start()
+        void Awake()
         {
             //Get All items in of the project
             foreach (Item item in Resources.LoadAll<Item>(""))
@@ -27,24 +28,23 @@ namespace PSmash.Inventories
 
         private void OnEnable()
         {
-            Drop.onDropCollected += CraftingItemCollected;
+            Pickup.onDropCollected += CraftingItemCollected;
         }
 
         void OnDisable()
         {
-            Drop.onDropCollected -= CraftingItemCollected;
+            Pickup.onDropCollected -= CraftingItemCollected;
         }
 
-        private void CraftingItemCollected(CraftingItem craftingItem)
+        private void CraftingItemCollected(Pickup.ItemSlot item)
         {
             //print("Crafting item Collected");
             foreach(CraftingSlot slot in slots)
             {
-                if(slot.item == craftingItem)
+                if(slot.item == item.item as CraftingItem)
                 {
                     slot.number ++;
-                    dropAudioSource.Play();
-                    //print(slot + " was collected");
+                    collectedDropAudioSource.PlayOneShot(collectedDrop);
                 }
             }
         }
@@ -89,8 +89,8 @@ namespace PSmash.Inventories
 
         public void UnlockSkill(Item skill)
         {
-            //print("In Inventory unlocking the skill  " + skill.name);
-            if(skill is SubWeaponItem)
+            print("In Inventory unlocking the skill  " + skill.name);
+            if(skill is ToolItem)
             {
                 GetComponentInParent<Equipment>().UpgradeStock(skill);
             }
@@ -113,18 +113,14 @@ namespace PSmash.Inventories
 
         public void RestoreState(object state)
         {
-            if (ES3.KeyExists("inventory"))
+            Dictionary<string, int> inventoryState = (Dictionary<string, int>)state;
+            foreach (string itemName in inventoryState.Keys)
             {
-                //print("Inventory being restored");
-                Dictionary<string, int> inventoryState = (Dictionary<string, int>)state;
-                foreach (string itemName in inventoryState.Keys)
+                foreach (CraftingSlot slot in slots)
                 {
-                    foreach (CraftingSlot slot in slots)
+                    if (slot.item.GetID() == itemName)
                     {
-                        if (slot.item.GetID() == itemName)
-                        {
-                            slot.number = inventoryState[itemName];
-                        }
+                        slot.number = inventoryState[itemName];
                     }
                 }
             }

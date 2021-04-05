@@ -5,6 +5,7 @@ using UnityEngine;
 using PSmash.Combat.Weapons;
 using PSmash.Inventories;
 using PSmash.Stats;
+using PSmash.Movement;
 
 namespace PSmash.Combat
 {
@@ -20,6 +21,7 @@ namespace PSmash.Combat
         [SerializeField] Vector2 comboAttackArea = new Vector2(1.5f, 1.5f);
         [SerializeField] AudioClip attackSound = null;
         [SerializeField] Weapon fists = null;
+        [SerializeField] float attackImpulse = 10f; 
 
         [Header("Tool Attack")]
         [SerializeField] Weapon mace = null;
@@ -57,20 +59,6 @@ namespace PSmash.Combat
 
         #region Finisher
 
-        public void CheckToolButtonState(PlayMakerFSM pm, bool toolButtonState)
-        {
-            if (!toolButtonState)
-                return;
-            if (IsEnemyStunned())
-            {
-                pm.SendEvent("FINISHER");
-            }
-            else
-            {
-                pm.SendEvent("TOOLATTACK");
-            }
-        }
-
         public bool IsEnemyStunned()
         {
             RaycastHit2D hit = Physics2D.Raycast(transform.position + new Vector3(0, 1), transform.right, 2, whatIsEnemy);
@@ -78,6 +66,7 @@ namespace PSmash.Combat
             targetTransform = hit.transform;
             return hit.transform.GetComponent<EnemyHealth>().IsStunned();
         }
+
 
         public void FinisherMove()
         {
@@ -185,6 +174,16 @@ namespace PSmash.Combat
             Attack(attackTransform, comboAttackArea, fists);
         }
 
+        /// <summary>
+        /// AnimEvent for Attacks
+        /// </summary>
+        /// <returns></returns>
+        void AttackImpulse()
+        {
+            //print("AttackImpulse");
+            GetComponent<PlayerMovement>().MovementImpulse(attackImpulse);
+        }
+
         void LightAttackSound()
         {
             audioSource.pitch = UnityEngine.Random.Range(0.75f, 1.1f);
@@ -211,7 +210,7 @@ namespace PSmash.Combat
 
         #endregion
 
-        private void Attack(Transform attackOriginPosition, Vector2 attackArea, Weapon currentWeapon)
+        void Attack(Transform attackOriginPosition, Vector2 attackArea, Weapon currentWeapon)
         {
             //print("Looking to Damage Enemy");
             Collider2D[] colls = Physics2D.OverlapBoxAll(attackOriginPosition.position, attackArea, 0, whatIsDamagable);
@@ -231,7 +230,7 @@ namespace PSmash.Combat
             }
         }
 
-        private void OnDrawGizmosSelected()
+        void OnDrawGizmosSelected()
         {
             Gizmos.DrawWireCube(attackTransform.position, comboAttackArea);
 

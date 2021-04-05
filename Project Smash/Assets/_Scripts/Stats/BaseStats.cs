@@ -21,18 +21,19 @@ namespace PSmash.Stats
         {
             foreach(StatSlot slot in slots)
             {
-                if(slot.item.GetMyEnumID() == stat)
+                if(slot.stat == stat)
                 {
                     return slot.number;
                 }
             }
+            Debug.LogWarning("No Stat was loaded. A 0 will be returned for  " + stat);
             return 0;
         }
         public void SetStat(StatsList stat, float value)
         {
             foreach(StatSlot slot in slots)
             {
-                if(slot.item.GetMyEnumID() == stat)
+                if(slot.stat == stat)
                 {
                     slot.number = value;
                 }
@@ -44,11 +45,11 @@ namespace PSmash.Stats
             print("Unlocking a skill of  " + stat);
             foreach(StatSlot slot in slots)
             {
-                if(slot.item == stat)
+                if(slot.stat == stat.GetMyEnumID())
                 {
                     float extraHealthValue = Mathf.Round(slot.number * (stat.GetNumber() / 100));
                     slot.number += extraHealthValue;
-                    if(slot.item.name == "Health")
+                    if(slot.stat == StatsList.Health)
                     {
                         health.RestoreHealth(extraHealthValue);
                     }
@@ -59,24 +60,24 @@ namespace PSmash.Stats
 
         public object CaptureState()
         {
-            Dictionary<string, float> data = new Dictionary<string, float>();
+            Dictionary<StatsList, float> data = new Dictionary<StatsList, float>();
             foreach(StatSlot slot in slots)
             {
-                data.Add(slot.item.GetID(), slot.number);
+                data.Add(slot.stat, slot.number);
             }
             return data;
         }
 
         public void RestoreState(object state)
         {
-            Dictionary<string, float> data = (Dictionary<string, float>)state;
-            foreach(string itemID in data.Keys)
+            Dictionary<StatsList, float> data = (Dictionary<StatsList, float>)state;
+            foreach(StatsList stat in data.Keys)
             {
                 foreach(StatSlot slot in slots)
                 {
-                    if(slot.item.GetID() == itemID)
+                    if(slot.stat == stat)
                     {
-                        slot.number = data[itemID];
+                        slot.number = data[stat];
                     }
                 }
             }
@@ -86,7 +87,9 @@ namespace PSmash.Stats
         [System.Serializable]
         public class StatSlot
         {
-            public StatusItem item;
+            [Tooltip("The stat to consider")]
+            public StatsList stat;
+            [Tooltip("The amount that will be used as default value in case no loading has been done")]
             public float number;
         }
     }

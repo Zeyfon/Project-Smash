@@ -27,7 +27,7 @@ public class @_Controller : IInputActionCollection, IDisposable
                     ""interactions"": """"
                 },
                 {
-                    ""name"": ""ButtonA"",
+                    ""name"": ""Action1"",
                     ""type"": ""Button"",
                     ""id"": ""8d36a7b8-9cf4-4980-8f02-2ffee49f0207"",
                     ""expectedControlType"": ""Button"",
@@ -35,15 +35,7 @@ public class @_Controller : IInputActionCollection, IDisposable
                     ""interactions"": """"
                 },
                 {
-                    ""name"": ""ButtonB"",
-                    ""type"": ""Button"",
-                    ""id"": ""94ba8e0b-b6ef-4c2e-91dd-d81234129706"",
-                    ""expectedControlType"": ""Button"",
-                    ""processors"": """",
-                    ""interactions"": """"
-                },
-                {
-                    ""name"": ""ButtonX"",
+                    ""name"": ""Action2"",
                     ""type"": ""Button"",
                     ""id"": ""904d9a70-256f-4b65-819d-6b8068d9833c"",
                     ""expectedControlType"": ""Button"",
@@ -51,7 +43,15 @@ public class @_Controller : IInputActionCollection, IDisposable
                     ""interactions"": """"
                 },
                 {
-                    ""name"": ""ButtonY"",
+                    ""name"": ""Action3"",
+                    ""type"": ""Button"",
+                    ""id"": ""94ba8e0b-b6ef-4c2e-91dd-d81234129706"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
+                },
+                {
+                    ""name"": ""Action4"",
                     ""type"": ""Button"",
                     ""id"": ""0a2d9c38-81df-4703-89b1-f7bd9384a188"",
                     ""expectedControlType"": ""Button"",
@@ -59,55 +59,15 @@ public class @_Controller : IInputActionCollection, IDisposable
                     ""interactions"": """"
                 },
                 {
-                    ""name"": ""ButtonStart"",
-                    ""type"": ""Button"",
-                    ""id"": ""027dbb4e-086a-4d74-a769-74bc77ffe60a"",
-                    ""expectedControlType"": ""Button"",
-                    ""processors"": """",
-                    ""interactions"": """"
-                },
-                {
-                    ""name"": ""ButtonRB"",
-                    ""type"": ""Button"",
+                    ""name"": ""Action5"",
+                    ""type"": ""PassThrough"",
                     ""id"": ""c03656bb-6268-4b05-899b-39efdec0f9dd"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """"
                 },
                 {
-                    ""name"": ""Quit"",
-                    ""type"": ""Button"",
-                    ""id"": ""7425de88-f98d-41e7-8ac1-ba7e47e403e0"",
-                    ""expectedControlType"": ""Button"",
-                    ""processors"": """",
-                    ""interactions"": """"
-                },
-                {
-                    ""name"": ""ButtonLB"",
-                    ""type"": ""Button"",
-                    ""id"": ""492c5cf6-9b87-42d3-b934-5c677ac15281"",
-                    ""expectedControlType"": ""Button"",
-                    ""processors"": """",
-                    ""interactions"": """"
-                },
-                {
-                    ""name"": ""DPadLeft"",
-                    ""type"": ""Button"",
-                    ""id"": ""34d1bbec-8e9b-4ca2-94ee-4f65e5f925a8"",
-                    ""expectedControlType"": ""Button"",
-                    ""processors"": """",
-                    ""interactions"": """"
-                },
-                {
-                    ""name"": ""LeftTrigger"",
-                    ""type"": ""Button"",
-                    ""id"": ""15182669-89a0-4c08-b90b-dba5d2a9d938"",
-                    ""expectedControlType"": ""Button"",
-                    ""processors"": """",
-                    ""interactions"": """"
-                },
-                {
-                    ""name"": ""ItemUse"",
+                    ""name"": ""Action6"",
                     ""type"": ""Button"",
                     ""id"": ""86aa0802-bd60-4d0b-9066-bdc6a0d8b463"",
                     ""expectedControlType"": ""Button"",
@@ -127,6 +87,30 @@ public class @_Controller : IInputActionCollection, IDisposable
                     ""type"": ""Button"",
                     ""id"": ""e9d609dd-e035-491c-93f7-ca4dd4ef0b7b"",
                     ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
+                },
+                {
+                    ""name"": ""Quit"",
+                    ""type"": ""Button"",
+                    ""id"": ""7425de88-f98d-41e7-8ac1-ba7e47e403e0"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
+                },
+                {
+                    ""name"": ""ButtonStart"",
+                    ""type"": ""Button"",
+                    ""id"": ""027dbb4e-086a-4d74-a769-74bc77ffe60a"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
+                },
+                {
+                    ""name"": ""Action7"",
+                    ""type"": ""PassThrough"",
+                    ""id"": ""e375c2fd-20a8-4be9-9371-284419750b33"",
+                    ""expectedControlType"": ""Axis"",
                     ""processors"": """",
                     ""interactions"": """"
                 }
@@ -205,7 +189,7 @@ public class @_Controller : IInputActionCollection, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Gamepad"",
-                    ""action"": ""ButtonB"",
+                    ""action"": ""Action3"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -216,7 +200,7 @@ public class @_Controller : IInputActionCollection, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Keyboard&Mouse"",
-                    ""action"": ""ButtonB"",
+                    ""action"": ""Action3"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -227,7 +211,7 @@ public class @_Controller : IInputActionCollection, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Gamepad"",
-                    ""action"": ""ButtonA"",
+                    ""action"": ""Action1"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -238,51 +222,7 @@ public class @_Controller : IInputActionCollection, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Keyboard&Mouse"",
-                    ""action"": ""ButtonA"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""43e3f5d3-92ab-4057-953f-b9806fb54e85"",
-                    ""path"": ""<Gamepad>/buttonWest"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""Gamepad"",
-                    ""action"": ""ButtonX"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""8eb0103b-bc7c-4946-9ad5-60b657573b36"",
-                    ""path"": ""<Keyboard>/d"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""Keyboard&Mouse"",
-                    ""action"": ""ButtonX"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""43ab7040-63e7-4cce-b720-053bc3cc333c"",
-                    ""path"": ""<Gamepad>/start"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""Gamepad"",
-                    ""action"": ""ButtonStart"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""d90d6b46-96a5-49dc-824c-d87d3974bafa"",
-                    ""path"": ""<Keyboard>/escape"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""Keyboard&Mouse"",
-                    ""action"": ""ButtonStart"",
+                    ""action"": ""Action1"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -293,7 +233,7 @@ public class @_Controller : IInputActionCollection, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Gamepad"",
-                    ""action"": ""ButtonY"",
+                    ""action"": ""Action4"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -304,7 +244,7 @@ public class @_Controller : IInputActionCollection, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Keyboard&Mouse"",
-                    ""action"": ""ButtonY"",
+                    ""action"": ""Action4"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -315,7 +255,7 @@ public class @_Controller : IInputActionCollection, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Gamepad"",
-                    ""action"": ""ButtonRB"",
+                    ""action"": ""Action5"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -326,62 +266,7 @@ public class @_Controller : IInputActionCollection, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Keyboard&Mouse"",
-                    ""action"": ""ButtonRB"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""c6eb8bc0-a890-401a-9ff3-664d254294e0"",
-                    ""path"": ""<Keyboard>/p"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""Keyboard&Mouse"",
-                    ""action"": ""Quit"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""b632a11e-86b6-475a-a04a-1a8921aa9af4"",
-                    ""path"": ""<Gamepad>/leftShoulder"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""Gamepad"",
-                    ""action"": ""ButtonLB"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""63d2451b-bdfa-465f-9fd3-b4be403e84ca"",
-                    ""path"": ""<Keyboard>/z"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""Keyboard&Mouse"",
-                    ""action"": ""ButtonLB"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""d460d0b8-193d-413c-bad9-c3054017b8ca"",
-                    ""path"": ""<Gamepad>/dpad/left"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""Gamepad"",
-                    ""action"": ""DPadLeft"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""331111fa-bcd6-4e7a-8111-56f64b1f1450"",
-                    ""path"": ""<Gamepad>/leftTrigger"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""Gamepad"",
-                    ""action"": ""LeftTrigger"",
+                    ""action"": ""Action5"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -392,7 +277,7 @@ public class @_Controller : IInputActionCollection, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Gamepad"",
-                    ""action"": ""ItemUse"",
+                    ""action"": ""Action6"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -403,7 +288,7 @@ public class @_Controller : IInputActionCollection, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Keyboard&Mouse"",
-                    ""action"": ""ItemUse"",
+                    ""action"": ""Action6"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -450,6 +335,127 @@ public class @_Controller : IInputActionCollection, IDisposable
                     ""action"": ""ItemChangeLeft"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""43e3f5d3-92ab-4057-953f-b9806fb54e85"",
+                    ""path"": ""<Gamepad>/buttonWest"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""Action2"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""8eb0103b-bc7c-4946-9ad5-60b657573b36"",
+                    ""path"": ""<Keyboard>/d"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard&Mouse"",
+                    ""action"": ""Action2"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""43ab7040-63e7-4cce-b720-053bc3cc333c"",
+                    ""path"": ""<Gamepad>/start"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""ButtonStart"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""d90d6b46-96a5-49dc-824c-d87d3974bafa"",
+                    ""path"": ""<Keyboard>/escape"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard&Mouse"",
+                    ""action"": ""ButtonStart"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""c6eb8bc0-a890-401a-9ff3-664d254294e0"",
+                    ""path"": ""<Keyboard>/p"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard&Mouse"",
+                    ""action"": ""Quit"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""Keyboard"",
+                    ""id"": ""f7ac1f51-086e-4d76-a081-057ebad9eafe"",
+                    ""path"": ""1DAxis"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Action7"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""negative"",
+                    ""id"": ""d883ceed-f9e5-46f4-91d2-9cb7f0878f7c"",
+                    ""path"": ""<Keyboard>/q"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Action7"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""positive"",
+                    ""id"": ""6b89483b-3c30-4f26-aa64-44c62808ea3f"",
+                    ""path"": ""<Keyboard>/e"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard&Mouse"",
+                    ""action"": ""Action7"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""DPad"",
+                    ""id"": ""0eec683b-fffe-42f1-9f0d-c4c6cab602ce"",
+                    ""path"": ""1DAxis"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Action7"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""negative"",
+                    ""id"": ""da7642e3-8bc0-467b-931f-1b6063c65c8a"",
+                    ""path"": ""<Gamepad>/dpad/left"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""Action7"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""positive"",
+                    ""id"": ""fb9a7095-65ff-4a87-b7a2-9bfa4252eaab"",
+                    ""path"": ""<Gamepad>/dpad/right"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""Action7"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
                 }
             ]
         },
@@ -1073,19 +1079,17 @@ public class @_Controller : IInputActionCollection, IDisposable
         // Player
         m_Player = asset.FindActionMap("Player", throwIfNotFound: true);
         m_Player_Move = m_Player.FindAction("Move", throwIfNotFound: true);
-        m_Player_ButtonA = m_Player.FindAction("ButtonA", throwIfNotFound: true);
-        m_Player_ButtonB = m_Player.FindAction("ButtonB", throwIfNotFound: true);
-        m_Player_ButtonX = m_Player.FindAction("ButtonX", throwIfNotFound: true);
-        m_Player_ButtonY = m_Player.FindAction("ButtonY", throwIfNotFound: true);
-        m_Player_ButtonStart = m_Player.FindAction("ButtonStart", throwIfNotFound: true);
-        m_Player_ButtonRB = m_Player.FindAction("ButtonRB", throwIfNotFound: true);
-        m_Player_Quit = m_Player.FindAction("Quit", throwIfNotFound: true);
-        m_Player_ButtonLB = m_Player.FindAction("ButtonLB", throwIfNotFound: true);
-        m_Player_DPadLeft = m_Player.FindAction("DPadLeft", throwIfNotFound: true);
-        m_Player_LeftTrigger = m_Player.FindAction("LeftTrigger", throwIfNotFound: true);
-        m_Player_ItemUse = m_Player.FindAction("ItemUse", throwIfNotFound: true);
+        m_Player_Action1 = m_Player.FindAction("Action1", throwIfNotFound: true);
+        m_Player_Action2 = m_Player.FindAction("Action2", throwIfNotFound: true);
+        m_Player_Action3 = m_Player.FindAction("Action3", throwIfNotFound: true);
+        m_Player_Action4 = m_Player.FindAction("Action4", throwIfNotFound: true);
+        m_Player_Action5 = m_Player.FindAction("Action5", throwIfNotFound: true);
+        m_Player_Action6 = m_Player.FindAction("Action6", throwIfNotFound: true);
         m_Player_ItemChangeRight = m_Player.FindAction("ItemChangeRight", throwIfNotFound: true);
         m_Player_ItemChangeLeft = m_Player.FindAction("ItemChangeLeft", throwIfNotFound: true);
+        m_Player_Quit = m_Player.FindAction("Quit", throwIfNotFound: true);
+        m_Player_ButtonStart = m_Player.FindAction("ButtonStart", throwIfNotFound: true);
+        m_Player_Action7 = m_Player.FindAction("Action7", throwIfNotFound: true);
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
         m_UI_Navigate = m_UI.FindAction("Navigate", throwIfNotFound: true);
@@ -1160,37 +1164,33 @@ public class @_Controller : IInputActionCollection, IDisposable
     private readonly InputActionMap m_Player;
     private IPlayerActions m_PlayerActionsCallbackInterface;
     private readonly InputAction m_Player_Move;
-    private readonly InputAction m_Player_ButtonA;
-    private readonly InputAction m_Player_ButtonB;
-    private readonly InputAction m_Player_ButtonX;
-    private readonly InputAction m_Player_ButtonY;
-    private readonly InputAction m_Player_ButtonStart;
-    private readonly InputAction m_Player_ButtonRB;
-    private readonly InputAction m_Player_Quit;
-    private readonly InputAction m_Player_ButtonLB;
-    private readonly InputAction m_Player_DPadLeft;
-    private readonly InputAction m_Player_LeftTrigger;
-    private readonly InputAction m_Player_ItemUse;
+    private readonly InputAction m_Player_Action1;
+    private readonly InputAction m_Player_Action2;
+    private readonly InputAction m_Player_Action3;
+    private readonly InputAction m_Player_Action4;
+    private readonly InputAction m_Player_Action5;
+    private readonly InputAction m_Player_Action6;
     private readonly InputAction m_Player_ItemChangeRight;
     private readonly InputAction m_Player_ItemChangeLeft;
+    private readonly InputAction m_Player_Quit;
+    private readonly InputAction m_Player_ButtonStart;
+    private readonly InputAction m_Player_Action7;
     public struct PlayerActions
     {
         private @_Controller m_Wrapper;
         public PlayerActions(@_Controller wrapper) { m_Wrapper = wrapper; }
         public InputAction @Move => m_Wrapper.m_Player_Move;
-        public InputAction @ButtonA => m_Wrapper.m_Player_ButtonA;
-        public InputAction @ButtonB => m_Wrapper.m_Player_ButtonB;
-        public InputAction @ButtonX => m_Wrapper.m_Player_ButtonX;
-        public InputAction @ButtonY => m_Wrapper.m_Player_ButtonY;
-        public InputAction @ButtonStart => m_Wrapper.m_Player_ButtonStart;
-        public InputAction @ButtonRB => m_Wrapper.m_Player_ButtonRB;
-        public InputAction @Quit => m_Wrapper.m_Player_Quit;
-        public InputAction @ButtonLB => m_Wrapper.m_Player_ButtonLB;
-        public InputAction @DPadLeft => m_Wrapper.m_Player_DPadLeft;
-        public InputAction @LeftTrigger => m_Wrapper.m_Player_LeftTrigger;
-        public InputAction @ItemUse => m_Wrapper.m_Player_ItemUse;
+        public InputAction @Action1 => m_Wrapper.m_Player_Action1;
+        public InputAction @Action2 => m_Wrapper.m_Player_Action2;
+        public InputAction @Action3 => m_Wrapper.m_Player_Action3;
+        public InputAction @Action4 => m_Wrapper.m_Player_Action4;
+        public InputAction @Action5 => m_Wrapper.m_Player_Action5;
+        public InputAction @Action6 => m_Wrapper.m_Player_Action6;
         public InputAction @ItemChangeRight => m_Wrapper.m_Player_ItemChangeRight;
         public InputAction @ItemChangeLeft => m_Wrapper.m_Player_ItemChangeLeft;
+        public InputAction @Quit => m_Wrapper.m_Player_Quit;
+        public InputAction @ButtonStart => m_Wrapper.m_Player_ButtonStart;
+        public InputAction @Action7 => m_Wrapper.m_Player_Action7;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -1203,45 +1203,39 @@ public class @_Controller : IInputActionCollection, IDisposable
                 @Move.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnMove;
                 @Move.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnMove;
                 @Move.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnMove;
-                @ButtonA.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnButtonA;
-                @ButtonA.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnButtonA;
-                @ButtonA.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnButtonA;
-                @ButtonB.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnButtonB;
-                @ButtonB.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnButtonB;
-                @ButtonB.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnButtonB;
-                @ButtonX.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnButtonX;
-                @ButtonX.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnButtonX;
-                @ButtonX.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnButtonX;
-                @ButtonY.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnButtonY;
-                @ButtonY.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnButtonY;
-                @ButtonY.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnButtonY;
-                @ButtonStart.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnButtonStart;
-                @ButtonStart.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnButtonStart;
-                @ButtonStart.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnButtonStart;
-                @ButtonRB.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnButtonRB;
-                @ButtonRB.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnButtonRB;
-                @ButtonRB.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnButtonRB;
-                @Quit.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnQuit;
-                @Quit.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnQuit;
-                @Quit.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnQuit;
-                @ButtonLB.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnButtonLB;
-                @ButtonLB.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnButtonLB;
-                @ButtonLB.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnButtonLB;
-                @DPadLeft.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnDPadLeft;
-                @DPadLeft.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnDPadLeft;
-                @DPadLeft.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnDPadLeft;
-                @LeftTrigger.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnLeftTrigger;
-                @LeftTrigger.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnLeftTrigger;
-                @LeftTrigger.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnLeftTrigger;
-                @ItemUse.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnItemUse;
-                @ItemUse.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnItemUse;
-                @ItemUse.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnItemUse;
+                @Action1.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnAction1;
+                @Action1.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnAction1;
+                @Action1.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnAction1;
+                @Action2.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnAction2;
+                @Action2.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnAction2;
+                @Action2.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnAction2;
+                @Action3.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnAction3;
+                @Action3.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnAction3;
+                @Action3.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnAction3;
+                @Action4.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnAction4;
+                @Action4.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnAction4;
+                @Action4.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnAction4;
+                @Action5.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnAction5;
+                @Action5.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnAction5;
+                @Action5.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnAction5;
+                @Action6.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnAction6;
+                @Action6.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnAction6;
+                @Action6.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnAction6;
                 @ItemChangeRight.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnItemChangeRight;
                 @ItemChangeRight.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnItemChangeRight;
                 @ItemChangeRight.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnItemChangeRight;
                 @ItemChangeLeft.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnItemChangeLeft;
                 @ItemChangeLeft.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnItemChangeLeft;
                 @ItemChangeLeft.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnItemChangeLeft;
+                @Quit.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnQuit;
+                @Quit.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnQuit;
+                @Quit.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnQuit;
+                @ButtonStart.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnButtonStart;
+                @ButtonStart.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnButtonStart;
+                @ButtonStart.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnButtonStart;
+                @Action7.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnAction7;
+                @Action7.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnAction7;
+                @Action7.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnAction7;
             }
             m_Wrapper.m_PlayerActionsCallbackInterface = instance;
             if (instance != null)
@@ -1249,45 +1243,39 @@ public class @_Controller : IInputActionCollection, IDisposable
                 @Move.started += instance.OnMove;
                 @Move.performed += instance.OnMove;
                 @Move.canceled += instance.OnMove;
-                @ButtonA.started += instance.OnButtonA;
-                @ButtonA.performed += instance.OnButtonA;
-                @ButtonA.canceled += instance.OnButtonA;
-                @ButtonB.started += instance.OnButtonB;
-                @ButtonB.performed += instance.OnButtonB;
-                @ButtonB.canceled += instance.OnButtonB;
-                @ButtonX.started += instance.OnButtonX;
-                @ButtonX.performed += instance.OnButtonX;
-                @ButtonX.canceled += instance.OnButtonX;
-                @ButtonY.started += instance.OnButtonY;
-                @ButtonY.performed += instance.OnButtonY;
-                @ButtonY.canceled += instance.OnButtonY;
-                @ButtonStart.started += instance.OnButtonStart;
-                @ButtonStart.performed += instance.OnButtonStart;
-                @ButtonStart.canceled += instance.OnButtonStart;
-                @ButtonRB.started += instance.OnButtonRB;
-                @ButtonRB.performed += instance.OnButtonRB;
-                @ButtonRB.canceled += instance.OnButtonRB;
-                @Quit.started += instance.OnQuit;
-                @Quit.performed += instance.OnQuit;
-                @Quit.canceled += instance.OnQuit;
-                @ButtonLB.started += instance.OnButtonLB;
-                @ButtonLB.performed += instance.OnButtonLB;
-                @ButtonLB.canceled += instance.OnButtonLB;
-                @DPadLeft.started += instance.OnDPadLeft;
-                @DPadLeft.performed += instance.OnDPadLeft;
-                @DPadLeft.canceled += instance.OnDPadLeft;
-                @LeftTrigger.started += instance.OnLeftTrigger;
-                @LeftTrigger.performed += instance.OnLeftTrigger;
-                @LeftTrigger.canceled += instance.OnLeftTrigger;
-                @ItemUse.started += instance.OnItemUse;
-                @ItemUse.performed += instance.OnItemUse;
-                @ItemUse.canceled += instance.OnItemUse;
+                @Action1.started += instance.OnAction1;
+                @Action1.performed += instance.OnAction1;
+                @Action1.canceled += instance.OnAction1;
+                @Action2.started += instance.OnAction2;
+                @Action2.performed += instance.OnAction2;
+                @Action2.canceled += instance.OnAction2;
+                @Action3.started += instance.OnAction3;
+                @Action3.performed += instance.OnAction3;
+                @Action3.canceled += instance.OnAction3;
+                @Action4.started += instance.OnAction4;
+                @Action4.performed += instance.OnAction4;
+                @Action4.canceled += instance.OnAction4;
+                @Action5.started += instance.OnAction5;
+                @Action5.performed += instance.OnAction5;
+                @Action5.canceled += instance.OnAction5;
+                @Action6.started += instance.OnAction6;
+                @Action6.performed += instance.OnAction6;
+                @Action6.canceled += instance.OnAction6;
                 @ItemChangeRight.started += instance.OnItemChangeRight;
                 @ItemChangeRight.performed += instance.OnItemChangeRight;
                 @ItemChangeRight.canceled += instance.OnItemChangeRight;
                 @ItemChangeLeft.started += instance.OnItemChangeLeft;
                 @ItemChangeLeft.performed += instance.OnItemChangeLeft;
                 @ItemChangeLeft.canceled += instance.OnItemChangeLeft;
+                @Quit.started += instance.OnQuit;
+                @Quit.performed += instance.OnQuit;
+                @Quit.canceled += instance.OnQuit;
+                @ButtonStart.started += instance.OnButtonStart;
+                @ButtonStart.performed += instance.OnButtonStart;
+                @ButtonStart.canceled += instance.OnButtonStart;
+                @Action7.started += instance.OnAction7;
+                @Action7.performed += instance.OnAction7;
+                @Action7.canceled += instance.OnAction7;
             }
         }
     }
@@ -1559,19 +1547,17 @@ public class @_Controller : IInputActionCollection, IDisposable
     public interface IPlayerActions
     {
         void OnMove(InputAction.CallbackContext context);
-        void OnButtonA(InputAction.CallbackContext context);
-        void OnButtonB(InputAction.CallbackContext context);
-        void OnButtonX(InputAction.CallbackContext context);
-        void OnButtonY(InputAction.CallbackContext context);
-        void OnButtonStart(InputAction.CallbackContext context);
-        void OnButtonRB(InputAction.CallbackContext context);
-        void OnQuit(InputAction.CallbackContext context);
-        void OnButtonLB(InputAction.CallbackContext context);
-        void OnDPadLeft(InputAction.CallbackContext context);
-        void OnLeftTrigger(InputAction.CallbackContext context);
-        void OnItemUse(InputAction.CallbackContext context);
+        void OnAction1(InputAction.CallbackContext context);
+        void OnAction2(InputAction.CallbackContext context);
+        void OnAction3(InputAction.CallbackContext context);
+        void OnAction4(InputAction.CallbackContext context);
+        void OnAction5(InputAction.CallbackContext context);
+        void OnAction6(InputAction.CallbackContext context);
         void OnItemChangeRight(InputAction.CallbackContext context);
         void OnItemChangeLeft(InputAction.CallbackContext context);
+        void OnQuit(InputAction.CallbackContext context);
+        void OnButtonStart(InputAction.CallbackContext context);
+        void OnAction7(InputAction.CallbackContext context);
     }
     public interface IUIActions
     {
