@@ -7,7 +7,7 @@ using PSmash.Inventories;
 
 namespace PSmash.UI.CraftingSytem
 {
-    public class CraftingItemSlotsUI : MonoBehaviour
+    public class ToolTipWindowItemSlot : MonoBehaviour
     {
         [SerializeField] TextMeshProUGUI requiredQuantityText = null;
         [SerializeField] TextMeshProUGUI playerQuantityText = null;
