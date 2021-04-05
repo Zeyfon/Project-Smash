@@ -9,11 +9,9 @@ namespace PSmash.InputSystem
 {
     public abstract class Command
     {
-
         public abstract void ButtonPressed(Transform transform, InputHandler inputHandler, PlayMakerFSM pm, Vector2 input, float buttonState);
 
         public abstract void ButtonReleased(Transform transform, InputHandler inputHandler, PlayMakerFSM pm, Vector2 input, float buttonState);
-
 
     }
 
@@ -22,10 +20,10 @@ namespace PSmash.InputSystem
         LayerMask whatIsOneWayPlatform = LayerMask.GetMask("PlayerGround");
         public override void ButtonPressed(Transform transform, InputHandler inputHandler, PlayMakerFSM pm, Vector2 input, float buttonState)
         {
-            Collider2D interactableObject = transform.parent.GetComponent<InteractableElements>().GetInteractableObject();
-            if (interactableObject != null)
+            IManualInteraction manualInteractableObject = transform.parent.GetComponent<InteractableElements>().GetInteractableObject();
+            if (manualInteractableObject != null)
             {
-                interactableObject.GetComponent<IInteractable>().Interact();
+                manualInteractableObject.Interact();
                 inputHandler.EnableInput(false);
                 return;
             }

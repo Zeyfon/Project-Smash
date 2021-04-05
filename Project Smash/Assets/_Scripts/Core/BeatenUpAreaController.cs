@@ -11,20 +11,37 @@ namespace PSmash.Core
     //Keep track of the remaining ememies alive
     //When no enemies are alive open the doors
     //Let the player go back to his journey
-    public class BeatenUpAreaController : MonoBehaviour
+    public class BeatenUpAreaController : MonoBehaviour, IAutomaticInteraction
     {
+        [SerializeField] Collider2D combatEnabler = null;
         [SerializeField] CinemachineVirtualCamera vCam = null;
-        [SerializeField] BeatenUpDoor[] doors = null;
-        [SerializeField] EnemySpawner[] spawners = null;
+        [SerializeField] ParticleSystem spawnParticles = null;
+
+        int enemyQuantity = 0;
+        int currentCounter = 0;
+
+
+        void OnDisable()
+        {
+            EnemyHealth.onEnemyDead -= EnemyDied;
+        }
 
         public void StartBeatenUpMoment()
         {
+            
             vCam.m_Priority = 20;
-            foreach (BeatenUpDoor door in doors)
+            foreach (BeatenUpDoor door in GetComponentsInChildren<BeatenUpDoor>())
             {
                 door.CloseDoor();
             }
+            EnemyHealth.onEnemyDead += EnemyDied;
             StartCoroutine(SpawnEnemies());
+        }
+
+        void EnemyDied()
+        {
+            enemyQuantity--;
+            print("Nice!! 1 less. Take out " + enemyQuantity + " more and you are out");
         }
 
         IEnumerator SpawnEnemies()
@@ -32,17 +49,30 @@ namespace PSmash.Core
             //print("SpawneEnemies");
             List<EnemyHealth> healths = new List<EnemyHealth>();
             yield return new WaitForSeconds(2);
-            foreach(EnemySpawner spawner in spawners)
+            foreach(EnemySpawner spawner in GetComponentsInChildren<EnemySpawner>())
             {
-                EnemyHealth health = spawner.SpawnEnemyEnableAutoAttackAndGetHealth();
+                EnemyHealth health = spawner.SpawnEnemyEnableAutoAttackAndGetHealth(spawnParticles);
                 healths.Add(health);
+                enemyQuantity++;
             }
 
-            foreach (EnemyHealth health in healths)
+            if (healths.Count == 0)
             {
-                print(health);
+                Debug.LogWarning("No enemies were added to the array");
             }
-            StartCoroutine(EnemyAliveTracker(healths));
+
+            while(enemyQuantity != 0)
+            {
+                yield return null;
+            }
+
+            StartCoroutine(EndsBeatenUpMoment());
+
+            //foreach (EnemyHealth health in healths)
+            //{
+            //    print(health);
+            //}
+            //StartCoroutine(EnemyAliveTracker(healths));
         }
 
         IEnumerator EnemyAliveTracker(List<EnemyHealth> healths)
@@ -66,7 +96,7 @@ namespace PSmash.Core
             }
         }
 
-        private static bool CheckForRemainingAliveEnemies(List<EnemyHealth> healths)
+        bool CheckForRemainingAliveEnemies(List<EnemyHealth> healths)
         {
             bool enemiesAlive = false;
             foreach (EnemyHealth health in healths)
@@ -81,10 +111,17 @@ namespace PSmash.Core
             yield return new WaitForSeconds(2);
             print("Enemies are not alive anymore");
             vCam.m_Priority = 0;
-            foreach (BeatenUpDoor door in doors)
+            foreach (BeatenUpDoor door in GetComponentsInChildren<BeatenUpDoor>())
             {
                 door.OpenDoor();
             }
+        }
+
+        public void Interact()
+        {
+            combatEnabler.enabled = false;
+            print("Combat Starts");
+            StartBeatenUpMoment();
         }
     }
 

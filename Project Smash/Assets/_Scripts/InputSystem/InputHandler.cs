@@ -209,9 +209,6 @@ namespace PSmash.InputSystem
         }
 
 
-
-
-
         private void ButtonStartPressed()
         {
             if (OnPlayerStartButtonPressed != null)

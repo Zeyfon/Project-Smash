@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace PSmash.Core
 {
-    public interface IInteractable
+    public interface IAutomaticInteraction
     {
         void Interact();
     }
