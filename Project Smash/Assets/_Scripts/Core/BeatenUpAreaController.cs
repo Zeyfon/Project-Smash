@@ -36,6 +36,7 @@ namespace PSmash.Core
             }
             EnemyHealth.onEnemyDead += EnemyDied;
             StartCoroutine(SpawnEnemies());
+            GameObject.FindObjectOfType<MusicManager>().PlayBossMusic();
         }
 
         void EnemyDied()
@@ -67,48 +68,12 @@ namespace PSmash.Core
             }
 
             StartCoroutine(EndsBeatenUpMoment());
-
-            //foreach (EnemyHealth health in healths)
-            //{
-            //    print(health);
-            //}
-            //StartCoroutine(EnemyAliveTracker(healths));
-        }
-
-        IEnumerator EnemyAliveTracker(List<EnemyHealth> healths)
-        {
-            //print("EnemyTracker");
-            if (healths.Count == 0)
-            {
-                Debug.LogWarning("No enemies were added to the array"); 
-            }
-
-            while (true)
-            {
-                bool enemiesAlive = CheckForRemainingAliveEnemies(healths);
-
-                if (enemiesAlive) yield return null;
-                else
-                {
-                    StartCoroutine(EndsBeatenUpMoment());
-                    yield break;
-                }
-            }
-        }
-
-        bool CheckForRemainingAliveEnemies(List<EnemyHealth> healths)
-        {
-            bool enemiesAlive = false;
-            foreach (EnemyHealth health in healths)
-            {
-                if (!health.IsDead()) enemiesAlive = true;
-            }
-            return enemiesAlive;
         }
 
         IEnumerator EndsBeatenUpMoment()
         {
             yield return new WaitForSeconds(2);
+            GameObject.FindObjectOfType<MusicManager>().PlayLevelMusic();
             print("Enemies are not alive anymore");
             vCam.m_Priority = 0;
             foreach (BeatenUpDoor door in GetComponentsInChildren<BeatenUpDoor>())
