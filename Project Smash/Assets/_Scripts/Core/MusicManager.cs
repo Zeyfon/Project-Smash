@@ -6,44 +6,45 @@ namespace PSmash.Core
 {
     public class MusicManager : MonoBehaviour
     {
-        [SerializeField] AudioClip relaxedMusic = null;
-        [SerializeField] AudioClip tenseMusic = null;
-        [SerializeField] float ambientTrackFadeOutTime = 2;
-        [SerializeField] float ambientTrackFadeInTime = 2;
-        [SerializeField] float ambientMusicVolume = 1;
+        //CONFIG
+        [SerializeField] AudioClip levelMusic = null;
+        [Range(0,1)]
+        [SerializeField] float levelMusicVolume = 1;
 
+        [SerializeField] AudioClip bossMusic = null;
+        [Range(0, 1)]
+        [SerializeField] float bossMusicVolume = 1;
+
+        [SerializeField] float fadeTime = 2;
+
+
+        //STATE
         AudioSource audioSource;
-        bool tenseMusicOn = false;
-        bool relaxedMusicOn = false;
+
         // Start is called before the first frame update
         void Start()
         {
             audioSource = GetComponent<AudioSource>();
-            audioSource.volume = ambientMusicVolume;
+            PlayLevelMusic();
         }
 
-        public void PlayTenseMusic()
+        public void PlayBossMusic()
         {
-            if (tenseMusicOn) return;
-            tenseMusicOn = true;
-            relaxedMusicOn = false;
-            StartCoroutine(PlayThisTrack(tenseMusic));
+            print("Play Boss Music");
+            StartCoroutine(PlayThisTrack(bossMusic, bossMusicVolume));
         }
 
-        public void PlayRelaxedMusic()
+        public void PlayLevelMusic()
         {
-            if (relaxedMusicOn) return;
-            tenseMusicOn = false;
-            relaxedMusicOn = true;
-            StartCoroutine(PlayThisTrack(relaxedMusic));
-
+            print("PlayLevel Music");
+            StartCoroutine(PlayThisTrack(levelMusic, levelMusicVolume));
         }
 
-        IEnumerator PlayThisTrack(AudioClip track)
+        IEnumerator PlayThisTrack(AudioClip track, float volume)
         {
             if (audioSource.isPlaying)
             {
-                yield return FadeOutOtherTrack();
+                yield return FadeOutOtherTrack(volume);
             }
             else
             {
@@ -52,38 +53,30 @@ namespace PSmash.Core
             audioSource.clip = track;
             audioSource.Play();
 
-            yield return FadeInThisTrack();
+            yield return FadeInThisTrack(volume);
         }
 
-        IEnumerator FadeOutOtherTrack()
+        IEnumerator FadeOutOtherTrack(float maxVolume)
         {
-            //print("Fading Out Music");
-            float maxVolume = ambientMusicVolume;
-            float time = 0;
+            print("Fading Out Music");
             float currentVolume = audioSource.volume;
             while (currentVolume > 0)
             {
-                time += Time.deltaTime;
-                currentVolume = ((ambientTrackFadeOutTime - time) * maxVolume) / ambientTrackFadeOutTime;
+                currentVolume -= ((fadeTime - Time.deltaTime) * maxVolume) / fadeTime;
                 if (currentVolume < 0) currentVolume = 0;
-                //print(currentVolume);
                 audioSource.volume = currentVolume;
                 yield return new WaitForEndOfFrame();
             }
         }
 
-        IEnumerator FadeInThisTrack()
+        IEnumerator FadeInThisTrack(float maxVolume)
         {
-            //print("Fading In Music");
-            float maxVolume = ambientMusicVolume;
-            float time = 0;
+            print("Fading In Music");
             float currentVolume = audioSource.volume;
             while (currentVolume < maxVolume)
             {
-                time += Time.deltaTime;
-                currentVolume = (time * maxVolume) / ambientTrackFadeOutTime;
+                currentVolume += (Time.deltaTime * maxVolume) / fadeTime;
                 if (currentVolume > maxVolume) currentVolume = maxVolume;
-                //print(currentVolume);
                 audioSource.volume = currentVolume;
                 yield return new WaitForEndOfFrame();
             }
