@@ -142,7 +142,10 @@ namespace PSmash.Attributes
             if (health <= 0)
             {
                 isDead = true;
-                onEnemyDead();
+                if(onEnemyDead != null)
+                {
+                    onEnemyDead();
+                }
             }
         }
 
