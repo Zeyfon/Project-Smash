@@ -39,6 +39,7 @@ namespace PSmash.InputSystem
 
         PlayMakerFSM currentPMState;
         FsmObject currentFSM;
+        FsmVector2 movementInput;
         _Controller _controller;
 
         Vector2 movement;
@@ -56,11 +57,11 @@ namespace PSmash.InputSystem
                 if (pm.FsmName == "PlayerController") pmPlayerController = pm;
             }
             if (pmPlayerController == null) Debug.LogWarning("FSM Player Controller could not be found");
-            //playerController = transform.parent.GetComponent<PlayerController>();
         }
         private void Start()
         {
             currentFSM = FsmVariables.GlobalVariables.FindFsmObject("currentFSM");
+            movementInput = FsmVariables.GlobalVariables.FindFsmVector2("movementInput");
             SetInitialCommandsToButtons();
             //SetCommandList();
             //SetButtonsInControllerMenu();
@@ -81,14 +82,14 @@ namespace PSmash.InputSystem
         //Method used by each state in PlayMaker to inform to which state the inputs will be sent
         public void SetCurrentStateFSM(PlayMakerFSM pm)
         {
-            currentPMState = pm;
+            //currentPMState = pm;
             //print("Current State in Player is " + currentPMState.FsmName);
         }
 
         private void OnEnable()
         {
             _controller.Player.Enable();
-            _controller.Player.Move.performed += ctx => movement = ctx.ReadValue<Vector2>();
+            //_controller.Player.Move.performed += ctx => movement = ctx.ReadValue<Vector2>();
             _controller.Player.Action1.started += ctx => Action1Pressed();
             _controller.Player.Action1.canceled += ctx => Action1Released();
             _controller.Player.Action2.started += ctx => Action2Pressed();
@@ -119,7 +120,7 @@ namespace PSmash.InputSystem
         private void OnDisable()
         {
             _controller.Player.Disable();
-            _controller.Player.Move.performed -= ctx => movement = ctx.ReadValue<Vector2>();
+            //_controller.Player.Move.performed -= ctx => movement = ctx.ReadValue<Vector2>();
             _controller.Player.Action1.started -= ctx => Action1Pressed();
             _controller.Player.Action1.canceled -= ctx => Action1Released();
             _controller.Player.Action2.started -= ctx => Action2Pressed();
@@ -151,61 +152,62 @@ namespace PSmash.InputSystem
         private void Update()
         {
             action5State = _controller.Player.Action5.ReadValue<float>();
-            action0State = _controller.Player.Move.ReadValue<Vector2>();
+            movement = _controller.Player.Move.ReadValue<Vector2>();
             action7State = _controller.Player.Action7.ReadValue<float>();
-            action5.ButtonPressed(transform, this, currentPMState, movement, action5State);
-            action0.ButtonPressed(transform, this, currentPMState, movement, action5State);
-            action7.ButtonPressed(transform, this, currentPMState, movement, action7State);
+            action5.ButtonPressed(transform, this, currentFSM.Value as PlayMakerFSM, movement, action5State);
+            //action0.ButtonPressed(transform, this, currentFSM.Value as PlayMakerFSM, movement, action5State);
+            movementInput.Value = movement;
+            action7.ButtonPressed(transform, this, currentFSM.Value as PlayMakerFSM, movement, action7State);
             //print(currentFSM.Value);
         }
 
         private void Action1Pressed()
         {
-            action1.ButtonPressed(transform,this,currentPMState, movement, action5State);
+            action1.ButtonPressed(transform,this, currentFSM.Value as PlayMakerFSM, movement, action5State);
         }
         private void Action1Released()
         {
-            action1.ButtonReleased(transform, this, currentPMState, movement, action5State);
+            action1.ButtonReleased(transform, this, currentFSM.Value as PlayMakerFSM, movement, action5State);
         }
 
 
         private void Action2Pressed()
         {
-            action2.ButtonPressed(transform, this, currentPMState, movement, action5State);
+            action2.ButtonPressed(transform, this, currentFSM.Value as PlayMakerFSM, movement, action5State);
         }
         private void Action2Released()
         {
-            action2.ButtonReleased(transform, this, currentPMState, movement, action5State);
+            action2.ButtonReleased(transform, this, currentFSM.Value as PlayMakerFSM, movement, action5State);
         }
 
 
         private void Action3Pressed()
         {
-            action3.ButtonPressed(transform, this, currentPMState, movement, action5State);
+            action3.ButtonPressed(transform, this, currentFSM.Value as PlayMakerFSM, movement, action5State);
         }
         private void Action3Released()
         {
-            action3.ButtonPressed(transform, this, currentPMState, movement, action5State);
+            action3.ButtonPressed(transform, this, currentFSM.Value as PlayMakerFSM, movement, action5State);
         }
 
 
         private void Action4Pressed()
         {
-            action4.ButtonPressed(transform, this, currentPMState, movement, action5State);
+            action4.ButtonPressed(transform, this, currentFSM.Value as PlayMakerFSM, movement, action5State);
         }
         private void Action4Released()
         {
-            action4.ButtonReleased(transform, this, currentPMState, movement, action5State);
+            action4.ButtonReleased(transform, this, currentFSM.Value as PlayMakerFSM, movement, action5State);
         }
 
         private void Action6Released()
         {
-            action6.ButtonReleased(transform, this, currentPMState, movement, action5State);
+            action6.ButtonReleased(transform, this, currentFSM.Value as PlayMakerFSM, movement, action5State);
         }
 
         private void Action6Pressed()
         {
-            action6.ButtonPressed(transform, this, currentPMState, movement, action5State);
+            action6.ButtonPressed(transform, this, currentFSM.Value as PlayMakerFSM, movement, action5State);
         }
 
 

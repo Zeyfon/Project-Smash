@@ -179,7 +179,7 @@ namespace PSmash.InputSystem
         FsmVector2 movementInput = FsmVariables.GlobalVariables.FindFsmVector2("movementInput");
         public override void ButtonPressed(Transform transform, InputHandler inputHandler, PlayMakerFSM pm, Vector2 input, float buttonState)
         {
-            //Debug.Log(input +"   here");
+            Debug.Log(input +"   here");
             movementInput.Value = input;
         }
 

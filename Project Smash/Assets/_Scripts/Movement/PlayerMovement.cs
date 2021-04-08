@@ -73,8 +73,9 @@ namespace PSmash.Movement
         public delegate void PlayerOnWall(bool state);
         public event PlayerOnWall OnPlayerWallState;
 
+        FsmObject currentFSM;
         SlopeControl slope = new SlopeControl();
-        PlayMakerFSM pm;
+        //PlayMakerFSM pm;
         GameObject oneWayPlatform;
         Rigidbody2D rb;
         Animator animator;
@@ -110,6 +111,7 @@ namespace PSmash.Movement
 
         void Start()
         {
+            currentFSM = FsmVariables.GlobalVariables.FindFsmObject("currentFSM");
             gravityScale = rb.gravityScale;
         }
 
@@ -138,7 +140,7 @@ namespace PSmash.Movement
         /// <param name="pm"></param>
         public void SetCurrentStateFSM(PlayMakerFSM pm)
         {
-            this.pm = pm;
+            //this.pm = pm;
         }
 
         /// <summary>
@@ -366,21 +368,24 @@ namespace PSmash.Movement
 
         void GroundMovement(Vector2 input, float speedFactor)
         {
-            //print("Grounded Movement");
+            print("Grounded Movement");
+            print(" Input  " +input);
             rb.sharedMaterial = noFriction;
             if (input.magnitude == 0)
             {
                 //print("input = 0");
                 rb.sharedMaterial = lowFriction;
             }
-            Vector2 direction = slope.GetSlopeNormalPerp(transform.position, transform.right, slopeCheckDistance, maxSlopeAngle, whatIsGround);
-            
+            input.y = 0;
+            Vector2 direction = slope.GetSlopeNormalPerp(transform.position, input, slopeCheckDistance, maxSlopeAngle, whatIsGround);
+            print("Direction  " + direction);
             if(direction.sqrMagnitude == 0)
             {
                 MoveInAir(input, speedFactor);
                 return;
             }
             float speed = baseSpeed * Mathf.Abs(input.x) * speedFactor;
+            print("Speed " + speed);
             float xVelocity = -1 * speed * direction.x;
             float yVelocity = -1 * speed * direction.y;
             rb.velocity = new Vector2(xVelocity, yVelocity);
@@ -446,7 +451,7 @@ namespace PSmash.Movement
             FsmEventData myfsmEventData = new FsmEventData();
             myfsmEventData.Vector2Data = ledge;
             HutongGames.PlayMaker.Fsm.EventData = myfsmEventData;
-            pm.Fsm.Event("CLIMBINGLEDGE");
+            (currentFSM.Value as PlayMakerFSM).SendEvent("CLIMBINGLEDGE");
         }
 
         //Anim Event
@@ -484,7 +489,7 @@ namespace PSmash.Movement
             transform.position = finalPosition;
             GravityScale(gravityScale);
             gameObject.layer = LayerMask.NameToLayer("Player");
-            pm.SendEvent("ACTIONFINISHED");
+            (currentFSM.Value as PlayMakerFSM).SendEvent("ACTIONFINISHED");
         }
 
         //AnimEvent
@@ -503,15 +508,15 @@ namespace PSmash.Movement
             if (isCollidingWithOneWayPlatform && yInput < -0.9f)
             {
                 oneWayPlatform.GetComponent<OneWayPlatform>().RotatePlatform();
-                pm.SendEvent("LADDERCLIMB");
+                (currentFSM.Value as PlayMakerFSM).SendEvent("LADDERCLIMB");
             }
             else if (!isGrounded && Mathf.Abs(yInput) > 0.9f)
             {
-                pm.SendEvent("LADDERCLIMB");
+                (currentFSM.Value as PlayMakerFSM).SendEvent("LADDERCLIMB");
             }
             else if (isGrounded && !isCollidingWithOneWayPlatform && yInput > 0.8f)
             {
-                pm.SendEvent("LADDERCLIMB");
+                (currentFSM.Value as PlayMakerFSM).SendEvent("LADDERCLIMB");
             }
         }
 
@@ -585,7 +590,7 @@ namespace PSmash.Movement
             //isMovingOnLadder = false;
             GravityScale(gravityScale);
             animator.SetInteger("LadderMovement", 10);
-            pm.SendEvent("ACTIONFINISHED");
+            (currentFSM.Value as PlayMakerFSM).SendEvent("ACTIONFINISHED");
             print("Exit Ladder from Below");
         }
 
@@ -605,8 +610,8 @@ namespace PSmash.Movement
             animator.SetInteger("LadderMovement", 0);
 
             GravityScale(gravityScale);
-            pm.SendEvent("ACTIONFINISHED");
-            print("Exit Ladder from Above.... Event sent to  " + pm.FsmName);
+            (currentFSM.Value as PlayMakerFSM).SendEvent("ACTIONFINISHED");
+            print("Exit Ladder from Above.... Event sent to  " + (currentFSM.Value as PlayMakerFSM).FsmName);
             cr_running = false;
         }
 
