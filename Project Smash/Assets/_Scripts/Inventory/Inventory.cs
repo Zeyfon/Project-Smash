@@ -43,7 +43,7 @@ namespace PSmash.Inventories
             {
                 if(slot.item == item.item as CraftingItem)
                 {
-                    slot.number ++;
+                    slot.number += item.number;
                     collectedDropAudioSource.PlayOneShot(collectedDrop);
                 }
             }
