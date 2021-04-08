@@ -3362,370 +3362,9 @@ MonoBehaviour:
       colorIndex: 0
       position:
         serializedVersion: 2
-        x: 111.765625
-        y: 112.421875
+        x: 92.17969
+        y: 107.59375
         width: 305
-        height: 32
-      isBreakpoint: 0
-      isSequence: 0
-      hideUnused: 0
-      transitions:
-      - fsmEvent:
-          name: FINISHED
-          isSystemEvent: 1
-          isGlobal: 0
-        toState: Set this FSM in Movement
-        linkStyle: 0
-        linkConstraint: 0
-        colorIndex: 0
-      actionData:
-        actionNames:
-        - HutongGames.PlayMaker.Actions.CallMethod
-        customNames:
-        - 
-        actionEnabled: 01
-        actionIsOpen: 01
-        actionStartIndex: 00000000
-        actionHashCodes: ca51e900
-        unityObjectParams: []
-        fsmGameObjectParams: []
-        fsmOwnerDefaultParams: []
-        animationCurveParams: []
-        functionCallParams: []
-        fsmTemplateControlParams: []
-        fsmEventTargetParams: []
-        fsmPropertyParams: []
-        layoutOptionParams: []
-        fsmStringParams:
-        - useVariable: 0
-          name: 
-          tooltip: 
-          showInInspector: 0
-          networkSync: 0
-          value: SetCurrentStateFSM
-        fsmObjectParams:
-        - useVariable: 1
-          name: inputHandler
-          tooltip: 
-          showInInspector: 0
-          networkSync: 0
-          typeName: PSmash.InputSystem.InputHandler
-          value: {fileID: 8540863619128468569}
-        fsmVarParams:
-        - variableName: myFSM
-          objectType: PlayMakerFSM
-          useVariable: 1
-          type: 12
-          floatValue: 0
-          intValue: 0
-          boolValue: 0
-          stringValue: 
-          vector4Value: {x: 0, y: 0, z: 0, w: 0}
-          objectReference: {fileID: 578391038514376506}
-          arrayValue:
-            useVariable: 0
-            name: 
-            tooltip: 
-            showInInspector: 0
-            networkSync: 0
-            type: -1
-            objectTypeName: 
-            floatValues: []
-            intValues: 
-            boolValues: 
-            stringValues: []
-            vector4Values: []
-            objectReferences: []
-        - variableName: 
-          objectType: 
-          useVariable: 0
-          type: -1
-          floatValue: 0
-          intValue: 0
-          boolValue: 0
-          stringValue: 
-          vector4Value: {x: 0, y: 0, z: 0, w: 0}
-          objectReference: {fileID: 0}
-          arrayValue:
-            useVariable: 0
-            name: 
-            tooltip: 
-            showInInspector: 0
-            networkSync: 0
-            type: -1
-            objectTypeName: 
-            floatValues: []
-            intValues: 
-            boolValues: 
-            stringValues: []
-            vector4Values: []
-            objectReferences: []
-        fsmArrayParams: []
-        fsmEnumParams: []
-        fsmFloatParams: []
-        fsmIntParams: []
-        fsmBoolParams: []
-        fsmVector2Params: []
-        fsmVector3Params: []
-        fsmColorParams: []
-        fsmRectParams: []
-        fsmQuaternionParams: []
-        stringParams: []
-        byteData: 0000
-        arrayParamSizes: 01000000
-        arrayParamTypes:
-        - HutongGames.PlayMaker.FsmVar
-        customTypeSizes: 
-        customTypeNames: []
-        paramDataType: 18000000120000000c00000027000000270000000100000001000000
-        paramName:
-        - behaviour
-        - methodName
-        - parameters
-        - 
-        - storeResult
-        - everyFrame
-        - manualUI
-        paramDataPos: 00000000000000000000000000000000010000000000000001000000
-        paramByteDataSize: 00000000000000000000000000000000000000000100000001000000
-    - name: Set Current State in Input Proxy
-      description: 'Set this FSM as the current state to pass the movementV2 and
-        jumpState values '
-      colorIndex: 0
-      position:
-        serializedVersion: 2
-        x: 105.92969
-        y: 202.5
-        width: 361
-        height: 32
-      isBreakpoint: 0
-      isSequence: 1
-      hideUnused: 0
-      transitions:
-      - fsmEvent:
-          name: FINISHED
-          isSystemEvent: 1
-          isGlobal: 0
-        toState: Set this FSM in Movement
-        linkStyle: 0
-        linkConstraint: 0
-        colorIndex: 0
-      actionData:
-        actionNames:
-        - HutongGames.PlayMaker.Actions.GetProperty
-        - HutongGames.PlayMaker.Actions.SetFsmString
-        customNames:
-        - 
-        - 
-        actionEnabled: 0101
-        actionIsOpen: 0101
-        actionStartIndex: 0000000002000000
-        actionHashCodes: 5ac8520452221a02
-        unityObjectParams: []
-        fsmGameObjectParams: []
-        fsmOwnerDefaultParams:
-        - ownerOption: 1
-          gameObject:
-            useVariable: 0
-            name: 
-            tooltip: 
-            showInInspector: 0
-            networkSync: 0
-            value: {fileID: 2796500828864873445}
-        animationCurveParams: []
-        functionCallParams: []
-        fsmTemplateControlParams: []
-        fsmEventTargetParams: []
-        fsmPropertyParams:
-        - TargetObject:
-            useVariable: 1
-            name: myFSM
-            tooltip: 
-            showInInspector: 0
-            networkSync: 0
-            typeName: PlayMakerFSM
-            value: {fileID: 578391038514376506}
-          TargetTypeName: PlayMakerFSM
-          PropertyName: FsmName
-          BoolParameter:
-            useVariable: 0
-            name: 
-            tooltip: 
-            showInInspector: 0
-            networkSync: 0
-            value: 0
-          FloatParameter:
-            useVariable: 0
-            name: 
-            tooltip: 
-            showInInspector: 0
-            networkSync: 0
-            value: 0
-          IntParameter:
-            useVariable: 0
-            name: 
-            tooltip: 
-            showInInspector: 0
-            networkSync: 0
-            value: 0
-          GameObjectParameter:
-            useVariable: 0
-            name: 
-            tooltip: 
-            showInInspector: 0
-            networkSync: 0
-            value: {fileID: 0}
-          StringParameter:
-            useVariable: 1
-            name: myFSMName
-            tooltip: 
-            showInInspector: 0
-            networkSync: 0
-            value: 
-          Vector2Parameter:
-            useVariable: 0
-            name: 
-            tooltip: 
-            showInInspector: 0
-            networkSync: 0
-            value: {x: 0, y: 0}
-          Vector3Parameter:
-            useVariable: 0
-            name: 
-            tooltip: 
-            showInInspector: 0
-            networkSync: 0
-            value: {x: 0, y: 0, z: 0}
-          RectParamater:
-            useVariable: 0
-            name: 
-            tooltip: 
-            showInInspector: 0
-            networkSync: 0
-            value:
-              serializedVersion: 2
-              x: 0
-              y: 0
-              width: 0
-              height: 0
-          QuaternionParameter:
-            useVariable: 0
-            name: 
-            tooltip: 
-            showInInspector: 0
-            networkSync: 0
-            value: {x: 0, y: 0, z: 0, w: 0}
-          ObjectParameter:
-            useVariable: 0
-            name: 
-            tooltip: 
-            showInInspector: 0
-            networkSync: 0
-            typeName: System.String
-            value: {fileID: 0}
-          MaterialParameter:
-            useVariable: 0
-            name: 
-            tooltip: 
-            showInInspector: 0
-            networkSync: 0
-            typeName: 
-            value: {fileID: 0}
-          TextureParameter:
-            useVariable: 0
-            name: 
-            tooltip: 
-            showInInspector: 0
-            networkSync: 0
-            typeName: 
-            value: {fileID: 0}
-          ColorParameter:
-            useVariable: 0
-            name: 
-            tooltip: 
-            showInInspector: 0
-            networkSync: 0
-            value: {r: 0, g: 0, b: 0, a: 1}
-          EnumParameter:
-            useVariable: 0
-            name: 
-            tooltip: 
-            showInInspector: 0
-            networkSync: 0
-            enumName: HutongGames.PlayMaker.None
-            intValue: 0
-          ArrayParameter:
-            useVariable: 0
-            name: 
-            tooltip: 
-            showInInspector: 0
-            networkSync: 0
-            type: -1
-            objectTypeName: UnityEngine.Object
-            floatValues: []
-            intValues: 
-            boolValues: 
-            stringValues: []
-            vector4Values: []
-            objectReferences: []
-          setProperty: 0
-        layoutOptionParams: []
-        fsmStringParams:
-        - useVariable: 0
-          name: 
-          tooltip: 
-          showInInspector: 0
-          networkSync: 0
-          value: InputProxy
-        - useVariable: 0
-          name: 
-          tooltip: 
-          showInInspector: 0
-          networkSync: 0
-          value: currentStateName
-        - useVariable: 1
-          name: myFSMName
-          tooltip: 
-          showInInspector: 0
-          networkSync: 0
-          value: 
-        fsmObjectParams: []
-        fsmVarParams: []
-        fsmArrayParams: []
-        fsmEnumParams: []
-        fsmFloatParams: []
-        fsmIntParams: []
-        fsmBoolParams: []
-        fsmVector2Params: []
-        fsmVector3Params: []
-        fsmColorParams: []
-        fsmRectParams: []
-        fsmQuaternionParams: []
-        stringParams: []
-        byteData: 0000
-        arrayParamSizes: 
-        arrayParamTypes: []
-        customTypeSizes: 
-        customTypeNames: []
-        paramDataType: 24000000010000001400000012000000120000001200000001000000
-        paramName:
-        - targetProperty
-        - everyFrame
-        - gameObject
-        - fsmName
-        - variableName
-        - setValue
-        - everyFrame
-        paramDataPos: 00000000000000000000000000000000010000000200000001000000
-        paramByteDataSize: 00000000010000000000000000000000000000000000000001000000
-    - name: Set this FSM in Movement
-      description: Set this FSM as the current state to pass the button state events
-      colorIndex: 0
-      position:
-        serializedVersion: 2
-        x: 96.89844
-        y: 282.35938
-        width: 296.5
         height: 32
       isBreakpoint: 0
       isSequence: 0
@@ -3741,13 +3380,13 @@ MonoBehaviour:
         colorIndex: 0
       actionData:
         actionNames:
-        - HutongGames.PlayMaker.Actions.CallMethod
+        - HutongGames.PlayMaker.Actions.SetObjectValue
         customNames:
         - 
         actionEnabled: 01
         actionIsOpen: 01
         actionStartIndex: 00000000
-        actionHashCodes: ca51e900
+        actionHashCodes: 1bc10e04
         unityObjectParams: []
         fsmGameObjectParams: []
         fsmOwnerDefaultParams: []
@@ -3757,70 +3396,23 @@ MonoBehaviour:
         fsmEventTargetParams: []
         fsmPropertyParams: []
         layoutOptionParams: []
-        fsmStringParams:
-        - useVariable: 0
-          name: 
-          tooltip: 
-          showInInspector: 0
-          networkSync: 0
-          value: SetCurrentStateFSM
+        fsmStringParams: []
         fsmObjectParams:
         - useVariable: 1
-          name: movement
+          name: currentFSM
           tooltip: 
           showInInspector: 0
           networkSync: 0
-          typeName: PSmash.Movement.PlayerMovement
-          value: {fileID: 8235024681204614677}
-        fsmVarParams:
-        - variableName: myFSM
-          objectType: PlayMakerFSM
-          useVariable: 1
-          type: 12
-          floatValue: 0
-          intValue: 0
-          boolValue: 0
-          stringValue: 
-          vector4Value: {x: 0, y: 0, z: 0, w: 0}
-          objectReference: {fileID: 578391038514376506}
-          arrayValue:
-            useVariable: 0
-            name: 
-            tooltip: 
-            showInInspector: 0
-            networkSync: 0
-            type: -1
-            objectTypeName: 
-            floatValues: []
-            intValues: 
-            boolValues: 
-            stringValues: []
-            vector4Values: []
-            objectReferences: []
-        - variableName: 
-          objectType: 
-          useVariable: 0
-          type: -1
-          floatValue: 0
-          intValue: 0
-          boolValue: 0
-          stringValue: 
-          vector4Value: {x: 0, y: 0, z: 0, w: 0}
-          objectReference: {fileID: 0}
-          arrayValue:
-            useVariable: 0
-            name: 
-            tooltip: 
-            showInInspector: 0
-            networkSync: 0
-            type: -1
-            objectTypeName: 
-            floatValues: []
-            intValues: 
-            boolValues: 
-            stringValues: []
-            vector4Values: []
-            objectReferences: []
+          typeName: PlayMakerFSM
+          value: {fileID: 0}
+        - useVariable: 1
+          name: myFSM
+          tooltip: 
+          showInInspector: 0
+          networkSync: 0
+          typeName: PlayMakerFSM
+          value: {fileID: 578391038514376506}
+        fsmVarParams: []
         fsmArrayParams: []
         fsmEnumParams: []
         fsmFloatParams: []
@@ -3832,30 +3424,25 @@ MonoBehaviour:
         fsmRectParams: []
         fsmQuaternionParams: []
         stringParams: []
-        byteData: 0000
-        arrayParamSizes: 01000000
-        arrayParamTypes:
-        - HutongGames.PlayMaker.FsmVar
+        byteData: 00
+        arrayParamSizes: 
+        arrayParamTypes: []
         customTypeSizes: 
         customTypeNames: []
-        paramDataType: 18000000120000000c00000027000000270000000100000001000000
+        paramDataType: 180000001800000001000000
         paramName:
-        - behaviour
-        - methodName
-        - parameters
-        - 
-        - storeResult
+        - objectVariable
+        - objectValue
         - everyFrame
-        - manualUI
-        paramDataPos: 00000000000000000000000000000000010000000000000001000000
-        paramByteDataSize: 00000000000000000000000000000000000000000100000001000000
+        paramDataPos: 000000000100000000000000
+        paramByteDataSize: 000000000000000001000000
     - name: StartAnimation
       description: 
       colorIndex: 0
       position:
         serializedVersion: 2
         x: 73.546875
-        y: 410.59375
+        y: 266.59375
         width: 119
         height: 32
       isBreakpoint: 0
@@ -3992,7 +3579,7 @@ MonoBehaviour:
       position:
         serializedVersion: 2
         x: 71.30469
-        y: 465.5625
+        y: 321.5625
         width: 132
         height: 48
       isBreakpoint: 0
@@ -4097,7 +3684,7 @@ MonoBehaviour:
           objectType: UnityEngine.Object
           useVariable: 1
           type: 0
-          floatValue: 2
+          floatValue: 0.25
           intValue: 0
           boolValue: 0
           stringValue: 
@@ -4254,7 +3841,7 @@ MonoBehaviour:
       position:
         serializedVersion: 2
         x: 64.09375
-        y: 628.0469
+        y: 484.04688
         width: 132
         height: 16
       isBreakpoint: 0
@@ -4356,7 +3943,7 @@ MonoBehaviour:
       position:
         serializedVersion: 2
         x: 64.14844
-        y: 546.9297
+        y: 402.9297
         width: 132
         height: 32
       isBreakpoint: 0
@@ -4493,7 +4080,7 @@ MonoBehaviour:
       position:
         serializedVersion: 2
         x: 390.42188
-        y: 380.8047
+        y: 236.80469
         width: 182
         height: 32
       isBreakpoint: 0
@@ -4565,7 +4152,7 @@ MonoBehaviour:
       position:
         serializedVersion: 2
         x: 388.29688
-        y: 435.0547
+        y: 291.0547
         width: 165
         height: 32
       isBreakpoint: 0
@@ -4643,7 +4230,7 @@ MonoBehaviour:
       position:
         serializedVersion: 2
         x: 384.0625
-        y: 505.3047
+        y: 361.3047
         width: 183
         height: 48
       isBreakpoint: 0
@@ -4725,7 +4312,7 @@ MonoBehaviour:
       position:
         serializedVersion: 2
         x: 409.14844
-        y: 597.3828
+        y: 453.3828
         width: 141
         height: 32
       isBreakpoint: 0
@@ -4797,7 +4384,7 @@ MonoBehaviour:
       position:
         serializedVersion: 2
         x: 81.99219
-        y: 352.7422
+        y: 208.74219
         width: 151
         height: 32
       isBreakpoint: 0
@@ -4887,7 +4474,7 @@ MonoBehaviour:
         tooltip: 
         showInInspector: 1
         networkSync: 0
-        value: 2
+        value: 0.25
       - useVariable: 1
         name: xInput
         tooltip: 
@@ -4922,7 +4509,7 @@ MonoBehaviour:
         value: 0
       stringVariables:
       - useVariable: 1
-        name: myFSMName
+        name: 
         tooltip: 
         showInInspector: 0
         networkSync: 0
@@ -4941,12 +4528,12 @@ MonoBehaviour:
       gameObjectVariables: []
       objectVariables:
       - useVariable: 1
-        name: inputHandler
+        name: 
         tooltip: 
         showInInspector: 0
         networkSync: 0
-        typeName: PSmash.InputSystem.InputHandler
-        value: {fileID: 8540863619128468569}
+        typeName: 
+        value: {fileID: 0}
       - useVariable: 1
         name: movement
         tooltip: 
@@ -4989,7 +4576,7 @@ MonoBehaviour:
     locked: 0
     manualUpdate: 0
     keepDelayedEventsOnStateExit: 0
-    preprocessed: 1
+    preprocessed: 0
     ExposedEvents: []
     RestartOnEnable: 1
     EnableDebugFlow: 0
@@ -5015,7 +4602,7 @@ MonoBehaviour:
     handleJointBreak: 0
     handleJointBreak2D: 0
     handleOnGUI: 0
-    handleFixedUpdate: 1
+    handleFixedUpdate: 0
     handleLateUpdate: 0
     handleApplicationEvents: 0
     handleUiEvents: 0
@@ -5087,140 +4674,9 @@ MonoBehaviour:
       colorIndex: 0
       position:
         serializedVersion: 2
-        x: 310.96875
-        y: 211.04688
+        x: 304.78125
+        y: 189.76562
         width: 305
-        height: 32
-      isBreakpoint: 0
-      isSequence: 0
-      hideUnused: 0
-      transitions:
-      - fsmEvent:
-          name: FINISHED
-          isSystemEvent: 1
-          isGlobal: 0
-        toState: Set this FSM in Movement
-        linkStyle: 0
-        linkConstraint: 0
-        colorIndex: 0
-      actionData:
-        actionNames:
-        - HutongGames.PlayMaker.Actions.CallMethod
-        customNames:
-        - 
-        actionEnabled: 01
-        actionIsOpen: 01
-        actionStartIndex: 00000000
-        actionHashCodes: ca51e900
-        unityObjectParams: []
-        fsmGameObjectParams: []
-        fsmOwnerDefaultParams: []
-        animationCurveParams: []
-        functionCallParams: []
-        fsmTemplateControlParams: []
-        fsmEventTargetParams: []
-        fsmPropertyParams: []
-        layoutOptionParams: []
-        fsmStringParams:
-        - useVariable: 0
-          name: 
-          tooltip: 
-          showInInspector: 0
-          networkSync: 0
-          value: SetCurrentStateFSM
-        fsmObjectParams:
-        - useVariable: 1
-          name: inputHandler
-          tooltip: 
-          showInInspector: 0
-          networkSync: 0
-          typeName: PSmash.InputSystem.InputHandler
-          value: {fileID: 8540863619128468569}
-        fsmVarParams:
-        - variableName: myFSM
-          objectType: PlayMakerFSM
-          useVariable: 1
-          type: 12
-          floatValue: 0
-          intValue: 0
-          boolValue: 0
-          stringValue: 
-          vector4Value: {x: 0, y: 0, z: 0, w: 0}
-          objectReference: {fileID: 887520100497366930}
-          arrayValue:
-            useVariable: 0
-            name: 
-            tooltip: 
-            showInInspector: 0
-            networkSync: 0
-            type: -1
-            objectTypeName: 
-            floatValues: []
-            intValues: 
-            boolValues: 
-            stringValues: []
-            vector4Values: []
-            objectReferences: []
-        - variableName: 
-          objectType: 
-          useVariable: 0
-          type: -1
-          floatValue: 0
-          intValue: 0
-          boolValue: 0
-          stringValue: 
-          vector4Value: {x: 0, y: 0, z: 0, w: 0}
-          objectReference: {fileID: 0}
-          arrayValue:
-            useVariable: 0
-            name: 
-            tooltip: 
-            showInInspector: 0
-            networkSync: 0
-            type: -1
-            objectTypeName: 
-            floatValues: []
-            intValues: 
-            boolValues: 
-            stringValues: []
-            vector4Values: []
-            objectReferences: []
-        fsmArrayParams: []
-        fsmEnumParams: []
-        fsmFloatParams: []
-        fsmIntParams: []
-        fsmBoolParams: []
-        fsmVector2Params: []
-        fsmVector3Params: []
-        fsmColorParams: []
-        fsmRectParams: []
-        fsmQuaternionParams: []
-        stringParams: []
-        byteData: 0000
-        arrayParamSizes: 01000000
-        arrayParamTypes:
-        - HutongGames.PlayMaker.FsmVar
-        customTypeSizes: 
-        customTypeNames: []
-        paramDataType: 18000000120000000c00000027000000270000000100000001000000
-        paramName:
-        - behaviour
-        - methodName
-        - parameters
-        - 
-        - storeResult
-        - everyFrame
-        - manualUI
-        paramDataPos: 00000000000000000000000000000000010000000000000001000000
-        paramByteDataSize: 00000000000000000000000000000000000000000100000001000000
-    - name: Set this FSM in Movement
-      description: Set this FSM as the current state to pass the button state events
-      colorIndex: 0
-      position:
-        serializedVersion: 2
-        x: 295.8828
-        y: 297.54688
-        width: 296.5
         height: 32
       isBreakpoint: 0
       isSequence: 0
@@ -5236,13 +4692,13 @@ MonoBehaviour:
         colorIndex: 0
       actionData:
         actionNames:
-        - HutongGames.PlayMaker.Actions.CallMethod
+        - HutongGames.PlayMaker.Actions.SetObjectValue
         customNames:
         - 
         actionEnabled: 01
         actionIsOpen: 01
         actionStartIndex: 00000000
-        actionHashCodes: ca51e900
+        actionHashCodes: 1bc10e04
         unityObjectParams: []
         fsmGameObjectParams: []
         fsmOwnerDefaultParams: []
@@ -5252,70 +4708,23 @@ MonoBehaviour:
         fsmEventTargetParams: []
         fsmPropertyParams: []
         layoutOptionParams: []
-        fsmStringParams:
-        - useVariable: 0
-          name: 
-          tooltip: 
-          showInInspector: 0
-          networkSync: 0
-          value: SetCurrentStateFSM
+        fsmStringParams: []
         fsmObjectParams:
         - useVariable: 1
-          name: movement
+          name: currentFSM
           tooltip: 
           showInInspector: 0
           networkSync: 0
-          typeName: PSmash.Movement.PlayerMovement
-          value: {fileID: 8235024681204614677}
-        fsmVarParams:
-        - variableName: myFSM
-          objectType: PlayMakerFSM
-          useVariable: 1
-          type: 12
-          floatValue: 0
-          intValue: 0
-          boolValue: 0
-          stringValue: 
-          vector4Value: {x: 0, y: 0, z: 0, w: 0}
-          objectReference: {fileID: 887520100497366930}
-          arrayValue:
-            useVariable: 0
-            name: 
-            tooltip: 
-            showInInspector: 0
-            networkSync: 0
-            type: -1
-            objectTypeName: 
-            floatValues: []
-            intValues: 
-            boolValues: 
-            stringValues: []
-            vector4Values: []
-            objectReferences: []
-        - variableName: 
-          objectType: 
-          useVariable: 0
-          type: -1
-          floatValue: 0
-          intValue: 0
-          boolValue: 0
-          stringValue: 
-          vector4Value: {x: 0, y: 0, z: 0, w: 0}
-          objectReference: {fileID: 0}
-          arrayValue:
-            useVariable: 0
-            name: 
-            tooltip: 
-            showInInspector: 0
-            networkSync: 0
-            type: -1
-            objectTypeName: 
-            floatValues: []
-            intValues: 
-            boolValues: 
-            stringValues: []
-            vector4Values: []
-            objectReferences: []
+          typeName: PlayMakerFSM
+          value: {fileID: 0}
+        - useVariable: 1
+          name: myFSM
+          tooltip: 
+          showInInspector: 0
+          networkSync: 0
+          typeName: PlayMakerFSM
+          value: {fileID: 887520100497366930}
+        fsmVarParams: []
         fsmArrayParams: []
         fsmEnumParams: []
         fsmFloatParams: []
@@ -5327,30 +4736,25 @@ MonoBehaviour:
         fsmRectParams: []
         fsmQuaternionParams: []
         stringParams: []
-        byteData: 0000
-        arrayParamSizes: 01000000
-        arrayParamTypes:
-        - HutongGames.PlayMaker.FsmVar
+        byteData: 00
+        arrayParamSizes: 
+        arrayParamTypes: []
         customTypeSizes: 
         customTypeNames: []
-        paramDataType: 18000000120000000c00000027000000270000000100000001000000
+        paramDataType: 180000001800000001000000
         paramName:
-        - behaviour
-        - methodName
-        - parameters
-        - 
-        - storeResult
+        - objectVariable
+        - objectValue
         - everyFrame
-        - manualUI
-        paramDataPos: 00000000000000000000000000000000010000000000000001000000
-        paramByteDataSize: 00000000000000000000000000000000000000000100000001000000
+        paramDataPos: 000000000100000000000000
+        paramByteDataSize: 000000000000000001000000
     - name: Start Attack Animation
       description: 
       colorIndex: 0
       position:
         serializedVersion: 2
         x: 287.90625
-        y: 528.64844
+        y: 416.64844
         width: 165
         height: 32
       isBreakpoint: 0
@@ -5497,7 +4901,7 @@ MonoBehaviour:
       position:
         serializedVersion: 2
         x: 282.6797
-        y: 597.4922
+        y: 485.4922
         width: 100
         height: 32
       isBreakpoint: 0
@@ -5607,7 +5011,7 @@ MonoBehaviour:
       position:
         serializedVersion: 2
         x: 281.92188
-        y: 667.5156
+        y: 555.5156
         width: 132
         height: 16
       isBreakpoint: 0
@@ -5709,7 +5113,7 @@ MonoBehaviour:
       position:
         serializedVersion: 2
         x: 291.1328
-        y: 469.1797
+        y: 357.1797
         width: 266
         height: 32
       isBreakpoint: 0
@@ -5842,7 +5246,7 @@ MonoBehaviour:
       position:
         serializedVersion: 2
         x: 294.58594
-        y: 387.28125
+        y: 275.28125
         width: 100
         height: 32
       isBreakpoint: 0
@@ -6013,8 +5417,8 @@ MonoBehaviour:
       colorIndex: 0
       position:
         serializedVersion: 2
-        x: 317.67188
-        y: 108.08594
+        x: 310.45312
+        y: 104.33594
         width: 169
         height: 48
       isBreakpoint: 0
@@ -6313,7 +5717,7 @@ MonoBehaviour:
       position:
         serializedVersion: 2
         x: 51.039062
-        y: 341.1328
+        y: 229.13281
         width: 100
         height: 32
       isBreakpoint: 0
@@ -6414,7 +5818,7 @@ MonoBehaviour:
         value: 0
       stringVariables:
       - useVariable: 1
-        name: myFSMName
+        name: 
         tooltip: 
         showInInspector: 0
         networkSync: 0
@@ -6433,12 +5837,12 @@ MonoBehaviour:
       gameObjectVariables: []
       objectVariables:
       - useVariable: 1
-        name: inputHandler
+        name: 
         tooltip: 
         showInInspector: 0
         networkSync: 0
-        typeName: PSmash.InputSystem.InputHandler
-        value: {fileID: 8540863619128468569}
+        typeName: 
+        value: {fileID: 0}
       - useVariable: 1
         name: movement
         tooltip: 
@@ -6484,7 +5888,7 @@ MonoBehaviour:
     locked: 0
     manualUpdate: 0
     keepDelayedEventsOnStateExit: 0
-    preprocessed: 1
+    preprocessed: 0
     ExposedEvents: []
     RestartOnEnable: 1
     EnableDebugFlow: 0
@@ -6510,7 +5914,7 @@ MonoBehaviour:
     handleJointBreak: 0
     handleJointBreak2D: 0
     handleOnGUI: 0
-    handleFixedUpdate: 1
+    handleFixedUpdate: 0
     handleLateUpdate: 0
     handleApplicationEvents: 0
     handleUiEvents: 0
@@ -6557,14 +5961,14 @@ MonoBehaviour:
     name: ItemState
     startState: Set this FSM in Input Handler
     states:
-    - name: Set this FSM in Movement
+    - name: Set this FSM in Input Handler
       description: Set this FSM as the current state to pass the button state events
       colorIndex: 0
       position:
         serializedVersion: 2
-        x: 83.03125
-        y: 291.64844
-        width: 296.5
+        x: 84.5
+        y: 101.375
+        width: 305
         height: 32
       isBreakpoint: 0
       isSequence: 0
@@ -6580,13 +5984,13 @@ MonoBehaviour:
         colorIndex: 0
       actionData:
         actionNames:
-        - HutongGames.PlayMaker.Actions.CallMethod
+        - HutongGames.PlayMaker.Actions.SetObjectValue
         customNames:
         - 
         actionEnabled: 01
         actionIsOpen: 01
         actionStartIndex: 00000000
-        actionHashCodes: ca51e900
+        actionHashCodes: 1bc10e04
         unityObjectParams: []
         fsmGameObjectParams: []
         fsmOwnerDefaultParams: []
@@ -6596,300 +6000,22 @@ MonoBehaviour:
         fsmEventTargetParams: []
         fsmPropertyParams: []
         layoutOptionParams: []
-        fsmStringParams:
-        - useVariable: 0
-          name: 
-          tooltip: 
-          showInInspector: 0
-          networkSync: 0
-          value: SetCurrentStateFSM
+        fsmStringParams: []
         fsmObjectParams:
         - useVariable: 1
-          name: movement
+          name: currentFSM
           tooltip: 
           showInInspector: 0
           networkSync: 0
-          typeName: PSmash.Movement.PlayerMovement
-          value: {fileID: 8235024681204614677}
-        fsmVarParams:
-        - variableName: myFSM
-          objectType: PlayMakerFSM
-          useVariable: 1
-          type: 12
-          floatValue: 0
-          intValue: 0
-          boolValue: 0
-          stringValue: 
-          vector4Value: {x: 0, y: 0, z: 0, w: 0}
-          objectReference: {fileID: 1451262971914643979}
-          arrayValue:
-            useVariable: 0
-            name: 
-            tooltip: 
-            showInInspector: 0
-            networkSync: 0
-            type: -1
-            objectTypeName: 
-            floatValues: []
-            intValues: 
-            boolValues: 
-            stringValues: []
-            vector4Values: []
-            objectReferences: []
-        - variableName: 
-          objectType: 
-          useVariable: 0
-          type: -1
-          floatValue: 0
-          intValue: 0
-          boolValue: 0
-          stringValue: 
-          vector4Value: {x: 0, y: 0, z: 0, w: 0}
-          objectReference: {fileID: 0}
-          arrayValue:
-            useVariable: 0
-            name: 
-            tooltip: 
-            showInInspector: 0
-            networkSync: 0
-            type: -1
-            objectTypeName: 
-            floatValues: []
-            intValues: 
-            boolValues: 
-            stringValues: []
-            vector4Values: []
-            objectReferences: []
-        fsmArrayParams: []
-        fsmEnumParams: []
-        fsmFloatParams: []
-        fsmIntParams: []
-        fsmBoolParams: []
-        fsmVector2Params: []
-        fsmVector3Params: []
-        fsmColorParams: []
-        fsmRectParams: []
-        fsmQuaternionParams: []
-        stringParams: []
-        byteData: 0000
-        arrayParamSizes: 01000000
-        arrayParamTypes:
-        - HutongGames.PlayMaker.FsmVar
-        customTypeSizes: 
-        customTypeNames: []
-        paramDataType: 18000000120000000c00000027000000270000000100000001000000
-        paramName:
-        - behaviour
-        - methodName
-        - parameters
-        - 
-        - storeResult
-        - everyFrame
-        - manualUI
-        paramDataPos: 00000000000000000000000000000000010000000000000001000000
-        paramByteDataSize: 00000000000000000000000000000000000000000100000001000000
-    - name: Set Current State in Input Proxy
-      description: 'Set this FSM as the current state to pass the movementV2 and
-        jumpState values '
-      colorIndex: 0
-      position:
-        serializedVersion: 2
-        x: 85.99219
-        y: 204.54688
-        width: 361
-        height: 32
-      isBreakpoint: 0
-      isSequence: 1
-      hideUnused: 0
-      transitions:
-      - fsmEvent:
-          name: FINISHED
-          isSystemEvent: 1
-          isGlobal: 0
-        toState: Set this FSM in Movement
-        linkStyle: 0
-        linkConstraint: 0
-        colorIndex: 0
-      actionData:
-        actionNames:
-        - HutongGames.PlayMaker.Actions.GetProperty
-        - HutongGames.PlayMaker.Actions.SetFsmString
-        customNames:
-        - 
-        - 
-        actionEnabled: 0101
-        actionIsOpen: 0101
-        actionStartIndex: 0000000002000000
-        actionHashCodes: 5ac8520452221a02
-        unityObjectParams: []
-        fsmGameObjectParams: []
-        fsmOwnerDefaultParams:
-        - ownerOption: 1
-          gameObject:
-            useVariable: 0
-            name: 
-            tooltip: 
-            showInInspector: 0
-            networkSync: 0
-            value: {fileID: 2796500828864873445}
-        animationCurveParams: []
-        functionCallParams: []
-        fsmTemplateControlParams: []
-        fsmEventTargetParams: []
-        fsmPropertyParams:
-        - TargetObject:
-            useVariable: 1
-            name: myFSM
-            tooltip: 
-            showInInspector: 0
-            networkSync: 0
-            typeName: PlayMakerFSM
-            value: {fileID: 1451262971914643979}
-          TargetTypeName: PlayMakerFSM
-          PropertyName: FsmName
-          BoolParameter:
-            useVariable: 0
-            name: 
-            tooltip: 
-            showInInspector: 0
-            networkSync: 0
-            value: 0
-          FloatParameter:
-            useVariable: 0
-            name: 
-            tooltip: 
-            showInInspector: 0
-            networkSync: 0
-            value: 0
-          IntParameter:
-            useVariable: 0
-            name: 
-            tooltip: 
-            showInInspector: 0
-            networkSync: 0
-            value: 0
-          GameObjectParameter:
-            useVariable: 0
-            name: 
-            tooltip: 
-            showInInspector: 0
-            networkSync: 0
-            value: {fileID: 0}
-          StringParameter:
-            useVariable: 1
-            name: myFSMName
-            tooltip: 
-            showInInspector: 0
-            networkSync: 0
-            value: 
-          Vector2Parameter:
-            useVariable: 0
-            name: 
-            tooltip: 
-            showInInspector: 0
-            networkSync: 0
-            value: {x: 0, y: 0}
-          Vector3Parameter:
-            useVariable: 0
-            name: 
-            tooltip: 
-            showInInspector: 0
-            networkSync: 0
-            value: {x: 0, y: 0, z: 0}
-          RectParamater:
-            useVariable: 0
-            name: 
-            tooltip: 
-            showInInspector: 0
-            networkSync: 0
-            value:
-              serializedVersion: 2
-              x: 0
-              y: 0
-              width: 0
-              height: 0
-          QuaternionParameter:
-            useVariable: 0
-            name: 
-            tooltip: 
-            showInInspector: 0
-            networkSync: 0
-            value: {x: 0, y: 0, z: 0, w: 0}
-          ObjectParameter:
-            useVariable: 0
-            name: 
-            tooltip: 
-            showInInspector: 0
-            networkSync: 0
-            typeName: System.String
-            value: {fileID: 0}
-          MaterialParameter:
-            useVariable: 0
-            name: 
-            tooltip: 
-            showInInspector: 0
-            networkSync: 0
-            typeName: 
-            value: {fileID: 0}
-          TextureParameter:
-            useVariable: 0
-            name: 
-            tooltip: 
-            showInInspector: 0
-            networkSync: 0
-            typeName: 
-            value: {fileID: 0}
-          ColorParameter:
-            useVariable: 0
-            name: 
-            tooltip: 
-            showInInspector: 0
-            networkSync: 0
-            value: {r: 0, g: 0, b: 0, a: 1}
-          EnumParameter:
-            useVariable: 0
-            name: 
-            tooltip: 
-            showInInspector: 0
-            networkSync: 0
-            enumName: HutongGames.PlayMaker.None
-            intValue: 0
-          ArrayParameter:
-            useVariable: 0
-            name: 
-            tooltip: 
-            showInInspector: 0
-            networkSync: 0
-            type: -1
-            objectTypeName: UnityEngine.Object
-            floatValues: []
-            intValues: 
-            boolValues: 
-            stringValues: []
-            vector4Values: []
-            objectReferences: []
-          setProperty: 0
-        layoutOptionParams: []
-        fsmStringParams:
-        - useVariable: 0
-          name: 
-          tooltip: 
-          showInInspector: 0
-          networkSync: 0
-          value: InputProxy
-        - useVariable: 0
-          name: 
-          tooltip: 
-          showInInspector: 0
-          networkSync: 0
-          value: currentStateName
+          typeName: PlayMakerFSM
+          value: {fileID: 0}
         - useVariable: 1
-          name: myFSMName
+          name: myFSM
           tooltip: 
           showInInspector: 0
           networkSync: 0
-          value: 
-        fsmObjectParams: []
+          typeName: PlayMakerFSM
+          value: {fileID: 1451262971914643979}
         fsmVarParams: []
         fsmArrayParams: []
         fsmEnumParams: []
@@ -6902,160 +6028,25 @@ MonoBehaviour:
         fsmRectParams: []
         fsmQuaternionParams: []
         stringParams: []
-        byteData: 0000
+        byteData: 00
         arrayParamSizes: 
         arrayParamTypes: []
         customTypeSizes: 
         customTypeNames: []
-        paramDataType: 24000000010000001400000012000000120000001200000001000000
+        paramDataType: 180000001800000001000000
         paramName:
-        - targetProperty
+        - objectVariable
+        - objectValue
         - everyFrame
-        - gameObject
-        - fsmName
-        - variableName
-        - setValue
-        - everyFrame
-        paramDataPos: 00000000000000000000000000000000010000000200000001000000
-        paramByteDataSize: 00000000010000000000000000000000000000000000000001000000
-    - name: Set this FSM in Input Handler
-      description: Set this FSM as the current state to pass the button state events
-      colorIndex: 0
-      position:
-        serializedVersion: 2
-        x: 112.5
-        y: 109.375
-        width: 305
-        height: 32
-      isBreakpoint: 0
-      isSequence: 0
-      hideUnused: 0
-      transitions:
-      - fsmEvent:
-          name: FINISHED
-          isSystemEvent: 1
-          isGlobal: 0
-        toState: Set this FSM in Movement
-        linkStyle: 0
-        linkConstraint: 0
-        colorIndex: 0
-      actionData:
-        actionNames:
-        - HutongGames.PlayMaker.Actions.CallMethod
-        customNames:
-        - 
-        actionEnabled: 01
-        actionIsOpen: 01
-        actionStartIndex: 00000000
-        actionHashCodes: ca51e900
-        unityObjectParams: []
-        fsmGameObjectParams: []
-        fsmOwnerDefaultParams: []
-        animationCurveParams: []
-        functionCallParams: []
-        fsmTemplateControlParams: []
-        fsmEventTargetParams: []
-        fsmPropertyParams: []
-        layoutOptionParams: []
-        fsmStringParams:
-        - useVariable: 0
-          name: 
-          tooltip: 
-          showInInspector: 0
-          networkSync: 0
-          value: SetCurrentStateFSM
-        fsmObjectParams:
-        - useVariable: 1
-          name: inputHandler
-          tooltip: 
-          showInInspector: 0
-          networkSync: 0
-          typeName: PSmash.InputSystem.InputHandler
-          value: {fileID: 8540863619128468569}
-        fsmVarParams:
-        - variableName: myFSM
-          objectType: PlayMakerFSM
-          useVariable: 1
-          type: 12
-          floatValue: 0
-          intValue: 0
-          boolValue: 0
-          stringValue: 
-          vector4Value: {x: 0, y: 0, z: 0, w: 0}
-          objectReference: {fileID: 1451262971914643979}
-          arrayValue:
-            useVariable: 0
-            name: 
-            tooltip: 
-            showInInspector: 0
-            networkSync: 0
-            type: -1
-            objectTypeName: 
-            floatValues: []
-            intValues: 
-            boolValues: 
-            stringValues: []
-            vector4Values: []
-            objectReferences: []
-        - variableName: 
-          objectType: 
-          useVariable: 0
-          type: -1
-          floatValue: 0
-          intValue: 0
-          boolValue: 0
-          stringValue: 
-          vector4Value: {x: 0, y: 0, z: 0, w: 0}
-          objectReference: {fileID: 0}
-          arrayValue:
-            useVariable: 0
-            name: 
-            tooltip: 
-            showInInspector: 0
-            networkSync: 0
-            type: -1
-            objectTypeName: 
-            floatValues: []
-            intValues: 
-            boolValues: 
-            stringValues: []
-            vector4Values: []
-            objectReferences: []
-        fsmArrayParams: []
-        fsmEnumParams: []
-        fsmFloatParams: []
-        fsmIntParams: []
-        fsmBoolParams: []
-        fsmVector2Params: []
-        fsmVector3Params: []
-        fsmColorParams: []
-        fsmRectParams: []
-        fsmQuaternionParams: []
-        stringParams: []
-        byteData: 0000
-        arrayParamSizes: 01000000
-        arrayParamTypes:
-        - HutongGames.PlayMaker.FsmVar
-        customTypeSizes: 
-        customTypeNames: []
-        paramDataType: 18000000120000000c00000027000000270000000100000001000000
-        paramName:
-        - behaviour
-        - methodName
-        - parameters
-        - 
-        - storeResult
-        - everyFrame
-        - manualUI
-        paramDataPos: 00000000000000000000000000000000010000000000000001000000
-        paramByteDataSize: 00000000000000000000000000000000000000000100000001000000
+        paramDataPos: 000000000100000000000000
+        paramByteDataSize: 000000000000000001000000
     - name: Waiting for Animation to Finish
       description: 
       colorIndex: 0
       position:
         serializedVersion: 2
         x: 68.92969
-        y: 519.1719
+        y: 311.17188
         width: 209
         height: 32
       isBreakpoint: 0
@@ -7165,7 +6156,7 @@ MonoBehaviour:
       position:
         serializedVersion: 2
         x: 60.335938
-        y: 603.1406
+        y: 395.14062
         width: 132
         height: 16
       isBreakpoint: 0
@@ -7267,7 +6258,7 @@ MonoBehaviour:
       position:
         serializedVersion: 2
         x: 69.10156
-        y: 453.85938
+        y: 245.85938
         width: 100
         height: 32
       isBreakpoint: 0
@@ -7373,7 +6364,7 @@ MonoBehaviour:
       position:
         serializedVersion: 2
         x: 74.71094
-        y: 397.45312
+        y: 189.45312
         width: 147
         height: 32
       isBreakpoint: 0
@@ -7567,7 +6558,7 @@ MonoBehaviour:
         value: 0
       stringVariables:
       - useVariable: 1
-        name: myFSMName
+        name: 
         tooltip: 
         showInInspector: 0
         networkSync: 0
@@ -7598,19 +6589,19 @@ MonoBehaviour:
         value: {fileID: 0}
       objectVariables:
       - useVariable: 1
-        name: inputHandler
+        name: 
         tooltip: 
         showInInspector: 0
         networkSync: 0
-        typeName: PSmash.InputSystem.InputHandler
-        value: {fileID: 8540863619128468569}
+        typeName: 
+        value: {fileID: 0}
       - useVariable: 1
-        name: movement
+        name: 
         tooltip: 
         showInInspector: 0
         networkSync: 0
-        typeName: PSmash.Movement.PlayerMovement
-        value: {fileID: 8235024681204614677}
+        typeName: 
+        value: {fileID: 0}
       - useVariable: 1
         name: myFSM
         tooltip: 
@@ -7691,7 +6682,7 @@ MonoBehaviour:
     locked: 0
     manualUpdate: 0
     keepDelayedEventsOnStateExit: 0
-    preprocessed: 1
+    preprocessed: 0
     ExposedEvents: []
     RestartOnEnable: 1
     EnableDebugFlow: 0
@@ -7774,14 +6765,14 @@ MonoBehaviour:
     name: WallMovementState
     startState: Set this FSM in Input Handler
     states:
-    - name: Set this FSM in Movement
+    - name: Set this FSM in Input Handler
       description: Set this FSM as the current state to pass the button state events
       colorIndex: 0
       position:
         serializedVersion: 2
-        x: 72.77344
-        y: 287.46875
-        width: 296.5
+        x: 77.71875
+        y: 115.890625
+        width: 305
         height: 32
       isBreakpoint: 0
       isSequence: 0
@@ -7797,13 +6788,13 @@ MonoBehaviour:
         colorIndex: 0
       actionData:
         actionNames:
-        - HutongGames.PlayMaker.Actions.CallMethod
+        - HutongGames.PlayMaker.Actions.SetObjectValue
         customNames:
         - 
         actionEnabled: 01
         actionIsOpen: 01
         actionStartIndex: 00000000
-        actionHashCodes: ca51e900
+        actionHashCodes: 1bc10e04
         unityObjectParams: []
         fsmGameObjectParams: []
         fsmOwnerDefaultParams: []
@@ -7813,70 +6804,23 @@ MonoBehaviour:
         fsmEventTargetParams: []
         fsmPropertyParams: []
         layoutOptionParams: []
-        fsmStringParams:
-        - useVariable: 0
-          name: 
-          tooltip: 
-          showInInspector: 0
-          networkSync: 0
-          value: SetCurrentStateFSM
+        fsmStringParams: []
         fsmObjectParams:
         - useVariable: 1
-          name: movement
+          name: currentFSM
           tooltip: 
           showInInspector: 0
           networkSync: 0
-          typeName: PSmash.Movement.PlayerMovement
-          value: {fileID: 8235024681204614677}
-        fsmVarParams:
-        - variableName: myFSM
-          objectType: PlayMakerFSM
-          useVariable: 1
-          type: 12
-          floatValue: 0
-          intValue: 0
-          boolValue: 0
-          stringValue: 
-          vector4Value: {x: 0, y: 0, z: 0, w: 0}
-          objectReference: {fileID: 2150547718556862525}
-          arrayValue:
-            useVariable: 0
-            name: 
-            tooltip: 
-            showInInspector: 0
-            networkSync: 0
-            type: -1
-            objectTypeName: 
-            floatValues: []
-            intValues: 
-            boolValues: 
-            stringValues: []
-            vector4Values: []
-            objectReferences: []
-        - variableName: 
-          objectType: 
-          useVariable: 0
-          type: -1
-          floatValue: 0
-          intValue: 0
-          boolValue: 0
-          stringValue: 
-          vector4Value: {x: 0, y: 0, z: 0, w: 0}
-          objectReference: {fileID: 0}
-          arrayValue:
-            useVariable: 0
-            name: 
-            tooltip: 
-            showInInspector: 0
-            networkSync: 0
-            type: -1
-            objectTypeName: 
-            floatValues: []
-            intValues: 
-            boolValues: 
-            stringValues: []
-            vector4Values: []
-            objectReferences: []
+          typeName: PlayMakerFSM
+          value: {fileID: 0}
+        - useVariable: 1
+          name: myFSM
+          tooltip: 
+          showInInspector: 0
+          networkSync: 0
+          typeName: PlayMakerFSM
+          value: {fileID: 2150547718556862525}
+        fsmVarParams: []
         fsmArrayParams: []
         fsmEnumParams: []
         fsmFloatParams: []
@@ -7888,161 +6832,25 @@ MonoBehaviour:
         fsmRectParams: []
         fsmQuaternionParams: []
         stringParams: []
-        byteData: 0000
-        arrayParamSizes: 01000000
-        arrayParamTypes:
-        - HutongGames.PlayMaker.FsmVar
+        byteData: 00
+        arrayParamSizes: 
+        arrayParamTypes: []
         customTypeSizes: 
         customTypeNames: []
-        paramDataType: 18000000120000000c00000027000000270000000100000001000000
+        paramDataType: 180000001800000001000000
         paramName:
-        - behaviour
-        - methodName
-        - parameters
-        - 
-        - storeResult
+        - objectVariable
+        - objectValue
         - everyFrame
-        - manualUI
-        paramDataPos: 00000000000000000000000000000000010000000000000001000000
-        paramByteDataSize: 00000000000000000000000000000000000000000100000001000000
-    - name: Set this FSM in Input Handler
-      description: Set this FSM as the current state to pass the button state events
-      colorIndex: 0
-      position:
-        serializedVersion: 2
-        x: 79.11719
-        y: 114.71875
-        width: 305
-        height: 32
-      isBreakpoint: 0
-      isSequence: 0
-      hideUnused: 0
-      transitions:
-      - fsmEvent:
-          name: FINISHED
-          isSystemEvent: 1
-          isGlobal: 0
-        toState: Set this FSM in Movement
-        linkStyle: 0
-        linkConstraint: 0
-        colorIndex: 0
-      actionData:
-        actionNames:
-        - HutongGames.PlayMaker.Actions.CallMethod
-        customNames:
-        - 
-        actionEnabled: 01
-        actionIsOpen: 01
-        actionStartIndex: 00000000
-        actionHashCodes: ca51e900
-        unityObjectParams: []
-        fsmGameObjectParams: []
-        fsmOwnerDefaultParams: []
-        animationCurveParams: []
-        functionCallParams: []
-        fsmTemplateControlParams: []
-        fsmEventTargetParams: []
-        fsmPropertyParams: []
-        layoutOptionParams: []
-        fsmStringParams:
-        - useVariable: 0
-          name: 
-          tooltip: 
-          showInInspector: 0
-          networkSync: 0
-          value: SetCurrentStateFSM
-        fsmObjectParams:
-        - useVariable: 1
-          name: inputHandler
-          tooltip: 
-          showInInspector: 0
-          networkSync: 0
-          typeName: PSmash.InputSystem.InputHandler
-          value: {fileID: 8540863619128468569}
-        fsmVarParams:
-        - variableName: myFSM
-          objectType: PlayMakerFSM
-          useVariable: 1
-          type: 12
-          floatValue: 0
-          intValue: 0
-          boolValue: 0
-          stringValue: 
-          vector4Value: {x: 0, y: 0, z: 0, w: 0}
-          objectReference: {fileID: 2150547718556862525}
-          arrayValue:
-            useVariable: 0
-            name: 
-            tooltip: 
-            showInInspector: 0
-            networkSync: 0
-            type: -1
-            objectTypeName: 
-            floatValues: []
-            intValues: 
-            boolValues: 
-            stringValues: []
-            vector4Values: []
-            objectReferences: []
-        - variableName: 
-          objectType: 
-          useVariable: 0
-          type: -1
-          floatValue: 0
-          intValue: 0
-          boolValue: 0
-          stringValue: 
-          vector4Value: {x: 0, y: 0, z: 0, w: 0}
-          objectReference: {fileID: 0}
-          arrayValue:
-            useVariable: 0
-            name: 
-            tooltip: 
-            showInInspector: 0
-            networkSync: 0
-            type: -1
-            objectTypeName: 
-            floatValues: []
-            intValues: 
-            boolValues: 
-            stringValues: []
-            vector4Values: []
-            objectReferences: []
-        fsmArrayParams: []
-        fsmEnumParams: []
-        fsmFloatParams: []
-        fsmIntParams: []
-        fsmBoolParams: []
-        fsmVector2Params: []
-        fsmVector3Params: []
-        fsmColorParams: []
-        fsmRectParams: []
-        fsmQuaternionParams: []
-        stringParams: []
-        byteData: 0000
-        arrayParamSizes: 01000000
-        arrayParamTypes:
-        - HutongGames.PlayMaker.FsmVar
-        customTypeSizes: 
-        customTypeNames: []
-        paramDataType: 18000000120000000c00000027000000270000000100000001000000
-        paramName:
-        - behaviour
-        - methodName
-        - parameters
-        - 
-        - storeResult
-        - everyFrame
-        - manualUI
-        paramDataPos: 00000000000000000000000000000000010000000000000001000000
-        paramByteDataSize: 00000000000000000000000000000000000000000100000001000000
+        paramDataPos: 000000000100000000000000
+        paramByteDataSize: 000000000000000001000000
     - name: Movement With Interruption
       description: 
       colorIndex: 0
       position:
         serializedVersion: 2
         x: 61.84375
-        y: 491.5078
+        y: 347.5078
         width: 194
         height: 48
       isBreakpoint: 0
@@ -8110,7 +6918,7 @@ MonoBehaviour:
       position:
         serializedVersion: 2
         x: 489.9922
-        y: 547.7969
+        y: 403.79688
         width: 132
         height: 16
       isBreakpoint: 0
@@ -8239,7 +7047,7 @@ MonoBehaviour:
       position:
         serializedVersion: 2
         x: 71.58594
-        y: 367.91406
+        y: 223.91406
         width: 122
         height: 32
       isBreakpoint: 0
@@ -8348,7 +7156,7 @@ MonoBehaviour:
       position:
         serializedVersion: 2
         x: 495.28906
-        y: 496.59375
+        y: 352.59375
         width: 100
         height: 16
       isBreakpoint: 0
@@ -8497,11 +7305,11 @@ MonoBehaviour:
         networkSync: 0
         value: 0
       - useVariable: 1
-        name: maxWallMovementSpeed
+        name: 
         tooltip: 
         showInInspector: 1
         networkSync: 0
-        value: 2
+        value: 0
       intVariables: []
       boolVariables:
       - useVariable: 1
@@ -8530,7 +7338,7 @@ MonoBehaviour:
         value: 0
       stringVariables:
       - useVariable: 1
-        name: myFSMName
+        name: 
         tooltip: 
         showInInspector: 0
         networkSync: 0
@@ -8549,19 +7357,19 @@ MonoBehaviour:
       gameObjectVariables: []
       objectVariables:
       - useVariable: 1
-        name: inputHandler
+        name: 
         tooltip: 
         showInInspector: 0
         networkSync: 0
-        typeName: PSmash.InputSystem.InputHandler
-        value: {fileID: 8540863619128468569}
+        typeName: 
+        value: {fileID: 0}
       - useVariable: 1
-        name: movement
+        name: 
         tooltip: 
         showInInspector: 0
         networkSync: 0
-        typeName: PSmash.Movement.PlayerMovement
-        value: {fileID: 8235024681204614677}
+        typeName: 
+        value: {fileID: 0}
       - useVariable: 1
         name: myFSM
         tooltip: 
@@ -8587,7 +7395,7 @@ MonoBehaviour:
     locked: 0
     manualUpdate: 0
     keepDelayedEventsOnStateExit: 0
-    preprocessed: 1
+    preprocessed: 0
     ExposedEvents: []
     RestartOnEnable: 1
     EnableDebugFlow: 0
@@ -9160,7 +7968,7 @@ MonoBehaviour:
       position:
         serializedVersion: 2
         x: 330
-        y: 427
+        y: 251
         width: 215
         height: 176
       isBreakpoint: 0
@@ -9486,7 +8294,7 @@ MonoBehaviour:
       position:
         serializedVersion: 2
         x: 866.97656
-        y: 500.23438
+        y: 324.23438
         width: 134
         height: 16
       isBreakpoint: 0
@@ -9588,7 +8396,7 @@ MonoBehaviour:
       position:
         serializedVersion: 2
         x: 739.8125
-        y: 723.40625
+        y: 547.40625
         width: 100
         height: 16
       isBreakpoint: 0
@@ -9690,7 +8498,7 @@ MonoBehaviour:
       position:
         serializedVersion: 2
         x: 734.4375
-        y: 749.4844
+        y: 573.4844
         width: 100
         height: 16
       isBreakpoint: 0
@@ -9786,243 +8594,13 @@ MonoBehaviour:
         - everyFrame
         paramDataPos: 00000000000000000000000000000000
         paramByteDataSize: 00000000000000000000000001000000
-    - name: Set Current State in Input Proxy
-      description: 'Set this FSM as the current state to pass the movementV2 and
-        jumpState values '
-      colorIndex: 0
-      position:
-        serializedVersion: 2
-        x: 352.14844
-        y: 200.65625
-        width: 361
-        height: 32
-      isBreakpoint: 0
-      isSequence: 1
-      hideUnused: 0
-      transitions:
-      - fsmEvent:
-          name: FINISHED
-          isSystemEvent: 1
-          isGlobal: 0
-        toState: Set this FSM in Movement
-        linkStyle: 0
-        linkConstraint: 0
-        colorIndex: 0
-      actionData:
-        actionNames:
-        - HutongGames.PlayMaker.Actions.GetProperty
-        - HutongGames.PlayMaker.Actions.SetFsmString
-        customNames:
-        - 
-        - 
-        actionEnabled: 0101
-        actionIsOpen: 0101
-        actionStartIndex: 0000000002000000
-        actionHashCodes: 5ac8520452221a02
-        unityObjectParams: []
-        fsmGameObjectParams: []
-        fsmOwnerDefaultParams:
-        - ownerOption: 1
-          gameObject:
-            useVariable: 0
-            name: 
-            tooltip: 
-            showInInspector: 0
-            networkSync: 0
-            value: {fileID: 2796500828864873445}
-        animationCurveParams: []
-        functionCallParams: []
-        fsmTemplateControlParams: []
-        fsmEventTargetParams: []
-        fsmPropertyParams:
-        - TargetObject:
-            useVariable: 1
-            name: myFSM
-            tooltip: 
-            showInInspector: 0
-            networkSync: 0
-            typeName: PlayMakerFSM
-            value: {fileID: 5240833402420041602}
-          TargetTypeName: PlayMakerFSM
-          PropertyName: FsmName
-          BoolParameter:
-            useVariable: 0
-            name: 
-            tooltip: 
-            showInInspector: 0
-            networkSync: 0
-            value: 0
-          FloatParameter:
-            useVariable: 0
-            name: 
-            tooltip: 
-            showInInspector: 0
-            networkSync: 0
-            value: 0
-          IntParameter:
-            useVariable: 0
-            name: 
-            tooltip: 
-            showInInspector: 0
-            networkSync: 0
-            value: 0
-          GameObjectParameter:
-            useVariable: 0
-            name: 
-            tooltip: 
-            showInInspector: 0
-            networkSync: 0
-            value: {fileID: 0}
-          StringParameter:
-            useVariable: 1
-            name: myFSMName
-            tooltip: 
-            showInInspector: 0
-            networkSync: 0
-            value: 
-          Vector2Parameter:
-            useVariable: 0
-            name: 
-            tooltip: 
-            showInInspector: 0
-            networkSync: 0
-            value: {x: 0, y: 0}
-          Vector3Parameter:
-            useVariable: 0
-            name: 
-            tooltip: 
-            showInInspector: 0
-            networkSync: 0
-            value: {x: 0, y: 0, z: 0}
-          RectParamater:
-            useVariable: 0
-            name: 
-            tooltip: 
-            showInInspector: 0
-            networkSync: 0
-            value:
-              serializedVersion: 2
-              x: 0
-              y: 0
-              width: 0
-              height: 0
-          QuaternionParameter:
-            useVariable: 0
-            name: 
-            tooltip: 
-            showInInspector: 0
-            networkSync: 0
-            value: {x: 0, y: 0, z: 0, w: 0}
-          ObjectParameter:
-            useVariable: 0
-            name: 
-            tooltip: 
-            showInInspector: 0
-            networkSync: 0
-            typeName: System.String
-            value: {fileID: 0}
-          MaterialParameter:
-            useVariable: 0
-            name: 
-            tooltip: 
-            showInInspector: 0
-            networkSync: 0
-            typeName: 
-            value: {fileID: 0}
-          TextureParameter:
-            useVariable: 0
-            name: 
-            tooltip: 
-            showInInspector: 0
-            networkSync: 0
-            typeName: 
-            value: {fileID: 0}
-          ColorParameter:
-            useVariable: 0
-            name: 
-            tooltip: 
-            showInInspector: 0
-            networkSync: 0
-            value: {r: 0, g: 0, b: 0, a: 1}
-          EnumParameter:
-            useVariable: 0
-            name: 
-            tooltip: 
-            showInInspector: 0
-            networkSync: 0
-            enumName: HutongGames.PlayMaker.None
-            intValue: 0
-          ArrayParameter:
-            useVariable: 0
-            name: 
-            tooltip: 
-            showInInspector: 0
-            networkSync: 0
-            type: -1
-            objectTypeName: UnityEngine.Object
-            floatValues: []
-            intValues: 
-            boolValues: 
-            stringValues: []
-            vector4Values: []
-            objectReferences: []
-          setProperty: 0
-        layoutOptionParams: []
-        fsmStringParams:
-        - useVariable: 0
-          name: 
-          tooltip: 
-          showInInspector: 0
-          networkSync: 0
-          value: InputProxy
-        - useVariable: 0
-          name: 
-          tooltip: 
-          showInInspector: 0
-          networkSync: 0
-          value: currentStateName
-        - useVariable: 1
-          name: myFSMName
-          tooltip: 
-          showInInspector: 0
-          networkSync: 0
-          value: 
-        fsmObjectParams: []
-        fsmVarParams: []
-        fsmArrayParams: []
-        fsmEnumParams: []
-        fsmFloatParams: []
-        fsmIntParams: []
-        fsmBoolParams: []
-        fsmVector2Params: []
-        fsmVector3Params: []
-        fsmColorParams: []
-        fsmRectParams: []
-        fsmQuaternionParams: []
-        stringParams: []
-        byteData: 0000
-        arrayParamSizes: 
-        arrayParamTypes: []
-        customTypeSizes: 
-        customTypeNames: []
-        paramDataType: 24000000010000001400000012000000120000001200000001000000
-        paramName:
-        - targetProperty
-        - everyFrame
-        - gameObject
-        - fsmName
-        - variableName
-        - setValue
-        - everyFrame
-        paramDataPos: 00000000000000000000000000000000010000000200000001000000
-        paramByteDataSize: 00000000010000000000000000000000000000000000000001000000
     - name: Set this FSM in Input Handler
       description: Set this FSM as the current state to pass the button state events
       colorIndex: 0
       position:
         serializedVersion: 2
-        x: 357.98438
-        y: 110.578125
+        x: 351.98438
+        y: 101.578125
         width: 305
         height: 32
       isBreakpoint: 0
@@ -10033,21 +8611,19 @@ MonoBehaviour:
           name: FINISHED
           isSystemEvent: 1
           isGlobal: 0
-        toState: Set this FSM in Movement
+        toState: State 1
         linkStyle: 0
         linkConstraint: 0
         colorIndex: 0
       actionData:
         actionNames:
-        - HutongGames.PlayMaker.Actions.CallMethod
         - HutongGames.PlayMaker.Actions.SetObjectValue
         customNames:
         - 
-        - 
-        actionEnabled: 0101
-        actionIsOpen: 0101
-        actionStartIndex: 0000000007000000
-        actionHashCodes: ca51e9001bc10e04
+        actionEnabled: 01
+        actionIsOpen: 01
+        actionStartIndex: 00000000
+        actionHashCodes: 1bc10e04
         unityObjectParams: []
         fsmGameObjectParams: []
         fsmOwnerDefaultParams: []
@@ -10057,21 +8633,8 @@ MonoBehaviour:
         fsmEventTargetParams: []
         fsmPropertyParams: []
         layoutOptionParams: []
-        fsmStringParams:
-        - useVariable: 0
-          name: 
-          tooltip: 
-          showInInspector: 0
-          networkSync: 0
-          value: SetCurrentStateFSM
+        fsmStringParams: []
         fsmObjectParams:
-        - useVariable: 1
-          name: inputHandler
-          tooltip: 
-          showInInspector: 0
-          networkSync: 0
-          typeName: PSmash.InputSystem.InputHandler
-          value: {fileID: 8540863619128468569}
         - useVariable: 1
           name: currentFSM
           tooltip: 
@@ -10086,55 +8649,7 @@ MonoBehaviour:
           networkSync: 0
           typeName: PlayMakerFSM
           value: {fileID: 5240833402420041602}
-        fsmVarParams:
-        - variableName: myFSM
-          objectType: PlayMakerFSM
-          useVariable: 1
-          type: 12
-          floatValue: 0
-          intValue: 0
-          boolValue: 0
-          stringValue: 
-          vector4Value: {x: 0, y: 0, z: 0, w: 0}
-          objectReference: {fileID: 5240833402420041602}
-          arrayValue:
-            useVariable: 0
-            name: 
-            tooltip: 
-            showInInspector: 0
-            networkSync: 0
-            type: -1
-            objectTypeName: 
-            floatValues: []
-            intValues: 
-            boolValues: 
-            stringValues: []
-            vector4Values: []
-            objectReferences: []
-        - variableName: 
-          objectType: 
-          useVariable: 0
-          type: -1
-          floatValue: 0
-          intValue: 0
-          boolValue: 0
-          stringValue: 
-          vector4Value: {x: 0, y: 0, z: 0, w: 0}
-          objectReference: {fileID: 0}
-          arrayValue:
-            useVariable: 0
-            name: 
-            tooltip: 
-            showInInspector: 0
-            networkSync: 0
-            type: -1
-            objectTypeName: 
-            floatValues: []
-            intValues: 
-            boolValues: 
-            stringValues: []
-            vector4Values: []
-            objectReferences: []
+        fsmVarParams: []
         fsmArrayParams: []
         fsmEnumParams: []
         fsmFloatParams: []
@@ -10146,33 +8661,25 @@ MonoBehaviour:
         fsmRectParams: []
         fsmQuaternionParams: []
         stringParams: []
-        byteData: 000000
-        arrayParamSizes: 01000000
-        arrayParamTypes:
-        - HutongGames.PlayMaker.FsmVar
+        byteData: 00
+        arrayParamSizes: 
+        arrayParamTypes: []
         customTypeSizes: 
         customTypeNames: []
-        paramDataType: 18000000120000000c00000027000000270000000100000001000000180000001800000001000000
+        paramDataType: 180000001800000001000000
         paramName:
-        - behaviour
-        - methodName
-        - parameters
-        - 
-        - storeResult
-        - everyFrame
-        - manualUI
         - objectVariable
         - objectValue
         - everyFrame
-        paramDataPos: 00000000000000000000000000000000010000000000000001000000010000000200000002000000
-        paramByteDataSize: 00000000000000000000000000000000000000000100000001000000000000000000000001000000
+        paramDataPos: 000000000100000000000000
+        paramByteDataSize: 000000000000000001000000
     - name: JUMP
       description: 
       colorIndex: 2
       position:
         serializedVersion: 2
         x: 765.9297
-        y: 379.3125
+        y: 203.3125
         width: 100
         height: 16
       isBreakpoint: 0
@@ -10268,144 +8775,13 @@ MonoBehaviour:
         - everyFrame
         paramDataPos: 00000000000000000000000000000000
         paramByteDataSize: 00000000000000000000000001000000
-    - name: Set this FSM in Movement
-      description: Set this FSM as the current state to pass the button state events
-      colorIndex: 0
-      position:
-        serializedVersion: 2
-        x: 343.1172
-        y: 280.51562
-        width: 296.5
-        height: 32
-      isBreakpoint: 0
-      isSequence: 0
-      hideUnused: 0
-      transitions:
-      - fsmEvent:
-          name: FINISHED
-          isSystemEvent: 1
-          isGlobal: 0
-        toState: State 1
-        linkStyle: 0
-        linkConstraint: 0
-        colorIndex: 0
-      actionData:
-        actionNames:
-        - HutongGames.PlayMaker.Actions.CallMethod
-        customNames:
-        - 
-        actionEnabled: 01
-        actionIsOpen: 01
-        actionStartIndex: 00000000
-        actionHashCodes: ca51e900
-        unityObjectParams: []
-        fsmGameObjectParams: []
-        fsmOwnerDefaultParams: []
-        animationCurveParams: []
-        functionCallParams: []
-        fsmTemplateControlParams: []
-        fsmEventTargetParams: []
-        fsmPropertyParams: []
-        layoutOptionParams: []
-        fsmStringParams:
-        - useVariable: 0
-          name: 
-          tooltip: 
-          showInInspector: 0
-          networkSync: 0
-          value: SetCurrentStateFSM
-        fsmObjectParams:
-        - useVariable: 1
-          name: movement
-          tooltip: 
-          showInInspector: 0
-          networkSync: 0
-          typeName: PSmash.Movement.PlayerMovement
-          value: {fileID: 8235024681204614677}
-        fsmVarParams:
-        - variableName: myFSM
-          objectType: PlayMakerFSM
-          useVariable: 1
-          type: 12
-          floatValue: 0
-          intValue: 0
-          boolValue: 0
-          stringValue: 
-          vector4Value: {x: 0, y: 0, z: 0, w: 0}
-          objectReference: {fileID: 5240833402420041602}
-          arrayValue:
-            useVariable: 0
-            name: 
-            tooltip: 
-            showInInspector: 0
-            networkSync: 0
-            type: -1
-            objectTypeName: 
-            floatValues: []
-            intValues: 
-            boolValues: 
-            stringValues: []
-            vector4Values: []
-            objectReferences: []
-        - variableName: 
-          objectType: 
-          useVariable: 0
-          type: -1
-          floatValue: 0
-          intValue: 0
-          boolValue: 0
-          stringValue: 
-          vector4Value: {x: 0, y: 0, z: 0, w: 0}
-          objectReference: {fileID: 0}
-          arrayValue:
-            useVariable: 0
-            name: 
-            tooltip: 
-            showInInspector: 0
-            networkSync: 0
-            type: -1
-            objectTypeName: 
-            floatValues: []
-            intValues: 
-            boolValues: 
-            stringValues: []
-            vector4Values: []
-            objectReferences: []
-        fsmArrayParams: []
-        fsmEnumParams: []
-        fsmFloatParams: []
-        fsmIntParams: []
-        fsmBoolParams: []
-        fsmVector2Params: []
-        fsmVector3Params: []
-        fsmColorParams: []
-        fsmRectParams: []
-        fsmQuaternionParams: []
-        stringParams: []
-        byteData: 0000
-        arrayParamSizes: 01000000
-        arrayParamTypes:
-        - HutongGames.PlayMaker.FsmVar
-        customTypeSizes: 
-        customTypeNames: []
-        paramDataType: 18000000120000000c00000027000000270000000100000001000000
-        paramName:
-        - behaviour
-        - methodName
-        - parameters
-        - 
-        - storeResult
-        - everyFrame
-        - manualUI
-        paramDataPos: 00000000000000000000000000000000010000000000000001000000
-        paramByteDataSize: 00000000000000000000000000000000000000000100000001000000
     - name: State 1
       description: 
       colorIndex: 0
       position:
         serializedVersion: 2
         x: 331.28125
-        y: 363.39844
+        y: 187.39844
         width: 100
         height: 32
       isBreakpoint: 0
@@ -10541,7 +8917,7 @@ MonoBehaviour:
       position:
         serializedVersion: 2
         x: 756.10156
-        y: 625.3672
+        y: 449.3672
         width: 120
         height: 16
       isBreakpoint: 0
@@ -10643,7 +9019,7 @@ MonoBehaviour:
       position:
         serializedVersion: 2
         x: 110
-        y: 441
+        y: 265
         width: 132
         height: 32
       isBreakpoint: 0
@@ -10991,7 +9367,7 @@ MonoBehaviour:
       position:
         serializedVersion: 2
         x: 56.664062
-        y: 524.6797
+        y: 348.6797
         width: 110
         height: 16
       isBreakpoint: 0
@@ -11093,7 +9469,7 @@ MonoBehaviour:
       position:
         serializedVersion: 2
         x: 755.9297
-        y: 676.97656
+        y: 500.97656
         width: 100
         height: 16
       isBreakpoint: 0
@@ -11195,7 +9571,7 @@ MonoBehaviour:
       position:
         serializedVersion: 2
         x: 875.71875
-        y: 454.16406
+        y: 278.16406
         width: 100
         height: 16
       isBreakpoint: 0
@@ -11297,7 +9673,7 @@ MonoBehaviour:
       position:
         serializedVersion: 2
         x: 89.90625
-        y: 625.1094
+        y: 449.10938
         width: 100
         height: 16
       isBreakpoint: 0
@@ -11399,7 +9775,7 @@ MonoBehaviour:
       position:
         serializedVersion: 2
         x: 98.39844
-        y: 679.09375
+        y: 503.09375
         width: 109
         height: 16
       isBreakpoint: 0
@@ -11501,7 +9877,7 @@ MonoBehaviour:
       position:
         serializedVersion: 2
         x: 597.90625
-        y: 381.89844
+        y: 205.89844
         width: 100
         height: 48
       isBreakpoint: 0
@@ -11630,7 +10006,7 @@ MonoBehaviour:
       position:
         serializedVersion: 2
         x: 605.0703
-        y: 456.76562
+        y: 280.76562
         width: 162
         height: 48
       isBreakpoint: 0
@@ -11931,7 +10307,7 @@ MonoBehaviour:
         value: 0
       stringVariables:
       - useVariable: 1
-        name: myFSMName
+        name: 
         tooltip: 
         showInInspector: 0
         networkSync: 0
@@ -11975,12 +10351,12 @@ MonoBehaviour:
         typeName: PSmash.Movement.PlayerMovement
         value: {fileID: 8235024681204614677}
       - useVariable: 1
-        name: inputHandler
+        name: 
         tooltip: 
         showInInspector: 0
         networkSync: 0
-        typeName: PSmash.InputSystem.InputHandler
-        value: {fileID: 8540863619128468569}
+        typeName: 
+        value: {fileID: 0}
       - useVariable: 1
         name: myFSM
         tooltip: 
@@ -12093,208 +10469,61 @@ MonoBehaviour:
     name: ClimbingState
     startState: Set this FSM in Input Handler
     states:
-    - name: Set Current State in Input Proxy
-      description: 'Set this FSM as the current state to pass the movementV2 and
-        jumpState values '
+    - name: Set this FSM in Input Handler
+      description: Set this FSM as the current state to pass the button state events
       colorIndex: 0
       position:
         serializedVersion: 2
-        x: 77.5
-        y: 196.41406
-        width: 361
+        x: 75.07031
+        y: 115.39844
+        width: 305
         height: 32
       isBreakpoint: 0
-      isSequence: 1
+      isSequence: 0
       hideUnused: 0
       transitions:
       - fsmEvent:
           name: FINISHED
           isSystemEvent: 1
           isGlobal: 0
-        toState: Set this FSM in Movement
+        toState: Start Climbing Ladder
         linkStyle: 0
         linkConstraint: 0
         colorIndex: 0
       actionData:
         actionNames:
-        - HutongGames.PlayMaker.Actions.GetProperty
-        - HutongGames.PlayMaker.Actions.SetFsmString
+        - HutongGames.PlayMaker.Actions.SetObjectValue
         customNames:
         - 
-        - 
-        actionEnabled: 0101
-        actionIsOpen: 0101
-        actionStartIndex: 0000000002000000
-        actionHashCodes: 5ac8520452221a02
+        actionEnabled: 01
+        actionIsOpen: 01
+        actionStartIndex: 00000000
+        actionHashCodes: 1bc10e04
         unityObjectParams: []
         fsmGameObjectParams: []
-        fsmOwnerDefaultParams:
-        - ownerOption: 1
-          gameObject:
-            useVariable: 0
-            name: 
-            tooltip: 
-            showInInspector: 0
-            networkSync: 0
-            value: {fileID: 2796500828864873445}
+        fsmOwnerDefaultParams: []
         animationCurveParams: []
         functionCallParams: []
         fsmTemplateControlParams: []
         fsmEventTargetParams: []
-        fsmPropertyParams:
-        - TargetObject:
-            useVariable: 1
-            name: myFSM
-            tooltip: 
-            showInInspector: 0
-            networkSync: 0
-            typeName: PlayMakerFSM
-            value: {fileID: 5898523237326450535}
-          TargetTypeName: PlayMakerFSM
-          PropertyName: FsmName
-          BoolParameter:
-            useVariable: 0
-            name: 
-            tooltip: 
-            showInInspector: 0
-            networkSync: 0
-            value: 0
-          FloatParameter:
-            useVariable: 0
-            name: 
-            tooltip: 
-            showInInspector: 0
-            networkSync: 0
-            value: 0
-          IntParameter:
-            useVariable: 0
-            name: 
-            tooltip: 
-            showInInspector: 0
-            networkSync: 0
-            value: 0
-          GameObjectParameter:
-            useVariable: 0
-            name: 
-            tooltip: 
-            showInInspector: 0
-            networkSync: 0
-            value: {fileID: 0}
-          StringParameter:
-            useVariable: 1
-            name: myFSMName
-            tooltip: 
-            showInInspector: 0
-            networkSync: 0
-            value: 
-          Vector2Parameter:
-            useVariable: 0
-            name: 
-            tooltip: 
-            showInInspector: 0
-            networkSync: 0
-            value: {x: 0, y: 0}
-          Vector3Parameter:
-            useVariable: 0
-            name: 
-            tooltip: 
-            showInInspector: 0
-            networkSync: 0
-            value: {x: 0, y: 0, z: 0}
-          RectParamater:
-            useVariable: 0
-            name: 
-            tooltip: 
-            showInInspector: 0
-            networkSync: 0
-            value:
-              serializedVersion: 2
-              x: 0
-              y: 0
-              width: 0
-              height: 0
-          QuaternionParameter:
-            useVariable: 0
-            name: 
-            tooltip: 
-            showInInspector: 0
-            networkSync: 0
-            value: {x: 0, y: 0, z: 0, w: 0}
-          ObjectParameter:
-            useVariable: 0
-            name: 
-            tooltip: 
-            showInInspector: 0
-            networkSync: 0
-            typeName: System.String
-            value: {fileID: 0}
-          MaterialParameter:
-            useVariable: 0
-            name: 
-            tooltip: 
-            showInInspector: 0
-            networkSync: 0
-            typeName: 
-            value: {fileID: 0}
-          TextureParameter:
-            useVariable: 0
-            name: 
-            tooltip: 
-            showInInspector: 0
-            networkSync: 0
-            typeName: 
-            value: {fileID: 0}
-          ColorParameter:
-            useVariable: 0
-            name: 
-            tooltip: 
-            showInInspector: 0
-            networkSync: 0
-            value: {r: 0, g: 0, b: 0, a: 1}
-          EnumParameter:
-            useVariable: 0
-            name: 
-            tooltip: 
-            showInInspector: 0
-            networkSync: 0
-            enumName: HutongGames.PlayMaker.None
-            intValue: 0
-          ArrayParameter:
-            useVariable: 0
-            name: 
-            tooltip: 
-            showInInspector: 0
-            networkSync: 0
-            type: -1
-            objectTypeName: UnityEngine.Object
-            floatValues: []
-            intValues: 
-            boolValues: 
-            stringValues: []
-            vector4Values: []
-            objectReferences: []
-          setProperty: 0
+        fsmPropertyParams: []
         layoutOptionParams: []
-        fsmStringParams:
-        - useVariable: 0
-          name: 
-          tooltip: 
-          showInInspector: 0
-          networkSync: 0
-          value: InputProxy
-        - useVariable: 0
-          name: 
-          tooltip: 
-          showInInspector: 0
-          networkSync: 0
-          value: currentStateName
+        fsmStringParams: []
+        fsmObjectParams:
         - useVariable: 1
-          name: myFSMName
+          name: currentFSM
           tooltip: 
           showInInspector: 0
           networkSync: 0
-          value: 
-        fsmObjectParams: []
+          typeName: PlayMakerFSM
+          value: {fileID: 0}
+        - useVariable: 1
+          name: myFSM
+          tooltip: 
+          showInInspector: 0
+          networkSync: 0
+          typeName: PlayMakerFSM
+          value: {fileID: 5898523237326450535}
         fsmVarParams: []
         fsmArrayParams: []
         fsmEnumParams: []
@@ -12307,160 +10536,25 @@ MonoBehaviour:
         fsmRectParams: []
         fsmQuaternionParams: []
         stringParams: []
-        byteData: 0000
+        byteData: 00
         arrayParamSizes: 
         arrayParamTypes: []
         customTypeSizes: 
         customTypeNames: []
-        paramDataType: 24000000010000001400000012000000120000001200000001000000
+        paramDataType: 180000001800000001000000
         paramName:
-        - targetProperty
+        - objectVariable
+        - objectValue
         - everyFrame
-        - gameObject
-        - fsmName
-        - variableName
-        - setValue
-        - everyFrame
-        paramDataPos: 00000000000000000000000000000000010000000200000001000000
-        paramByteDataSize: 00000000010000000000000000000000000000000000000001000000
-    - name: Set this FSM in Input Handler
-      description: Set this FSM as the current state to pass the button state events
-      colorIndex: 0
-      position:
-        serializedVersion: 2
-        x: 106.07031
-        y: 106.39844
-        width: 305
-        height: 32
-      isBreakpoint: 0
-      isSequence: 0
-      hideUnused: 0
-      transitions:
-      - fsmEvent:
-          name: FINISHED
-          isSystemEvent: 1
-          isGlobal: 0
-        toState: Set this FSM in Movement
-        linkStyle: 0
-        linkConstraint: 0
-        colorIndex: 0
-      actionData:
-        actionNames:
-        - HutongGames.PlayMaker.Actions.CallMethod
-        customNames:
-        - 
-        actionEnabled: 01
-        actionIsOpen: 01
-        actionStartIndex: 00000000
-        actionHashCodes: ca51e900
-        unityObjectParams: []
-        fsmGameObjectParams: []
-        fsmOwnerDefaultParams: []
-        animationCurveParams: []
-        functionCallParams: []
-        fsmTemplateControlParams: []
-        fsmEventTargetParams: []
-        fsmPropertyParams: []
-        layoutOptionParams: []
-        fsmStringParams:
-        - useVariable: 0
-          name: 
-          tooltip: 
-          showInInspector: 0
-          networkSync: 0
-          value: SetCurrentStateFSM
-        fsmObjectParams:
-        - useVariable: 1
-          name: inputHandler
-          tooltip: 
-          showInInspector: 0
-          networkSync: 0
-          typeName: PSmash.InputSystem.InputHandler
-          value: {fileID: 8540863619128468569}
-        fsmVarParams:
-        - variableName: myFSM
-          objectType: PlayMakerFSM
-          useVariable: 1
-          type: 12
-          floatValue: 0
-          intValue: 0
-          boolValue: 0
-          stringValue: 
-          vector4Value: {x: 0, y: 0, z: 0, w: 0}
-          objectReference: {fileID: 5898523237326450535}
-          arrayValue:
-            useVariable: 0
-            name: 
-            tooltip: 
-            showInInspector: 0
-            networkSync: 0
-            type: -1
-            objectTypeName: 
-            floatValues: []
-            intValues: 
-            boolValues: 
-            stringValues: []
-            vector4Values: []
-            objectReferences: []
-        - variableName: 
-          objectType: 
-          useVariable: 0
-          type: -1
-          floatValue: 0
-          intValue: 0
-          boolValue: 0
-          stringValue: 
-          vector4Value: {x: 0, y: 0, z: 0, w: 0}
-          objectReference: {fileID: 0}
-          arrayValue:
-            useVariable: 0
-            name: 
-            tooltip: 
-            showInInspector: 0
-            networkSync: 0
-            type: -1
-            objectTypeName: 
-            floatValues: []
-            intValues: 
-            boolValues: 
-            stringValues: []
-            vector4Values: []
-            objectReferences: []
-        fsmArrayParams: []
-        fsmEnumParams: []
-        fsmFloatParams: []
-        fsmIntParams: []
-        fsmBoolParams: []
-        fsmVector2Params: []
-        fsmVector3Params: []
-        fsmColorParams: []
-        fsmRectParams: []
-        fsmQuaternionParams: []
-        stringParams: []
-        byteData: 0000
-        arrayParamSizes: 01000000
-        arrayParamTypes:
-        - HutongGames.PlayMaker.FsmVar
-        customTypeSizes: 
-        customTypeNames: []
-        paramDataType: 18000000120000000c00000027000000270000000100000001000000
-        paramName:
-        - behaviour
-        - methodName
-        - parameters
-        - 
-        - storeResult
-        - everyFrame
-        - manualUI
-        paramDataPos: 00000000000000000000000000000000010000000000000001000000
-        paramByteDataSize: 00000000000000000000000000000000000000000100000001000000
+        paramDataPos: 000000000100000000000000
+        paramByteDataSize: 000000000000000001000000
     - name: Start Climbing Ladder
       description: 
       colorIndex: 0
       position:
         serializedVersion: 2
         x: 73
-        y: 367
+        y: 223
         width: 160
         height: 32
       isBreakpoint: 0
@@ -12594,7 +10688,7 @@ MonoBehaviour:
       position:
         serializedVersion: 2
         x: 68
-        y: 441.0078
+        y: 297.0078
         width: 127
         height: 32
       isBreakpoint: 0
@@ -12763,7 +10857,7 @@ MonoBehaviour:
       position:
         serializedVersion: 2
         x: 55.515625
-        y: 583.5703
+        y: 439.5703
         width: 132
         height: 16
       isBreakpoint: 0
@@ -12859,144 +10953,13 @@ MonoBehaviour:
         - everyFrame
         paramDataPos: 00000000000000000000000000000000
         paramByteDataSize: 00000000000000000000000001000000
-    - name: Set this FSM in Movement
-      description: Set this FSM as the current state to pass the button state events
-      colorIndex: 0
-      position:
-        serializedVersion: 2
-        x: 74.53906
-        y: 283.51562
-        width: 296.5
-        height: 32
-      isBreakpoint: 0
-      isSequence: 0
-      hideUnused: 0
-      transitions:
-      - fsmEvent:
-          name: FINISHED
-          isSystemEvent: 1
-          isGlobal: 0
-        toState: Start Climbing Ladder
-        linkStyle: 0
-        linkConstraint: 0
-        colorIndex: 0
-      actionData:
-        actionNames:
-        - HutongGames.PlayMaker.Actions.CallMethod
-        customNames:
-        - 
-        actionEnabled: 01
-        actionIsOpen: 01
-        actionStartIndex: 00000000
-        actionHashCodes: ca51e900
-        unityObjectParams: []
-        fsmGameObjectParams: []
-        fsmOwnerDefaultParams: []
-        animationCurveParams: []
-        functionCallParams: []
-        fsmTemplateControlParams: []
-        fsmEventTargetParams: []
-        fsmPropertyParams: []
-        layoutOptionParams: []
-        fsmStringParams:
-        - useVariable: 0
-          name: 
-          tooltip: 
-          showInInspector: 0
-          networkSync: 0
-          value: SetCurrentStateFSM
-        fsmObjectParams:
-        - useVariable: 1
-          name: movement
-          tooltip: 
-          showInInspector: 0
-          networkSync: 0
-          typeName: PSmash.Movement.PlayerMovement
-          value: {fileID: 8235024681204614677}
-        fsmVarParams:
-        - variableName: myFSM
-          objectType: PlayMakerFSM
-          useVariable: 1
-          type: 12
-          floatValue: 0
-          intValue: 0
-          boolValue: 0
-          stringValue: 
-          vector4Value: {x: 0, y: 0, z: 0, w: 0}
-          objectReference: {fileID: 5898523237326450535}
-          arrayValue:
-            useVariable: 0
-            name: 
-            tooltip: 
-            showInInspector: 0
-            networkSync: 0
-            type: -1
-            objectTypeName: 
-            floatValues: []
-            intValues: 
-            boolValues: 
-            stringValues: []
-            vector4Values: []
-            objectReferences: []
-        - variableName: 
-          objectType: 
-          useVariable: 0
-          type: -1
-          floatValue: 0
-          intValue: 0
-          boolValue: 0
-          stringValue: 
-          vector4Value: {x: 0, y: 0, z: 0, w: 0}
-          objectReference: {fileID: 0}
-          arrayValue:
-            useVariable: 0
-            name: 
-            tooltip: 
-            showInInspector: 0
-            networkSync: 0
-            type: -1
-            objectTypeName: 
-            floatValues: []
-            intValues: 
-            boolValues: 
-            stringValues: []
-            vector4Values: []
-            objectReferences: []
-        fsmArrayParams: []
-        fsmEnumParams: []
-        fsmFloatParams: []
-        fsmIntParams: []
-        fsmBoolParams: []
-        fsmVector2Params: []
-        fsmVector3Params: []
-        fsmColorParams: []
-        fsmRectParams: []
-        fsmQuaternionParams: []
-        stringParams: []
-        byteData: 0000
-        arrayParamSizes: 01000000
-        arrayParamTypes:
-        - HutongGames.PlayMaker.FsmVar
-        customTypeSizes: 
-        customTypeNames: []
-        paramDataType: 18000000120000000c00000027000000270000000100000001000000
-        paramName:
-        - behaviour
-        - methodName
-        - parameters
-        - 
-        - storeResult
-        - everyFrame
-        - manualUI
-        paramDataPos: 00000000000000000000000000000000010000000000000001000000
-        paramByteDataSize: 00000000000000000000000000000000000000000100000001000000
     - name: Climbing Ladder 2
       description: 
       colorIndex: 0
       position:
         serializedVersion: 2
         x: 63.828125
-        y: 489.1953
+        y: 345.1953
         width: 171
         height: 64
       isBreakpoint: 0
@@ -13169,7 +11132,7 @@ MonoBehaviour:
       position:
         serializedVersion: 2
         x: 297.91406
-        y: 515.6797
+        y: 371.6797
         width: 100
         height: 16
       isBreakpoint: 0
@@ -13298,7 +11261,7 @@ MonoBehaviour:
       position:
         serializedVersion: 2
         x: 320.22656
-        y: 563.25
+        y: 419.25
         width: 137
         height: 16
       isBreakpoint: 0
@@ -13493,7 +11456,7 @@ MonoBehaviour:
         value: 0
       stringVariables:
       - useVariable: 1
-        name: myFSMName
+        name: 
         tooltip: 
         showInInspector: 0
         networkSync: 0
@@ -13512,12 +11475,12 @@ MonoBehaviour:
       gameObjectVariables: []
       objectVariables:
       - useVariable: 1
-        name: inputHandler
+        name: 
         tooltip: 
         showInInspector: 0
         networkSync: 0
-        typeName: PSmash.InputSystem.InputHandler
-        value: {fileID: 8540863619128468569}
+        typeName: 
+        value: {fileID: 0}
       - useVariable: 1
         name: myFSM
         tooltip: 
@@ -13549,7 +11512,7 @@ MonoBehaviour:
     locked: 0
     manualUpdate: 0
     keepDelayedEventsOnStateExit: 0
-    preprocessed: 1
+    preprocessed: 0
     ExposedEvents: []
     RestartOnEnable: 1
     EnableDebugFlow: 0
@@ -13575,7 +11538,7 @@ MonoBehaviour:
     handleJointBreak: 0
     handleJointBreak2D: 0
     handleOnGUI: 0
-    handleFixedUpdate: 1
+    handleFixedUpdate: 0
     handleLateUpdate: 0
     handleApplicationEvents: 0
     handleUiEvents: 0
@@ -13608,7 +11571,7 @@ MonoBehaviour:
       position:
         serializedVersion: 2
         x: 57.257812
-        y: 464.6875
+        y: 336.6875
         width: 165
         height: 32
       isBreakpoint: 0
@@ -13745,7 +11708,7 @@ MonoBehaviour:
       position:
         serializedVersion: 2
         x: 56.257812
-        y: 536.6875
+        y: 408.6875
         width: 186
         height: 48
       isBreakpoint: 0
@@ -13863,7 +11826,7 @@ MonoBehaviour:
       position:
         serializedVersion: 2
         x: 470.57812
-        y: 464.4922
+        y: 336.4922
         width: 190
         height: 48
       isBreakpoint: 0
@@ -13931,7 +11894,7 @@ MonoBehaviour:
       position:
         serializedVersion: 2
         x: 51.257812
-        y: 622.6875
+        y: 494.6875
         width: 100
         height: 16
       isBreakpoint: 0
@@ -14032,8 +11995,8 @@ MonoBehaviour:
       colorIndex: 0
       position:
         serializedVersion: 2
-        x: 97.94531
-        y: 105.02344
+        x: 80.21094
+        y: 113.71875
         width: 305
         height: 32
       isBreakpoint: 0
@@ -14044,19 +12007,19 @@ MonoBehaviour:
           name: FINISHED
           isSystemEvent: 1
           isGlobal: 0
-        toState: Set this FSM in Movement
+        toState: Flip Check
         linkStyle: 0
         linkConstraint: 0
         colorIndex: 0
       actionData:
         actionNames:
-        - HutongGames.PlayMaker.Actions.CallMethod
+        - HutongGames.PlayMaker.Actions.SetObjectValue
         customNames:
         - 
         actionEnabled: 01
         actionIsOpen: 01
         actionStartIndex: 00000000
-        actionHashCodes: ca51e900
+        actionHashCodes: 1bc10e04
         unityObjectParams: []
         fsmGameObjectParams: []
         fsmOwnerDefaultParams: []
@@ -14066,300 +12029,22 @@ MonoBehaviour:
         fsmEventTargetParams: []
         fsmPropertyParams: []
         layoutOptionParams: []
-        fsmStringParams:
-        - useVariable: 0
-          name: 
-          tooltip: 
-          showInInspector: 0
-          networkSync: 0
-          value: SetCurrentStateFSM
+        fsmStringParams: []
         fsmObjectParams:
         - useVariable: 1
-          name: inputHandler
+          name: currentFSM
           tooltip: 
           showInInspector: 0
           networkSync: 0
-          typeName: PSmash.InputSystem.InputHandler
-          value: {fileID: 8540863619128468569}
-        fsmVarParams:
-        - variableName: myFSM
-          objectType: PlayMakerFSM
-          useVariable: 1
-          type: 12
-          floatValue: 0
-          intValue: 0
-          boolValue: 0
-          stringValue: 
-          vector4Value: {x: 0, y: 0, z: 0, w: 0}
-          objectReference: {fileID: 5949932138965589576}
-          arrayValue:
-            useVariable: 0
-            name: 
-            tooltip: 
-            showInInspector: 0
-            networkSync: 0
-            type: -1
-            objectTypeName: 
-            floatValues: []
-            intValues: 
-            boolValues: 
-            stringValues: []
-            vector4Values: []
-            objectReferences: []
-        - variableName: 
-          objectType: 
-          useVariable: 0
-          type: -1
-          floatValue: 0
-          intValue: 0
-          boolValue: 0
-          stringValue: 
-          vector4Value: {x: 0, y: 0, z: 0, w: 0}
-          objectReference: {fileID: 0}
-          arrayValue:
-            useVariable: 0
-            name: 
-            tooltip: 
-            showInInspector: 0
-            networkSync: 0
-            type: -1
-            objectTypeName: 
-            floatValues: []
-            intValues: 
-            boolValues: 
-            stringValues: []
-            vector4Values: []
-            objectReferences: []
-        fsmArrayParams: []
-        fsmEnumParams: []
-        fsmFloatParams: []
-        fsmIntParams: []
-        fsmBoolParams: []
-        fsmVector2Params: []
-        fsmVector3Params: []
-        fsmColorParams: []
-        fsmRectParams: []
-        fsmQuaternionParams: []
-        stringParams: []
-        byteData: 0000
-        arrayParamSizes: 01000000
-        arrayParamTypes:
-        - HutongGames.PlayMaker.FsmVar
-        customTypeSizes: 
-        customTypeNames: []
-        paramDataType: 18000000120000000c00000027000000270000000100000001000000
-        paramName:
-        - behaviour
-        - methodName
-        - parameters
-        - 
-        - storeResult
-        - everyFrame
-        - manualUI
-        paramDataPos: 00000000000000000000000000000000010000000000000001000000
-        paramByteDataSize: 00000000000000000000000000000000000000000100000001000000
-    - name: Set Current State in Input Proxy
-      description: 'Set this FSM as the current state to pass the movementV2 and
-        jumpState values '
-      colorIndex: 0
-      position:
-        serializedVersion: 2
-        x: 92.109375
-        y: 195.09375
-        width: 361
-        height: 32
-      isBreakpoint: 0
-      isSequence: 1
-      hideUnused: 0
-      transitions:
-      - fsmEvent:
-          name: FINISHED
-          isSystemEvent: 1
-          isGlobal: 0
-        toState: Set this FSM in Movement
-        linkStyle: 0
-        linkConstraint: 0
-        colorIndex: 0
-      actionData:
-        actionNames:
-        - HutongGames.PlayMaker.Actions.GetProperty
-        - HutongGames.PlayMaker.Actions.SetFsmString
-        customNames:
-        - 
-        - 
-        actionEnabled: 0101
-        actionIsOpen: 0101
-        actionStartIndex: 0000000002000000
-        actionHashCodes: 5ac8520452221a02
-        unityObjectParams: []
-        fsmGameObjectParams: []
-        fsmOwnerDefaultParams:
-        - ownerOption: 1
-          gameObject:
-            useVariable: 0
-            name: 
-            tooltip: 
-            showInInspector: 0
-            networkSync: 0
-            value: {fileID: 2796500828864873445}
-        animationCurveParams: []
-        functionCallParams: []
-        fsmTemplateControlParams: []
-        fsmEventTargetParams: []
-        fsmPropertyParams:
-        - TargetObject:
-            useVariable: 1
-            name: myFSM
-            tooltip: 
-            showInInspector: 0
-            networkSync: 0
-            typeName: PlayMakerFSM
-            value: {fileID: 5949932138965589576}
-          TargetTypeName: PlayMakerFSM
-          PropertyName: FsmName
-          BoolParameter:
-            useVariable: 0
-            name: 
-            tooltip: 
-            showInInspector: 0
-            networkSync: 0
-            value: 0
-          FloatParameter:
-            useVariable: 0
-            name: 
-            tooltip: 
-            showInInspector: 0
-            networkSync: 0
-            value: 0
-          IntParameter:
-            useVariable: 0
-            name: 
-            tooltip: 
-            showInInspector: 0
-            networkSync: 0
-            value: 0
-          GameObjectParameter:
-            useVariable: 0
-            name: 
-            tooltip: 
-            showInInspector: 0
-            networkSync: 0
-            value: {fileID: 0}
-          StringParameter:
-            useVariable: 1
-            name: myFSMName
-            tooltip: 
-            showInInspector: 0
-            networkSync: 0
-            value: 
-          Vector2Parameter:
-            useVariable: 0
-            name: 
-            tooltip: 
-            showInInspector: 0
-            networkSync: 0
-            value: {x: 0, y: 0}
-          Vector3Parameter:
-            useVariable: 0
-            name: 
-            tooltip: 
-            showInInspector: 0
-            networkSync: 0
-            value: {x: 0, y: 0, z: 0}
-          RectParamater:
-            useVariable: 0
-            name: 
-            tooltip: 
-            showInInspector: 0
-            networkSync: 0
-            value:
-              serializedVersion: 2
-              x: 0
-              y: 0
-              width: 0
-              height: 0
-          QuaternionParameter:
-            useVariable: 0
-            name: 
-            tooltip: 
-            showInInspector: 0
-            networkSync: 0
-            value: {x: 0, y: 0, z: 0, w: 0}
-          ObjectParameter:
-            useVariable: 0
-            name: 
-            tooltip: 
-            showInInspector: 0
-            networkSync: 0
-            typeName: System.String
-            value: {fileID: 0}
-          MaterialParameter:
-            useVariable: 0
-            name: 
-            tooltip: 
-            showInInspector: 0
-            networkSync: 0
-            typeName: 
-            value: {fileID: 0}
-          TextureParameter:
-            useVariable: 0
-            name: 
-            tooltip: 
-            showInInspector: 0
-            networkSync: 0
-            typeName: 
-            value: {fileID: 0}
-          ColorParameter:
-            useVariable: 0
-            name: 
-            tooltip: 
-            showInInspector: 0
-            networkSync: 0
-            value: {r: 0, g: 0, b: 0, a: 1}
-          EnumParameter:
-            useVariable: 0
-            name: 
-            tooltip: 
-            showInInspector: 0
-            networkSync: 0
-            enumName: HutongGames.PlayMaker.None
-            intValue: 0
-          ArrayParameter:
-            useVariable: 0
-            name: 
-            tooltip: 
-            showInInspector: 0
-            networkSync: 0
-            type: -1
-            objectTypeName: UnityEngine.Object
-            floatValues: []
-            intValues: 
-            boolValues: 
-            stringValues: []
-            vector4Values: []
-            objectReferences: []
-          setProperty: 0
-        layoutOptionParams: []
-        fsmStringParams:
-        - useVariable: 0
-          name: 
-          tooltip: 
-          showInInspector: 0
-          networkSync: 0
-          value: InputProxy
-        - useVariable: 0
-          name: 
-          tooltip: 
-          showInInspector: 0
-          networkSync: 0
-          value: currentStateName
+          typeName: PlayMakerFSM
+          value: {fileID: 0}
         - useVariable: 1
-          name: myFSMName
+          name: myFSM
           tooltip: 
           showInInspector: 0
           networkSync: 0
-          value: 
-        fsmObjectParams: []
+          typeName: PlayMakerFSM
+          value: {fileID: 5949932138965589576}
         fsmVarParams: []
         fsmArrayParams: []
         fsmEnumParams: []
@@ -14372,29 +12057,25 @@ MonoBehaviour:
         fsmRectParams: []
         fsmQuaternionParams: []
         stringParams: []
-        byteData: 0000
+        byteData: 00
         arrayParamSizes: 
         arrayParamTypes: []
         customTypeSizes: 
         customTypeNames: []
-        paramDataType: 24000000010000001400000012000000120000001200000001000000
+        paramDataType: 180000001800000001000000
         paramName:
-        - targetProperty
+        - objectVariable
+        - objectValue
         - everyFrame
-        - gameObject
-        - fsmName
-        - variableName
-        - setValue
-        - everyFrame
-        paramDataPos: 00000000000000000000000000000000010000000200000001000000
-        paramByteDataSize: 00000000010000000000000000000000000000000000000001000000
+        paramDataPos: 000000000100000000000000
+        paramByteDataSize: 000000000000000001000000
     - name: Set Physics Attributes to Normal Attack
       description: 
       colorIndex: 0
       position:
         serializedVersion: 2
         x: 60.484375
-        y: 405.21875
+        y: 277.21875
         width: 266
         height: 32
       isBreakpoint: 0
@@ -14527,7 +12208,7 @@ MonoBehaviour:
       position:
         serializedVersion: 2
         x: 67.96875
-        y: 342.125
+        y: 214.125
         width: 100
         height: 32
       isBreakpoint: 0
@@ -14697,144 +12378,13 @@ MonoBehaviour:
         - sendEvent
         paramDataPos: 000000000100000000000000000000000000000001000000010000000000000000000000000000000000000001000000020000000300000000000000
         paramByteDataSize: 000000000000000001000000000000000000000000000000010000000000000000000000000000000000000000000000010000000100000000000000
-    - name: Set this FSM in Movement
-      description: Set this FSM as the current state to pass the button state events
-      colorIndex: 0
-      position:
-        serializedVersion: 2
-        x: 88.890625
-        y: 253.51562
-        width: 296.5
-        height: 32
-      isBreakpoint: 0
-      isSequence: 0
-      hideUnused: 0
-      transitions:
-      - fsmEvent:
-          name: FINISHED
-          isSystemEvent: 1
-          isGlobal: 0
-        toState: Flip Check
-        linkStyle: 0
-        linkConstraint: 0
-        colorIndex: 0
-      actionData:
-        actionNames:
-        - HutongGames.PlayMaker.Actions.CallMethod
-        customNames:
-        - 
-        actionEnabled: 01
-        actionIsOpen: 01
-        actionStartIndex: 00000000
-        actionHashCodes: ca51e900
-        unityObjectParams: []
-        fsmGameObjectParams: []
-        fsmOwnerDefaultParams: []
-        animationCurveParams: []
-        functionCallParams: []
-        fsmTemplateControlParams: []
-        fsmEventTargetParams: []
-        fsmPropertyParams: []
-        layoutOptionParams: []
-        fsmStringParams:
-        - useVariable: 0
-          name: 
-          tooltip: 
-          showInInspector: 0
-          networkSync: 0
-          value: SetCurrentStateFSM
-        fsmObjectParams:
-        - useVariable: 1
-          name: movement
-          tooltip: 
-          showInInspector: 0
-          networkSync: 0
-          typeName: PSmash.Movement.PlayerMovement
-          value: {fileID: 8235024681204614677}
-        fsmVarParams:
-        - variableName: myFSM
-          objectType: PlayMakerFSM
-          useVariable: 1
-          type: 12
-          floatValue: 0
-          intValue: 0
-          boolValue: 0
-          stringValue: 
-          vector4Value: {x: 0, y: 0, z: 0, w: 0}
-          objectReference: {fileID: 5949932138965589576}
-          arrayValue:
-            useVariable: 0
-            name: 
-            tooltip: 
-            showInInspector: 0
-            networkSync: 0
-            type: -1
-            objectTypeName: 
-            floatValues: []
-            intValues: 
-            boolValues: 
-            stringValues: []
-            vector4Values: []
-            objectReferences: []
-        - variableName: 
-          objectType: 
-          useVariable: 0
-          type: -1
-          floatValue: 0
-          intValue: 0
-          boolValue: 0
-          stringValue: 
-          vector4Value: {x: 0, y: 0, z: 0, w: 0}
-          objectReference: {fileID: 0}
-          arrayValue:
-            useVariable: 0
-            name: 
-            tooltip: 
-            showInInspector: 0
-            networkSync: 0
-            type: -1
-            objectTypeName: 
-            floatValues: []
-            intValues: 
-            boolValues: 
-            stringValues: []
-            vector4Values: []
-            objectReferences: []
-        fsmArrayParams: []
-        fsmEnumParams: []
-        fsmFloatParams: []
-        fsmIntParams: []
-        fsmBoolParams: []
-        fsmVector2Params: []
-        fsmVector3Params: []
-        fsmColorParams: []
-        fsmRectParams: []
-        fsmQuaternionParams: []
-        stringParams: []
-        byteData: 0000
-        arrayParamSizes: 01000000
-        arrayParamTypes:
-        - HutongGames.PlayMaker.FsmVar
-        customTypeSizes: 
-        customTypeNames: []
-        paramDataType: 18000000120000000c00000027000000270000000100000001000000
-        paramName:
-        - behaviour
-        - methodName
-        - parameters
-        - 
-        - storeResult
-        - everyFrame
-        - manualUI
-        paramDataPos: 00000000000000000000000000000000010000000000000001000000
-        paramByteDataSize: 00000000000000000000000000000000000000000100000001000000
     - name: FINIHSER
       description: 
       colorIndex: 0
       position:
         serializedVersion: 2
         x: 455.46875
-        y: 627.2969
+        y: 499.29688
         width: 100
         height: 16
       isBreakpoint: 0
@@ -14936,7 +12486,7 @@ MonoBehaviour:
       position:
         serializedVersion: 2
         x: 461.54688
-        y: 534.3125
+        y: 406.3125
         width: 141
         height: 48
       isBreakpoint: 0
@@ -15147,7 +12697,7 @@ MonoBehaviour:
         value: 0
       stringVariables:
       - useVariable: 1
-        name: myFSMName
+        name: 
         tooltip: 
         showInInspector: 0
         networkSync: 0
@@ -15166,12 +12716,12 @@ MonoBehaviour:
       gameObjectVariables: []
       objectVariables:
       - useVariable: 1
-        name: inputHandler
+        name: 
         tooltip: 
         showInInspector: 0
         networkSync: 0
-        typeName: PSmash.InputSystem.InputHandler
-        value: {fileID: 8540863619128468569}
+        typeName: 
+        value: {fileID: 0}
       - useVariable: 1
         name: myFSM
         tooltip: 
@@ -15184,7 +12734,7 @@ MonoBehaviour:
         tooltip: 
         showInInspector: 0
         networkSync: 0
-        typeName: UnityEngine.Object
+        typeName: 
         value: {fileID: 0}
       - useVariable: 1
         name: movement
@@ -15217,7 +12767,7 @@ MonoBehaviour:
     locked: 0
     manualUpdate: 0
     keepDelayedEventsOnStateExit: 0
-    preprocessed: 1
+    preprocessed: 0
     ExposedEvents: []
     RestartOnEnable: 1
     EnableDebugFlow: 0
@@ -15243,7 +12793,7 @@ MonoBehaviour:
     handleJointBreak: 0
     handleJointBreak2D: 0
     handleOnGUI: 0
-    handleFixedUpdate: 1
+    handleFixedUpdate: 0
     handleLateUpdate: 0
     handleApplicationEvents: 0
     handleUiEvents: 0
@@ -15276,7 +12826,7 @@ MonoBehaviour:
       position:
         serializedVersion: 2
         x: 58.0625
-        y: 406.73438
+        y: 278.73438
         width: 122
         height: 32
       isBreakpoint: 0
@@ -15477,7 +13027,7 @@ MonoBehaviour:
       position:
         serializedVersion: 2
         x: 54.351562
-        y: 482.14062
+        y: 354.14062
         width: 215
         height: 80
       isBreakpoint: 0
@@ -15708,7 +13258,7 @@ MonoBehaviour:
       position:
         serializedVersion: 2
         x: 314.34375
-        y: 443.7422
+        y: 315.7422
         width: 135
         height: 16
       isBreakpoint: 0
@@ -15822,7 +13372,7 @@ MonoBehaviour:
       position:
         serializedVersion: 2
         x: 62.765625
-        y: 353.7578
+        y: 225.75781
         width: 127
         height: 32
       isBreakpoint: 0
@@ -15918,8 +13468,8 @@ MonoBehaviour:
       colorIndex: 0
       position:
         serializedVersion: 2
-        x: 81.203125
-        y: 113.14844
+        x: 73.578125
+        y: 110.4375
         width: 305
         height: 32
       isBreakpoint: 0
@@ -15930,19 +13480,19 @@ MonoBehaviour:
           name: FINISHED
           isSystemEvent: 1
           isGlobal: 0
-        toState: Set this FSM in Movement
+        toState: Set Velocity to 0
         linkStyle: 0
         linkConstraint: 0
         colorIndex: 0
       actionData:
         actionNames:
-        - HutongGames.PlayMaker.Actions.CallMethod
+        - HutongGames.PlayMaker.Actions.SetObjectValue
         customNames:
         - 
         actionEnabled: 01
         actionIsOpen: 01
         actionStartIndex: 00000000
-        actionHashCodes: ca51e900
+        actionHashCodes: 1bc10e04
         unityObjectParams: []
         fsmGameObjectParams: []
         fsmOwnerDefaultParams: []
@@ -15952,300 +13502,22 @@ MonoBehaviour:
         fsmEventTargetParams: []
         fsmPropertyParams: []
         layoutOptionParams: []
-        fsmStringParams:
-        - useVariable: 0
-          name: 
-          tooltip: 
-          showInInspector: 0
-          networkSync: 0
-          value: SetCurrentStateFSM
+        fsmStringParams: []
         fsmObjectParams:
         - useVariable: 1
-          name: inputHandler
+          name: currentFSM
           tooltip: 
           showInInspector: 0
           networkSync: 0
-          typeName: PSmash.InputSystem.InputHandler
-          value: {fileID: 8540863619128468569}
-        fsmVarParams:
-        - variableName: myFSM
-          objectType: PlayMakerFSM
-          useVariable: 1
-          type: 12
-          floatValue: 0
-          intValue: 0
-          boolValue: 0
-          stringValue: 
-          vector4Value: {x: 0, y: 0, z: 0, w: 0}
-          objectReference: {fileID: 6081940117986676589}
-          arrayValue:
-            useVariable: 0
-            name: 
-            tooltip: 
-            showInInspector: 0
-            networkSync: 0
-            type: -1
-            objectTypeName: 
-            floatValues: []
-            intValues: 
-            boolValues: 
-            stringValues: []
-            vector4Values: []
-            objectReferences: []
-        - variableName: 
-          objectType: 
-          useVariable: 0
-          type: -1
-          floatValue: 0
-          intValue: 0
-          boolValue: 0
-          stringValue: 
-          vector4Value: {x: 0, y: 0, z: 0, w: 0}
-          objectReference: {fileID: 0}
-          arrayValue:
-            useVariable: 0
-            name: 
-            tooltip: 
-            showInInspector: 0
-            networkSync: 0
-            type: -1
-            objectTypeName: 
-            floatValues: []
-            intValues: 
-            boolValues: 
-            stringValues: []
-            vector4Values: []
-            objectReferences: []
-        fsmArrayParams: []
-        fsmEnumParams: []
-        fsmFloatParams: []
-        fsmIntParams: []
-        fsmBoolParams: []
-        fsmVector2Params: []
-        fsmVector3Params: []
-        fsmColorParams: []
-        fsmRectParams: []
-        fsmQuaternionParams: []
-        stringParams: []
-        byteData: 0000
-        arrayParamSizes: 01000000
-        arrayParamTypes:
-        - HutongGames.PlayMaker.FsmVar
-        customTypeSizes: 
-        customTypeNames: []
-        paramDataType: 18000000120000000c00000027000000270000000100000001000000
-        paramName:
-        - behaviour
-        - methodName
-        - parameters
-        - 
-        - storeResult
-        - everyFrame
-        - manualUI
-        paramDataPos: 00000000000000000000000000000000010000000000000001000000
-        paramByteDataSize: 00000000000000000000000000000000000000000100000001000000
-    - name: Set Current State in Input Proxy
-      description: 'Set this FSM as the current state to pass the movementV2 and
-        jumpState values '
-      colorIndex: 0
-      position:
-        serializedVersion: 2
-        x: 75.36719
-        y: 203.21875
-        width: 361
-        height: 32
-      isBreakpoint: 0
-      isSequence: 1
-      hideUnused: 0
-      transitions:
-      - fsmEvent:
-          name: FINISHED
-          isSystemEvent: 1
-          isGlobal: 0
-        toState: Set this FSM in Movement
-        linkStyle: 0
-        linkConstraint: 0
-        colorIndex: 0
-      actionData:
-        actionNames:
-        - HutongGames.PlayMaker.Actions.GetProperty
-        - HutongGames.PlayMaker.Actions.SetFsmString
-        customNames:
-        - 
-        - 
-        actionEnabled: 0101
-        actionIsOpen: 0101
-        actionStartIndex: 0000000002000000
-        actionHashCodes: 5ac8520452221a02
-        unityObjectParams: []
-        fsmGameObjectParams: []
-        fsmOwnerDefaultParams:
-        - ownerOption: 1
-          gameObject:
-            useVariable: 0
-            name: 
-            tooltip: 
-            showInInspector: 0
-            networkSync: 0
-            value: {fileID: 2796500828864873445}
-        animationCurveParams: []
-        functionCallParams: []
-        fsmTemplateControlParams: []
-        fsmEventTargetParams: []
-        fsmPropertyParams:
-        - TargetObject:
-            useVariable: 1
-            name: myFSM
-            tooltip: 
-            showInInspector: 0
-            networkSync: 0
-            typeName: PlayMakerFSM
-            value: {fileID: 6081940117986676589}
-          TargetTypeName: PlayMakerFSM
-          PropertyName: FsmName
-          BoolParameter:
-            useVariable: 0
-            name: 
-            tooltip: 
-            showInInspector: 0
-            networkSync: 0
-            value: 0
-          FloatParameter:
-            useVariable: 0
-            name: 
-            tooltip: 
-            showInInspector: 0
-            networkSync: 0
-            value: 0
-          IntParameter:
-            useVariable: 0
-            name: 
-            tooltip: 
-            showInInspector: 0
-            networkSync: 0
-            value: 0
-          GameObjectParameter:
-            useVariable: 0
-            name: 
-            tooltip: 
-            showInInspector: 0
-            networkSync: 0
-            value: {fileID: 0}
-          StringParameter:
-            useVariable: 1
-            name: myFSMName
-            tooltip: 
-            showInInspector: 0
-            networkSync: 0
-            value: 
-          Vector2Parameter:
-            useVariable: 0
-            name: 
-            tooltip: 
-            showInInspector: 0
-            networkSync: 0
-            value: {x: 0, y: 0}
-          Vector3Parameter:
-            useVariable: 0
-            name: 
-            tooltip: 
-            showInInspector: 0
-            networkSync: 0
-            value: {x: 0, y: 0, z: 0}
-          RectParamater:
-            useVariable: 0
-            name: 
-            tooltip: 
-            showInInspector: 0
-            networkSync: 0
-            value:
-              serializedVersion: 2
-              x: 0
-              y: 0
-              width: 0
-              height: 0
-          QuaternionParameter:
-            useVariable: 0
-            name: 
-            tooltip: 
-            showInInspector: 0
-            networkSync: 0
-            value: {x: 0, y: 0, z: 0, w: 0}
-          ObjectParameter:
-            useVariable: 0
-            name: 
-            tooltip: 
-            showInInspector: 0
-            networkSync: 0
-            typeName: System.String
-            value: {fileID: 0}
-          MaterialParameter:
-            useVariable: 0
-            name: 
-            tooltip: 
-            showInInspector: 0
-            networkSync: 0
-            typeName: 
-            value: {fileID: 0}
-          TextureParameter:
-            useVariable: 0
-            name: 
-            tooltip: 
-            showInInspector: 0
-            networkSync: 0
-            typeName: 
-            value: {fileID: 0}
-          ColorParameter:
-            useVariable: 0
-            name: 
-            tooltip: 
-            showInInspector: 0
-            networkSync: 0
-            value: {r: 0, g: 0, b: 0, a: 1}
-          EnumParameter:
-            useVariable: 0
-            name: 
-            tooltip: 
-            showInInspector: 0
-            networkSync: 0
-            enumName: HutongGames.PlayMaker.None
-            intValue: 0
-          ArrayParameter:
-            useVariable: 0
-            name: 
-            tooltip: 
-            showInInspector: 0
-            networkSync: 0
-            type: -1
-            objectTypeName: UnityEngine.Object
-            floatValues: []
-            intValues: 
-            boolValues: 
-            stringValues: []
-            vector4Values: []
-            objectReferences: []
-          setProperty: 0
-        layoutOptionParams: []
-        fsmStringParams:
-        - useVariable: 0
-          name: 
-          tooltip: 
-          showInInspector: 0
-          networkSync: 0
-          value: InputProxy
-        - useVariable: 0
-          name: 
-          tooltip: 
-          showInInspector: 0
-          networkSync: 0
-          value: currentStateName
+          typeName: PlayMakerFSM
+          value: {fileID: 0}
         - useVariable: 1
-          name: myFSMName
+          name: myFSM
           tooltip: 
           showInInspector: 0
           networkSync: 0
-          value: 
-        fsmObjectParams: []
+          typeName: PlayMakerFSM
+          value: {fileID: 6081940117986676589}
         fsmVarParams: []
         fsmArrayParams: []
         fsmEnumParams: []
@@ -16258,29 +13530,25 @@ MonoBehaviour:
         fsmRectParams: []
         fsmQuaternionParams: []
         stringParams: []
-        byteData: 0000
+        byteData: 00
         arrayParamSizes: 
         arrayParamTypes: []
         customTypeSizes: 
         customTypeNames: []
-        paramDataType: 24000000010000001400000012000000120000001200000001000000
+        paramDataType: 180000001800000001000000
         paramName:
-        - targetProperty
+        - objectVariable
+        - objectValue
         - everyFrame
-        - gameObject
-        - fsmName
-        - variableName
-        - setValue
-        - everyFrame
-        paramDataPos: 00000000000000000000000000000000010000000200000001000000
-        paramByteDataSize: 00000000010000000000000000000000000000000000000001000000
+        paramDataPos: 000000000100000000000000
+        paramByteDataSize: 000000000000000001000000
     - name: JUMP
       description: 
       colorIndex: 2
       position:
         serializedVersion: 2
         x: 452.2578
-        y: 511.6875
+        y: 383.6875
         width: 100
         height: 16
       isBreakpoint: 0
@@ -16394,7 +13662,7 @@ MonoBehaviour:
       position:
         serializedVersion: 2
         x: 491.32812
-        y: 601.33594
+        y: 473.33594
         width: 137
         height: 16
       isBreakpoint: 0
@@ -16536,144 +13804,13 @@ MonoBehaviour:
         - everyFrame
         paramDataPos: 000000000000000001000000000000000000000001000000040000000500000000000000010000000200000009000000
         paramByteDataSize: 000000000400000000000000000000000000000000000000010000000400000000000000000000000000000001000000
-    - name: Set this FSM in Movement
-      description: Set this FSM as the current state to pass the button state events
-      colorIndex: 0
-      position:
-        serializedVersion: 2
-        x: 64.14844
-        y: 278.67188
-        width: 296.5
-        height: 32
-      isBreakpoint: 0
-      isSequence: 0
-      hideUnused: 0
-      transitions:
-      - fsmEvent:
-          name: FINISHED
-          isSystemEvent: 1
-          isGlobal: 0
-        toState: Set Velocity to 0
-        linkStyle: 0
-        linkConstraint: 0
-        colorIndex: 0
-      actionData:
-        actionNames:
-        - HutongGames.PlayMaker.Actions.CallMethod
-        customNames:
-        - 
-        actionEnabled: 01
-        actionIsOpen: 01
-        actionStartIndex: 00000000
-        actionHashCodes: ca51e900
-        unityObjectParams: []
-        fsmGameObjectParams: []
-        fsmOwnerDefaultParams: []
-        animationCurveParams: []
-        functionCallParams: []
-        fsmTemplateControlParams: []
-        fsmEventTargetParams: []
-        fsmPropertyParams: []
-        layoutOptionParams: []
-        fsmStringParams:
-        - useVariable: 0
-          name: 
-          tooltip: 
-          showInInspector: 0
-          networkSync: 0
-          value: SetCurrentStateFSM
-        fsmObjectParams:
-        - useVariable: 1
-          name: movement
-          tooltip: 
-          showInInspector: 0
-          networkSync: 0
-          typeName: PSmash.Movement.PlayerMovement
-          value: {fileID: 8235024681204614677}
-        fsmVarParams:
-        - variableName: myFSM
-          objectType: PlayMakerFSM
-          useVariable: 1
-          type: 12
-          floatValue: 0
-          intValue: 0
-          boolValue: 0
-          stringValue: 
-          vector4Value: {x: 0, y: 0, z: 0, w: 0}
-          objectReference: {fileID: 6081940117986676589}
-          arrayValue:
-            useVariable: 0
-            name: 
-            tooltip: 
-            showInInspector: 0
-            networkSync: 0
-            type: -1
-            objectTypeName: 
-            floatValues: []
-            intValues: 
-            boolValues: 
-            stringValues: []
-            vector4Values: []
-            objectReferences: []
-        - variableName: 
-          objectType: 
-          useVariable: 0
-          type: -1
-          floatValue: 0
-          intValue: 0
-          boolValue: 0
-          stringValue: 
-          vector4Value: {x: 0, y: 0, z: 0, w: 0}
-          objectReference: {fileID: 0}
-          arrayValue:
-            useVariable: 0
-            name: 
-            tooltip: 
-            showInInspector: 0
-            networkSync: 0
-            type: -1
-            objectTypeName: 
-            floatValues: []
-            intValues: 
-            boolValues: 
-            stringValues: []
-            vector4Values: []
-            objectReferences: []
-        fsmArrayParams: []
-        fsmEnumParams: []
-        fsmFloatParams: []
-        fsmIntParams: []
-        fsmBoolParams: []
-        fsmVector2Params: []
-        fsmVector3Params: []
-        fsmColorParams: []
-        fsmRectParams: []
-        fsmQuaternionParams: []
-        stringParams: []
-        byteData: 0000
-        arrayParamSizes: 01000000
-        arrayParamTypes:
-        - HutongGames.PlayMaker.FsmVar
-        customTypeSizes: 
-        customTypeNames: []
-        paramDataType: 18000000120000000c00000027000000270000000100000001000000
-        paramName:
-        - behaviour
-        - methodName
-        - parameters
-        - 
-        - storeResult
-        - everyFrame
-        - manualUI
-        paramDataPos: 00000000000000000000000000000000010000000000000001000000
-        paramByteDataSize: 00000000000000000000000000000000000000000100000001000000
     - name: Can Jump?
       description: 
       colorIndex: 0
       position:
         serializedVersion: 2
         x: 301
-        y: 491
+        y: 363
         width: 100
         height: 48
       isBreakpoint: 0
@@ -16801,7 +13938,7 @@ MonoBehaviour:
       position:
         serializedVersion: 2
         x: 489.75
-        y: 550.46094
+        y: 422.46094
         width: 100
         height: 16
       isBreakpoint: 0
@@ -16915,7 +14052,7 @@ MonoBehaviour:
       position:
         serializedVersion: 2
         x: 277.67188
-        y: 557.03906
+        y: 429.03906
         width: 134
         height: 48
       isBreakpoint: 0
@@ -17043,7 +14180,7 @@ MonoBehaviour:
       position:
         serializedVersion: 2
         x: 480.84375
-        y: 646.6953
+        y: 518.6953
         width: 163
         height: 16
       isBreakpoint: 0
@@ -17301,7 +14438,7 @@ MonoBehaviour:
         value: 0
       stringVariables:
       - useVariable: 1
-        name: myFSMName
+        name: 
         tooltip: 
         showInInspector: 0
         networkSync: 0
@@ -17357,12 +14494,12 @@ MonoBehaviour:
         typeName: PSmash.Movement.PlayerMovement
         value: {fileID: 8235024681204614677}
       - useVariable: 1
-        name: inputHandler
+        name: 
         tooltip: 
         showInInspector: 0
         networkSync: 0
-        typeName: PSmash.InputSystem.InputHandler
-        value: {fileID: 8540863619128468569}
+        typeName: 
+        value: {fileID: 0}
       - useVariable: 1
         name: myFSM
         tooltip: 
@@ -17402,7 +14539,7 @@ MonoBehaviour:
     locked: 0
     manualUpdate: 0
     keepDelayedEventsOnStateExit: 0
-    preprocessed: 1
+    preprocessed: 0
     ExposedEvents: []
     RestartOnEnable: 1
     EnableDebugFlow: 0
@@ -17428,7 +14565,7 @@ MonoBehaviour:
     handleJointBreak: 0
     handleJointBreak2D: 0
     handleOnGUI: 0
-    handleFixedUpdate: 1
+    handleFixedUpdate: 0
     handleLateUpdate: 0
     handleApplicationEvents: 0
     handleUiEvents: 0
@@ -17461,7 +14598,7 @@ MonoBehaviour:
       position:
         serializedVersion: 2
         x: 67
-        y: 342
+        y: 230
         width: 122
         height: 32
       isBreakpoint: 0
@@ -17582,7 +14719,7 @@ MonoBehaviour:
       position:
         serializedVersion: 2
         x: 62.804688
-        y: 465.17188
+        y: 353.17188
         width: 100
         height: 32
       isBreakpoint: 0
@@ -17692,7 +14829,7 @@ MonoBehaviour:
       position:
         serializedVersion: 2
         x: 56.585938
-        y: 552.0078
+        y: 440.0078
         width: 132
         height: 16
       isBreakpoint: 0
@@ -17788,208 +14925,61 @@ MonoBehaviour:
         - everyFrame
         paramDataPos: 00000000000000000000000000000000
         paramByteDataSize: 00000000000000000000000001000000
-    - name: Set Current State in Input Proxy
-      description: 'Set this FSM as the current state to pass the movementV2 and
-        jumpState values '
+    - name: Set this FSM in Input Handler
+      description: Set this FSM as the current state to pass the button state events
       colorIndex: 0
       position:
         serializedVersion: 2
-        x: 76.13281
-        y: 199.375
-        width: 361
+        x: 70.515625
+        y: 101.14844
+        width: 305
         height: 32
       isBreakpoint: 0
-      isSequence: 1
+      isSequence: 0
       hideUnused: 0
       transitions:
       - fsmEvent:
           name: FINISHED
           isSystemEvent: 1
           isGlobal: 0
-        toState: Set this FSM in Movement
+        toState: Start Animation
         linkStyle: 0
         linkConstraint: 0
         colorIndex: 0
       actionData:
         actionNames:
-        - HutongGames.PlayMaker.Actions.GetProperty
-        - HutongGames.PlayMaker.Actions.SetFsmString
+        - HutongGames.PlayMaker.Actions.SetObjectValue
         customNames:
         - 
-        - 
-        actionEnabled: 0101
-        actionIsOpen: 0101
-        actionStartIndex: 0000000002000000
-        actionHashCodes: 5ac8520452221a02
+        actionEnabled: 01
+        actionIsOpen: 01
+        actionStartIndex: 00000000
+        actionHashCodes: 1bc10e04
         unityObjectParams: []
         fsmGameObjectParams: []
-        fsmOwnerDefaultParams:
-        - ownerOption: 1
-          gameObject:
-            useVariable: 0
-            name: 
-            tooltip: 
-            showInInspector: 0
-            networkSync: 0
-            value: {fileID: 2796500828864873445}
+        fsmOwnerDefaultParams: []
         animationCurveParams: []
         functionCallParams: []
         fsmTemplateControlParams: []
         fsmEventTargetParams: []
-        fsmPropertyParams:
-        - TargetObject:
-            useVariable: 1
-            name: myFSM
-            tooltip: 
-            showInInspector: 0
-            networkSync: 0
-            typeName: PlayMakerFSM
-            value: {fileID: 6426372689217041762}
-          TargetTypeName: PlayMakerFSM
-          PropertyName: FsmName
-          BoolParameter:
-            useVariable: 0
-            name: 
-            tooltip: 
-            showInInspector: 0
-            networkSync: 0
-            value: 0
-          FloatParameter:
-            useVariable: 0
-            name: 
-            tooltip: 
-            showInInspector: 0
-            networkSync: 0
-            value: 0
-          IntParameter:
-            useVariable: 0
-            name: 
-            tooltip: 
-            showInInspector: 0
-            networkSync: 0
-            value: 0
-          GameObjectParameter:
-            useVariable: 0
-            name: 
-            tooltip: 
-            showInInspector: 0
-            networkSync: 0
-            value: {fileID: 0}
-          StringParameter:
-            useVariable: 1
-            name: myFSMName
-            tooltip: 
-            showInInspector: 0
-            networkSync: 0
-            value: 
-          Vector2Parameter:
-            useVariable: 0
-            name: 
-            tooltip: 
-            showInInspector: 0
-            networkSync: 0
-            value: {x: 0, y: 0}
-          Vector3Parameter:
-            useVariable: 0
-            name: 
-            tooltip: 
-            showInInspector: 0
-            networkSync: 0
-            value: {x: 0, y: 0, z: 0}
-          RectParamater:
-            useVariable: 0
-            name: 
-            tooltip: 
-            showInInspector: 0
-            networkSync: 0
-            value:
-              serializedVersion: 2
-              x: 0
-              y: 0
-              width: 0
-              height: 0
-          QuaternionParameter:
-            useVariable: 0
-            name: 
-            tooltip: 
-            showInInspector: 0
-            networkSync: 0
-            value: {x: 0, y: 0, z: 0, w: 0}
-          ObjectParameter:
-            useVariable: 0
-            name: 
-            tooltip: 
-            showInInspector: 0
-            networkSync: 0
-            typeName: System.String
-            value: {fileID: 0}
-          MaterialParameter:
-            useVariable: 0
-            name: 
-            tooltip: 
-            showInInspector: 0
-            networkSync: 0
-            typeName: 
-            value: {fileID: 0}
-          TextureParameter:
-            useVariable: 0
-            name: 
-            tooltip: 
-            showInInspector: 0
-            networkSync: 0
-            typeName: 
-            value: {fileID: 0}
-          ColorParameter:
-            useVariable: 0
-            name: 
-            tooltip: 
-            showInInspector: 0
-            networkSync: 0
-            value: {r: 0, g: 0, b: 0, a: 1}
-          EnumParameter:
-            useVariable: 0
-            name: 
-            tooltip: 
-            showInInspector: 0
-            networkSync: 0
-            enumName: HutongGames.PlayMaker.None
-            intValue: 0
-          ArrayParameter:
-            useVariable: 0
-            name: 
-            tooltip: 
-            showInInspector: 0
-            networkSync: 0
-            type: -1
-            objectTypeName: UnityEngine.Object
-            floatValues: []
-            intValues: 
-            boolValues: 
-            stringValues: []
-            vector4Values: []
-            objectReferences: []
-          setProperty: 0
+        fsmPropertyParams: []
         layoutOptionParams: []
-        fsmStringParams:
-        - useVariable: 0
-          name: 
-          tooltip: 
-          showInInspector: 0
-          networkSync: 0
-          value: InputProxy
-        - useVariable: 0
-          name: 
-          tooltip: 
-          showInInspector: 0
-          networkSync: 0
-          value: currentStateName
+        fsmStringParams: []
+        fsmObjectParams:
         - useVariable: 1
-          name: myFSMName
+          name: currentFSM
           tooltip: 
           showInInspector: 0
           networkSync: 0
-          value: 
-        fsmObjectParams: []
+          typeName: PlayMakerFSM
+          value: {fileID: 0}
+        - useVariable: 1
+          name: myFSM
+          tooltip: 
+          showInInspector: 0
+          networkSync: 0
+          typeName: PlayMakerFSM
+          value: {fileID: 6426372689217041762}
         fsmVarParams: []
         fsmArrayParams: []
         fsmEnumParams: []
@@ -18002,160 +14992,25 @@ MonoBehaviour:
         fsmRectParams: []
         fsmQuaternionParams: []
         stringParams: []
-        byteData: 0000
+        byteData: 00
         arrayParamSizes: 
         arrayParamTypes: []
         customTypeSizes: 
         customTypeNames: []
-        paramDataType: 24000000010000001400000012000000120000001200000001000000
+        paramDataType: 180000001800000001000000
         paramName:
-        - targetProperty
+        - objectVariable
+        - objectValue
         - everyFrame
-        - gameObject
-        - fsmName
-        - variableName
-        - setValue
-        - everyFrame
-        paramDataPos: 00000000000000000000000000000000010000000200000001000000
-        paramByteDataSize: 00000000010000000000000000000000000000000000000001000000
-    - name: Set this FSM in Input Handler
-      description: Set this FSM as the current state to pass the button state events
-      colorIndex: 0
-      position:
-        serializedVersion: 2
-        x: 104.703125
-        y: 109.359375
-        width: 305
-        height: 32
-      isBreakpoint: 0
-      isSequence: 0
-      hideUnused: 0
-      transitions:
-      - fsmEvent:
-          name: FINISHED
-          isSystemEvent: 1
-          isGlobal: 0
-        toState: Set this FSM in Movement
-        linkStyle: 0
-        linkConstraint: 0
-        colorIndex: 0
-      actionData:
-        actionNames:
-        - HutongGames.PlayMaker.Actions.CallMethod
-        customNames:
-        - 
-        actionEnabled: 01
-        actionIsOpen: 01
-        actionStartIndex: 00000000
-        actionHashCodes: ca51e900
-        unityObjectParams: []
-        fsmGameObjectParams: []
-        fsmOwnerDefaultParams: []
-        animationCurveParams: []
-        functionCallParams: []
-        fsmTemplateControlParams: []
-        fsmEventTargetParams: []
-        fsmPropertyParams: []
-        layoutOptionParams: []
-        fsmStringParams:
-        - useVariable: 0
-          name: 
-          tooltip: 
-          showInInspector: 0
-          networkSync: 0
-          value: SetCurrentStateFSM
-        fsmObjectParams:
-        - useVariable: 1
-          name: inputHandler
-          tooltip: 
-          showInInspector: 0
-          networkSync: 0
-          typeName: PSmash.InputSystem.InputHandler
-          value: {fileID: 8540863619128468569}
-        fsmVarParams:
-        - variableName: myFSM
-          objectType: PlayMakerFSM
-          useVariable: 1
-          type: 12
-          floatValue: 0
-          intValue: 0
-          boolValue: 0
-          stringValue: 
-          vector4Value: {x: 0, y: 0, z: 0, w: 0}
-          objectReference: {fileID: 6426372689217041762}
-          arrayValue:
-            useVariable: 0
-            name: 
-            tooltip: 
-            showInInspector: 0
-            networkSync: 0
-            type: -1
-            objectTypeName: 
-            floatValues: []
-            intValues: 
-            boolValues: 
-            stringValues: []
-            vector4Values: []
-            objectReferences: []
-        - variableName: 
-          objectType: 
-          useVariable: 0
-          type: -1
-          floatValue: 0
-          intValue: 0
-          boolValue: 0
-          stringValue: 
-          vector4Value: {x: 0, y: 0, z: 0, w: 0}
-          objectReference: {fileID: 0}
-          arrayValue:
-            useVariable: 0
-            name: 
-            tooltip: 
-            showInInspector: 0
-            networkSync: 0
-            type: -1
-            objectTypeName: 
-            floatValues: []
-            intValues: 
-            boolValues: 
-            stringValues: []
-            vector4Values: []
-            objectReferences: []
-        fsmArrayParams: []
-        fsmEnumParams: []
-        fsmFloatParams: []
-        fsmIntParams: []
-        fsmBoolParams: []
-        fsmVector2Params: []
-        fsmVector3Params: []
-        fsmColorParams: []
-        fsmRectParams: []
-        fsmQuaternionParams: []
-        stringParams: []
-        byteData: 0000
-        arrayParamSizes: 01000000
-        arrayParamTypes:
-        - HutongGames.PlayMaker.FsmVar
-        customTypeSizes: 
-        customTypeNames: []
-        paramDataType: 18000000120000000c00000027000000270000000100000001000000
-        paramName:
-        - behaviour
-        - methodName
-        - parameters
-        - 
-        - storeResult
-        - everyFrame
-        - manualUI
-        paramDataPos: 00000000000000000000000000000000010000000000000001000000
-        paramByteDataSize: 00000000000000000000000000000000000000000100000001000000
+        paramDataPos: 000000000100000000000000
+        paramByteDataSize: 000000000000000001000000
     - name: State 1
       description: 
       colorIndex: 0
       position:
         serializedVersion: 2
         x: 66.921875
-        y: 406.0547
+        y: 294.0547
         width: 100
         height: 32
       isBreakpoint: 0
@@ -18241,7 +15096,7 @@ MonoBehaviour:
       position:
         serializedVersion: 2
         x: 265
-        y: 408
+        y: 296
         width: 100
         height: 32
       isBreakpoint: 0
@@ -18334,7 +15189,7 @@ MonoBehaviour:
       position:
         serializedVersion: 2
         x: 507
-        y: 343
+        y: 231
         width: 100
         height: 32
       isBreakpoint: 0
@@ -18444,137 +15299,6 @@ MonoBehaviour:
         - everyFrame
         paramDataPos: 00000000000000000100000002000000000000000300000004000000010000000500000005000000
         paramByteDataSize: 00000000000000000000000000000000010000000000000000000000040000000000000001000000
-    - name: Set this FSM in Movement
-      description: Set this FSM as the current state to pass the button state events
-      colorIndex: 0
-      position:
-        serializedVersion: 2
-        x: 73.78906
-        y: 250.6875
-        width: 296.5
-        height: 32
-      isBreakpoint: 0
-      isSequence: 0
-      hideUnused: 0
-      transitions:
-      - fsmEvent:
-          name: FINISHED
-          isSystemEvent: 1
-          isGlobal: 0
-        toState: Start Animation
-        linkStyle: 0
-        linkConstraint: 0
-        colorIndex: 0
-      actionData:
-        actionNames:
-        - HutongGames.PlayMaker.Actions.CallMethod
-        customNames:
-        - 
-        actionEnabled: 01
-        actionIsOpen: 01
-        actionStartIndex: 00000000
-        actionHashCodes: ca51e900
-        unityObjectParams: []
-        fsmGameObjectParams: []
-        fsmOwnerDefaultParams: []
-        animationCurveParams: []
-        functionCallParams: []
-        fsmTemplateControlParams: []
-        fsmEventTargetParams: []
-        fsmPropertyParams: []
-        layoutOptionParams: []
-        fsmStringParams:
-        - useVariable: 0
-          name: 
-          tooltip: 
-          showInInspector: 0
-          networkSync: 0
-          value: SetCurrentStateFSM
-        fsmObjectParams:
-        - useVariable: 1
-          name: movement
-          tooltip: 
-          showInInspector: 0
-          networkSync: 0
-          typeName: PSmash.Movement.PlayerMovement
-          value: {fileID: 8235024681204614677}
-        fsmVarParams:
-        - variableName: myFSM
-          objectType: PlayMakerFSM
-          useVariable: 1
-          type: 12
-          floatValue: 0
-          intValue: 0
-          boolValue: 0
-          stringValue: 
-          vector4Value: {x: 0, y: 0, z: 0, w: 0}
-          objectReference: {fileID: 6426372689217041762}
-          arrayValue:
-            useVariable: 0
-            name: 
-            tooltip: 
-            showInInspector: 0
-            networkSync: 0
-            type: -1
-            objectTypeName: 
-            floatValues: []
-            intValues: 
-            boolValues: 
-            stringValues: []
-            vector4Values: []
-            objectReferences: []
-        - variableName: 
-          objectType: 
-          useVariable: 0
-          type: -1
-          floatValue: 0
-          intValue: 0
-          boolValue: 0
-          stringValue: 
-          vector4Value: {x: 0, y: 0, z: 0, w: 0}
-          objectReference: {fileID: 0}
-          arrayValue:
-            useVariable: 0
-            name: 
-            tooltip: 
-            showInInspector: 0
-            networkSync: 0
-            type: -1
-            objectTypeName: 
-            floatValues: []
-            intValues: 
-            boolValues: 
-            stringValues: []
-            vector4Values: []
-            objectReferences: []
-        fsmArrayParams: []
-        fsmEnumParams: []
-        fsmFloatParams: []
-        fsmIntParams: []
-        fsmBoolParams: []
-        fsmVector2Params: []
-        fsmVector3Params: []
-        fsmColorParams: []
-        fsmRectParams: []
-        fsmQuaternionParams: []
-        stringParams: []
-        byteData: 0000
-        arrayParamSizes: 01000000
-        arrayParamTypes:
-        - HutongGames.PlayMaker.FsmVar
-        customTypeSizes: 
-        customTypeNames: []
-        paramDataType: 18000000120000000c00000027000000270000000100000001000000
-        paramName:
-        - behaviour
-        - methodName
-        - parameters
-        - 
-        - storeResult
-        - everyFrame
-        - manualUI
-        paramDataPos: 00000000000000000000000000000000010000000000000001000000
-        paramByteDataSize: 00000000000000000000000000000000000000000100000001000000
     events:
     - name: FINISHED
       isSystemEvent: 1
@@ -18652,7 +15376,7 @@ MonoBehaviour:
         value: 0
       stringVariables:
       - useVariable: 1
-        name: myFSMName
+        name: 
         tooltip: 
         showInInspector: 0
         networkSync: 0
@@ -18726,19 +15450,19 @@ MonoBehaviour:
         typeName: PlayMakerFSM
         value: {fileID: 6426372689217041762}
       - useVariable: 1
-        name: inputHandler
+        name: 
         tooltip: 
         showInInspector: 0
         networkSync: 0
-        typeName: PSmash.InputSystem.InputHandler
-        value: {fileID: 8540863619128468569}
+        typeName: 
+        value: {fileID: 0}
       - useVariable: 1
-        name: movement
+        name: 
         tooltip: 
         showInInspector: 0
         networkSync: 0
-        typeName: PSmash.Movement.PlayerMovement
-        value: {fileID: 8235024681204614677}
+        typeName: 
+        value: {fileID: 0}
       materialVariables: []
       textureVariables: []
       arrayVariables: []
@@ -18756,7 +15480,7 @@ MonoBehaviour:
     locked: 0
     manualUpdate: 0
     keepDelayedEventsOnStateExit: 0
-    preprocessed: 1
+    preprocessed: 0
     ExposedEvents: []
     RestartOnEnable: 1
     EnableDebugFlow: 0
@@ -18892,140 +15616,9 @@ MonoBehaviour:
       colorIndex: 0
       position:
         serializedVersion: 2
-        x: 95.74219
-        y: 110.296875
+        x: 90.74219
+        y: 112.296875
         width: 305
-        height: 32
-      isBreakpoint: 0
-      isSequence: 0
-      hideUnused: 0
-      transitions:
-      - fsmEvent:
-          name: FINISHED
-          isSystemEvent: 1
-          isGlobal: 0
-        toState: Set this FSM in Movement
-        linkStyle: 0
-        linkConstraint: 0
-        colorIndex: 0
-      actionData:
-        actionNames:
-        - HutongGames.PlayMaker.Actions.CallMethod
-        customNames:
-        - 
-        actionEnabled: 01
-        actionIsOpen: 01
-        actionStartIndex: 00000000
-        actionHashCodes: ca51e900
-        unityObjectParams: []
-        fsmGameObjectParams: []
-        fsmOwnerDefaultParams: []
-        animationCurveParams: []
-        functionCallParams: []
-        fsmTemplateControlParams: []
-        fsmEventTargetParams: []
-        fsmPropertyParams: []
-        layoutOptionParams: []
-        fsmStringParams:
-        - useVariable: 0
-          name: 
-          tooltip: 
-          showInInspector: 0
-          networkSync: 0
-          value: SetCurrentStateFSM
-        fsmObjectParams:
-        - useVariable: 1
-          name: inputHandler
-          tooltip: 
-          showInInspector: 0
-          networkSync: 0
-          typeName: PSmash.InputSystem.InputHandler
-          value: {fileID: 8540863619128468569}
-        fsmVarParams:
-        - variableName: myFSM
-          objectType: PlayMakerFSM
-          useVariable: 1
-          type: 12
-          floatValue: 0
-          intValue: 0
-          boolValue: 0
-          stringValue: 
-          vector4Value: {x: 0, y: 0, z: 0, w: 0}
-          objectReference: {fileID: 8711499913422244330}
-          arrayValue:
-            useVariable: 0
-            name: 
-            tooltip: 
-            showInInspector: 0
-            networkSync: 0
-            type: -1
-            objectTypeName: 
-            floatValues: []
-            intValues: 
-            boolValues: 
-            stringValues: []
-            vector4Values: []
-            objectReferences: []
-        - variableName: 
-          objectType: 
-          useVariable: 0
-          type: -1
-          floatValue: 0
-          intValue: 0
-          boolValue: 0
-          stringValue: 
-          vector4Value: {x: 0, y: 0, z: 0, w: 0}
-          objectReference: {fileID: 0}
-          arrayValue:
-            useVariable: 0
-            name: 
-            tooltip: 
-            showInInspector: 0
-            networkSync: 0
-            type: -1
-            objectTypeName: 
-            floatValues: []
-            intValues: 
-            boolValues: 
-            stringValues: []
-            vector4Values: []
-            objectReferences: []
-        fsmArrayParams: []
-        fsmEnumParams: []
-        fsmFloatParams: []
-        fsmIntParams: []
-        fsmBoolParams: []
-        fsmVector2Params: []
-        fsmVector3Params: []
-        fsmColorParams: []
-        fsmRectParams: []
-        fsmQuaternionParams: []
-        stringParams: []
-        byteData: 0000
-        arrayParamSizes: 01000000
-        arrayParamTypes:
-        - HutongGames.PlayMaker.FsmVar
-        customTypeSizes: 
-        customTypeNames: []
-        paramDataType: 18000000120000000c00000027000000270000000100000001000000
-        paramName:
-        - behaviour
-        - methodName
-        - parameters
-        - 
-        - storeResult
-        - everyFrame
-        - manualUI
-        paramDataPos: 00000000000000000000000000000000010000000000000001000000
-        paramByteDataSize: 00000000000000000000000000000000000000000100000001000000
-    - name: Set this FSM in Movement
-      description: Set this FSM as the current state to pass the button state events
-      colorIndex: 0
-      position:
-        serializedVersion: 2
-        x: 90.921875
-        y: 199.07031
-        width: 296.5
         height: 32
       isBreakpoint: 0
       isSequence: 0
@@ -19041,13 +15634,13 @@ MonoBehaviour:
         colorIndex: 0
       actionData:
         actionNames:
-        - HutongGames.PlayMaker.Actions.CallMethod
+        - HutongGames.PlayMaker.Actions.SetObjectValue
         customNames:
         - 
         actionEnabled: 01
         actionIsOpen: 01
         actionStartIndex: 00000000
-        actionHashCodes: ca51e900
+        actionHashCodes: 1bc10e04
         unityObjectParams: []
         fsmGameObjectParams: []
         fsmOwnerDefaultParams: []
@@ -19057,70 +15650,23 @@ MonoBehaviour:
         fsmEventTargetParams: []
         fsmPropertyParams: []
         layoutOptionParams: []
-        fsmStringParams:
-        - useVariable: 0
-          name: 
-          tooltip: 
-          showInInspector: 0
-          networkSync: 0
-          value: SetCurrentStateFSM
+        fsmStringParams: []
         fsmObjectParams:
         - useVariable: 1
-          name: movement
+          name: currentFSM
           tooltip: 
           showInInspector: 0
           networkSync: 0
-          typeName: PSmash.Movement.PlayerMovement
-          value: {fileID: 8235024681204614677}
-        fsmVarParams:
-        - variableName: myFSM
-          objectType: PlayMakerFSM
-          useVariable: 1
-          type: 12
-          floatValue: 0
-          intValue: 0
-          boolValue: 0
-          stringValue: 
-          vector4Value: {x: 0, y: 0, z: 0, w: 0}
-          objectReference: {fileID: 8711499913422244330}
-          arrayValue:
-            useVariable: 0
-            name: 
-            tooltip: 
-            showInInspector: 0
-            networkSync: 0
-            type: -1
-            objectTypeName: 
-            floatValues: []
-            intValues: 
-            boolValues: 
-            stringValues: []
-            vector4Values: []
-            objectReferences: []
-        - variableName: 
-          objectType: 
-          useVariable: 0
-          type: -1
-          floatValue: 0
-          intValue: 0
-          boolValue: 0
-          stringValue: 
-          vector4Value: {x: 0, y: 0, z: 0, w: 0}
-          objectReference: {fileID: 0}
-          arrayValue:
-            useVariable: 0
-            name: 
-            tooltip: 
-            showInInspector: 0
-            networkSync: 0
-            type: -1
-            objectTypeName: 
-            floatValues: []
-            intValues: 
-            boolValues: 
-            stringValues: []
-            vector4Values: []
-            objectReferences: []
+          typeName: PlayMakerFSM
+          value: {fileID: 0}
+        - useVariable: 1
+          name: myFSM
+          tooltip: 
+          showInInspector: 0
+          networkSync: 0
+          typeName: PlayMakerFSM
+          value: {fileID: 8711499913422244330}
+        fsmVarParams: []
         fsmArrayParams: []
         fsmEnumParams: []
         fsmFloatParams: []
@@ -19132,30 +15678,25 @@ MonoBehaviour:
         fsmRectParams: []
         fsmQuaternionParams: []
         stringParams: []
-        byteData: 0000
-        arrayParamSizes: 01000000
-        arrayParamTypes:
-        - HutongGames.PlayMaker.FsmVar
+        byteData: 00
+        arrayParamSizes: 
+        arrayParamTypes: []
         customTypeSizes: 
         customTypeNames: []
-        paramDataType: 18000000120000000c00000027000000270000000100000001000000
+        paramDataType: 180000001800000001000000
         paramName:
-        - behaviour
-        - methodName
-        - parameters
-        - 
-        - storeResult
+        - objectVariable
+        - objectValue
         - everyFrame
-        - manualUI
-        paramDataPos: 00000000000000000000000000000000010000000000000001000000
-        paramByteDataSize: 00000000000000000000000000000000000000000100000001000000
+        paramDataPos: 000000000100000000000000
+        paramByteDataSize: 000000000000000001000000
     - name: Start Finisher Action
       description: 
       colorIndex: 0
       position:
         serializedVersion: 2
         x: 75.84375
-        y: 344.73438
+        y: 248.73438
         width: 150
         height: 32
       isBreakpoint: 0
@@ -19262,7 +15803,7 @@ MonoBehaviour:
       position:
         serializedVersion: 2
         x: 69.53125
-        y: 412.35156
+        y: 316.35156
         width: 132
         height: 32
       isBreakpoint: 0
@@ -19372,7 +15913,7 @@ MonoBehaviour:
       position:
         serializedVersion: 2
         x: 60.601562
-        y: 529.1953
+        y: 433.1953
         width: 132
         height: 16
       isBreakpoint: 0
@@ -19474,7 +16015,7 @@ MonoBehaviour:
       position:
         serializedVersion: 2
         x: 68.82031
-        y: 477.0547
+        y: 381.0547
         width: 143
         height: 32
       isBreakpoint: 0
@@ -19580,7 +16121,7 @@ MonoBehaviour:
       position:
         serializedVersion: 2
         x: 86.4375
-        y: 292.3125
+        y: 196.3125
         width: 126
         height: 32
       isBreakpoint: 0
@@ -19652,7 +16193,7 @@ MonoBehaviour:
       position:
         serializedVersion: 2
         x: 279.41406
-        y: 302.9375
+        y: 206.9375
         width: 100
         height: 32
       isBreakpoint: 0
@@ -19849,7 +16390,7 @@ MonoBehaviour:
         value: 0
       stringVariables:
       - useVariable: 1
-        name: myFSMName
+        name: 
         tooltip: 
         showInInspector: 0
         networkSync: 0
@@ -19868,12 +16409,12 @@ MonoBehaviour:
       gameObjectVariables: []
       objectVariables:
       - useVariable: 1
-        name: inputHandler
+        name: 
         tooltip: 
         showInInspector: 0
         networkSync: 0
-        typeName: PSmash.InputSystem.InputHandler
-        value: {fileID: 8540863619128468569}
+        typeName: 
+        value: {fileID: 0}
       - useVariable: 1
         name: movement
         tooltip: 
@@ -19912,7 +16453,7 @@ MonoBehaviour:
     locked: 0
     manualUpdate: 0
     keepDelayedEventsOnStateExit: 0
-    preprocessed: 1
+    preprocessed: 0
     ExposedEvents: []
     RestartOnEnable: 1
     EnableDebugFlow: 0
@@ -19938,7 +16479,7 @@ MonoBehaviour:
     handleJointBreak: 0
     handleJointBreak2D: 0
     handleOnGUI: 0
-    handleFixedUpdate: 1
+    handleFixedUpdate: 0
     handleLateUpdate: 0
     handleApplicationEvents: 0
     handleUiEvents: 0
