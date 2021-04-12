@@ -168,7 +168,7 @@ namespace PSmash.Combat
 
         #region ComboAttack
         //Anim Event
-        void LightAttackDamage(int comboAttackNumber)
+        void LightAttackDamage()
         {
             //print("NormalAttack");
             Attack(attackTransform, comboAttackArea, fists);
@@ -195,14 +195,14 @@ namespace PSmash.Combat
         #region ToolAttack
 
         //Anim Event
-        void ToolAttack()
+        void SubweaponAttack()
         {
             //print("ToolAttack");
             Attack(attackTransform, comboAttackArea, mace);
         }
 
         //AnimEvent
-        void ToolAttackSound()
+        void SbuweaponAttackSound()
         {
             audioSource.pitch = UnityEngine.Random.Range(0.75f, 1.1f);
             audioSource.PlayOneShot(toolAttackSound);
@@ -224,6 +224,7 @@ namespace PSmash.Combat
                 IDamagable target = coll.GetComponent<IDamagable>();
                 if (target == null || coll.GetComponent<Projectile>())
                     continue;
+                print(currentWeapon.name);
                 target.TakeDamage(transform, currentWeapon, baseStats.GetStat(StatsList.Attack));
                 //print("Sendingdamage from player to  " + target);
 
