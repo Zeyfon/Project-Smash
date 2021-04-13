@@ -368,8 +368,8 @@ namespace PSmash.Movement
 
         void GroundMovement(Vector2 input, float speedFactor)
         {
-            print("Grounded Movement");
-            print(" Input  " +input);
+            //print("Grounded Movement");
+            //print(" Input  " +input);
             rb.sharedMaterial = noFriction;
             if (input.magnitude == 0)
             {
@@ -378,14 +378,14 @@ namespace PSmash.Movement
             }
             input.y = 0;
             Vector2 direction = slope.GetSlopeNormalPerp(transform.position, input, slopeCheckDistance, maxSlopeAngle, whatIsGround);
-            print("Direction  " + direction);
+            //print("Direction  " + direction);
             if(direction.sqrMagnitude == 0)
             {
                 MoveInAir(input, speedFactor);
                 return;
             }
             float speed = baseSpeed * Mathf.Abs(input.x) * speedFactor;
-            print("Speed " + speed);
+            //print("Speed " + speed);
             float xVelocity = -1 * speed * direction.x;
             float yVelocity = -1 * speed * direction.y;
             rb.velocity = new Vector2(xVelocity, yVelocity);

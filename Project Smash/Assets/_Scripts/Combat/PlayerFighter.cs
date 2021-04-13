@@ -31,7 +31,7 @@ namespace PSmash.Combat
         [SerializeField] int finisherAttackFactor = 10;
         [SerializeField] AudioClip finisherSound = null;
         [SerializeField] Transform steamTransform = null;
-        [SerializeField]  GameObject finisherEffects = null;
+        [SerializeField]  GameObject finisherPS = null;
 
         [Header("Guard")]
         [SerializeField] AudioClip guardFootstepSound = null;
@@ -75,9 +75,19 @@ namespace PSmash.Combat
 
         IEnumerator DoFinisherMove()
         {
-            SetEnemyStateToFinisher();
+            targetTransform.GetComponent<EnemyHealth>().SetStateToFinisher();
             gameObject.layer = LayerMask.NameToLayer("PlayerGhost");
-            print("Player is doing Finisher Move");
+            RaycastHit2D hit = PositionPlayerInFronOfEnemy();
+            OnFinisherCamera(true);
+            //targetTransform = hit.transform;
+            StartCoroutine(StartPlayerAndTargetFinisherAnimations(hit.transform));
+
+            //isFinishinAnEnemy = false;
+            yield return null;
+        }
+
+        RaycastHit2D PositionPlayerInFronOfEnemy()
+        {
             RaycastHit2D hit = Physics2D.Raycast(transform.position + new Vector3(0, 1), transform.right, 2, whatIsEnemy);
             if (transform.position.x - hit.transform.position.x > 0)
             {
@@ -89,19 +99,8 @@ namespace PSmash.Combat
                 //Player is at left side of enemy
                 GetComponent<Rigidbody2D>().MovePosition(hit.transform.position + new Vector3(-1, 0, 0));
             }
-            OnFinisherCamera(true);
-            //targetTransform = hit.transform;
-            StartCoroutine(StartPlayerAndTargetFinisherAnimations(hit.transform));
-
-            //isFinishinAnEnemy = false;
-            yield return null;
+            return hit;
         }
-
-        private void SetEnemyStateToFinisher()
-        {
-            targetTransform.GetComponent<EnemyHealth>().SetStateToFinisher();
-        }
-
         IEnumerator StartPlayerAndTargetFinisherAnimations(Transform targetTransform)
         {
             animator.SetInteger("Attack", 80);
@@ -132,17 +131,19 @@ namespace PSmash.Combat
         }
 
         //Anim Event
-        void Shockwave()
-        {
-
-            Instantiate(finisherEffects,attackTransform.position,Quaternion.identity);
-        }
-
-        //Anim Event
         void FinisherAttack()
         {
             if (targetTransform == null) return;
-            targetTransform.GetComponent<EnemyHealth>().DeliverFinishingBlow(transform.position, (int)baseStats.GetStat(StatsList.Attack) * finisherAttackFactor);
+            RaycastHit2D hit = Physics2D.Raycast(transform.position + new Vector3(0, 1), transform.right, 2, whatIsEnemy);
+            if (hit)
+            {
+                hit.collider.GetComponent<EnemyHealth>().TakeFinisherAttackDamage(transform.position, (int)baseStats.GetStat(StatsList.Attack) * finisherAttackFactor);
+                Instantiate(finisherPS, attackTransform.position, Quaternion.identity);
+            }
+            else
+            {
+                Debug.LogWarning("Enemy not spotted for finisher attack");
+            }
             //Camera Shake
             print("Camera Effect");
             OnCameraShake();
@@ -224,7 +225,7 @@ namespace PSmash.Combat
                 IDamagable target = coll.GetComponent<IDamagable>();
                 if (target == null || coll.GetComponent<Projectile>())
                     continue;
-                print(currentWeapon.name);
+                //print(currentWeapon.name);
                 target.TakeDamage(transform, currentWeapon, baseStats.GetStat(StatsList.Attack));
                 //print("Sendingdamage from player to  " + target);
 
