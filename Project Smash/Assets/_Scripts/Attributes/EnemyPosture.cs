@@ -4,11 +4,16 @@ using System.Collections.Generic;
 using UnityEngine;
 using PSmash.Combat;
 using UnityEngine.Events;
+using Spine.Unity;
+using Spine;
 
 namespace PSmash.Attributes
 {
     public class EnemyPosture : MonoBehaviour
     {
+        //[SpineBone(dataField: "skeletonAnimation")]
+        //public string boneName;
+
         public float posture = 50;
         [SerializeField] float timeToCanRegen = 1f;
         [SerializeField] float timeToFullyRegenGuard = 60f;

@@ -58,7 +58,7 @@ namespace PSmash.Combat
                 }
                 else
                 {
-                    print("SpecialAttack coming from " + transform.parent.gameObject.name);
+                    //print("SpecialAttack coming from " + transform.parent.gameObject.name);
                     //Debug.Break();
                     pm.SendEvent("SPECIALATTACK");
                     return;
@@ -99,7 +99,7 @@ namespace PSmash.Combat
         //AnimEvent 
         void StartSpecialAttackImpulse()
         {
-            print("StartSpecial Attack Impulse");
+            //print("StartSpecial Attack Impulse");
             GetComponent<EnemyMovement>().SpecialAttackImpulse_Start(specialAttackSpeedFactor);
         }
 
@@ -111,7 +111,7 @@ namespace PSmash.Combat
         //This method can be called via Anim Event and via SpecialAttack State in the PlayMaker
         public void StopSpecialAttackImpulse()
         {
-            print("Stop Special Attack Impulse");
+            //print("Stop Special Attack Impulse");
             GetComponent<EnemyMovement>().SpecialAttackImpulse_Stop();
             ReturnToOriginalTint();
             GetComponent<Rigidbody2D>().drag = currentDrag;
@@ -126,7 +126,7 @@ namespace PSmash.Combat
             {
                 skeletonRenderer.CustomMaterialOverride.Remove(defaultMaterial);
             }
-            print("Tinting red");
+            //print("Tinting red");
             skeletonRenderer.CustomMaterialOverride.Add(defaultMaterial, redTintMaterial);
         }
 
@@ -192,11 +192,11 @@ namespace PSmash.Combat
         ///Called from the Finisher 
         public void ChangeSkin(string skinName)
         {
-            print("Changed Skin");
+            //print("Changed Skin");
             SkeletonMecanim skeleton = GetComponent<SkeletonMecanim>();
             skeleton.skeleton.SetSkin(skinName);
             skeleton.skeleton.SetSlotsToSetupPose();
-            print(skeleton.skeleton.Skin);
+            //print(skeleton.skeleton.Skin);
         }
         #endregion
 

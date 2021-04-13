@@ -15,6 +15,7 @@ namespace PSmash.Inventories
         {
             Equipment.EquipmentSlots slot = GetComponentInChildren<Equipment>().GetEquipmentSlot();
             GetComponent<Animator>().SetInteger("UseItem", slot.item.GetAnimatorInt());
+            print("Using Equipped Tool");
         }
 
         //AnimEvent

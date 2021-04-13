@@ -22,7 +22,11 @@ namespace PSmash.Attributes
         [SerializeField] AudioClip stunnedAudio = null;
         [SerializeField] AudioClip staggerAuduio = null;
         [SerializeField] AudioClip stunEndAudio = null;
+        [SerializeField] AudioClip finisherAudio = null;
         [SerializeField] float volume = 1;
+
+        [Header("Finisher")]
+        [SerializeField] Vector2 finisherImpulse = new Vector2(15, 7);
 
         public static event Action onEnemyDead;
 
@@ -204,29 +208,25 @@ namespace PSmash.Attributes
         }
 
         //The damage dealt by the player and the thrown away force of the impact
-        public void DeliverFinishingBlow(Vector3 attackerPosition, float damage)
+        public void TakeFinisherAttackDamage(Vector3 attackerPosition, float damage)
         {
-            StartCoroutine(FinisherReaction(attackerPosition, damage));
+            audioSource.PlayOneShot(finisherAudio);
+            FlyObjectAway(attackerPosition);
+            DamageHealth(damage, 100);
+            onTakeDamage.Invoke(damage);
         }
 
-        public IEnumerator FinisherReaction(Vector3 attackerPosition, float damage)
+        void FlyObjectAway(Vector3 attackerPosition)
         {
-            float x = 15;
-            float y = 7;
             float position = attackerPosition.x - transform.position.x;
-            GetComponent<Rigidbody2D>().gravityScale = 1;
-            GetComponent<Rigidbody2D>().drag = 2.5f;
             if (position > 0)
             {
-                GetComponent<Rigidbody2D>().velocity = new Vector2(-x, y);
+                GetComponent<Rigidbody2D>().velocity = new Vector2(-finisherImpulse.x, finisherImpulse.y);
             }
             else
             {
-                GetComponent<Rigidbody2D>().velocity = new Vector2(x, y);
+                GetComponent<Rigidbody2D>().velocity = finisherImpulse;
             }
-            DamageHealth(damage, 100);
-            onTakeDamage.Invoke(damage);
-            yield return null;
         }
 
         #endregion
