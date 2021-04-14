@@ -7,11 +7,11 @@ namespace PSmash.Movement
 {
     public class EnemyMovement : MonoBehaviour
     {
-
+        //CONFIG
         [Header("Speed Values")]
         [SerializeField] float baseSpeed = 5;
-        [SerializeField] float chaseFactor = 1;
-        [SerializeField] float patrolingFactor = 0.5f;
+        //[SerializeField] float chaseFactor = 1;
+        //[SerializeField] float patrolingFactor = 0.5f;
 
         [Header("Slope Control")]
         [SerializeField] float slopeCheckDistance = 0.5f;
@@ -32,10 +32,13 @@ namespace PSmash.Movement
         [SerializeField] LayerMask whatIsObstacle;
         [SerializeField] LayerMask whatIsPlayer;
         
+
+        //STATE
         Animator animator;
         Rigidbody2D rb;
         bool isGrounded;
         float currentYAngle = 0;
+        float speedFactorModifier = 1;
         Coroutine coroutine;
 
         int test = 0;
@@ -137,6 +140,17 @@ namespace PSmash.Movement
             }
         }
 
+        /// <summary>
+        /// Will update the movemement speed by its factor from 0 to 1;
+        /// Example: The speed of the smasher after losing its armor will be greater than before.
+        /// </summary>
+        /// <param name="speedFactor"></param>
+        public void SetSpeedModifier(float speedFactor)
+        {
+            speedFactorModifier = speedFactor;
+            print("Movement Speed Increased");
+        }
+
         bool CanMove()
         {
             if (IsGroundInFront() && !IsObstacleInFront()) return true;
@@ -145,15 +159,16 @@ namespace PSmash.Movement
 
         void Move(Vector2 slopeNormalPerp, float speedFactor )
         {
-            float speed = baseSpeed * speedFactor;
+            float speed = baseSpeed * speedFactor * speedFactorModifier ;
+
             float xVelocity = -1 * speed * slopeNormalPerp.x;
             float yVelocity = -1 * speed * slopeNormalPerp.y;
 
             rb.velocity = new Vector2(xVelocity, yVelocity);
-            if(rb.velocity.magnitude > baseSpeed * speedFactor)
+            if(rb.velocity.magnitude > speed)
             {
                 Vector2 newVelocity = rb.velocity;
-                newVelocity = newVelocity.normalized * baseSpeed * speedFactor;
+                newVelocity = newVelocity.normalized * speed;
                 rb.velocity = newVelocity;
             }
             //print("Post velocity " + rb.velocity);

@@ -6,6 +6,7 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.Events;
 using PSmash.Combat;
+using PSmash.Movement;
 
 namespace PSmash.Attributes
 {
@@ -145,6 +146,7 @@ namespace PSmash.Attributes
             onTakeDamage.Invoke(damage);
             if (health <= 0)
             {
+                GetComponent<AudioSource>().pitch = 1;
                 isDead = true;
                 if(onEnemyDead != null)
                 {
@@ -187,8 +189,13 @@ namespace PSmash.Attributes
 
         public void TakeArmorOff()
         {
+            print("Armor taken off");
             GetComponent<UnblockableAttack>().TakeArmorOff();
             posture.DisablePostureBar();
+            ArmoredEnemy armored = GetComponent<ArmoredEnemy>();
+            GetComponent<EnemyMovement>().SetSpeedModifier(armored.GetSpeedFactorModifier());
+            GetComponent<Animator>().SetFloat("attackSpeed", armored.GetAttackSpeedFactor());
+            GetComponent<AudioSource>().pitch = 1.4f;
         }
         #endregion
 
@@ -235,7 +242,7 @@ namespace PSmash.Attributes
 
         public void ProtectedDamageSound()
         {
-            if (isArmorEnabled && !posture.isActiveAndEnabled)
+            if (GetComponent<ArmoredEnemy>() && !posture.isActiveAndEnabled)
             {
                 FleshDamageSound();
                 return;
