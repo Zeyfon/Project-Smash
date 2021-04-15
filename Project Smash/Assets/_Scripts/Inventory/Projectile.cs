@@ -92,7 +92,7 @@ namespace PSmash.Inventories
             this.weapon = weapon;
         }
 
-        public void TakeDamage(Transform attacker, Weapon weapon, float damage)
+        public void TakeDamage(Transform attacker, Weapon weapon, AttackType attackType, float damage)
         {
             timer = 0;
             print("Received the parry");
@@ -203,7 +203,7 @@ namespace PSmash.Inventories
             if (target != null)
             {
                 float damage = owner.GetComponent<BaseStats>().GetStat(StatsList.Attack);
-                target.TakeDamage(transform, weapon, damage);
+                target.TakeDamage(transform, weapon, AttackType.NotUnblockable, damage);
             }
         }
 

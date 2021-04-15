@@ -226,7 +226,7 @@ namespace PSmash.Combat
                 if (target == null || coll.GetComponent<Projectile>())
                     continue;
                 //print(currentWeapon.name);
-                target.TakeDamage(transform, currentWeapon, baseStats.GetStat(StatsList.Attack));
+                target.TakeDamage(transform, currentWeapon, AttackType.NotUnblockable, baseStats.GetStat(StatsList.Attack));
                 //print("Sendingdamage from player to  " + target);
 
             }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using PSmash.Attributes;
 using PSmash.Combat.Weapons;
+using PSmash.Combat;
 using PSmash.Inventories;
 
 namespace PSmash.Items
@@ -32,7 +33,7 @@ namespace PSmash.Items
 
         int counter = 0;
 
-        public void TakeDamage(Transform attacker, Weapon weapon, float damage)
+        public void TakeDamage(Transform attacker, Weapon weapon, AttackType attackType, float damage)
         {
             counter++;
             if (counter > hitsToDestroy)

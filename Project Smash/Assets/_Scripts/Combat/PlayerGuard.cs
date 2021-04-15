@@ -1,34 +1,74 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using PSmash.Attributes;
+﻿using PSmash.Attributes;
 using PSmash.Combat.Weapons;
+using UnityEngine;
 
 namespace PSmash.Combat
 {
-    public class PlayerGuard : MonoBehaviour, IDamagable
+    public class PlayerGuard : MonoBehaviour
     {
+        //CONFIG
         [SerializeField] int damage = 30;
         [SerializeField] AudioSource audioSource = null;
         [SerializeField] AudioClip parrySound = null;
         [SerializeField] AudioClip guardSound = null;
+        [Range(0,2)]
         [SerializeField] float parryTime = 1;
-        
-        PlayMakerFSM guardFSM = null;
+      
+        //STATE
         bool canParry=false;
         float parryTimer = 0;
+        bool isGuarding = false;
 
-        void Awake()
+
+
+        //////////////////////////////////////////////////////////////////////////////////////////    PUBLIC /////////////////////////////////////////////////////////////////////////////////////
+        public void EnableGuard()
         {
-            foreach(PlayMakerFSM pm in GetComponentsInParent<PlayMakerFSM>())
-            {
-                if(pm.FsmName == "GuardParryState")
-                {
-                    print("Found guard fsm");
-                    guardFSM = pm;
-                }
-            }
+            parryTimer = 0;
+            isGuarding = true;
+            print("Guard Enabled  " + isGuarding);
         }
+
+        public void DisableGuard()
+        {
+            parryTimer = Mathf.Infinity;
+            isGuarding = false;
+            print("Guard Disabled  " + isGuarding);
+        }
+
+        public bool IsGuarding(Transform attacker, Weapon weapon)
+        {
+            print("Checking guard" + isGuarding);
+            if (isGuarding)
+            {
+                if (canParry)
+                {
+                    foreach (PlayMakerFSM pm in GetComponentsInParent<PlayMakerFSM>())
+                    {
+                        if (pm.FsmName == "GuardParryState")
+                        {
+                            print("Found guard fsm");
+                            attacker.GetComponent<IDamagable>().TakeDamage(transform, weapon, AttackType.NotUnblockable, damage);
+                            pm.SendEvent("PARRY");
+                            PlaySound(parrySound);
+                            break;
+                        }
+                    }
+                }
+                else
+                {
+                    PlaySound(guardSound);
+                }
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+
+        }
+
+        ////////////////////////////////////////////////////////////////////////////////////PRIVATE////////////////////////////////////////////////////////////////////////////////////////////
 
         void Update()
         {
@@ -37,25 +77,6 @@ namespace PSmash.Combat
             else
                 canParry = false;
             parryTimer += Time.deltaTime;
-        }
-
-        public void TakeDamage(Transform attacker, Weapon weapon, float damage)
-        {
-            if (canParry)
-            {
-                attacker.GetComponent<IDamagable>().TakeDamage(transform.parent, weapon, damage);
-                guardFSM.SendEvent("PARRY");
-                PlaySound(parrySound);
-            }
-            else
-            {
-                PlaySound(guardSound);
-            }
-        }
-
-        public void EnableParryWindow()
-        {
-            parryTimer = 0;
         }
 
         void PlaySound(AudioClip sound)

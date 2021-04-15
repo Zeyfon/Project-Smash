@@ -1,4 +1,5 @@
 ﻿using PSmash.Combat.Weapons;
+using PSmash.Combat;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -19,7 +20,7 @@ namespace PSmash.Attributes
         {
 
         }
-        public virtual void TakeDamage(Transform attacker, Weapon weapon, float damage)
+        public virtual void TakeDamage(Transform attacker, Weapon weapon, AttackType attackType, float damage)
         {
             //Used by child class
         }
