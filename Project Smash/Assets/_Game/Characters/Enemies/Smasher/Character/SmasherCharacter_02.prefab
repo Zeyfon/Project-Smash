@@ -1,5 +1,18 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!114 &4646735505274559315
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6285349636030742712}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1043544612, guid: e743331561ef77147ae48cda9bcb8209, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  TargetFSMs: []
 --- !u!33 &3805381120273904507
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -1314,13 +1327,15 @@ MonoBehaviour:
         actionNames:
         - HutongGames.PlayMaker.Actions.GetComponent
         - HutongGames.PlayMaker.Actions.CallMethod
+        - HutongGames.PlayMaker.Actions.CallMethod
         customNames:
         - 
         - 
-        actionEnabled: 0101
-        actionIsOpen: 0101
-        actionStartIndex: 0000000003000000
-        actionHashCodes: 04d81402ca51e900
+        - 
+        actionEnabled: 010101
+        actionIsOpen: 010101
+        actionStartIndex: 00000000030000000a000000
+        actionHashCodes: 04d81402ca51e900ca51e900
         unityObjectParams: []
         fsmGameObjectParams: []
         fsmOwnerDefaultParams:
@@ -1344,6 +1359,12 @@ MonoBehaviour:
           tooltip: 
           showInInspector: 0
           networkSync: 0
+          value: GetStat
+        - useVariable: 0
+          name: 
+          tooltip: 
+          showInInspector: 0
+          networkSync: 0
           value: TakeDamage
         fsmObjectParams:
         - useVariable: 1
@@ -1354,6 +1375,13 @@ MonoBehaviour:
           typeName: PSmash.Attributes.PlayerHealth
           value: {fileID: 0}
         - useVariable: 1
+          name: stats
+          tooltip: 
+          showInInspector: 0
+          networkSync: 0
+          typeName: PSmash.Stats.BaseStats
+          value: {fileID: 4191859700395274613}
+        - useVariable: 1
           name: playerHealth
           tooltip: 
           showInInspector: 0
@@ -1361,6 +1389,54 @@ MonoBehaviour:
           typeName: PSmash.Attributes.PlayerHealth
           value: {fileID: 0}
         fsmVarParams:
+        - variableName: 
+          objectType: PSmash.Stats.StatsList
+          useVariable: 0
+          type: 14
+          floatValue: 0
+          intValue: 1
+          boolValue: 0
+          stringValue: 
+          vector4Value: {x: 0, y: 0, z: 0, w: 0}
+          objectReference: {fileID: 0}
+          arrayValue:
+            useVariable: 0
+            name: 
+            tooltip: 
+            showInInspector: 0
+            networkSync: 0
+            type: -1
+            objectTypeName: 
+            floatValues: []
+            intValues: 
+            boolValues: 
+            stringValues: []
+            vector4Values: []
+            objectReferences: []
+        - variableName: attackDamage
+          objectType: UnityEngine.Object
+          useVariable: 1
+          type: 0
+          floatValue: 0
+          intValue: 0
+          boolValue: 0
+          stringValue: 
+          vector4Value: {x: 0, y: 0, z: 0, w: 0}
+          objectReference: {fileID: 0}
+          arrayValue:
+            useVariable: 0
+            name: 
+            tooltip: 
+            showInInspector: 0
+            networkSync: 0
+            type: -1
+            objectTypeName: 
+            floatValues: []
+            intValues: 
+            boolValues: 
+            stringValues: []
+            vector4Values: []
+            objectReferences: []
         - variableName: transform
           objectType: UnityEngine.Transform
           useVariable: 1
@@ -1410,11 +1486,11 @@ MonoBehaviour:
             stringValues: []
             vector4Values: []
             objectReferences: []
-        - variableName: 
+        - variableName: attackDamage
           objectType: UnityEngine.Object
-          useVariable: 0
+          useVariable: 1
           type: 0
-          floatValue: 10
+          floatValue: 0
           intValue: 0
           boolValue: 0
           stringValue: 
@@ -1469,17 +1545,25 @@ MonoBehaviour:
         fsmRectParams: []
         fsmQuaternionParams: []
         stringParams: []
-        byteData: 000000
-        arrayParamSizes: 03000000
+        byteData: 0000000000
+        arrayParamSizes: 0100000003000000
         arrayParamTypes:
+        - HutongGames.PlayMaker.FsmVar
         - HutongGames.PlayMaker.FsmVar
         customTypeSizes: 
         customTypeNames: []
-        paramDataType: 14000000180000000100000018000000120000000c000000270000002700000027000000270000000100000001000000
+        paramDataType: 14000000180000000100000018000000120000000c0000002700000027000000010000000100000018000000120000000c000000270000002700000027000000270000000100000001000000
         paramName:
         - gameObject
         - storeComponent
         - everyFrame
+        - behaviour
+        - methodName
+        - parameters
+        - 
+        - storeResult
+        - everyFrame
+        - manualUI
         - behaviour
         - methodName
         - parameters
@@ -1489,8 +1573,8 @@ MonoBehaviour:
         - storeResult
         - everyFrame
         - manualUI
-        paramDataPos: 000000000000000000000000010000000000000000000000000000000100000002000000030000000100000002000000
-        paramByteDataSize: 000000000000000001000000000000000000000000000000000000000000000000000000000000000100000001000000
+        paramDataPos: 00000000000000000000000001000000000000000000000000000000010000000100000002000000020000000100000001000000020000000300000004000000050000000300000004000000
+        paramByteDataSize: 00000000000000000100000000000000000000000000000000000000000000000100000001000000000000000000000000000000000000000000000000000000000000000100000001000000
     - name: Set Linear Drag
       description: 
       colorIndex: 0
@@ -3110,13 +3194,15 @@ MonoBehaviour:
         actionNames:
         - HutongGames.PlayMaker.Actions.GetComponent
         - HutongGames.PlayMaker.Actions.CallMethod
+        - HutongGames.PlayMaker.Actions.CallMethod
         customNames:
         - 
         - 
-        actionEnabled: 0101
-        actionIsOpen: 0101
-        actionStartIndex: 0000000003000000
-        actionHashCodes: 04d81402ca51e900
+        - 
+        actionEnabled: 010101
+        actionIsOpen: 010101
+        actionStartIndex: 00000000030000000a000000
+        actionHashCodes: 04d81402ca51e900ca51e900
         unityObjectParams: []
         fsmGameObjectParams: []
         fsmOwnerDefaultParams:
@@ -3140,6 +3226,12 @@ MonoBehaviour:
           tooltip: 
           showInInspector: 0
           networkSync: 0
+          value: GetStat
+        - useVariable: 0
+          name: 
+          tooltip: 
+          showInInspector: 0
+          networkSync: 0
           value: TakeDamage
         fsmObjectParams:
         - useVariable: 1
@@ -3150,6 +3242,13 @@ MonoBehaviour:
           typeName: PSmash.Attributes.PlayerHealth
           value: {fileID: 0}
         - useVariable: 1
+          name: stats
+          tooltip: 
+          showInInspector: 0
+          networkSync: 0
+          typeName: PSmash.Stats.BaseStats
+          value: {fileID: 4191859700395274613}
+        - useVariable: 1
           name: playerHealth
           tooltip: 
           showInInspector: 0
@@ -3157,6 +3256,54 @@ MonoBehaviour:
           typeName: PSmash.Attributes.PlayerHealth
           value: {fileID: 0}
         fsmVarParams:
+        - variableName: 
+          objectType: PSmash.Stats.StatsList
+          useVariable: 0
+          type: 14
+          floatValue: 0
+          intValue: 1
+          boolValue: 0
+          stringValue: 
+          vector4Value: {x: 0, y: 0, z: 0, w: 0}
+          objectReference: {fileID: 0}
+          arrayValue:
+            useVariable: 0
+            name: 
+            tooltip: 
+            showInInspector: 0
+            networkSync: 0
+            type: -1
+            objectTypeName: 
+            floatValues: []
+            intValues: 
+            boolValues: 
+            stringValues: []
+            vector4Values: []
+            objectReferences: []
+        - variableName: attackDamage
+          objectType: UnityEngine.Object
+          useVariable: 1
+          type: 0
+          floatValue: 0
+          intValue: 0
+          boolValue: 0
+          stringValue: 
+          vector4Value: {x: 0, y: 0, z: 0, w: 0}
+          objectReference: {fileID: 0}
+          arrayValue:
+            useVariable: 0
+            name: 
+            tooltip: 
+            showInInspector: 0
+            networkSync: 0
+            type: -1
+            objectTypeName: 
+            floatValues: []
+            intValues: 
+            boolValues: 
+            stringValues: []
+            vector4Values: []
+            objectReferences: []
         - variableName: transform
           objectType: UnityEngine.Transform
           useVariable: 1
@@ -3206,11 +3353,11 @@ MonoBehaviour:
             stringValues: []
             vector4Values: []
             objectReferences: []
-        - variableName: 
+        - variableName: attackDamage
           objectType: UnityEngine.Object
-          useVariable: 0
+          useVariable: 1
           type: 0
-          floatValue: 10
+          floatValue: 0
           intValue: 0
           boolValue: 0
           stringValue: 
@@ -3265,17 +3412,25 @@ MonoBehaviour:
         fsmRectParams: []
         fsmQuaternionParams: []
         stringParams: []
-        byteData: 000000
-        arrayParamSizes: 03000000
+        byteData: 0000000000
+        arrayParamSizes: 0100000003000000
         arrayParamTypes:
+        - HutongGames.PlayMaker.FsmVar
         - HutongGames.PlayMaker.FsmVar
         customTypeSizes: 
         customTypeNames: []
-        paramDataType: 14000000180000000100000018000000120000000c000000270000002700000027000000270000000100000001000000
+        paramDataType: 14000000180000000100000018000000120000000c0000002700000027000000010000000100000018000000120000000c000000270000002700000027000000270000000100000001000000
         paramName:
         - gameObject
         - storeComponent
         - everyFrame
+        - behaviour
+        - methodName
+        - parameters
+        - 
+        - storeResult
+        - everyFrame
+        - manualUI
         - behaviour
         - methodName
         - parameters
@@ -3285,8 +3440,8 @@ MonoBehaviour:
         - storeResult
         - everyFrame
         - manualUI
-        paramDataPos: 000000000000000000000000010000000000000000000000000000000100000002000000030000000100000002000000
-        paramByteDataSize: 000000000000000001000000000000000000000000000000000000000000000000000000000000000100000001000000
+        paramDataPos: 00000000000000000000000001000000000000000000000000000000010000000100000002000000020000000100000001000000020000000300000004000000050000000300000004000000
+        paramByteDataSize: 00000000000000000100000000000000000000000000000000000000000000000100000001000000000000000000000000000000000000000000000000000000000000000100000001000000
     - name: Audio2
       description: 
       colorIndex: 4
@@ -4197,6 +4352,12 @@ MonoBehaviour:
         showInInspector: 1
         networkSync: 0
         value: 1
+      - useVariable: 1
+        name: attackDamage
+        tooltip: 
+        showInInspector: 0
+        networkSync: 0
+        value: 0
       intVariables:
       - useVariable: 1
         name: 
@@ -4344,6 +4505,13 @@ MonoBehaviour:
         networkSync: 0
         typeName: PSmash.Combat.UnblockableAttack
         value: {fileID: 5698365038011637547}
+      - useVariable: 1
+        name: stats
+        tooltip: 
+        showInInspector: 0
+        networkSync: 0
+        typeName: PSmash.Stats.BaseStats
+        value: {fileID: 4191859700395274613}
       materialVariables: []
       textureVariables: []
       arrayVariables: []
@@ -4352,7 +4520,7 @@ MonoBehaviour:
       - 
       - Exposed
       - PreviouslyInitialized
-      variableCategoryIDs: 0000000000000000000000000100000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000200000000000000000000000000000000000000
+      variableCategoryIDs: 00000000000000000000000001000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000020000000000000000000000000000000000000000000000
     description: 'Special Attack State
 
       This FSM is in charge of the actions
@@ -9771,8 +9939,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b584a9918e6417044bcd27c31050bd3d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  unarmoredSpeedFactor: 0
-  unarmoredAttackSpeedFactor: 0
+  unarmoredSpeedFactor: 1.8
+  unarmoredAttackSpeedFactor: 1.9
 --- !u!114 &3675793518646679043
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -15696,7 +15864,7 @@ MonoBehaviour:
     locked: 0
     manualUpdate: 0
     keepDelayedEventsOnStateExit: 0
-    preprocessed: 0
+    preprocessed: 1
     ExposedEvents: []
     RestartOnEnable: 1
     EnableDebugFlow: 0
@@ -15782,19 +15950,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3aa6bf3de29008b419bcdfbd9577c1a6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &4646735505274559315
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6285349636030742712}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: -1043544612, guid: e743331561ef77147ae48cda9bcb8209, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  TargetFSMs: []
 --- !u!1001 &2724296443517035617
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -15848,17 +16003,17 @@ PrefabInstance:
     - target: {fileID: 2297644081278653716, guid: 587e06734df96fb45836c4df01ad03a7,
         type: 3}
       propertyPath: slots.Array.data[0].number
-      value: 20
+      value: 40
       objectReference: {fileID: 0}
     - target: {fileID: 2297644081278653716, guid: 587e06734df96fb45836c4df01ad03a7,
         type: 3}
       propertyPath: slots.Array.data[1].number
-      value: 90
+      value: 95
       objectReference: {fileID: 0}
     - target: {fileID: 2297644081278653716, guid: 587e06734df96fb45836c4df01ad03a7,
         type: 3}
       propertyPath: slots.Array.data[2].number
-      value: 300
+      value: 400
       objectReference: {fileID: 0}
     - target: {fileID: 2701534567474707569, guid: 587e06734df96fb45836c4df01ad03a7,
         type: 3}
@@ -15954,6 +16109,18 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 2724296443517035617}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &4191859700395274613 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2297644081278653716, guid: 587e06734df96fb45836c4df01ad03a7,
+    type: 3}
+  m_PrefabInstance: {fileID: 2724296443517035617}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6852413905604142772}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 24a03d575fcbe764fbfff6203d61b643, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &758294006274335666 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 3407154881087883219, guid: 587e06734df96fb45836c4df01ad03a7,
