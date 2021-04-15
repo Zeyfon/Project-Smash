@@ -18,7 +18,7 @@ namespace PSmash.SceneManagement
         }
 
         // Update is called once per frame
-        void LateUpdate()
+        void FixedUpdate()
         {
             foreach (BackgroundLayers backgroundLayer in backgroundLayers)
             {
