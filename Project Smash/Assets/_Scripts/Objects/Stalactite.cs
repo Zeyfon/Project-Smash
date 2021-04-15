@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using PSmash.Attributes;
 using PSmash.Combat.Weapons;
+using PSmash.Combat;
 
 namespace PSmash.Items
 {
@@ -19,7 +20,7 @@ namespace PSmash.Items
         [SerializeField] AudioClip damagedClip = null;
 
 
-        public void TakeDamage(Transform attacker, Weapon weapon, float damage)
+        public void TakeDamage(Transform attacker, Weapon weapon, AttackType attackType, float damage)
         {
             audioSource.PlayOneShot(damagedClip);
             if (weapon == this.weaknessWeapon)

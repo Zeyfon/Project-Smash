@@ -1,5 +1,6 @@
 ﻿using PSmash.Attributes;
 using PSmash.Combat.Weapons;
+using PSmash.Combat;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -12,7 +13,7 @@ namespace PSmash.Items
         [SerializeField] AudioSource audioSource = null;
         [SerializeField] AudioClip damageSound = null;
         [SerializeField] GameObject drop = null;
-        public void TakeDamage(Transform attacker, Weapon weapon, float damage)
+        public void TakeDamage(Transform attacker, Weapon weapon, AttackType attackType, float damage)
         {
             print("Ore Damaged");
             health -= damage;

@@ -57,7 +57,7 @@ namespace PSmash.Attributes
 
         #region Damaged
 
-        public override void TakeDamage(Transform attacker, Weapon weapon, float damage)
+        public override void TakeDamage(Transform attacker, Weapon weapon, AttackType attackType, float damage)
         {
             if (isDead)
             {
@@ -70,10 +70,10 @@ namespace PSmash.Attributes
                 Debug.LogWarning("No Enemy State set to return DAMAGE Event");
                 return;
             }
-            Damaged(attacker, weapon, damage);
+            Damaged(attacker, weapon, attackType, damage);
         }
 
-        void Damaged(Transform attacker, Weapon attackedWeapon, float damage)
+        void Damaged(Transform attacker, Weapon attackedWeapon, AttackType attackType, float damage)
         {
             float healthDamage;
             float totalPenetrationPercentage;

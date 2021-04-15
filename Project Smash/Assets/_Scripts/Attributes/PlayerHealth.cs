@@ -7,29 +7,31 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Analytics;
 using UnityEngine.SceneManagement;
+using PSmash.Combat;
 
 namespace PSmash.Attributes
 {
     public class PlayerHealth : Health
     {
+
+        //CONFIG
         [SerializeField] PlayMakerFSM playerControllerPM;
         [SerializeField] AudioClip damagedSound = null;
         [SerializeField] AudioClip deadSound = null;
         [SerializeField] float timeToRecoverControlAfterDamage = 0.35f;
 
+
+        //STATE
         public delegate void PlayerDamaged();
         public event PlayerDamaged onDamaged;
-
         public delegate void PlayerHealed();
         public event PlayerHealed onHealed;
-
-
-
         Coroutine coroutine;
         Animator animator;
         BaseStats baseStats;
-        
         bool isDamaged;
+
+        ////////INITIALIZE///////////
 
         private void Awake()
         {
@@ -51,24 +53,27 @@ namespace PSmash.Attributes
             Tent.OnTentMenuOpen -= RestorePlayer;
         }
 
+        /////////////////////////////////////////////////////////////////////////////////////////PUBLIC/////////////////////////////////////////////////////////////////////////////////////////////
 
-        void RestorePlayer()
-        {
-            //print(this.gameObject);
-            BaseStats baseStats = GetComponent<BaseStats>();
-            health = baseStats.GetStat(StatsList.Health);
-            onHealed();
-        }
-        //Take damage will always be to damage the player
-        //The guard and parry states will be checked in the Enemy Attack's Script
-        //to deliver the proper assessment
 
-        public override void TakeDamage(Transform attacker, Weapon weapon, float damage)
+        /// <summary>
+        /// Take the damage done by the enemy or other harmful entities in the game.
+        /// Every damage pass through this method. From here the Guard and Parry mechanics are triggered.
+        /// </summary>
+        /// <param name="attacker"></param>
+        /// <param name="weapon"></param>
+        /// <param name="attackType"></param>
+        /// <param name="damage"></param>
+        public override void TakeDamage(Transform attacker, Weapon weapon, AttackType attackType, float damage)
         {
-            if (isDead) return;
+            if (isDead) 
+                return;
             //print("Damage received");
+            if (attackType == AttackType.NotUnblockable && GetComponent<PlayerGuard>().IsGuarding(attacker, weapon))
+                return;
             isDamaged = true;
-            if (coroutine != null) StopCoroutine(coroutine);
+            if (coroutine != null) 
+                StopCoroutine(coroutine);
             damage *= (1 - baseStats.GetStat(StatsList.Defense)/100);
             health -= damage;
             playerControllerPM.enabled = false;
@@ -109,6 +114,38 @@ namespace PSmash.Attributes
             onHealed();
         }
 
+        public override bool IsDead()
+        {
+            return isDead;
+        }
+
+        public bool IsDamaged()
+        {
+            return isDamaged;
+        }
+
+        //AnimEvent
+        void DamageSound()
+        {
+            audioSource.PlayOneShot(damagedSound);
+
+        }
+        //AnimEvent
+        void DeadSound()
+        {
+            audioSource.PlayOneShot(deadSound);
+        }
+
+        ///////////////////////////////////////////////////////////////////////////////////////////////////PRIVATE//////////////////////////////////////////////////////////////////
+
+        void RestorePlayer()
+        {
+            //print(this.gameObject);
+            BaseStats baseStats = GetComponent<BaseStats>();
+            health = baseStats.GetStat(StatsList.Health);
+            onHealed();
+        }
+
         IEnumerator DamageEffects()
         {
             //print("Playing player damage sound");
@@ -139,27 +176,6 @@ namespace PSmash.Attributes
             animator.SetInteger("Damage", 50);
             yield return new WaitForSeconds(2);
             SceneManager.LoadScene(0);
-        }
-
-        //AnimEvent
-        void DamageSound()
-        {
-            audioSource.PlayOneShot(damagedSound);
-
-        }
-        //AnimEvent
-        void DeadSound()
-        {
-            audioSource.PlayOneShot(deadSound);
-        }
-        public override bool IsDead()
-        {
-            return isDead;
-        }
-
-        public bool IsDamaged()
-        {
-            return isDamaged;
         }
     }
 }

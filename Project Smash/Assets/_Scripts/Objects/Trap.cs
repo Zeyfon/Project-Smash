@@ -1,5 +1,6 @@
 ﻿using PSmash.Attributes;
 using PSmash.Combat.Weapons;
+using PSmash.Combat;
 using PSmash.Core;
 using System.Collections;
 using UnityEngine;
@@ -22,7 +23,7 @@ namespace PSmash.Items.Traps
             if (collision.collider.CompareTag("Player"))
             {
                 IDamagable target = collision.collider.GetComponent<IDamagable>();
-                target.TakeDamage(transform, weapon, damage);
+                target.TakeDamage(transform, weapon, AttackType.NotUnblockable, damage);
                 StartCoroutine(ReturnPlayerToLastPosition(collision.transform));
             }
             if (collision.collider.CompareTag("Enemy"))

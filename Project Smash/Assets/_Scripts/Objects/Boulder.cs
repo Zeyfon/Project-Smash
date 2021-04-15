@@ -1,6 +1,7 @@
 ﻿using PSmash.Attributes;
 using PSmash.Combat.Weapons;
 using UnityEngine;
+using PSmash.Combat;
 
 namespace PSmash.Items
 {
@@ -31,7 +32,7 @@ namespace PSmash.Items
             initialPosition = transform.position;
         }
 
-        public void TakeDamage(Transform attacker, Weapon weapon, float damage)
+        public void TakeDamage(Transform attacker, Weapon weapon, AttackType attackType, float damage)
         {
             if (weapon == interactiveWeapon)
             {
@@ -136,7 +137,7 @@ namespace PSmash.Items
         {
             if (isMoving && collision.CompareTag("Enemy"))
             {
-                collision.GetComponent<IDamagable>().TakeDamage(transform, interactiveWeapon, damage);
+                collision.GetComponent<IDamagable>().TakeDamage(transform, interactiveWeapon, AttackType.NotUnblockable, damage);
             }
         }
     }
