@@ -11,6 +11,7 @@ namespace PSmash.Inventories
 {
     public class Projectile : UsableItem, IDamagable
     {
+        //CONFIG
         [Header("General")]
         [SerializeField] Rigidbody2D rb = null;
         [SerializeField] AudioSource audioSource = null;
@@ -37,22 +38,72 @@ namespace PSmash.Inventories
         [Header("Weapon")]
         [SerializeField] Weapon weapon;
 
-        //Health owner;
+        //STATE
         Transform parabolicMovementTarget;
         bool hasHit = false;
         float timeToDie = 10f;
         float timer = 0;
 
-        /// <summary>
-        /// This scripts controls the projectile movement as the animations from spine
-        /// In The start method the events from the Skeleton Animations are subscribed
-        /// </summary>
+        ////////////////////////////////////////////////////////INITIALIZE///////////////////////////////////////////////////////////////////
         void Start()
         {
             skeletonAnim.AnimationState.SetAnimation(0, spawn, false);
             skeletonAnim.AnimationState.AddAnimation(0, idleLoop, true, 0.2f);
             skeletonAnim.AnimationState.Complete += OnSpineAnimationEnd;
         }
+
+        void OnDisable()
+        {
+            skeletonAnim.AnimationState.Complete -= OnSpineAnimationEnd;
+        }
+
+
+
+        /////////////////////////////////////////////////////////////////////PUBLIC///////////////////////////////////////////////////////
+
+        //public void SetWeapon(Weapon weapon)
+        //{
+        //    this.weapon = weapon;
+        //}
+
+        public void TakeDamage(Transform attacker, Weapon weapon, AttackType attackType, float damage)
+        {
+            print("Received the parry "  + hasHit);
+            timer = 0;
+            skeletonAnim.AnimationState.SetAnimation(0, idleLoop, true);
+            float zRotation = Random.Range(-10, 25);
+            parabolicMovementTarget = owner.transform;
+
+            if (attacker.position.x - transform.position.x >= 0)
+
+                transform.rotation = Quaternion.Euler(0, 180, zRotation);
+            else
+                transform.rotation = Quaternion.Euler(0, 0, zRotation);
+
+            owner = attacker.GetComponent<Health>();
+            hasHit = false;
+        }
+
+        //Anim Event
+        void WallHitSound()
+        {
+            audioSource.volume = 1;
+            audioSource.clip = wallHitSound;
+            audioSource.pitch = Random.Range(0.8f, 1f);
+            audioSource.Play();
+        }
+
+        //Anim Event
+        void NPCHitSound()
+        {
+            audioSource.volume = 0.5f;
+            audioSource.clip = enemyHitSound;
+            audioSource.pitch = Random.Range(0.8f, 1f);
+            audioSource.Play();
+        }
+
+        /////////////////////////////////////////////////////////////////////////////PRIVATE//////////////////////////////////////////////////////////////////////
+
 
         void Update()
         {
@@ -66,6 +117,7 @@ namespace PSmash.Inventories
         // Update is called once per frame
         void FixedUpdate()
         {
+            print(hasHit);
             if (hasHit)
                 return;
 
@@ -81,108 +133,8 @@ namespace PSmash.Inventories
             rb.velocity = transform.right * speed;
         }
 
-        void OnDisable()
-        {
-            skeletonAnim.AnimationState.Complete -= OnSpineAnimationEnd;
-        }
 
-
-        public void SetWeapon(Weapon weapon)
-        {
-            this.weapon = weapon;
-        }
-
-        public void TakeDamage(Transform attacker, Weapon weapon, AttackType attackType, float damage)
-        {
-            timer = 0;
-            print("Received the parry");
-            skeletonAnim.AnimationState.SetAnimation(0, idleLoop, true);
-            float zRotation = Random.Range(-10, 25);
-            //The owner right now is the enemy, so it is set as the new target
-            //and after all the set the owner will be updated to be the player
-            parabolicMovementTarget = owner.transform;
-
-            if (owner.transform.position.x - transform.position.x >= 0)
-                transform.rotation = Quaternion.Euler(0, 0, zRotation);
-            else
-                transform.rotation = Quaternion.Euler(0, 180, zRotation);
-
-            owner = attacker.GetComponent<Health>();
-            hasHit = false;
-        }
-
-
-        private void OnTriggerEnter2D(Collider2D collision)
-        {
-            if (collision.CompareTag("Destructible"))
-                return;
-            if (hasHit)
-                return;
-
-            if (owner == null)
-            {
-                print("Hit test");
-                HitGround(collision);
-                return;
-            }
-
-
-
-            string tag = owner.gameObject.tag;
-            //Collision with the playe being the current owner of the projectile
-            if (tag == "Player")
-            {
-
-                if (collision.CompareTag("Enemy"))
-                {
-                    if (collision.GetComponent<Health>().IsDead())
-                        return;
-                    hasHit = true;
-                    print("Attack from Player colliding with enemy");
-                    Instantiate(enemyHitEffect, transform.position, Quaternion.identity);
-                    NPCHitSound();
-                    ProjectileCollisionImpact(collision, impactOnNPC);
-                }
-                else /*if (collision.CompareTag("Ground"))*/
-                {
-                    //Debug.Break();
-                    hasHit = true;
-                    print("Attack from player colliding with ground");
-                    HitGround(collision);
-                }
-            }
-            //Collision with the enemy being the current owner of the projectile
-            else
-            {
-
-                if (collision.CompareTag("Player"))
-                {
-                    if (collision.GetComponent<Health>().IsDead())
-                        return;
-                    hasHit = true;
-                    Instantiate(enemyHitEffect, transform.position, Quaternion.identity);
-                    NPCHitSound();
-                    print("Attack from enemy colliding with player");
-                    ProjectileCollisionImpact(collision, impactOnNPC);
-                }
-                else if (collision.GetComponent<PlayerGuard>())
-                {
-                    hasHit = true;
-                    print("Attack from enemy colliding with guard");
-                    Instantiate(enemyHitEffect, transform.position, Quaternion.identity);
-                    ProjectileCollisionImpact(collision, impactOnNPC);
-                }
-                else if (collision.CompareTag("Ground"))
-                {
-                    //Debug.Break();
-                    hasHit = true;
-                    print("Attack from enemy colliding with ground");
-                    HitGround(collision);
-                }
-            }
-        }
-
-        private void HitGround(Collider2D collision)
+        void HitGround(Collider2D collision)
         {
             Vector3 effectsOrigin;
             if (GetComponent<BoxCollider2D>())
@@ -194,11 +146,9 @@ namespace PSmash.Inventories
             ProjectileCollisionImpact(collision, impactOnWall);
         }
 
-        private void ProjectileCollisionImpact(Collider2D collision, AnimationReferenceAsset anim)
+        void ProjectileCollisionImpact(Collider2D collision, AnimationReferenceAsset anim)
         {
-            rb.velocity = new Vector2(0, 0);
-            rb.angularVelocity = 0;
-            skeletonAnim.AnimationState.SetAnimation(0, anim, false);
+            StopProjectile(anim);
             IDamagable target = collision.GetComponent<IDamagable>();
             if (target != null)
             {
@@ -207,7 +157,15 @@ namespace PSmash.Inventories
             }
         }
 
-        private void OnSpineAnimationEnd(TrackEntry trackEntry)
+        void StopProjectile(AnimationReferenceAsset anim)
+        {
+            rb.velocity = new Vector2(0, 0);
+            rb.angularVelocity = 0;
+            skeletonAnim.AnimationState.SetAnimation(0, anim, false);
+            print("ProjectileStopped");
+        }
+
+        void OnSpineAnimationEnd(TrackEntry trackEntry)
         {
             if (trackEntry.Animation.Name == impactOnNPC.name)
                 StartCoroutine(Destroy());
@@ -221,20 +179,27 @@ namespace PSmash.Inventories
             Destroy(gameObject);
         }
 
-        //Anim Event
-        void WallHitSound()
-        {
-            audioSource.clip = wallHitSound;
-            audioSource.pitch = Random.Range(0.8f, 1f);
-            audioSource.Play();
-        }
 
-        //Anim Event
-        void NPCHitSound()
+        ////////////////////////////////////////////////////////////////////////COLLISION////////////////////////////////////////////////////////////
+        void OnTriggerEnter2D(Collider2D collision)
         {
-            audioSource.clip = enemyHitSound;
-            audioSource.pitch = Random.Range(0.8f, 1f);
-            audioSource.Play();
+            if (collision.CompareTag("Destructible"))
+                return;
+            else if (collision.CompareTag("Ground"))
+            {
+                hasHit = true;
+                HitGround(collision);
+                return;
+            }
+
+            Health health = collision.GetComponent<Health>();
+            if (health == null || health == owner || health.IsDead())
+                return;
+
+            hasHit = true;
+            Instantiate(enemyHitEffect, transform.position, Quaternion.identity);
+            NPCHitSound();
+            ProjectileCollisionImpact(collision, impactOnNPC);
         }
 
     }
