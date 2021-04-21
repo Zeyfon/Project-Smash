@@ -202,12 +202,12 @@ namespace PSmash.Attributes
                 if(name == "health")
                 {
                     health = healthstate[name];
-                    print("health restored from file  " + health +"  "  +gameObject.name);
+                    //print("health restored from file  " + health +"  "  +gameObject.name);
                     onHealed();
                     //Debug.Break();
                     break;
                 }
-                print("health from file to restores was not found");
+                //print("health from file to restores was not found");
             }
         }
     }

@@ -20,6 +20,11 @@ namespace PSmash.Inventories
             RestoreToolsNumber();
         }
 
+        void Start()
+        {
+            onEquipmentUIUpdate(currentIndex);
+        }
+
         private void OnEnable()
         {
             Tent.OnTentMenuOpen += RestoreToolsNumber;
@@ -46,7 +51,6 @@ namespace PSmash.Inventories
             {
                 slot.number = slot.maxNumber;
             }
-            onEquipmentUIUpdate(currentIndex);
         }
 
 
@@ -106,7 +110,7 @@ namespace PSmash.Inventories
                 if(item == slot.item)
                 {
                     slot.maxNumber +=1;
-                    print("The " + item.name + "  increase to  " + slot.maxNumber);
+                    //print("The " + item.name + "  increase to  " + slot.maxNumber);
                     RestoreToolsNumber();
                     return;
                 }
@@ -146,7 +150,7 @@ namespace PSmash.Inventories
                     {
                         if(item == slot.item)
                         {
-                            print("Restoring " + item.name);
+                            //print("Restoring " + item.name);
                             slot.number = equippedItemsForSerialization[name][0];
                             slot.maxNumber = equippedItemsForSerialization[name][1];
                         }
@@ -155,7 +159,7 @@ namespace PSmash.Inventories
                 if(name == "currentIndex")
                 {
                     currentIndex = equippedItemsForSerialization[name][0];
-                    print("Restoring Tool index  " + currentIndex);
+                    //print("Restoring Tool index  " + currentIndex);
                 }
             }
             onEquipmentUIUpdate(currentIndex);

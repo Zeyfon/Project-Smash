@@ -31,7 +31,7 @@ namespace PSmash.Items
 
         public static List<string> bouldersMoved = new List<string>();
 
-        private void Start()
+        private void Awake()
         {
             initialPosition = transform.position;
         }
@@ -48,7 +48,7 @@ namespace PSmash.Items
             else
             {
                 audioSource.PlayOneShot(incorrectHit);
-                print("Was not hit with correct weapon");
+                //print("Was not hit with correct weapon");
             }
         }
 
@@ -75,7 +75,7 @@ namespace PSmash.Items
             bool collidedWithWall = Mathf.Abs(rb.angularVelocity - previousAngularVelocity) > 100;
             if (collidedWithWall)
             {
-                print("Collided with wall");
+                //print("Collided with wall");
                 StopMovement();
                 audioSource.PlayOneShot(impactAudio);
             }
@@ -84,7 +84,7 @@ namespace PSmash.Items
             bool isMovingAndIsAlmostStopped = isMoving && angVelocityABS < 50 && timer < 0;
             if (isMovingAndIsAlmostStopped)
             {
-                print("Stopped by itself");
+                //print("Stopped by itself");
                 StopMovement();
             }
 
@@ -122,7 +122,6 @@ namespace PSmash.Items
                 return 1;
             else
                 return -1;
-
         }
 
 
@@ -152,6 +151,7 @@ namespace PSmash.Items
                 string identifier = GetComponent<SaveableEntity>().GetUniqueIdentifier();
                 if (!bouldersMoved.Contains(identifier))
                 {
+                    //print("Capturing Boulder Position " + transform.position);
                     bouldersMoved.Add(identifier);
                 }
                 SerializableVector3 position = new SerializableVector3(transform.position);
@@ -175,6 +175,7 @@ namespace PSmash.Items
             {
                 SerializableVector3 position = (SerializableVector3)state;
                 Vector3 newPosition = position.ToVector();
+                //print("Restoring Boulder to position  " + newPosition);
                 transform.position = newPosition;
             }
         }
