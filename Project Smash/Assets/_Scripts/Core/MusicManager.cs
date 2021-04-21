@@ -30,13 +30,13 @@ namespace PSmash.Core
 
         public void PlayBossMusic()
         {
-            print("Play Boss Music");
+            //print("Play Boss Music");
             StartCoroutine(PlayThisTrack(bossMusic, bossMusicVolume));
         }
 
         public void PlayLevelMusic()
         {
-            print("PlayLevel Music");
+            //print("PlayLevel Music");
             StartCoroutine(PlayThisTrack(levelMusic, levelMusicVolume));
         }
 
@@ -58,7 +58,7 @@ namespace PSmash.Core
 
         IEnumerator FadeOutOtherTrack(float maxVolume)
         {
-            print("Fading Out Music");
+            //print("Fading Out Music");
             float currentVolume = audioSource.volume;
             while (currentVolume > 0)
             {
@@ -71,7 +71,7 @@ namespace PSmash.Core
 
         IEnumerator FadeInThisTrack(float maxVolume)
         {
-            print("Fading In Music");
+            //print("Fading In Music");
             float currentVolume = audioSource.volume;
             while (currentVolume < maxVolume)
             {

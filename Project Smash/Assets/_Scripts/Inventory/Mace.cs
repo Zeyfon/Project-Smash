@@ -30,9 +30,9 @@ namespace PSmash.Inventories
             onObjectTaken(false);
             audioSource.Play();
             Fader fader = new Fader();
-            yield return fader.FadeIn(canvasGroup, 0.5f);
+            yield return fader.FadeOut(canvasGroup, 0.5f);
             yield return new WaitForSeconds(4);
-            yield return fader.FadeOut(canvasGroup, 1);
+            yield return fader.FadeIn(canvasGroup, 1);
             FindObjectOfType<SavingWrapper>().Save();
             onObjectTaken(true);
             gameObject.SetActive(false);

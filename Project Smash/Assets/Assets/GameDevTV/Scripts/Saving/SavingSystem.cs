@@ -7,6 +7,7 @@ using System.Text;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.Events;
+using PSmash.Checkpoints;
 
 namespace GameDevTV.Saving
 {
@@ -30,20 +31,29 @@ namespace GameDevTV.Saving
         {
             Dictionary<string, object> state = LoadFile(saveFile);
 
-            int buildIndex = SceneManager.GetActiveScene().buildIndex + 1;
             if (state.ContainsKey("lastSceneBuildIndex"))
             {
+                print("Last Save Scene Loaded");
+                int buildIndex = SceneManager.GetActiveScene().buildIndex;
                 buildIndex = (int)state["lastSceneBuildIndex"];
+
+                if (buildIndex > SceneManager.sceneCountInBuildSettings)
+                {
+                    print("2");
+                    yield return null;
+                }
+                else if (buildIndex != SceneManager.GetActiveScene().buildIndex)
+                {
+                    print("3");
+                    print("Loading scene " + buildIndex);
+                    yield return SceneManager.LoadSceneAsync(buildIndex);
+                }
+                else
+                {
+                    print("4");
+                }
+                RestoreState(state);
             }
-            if(buildIndex > SceneManager.sceneCountInBuildSettings)
-            {
-                yield return null;
-            }
-            else
-            {
-                yield return SceneManager.LoadSceneAsync(buildIndex);
-            }
-            RestoreState(state);
             OnSaveEnds.Invoke();
         }
 
@@ -105,13 +115,17 @@ namespace GameDevTV.Saving
 
         private void CaptureState(Dictionary<string, object> state)
         {
+           
             foreach (SaveableEntity saveable in FindObjectsOfType<SaveableEntity>())
             {
-                print("Saving the  " + saveable.gameObject.name);
+                //print("Saving the  " + saveable.gameObject.name);
                 state[saveable.GetUniqueIdentifier()] = saveable.CaptureState();
             }
 
-            state["lastSceneBuildIndex"] = SceneManager.GetActiveScene().buildIndex;
+            if (FindObjectOfType<PlayerPositionCheckpoint>().CanSaveCheckpoint())
+            {
+                state["lastSceneBuildIndex"] = SceneManager.GetActiveScene().buildIndex;
+            }
         }
 
         private void RestoreState(Dictionary<string, object> state)

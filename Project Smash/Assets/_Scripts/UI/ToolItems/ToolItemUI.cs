@@ -13,32 +13,29 @@ namespace PSmash.UI
         private void Awake()
         {
             playerEquipment = Inventory.GetPlayerInventory().GetComponentInParent<Equipment>();
-            //print(playerInventory);
         }
 
         private void OnEnable()
         {
-            playerEquipment.onEquippedActionItemChange += EquippedActionItemChange;
+            playerEquipment.onEquipmentUIUpdate += EquipmentUIToolUpdate;
         }
 
         private void OnDisable()
         {
-            playerEquipment.onEquippedActionItemChange -= EquippedActionItemChange;
+            playerEquipment.onEquipmentUIUpdate -= EquipmentUIToolUpdate;
         }
 
-        private void EquippedActionItemChange(int index)
+        private void EquipmentUIToolUpdate(int index)
         {
-            //print("Update Action Items UI ");
-            //List<ActionableItem> items = playerInventory.GetActionableItems();
-            Equipment.EquipmentSlots[] slots = playerEquipment.GetActionableItems();
+            Equipment.EquipmentSlots[] slots = playerEquipment.GetTools();
 
-            int previousIndex = GetPreviousItem(slots, index);
-
+            int previousIndex = GetPreviousIndex(slots, index);
             leftItem.UpdateItemInfo(slots[previousIndex]);
+
             centerItem.UpdateItemInfo(slots[index]);
         }
 
-        int GetPreviousItem(Equipment.EquipmentSlots[] slots, int index)
+        int GetPreviousIndex(Equipment.EquipmentSlots[] slots, int index)
         {
             int newIndex;
             if (index == 0)

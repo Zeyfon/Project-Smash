@@ -20,7 +20,7 @@ namespace PSmash.Temporal
             //Fader fader = FindObjectOfType<Fader>();
             Fader fader = new Fader();
             CanvasGroup canvasGroup = GetComponent<CanvasGroup>();
-            yield return fader.FadeOut(canvasGroup, 1);
+            yield return fader.FadeIn(canvasGroup, 1);
             Application.Quit();
         }
     }

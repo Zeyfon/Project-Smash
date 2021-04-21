@@ -10,7 +10,7 @@ namespace PSmash.Attributes
         [Header("General")]
         [SerializeField] protected TakeDamageEvent onTakeDamage;
 
-        protected float health;
+        [SerializeField] protected float health = 0;
         protected AudioSource audioSource;
         protected bool isDead = false;
         //protected int initialHealth;

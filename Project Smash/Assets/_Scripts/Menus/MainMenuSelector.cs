@@ -29,7 +29,7 @@ namespace PSmash.Menus
 
         private void OnEnable()
         {
-            print("Trying to open main menu");
+            //print("Trying to open main menu");
             if (eventSystem == null)
             {
                 eventSystem = GameObject.FindObjectOfType<EventSystem>();
@@ -39,7 +39,7 @@ namespace PSmash.Menus
                 }
             }
             StartCoroutine(SetInitialGeneralMenuSelection());
-            print("Main menu enabled");
+            //print("Main menu enabled");
             UpdateSubMenu(initialSelection);
         }
 
@@ -88,7 +88,7 @@ namespace PSmash.Menus
         //SubFunction in Update
         void UpdateSubMenu(GameObject selectedTab)
         {
-            print("Set Initial Selection Main menu");
+           // print("Set Initial Selection Main menu");
             foreach(MenuTab tab in menuTabs)
             {
                 tab.DisableSubMenu();
@@ -98,7 +98,7 @@ namespace PSmash.Menus
             {
                 if (selectedTab == tab.gameObject)
                 {
-                    print("enabled tab  " + tab.gameObject.name);
+                    //print("enabled tab  " + tab.gameObject.name);
                     tab.EnableSubMenu();
                 }
             }

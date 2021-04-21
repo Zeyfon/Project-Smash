@@ -68,8 +68,9 @@ namespace PSmash.UI.CraftingSytem
             previousGameObject = skillSlot.gameObject;
         }
 
-        void UpdateSkillPanel()
+        public void UpdateSkillPanel()
         {
+            print("Updating Panel");
             foreach(SkillSlot slot in GetComponentsInChildren<SkillSlot>())
             {
                 slot.VisualUpdate();

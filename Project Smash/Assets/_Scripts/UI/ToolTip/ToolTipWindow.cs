@@ -68,10 +68,10 @@ namespace PSmash.UI
         {
             //print("Updating Description Window");
             Fader fader = new Fader();
-            yield return fader.FadeOut(canvasGroup, fadeOutTime);
+            yield return fader.FadeIn(canvasGroup, fadeOutTime);
 
             yield return InfoChange(skillSlotGameObject);
-            yield return fader.FadeIn(canvasGroup, fadeInTime);
+            yield return fader.FadeOut(canvasGroup, fadeInTime);
         }
 
         IEnumerator InfoChange(SkillSlot skillSlot)

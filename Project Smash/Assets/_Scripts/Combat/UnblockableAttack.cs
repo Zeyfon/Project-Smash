@@ -73,7 +73,7 @@ namespace PSmash.Combat
             RaycastHit2D hit = Physics2D.Raycast(transform.position + new Vector3(0, 1), transform.right, distanceCheckForObstacles, whatIsEnemy);
             if (hit && (hit.collider.gameObject != gameObject))
             {
-                print(hit.collider.gameObject.tag);
+                //print(hit.collider.gameObject.tag);
                 //print("There is an obstacle between the target and me");
                 return true;
             }

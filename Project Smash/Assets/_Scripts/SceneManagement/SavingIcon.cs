@@ -13,13 +13,13 @@ namespace PSmash.SceneManagement
         Coroutine coroutine;
         public void ShowIcon()
         {
-            print("OnStartSaving");
+            //print("OnStartSaving");
             if (coroutine != null) StopCoroutine(coroutine);
             coroutine = StartCoroutine(ShowingIcon());
         }
         public void HideIcon()
         {
-            print("OnEndSaving");
+            //print("OnEndSaving");
             if (coroutine != null) StopCoroutine(coroutine);
             coroutine = StartCoroutine(HidingIcon());
         }
@@ -28,14 +28,14 @@ namespace PSmash.SceneManagement
         {
             //print("Showing Saving Icon");
             Fader fader = new Fader();
-            yield return fader.FadeIn(canvasGroup, 0.5f);
+            yield return fader.FadeOut(canvasGroup, 0.5f);
         }
 
         IEnumerator HidingIcon()
         {
             //print("Hiding Saving Icon");
             Fader fader = new Fader();
-            yield return fader.FadeOut(canvasGroup, 2);
+            yield return fader.FadeIn(canvasGroup, 2);
         }
     }
 

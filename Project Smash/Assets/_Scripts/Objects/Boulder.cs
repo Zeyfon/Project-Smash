@@ -2,10 +2,12 @@
 using PSmash.Combat.Weapons;
 using UnityEngine;
 using PSmash.Combat;
+using GameDevTV.Saving;
+using System.Collections.Generic;
 
 namespace PSmash.Items
 {
-    public class Boulder : MonoBehaviour, IDamagable
+    public class Boulder : MonoBehaviour, IDamagable, ISaveable
     {
         [SerializeField] Weapon interactiveWeapon = null;
         [SerializeField] Rigidbody2D rb;
@@ -25,7 +27,9 @@ namespace PSmash.Items
         bool isMoving = false;
         float previousAngularVelocity;
 
-        Vector2 initialPosition;
+        Vector3 initialPosition;
+
+        public static List<string> bouldersMoved = new List<string>();
 
         private void Start()
         {
@@ -138,6 +142,40 @@ namespace PSmash.Items
             if (isMoving && collision.CompareTag("Enemy"))
             {
                 collision.GetComponent<IDamagable>().TakeDamage(transform, interactiveWeapon, AttackType.NotUnblockable, damage);
+            }
+        }
+
+        public object CaptureState()
+        {
+            if (WasBoulderMovedSinceCheckpoint())
+            {
+                string identifier = GetComponent<SaveableEntity>().GetUniqueIdentifier();
+                if (!bouldersMoved.Contains(identifier))
+                {
+                    bouldersMoved.Add(identifier);
+                }
+                SerializableVector3 position = new SerializableVector3(transform.position);
+                return position;
+
+            }
+
+            else 
+                return null;
+            
+        }
+
+        bool WasBoulderMovedSinceCheckpoint()
+        {
+            return Mathf.Abs(transform.position.magnitude - initialPosition.magnitude) > 2;
+        }
+
+        public void RestoreState(object state)
+        {
+            if (bouldersMoved.Contains(GetComponent<SaveableEntity>().GetUniqueIdentifier()))
+            {
+                SerializableVector3 position = (SerializableVector3)state;
+                Vector3 newPosition = position.ToVector();
+                transform.position = newPosition;
             }
         }
     }

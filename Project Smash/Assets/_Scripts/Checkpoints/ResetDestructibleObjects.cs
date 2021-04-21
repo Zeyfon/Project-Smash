@@ -47,23 +47,24 @@ namespace PSmash.Checkpoints
 
         private void OnEnable()
         {
-            Checkpoint.onCheckpointPerformed += RespawnAllEnemies;
+            Checkpoint.onCheckpointPerformed += RespawnDestructibleObjects;
         }
 
         private void OnDisable()
         {
-            Checkpoint.onCheckpointPerformed -= RespawnAllEnemies;
+            Checkpoint.onCheckpointPerformed -= RespawnDestructibleObjects;
 
         }
 
-        void RespawnAllEnemies()
+        void RespawnDestructibleObjects()
         {
-            StartCoroutine(RespawnEnemies());
+            StartCoroutine(RespawnDestructibleObjects_CR());
 
         }
 
-        IEnumerator RespawnEnemies()
+        IEnumerator RespawnDestructibleObjects_CR()
         {
+            DestructibleObject.destroyedObjects.Clear();
             foreach (DestructibleObject entity in FindObjectsOfType<DestructibleObject>())
             {
                 Destroy(entity.gameObject);

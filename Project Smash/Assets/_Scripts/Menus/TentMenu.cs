@@ -42,7 +42,7 @@ namespace PSmash.Menus
         public void OpenTentMenuAndDoCheckpoint()
         {
             OpenMenu();
-            print(OnTentMenuClose.Target);
+            //print(OnTentMenuClose.Target);
             Checkpoint();
         }
 
@@ -51,7 +51,7 @@ namespace PSmash.Menus
         /// </summary>
         public void OpenMenu()
         {
-            print("Open Tent Menu");
+            //print("Open Tent Menu");
             SetChildObjects(true);
             StartCoroutine(EnableControl());
             StartCoroutine(InitializeSelection());
@@ -80,7 +80,7 @@ namespace PSmash.Menus
 
         void CloseTentMenu()
         {
-            print("Closing Tent Menu");
+            //print("Closing Tent Menu");
             DisableUIController();
             DisableMenuObjects();
             if(OnTentMenuClose == null)
@@ -112,7 +112,7 @@ namespace PSmash.Menus
 
         private void EnableUIController()
         {
-            print("Enable Tent Menu Controller");
+            //print("Enable Tent Menu Controller");
             _controller.UI.Enable();
             _controller.UI.Cancel.performed += ctx => BacktrackMenu();
             _controller.UI.ButtonStart.performed += ctx => CloseAllMenus();
@@ -120,7 +120,7 @@ namespace PSmash.Menus
 
         private void DisableUIController()
         {
-            print("Disable Tent Menu Controller");
+            //print("Disable Tent Menu Controller");
             _controller.UI.Disable();
             _controller.UI.Cancel.performed -= ctx => BacktrackMenu();
             _controller.UI.ButtonStart.performed -= ctx => CloseAllMenus();

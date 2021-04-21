@@ -109,10 +109,10 @@ namespace PSmash.Items.Doors
             yield return new WaitForSeconds(1);
             myVirtualCamera.m_Priority = 100;
             yield return new WaitForSeconds(4);
-            yield return fader.FadeOut(canvasGroup, fadeOutTime);
+            yield return fader.FadeIn(canvasGroup, fadeOutTime);
             myVirtualCamera.m_Priority = 0;
             yield return new WaitForSeconds(0.5f);
-            yield return fader.FadeIn(canvasGroup, fadeInTime);
+            yield return fader.FadeOut(canvasGroup, fadeInTime);
             EnableAvatarControl();
         }
 
