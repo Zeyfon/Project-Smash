@@ -47,6 +47,7 @@ namespace GameDevTV.Saving
                     print("3");
                     print("Loading scene " + buildIndex);
                     yield return SceneManager.LoadSceneAsync(buildIndex);
+                    yield return new WaitForEndOfFrame();
                 }
                 else
                 {
