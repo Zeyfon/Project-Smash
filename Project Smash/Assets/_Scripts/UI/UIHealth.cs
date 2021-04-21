@@ -56,6 +56,7 @@ namespace PSmash.UI
         {
             //print("UI Health Healed");
             healthBar.fillAmount = health.GetHealth() / health.GetMaxHealthPoints();
+            print("UI Health got " + health.GetHealth() + "  health");
             damageBar.fillAmount = healthBar.fillAmount;
             UpdateText();
         }

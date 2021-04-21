@@ -12,14 +12,14 @@ namespace PSmash.Core
         {
             if (!collision.CompareTag("Interactable"))
                 return;
-            print(collision.gameObject.name +  "  is trying to interact with the player");
+            //print(collision.gameObject.name +  "  is trying to interact with the player");
             if (collision.GetComponent<IManualInteraction>() != null)
             {
                 manualInteractableObject = collision.GetComponent<IManualInteraction>();
             }
             else if(collision.GetComponentInParent<IAutomaticInteraction>()!= null)
             {
-                print(collision.gameObject.name);
+                //print(collision.gameObject.name);
                 collision.GetComponentInParent<IAutomaticInteraction>().Interact();
             }
             else

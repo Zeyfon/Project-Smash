@@ -7,19 +7,17 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 using HutongGames.PlayMaker;
+using PSmash.SceneManagement;
 
 namespace PSmash.InputSystem
 {
     public class InputHandler : MonoBehaviour
     {
-
-        Collider2D interactableCollider;
         PlayMakerFSM pmPlayerController = null;
 
         public static event Action OnPlayerStartButtonPressed;
         public List<ICommand> commandList = new List<ICommand>();
 
-        Command action0;
         Command action1;
         Command action2;
         Command action3;
@@ -28,25 +26,14 @@ namespace PSmash.InputSystem
         Command action6;
         Command action7;
         
-
-        Vector2 action0State = new Vector2(0, 0);
-        float action1State = 0;
-        float action2State = 0;
-        float action3State = 0;
-        float action4State = 0;
         float action5State = 0;
         float action7State = 0;
 
-        PlayMakerFSM currentPMState;
         FsmObject currentFSM;
         FsmVector2 movementInput;
         _Controller _controller;
 
         Vector2 movement;
-        bool jumpButtonState = false;
-        bool toolButtonState = false;
-        bool guardButtonState = false;
-        bool guardTest = false;
 
         private void Awake()
         {
@@ -63,13 +50,10 @@ namespace PSmash.InputSystem
             currentFSM = FsmVariables.GlobalVariables.FindFsmObject("currentFSM");
             movementInput = FsmVariables.GlobalVariables.FindFsmVector2("movementInput");
             SetInitialCommandsToButtons();
-            //SetCommandList();
-            //SetButtonsInControllerMenu();
         }
 
         private void SetInitialCommandsToButtons()
         {
-            action0 = new MoveCommand();
             action1 = new JumpCommand();
             action2 = new AttackCommand();
             action3 = new EvadeCommand();
@@ -115,6 +99,7 @@ namespace PSmash.InputSystem
             Door.EnablePlayerController += IsPlayerInputEnabled;
             Trap.EnablePlayerController += IsPlayerInputEnabled;
             MainMenu.OnMenuAction += IsPlayerInputEnabled;
+            Portal.OnPortalTriggered += EnableInput;
         }
 
         private void OnDisable()
@@ -146,7 +131,9 @@ namespace PSmash.InputSystem
             EventManager.PlayerGotBoots -= PlayerGotBoots;
             Door.EnablePlayerController -= IsPlayerInputEnabled;
             Trap.EnablePlayerController -= IsPlayerInputEnabled;
-            MainMenu.OnMenuAction += IsPlayerInputEnabled;
+            MainMenu.OnMenuAction -= IsPlayerInputEnabled;
+            Portal.OnPortalTriggered -= EnableInput;
+
         }
 
         private void Update()
@@ -270,7 +257,7 @@ namespace PSmash.InputSystem
 
         public void SetInteractableCollider(Collider2D interactableCollider)
         {
-            this.interactableCollider = interactableCollider;
+            //this.interactableCollider = interactableCollider;
         }
 
         void EnablePlayerInput()
@@ -282,12 +269,12 @@ namespace PSmash.InputSystem
         {
             if (isEnabled)
             {
-                print("Enabling input handler");
+                //print("Enabling input handler");
                 _controller.Player.Enable();
             }
             else
             {
-                print("Disabling input handler");
+                //print("Disabling input handler");
                 _controller.Player.Disable();
                 movement = new Vector2(0, 0);
             }

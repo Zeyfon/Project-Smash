@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using PSmash.SceneManagement;
 using GameDevTV.Saving;
+using PSmash.UI.CraftingSytem;
 
 namespace PSmash.CraftingSystem
 {
@@ -42,7 +43,7 @@ namespace PSmash.CraftingSystem
         void Start()
         {
             tentMenu = FindObjectOfType<TentMenu>();
-            OnSkillPanelUpdate();
+            //OnSkillPanelUpdate();
             CloseMenu();
         }
 
@@ -261,11 +262,17 @@ namespace PSmash.CraftingSystem
         {
 
             Dictionary<int, bool> obj = (Dictionary<int, bool>)state;
-            SkillSlot[] slots = transform.GetComponentsInChildren<SkillSlot>();
+            SkillSlot[] slots = transform.GetChild(0).GetChild(1).GetComponentsInChildren<SkillSlot>();
+            //print(slots.Length);
             for( int i = 0; i<slots.Length; i++)
             {
                 slots[i].SetIsUnlocked(obj[i]);
+                if(obj[i] == true)
+                {
+                    //print(slots[i].gameObject.name + "  is already unlocked");
+                }
             }
+
         }
     }
 }

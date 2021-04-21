@@ -81,7 +81,6 @@ namespace PSmash.Stats
                     }
                 }
             }
-            health.RestoreHealth(999);
         }
 
         [System.Serializable]

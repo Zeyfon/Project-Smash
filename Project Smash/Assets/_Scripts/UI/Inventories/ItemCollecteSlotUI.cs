@@ -29,9 +29,9 @@ namespace PSmash.UI.Inventories
         IEnumerator ShowAndHide()
         {
             Fader fader = new Fader();
-            yield return fader.FadeIn(canvasGroup, 0.3f);
+            yield return fader.FadeOut(canvasGroup, 0.3f);
             yield return new WaitForSeconds(1.5f);
-            yield return fader.FadeOut(canvasGroup, 1);
+            yield return fader.FadeIn(canvasGroup, 1);
             Destroy(gameObject);
         }
     }

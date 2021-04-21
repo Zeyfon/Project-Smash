@@ -12,22 +12,22 @@ namespace PSmash.Inventories
         [SerializeField] SubWeaponItem subWeapon;
 
         public delegate void ItemChange(int index);
-        public event ItemChange onEquippedActionItemChange;
+        public event ItemChange onEquipmentUIUpdate;
 
         int currentIndex = 0;
-        private void Start()
+        private void Awake()
         {
-            ReplenishActionableItems();
+            RestoreToolsNumber();
         }
 
         private void OnEnable()
         {
-            Tent.OnTentMenuOpen += ReplenishActionableItems;
+            Tent.OnTentMenuOpen += RestoreToolsNumber;
         }
 
         private void OnDisable()
         {
-            Tent.OnTentMenuOpen -= ReplenishActionableItems;
+            Tent.OnTentMenuOpen -= RestoreToolsNumber;
         }
 
         public void SetSubWeapon(SubWeaponItem subWeapon)
@@ -40,13 +40,13 @@ namespace PSmash.Inventories
             return subWeapon;
         }
 
-        void ReplenishActionableItems()
+        void RestoreToolsNumber()
         {
             foreach (EquipmentSlots slot in slots)
             {
                 slot.number = slot.maxNumber;
             }
-            onEquippedActionItemChange(currentIndex);
+            onEquipmentUIUpdate(currentIndex);
         }
 
 
@@ -76,16 +76,16 @@ namespace PSmash.Inventories
                     currentIndex = slots.Length - 1;
                 }
             }
-            onEquippedActionItemChange(currentIndex);
+            onEquipmentUIUpdate(currentIndex);
         }
 
         public void ItemUsed(EquipmentSlots slot)
         {
             slot.number -= 1;
-            onEquippedActionItemChange(currentIndex);
+            onEquipmentUIUpdate(currentIndex);
         }
 
-        public EquipmentSlots[] GetActionableItems()
+        public EquipmentSlots[] GetTools()
         {
             return slots;
         }
@@ -107,7 +107,7 @@ namespace PSmash.Inventories
                 {
                     slot.maxNumber +=1;
                     print("The " + item.name + "  increase to  " + slot.maxNumber);
-                    ReplenishActionableItems();
+                    RestoreToolsNumber();
                     return;
                 }
             }
@@ -116,18 +116,26 @@ namespace PSmash.Inventories
 
         public object CaptureState()
         {
-            Dictionary<string, int> toolsForSerialization = new Dictionary<string, int>();
+            ///Save the quantity of each tool
+            Dictionary<string, List<int>> toolsForSerialization = new Dictionary<string, List<int>>();
             foreach(EquipmentSlots slot in slots)
             {
-                toolsForSerialization.Add(slot.item.GetID(), slot.number);
+                List<int> numbers = new List<int>();
+                numbers.Add(slot.number);
+                numbers.Add(slot.maxNumber);
+                toolsForSerialization.Add(slot.item.GetID(), numbers);
             }
+            List<int> currentIndexes = new List<int>();
+            currentIndexes.Add(currentIndex);
+
+            toolsForSerialization.Add("currentIndex", currentIndexes); 
             return toolsForSerialization;
         }
 
         public void RestoreState(object state)
         {
-
-            var equippedItemsForSerialization = (Dictionary<string, int>)state;
+            ///
+            var equippedItemsForSerialization = (Dictionary<string, List<int>>)state;
 
             foreach (string name in equippedItemsForSerialization.Keys)
             {
@@ -138,13 +146,19 @@ namespace PSmash.Inventories
                     {
                         if(item == slot.item)
                         {
-                            print(slot.item.name + "  got  " + equippedItemsForSerialization[name]);
-                            slot.maxNumber = equippedItemsForSerialization[name];
+                            print("Restoring " + item.name);
+                            slot.number = equippedItemsForSerialization[name][0];
+                            slot.maxNumber = equippedItemsForSerialization[name][1];
                         }
                     }
                 }
+                if(name == "currentIndex")
+                {
+                    currentIndex = equippedItemsForSerialization[name][0];
+                    print("Restoring Tool index  " + currentIndex);
+                }
             }
-            //ReplenishActionableItems();
+            onEquipmentUIUpdate(currentIndex);
         }
     }
 }

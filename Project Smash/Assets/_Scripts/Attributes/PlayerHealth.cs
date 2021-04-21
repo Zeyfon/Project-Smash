@@ -8,10 +8,11 @@ using UnityEngine;
 using UnityEngine.Analytics;
 using UnityEngine.SceneManagement;
 using PSmash.Combat;
+using GameDevTV.Saving;
 
 namespace PSmash.Attributes
 {
-    public class PlayerHealth : Health
+    public class PlayerHealth : Health, ISaveable
     {
 
         //CONFIG
@@ -38,7 +39,8 @@ namespace PSmash.Attributes
             baseStats = GetComponent<BaseStats>();
             audioSource = GetComponent<AudioSource>();
             animator = GetComponent<Animator>();
-            health = (int)baseStats.GetStat(StatsList.Health);
+            InitializeHealth();
+
         }
 
         private void OnEnable()
@@ -137,11 +139,18 @@ namespace PSmash.Attributes
         }
 
         ///////////////////////////////////////////////////////////////////////////////////////////////////PRIVATE//////////////////////////////////////////////////////////////////
+        void InitializeHealth()
+        {
+            if (health == 0)
+            {
+                print("Health Initialized from 0  " + gameObject.name);
+                health = baseStats.GetStat(StatsList.Health);
+            }
+        }
 
         void RestorePlayer()
         {
             //print(this.gameObject);
-            BaseStats baseStats = GetComponent<BaseStats>();
             health = baseStats.GetStat(StatsList.Health);
             onHealed();
         }
@@ -176,6 +185,30 @@ namespace PSmash.Attributes
             animator.SetInteger("Damage", 50);
             yield return new WaitForSeconds(2);
             SceneManager.LoadScene(0);
+        }
+
+        public object CaptureState()
+        {
+            Dictionary<string, float> healthState = new Dictionary<string, float>();
+            healthState.Add("health", health);
+            return healthState;
+        }
+
+        public void RestoreState(object state)
+        {
+            Dictionary<string, float> healthstate = (Dictionary<string, float>)state;
+            foreach(string name in healthstate.Keys)
+            {
+                if(name == "health")
+                {
+                    health = healthstate[name];
+                    print("health restored from file  " + health +"  "  +gameObject.name);
+                    onHealed();
+                    //Debug.Break();
+                    break;
+                }
+                print("health from file to restores was not found");
+            }
         }
     }
 }

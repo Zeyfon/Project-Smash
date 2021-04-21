@@ -49,6 +49,7 @@ namespace PSmash.Checkpoints
 
         IEnumerator RespawnBoulders()
         {
+            Boulder.bouldersMoved.Clear();
             foreach (Boulder boulderInstance in FindObjectsOfType<Boulder>())
             {
                 Destroy(boulderInstance.gameObject);

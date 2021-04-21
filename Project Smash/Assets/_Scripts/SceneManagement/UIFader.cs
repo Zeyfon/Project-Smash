@@ -8,16 +8,18 @@ namespace PSmash.SceneManagement
     {
         [SerializeField] CanvasGroup canvasGroup = null;
 
-        public IEnumerator FadeOut(float time)
-        {
-            Fader fader = new Fader();
-            yield return fader.FadeOut(canvasGroup, time);
-        }
-
         public IEnumerator FadeIn(float time)
         {
+            //print("Fading in");
             Fader fader = new Fader();
             yield return fader.FadeIn(canvasGroup, time);
+        }
+
+        public IEnumerator FadeOut(float time)
+        {
+            //print("Fading Out");
+            Fader fader = new Fader();
+            yield return fader.FadeOut(canvasGroup, time);
         }
 
         public void FadeOutInmediate()

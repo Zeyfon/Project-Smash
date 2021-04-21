@@ -34,9 +34,9 @@ namespace PSmash.SceneManagement
         IEnumerator LoadLastScene()
         {
             yield return GetComponent<SavingSystem>().LoadLastScene(defaultSaveFile);
-            //UIFader fader = FindObjectOfType<UIFader>();
-            //fader.FadeOutInmediate();
-            //yield return fader.FadeIn(fadeInTime);
+            UIFader fader = FindObjectOfType<UIFader>();
+            fader.FadeOutInmediate();
+            yield return fader.FadeIn(fadeInTime);
         }
 
         public void LoadLastScene2()

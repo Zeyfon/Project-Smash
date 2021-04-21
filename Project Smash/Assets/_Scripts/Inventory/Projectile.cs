@@ -117,7 +117,7 @@ namespace PSmash.Inventories
         // Update is called once per frame
         void FixedUpdate()
         {
-            print(hasHit);
+            //print(hasHit);
             if (hasHit)
                 return;
 

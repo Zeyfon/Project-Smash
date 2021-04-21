@@ -48,13 +48,13 @@ namespace PSmash.Items.Traps
             EnablePlayerController(false);
             print("1");
 
-            yield return fader.FadeOut(canvasGroup, fadeOutTime);
+            yield return fader.FadeIn(canvasGroup, fadeOutTime);
             print("1");
             player.position = lastPosition;
             print("1");
             yield return new WaitForSeconds(1);
             print("1");
-            yield return fader.FadeIn(canvasGroup, fadeInTime);
+            yield return fader.FadeOut(canvasGroup, fadeInTime);
             print("1");
             EnablePlayerController(true);
         }

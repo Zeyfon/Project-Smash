@@ -1,4 +1,5 @@
-﻿using PSmash.Checkpoints;
+﻿using PSmash.Attributes;
+using PSmash.Checkpoints;
 using PSmash.Core;
 using System.Collections;
 using System.Collections.Generic;
@@ -67,6 +68,7 @@ namespace PSmash.Saving
 
         IEnumerator RespawnEnemies()
         {
+            EnemyHealth.takenOutEnemies.Clear();
             foreach (EnemyID entity in FindObjectsOfType<EnemyID>())
             {
                 Destroy(entity.gameObject);

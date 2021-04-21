@@ -33,7 +33,7 @@ namespace PSmash.Core
         IEnumerator ShowDialogue()
         {
             Fader fader = new Fader();
-            yield return fader.FadeIn(canvasGroup, 1);
+            yield return fader.FadeOut(canvasGroup, 1);
         }
 
         private void OnTriggerExit2D(Collider2D collision)
@@ -49,7 +49,7 @@ namespace PSmash.Core
         IEnumerator HideDialogue()
         {
             Fader fader = new Fader();
-            yield return fader.FadeOut(canvasGroup, 1);
+            yield return fader.FadeIn(canvasGroup, 1);
         }
     }
 

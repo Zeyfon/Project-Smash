@@ -5,7 +5,7 @@ namespace PSmash.Core
 {
     public class Fader
     {
-        public IEnumerator FadeIn(CanvasGroup canvasGroup, float time)
+        public IEnumerator FadeOut(CanvasGroup canvasGroup, float time)
         {
             canvasGroup.alpha = 0;
             while (canvasGroup.alpha < 1)
@@ -15,7 +15,7 @@ namespace PSmash.Core
             }
         }
 
-        public IEnumerator FadeOut(CanvasGroup canvasGroup, float time)
+        public IEnumerator FadeIn(CanvasGroup canvasGroup, float time)
         {
             canvasGroup.alpha = 1;
             while (canvasGroup.alpha > 0)

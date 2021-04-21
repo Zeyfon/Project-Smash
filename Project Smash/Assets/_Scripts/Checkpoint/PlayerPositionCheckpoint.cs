@@ -2,21 +2,26 @@
 using System.Collections.Generic;
 using UnityEngine;
 using GameDevTV.Saving;
-using PSmash.Movement;
+using PSmash.Attributes;
 
 namespace PSmash.Checkpoints
 {
     public class PlayerPositionCheckpoint : MonoBehaviour, ISaveable
     {
 
-        bool canSavePosition = false;
+        bool canSaveCheckpoint = false;
+
+        public bool CanSaveCheckpoint()
+        {
+            return canSaveCheckpoint;
+        }
 
         private void OnTriggerEnter2D(Collider2D collision)
         {
             if (collision.CompareTag("Player"))
             {
                 //print("Player Pos Can be saved");
-                canSavePosition = true;
+                canSaveCheckpoint = true;
             }
 
         }
@@ -26,13 +31,13 @@ namespace PSmash.Checkpoints
             if (collision.CompareTag("Player"))
             {
                 //print("Player Pos cannot be saved");
-                canSavePosition = false;
+                canSaveCheckpoint = false;
             }
         }
 
         public object CaptureState()
         {
-            if (canSavePosition)
+            if (canSaveCheckpoint)
             {
                 print(gameObject.name + "  capturing player position");
                 SerializableVector3 position = new SerializableVector3(transform.position);
@@ -49,9 +54,10 @@ namespace PSmash.Checkpoints
             if (position == null)
                 return;
             Vector3 newPosition = position.ToVector();
-            FindObjectOfType<PlayerMovement>().transform.position = newPosition;
-            print(gameObject.name + "  restoring player position");
-            //FindObjectOfType<PlayerMovement>().GetComponent<Rigidbody2D>().MovePosition(newPosition);
+            GameObject player = GameObject.FindGameObjectWithTag("Player");
+            player.transform.position = newPosition;
+            player.GetComponent<PlayerHealth>().RestoreHealth(99999);
+            print("Setting " + player.name + "   to Position  " + newPosition);
         }
     }
 }

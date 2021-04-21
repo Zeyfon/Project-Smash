@@ -7,10 +7,12 @@ using UnityEngine;
 using UnityEngine.Events;
 using PSmash.Combat;
 using PSmash.Movement;
+using GameDevTV.Saving;
+using System.Collections.Generic;
 
 namespace PSmash.Attributes
 {
-    public class EnemyHealth : Health
+    public class EnemyHealth : Health, ISaveable
     {
         [SerializeField] bool isArmorEnabled = false;
         [Header("TestMode")]
@@ -30,6 +32,7 @@ namespace PSmash.Attributes
         [SerializeField] Vector2 finisherImpulse = new Vector2(15, 7);
 
         public static event Action onEnemyDead;
+        public static List<string> takenOutEnemies = new List<string>();
 
         EnemyPosture posture;
         PlayMakerFSM pm;
@@ -40,6 +43,10 @@ namespace PSmash.Attributes
 
         private void Awake()
         {
+            if (takenOutEnemies.Contains(GetComponent<SaveableEntity>().GetUniqueIdentifier()))
+            {
+                transform.parent.gameObject.SetActive(false);
+            }
             initialPosition = transform.position;
             baseStats = GetComponent<BaseStats>();
             health = baseStats.GetStat(StatsList.Health);
@@ -148,6 +155,7 @@ namespace PSmash.Attributes
             {
                 GetComponent<AudioSource>().pitch = 1;
                 isDead = true;
+                takenOutEnemies.Add(GetComponent<SaveableEntity>().GetUniqueIdentifier());
                 if(onEnemyDead != null)
                 {
                     onEnemyDead();
@@ -321,6 +329,27 @@ namespace PSmash.Attributes
 
             audioSource.PlayOneShot(stunEndAudio);
             posture.FullyRegenPosture();
+        }
+
+        public object CaptureState()
+        {
+            return health;
+        }
+
+        public void RestoreState(object state)
+        {
+            if (takenOutEnemies.Contains(GetComponent<SaveableEntity>().GetUniqueIdentifier()))
+            {
+                transform.parent.gameObject.SetActive(false);
+                return;
+            }
+            health = (float)state;
+            print(gameObject.name + "   health is " + health);
+            if (Mathf.Approximately(health, 0))
+            {
+                transform.parent.gameObject.SetActive(false);
+            }
+
         }
 
         #endregion
