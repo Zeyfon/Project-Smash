@@ -27,12 +27,12 @@ namespace PSmash.Inventories
 
         private void OnEnable()
         {
-            Tent.OnTentMenuOpen += RestoreToolsNumber;
+            Tent.OnTentMenuOpen += RestoreToolsNumber2;
         }
 
         private void OnDisable()
         {
-            Tent.OnTentMenuOpen -= RestoreToolsNumber;
+            Tent.OnTentMenuOpen -= RestoreToolsNumber2;
         }
 
         public void SetSubWeapon(SubWeaponItem subWeapon)
@@ -45,6 +45,11 @@ namespace PSmash.Inventories
             return subWeapon;
         }
 
+        void RestoreToolsNumber2()
+        {
+            RestoreToolsNumber();
+            onEquipmentUIUpdate(currentIndex);
+        }
         void RestoreToolsNumber()
         {
             foreach (EquipmentSlots slot in slots)
@@ -112,6 +117,7 @@ namespace PSmash.Inventories
                     slot.maxNumber +=1;
                     //print("The " + item.name + "  increase to  " + slot.maxNumber);
                     RestoreToolsNumber();
+                    onEquipmentUIUpdate(currentIndex);
                     return;
                 }
             }

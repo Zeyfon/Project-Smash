@@ -9,6 +9,7 @@ using PSmash.Combat;
 using PSmash.Movement;
 using GameDevTV.Saving;
 using System.Collections.Generic;
+using PSmash.Checkpoints;
 
 namespace PSmash.Attributes
 {
@@ -40,18 +41,24 @@ namespace PSmash.Attributes
         Vector3 initialPosition;
 
         float damagePenetrationPercentage;
+        bool armorDestroyed = false;
 
         private void Awake()
         {
-            if (takenOutEnemies.Contains(GetComponent<SaveableEntity>().GetUniqueIdentifier()))
-            {
-                transform.parent.gameObject.SetActive(false);
-            }
+
             initialPosition = transform.position;
             baseStats = GetComponent<BaseStats>();
             health = baseStats.GetStat(StatsList.Health);
             audioSource = GetComponent<AudioSource>();
             posture = GetComponent<EnemyPosture>();
+        }
+
+        void Start()
+        {
+            if (takenOutEnemies.Contains(GetComponent<SaveableEntity>().GetUniqueIdentifier()))
+            {
+                transform.parent.gameObject.SetActive(false);
+            }
         }
 
         //This method will always be called from the AIController
@@ -95,7 +102,7 @@ namespace PSmash.Attributes
                 totalPenetrationPercentage = damagePenetrationPercentage + attackedWeapon.damagePenetrationValue;
             }
 
-            bool armorDestroyed = false;
+            //armorDestroyed = false;
             //Unity Event to instantiate a object to show the damage in the screen
             if (posture != null && posture.enabled)
             { 
@@ -103,10 +110,10 @@ namespace PSmash.Attributes
                 if (weaknessWeapon == attackedWeapon)
                 {
                     postureDamage = (damage + attackedWeapon.damage) * weaknessFactor;
-                    if(posture.GetInitialPosture() < postureDamage)
-                    {
-                        armorDestroyed = true;
-                    }
+                    //if(posture.GetInitialPosture() < postureDamage)
+                    //{
+                    //    armorDestroyed = true;
+                    //}
                 }
 
                 else
@@ -156,6 +163,7 @@ namespace PSmash.Attributes
                 GetComponent<AudioSource>().pitch = 1;
                 isDead = true;
                 takenOutEnemies.Add(GetComponent<SaveableEntity>().GetUniqueIdentifier());
+                print("Added to Taken out enemy list " + gameObject.name + "  " + GetComponent<SaveableEntity>().GetUniqueIdentifier());
                 if(onEnemyDead != null)
                 {
                     onEnemyDead();
@@ -227,6 +235,7 @@ namespace PSmash.Attributes
         {
             audioSource.PlayOneShot(finisherAudio);
             FlyObjectAway(attackerPosition);
+            armorDestroyed = true;
             DamageHealth(damage, 100);
             onTakeDamage.Invoke(damage);
         }
@@ -331,27 +340,52 @@ namespace PSmash.Attributes
             posture.FullyRegenPosture();
         }
 
+        [System.Serializable]
+        struct Info
+        {
+            public bool isArmorDestroyed;
+            public int checkpointCounter;
+            public float health;
+        }
+
         public object CaptureState()
         {
-            return health;
+            Info info = new Info();
+            info.isArmorDestroyed = armorDestroyed;
+            info.checkpointCounter = FindObjectOfType<Tent>().GetCheckpointCounter();
+            info.health = health;
+            return info;
         }
 
         public void RestoreState(object state)
         {
+            //print("Restoring Taken out enemy list " + gameObject.name + "  " + GetComponent<SaveableEntity>().GetUniqueIdentifier());
             if (takenOutEnemies.Contains(GetComponent<SaveableEntity>().GetUniqueIdentifier()))
             {
                 transform.parent.gameObject.SetActive(false);
-                return;
+                
             }
-            health = (float)state;
-            print(gameObject.name + "   health is " + health);
-            if (Mathf.Approximately(health, 0))
+            else
             {
-                transform.parent.gameObject.SetActive(false);
+                Info info = (Info)state;
+                if(info.checkpointCounter == FindObjectOfType<Tent>().GetCheckpointCounter())
+                {
+                    print(gameObject.name + "  is in same checkpointNumber");
+                    print("Armor Broken  " + info.isArmorDestroyed);
+                    health = info.health;
+                    if (Mathf.Approximately(health, 0))
+                    {
+                        transform.parent.gameObject.SetActive(false);
+                    }
+                    if (info.isArmorDestroyed)
+                    {
+                        print("Restoring Armor Off");
+                        TakeArmorOff();
+                    }
+                }
+
             }
-
         }
-
         #endregion
     }
 }

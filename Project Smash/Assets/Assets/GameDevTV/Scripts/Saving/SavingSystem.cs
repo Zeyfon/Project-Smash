@@ -39,7 +39,7 @@ namespace GameDevTV.Saving
 
                 if (buildIndex > SceneManager.sceneCountInBuildSettings)
                 {
-                    print("2");
+                    //print("2");
                     yield return null;
                 }
                 else if (buildIndex != SceneManager.GetActiveScene().buildIndex)
@@ -51,7 +51,7 @@ namespace GameDevTV.Saving
                 }
                 else
                 {
-                    print("4");
+                    //print("4");
                 }
                 RestoreState(state);
             }

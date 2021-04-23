@@ -28,7 +28,7 @@ namespace PSmash.Temporal
                 SceneManager.LoadScene(1);
             }
         }
-        // Update is called once per fram
     }
+    // Update is called once per fram
 }
 

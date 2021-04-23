@@ -1,4 +1,5 @@
-﻿using PSmash.Items;
+﻿using GameDevTV.Saving;
+using PSmash.Items;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -11,57 +12,43 @@ namespace PSmash.Checkpoints
 
         struct ObjectSlot
         {
-            public GameObject prefab;
-            public Vector2 position;
+            public Transform transform;
+            public Vector3 position;
+            public string identifier;
         }
 
         List<ObjectSlot> slots = new List<ObjectSlot>();
         // Start is called before the first frame update
         void Awake()
         {
-            foreach (Boulder obj in FindObjectsOfType<Boulder>())
-            {
-
-                ObjectSlot slot = new ObjectSlot();
-                slot.prefab = boulderPrefab;
-                slot.position = obj.transform.position;
-                //print(slot.prefab.name);
-                slots.Add(slot);
-            }
+            SetObjectsRecord();
         }
 
-        private void OnEnable()
-        {
-            Checkpoint.onCheckpointPerformed += RespawnAllBoulders;
-        }
-
-        private void OnDisable()
-        {
-            Checkpoint.onCheckpointPerformed -= RespawnAllBoulders;
-
-        }
-
-        void RespawnAllBoulders()
-        {
-            StartCoroutine(RespawnBoulders());
-
-        }
-
-        IEnumerator RespawnBoulders()
+        public IEnumerator ResetEnvironmentalObjects()
         {
             Boulder.bouldersMoved.Clear();
-            foreach (Boulder boulderInstance in FindObjectsOfType<Boulder>())
-            {
-                Destroy(boulderInstance.gameObject);
-            }
-            //print("Enemies destroyed");
             foreach (ObjectSlot slot in slots)
             {
-                Instantiate(slot.prefab, slot.position, Quaternion.identity, transform);
-                
+                slot.transform.gameObject.SetActive(false);
+                Destroy(slot.transform.gameObject, 1);
+                GameObject clone = Instantiate(boulderPrefab, slot.position, Quaternion.identity, transform);
+                clone.GetComponentInChildren<SaveableEntity>().OverwriteUniqueIdentifer(slot.identifier);
             }
-            //print("Enemies respawned");
+            SetObjectsRecord();
             yield return null;
+        }
+
+        void SetObjectsRecord()
+        {
+            slots.Clear();
+            foreach (Boulder obj in FindObjectsOfType<Boulder>())
+            {
+                ObjectSlot slot = new ObjectSlot();
+                slot.transform = obj.transform;
+                slot.position = obj.transform.position;
+                slot.identifier = obj.GetComponentInChildren<SaveableEntity>().GetUniqueIdentifier();
+                slots.Add(slot);
+            }
         }
     }
 

@@ -143,7 +143,7 @@ namespace PSmash.Attributes
         {
             if (health == 0)
             {
-                print("Health Initialized from 0  " + gameObject.name);
+                //print("Health Initialized from 0  " + gameObject.name);
                 health = baseStats.GetStat(StatsList.Health);
             }
         }

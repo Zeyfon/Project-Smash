@@ -15,6 +15,7 @@ namespace PSmash.SceneManagement
         _Controller _controller;
         private void Awake()
         {
+            GetComponent<SavingSystem>().Delete(defaultSaveFile);
             _controller = new _Controller();
         }
 

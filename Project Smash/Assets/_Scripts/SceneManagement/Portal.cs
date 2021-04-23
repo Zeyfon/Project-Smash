@@ -63,14 +63,8 @@ namespace PSmash.SceneManagement
 
             ////////////////////////////////////////////////////// NEXT SCENE LOADING /////////////////////////////////////////
 
-            //AsyncOperation asyncLoad =  SceneManager.LoadSceneAsync(sceneToLoad);
-
-            //while (!asyncLoad.isDone)
-            //{
-            //    yield return null;
-            //}
-
             yield return SceneManager.LoadSceneAsync(sceneToLoad);
+            //yield return new WaitForSeconds(0.3f);
             ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
             if (OnPortalTriggered != null)
                 OnPortalTriggered(false);

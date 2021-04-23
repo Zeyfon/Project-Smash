@@ -26,19 +26,19 @@ namespace PSmash.Combat
         {
             parryTimer = 0;
             isGuarding = true;
-            print("Guard Enabled  " + isGuarding);
+            //print("Guard Enabled  " + isGuarding);
         }
 
         public void DisableGuard()
         {
             parryTimer = Mathf.Infinity;
             isGuarding = false;
-            print("Guard Disabled  " + isGuarding);
+            //print("Guard Disabled  " + isGuarding);
         }
 
         public bool IsGuarding(Transform attacker, Weapon weapon)
         {
-            print("Checking guard" + isGuarding);
+            //print("Checking guard" + isGuarding);
             if (isGuarding)
             {
                 if (canParry)
@@ -47,7 +47,7 @@ namespace PSmash.Combat
                     {
                         if (pm.FsmName == "GuardParryState")
                         {
-                            print("Found guard fsm");
+                            //print("Found guard fsm");
                             attacker.GetComponent<IDamagable>().TakeDamage(transform, weapon, AttackType.NotUnblockable, damage);
                             pm.SendEvent("PARRY");
                             PlaySound(parrySound);
