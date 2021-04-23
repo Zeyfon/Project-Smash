@@ -6,6 +6,7 @@ using PSmash.Combat.Weapons;
 using PSmash.Combat;
 using PSmash.Inventories;
 using GameDevTV.Saving;
+using PSmash.Checkpoints;
 
 namespace PSmash.Items
 {
@@ -101,19 +102,30 @@ namespace PSmash.Items
             return objectType;
         }
 
+        [System.Serializable]
+        struct Info
+        {
+            public int checkpointCounter;
+        }
+
         public object CaptureState()
         {
-            return null;
+            Info info = new Info();
+            info.checkpointCounter = FindObjectOfType<Tent>().GetCheckpointCounter();
+            return info;
         }
 
         public void RestoreState(object state)
         {
-            
-            string identifier = GetComponent<SaveableEntity>().GetUniqueIdentifier();
-            if (destroyedObjects.Contains(identifier))
+            Info info = (Info)state;
+
+            if(info.checkpointCounter == FindObjectOfType<Tent>().GetCheckpointCounter())
             {
-                DestroyedState();
-                //print(identifier + "  set to destroyed");
+                string identifier = GetComponent<SaveableEntity>().GetUniqueIdentifier();
+                if (destroyedObjects.Contains(identifier))
+                {
+                    DestroyedState();
+                }
             }
         }
     }

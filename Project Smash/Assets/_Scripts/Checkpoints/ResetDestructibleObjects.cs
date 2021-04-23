@@ -2,6 +2,7 @@
 using UnityEngine;
 using PSmash.Items;
 using System.Collections;
+using GameDevTV.Saving;
 
 namespace PSmash.Checkpoints
 {
@@ -10,72 +11,70 @@ namespace PSmash.Checkpoints
         [SerializeField] GameObject barrelPrefab = null;
         [SerializeField] GameObject cratePrefab = null;
         [SerializeField] GameObject rockPrefab = null;
-        List<DestructibleObject> objects = new List<DestructibleObject>();
 
         struct ObjectSlot
         {
-            public GameObject prefab;
+            public DestructibleObject destructibleObject;
             public Vector2 position;
+            public string identifier;
         }
 
         List<ObjectSlot> slots = new List<ObjectSlot>();
     // Start is called before the first frame update
         void Awake()
         {
+            SetObjectsRecord();
+        }
+
+
+
+        public IEnumerator ResetDestructibleObjects_CR()
+        {
+            DestructibleObject.destroyedObjects.Clear();
+            //print("Enemies destroyed");
+            foreach (ObjectSlot slot in slots)
+            {
+                slot.destructibleObject.gameObject.SetActive(false);
+                Destroy(slot.destructibleObject.gameObject, 1);
+                GameObject clone = Instantiate(GetObjectPrefab(slot), slot.position, Quaternion.identity, transform);
+                clone.GetComponentInChildren<SaveableEntity>().OverwriteUniqueIdentifer(slot.identifier);
+            }
+            SetObjectsRecord();
+            //print("Enemies respawned");
+            yield return null;
+        }
+
+        void SetObjectsRecord()
+        {
+            slots.Clear();
             foreach (DestructibleObject obj in FindObjectsOfType<DestructibleObject>())
             {
-                GameObject tempObj = null;
-                if (obj.GetObjectType() == DestructibleObject.ObjectType.barrel)
-                {
-                    tempObj = barrelPrefab;
-                }
-                if (obj.GetObjectType() == DestructibleObject.ObjectType.crate)
-                {
-                    tempObj = cratePrefab;
-                }
-                if (obj.GetObjectType() == DestructibleObject.ObjectType.rock)
-                {
-                    tempObj = rockPrefab;
-                }
+
                 ObjectSlot slot = new ObjectSlot();
-                slot.prefab = tempObj;
+                slot.destructibleObject = obj;
                 slot.position = obj.transform.position;
-                //print(slot.prefab.name);
+                string identifier = obj.GetComponentInChildren<SaveableEntity>().GetUniqueIdentifier();
+                slot.identifier = identifier;
                 slots.Add(slot);
             }
         }
 
-        private void OnEnable()
+        GameObject GetObjectPrefab(ObjectSlot slot)
         {
-            Checkpoint.onCheckpointPerformed += RespawnDestructibleObjects;
-        }
-
-        private void OnDisable()
-        {
-            Checkpoint.onCheckpointPerformed -= RespawnDestructibleObjects;
-
-        }
-
-        void RespawnDestructibleObjects()
-        {
-            StartCoroutine(RespawnDestructibleObjects_CR());
-
-        }
-
-        IEnumerator RespawnDestructibleObjects_CR()
-        {
-            DestructibleObject.destroyedObjects.Clear();
-            foreach (DestructibleObject entity in FindObjectsOfType<DestructibleObject>())
+            GameObject prefab = null;
+            if (slot.destructibleObject.GetObjectType() == DestructibleObject.ObjectType.barrel)
             {
-                Destroy(entity.gameObject);
+                prefab = barrelPrefab;
             }
-            //print("Enemies destroyed");
-            foreach (ObjectSlot slot in slots)
+            if (slot.destructibleObject.GetObjectType() == DestructibleObject.ObjectType.crate)
             {
-                Instantiate(slot.prefab, slot.position, Quaternion.identity, transform);
+                prefab = cratePrefab;
             }
-            //print("Enemies respawned");
-            yield return null;
+            if (slot.destructibleObject.GetObjectType() == DestructibleObject.ObjectType.rock)
+            {
+                prefab = rockPrefab;
+            }
+            return prefab;
         }
 
     }

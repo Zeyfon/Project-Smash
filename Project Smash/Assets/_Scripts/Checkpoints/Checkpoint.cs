@@ -18,6 +18,12 @@ namespace PSmash.Checkpoints
             Tent.OnTentMenuOpen += PerformCheckpoint;
         }
 
+        private void OnDisable()
+        {
+            Tent.OnTentMenuOpen -= PerformCheckpoint;
+
+        }
+
 
         void PerformCheckpoint()
         {

@@ -36,13 +36,14 @@ namespace PSmash.CraftingSystem
         {
             _controller = new _Controller();
             inventory = Inventory.GetPlayerInventory();
+            tentMenu = FindObjectOfType<TentMenu>();
             //TODO the unlocked skill slots will need to be reasigned when the save system begins to run.
         }
 
         // Start is called before the first frame update
         void Start()
         {
-            tentMenu = FindObjectOfType<TentMenu>();
+
             //OnSkillPanelUpdate();
             CloseMenu();
         }

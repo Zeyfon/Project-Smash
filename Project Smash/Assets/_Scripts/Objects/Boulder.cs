@@ -4,6 +4,7 @@ using UnityEngine;
 using PSmash.Combat;
 using GameDevTV.Saving;
 using System.Collections.Generic;
+using PSmash.Checkpoints;
 
 namespace PSmash.Items
 {
@@ -27,14 +28,8 @@ namespace PSmash.Items
         bool isMoving = false;
         float previousAngularVelocity;
 
-        Vector3 initialPosition;
-
         public static List<string> bouldersMoved = new List<string>();
 
-        private void Awake()
-        {
-            initialPosition = transform.position;
-        }
 
         public void TakeDamage(Transform attacker, Weapon weapon, AttackType attackType, float damage)
         {
@@ -144,41 +139,32 @@ namespace PSmash.Items
             }
         }
 
-        public object CaptureState()
+        [System.Serializable]
+        struct Info
         {
-            if (WasBoulderMovedSinceCheckpoint())
-            {
-                string identifier = GetComponent<SaveableEntity>().GetUniqueIdentifier();
-                if (!bouldersMoved.Contains(identifier))
-                {
-                    //print("Capturing Boulder Position " + transform.position);
-                    bouldersMoved.Add(identifier);
-                }
-                SerializableVector3 position = new SerializableVector3(transform.position);
-                return position;
-
-            }
-
-            else 
-                return null;
-            
+            public int checkpointCounter;
+            public SerializableVector3 position;
         }
 
-        bool WasBoulderMovedSinceCheckpoint()
+        public object CaptureState()
         {
-            return Mathf.Abs(transform.position.magnitude - initialPosition.magnitude) > 2;
+            Info info = new Info();
+            info.checkpointCounter = FindObjectOfType<Tent>().GetCheckpointCounter();
+            info.position = new SerializableVector3(transform.position);
+            print("Captured Boulder Position  " + transform.position);
+            return info;
         }
 
         public void RestoreState(object state)
         {
-            if (bouldersMoved.Contains(GetComponent<SaveableEntity>().GetUniqueIdentifier()))
-            {
-                SerializableVector3 position = (SerializableVector3)state;
+            Info info = (Info)state;
+            if (info.checkpointCounter == FindObjectOfType<Tent>().GetCheckpointCounter())
+            {             
+                SerializableVector3 position = info.position;
                 Vector3 newPosition = position.ToVector();
-                //print("Restoring Boulder to position  " + newPosition);
                 transform.position = newPosition;
+                print("Restored Boulder position  " + newPosition);
             }
         }
     }
-
 }

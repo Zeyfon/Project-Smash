@@ -32,6 +32,11 @@ namespace GameDevTV.Saving
             return uniqueIdentifier;
         }
 
+        public void OverwriteUniqueIdentifer(string identifier)
+        {
+            uniqueIdentifier = identifier;
+        }
+
         /// <summary>
         /// Will capture the state of all `ISaveables` on this component and
         /// return a `System.Serializable` object that can restore this state
