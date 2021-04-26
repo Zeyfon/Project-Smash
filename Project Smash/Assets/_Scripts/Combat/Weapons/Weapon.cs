@@ -10,7 +10,7 @@ namespace PSmash.Combat.Weapons
     {
         public float damage;
         public float damagePenetrationValue;
-        public WeaponList weapon;
+        //public WeaponList weapon;
     }
 }
 

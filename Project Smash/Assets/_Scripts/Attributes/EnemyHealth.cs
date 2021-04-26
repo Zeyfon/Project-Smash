@@ -110,10 +110,6 @@ namespace PSmash.Attributes
                 if (weaknessWeapon == attackedWeapon)
                 {
                     postureDamage = (damage + attackedWeapon.damage) * weaknessFactor;
-                    //if(posture.GetInitialPosture() < postureDamage)
-                    //{
-                    //    armorDestroyed = true;
-                    //}
                 }
 
                 else
