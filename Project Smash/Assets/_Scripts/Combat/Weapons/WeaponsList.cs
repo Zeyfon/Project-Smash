@@ -9,7 +9,8 @@ namespace PSmash.Combat.Weapons
         None,
         Fists,
         Saber,
-        Hookshot
+        Hookshot,
+        Mace
     }
 
 }

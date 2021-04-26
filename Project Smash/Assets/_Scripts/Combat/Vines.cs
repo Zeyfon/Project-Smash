@@ -9,23 +9,24 @@ namespace PSmash.Tools
 {
     public class Vines : MonoBehaviour, IDamagable
     {
+        [SerializeField] Weapon weaknessWeapon = null;
         [SerializeField] AudioSource noDamageAudio = null;
         [SerializeField] AudioSource damageAudio = null;
         public void TakeDamage(Transform attacker, Weapon weapon, AttackType attackType, float damage)
         {
             print("Attacker  " + attacker + "  weapon   " + weapon + "  damage  " + damage);
-            switch (weapon.weapon)
+            if(weapon == weaknessWeapon)
             {
-                case WeaponList.Saber:
-                    DoDamage();
-                    break;
-                default:
-                    NoDamage();
-                    break;
+                DoDamage();
+
+            }
+            else
+            {
+                DoNoDamage();
             }
         }
 
-        void NoDamage()
+        void DoNoDamage()
         {
             noDamageAudio.Play();
         }

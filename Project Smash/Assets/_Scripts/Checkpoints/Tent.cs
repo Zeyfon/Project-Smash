@@ -29,9 +29,10 @@ namespace PSmash.Checkpoints
         IEnumerator CheckpointReset()
         {
             checkpointCounter++;
-            yield return FindObjectOfType<ResetDestructibleObjects>().ResetDestructibleObjects_CR();
-            yield return FindObjectOfType<EnemiesReset>().ResetEnemies();
-            yield return FindObjectOfType<EnvironmentObjectsManager>().ResetEnvironmentalObjects();
+            GameObject sceneManager =  GameObject.FindGameObjectWithTag("SceneManager");
+            yield return sceneManager.GetComponent<ResetDestructibleObjects>().ResetDestructibleObjects_CR();
+            yield return sceneManager.GetComponent<EnemiesReset>().ResetEnemies();
+            yield return sceneManager.GetComponent<EnvironmentObjectsManager>().ResetEnvironmentalObjects();
             FindObjectOfType<SavingWrapper>().Save();
         }
 
