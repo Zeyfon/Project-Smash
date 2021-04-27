@@ -26,7 +26,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 646213186a0cc1b419fd20b05eee613e, type: 2}
+  - {fileID: 2100000, guid: cb7f5b2c821dd1949a44c3a976d153e4, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -57,7 +57,7 @@ Animator:
   m_GameObject: {fileID: 6852413905604142772}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 4d788711f3886b64c881519795feba5c, type: 2}
+  m_Controller: {fileID: 9100000, guid: 0ea2016ea8ac180489cfe4ce81510f1c, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -4107,14 +4107,14 @@ MonoBehaviour:
         serializedVersion: 2
         x: 412.39062
         y: 305.32812
-        width: 165
+        width: 126
         height: 32
       isBreakpoint: 0
       isSequence: 0
       hideUnused: 0
       transitions:
       - fsmEvent:
-          name: FLIPTOWARDSPLAYER
+          name: TARGETPLAYER
           isSystemEvent: 0
           isGlobal: 0
         toState: Listener2
@@ -4303,13 +4303,7 @@ MonoBehaviour:
     - name: ANIMATIONCOMPLETED
       isSystemEvent: 0
       isGlobal: 0
-    - name: DAMAGED
-      isSystemEvent: 0
-      isGlobal: 0
     - name: ENABLETRIGGER
-      isSystemEvent: 0
-      isGlobal: 0
-    - name: FLIPTOWARDSPLAYER
       isSystemEvent: 0
       isGlobal: 0
     - name: INTERRUPTED
@@ -4322,6 +4316,9 @@ MonoBehaviour:
       isSystemEvent: 0
       isGlobal: 0
     - name: PLAYERHIT
+      isSystemEvent: 0
+      isGlobal: 0
+    - name: TARGETPLAYER
       isSystemEvent: 0
       isGlobal: 0
     - name: UNBLOCKABLEATTACKSOUND
@@ -4570,7 +4567,7 @@ MonoBehaviour:
     locked: 0
     manualUpdate: 0
     keepDelayedEventsOnStateExit: 0
-    preprocessed: 1
+    preprocessed: 0
     ExposedEvents: []
     RestartOnEnable: 1
     EnableDebugFlow: 0
@@ -12179,7 +12176,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 2048
   specialAttackSpeedFactor: 2
-  defaultMaterial: {fileID: 2100000, guid: 646213186a0cc1b419fd20b05eee613e, type: 2}
+  defaultMaterial: {fileID: 2100000, guid: cb7f5b2c821dd1949a44c3a976d153e4, type: 2}
   redTintMaterial: {fileID: 2100000, guid: 8fc20065ec3045f43aaec2522ff212ca, type: 2}
   addedMaterial: {fileID: 0}
   fadeIntTime: 0.5
@@ -14443,7 +14440,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f9db98c60740638449864eb028fbe7ad, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  skeletonDataAsset: {fileID: 11400000, guid: ac4186fbe3ce2ea45b80609be21911b7, type: 2}
+  skeletonDataAsset: {fileID: 11400000, guid: ed792b308679dd34382188f3a1965d24, type: 2}
   initialSkinName: Armor
   initialFlipX: 0
   initialFlipY: 0
@@ -14494,8 +14491,8 @@ MonoBehaviour:
       colorIndex: 0
       position:
         serializedVersion: 2
-        x: 95.96875
-        y: 329.79688
+        x: 271.96875
+        y: 393.79688
         width: 195
         height: 32
       isBreakpoint: 0
@@ -14554,8 +14551,8 @@ MonoBehaviour:
       colorIndex: 0
       position:
         serializedVersion: 2
-        x: 93.35156
-        y: 395.60938
+        x: 269.35156
+        y: 459.60938
         width: 171
         height: 32
       isBreakpoint: 0
@@ -14650,13 +14647,13 @@ MonoBehaviour:
         paramByteDataSize: 00000000000000000000000001000000040000000000000004000000
     - name: Listener2
       description: 
-      colorIndex: 0
+      colorIndex: 6
       position:
         serializedVersion: 2
-        x: 87.13281
-        y: 454.8672
-        width: 141
-        height: 32
+        x: 263.1328
+        y: 518.8672
+        width: 176
+        height: 64
       isBreakpoint: 0
       isSequence: 0
       hideUnused: 0
@@ -14666,6 +14663,22 @@ MonoBehaviour:
           isSystemEvent: 0
           isGlobal: 0
         toState: IsDeadCheck
+        linkStyle: 0
+        linkConstraint: 0
+        colorIndex: 0
+      - fsmEvent:
+          name: DAMAGED_NOSTUNNED
+          isSystemEvent: 0
+          isGlobal: 0
+        toState: Damaged Audio
+        linkStyle: 0
+        linkConstraint: 0
+        colorIndex: 0
+      - fsmEvent:
+          name: DAMAGED_STUNNED
+          isSystemEvent: 0
+          isGlobal: 0
+        toState: Damaged Audio
         linkStyle: 0
         linkConstraint: 0
         colorIndex: 0
@@ -14763,8 +14776,8 @@ MonoBehaviour:
       colorIndex: 2
       position:
         serializedVersion: 2
-        x: 305.82812
-        y: 684.40625
+        x: 481.82812
+        y: 748.40625
         width: 132
         height: 16
       isBreakpoint: 0
@@ -14892,8 +14905,8 @@ MonoBehaviour:
       colorIndex: 2
       position:
         serializedVersion: 2
-        x: 321.875
-        y: 601.59375
+        x: 61.132812
+        y: 590.91406
         width: 100
         height: 16
       isBreakpoint: 0
@@ -15021,8 +15034,8 @@ MonoBehaviour:
       colorIndex: 0
       position:
         serializedVersion: 2
-        x: 63.585938
-        y: 665.4922
+        x: 239.58594
+        y: 729.4922
         width: 181
         height: 32
       isBreakpoint: 0
@@ -15093,8 +15106,8 @@ MonoBehaviour:
       colorIndex: 0
       position:
         serializedVersion: 2
-        x: 106.57031
-        y: 104.21094
+        x: 289.16406
+        y: 100.07031
         width: 178
         height: 32
       isBreakpoint: 0
@@ -15249,8 +15262,8 @@ MonoBehaviour:
       colorIndex: 0
       position:
         serializedVersion: 2
-        x: 79.42969
-        y: 593.78906
+        x: 255.42969
+        y: 657.78906
         width: 108
         height: 48
       isBreakpoint: 0
@@ -15377,8 +15390,8 @@ MonoBehaviour:
       colorIndex: 0
       position:
         serializedVersion: 2
-        x: 103
-        y: 165.82812
+        x: 285.59375
+        y: 161.6875
         width: 149
         height: 48
       isBreakpoint: 0
@@ -15459,8 +15472,8 @@ MonoBehaviour:
       colorIndex: 0
       position:
         serializedVersion: 2
-        x: 350
-        y: 266
+        x: 532.59375
+        y: 261.85938
         width: 100
         height: 32
       isBreakpoint: 0
@@ -15559,8 +15572,8 @@ MonoBehaviour:
       colorIndex: 0
       position:
         serializedVersion: 2
-        x: 100.52344
-        y: 278.8672
+        x: 283.1172
+        y: 274.72656
         width: 100
         height: 32
       isBreakpoint: 0
@@ -15571,7 +15584,7 @@ MonoBehaviour:
           name: FINISHED
           isSystemEvent: 1
           isGlobal: 0
-        toState: Listener
+        toState: IsDeadCheck 2
         linkStyle: 0
         linkConstraint: 0
         colorIndex: 0
@@ -15751,11 +15764,251 @@ MonoBehaviour:
         - manualUI
         paramDataPos: 000000000000000000000000010000000200000000000000040000000000000000000000000000000000000001000000020000000500000006000000
         paramByteDataSize: 000000000000000000000000000000000000000004000000010000000000000000000000000000000000000000000000000000000100000001000000
+    - name: IsDeadCheck 2
+      description: 
+      colorIndex: 0
+      position:
+        serializedVersion: 2
+        x: 281.07812
+        y: 325.03125
+        width: 118
+        height: 48
+      isBreakpoint: 0
+      isSequence: 1
+      hideUnused: 0
+      transitions:
+      - fsmEvent:
+          name: YES
+          isSystemEvent: 0
+          isGlobal: 0
+        toState: DEAD
+        linkStyle: 0
+        linkConstraint: 0
+        colorIndex: 0
+      - fsmEvent:
+          name: NO
+          isSystemEvent: 0
+          isGlobal: 0
+        toState: Listener
+        linkStyle: 0
+        linkConstraint: 0
+        colorIndex: 0
+      actionData:
+        actionNames:
+        - HutongGames.PlayMaker.Actions.CallMethod
+        - HutongGames.PlayMaker.Actions.BoolTest
+        customNames:
+        - 
+        - 
+        actionEnabled: 0101
+        actionIsOpen: 0101
+        actionStartIndex: 0000000006000000
+        actionHashCodes: ca51e900a4c8bf00
+        unityObjectParams: []
+        fsmGameObjectParams: []
+        fsmOwnerDefaultParams: []
+        animationCurveParams: []
+        functionCallParams: []
+        fsmTemplateControlParams: []
+        fsmEventTargetParams: []
+        fsmPropertyParams: []
+        layoutOptionParams: []
+        fsmStringParams:
+        - useVariable: 0
+          name: 
+          tooltip: 
+          showInInspector: 0
+          networkSync: 0
+          value: IsDeadCheck
+        fsmObjectParams:
+        - useVariable: 1
+          name: health
+          tooltip: 
+          showInInspector: 0
+          networkSync: 0
+          typeName: PSmash.Attributes.EnemyHealth
+          value: {fileID: 8489385723318554057}
+        fsmVarParams:
+        - variableName: isDead
+          objectType: UnityEngine.Object
+          useVariable: 1
+          type: 2
+          floatValue: 0
+          intValue: 0
+          boolValue: 0
+          stringValue: 
+          vector4Value: {x: 0, y: 0, z: 0, w: 0}
+          objectReference: {fileID: 0}
+          arrayValue:
+            useVariable: 0
+            name: 
+            tooltip: 
+            showInInspector: 0
+            networkSync: 0
+            type: -1
+            objectTypeName: 
+            floatValues: []
+            intValues: 
+            boolValues: 
+            stringValues: []
+            vector4Values: []
+            objectReferences: []
+        fsmArrayParams: []
+        fsmEnumParams: []
+        fsmFloatParams: []
+        fsmIntParams: []
+        fsmBoolParams:
+        - useVariable: 1
+          name: isDead
+          tooltip: 
+          showInInspector: 0
+          networkSync: 0
+          value: 0
+        fsmVector2Params: []
+        fsmVector3Params: []
+        fsmColorParams: []
+        fsmRectParams: []
+        fsmQuaternionParams: []
+        stringParams:
+        - YES
+        - NO
+        byteData: 000000
+        arrayParamSizes: 00000000
+        arrayParamTypes:
+        - HutongGames.PlayMaker.FsmVar
+        customTypeSizes: 
+        customTypeNames: []
+        paramDataType: 18000000120000000c00000027000000010000000100000011000000170000001700000001000000
+        paramName:
+        - behaviour
+        - methodName
+        - parameters
+        - storeResult
+        - everyFrame
+        - manualUI
+        - boolVariable
+        - isTrue
+        - isFalse
+        - everyFrame
+        paramDataPos: 00000000000000000000000000000000000000000100000000000000000000000100000002000000
+        paramByteDataSize: 00000000000000000000000000000000010000000100000000000000000000000000000001000000
+    - name: Damaged Audio
+      description: 
+      colorIndex: 4
+      position:
+        serializedVersion: 2
+        x: 545.60156
+        y: 536.8125
+        width: 124
+        height: 32
+      isBreakpoint: 0
+      isSequence: 0
+      hideUnused: 0
+      transitions:
+      - fsmEvent:
+          name: FINISHED
+          isSystemEvent: 1
+          isGlobal: 0
+        toState: Listener2
+        linkStyle: 0
+        linkConstraint: 0
+        colorIndex: 0
+      actionData:
+        actionNames:
+        - HutongGames.PlayMaker.Actions.CallMethod
+        customNames:
+        - 
+        actionEnabled: 01
+        actionIsOpen: 01
+        actionStartIndex: 00000000
+        actionHashCodes: ca51e900
+        unityObjectParams: []
+        fsmGameObjectParams: []
+        fsmOwnerDefaultParams: []
+        animationCurveParams: []
+        functionCallParams: []
+        fsmTemplateControlParams: []
+        fsmEventTargetParams: []
+        fsmPropertyParams: []
+        layoutOptionParams: []
+        fsmStringParams:
+        - useVariable: 0
+          name: 
+          tooltip: 
+          showInInspector: 0
+          networkSync: 0
+          value: FleshDamageSound
+        fsmObjectParams:
+        - useVariable: 1
+          name: health
+          tooltip: 
+          showInInspector: 0
+          networkSync: 0
+          typeName: PSmash.Attributes.EnemyHealth
+          value: {fileID: 8489385723318554057}
+        fsmVarParams:
+        - variableName: 
+          objectType: 
+          useVariable: 0
+          type: -1
+          floatValue: 0
+          intValue: 0
+          boolValue: 0
+          stringValue: 
+          vector4Value: {x: 0, y: 0, z: 0, w: 0}
+          objectReference: {fileID: 0}
+          arrayValue:
+            useVariable: 0
+            name: 
+            tooltip: 
+            showInInspector: 0
+            networkSync: 0
+            type: -1
+            objectTypeName: 
+            floatValues: []
+            intValues: 
+            boolValues: 
+            stringValues: []
+            vector4Values: []
+            objectReferences: []
+        fsmArrayParams: []
+        fsmEnumParams: []
+        fsmFloatParams: []
+        fsmIntParams: []
+        fsmBoolParams: []
+        fsmVector2Params: []
+        fsmVector3Params: []
+        fsmColorParams: []
+        fsmRectParams: []
+        fsmQuaternionParams: []
+        stringParams: []
+        byteData: 0000
+        arrayParamSizes: 00000000
+        arrayParamTypes:
+        - HutongGames.PlayMaker.FsmVar
+        customTypeSizes: 
+        customTypeNames: []
+        paramDataType: 18000000120000000c000000270000000100000001000000
+        paramName:
+        - behaviour
+        - methodName
+        - parameters
+        - storeResult
+        - everyFrame
+        - manualUI
+        paramDataPos: 000000000000000000000000000000000000000001000000
+        paramByteDataSize: 000000000000000000000000000000000100000001000000
     events:
     - name: FINISHED
       isSystemEvent: 1
       isGlobal: 0
     - name: ANIMATIONENDED
+      isSystemEvent: 0
+      isGlobal: 0
+    - name: DAMAGED_NOSTUNNED
+      isSystemEvent: 0
+      isGlobal: 0
+    - name: DAMAGED_STUNNED
       isSystemEvent: 0
       isGlobal: 0
     - name: FINISHERIMPULSE
@@ -15860,7 +16113,7 @@ MonoBehaviour:
         tooltip: 
         showInInspector: 0
         networkSync: 0
-        typeName: 
+        typeName: UnityEngine.Object
         value: {fileID: 0}
       - useVariable: 1
         name: health
@@ -15891,7 +16144,7 @@ MonoBehaviour:
       - 
       - Exposed
       - PreviouslyInitialized
-      variableCategoryIDs: 00000000010000000100000000000000000000000000000000000000010000000000000000000000000000000000000001000000020000000200000000000000
+      variableCategoryIDs: 00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000020000000200000000000000
     description: Finisher State
     docUrl: 
     showStateLabel: 0
@@ -15901,7 +16154,7 @@ MonoBehaviour:
     locked: 0
     manualUpdate: 0
     keepDelayedEventsOnStateExit: 0
-    preprocessed: 1
+    preprocessed: 0
     ExposedEvents: []
     RestartOnEnable: 1
     EnableDebugFlow: 0
@@ -16065,6 +16318,21 @@ PrefabInstance:
         type: 3}
       propertyPath: slots.Array.data[2].number
       value: 400
+      objectReference: {fileID: 0}
+    - target: {fileID: 2397961640516547746, guid: 587e06734df96fb45836c4df01ad03a7,
+        type: 3}
+      propertyPath: m_Size.x
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2397961640516547746, guid: 587e06734df96fb45836c4df01ad03a7,
+        type: 3}
+      propertyPath: m_Size.y
+      value: 2.4
+      objectReference: {fileID: 0}
+    - target: {fileID: 2397961640516547746, guid: 587e06734df96fb45836c4df01ad03a7,
+        type: 3}
+      propertyPath: m_Offset.y
+      value: 1.2
       objectReference: {fileID: 0}
     - target: {fileID: 2701534567474707569, guid: 587e06734df96fb45836c4df01ad03a7,
         type: 3}
