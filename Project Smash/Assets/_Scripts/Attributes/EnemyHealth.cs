@@ -45,7 +45,6 @@ namespace PSmash.Attributes
 
         private void Awake()
         {
-
             initialPosition = transform.position;
             baseStats = GetComponent<BaseStats>();
             health = baseStats.GetStat(StatsList.Health);
@@ -366,8 +365,8 @@ namespace PSmash.Attributes
                 Info info = (Info)state;
                 if(info.checkpointCounter == FindObjectOfType<Tent>().GetCheckpointCounter())
                 {
-                    print(gameObject.name + "  is in same checkpointNumber");
-                    print("Armor Broken  " + info.isArmorDestroyed);
+                    //print(gameObject.name + "  is in same checkpointNumber");
+                    //print("Armor Broken  " + info.isArmorDestroyed);
                     health = info.health;
                     if (Mathf.Approximately(health, 0))
                     {
@@ -375,6 +374,7 @@ namespace PSmash.Attributes
                     }
                     if (info.isArmorDestroyed)
                     {
+                        armorDestroyed = info.isArmorDestroyed;
                         print("Restoring Armor Off");
                         TakeArmorOff();
                     }

@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using GameDevTV.Saving;
-
+using PSmash.Checkpoints;
 
 namespace PSmash.SceneManagement
 {
@@ -13,15 +13,16 @@ namespace PSmash.SceneManagement
         [SerializeField] float fadeInTime = 0.2f;
 
         _Controller _controller;
+        bool cr_Running=false;
+
         private void Awake()
         {
-            GetComponent<SavingSystem>().Delete(defaultSaveFile);
             _controller = new _Controller();
         }
 
         private void Start()
         {
-            StartCoroutine(LoadLastScene());
+            LoadLastSavedScene();
         }
 
         private void OnEnable()
@@ -32,17 +33,39 @@ namespace PSmash.SceneManagement
             _controller.GameManagement.Delete.performed += ctx => Delete();
         }
 
-        IEnumerator LoadLastScene()
+        public void LoadLastSavedScene()
         {
-            yield return GetComponent<SavingSystem>().LoadLastScene(defaultSaveFile);
-            UIFader fader = FindObjectOfType<UIFader>();
-            fader.FadeOutInmediate();
-            yield return fader.FadeIn(fadeInTime);
+            StartCoroutine(LoadLastScene());
         }
 
-        public void LoadLastScene2()
+        IEnumerator LoadLastScene()
         {
-            StartCoroutine(GetComponent<SavingSystem>().LoadLastScene(defaultSaveFile));
+            if (!cr_Running)
+            {
+                cr_Running = true;
+                yield return GetComponent<SavingSystem>().LoadLastScene(defaultSaveFile);
+                UIFader fader = FindObjectOfType<UIFader>();
+                fader.FadeOutInmediate();
+                yield return fader.FadeIn(fadeInTime);
+                cr_Running = false;
+            }
+            yield return null;
+        }
+
+        public void LoadDeadScene(Tent tent)
+        {
+            StartCoroutine(LoadDeadSceneCR(tent));
+        }
+
+        IEnumerator LoadDeadSceneCR(Tent tent)
+        {
+            UIFader fader = FindObjectOfType<UIFader>();
+            yield return fader.FadeOut(2);
+            tent.ResetPlayer();
+            GetComponent<SavingSystem>().Save(defaultSaveFile);
+            yield return GetComponent<SavingSystem>().LoadDeadScene(0,defaultSaveFile);
+            fader.FadeOutInmediate();
+            yield return fader.FadeIn(2);
         }
 
         public void Save()

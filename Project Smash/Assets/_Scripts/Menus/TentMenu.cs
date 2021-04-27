@@ -57,9 +57,60 @@ namespace PSmash.Menus
             StartCoroutine(InitializeSelection());
         }
 
+        ////////INPUT/////////
+
+        /// <summary>
+        /// Will Close all menus and enable player controller
+        /// </summary>
+        private void CloseAllMenus()
+        {
+            print("Close All Menus");
+            CloseTentMenu();
+        }
+
+        /// <summary>
+        /// Will go back to the previous menu. If no previous is available will close the menu and enable player control
+        /// </summary>
+        private void BacktrackMenu()
+        {
+            print("BackTracking in Menus");
+            CloseTentMenu();
+        }
+
+        void EnableUIController()
+        {
+            _controller.UI.Enable();
+            _controller.UI.Cancel.performed += ctx => BacktrackMenu();
+            _controller.UI.ButtonStart.performed += ctx => CloseAllMenus();
+            print("Enable Tent Menu Controller");
+
+        }
+
+        void DisableUIController()
+        {
+            _controller.UI.Disable();
+            _controller.UI.Cancel.performed -= ctx => BacktrackMenu();
+            _controller.UI.ButtonStart.performed -= ctx => CloseAllMenus();
+            print("Disable Tent Menu Controller");
+        }
+
+
+        /// <summary>
+        /// TODO. This part must be taken out as is a method used by the button in the Tent Menu to open the Crafting Menu
+        /// </summary>
+        public void OpenCraftingMenu()
+        {
+            if (OnNextMenuOpen != null)
+            {
+                OnNextMenuOpen();
+                DisableMenuObjects();
+                DisableUIController();
+            }
+        }
+
         /////////////PRIVATE///////////////
 
-        private void Checkpoint()
+        void Checkpoint()
         {
             CheckpointOpenedAudioSource.Play();
         }
@@ -80,8 +131,7 @@ namespace PSmash.Menus
 
         void CloseTentMenu()
         {
-            //print("Closing Tent Menu");
-            DisableUIController();
+            print("Closing Tent Menu");
             DisableMenuObjects();
             if(OnTentMenuClose == null)
             {
@@ -89,11 +139,12 @@ namespace PSmash.Menus
                 return;
             }
                 OnTentMenuClose();
+            DisableUIController();
         }
 
         /// <summary>
         /// Open and Close menu actions
-        /// </summary>
+        /// </summary> 
 
         void DisableMenuObjects()
         {
@@ -101,7 +152,7 @@ namespace PSmash.Menus
         }
 
 
-        private void SetChildObjects(bool isEnabled)
+        void SetChildObjects(bool isEnabled)
         {
             for (int i = 0; i < transform.childCount; i++)
             {
@@ -110,53 +161,6 @@ namespace PSmash.Menus
         }
 
 
-        private void EnableUIController()
-        {
-            //print("Enable Tent Menu Controller");
-            _controller.UI.Enable();
-            _controller.UI.Cancel.performed += ctx => BacktrackMenu();
-            _controller.UI.ButtonStart.performed += ctx => CloseAllMenus();
-        }
-
-        private void DisableUIController()
-        {
-            //print("Disable Tent Menu Controller");
-            _controller.UI.Disable();
-            _controller.UI.Cancel.performed -= ctx => BacktrackMenu();
-            _controller.UI.ButtonStart.performed -= ctx => CloseAllMenus();
-        }
-
-        ////////INPUT/////////
-        
-        /// <summary>
-        /// Will Close all menus and enable player controller
-        /// </summary>
-        private void CloseAllMenus()
-        {
-            CloseTentMenu();
-        }
-
-        /// <summary>
-        /// Will go back to the previous menu. If no previous is available will close the menu and enable player control
-        /// </summary>
-        private void BacktrackMenu()
-        {
-            CloseTentMenu();
-        }
-
-
-        /// <summary>
-        /// TODO. This part must be taken out as is a method used by the button in the Tent Menu to open the Crafting Menu
-        /// </summary>
-        public void OpenCraftingMenu()
-        {
-            if (OnNextMenuOpen != null)
-            {
-                OnNextMenuOpen();
-                DisableMenuObjects();
-                DisableUIController();
-            }
-        }
     }
 
 }

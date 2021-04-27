@@ -27,9 +27,14 @@ namespace PSmash.Items
         float timer = 0;
         bool isMoving = false;
         float previousAngularVelocity;
+        Vector3 initialPosition;
 
         public static List<string> bouldersMoved = new List<string>();
 
+        void Awake()
+        {
+            initialPosition = transform.position;
+        }
 
         public void TakeDamage(Transform attacker, Weapon weapon, AttackType attackType, float damage)
         {
@@ -148,22 +153,32 @@ namespace PSmash.Items
 
         public object CaptureState()
         {
+            if(Mathf.Abs(initialPosition.magnitude - transform.position.magnitude) < 1)
+            {
+                //print("Boulder Captured");
+                bouldersMoved.Add(GetComponent<SaveableEntity>().GetUniqueIdentifier());
+            }
             Info info = new Info();
             info.checkpointCounter = FindObjectOfType<Tent>().GetCheckpointCounter();
             info.position = new SerializableVector3(transform.position);
-            print("Captured Boulder Position  " + transform.position);
+            //print("Captured Boulder Position  " + transform.position);
             return info;
         }
 
         public void RestoreState(object state)
         {
             Info info = (Info)state;
-            if (info.checkpointCounter == FindObjectOfType<Tent>().GetCheckpointCounter())
-            {             
+            if (bouldersMoved.Contains(GetComponent<SaveableEntity>().GetUniqueIdentifier()))
+            {
+                return;
+            }
+            else if (info.checkpointCounter == FindObjectOfType<Tent>().GetCheckpointCounter())
+            {
+                //print("Boulder Restored");
                 SerializableVector3 position = info.position;
                 Vector3 newPosition = position.ToVector();
                 transform.position = newPosition;
-                print("Restored Boulder position  " + newPosition);
+                //print("Restored Boulder position  " + newPosition);
             }
         }
     }

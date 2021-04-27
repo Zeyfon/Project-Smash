@@ -22,6 +22,13 @@ namespace GameDevTV.Saving
     {
         [SerializeField] UnityEvent onSaveStart;
         [SerializeField] UnityEvent OnSaveEnds;
+
+
+        public IEnumerator LoadDeadScene(int buildIndex, string saveFile)
+        {
+            Save(saveFile);
+            yield return SceneManager.LoadSceneAsync(buildIndex);
+        }
         /// <summary>
         /// Will load the last scene that was saved and restore the state. This
         /// must be run as a coroutine.
@@ -29,6 +36,7 @@ namespace GameDevTV.Saving
         /// <param name="saveFile">The save file to consult for loading.</param>
         public IEnumerator LoadLastScene(string saveFile)
         {
+            print("Trying to load a scene");
             Dictionary<string, object> state = LoadFile(saveFile);
 
             if (state.ContainsKey("lastSceneBuildIndex"))
@@ -39,7 +47,7 @@ namespace GameDevTV.Saving
 
                 if (buildIndex > SceneManager.sceneCountInBuildSettings)
                 {
-                    //print("2");
+                    print("2");
                     yield return null;
                 }
                 else if (buildIndex != SceneManager.GetActiveScene().buildIndex)
@@ -47,14 +55,23 @@ namespace GameDevTV.Saving
                     print("3");
                     print("Loading scene " + buildIndex);
                     yield return SceneManager.LoadSceneAsync(buildIndex);
-                    yield return new WaitForEndOfFrame();
-                }
-                else
-                {
-                    //print("4");
+                    //AsyncOperation asyncOperation =  SceneManager.LoadSceneAsync(buildIndex);
+                    //while (!asyncOperation.isDone)
+                    //{
+                    //    print("Not Done Loading");
+                    //    yield return null;
+                    //}
+                    print("Done Loading");
+                    //yield return new WaitForEndOfFrame();
                 }
                 RestoreState(state);
             }
+            else
+            {
+                print("5");
+                yield return SceneManager.LoadSceneAsync(1);
+            }
+            print("LoadLastScene ended");
             OnSaveEnds.Invoke();
         }
 
