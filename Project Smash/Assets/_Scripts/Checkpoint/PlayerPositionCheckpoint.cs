@@ -39,7 +39,7 @@ namespace PSmash.Checkpoints
         {
             if (canSaveCheckpoint)
             {
-                print(gameObject.name + "  capturing player position");
+                //print(gameObject.name + "  capturing player position");
                 SerializableVector3 position = new SerializableVector3(transform.position);
                 return position;
             }
@@ -57,7 +57,7 @@ namespace PSmash.Checkpoints
             GameObject player = GameObject.FindGameObjectWithTag("Player");
             player.transform.position = newPosition;
             player.GetComponent<PlayerHealth>().RestoreHealth(99999);
-            print("Setting " + player.name + "   to Position  " + newPosition);
+            //print("Setting " + player.name + "   to Position  " + newPosition);
         }
     }
 }

@@ -14,16 +14,46 @@ namespace PSmash.Checkpoints
     public class Tent : MonoBehaviour, IManualInteraction
     {
         public static event Action OnTentMenuOpen;
+        public static event Action OnCheckpointDone;
+
+
         static int checkpointCounter = 0;
 
         public void Interact()
         {
             if (OnTentMenuOpen != null)
             {
-                    OnTentMenuOpen();
-                //    FindObjectOfType<SavingWrapper>().Save();
+                print("Interactin with Tent");
+                OnTentMenuOpen();
+                OnCheckpointDone();
                 StartCoroutine(CheckpointReset());
             }
+        }
+
+        public void PlayerDies()
+        {
+            StartCoroutine(PlayerDiesCR());
+        } 
+
+        public void ResetPlayer()
+        {
+            OnCheckpointDone();
+        }
+
+        public int GetCheckpointCounter()
+        {
+            return checkpointCounter;
+        }
+
+        IEnumerator PlayerDiesCR()
+        {
+            GameObject sceneManager = GameObject.FindGameObjectWithTag("SceneManager");
+            sceneManager.GetComponent<ResetDestructibleObjects>().ClearObjectsList();
+            sceneManager.GetComponent<EnemiesReset>().ClearObjectsList();
+            sceneManager.GetComponent<EnvironmentObjectsManager>().ClearObjectsList();
+            print("Reaching Tent when dead");
+            FindObjectOfType<SavingWrapper>().LoadDeadScene(this);
+            yield return null;
         }
 
         IEnumerator CheckpointReset()
@@ -34,11 +64,6 @@ namespace PSmash.Checkpoints
             yield return sceneManager.GetComponent<EnemiesReset>().ResetEnemies();
             yield return sceneManager.GetComponent<EnvironmentObjectsManager>().ResetEnvironmentalObjects();
             FindObjectOfType<SavingWrapper>().Save();
-        }
-
-        public int GetCheckpointCounter()
-        {
-            return checkpointCounter;
         }
     }
 

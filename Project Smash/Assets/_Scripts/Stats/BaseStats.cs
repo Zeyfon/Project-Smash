@@ -12,9 +12,29 @@ namespace PSmash.Stats
         [SerializeField] StatSlot[] slots;
         PlayerHealth health;
 
+        Dictionary<StatsList, float> initialStats = new Dictionary<StatsList, float>();
+
         private void Awake()
         {
             health = GetComponent<PlayerHealth>();
+            foreach(StatSlot slot in slots)
+            {
+                initialStats.Add(slot.stat, slot.number);
+            }
+        }
+
+        public void SetToInitialValues()
+        {
+            foreach(StatSlot slot in slots)
+            {
+                foreach(StatsList stat in initialStats.Keys)
+                {
+                    if (slot.stat == stat)
+                    {
+                        slot.number = initialStats[stat];
+                    }
+                }
+            }
         }
 
         public float GetStat(StatsList stat)

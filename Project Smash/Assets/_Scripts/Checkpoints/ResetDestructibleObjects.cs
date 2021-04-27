@@ -30,7 +30,7 @@ namespace PSmash.Checkpoints
 
         public IEnumerator ResetDestructibleObjects_CR()
         {
-            DestructibleObject.destroyedObjects.Clear();
+            ClearObjectsList();
             //print("Enemies destroyed");
             foreach (ObjectSlot slot in slots)
             {
@@ -42,6 +42,13 @@ namespace PSmash.Checkpoints
             SetObjectsRecord();
             //print("Enemies respawned");
             yield return null;
+        }
+
+        public void ClearObjectsList()
+        {
+            DestructibleObject.destroyedObjects.Clear();
+            //SetObjectsRecord();
+
         }
 
         void SetObjectsRecord()

@@ -1,6 +1,7 @@
 ﻿using GameDevTV.Saving;
 using PSmash.Attributes;
 using PSmash.Core;
+using PSmash.Stats;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -37,7 +38,7 @@ namespace PSmash.Checkpoints
         ///////////////////////////////////////////////////////////////////////PUBLIC/////////////////////////////////////////////////////////////////////////
         public IEnumerator ResetEnemies()
         {
-            EnemyHealth.takenOutEnemies.Clear();
+            ClearObjectsList();
             foreach (EnemySlot slot in slots)
             {
                 slot.id.gameObject.SetActive(false);
@@ -48,6 +49,20 @@ namespace PSmash.Checkpoints
             SetEnemyRecord();
             print("Enemies respawned");
             yield return null;
+        }
+
+        public void ClearObjectsList()
+        {
+            EnemyHealth.takenOutEnemies.Clear();
+            ResetEnemyStatsToInitial();
+        }
+
+        private void ResetEnemyStatsToInitial()
+        {
+            foreach (EnemySlot slot in slots)
+            {
+                slot.id.GetComponentInChildren<BaseStats>().SetToInitialValues();
+            }
         }
 
 
@@ -65,20 +80,9 @@ namespace PSmash.Checkpoints
                 string identifier = id.GetComponentInChildren<SaveableEntity>().GetUniqueIdentifier();
                 slot.identifier = identifier;
                 slots.Add(slot);
-                //SetUniqueIdentifiers(identifier);
             }
+            ResetEnemyStatsToInitial();
         }
-
-        //void SetUniqueIdentifiers(string identifier)
-        //{
-        //    if (!identifiers.Contains(identifier))
-        //    {
-        //        identifiers.Add(identifier);
-        //        Debug.Log("Identifier was added  " + identifier);
-        //    }
-           
-        //}
-
 
         GameObject GetPrefab(EnemySlot slot)
         {

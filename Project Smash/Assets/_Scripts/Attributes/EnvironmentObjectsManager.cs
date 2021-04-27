@@ -26,7 +26,7 @@ namespace PSmash.Checkpoints
 
         public IEnumerator ResetEnvironmentalObjects()
         {
-            Boulder.bouldersMoved.Clear();
+            ClearObjectsList();
             foreach (ObjectSlot slot in slots)
             {
                 slot.transform.gameObject.SetActive(false);
@@ -36,6 +36,11 @@ namespace PSmash.Checkpoints
             }
             SetObjectsRecord();
             yield return null;
+        }
+
+        public void ClearObjectsList()
+        {
+            Boulder.bouldersMoved.Clear();
         }
 
         void SetObjectsRecord()

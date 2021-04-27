@@ -45,14 +45,12 @@ namespace PSmash.Attributes
 
         private void OnEnable()
         {
-            //print("Enabled");
-            Tent.OnTentMenuOpen += RestorePlayer;
+            Tent.OnCheckpointDone += RestorePlayer;
         }
 
         private void OnDisable()
         {
-            //print("Disabled");
-            Tent.OnTentMenuOpen -= RestorePlayer;
+            Tent.OnCheckpointDone -= RestorePlayer;
         }
 
         /////////////////////////////////////////////////////////////////////////////////////////PUBLIC/////////////////////////////////////////////////////////////////////////////////////////////
@@ -70,7 +68,6 @@ namespace PSmash.Attributes
         {
             if (isDead) 
                 return;
-            //print("Damage received");
             if (attackType == AttackType.NotUnblockable && GetComponent<PlayerGuard>().IsGuarding(attacker, weapon))
                 return;
             isDamaged = true;
@@ -184,7 +181,8 @@ namespace PSmash.Attributes
             gameObject.layer = LayerMask.NameToLayer("PlayerGhost");
             animator.SetInteger("Damage", 50);
             yield return new WaitForSeconds(2);
-            SceneManager.LoadScene(0);
+            //SceneManager.LoadScene(0);
+            FindObjectOfType<Tent>().PlayerDies();
         }
 
         public object CaptureState()

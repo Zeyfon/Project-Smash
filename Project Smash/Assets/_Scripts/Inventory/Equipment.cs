@@ -27,12 +27,12 @@ namespace PSmash.Inventories
 
         private void OnEnable()
         {
-            Tent.OnTentMenuOpen += RestoreToolsNumber2;
+            Tent.OnCheckpointDone += RestoreToolsNumber2;
         }
 
         private void OnDisable()
         {
-            Tent.OnTentMenuOpen -= RestoreToolsNumber2;
+            Tent.OnCheckpointDone -= RestoreToolsNumber2;
         }
 
         public void SetSubWeapon(SubWeaponItem subWeapon)

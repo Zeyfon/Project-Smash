@@ -36,14 +36,15 @@ namespace PSmash.CraftingSystem
         {
             _controller = new _Controller();
             inventory = Inventory.GetPlayerInventory();
-            tentMenu = FindObjectOfType<TentMenu>();
             //TODO the unlocked skill slots will need to be reasigned when the save system begins to run.
         }
 
         // Start is called before the first frame update
         void Start()
         {
-
+            tentMenu = FindObjectOfType<TentMenu>();
+            if (tentMenu == null)
+                Debug.LogWarning("No Tent Menu Found");
             //OnSkillPanelUpdate();
             CloseMenu();
         }
@@ -78,6 +79,7 @@ namespace PSmash.CraftingSystem
             CloseMenu();
             FindObjectOfType<SavingWrapper>().Save();
             _controller.UI.Cancel.performed -= ctx => BacktrackMenu();
+            _controller.UI.ButtonStart.performed -= ctx => CloseAllMenus();
             _controller.UI.Disable();
         }
 
@@ -88,6 +90,7 @@ namespace PSmash.CraftingSystem
             FindObjectOfType<SavingWrapper>().Save();
             tentMenu.OpenTentMenuAndDoCheckpoint();
             _controller.UI.Cancel.performed -= ctx => BacktrackMenu();
+            _controller.UI.ButtonStart.performed -= ctx => CloseAllMenus();
             _controller.UI.Disable();
         }
 
