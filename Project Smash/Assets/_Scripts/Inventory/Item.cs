@@ -7,11 +7,11 @@ namespace PSmash.Inventories
     public class Item : ScriptableObject, ISerializationCallbackReceiver
     {
         //CONFIG
-        [Header("CONFIG")]
-        [SerializeField] Sprite sprite;
-        [SerializeField] string displayName;
-        [SerializeField][TextArea] string description;
-        [SerializeField] string itemID = " ";
+        public Sprite sprite;
+        public string displayName;
+        [SerializeField][TextArea] public string description;
+        
+        public string itemID = " ";
         
         // STATE
         static Dictionary<string, Item> itemLookupCache;
