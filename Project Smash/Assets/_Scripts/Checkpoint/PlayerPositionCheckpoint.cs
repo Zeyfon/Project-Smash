@@ -9,11 +9,11 @@ namespace PSmash.Checkpoints
     public class PlayerPositionCheckpoint : MonoBehaviour, ISaveable
     {
 
-        bool canSaveCheckpoint = false;
+        bool isPlayerInSavePoint = false;
 
-        public bool CanSaveCheckpoint()
+        public bool IsPlayerInSavePoint()
         {
-            return canSaveCheckpoint;
+            return isPlayerInSavePoint;
         }
 
         private void OnTriggerEnter2D(Collider2D collision)
@@ -21,7 +21,7 @@ namespace PSmash.Checkpoints
             if (collision.CompareTag("Player"))
             {
                 //print("Player Pos Can be saved");
-                canSaveCheckpoint = true;
+                isPlayerInSavePoint = true;
             }
 
         }
@@ -31,15 +31,15 @@ namespace PSmash.Checkpoints
             if (collision.CompareTag("Player"))
             {
                 //print("Player Pos cannot be saved");
-                canSaveCheckpoint = false;
+                isPlayerInSavePoint = false;
             }
         }
 
         public object CaptureState()
         {
-            if (canSaveCheckpoint)
+            if (isPlayerInSavePoint)
             {
-                //print(gameObject.name + "  capturing player position");
+                print(gameObject.name + "  capturing player position");
                 SerializableVector3 position = new SerializableVector3(transform.position);
                 return position;
             }
@@ -52,7 +52,11 @@ namespace PSmash.Checkpoints
         {
             SerializableVector3 position = (SerializableVector3)state;
             if (position == null)
+            {
+                Debug.LogWarning("Player not restored in save point");
                 return;
+
+            }
             Vector3 newPosition = position.ToVector();
             GameObject player = GameObject.FindGameObjectWithTag("Player");
             player.transform.position = newPosition;

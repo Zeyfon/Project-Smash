@@ -172,6 +172,7 @@ namespace PSmash.Inventories
         }
         IEnumerator Destroy()
         {
+            print("About to destroy the dagger");
             while (audioSource.isPlaying)
             {
                 yield return new WaitForEndOfFrame();
@@ -193,7 +194,7 @@ namespace PSmash.Inventories
             }
 
             Health health = collision.GetComponent<Health>();
-            if (health == null || health == owner || health.IsDead())
+            if (health == null || health == owner || health.IsDead() || collision.tag == gameObject.tag)
                 return;
 
             hasHit = true;

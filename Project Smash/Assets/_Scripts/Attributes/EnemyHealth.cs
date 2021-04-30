@@ -43,6 +43,8 @@ namespace PSmash.Attributes
         float damagePenetrationPercentage;
         bool armorDestroyed = false;
 
+        static int checkpointCounter = 0;
+
         private void Awake()
         {
             initialPosition = transform.position;
@@ -347,7 +349,11 @@ namespace PSmash.Attributes
         {
             Info info = new Info();
             info.isArmorDestroyed = armorDestroyed;
-            info.checkpointCounter = FindObjectOfType<Tent>().GetCheckpointCounter();
+            Tent tent = FindObjectOfType<Tent>();
+            if(tent != null)
+            {
+                info.checkpointCounter = FindObjectOfType<Tent>().GetCheckpointCounter();
+            }
             info.health = health;
             return info;
         }
@@ -363,8 +369,15 @@ namespace PSmash.Attributes
             else
             {
                 Info info = (Info)state;
-                if(info.checkpointCounter == FindObjectOfType<Tent>().GetCheckpointCounter())
+                Tent tent = FindObjectOfType<Tent>();
+                if(tent == null)
                 {
+                    Debug.LogWarning("Cannot complete the restore state of this entity");
+                    return;
+                }
+                if (info.checkpointCounter == tent.GetCheckpointCounter())
+                {
+                    checkpointCounter = tent.GetCheckpointCounter();
                     //print(gameObject.name + "  is in same checkpointNumber");
                     //print("Armor Broken  " + info.isArmorDestroyed);
                     health = info.health;
