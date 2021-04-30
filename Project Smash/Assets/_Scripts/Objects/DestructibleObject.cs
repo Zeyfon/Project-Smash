@@ -26,7 +26,7 @@ namespace PSmash.Items
 
         [SerializeField] ObjectType objectType;
 
-
+        static int checkpointCounter = 0;
         public static List<string> destroyedObjects = new List<string>();
 
         public enum ObjectType
@@ -110,17 +110,28 @@ namespace PSmash.Items
 
         public object CaptureState()
         {
+            Tent tent = FindObjectOfType<Tent>();
+            if (tent == null)
+                return null;
+
             Info info = new Info();
-            info.checkpointCounter = FindObjectOfType<Tent>().GetCheckpointCounter();
+            info.checkpointCounter = tent.GetCheckpointCounter();
             return info;
         }
 
         public void RestoreState(object state)
         {
-            Info info = (Info)state;
+            if (state == null)
+                return;
 
-            if(info.checkpointCounter == FindObjectOfType<Tent>().GetCheckpointCounter())
+            Tent tent = FindObjectOfType<Tent>();
+            if (tent == null)
+                return;
+
+            Info info = (Info)state;
+            if (info.checkpointCounter == tent.GetCheckpointCounter())
             {
+                checkpointCounter = tent.GetCheckpointCounter();
                 string identifier = GetComponent<SaveableEntity>().GetUniqueIdentifier();
                 if (destroyedObjects.Contains(identifier))
                 {

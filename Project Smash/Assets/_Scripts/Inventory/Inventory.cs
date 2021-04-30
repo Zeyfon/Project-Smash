@@ -11,7 +11,7 @@ namespace PSmash.Inventories
         //CONFIG
         [SerializeField] AudioSource collectedDropAudioSource = null;
         [SerializeField] AudioClip collectedDrop = null;
-        [SerializeField] CraftingSlot[] slots;
+        [SerializeField] List<CraftingSlot> craftingItemSlots = new List<CraftingSlot>();
 
 
         List<Item> inventoryItems = new List<Item>();
@@ -19,10 +19,20 @@ namespace PSmash.Inventories
         // Start is called before the first frame update
         void Awake()
         {
-            //Get All items in of the project
             foreach (Item item in Resources.LoadAll<Item>(""))
             {
                 inventoryItems.Add(item);
+            }
+
+            craftingItemSlots.Clear();
+            foreach (Item item in inventoryItems)
+            {
+                if(item is CraftingItem)
+                {
+                    CraftingSlot slot = new CraftingSlot();
+                    slot.item = item as CraftingItem;
+                    craftingItemSlots.Add(slot);
+                }
             }
         }
 
@@ -39,7 +49,7 @@ namespace PSmash.Inventories
         private void CraftingItemCollected(Pickup.ItemSlot item)
         {
             //print("Crafting item Collected");
-            foreach(CraftingSlot slot in slots)
+            foreach(CraftingSlot slot in craftingItemSlots)
             {
                 if(slot.item == item.item as CraftingItem)
                 {
@@ -51,7 +61,7 @@ namespace PSmash.Inventories
 
         public int GetThisCraftingItemNumber(CraftingItem craftingItem) 
         {
-            foreach(CraftingSlot slot in slots)
+            foreach(CraftingSlot slot in craftingItemSlots)
             {
                 if(craftingItem == slot.item)
                 {
@@ -64,7 +74,7 @@ namespace PSmash.Inventories
 
         public void UpdateThisCraftingItem(CraftingItem craftingItem, int number)
         {
-            foreach(CraftingSlot slot in slots)
+            foreach(CraftingSlot slot in craftingItemSlots)
             {
                 if(slot.item == craftingItem)
                 {
@@ -104,7 +114,7 @@ namespace PSmash.Inventories
         {
             //print("Inventory being captured");
             Dictionary<string, int> inventoryState = new Dictionary<string, int>();
-            foreach (CraftingSlot slot in slots)
+            foreach (CraftingSlot slot in craftingItemSlots)
             {
                 inventoryState.Add(slot.item.GetID(), slot.number);
             }
@@ -116,7 +126,7 @@ namespace PSmash.Inventories
             Dictionary<string, int> inventoryState = (Dictionary<string, int>)state;
             foreach (string itemName in inventoryState.Keys)
             {
-                foreach (CraftingSlot slot in slots)
+                foreach (CraftingSlot slot in craftingItemSlots)
                 {
                     if (slot.item.GetID() == itemName)
                     {

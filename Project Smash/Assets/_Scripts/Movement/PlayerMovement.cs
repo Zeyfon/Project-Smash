@@ -4,10 +4,12 @@ using PSmash.SceneManagement;
 using Spine.Unity;
 using System.Collections;
 using UnityEngine;
+using GameDevTV.Saving;
+using PSmash.Checkpoints;
 
 namespace PSmash.Movement
 {
-    public class PlayerMovement : MonoBehaviour
+    public class PlayerMovement : MonoBehaviour, ISaveable
     {
 
         #region Inspector
@@ -83,6 +85,9 @@ namespace PSmash.Movement
         PlayerHealth health;
         Vector2 colliderSize;
         Vector2 finalPosition;
+
+        Vector3 storedPosition;
+
         float gravityScale;
         float ladderPositionX;
         float jumpTimer = 0;
@@ -684,7 +689,32 @@ namespace PSmash.Movement
             Gizmos.DrawWireSphere(groundCheck.position, groundCheckRadius);
         }
 
+        public object CaptureState()
+        {
+            PlayerPositionCheckpoint checkpoint = FindObjectOfType<PlayerPositionCheckpoint>();
+            if (checkpoint != null && checkpoint.IsPlayerInSavePoint())
+            {
+                SerializableVector3 position = new SerializableVector3(transform.position);
+                return position;
+            }
+            else
+            {
+                SerializableVector3 position = new SerializableVector3(storedPosition);
+                return position;
+            }
+        }
 
+        public void RestoreState(object state)
+        {
+            SerializableVector3 position = (SerializableVector3)state;
+            storedPosition = position.ToVector();
+            
+            //TODO
+            //HOW TO DIFFERENTIATE 
+            //WHEN IS A RESTORE FOR THE CHECKPOINT
+            //WHEN FOR A SCENE TRANSITION
+            //WHEN THE PLAYER DIED AND IS RESTORING FROM LAST SAVE POINT
+        }
     }
 
 }

@@ -69,7 +69,7 @@ namespace GameDevTV.Saving
             else
             {
                 print("5");
-                yield return SceneManager.LoadSceneAsync(1);
+                //yield return SceneManager.LoadSceneAsync(1);
             }
             print("LoadLastScene ended");
             OnSaveEnds.Invoke();
@@ -133,14 +133,13 @@ namespace GameDevTV.Saving
 
         private void CaptureState(Dictionary<string, object> state)
         {
-           
             foreach (SaveableEntity saveable in FindObjectsOfType<SaveableEntity>())
             {
                 //print("Saving the  " + saveable.gameObject.name);
                 state[saveable.GetUniqueIdentifier()] = saveable.CaptureState();
             }
-
-            if (FindObjectOfType<PlayerPositionCheckpoint>().CanSaveCheckpoint())
+            PlayerPositionCheckpoint checkpoint = FindObjectOfType<PlayerPositionCheckpoint>();
+            if (checkpoint != null && checkpoint.IsPlayerInSavePoint())
             {
                 state["lastSceneBuildIndex"] = SceneManager.GetActiveScene().buildIndex;
             }
