@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using PSmash.UI.CraftingSytem;
-
+using System;
 
 namespace PSmash.CraftingSystem
 {
@@ -12,7 +12,7 @@ namespace PSmash.CraftingSystem
         [Header("CONFIG")]
         [SerializeField] Skill skill = null;
         [SerializeField] Image skillSlotImage = null;
-        [SerializeField] SkillSlot[] unlockableBySkillSlots;
+        [SerializeField] SkillSlot[] unlockableBySkillSlotsOptions;
         [SerializeField] CraftingItemSlot[] requiredCraftingItems;
         [SerializeField] UnlockableSkillPath[] availablePathsOnceUnlocked;
 
@@ -53,7 +53,7 @@ namespace PSmash.CraftingSystem
         /// <returns></returns>
         public SkillSlot[] GetSkillSlotsUnlockingOptions()
         {
-            return unlockableBySkillSlots;
+            return unlockableBySkillSlotsOptions;
         }
 
         /// <summary>
@@ -139,16 +139,19 @@ namespace PSmash.CraftingSystem
         /// Checks if the skillSlot is unlockable
         /// </summary>
         /// <returns></returns>
-        bool IsUnlockable()
+        public bool IsUnlockable()
         {
-            foreach (SkillSlot slot in unlockableBySkillSlots)
+            if (isUnlocked)
+                return false;
+
+            foreach (SkillSlot slot in unlockableBySkillSlotsOptions)
             {
                 if (slot.GetIsUnlocked())
                 {
                     return true;
                 }
             }
-            if (unlockableBySkillSlots.Length == 0)
+            if (unlockableBySkillSlotsOptions.Length == 0)
             {
                 return true;
             }
@@ -176,7 +179,7 @@ namespace PSmash.CraftingSystem
             //print(skill.name + " is unlockable");
             UpdateSkillSlotVisualState(saturationCeroMaterial);
             UpdateLinks("Dark");
-            EnableWhiteRing();
+            //EnableWhiteRing();
         }
 
         /// <summary>
@@ -188,7 +191,7 @@ namespace PSmash.CraftingSystem
             //print(skill.name + " is locked");
             UpdateSkillSlotVisualState(saturationCeroMaterial);
             UpdateLinks("Dark");
-            DisableWhiteRing();
+            //DisableWhiteRing();
         }
 
         /// <summary>
@@ -223,6 +226,29 @@ namespace PSmash.CraftingSystem
 
         }
 
+        public void SetRightToWhite()
+        {
+            print(gameObject.name + "  white ring");
+            Image image = transform.GetChild(0).GetComponent<Image>();
+            image.material = null;
+            image.enabled = true;
+            
+        }
+
+        public void SetRingToNull()
+        {
+            print(gameObject.name + "  no ring");
+            Image image = transform.GetChild(0).GetComponent<Image>();
+            image.enabled = false;
+        }
+
+        public void SetRingToYellow(Material yellowMaterial)
+        {
+            print(gameObject.name + "  yellow ring");
+            Image image = transform.GetChild(0).GetComponent<Image>();
+            image.material = yellowMaterial;
+            image.enabled = true;
+        }
 
         public void SetRingMaterial(Material yellowMaterial)
         {

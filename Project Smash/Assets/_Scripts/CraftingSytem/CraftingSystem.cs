@@ -16,13 +16,17 @@ namespace PSmash.CraftingSystem
     /// </summary>
     public class CraftingSystem : MonoBehaviour, ISaveable
     {
+        //CONFIG
         [SerializeField] AudioSource audioSource = null;
         [SerializeField] AudioClip skillUnlockedSound = null;
         [SerializeField] AudioClip skillCannotBeUnlockedSound = null;
         [SerializeField] float volume = 1;
 
+        //STATE
         public static event Action OnMenuClose;
-        public static event Action OnSkillPanelUpdate;
+
+        public delegate void SkillPanelUpdate(SkillSlot slot);
+        public static event SkillPanelUpdate OnSkillPanelUpdate;
 
         Inventory inventory;
         _Controller _controller;
@@ -31,7 +35,7 @@ namespace PSmash.CraftingSystem
         //Create the dictionary where the info will be stored to substract the quantity from the Player's Materials in case it will be unlocked
         //Dictionary<CraftingItem, int> requiredCraftingItems = new Dictionary<CraftingItem, int>();
 
-
+        //INITIALIZE
         private void Awake()
         {
             _controller = new _Controller();
@@ -64,7 +68,7 @@ namespace PSmash.CraftingSystem
         void OpenMenu()
         {
             SetChildObjects(true);
-            OnSkillPanelUpdate();
+            OnSkillPanelUpdate(null);
             _controller.UI.Enable();
             _controller.UI.Cancel.performed += ctx => BacktrackMenu();
             _controller.UI.ButtonStart.performed += ctx => CloseAllMenus();
@@ -109,8 +113,10 @@ namespace PSmash.CraftingSystem
 
 
 
-        /////////////////////////CRAFTING SYSTEM//////////////////////////////////////////////////
+        ////////////////////////////////////////////////////////////////////////////////////////////////////CRAFTING SYSTEM//////////////////////////////////////////////////
         
+
+        /////////////////////////////////////////////////////////////////PUBLIC////////////////////////////////////////////////////////////////////////////
         /// <summary>
         /// This method is triggered by the SkillSlot once is being presses in the UI.
         /// This method will try to unlock the skill, but will check first if it has already been unlodked
@@ -141,6 +147,8 @@ namespace PSmash.CraftingSystem
             }
         }
 
+
+        ///////////////////////////////////////////////////////////////PRIVATE//////////////////////////////////////////////////////////////////
         /// <summary>
         /// Checks if the skillSlot has already been unlocked
         /// </summary>
@@ -181,19 +189,15 @@ namespace PSmash.CraftingSystem
         }
 
         /// <summary>
-        /// Checks if you have the required materials to unlock this skill
+        /// Returns all the craftingMaterial necessary to unlock this skill only if you have all the necessary materials in your inventory
         /// </summary>
         /// <param name="skillSlot"></param>
         /// <returns></returns>
-        Dictionary<CraftingItem,int> DoIHaveTheNecessaryItemNumbersToUnlockThisSkill(SkillSlot skillSlot)
+        public Dictionary<CraftingItem,int> DoIHaveTheNecessaryItemNumbersToUnlockThisSkill(SkillSlot skillSlot)
         {
-            //print(skillSlot);
             SkillSlot.CraftingItemSlot[] slots = skillSlot.GetRequiredCraftingItems();
             Dictionary<CraftingItem, int> itemsNeeded = new Dictionary<CraftingItem, int>();
-            //print(craftingItemRequirements.Length);
-            //Add the CraftingMaterialList enum to the dictionary with its requiredquantity to unlock
-            //In case the player does not meet the requirements of any material it will return a false inmediately
-            //In contrary case the foreach loop will end with the dictionary completed
+
             foreach (SkillSlot.CraftingItemSlot slot in slots)
             {
                 //print(itemRequirement.item + "  " + inventory);
@@ -233,7 +237,7 @@ namespace PSmash.CraftingSystem
             SubstractItemsFromInventory(craftingItemsRequired);
             skillSlot.Unlock();
             audioSource.PlayOneShot(skillUnlockedSound, volume);
-            OnSkillPanelUpdate();
+            OnSkillPanelUpdate(skillSlot);
         }
 
         void SubstractItemsFromInventory(Dictionary<CraftingItem,int> craftingItemsRequired)
