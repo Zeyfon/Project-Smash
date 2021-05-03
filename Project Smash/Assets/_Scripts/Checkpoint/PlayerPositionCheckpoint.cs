@@ -48,7 +48,7 @@ namespace PSmash.Checkpoints
         }
 
         
-        public void RestoreState(object state)
+        public void RestoreState(object state, bool isLoadLastSavedScene)
         {
             SerializableVector3 position = (SerializableVector3)state;
             if (position == null)
@@ -58,9 +58,9 @@ namespace PSmash.Checkpoints
 
             }
             Vector3 newPosition = position.ToVector();
-            GameObject player = GameObject.FindGameObjectWithTag("Player");
-            player.transform.position = newPosition;
-            player.GetComponent<PlayerHealth>().RestoreHealth(99999);
+            //GameObject player = GameObject.FindGameObjectWithTag("Player");
+            //player.transform.position = newPosition;
+            //player.GetComponent<PlayerHealth>().RestoreHealth(99999);
             //print("Setting " + player.name + "   to Position  " + newPosition);
         }
     }

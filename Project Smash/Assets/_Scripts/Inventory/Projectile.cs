@@ -68,7 +68,7 @@ namespace PSmash.Inventories
 
         public void TakeDamage(Transform attacker, Weapon weapon, AttackType attackType, float damage)
         {
-            print("Received the parry "  + hasHit);
+            //print("Received the parry "  + hasHit);
             timer = 0;
             skeletonAnim.AnimationState.SetAnimation(0, idleLoop, true);
             float zRotation = Random.Range(-10, 25);

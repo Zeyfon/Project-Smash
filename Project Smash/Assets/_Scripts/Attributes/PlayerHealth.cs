@@ -9,6 +9,7 @@ using UnityEngine.Analytics;
 using UnityEngine.SceneManagement;
 using PSmash.Combat;
 using GameDevTV.Saving;
+using PSmash.SceneManagement;
 
 namespace PSmash.Attributes
 {
@@ -181,8 +182,9 @@ namespace PSmash.Attributes
             gameObject.layer = LayerMask.NameToLayer("PlayerGhost");
             animator.SetInteger("Damage", 50);
             yield return new WaitForSeconds(2);
+            FindObjectOfType<SavingWrapper>().LoadLastSavedScene();
             //SceneManager.LoadScene(0);
-            FindObjectOfType<Tent>().PlayerDies();
+            //FindObjectOfType<Tent>().PlayerDies();
         }
 
         public object CaptureState()
@@ -192,20 +194,22 @@ namespace PSmash.Attributes
             return healthState;
         }
 
-        public void RestoreState(object state)
+        public void RestoreState(object state, bool isLoadLastScene)
         {
+            if (isLoadLastScene)
+                return;
+
+
             Dictionary<string, float> healthstate = (Dictionary<string, float>)state;
             foreach(string name in healthstate.Keys)
             {
                 if(name == "health")
                 {
                     health = healthstate[name];
-                    //print("health restored from file  " + health +"  "  +gameObject.name);
                     onHealed();
-                    //Debug.Break();
                     break;
                 }
-                //print("health from file to restores was not found");
+                print("health from file to restores was not found");
             }
         }
     }

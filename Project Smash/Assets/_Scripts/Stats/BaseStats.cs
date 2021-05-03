@@ -88,7 +88,7 @@ namespace PSmash.Stats
             return data;
         }
 
-        public void RestoreState(object state)
+        public void RestoreState(object state, bool isLoadLastScene)
         {
             Dictionary<StatsList, float> data = (Dictionary<StatsList, float>)state;
             foreach(StatsList stat in data.Keys)

@@ -21,6 +21,6 @@ namespace GameDevTV.Saving
         /// The same `System.Serializable` object that was returned by
         /// CaptureState when saving.
         /// </param>
-        void RestoreState(object state);
+        void RestoreState(object state, bool isLoadLastScene);
     }
 }

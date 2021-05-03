@@ -4,10 +4,11 @@ using UnityEngine;
 using PSmash.Attributes;
 using PSmash.Combat.Weapons;
 using PSmash.Combat;
+using GameDevTV.Saving;
 
 namespace PSmash.Items
 {
-    public class Stalactite : MonoBehaviour, IDamagable
+    public class Stalactite : MonoBehaviour, IDamagable, ISaveable
     {
         [Header("CONFIG")]
         [SerializeField] bool isDestroyedByMace = false;
@@ -19,7 +20,6 @@ namespace PSmash.Items
         [SerializeField] AudioClip destroyedClip = null;
         [SerializeField] AudioClip damagedClip = null;
 
-
         public void TakeDamage(Transform attacker, Weapon weapon, AttackType attackType, float damage)
         {
             audioSource.PlayOneShot(damagedClip);
@@ -28,6 +28,7 @@ namespace PSmash.Items
                 if (isDestroyedByMace)
                 {
                     Break();
+                    BreakSound();
                 }
             }
         }
@@ -36,9 +37,15 @@ namespace PSmash.Items
         {
             GetComponent<Collider2D>().enabled = false;
             GetComponentInChildren<SpriteRenderer>().sprite = destroyedSprite;
+        }
+
+        void BreakSound()
+        {
             audioSource.clip = destroyedClip;
             audioSource.Play();
         }
+
+
 
         private void OnCollisionEnter2D(Collision2D collision)
         {
@@ -46,6 +53,23 @@ namespace PSmash.Items
             {
                 Break();
             }
+        }
+
+        public object CaptureState()
+        {
+            bool isDestroyed;
+            if (!GetComponent<Collider2D>().enabled)
+                isDestroyed = true;
+            else
+                isDestroyed = false;
+            return isDestroyed;
+        }
+
+        public void RestoreState(object state, bool isLoadLastSavedScene)
+        {
+            bool isDestroyed = (bool)state;
+            if (isDestroyed)
+                Break();
         }
     }
 

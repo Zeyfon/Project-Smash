@@ -1,20 +1,22 @@
-﻿using System;
+﻿
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using GameDevTV.Saving;
-using PSmash.Checkpoints;
 
 namespace PSmash.SceneManagement
 {
     public class SavingWrapper : MonoBehaviour
     {
-        const string defaultSaveFile = "PSmashSaveFile" ;
-        [SerializeField] float fadeInTime = 0.2f;
-
+        //CONFIG
+        [SerializeField] float fadeInTime = 0.5f;
+        
+        //STATE
+        const string defaultSaveFile = "PSmashSaveFile";
         _Controller _controller;
         bool cr_Running=false;
 
+
+        //INITIALIZE
         private void Awake()
         {
             _controller = new _Controller();
@@ -29,43 +31,15 @@ namespace PSmash.SceneManagement
         {
             _controller.GameManagement.Enable();
             _controller.GameManagement.Save.performed += ctx => Save();
-            _controller.GameManagement.Load.performed += ctx => Load();
+            _controller.GameManagement.Load.performed += ctx => LoadLastSavedScene();
             _controller.GameManagement.Delete.performed += ctx => Delete();
         }
 
+
+        //PUBLIC
         public void LoadLastSavedScene()
         {
             StartCoroutine(LoadLastScene());
-        }
-
-        IEnumerator LoadLastScene()
-        {
-            if (!cr_Running)
-            {
-                cr_Running = true;
-                yield return GetComponent<SavingSystem>().LoadLastScene(defaultSaveFile);
-                UIFader fader = FindObjectOfType<UIFader>();
-                fader.FadeOutInmediate();
-                yield return fader.FadeIn(fadeInTime);
-                cr_Running = false;
-            }
-            yield return null;
-        }
-
-        public void LoadDeadScene(Tent tent)
-        {
-            StartCoroutine(LoadDeadSceneCR(tent));
-        }
-
-        IEnumerator LoadDeadSceneCR(Tent tent)
-        {
-            UIFader fader = FindObjectOfType<UIFader>();
-            yield return fader.FadeOut(2);
-            tent.ResetPlayer();
-            GetComponent<SavingSystem>().Save(defaultSaveFile);
-            yield return GetComponent<SavingSystem>().LoadDeadScene(0,defaultSaveFile);
-            fader.FadeOutInmediate();
-            yield return fader.FadeIn(2);
         }
 
         public void Save()
@@ -75,13 +49,30 @@ namespace PSmash.SceneManagement
 
         public void Load()
         {
-            GetComponent<SavingSystem>().Load(defaultSaveFile);
+            GetComponent<SavingSystem>().Load(defaultSaveFile, false);
         }
 
         public void Delete()
         {
             GetComponent<SavingSystem>().Delete(defaultSaveFile);
         }
+
+
+        //PRIVATE
+        IEnumerator LoadLastScene()
+        {
+            if (!cr_Running)
+            {
+                cr_Running = true;
+                yield return GetComponent<SavingSystem>().LoadLastScene(defaultSaveFile, true);
+                UIFader fader = FindObjectOfType<UIFader>();
+                fader.FadeOutInmediate();
+                yield return fader.FadeIn(fadeInTime);
+                cr_Running = false;
+            }
+            yield return null;
+        }
+
     }
 }
 

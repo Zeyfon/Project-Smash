@@ -119,9 +119,9 @@ namespace PSmash.Items
             return info;
         }
 
-        public void RestoreState(object state)
+        public void RestoreState(object state, bool isLoadLastScene)
         {
-            if (state == null)
+            if (state == null || isLoadLastScene)
                 return;
 
             Tent tent = FindObjectOfType<Tent>();

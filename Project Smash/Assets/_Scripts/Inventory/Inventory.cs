@@ -121,7 +121,7 @@ namespace PSmash.Inventories
             return inventoryState;
         }
 
-        public void RestoreState(object state)
+        public void RestoreState(object state, bool isLoadLastScene)
         {
             Dictionary<string, int> inventoryState = (Dictionary<string, int>)state;
             foreach (string itemName in inventoryState.Keys)

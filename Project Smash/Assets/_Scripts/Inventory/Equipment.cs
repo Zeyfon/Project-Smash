@@ -1,8 +1,9 @@
 ﻿using PSmash.Checkpoints;
 using UnityEngine;
 using GameDevTV.Saving;
-using GameDevTV.Saving;
 using System.Collections.Generic;
+using System;
+using PSmash.SceneManagement;
 
 namespace PSmash.Inventories
 {
@@ -11,18 +12,32 @@ namespace PSmash.Inventories
         [SerializeField] EquipmentSlots[] slots;
         [SerializeField] SubWeaponItem subWeapon;
 
-        public delegate void ItemChange(int index);
-        public event ItemChange onEquipmentUIUpdate;
+        public delegate void ToolChange(int index);
+        public event ToolChange onToolEquippedUpdate;
 
+        public delegate void SubWeaponChange(SubWeaponItem item);
+        public static event SubWeaponChange onSubWeaponChange;
+
+        List<SubWeaponItem> subWeapons = new List<SubWeaponItem>();
         int currentIndex = 0;
         private void Awake()
         {
+            GetWeapons();
             RestoreToolsNumber();
+        }
+
+        private void GetWeapons()
+        {
+            foreach (SubWeaponItem item in Resources.LoadAll<SubWeaponItem>(""))
+            {
+                subWeapons.Add(item);
+            }
         }
 
         void Start()
         {
-            onEquipmentUIUpdate(currentIndex);
+            onToolEquippedUpdate(currentIndex);
+            onSubWeaponChange(subWeapon);
         }
 
         private void OnEnable()
@@ -48,7 +63,7 @@ namespace PSmash.Inventories
         void RestoreToolsNumber2()
         {
             RestoreToolsNumber();
-            onEquipmentUIUpdate(currentIndex);
+            onToolEquippedUpdate(currentIndex);
         }
         void RestoreToolsNumber()
         {
@@ -85,13 +100,13 @@ namespace PSmash.Inventories
                     currentIndex = slots.Length - 1;
                 }
             }
-            onEquipmentUIUpdate(currentIndex);
+            onToolEquippedUpdate(currentIndex);
         }
 
         public void ItemUsed(EquipmentSlots slot)
         {
             slot.number -= 1;
-            onEquipmentUIUpdate(currentIndex);
+            onToolEquippedUpdate(currentIndex);
         }
 
         public EquipmentSlots[] GetTools()
@@ -117,7 +132,7 @@ namespace PSmash.Inventories
                     slot.maxNumber +=1;
                     //print("The " + item.name + "  increase to  " + slot.maxNumber);
                     RestoreToolsNumber();
-                    onEquipmentUIUpdate(currentIndex);
+                    onToolEquippedUpdate(currentIndex);
                     return;
                 }
             }
@@ -127,7 +142,7 @@ namespace PSmash.Inventories
         public object CaptureState()
         {
             ///Save the quantity of each tool
-            Dictionary<string, List<int>> toolsForSerialization = new Dictionary<string, List<int>>();
+            Dictionary<string, object> toolsForSerialization = new Dictionary<string, object>();
             foreach(EquipmentSlots slot in slots)
             {
                 List<int> numbers = new List<int>();
@@ -135,40 +150,60 @@ namespace PSmash.Inventories
                 numbers.Add(slot.maxNumber);
                 toolsForSerialization.Add(slot.item.GetID(), numbers);
             }
-            List<int> currentIndexes = new List<int>();
-            currentIndexes.Add(currentIndex);
 
-            toolsForSerialization.Add("currentIndex", currentIndexes); 
+            toolsForSerialization.Add("currentIndex", currentIndex);
+
+            if (subWeapon != null)
+            {
+                toolsForSerialization.Add("Mace", subWeapon.GetID());
+            }
             return toolsForSerialization;
         }
 
-        public void RestoreState(object state)
+        public void RestoreState(object state, bool isLoadLastScene)
         {
             ///
-            var equippedItemsForSerialization = (Dictionary<string, List<int>>)state;
+            var equippedItemsForSerialization = (Dictionary<string, object>)state;
 
             foreach (string name in equippedItemsForSerialization.Keys)
             {
                 var item = (ToolItem)Item.GetFromID(name);
-                if (item != null)
+                if (item != null && !isLoadLastScene)
                 {
                     foreach(EquipmentSlots slot in slots)
                     {
                         if(item == slot.item)
                         {
+                            List<int> tests = (List<int>)equippedItemsForSerialization[name];
                             //print("Restoring " + item.name);
-                            slot.number = equippedItemsForSerialization[name][0];
-                            slot.maxNumber = equippedItemsForSerialization[name][1];
+                            slot.number = tests[0];
+                            slot.maxNumber = tests[1];
                         }
                     }
                 }
+                
                 if(name == "currentIndex")
                 {
-                    currentIndex = equippedItemsForSerialization[name][0];
+                    currentIndex =(int)equippedItemsForSerialization[name];
                     //print("Restoring Tool index  " + currentIndex);
                 }
+
+                if(name == "Mace")
+                {
+                    foreach (SubWeaponItem subWeapon in subWeapons)
+                    {
+                        string subWeaponName = (string)equippedItemsForSerialization[name];
+                        if (subWeaponName == subWeapon.GetID())
+                        {
+                            this.subWeapon = subWeapon;
+                            print("I have the mace");
+                        }
+                    }
+                }
+                
             }
-            onEquipmentUIUpdate(currentIndex);
+            onToolEquippedUpdate(currentIndex);
+            onSubWeaponChange(subWeapon);
         }
     }
 }

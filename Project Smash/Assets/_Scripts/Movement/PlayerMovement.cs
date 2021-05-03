@@ -704,11 +704,15 @@ namespace PSmash.Movement
             }
         }
 
-        public void RestoreState(object state)
+        public void RestoreState(object state, bool isLoadLastScene)
         {
             SerializableVector3 position = (SerializableVector3)state;
             storedPosition = position.ToVector();
-            
+
+            if (isLoadLastScene)
+            {
+                transform.position = storedPosition;
+            }
             //TODO
             //HOW TO DIFFERENTIATE 
             //WHEN IS A RESTORE FOR THE CHECKPOINT
