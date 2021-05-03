@@ -172,7 +172,8 @@ namespace PSmash.Combat
         void LightAttackDamage()
         {
             //print("NormalAttack");
-            Attack(attackTransform, comboAttackArea, fists);
+            Vector2 attackArea = new Vector2(1.9f, 1.6f);
+            Attack(attackTransform, attackArea, fists);
         }
 
         /// <summary>
@@ -199,7 +200,8 @@ namespace PSmash.Combat
         void SubweaponAttack()
         {
             //print("ToolAttack");
-            Attack(attackTransform, comboAttackArea, mace);
+            Vector2 attackArea = new Vector2(2.5f, 1.75f);
+            Attack(attackTransform, attackArea, mace);
         }
 
         //AnimEvent
