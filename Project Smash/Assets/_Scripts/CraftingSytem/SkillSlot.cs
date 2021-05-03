@@ -9,22 +9,42 @@ namespace PSmash.CraftingSystem
 {
     public class SkillSlot : MonoBehaviour
     {
+        //CONFIG
         [Header("CONFIG")]
         [SerializeField] Skill skill = null;
         [SerializeField] Image skillSlotImage = null;
         [SerializeField] SkillSlot[] unlockableBySkillSlotsOptions;
         [SerializeField] CraftingItemSlot[] requiredCraftingItems;
         [SerializeField] UnlockableSkillPath[] availablePathsOnceUnlocked;
-
         [SerializeField] Material saturationCeroMaterial = null;
 
         [Header("STATE")]
         [SerializeField]bool isUnlocked = false;
+
+
+        //STATE
+        [System.Serializable]
+        public class CraftingItemSlot
+        {
+            public CraftingItem item;
+            public int number;
+        }
+
+        [System.Serializable]
+        public class UnlockableSkillPath
+        {
+            public Link link;
+        }
+
+        //INITIALIZE
+
         // Start is called before the first frame update
         void Start()
         {
             skillSlotImage.sprite = skill.GetSprite();
         }
+
+        //////////////////////////////////////////////////////////////////////PUBLIC/////////////////////////////////////////////////////////////////////
 
         public Item GetItem()
         {
@@ -36,15 +56,8 @@ namespace PSmash.CraftingSystem
             return skill;
         }
 
-
-        public void Unlock()
-        {
-            isUnlocked = true;
-        }
-
         public CraftingItemSlot[] GetRequiredCraftingItems()
         {
-            //print(requiredCraftingItems.Length);
             return requiredCraftingItems;
         }
         /// <summary>
@@ -86,22 +99,6 @@ namespace PSmash.CraftingSystem
             return requiredCraftingItems;
         }
 
-        [System.Serializable]
-        public class CraftingItemSlot
-        {
-            public CraftingItem item;
-            public int number;
-        }
-
-        [System.Serializable]
-        public class UnlockableSkillPath
-        {
-            public Link link;
-        }
-
-
-
-        //////////////// UI//////////////////////////////////////////
         public void VisualUpdate()
         {
             if (GetIsUnlocked())
@@ -160,6 +157,57 @@ namespace PSmash.CraftingSystem
                 return false;
             }
         }
+
+
+
+        /// <summary>
+        /// To update the visuals of the links between Grey and White
+        /// once it sets to white the links will not go back to dark again
+        /// </summary>
+        /// <param name="state"></param>
+        public void UpdateLinks(string state)
+        {
+            foreach (UnlockableSkillPath unlockableSkillPath in availablePathsOnceUnlocked)
+            {
+                //unlockableSkillPath.link.UpdateColor(state);
+                if (state == "White")
+                {
+                    unlockableSkillPath.link.GetComponent<Image>().color = Color.white;
+                }
+                else
+                {
+                    unlockableSkillPath.link.GetComponent<Image>().color = new Color(0.3f, 0.3f, 0.3f, 0.3f);
+                }
+            }
+        }
+
+        public void SetRightToWhite()
+        {
+            print(gameObject.name + "  white ring");
+            Image image = transform.GetChild(0).GetComponent<Image>();
+            image.material = null;
+            image.enabled = true;
+
+        }
+
+        public void SetRingToNull()
+        {
+            print(gameObject.name + "  no ring");
+            Image image = transform.GetChild(0).GetComponent<Image>();
+            image.enabled = false;
+        }
+
+        public void SetRingToYellow(Material yellowMaterial)
+        {
+            print(gameObject.name + "  yellow ring");
+            Image image = transform.GetChild(0).GetComponent<Image>();
+            image.material = yellowMaterial;
+            image.enabled = true;
+        }
+
+
+        //////////////////////////////////////////////////////////////////////PRIVATE/////////////////////////////////////////////////////////////////////
+
         /// <summary>
         /// The Update in the UI bases on the state of the skillSlot.
         /// Saturation 1
@@ -194,79 +242,7 @@ namespace PSmash.CraftingSystem
             //DisableWhiteRing();
         }
 
-        /// <summary>
-        /// To update the visuals of the links between Grey and White
-        /// once it sets to white the links will not go back to dark again
-        /// </summary>
-        /// <param name="state"></param>
-        public void UpdateLinks(string state)
-        {
-            foreach (UnlockableSkillPath unlockableSkillPath in availablePathsOnceUnlocked)
-            {
-                //unlockableSkillPath.link.UpdateColor(state);
-                if (state == "White")
-                {
-                    unlockableSkillPath.link.GetComponent<Image>().color = Color.white;
-                }
-                else
-                {
-                    unlockableSkillPath.link.GetComponent<Image>().color = new Color(0.3f, 0.3f, 0.3f, 0.3f);
-                }
-            }
-        }
 
-        void DisableWhiteRing()
-        {
-            GetComponentInChildren<Image>().enabled = false ;
-        }
-
-        void EnableWhiteRing()
-        {
-            GetComponentInChildren<Image>().enabled = true;
-
-        }
-
-        public void SetRightToWhite()
-        {
-            print(gameObject.name + "  white ring");
-            Image image = transform.GetChild(0).GetComponent<Image>();
-            image.material = null;
-            image.enabled = true;
-            
-        }
-
-        public void SetRingToNull()
-        {
-            print(gameObject.name + "  no ring");
-            Image image = transform.GetChild(0).GetComponent<Image>();
-            image.enabled = false;
-        }
-
-        public void SetRingToYellow(Material yellowMaterial)
-        {
-            print(gameObject.name + "  yellow ring");
-            Image image = transform.GetChild(0).GetComponent<Image>();
-            image.material = yellowMaterial;
-            image.enabled = true;
-        }
-
-        public void SetRingMaterial(Material yellowMaterial)
-        {
-            Image image = transform.GetChild(0).GetComponent<Image>();
-            image.enabled = true;
-            image.material = yellowMaterial;
-        }
-
-        //public object CaptureState()
-        //{
-        //    return IsUnlocked();
-        //}
-
-        //public void RestoreState(object state)
-        //{
-        //    isUnlocked = (bool)state;
-        //    VisualUpdate();
-        //}
     }
 
 }
