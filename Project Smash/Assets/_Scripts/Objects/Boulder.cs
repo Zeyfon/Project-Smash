@@ -165,14 +165,14 @@ namespace PSmash.Items
             return info;
         }
 
-        public void RestoreState(object state)
+        public void RestoreState(object state, bool isLoadLastScene)
         {
             Info info = (Info)state;
             if (bouldersMoved.Contains(GetComponent<SaveableEntity>().GetUniqueIdentifier()))
             {
                 return;
             }
-            else if (info.checkpointCounter == FindObjectOfType<Tent>().GetCheckpointCounter())
+            else if (!isLoadLastScene && info.checkpointCounter == FindObjectOfType<Tent>().GetCheckpointCounter())
             {
                 //print("Boulder Restored");
                 SerializableVector3 position = info.position;

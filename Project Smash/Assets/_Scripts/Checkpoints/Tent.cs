@@ -1,5 +1,4 @@
 ﻿using PSmash.Core;
-using PSmash.Saving;
 using PSmash.SceneManagement;
 using System;
 using System.Collections;
@@ -30,30 +29,9 @@ namespace PSmash.Checkpoints
             }
         }
 
-        public void PlayerDies()
-        {
-            StartCoroutine(PlayerDiesCR());
-        } 
-
-        public void ResetPlayer()
-        {
-            OnCheckpointDone();
-        }
-
         public int GetCheckpointCounter()
         {
             return checkpointCounter;
-        }
-
-        IEnumerator PlayerDiesCR()
-        {
-            GameObject sceneManager = GameObject.FindGameObjectWithTag("SceneManager");
-            sceneManager.GetComponent<ResetDestructibleObjects>().ClearObjectsList();
-            sceneManager.GetComponent<EnemiesReset>().ClearObjectsList();
-            sceneManager.GetComponent<EnvironmentObjectsManager>().ClearObjectsList();
-            print("Reaching Tent when dead");
-            FindObjectOfType<SavingWrapper>().LoadDeadScene(this);
-            yield return null;
         }
 
         IEnumerator CheckpointReset()

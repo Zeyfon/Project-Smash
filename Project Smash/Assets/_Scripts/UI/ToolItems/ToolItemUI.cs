@@ -17,12 +17,12 @@ namespace PSmash.UI
 
         private void OnEnable()
         {
-            playerEquipment.onEquipmentUIUpdate += EquipmentUIToolUpdate;
+            playerEquipment.onToolEquippedUpdate += EquipmentUIToolUpdate;
         }
 
         private void OnDisable()
         {
-            playerEquipment.onEquipmentUIUpdate -= EquipmentUIToolUpdate;
+            playerEquipment.onToolEquippedUpdate -= EquipmentUIToolUpdate;
         }
 
         private void EquipmentUIToolUpdate(int index)

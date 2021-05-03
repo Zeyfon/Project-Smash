@@ -1,14 +1,10 @@
 ﻿using PSmash.Inventories;
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using GameDevTV.Saving;
 
 namespace PSmash.UI
 {
-    public class SubweaponUI : MonoBehaviour, ISaveable
+    public class SubweaponUI : MonoBehaviour
     {
         [SerializeField] Image image = null;
 
@@ -19,30 +15,23 @@ namespace PSmash.UI
 
         private void OnEnable()
         {
-            Mace.onObjectTaken += ShowSubweapon;
+            Equipment.onSubWeaponChange += UpdateSubWeaponDisplay;
         }
+
         private void OnDisable()
         {
-            Mace.onObjectTaken -= ShowSubweapon;
+            Equipment.onSubWeaponChange -= UpdateSubWeaponDisplay;
         }
 
-        private void ShowSubweapon(bool isEnabled)
+        private void UpdateSubWeaponDisplay(SubWeaponItem subWeapon)
         {
-            if (!isEnabled)
+            if (subWeapon == null)
+                return;
+            else
             {
+                image.sprite = subWeapon.GetSprite();
                 image.enabled = true;
             }
-        }
-
-        public object CaptureState()
-        {
-            return image.enabled;
-        }
-
-        public void RestoreState(object state)
-        {
-            bool isEnabled = (bool)state;
-            image.enabled = isEnabled;
         }
     }
 }

@@ -38,23 +38,6 @@ namespace PSmash.Inventories
             gameObject.SetActive(false);
             print("Mace Ending");
         }
-        public object CaptureState()
-        {
-            return hasBeenTaken;
-        }
-
-        public void RestoreState(object state)
-        {
-            hasBeenTaken = (bool)state;
-            if(hasBeenTaken)
-            {
-                gameObject.SetActive(false);
-            }
-            else
-            {
-                gameObject.SetActive(true);
-            }
-        }
 
         private void OnTriggerEnter2D(Collider2D collision)
         {
@@ -62,6 +45,27 @@ namespace PSmash.Inventories
             {
                 collision.GetComponent<Equipment>().SetSubWeapon(subWeapon);
                 MaceTaken();
+            }
+        }
+
+        public object CaptureState()
+        {
+            print("Capture Mace Object " + hasBeenTaken);
+            return hasBeenTaken;
+        }
+
+        public void RestoreState(object state, bool isLoadLastSavedScene)
+        {
+            hasBeenTaken = (bool)state;
+            print("Restore Mace Object " + hasBeenTaken);
+
+            if (hasBeenTaken)
+            {
+                gameObject.SetActive(false);
+            }
+            else
+            {
+                gameObject.SetActive(true);
             }
         }
     }

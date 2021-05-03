@@ -160,7 +160,7 @@ namespace PSmash.Attributes
                 GetComponent<AudioSource>().pitch = 1;
                 isDead = true;
                 takenOutEnemies.Add(GetComponent<SaveableEntity>().GetUniqueIdentifier());
-                print("Added to Taken out enemy list " + gameObject.name + "  " + GetComponent<SaveableEntity>().GetUniqueIdentifier());
+                //print("Added to Taken out enemy list " + gameObject.name + "  " + GetComponent<SaveableEntity>().GetUniqueIdentifier());
                 if(onEnemyDead != null)
                 {
                     onEnemyDead();
@@ -358,16 +358,17 @@ namespace PSmash.Attributes
             return info;
         }
 
-        public void RestoreState(object state)
+        public void RestoreState(object state, bool isLoadLastScene)
         {
             //print("Restoring Taken out enemy list " + gameObject.name + "  " + GetComponent<SaveableEntity>().GetUniqueIdentifier());
             if (takenOutEnemies.Contains(GetComponent<SaveableEntity>().GetUniqueIdentifier()))
             {
                 transform.parent.gameObject.SetActive(false);
-                
             }
             else
             {
+                if (isLoadLastScene)
+                    return;
                 Info info = (Info)state;
                 Tent tent = FindObjectOfType<Tent>();
                 if(tent == null)

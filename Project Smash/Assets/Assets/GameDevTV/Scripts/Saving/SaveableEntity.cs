@@ -58,7 +58,7 @@ namespace GameDevTV.Saving
         /// <param name="state">
         /// The same object that was returned by `CaptureState`.
         /// </param>
-        public void RestoreState(object state)
+        public void RestoreState(object state, bool isLoadLastScene)
         {
             Dictionary<string, object> stateDict = (Dictionary<string, object>)state;
             foreach (ISaveable saveable in GetComponents<ISaveable>())
@@ -66,7 +66,7 @@ namespace GameDevTV.Saving
                 string typeString = saveable.GetType().ToString();
                 if (stateDict.ContainsKey(typeString))
                 {
-                    saveable.RestoreState(stateDict[typeString]);
+                    saveable.RestoreState(stateDict[typeString], isLoadLastScene);
                 }
             }
         }

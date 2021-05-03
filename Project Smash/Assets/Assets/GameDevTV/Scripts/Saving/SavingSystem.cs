@@ -1,9 +1,7 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
-using System.Text;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.Events;
@@ -20,10 +18,14 @@ namespace GameDevTV.Saving
     /// </summary>
     public class SavingSystem : MonoBehaviour
     {
+        //CONFIG
         [SerializeField] UnityEvent onSaveStart;
         [SerializeField] UnityEvent OnSaveEnds;
 
+        //STATE
+        List<string> restoredObjectsForLoadLastSavedScene = new List<string>();
 
+        /////////////////////////////////////////////////////////////////////PUBLIC//////////////////////////////////////////////////////////////////////
         public IEnumerator LoadDeadScene(int buildIndex, string saveFile)
         {
             Save(saveFile);
@@ -34,7 +36,7 @@ namespace GameDevTV.Saving
         /// must be run as a coroutine.
         /// </summary>
         /// <param name="saveFile">The save file to consult for loading.</param>
-        public IEnumerator LoadLastScene(string saveFile)
+        public IEnumerator LoadLastScene(string saveFile, bool isLoadLastScene)
         {
             print("Trying to load a scene");
             Dictionary<string, object> state = LoadFile(saveFile);
@@ -50,27 +52,20 @@ namespace GameDevTV.Saving
                     print("2");
                     yield return null;
                 }
-                else if (buildIndex != SceneManager.GetActiveScene().buildIndex)
+                else //if (buildIndex != SceneManager.GetActiveScene().buildIndex)
                 {
                     print("3");
                     print("Loading scene " + buildIndex);
                     yield return SceneManager.LoadSceneAsync(buildIndex);
-                    //AsyncOperation asyncOperation =  SceneManager.LoadSceneAsync(buildIndex);
-                    //while (!asyncOperation.isDone)
-                    //{
-                    //    print("Not Done Loading");
-                    //    yield return null;
-                    //}
                     print("Done Loading");
-                    //yield return new WaitForEndOfFrame();
                 }
-                RestoreState(state);
             }
             else
             {
                 print("5");
-                //yield return SceneManager.LoadSceneAsync(1);
+                Debug.LogWarning("There is no lastSceneBuildIndex");
             }
+            RestoreState(state, isLoadLastScene);
             print("LoadLastScene ended");
             OnSaveEnds.Invoke();
         }
@@ -99,14 +94,14 @@ namespace GameDevTV.Saving
 
 
 
-        public void Load(string saveFile)
+        public void Load(string saveFile, bool isLoadLastScene)
         {
-            RestoreState(LoadFile(saveFile));
+            RestoreState(LoadFile(saveFile), isLoadLastScene);
         }
 
-        // PRIVATE
+        /////////////////////////////////////////////////////////////////////PRIVATE//////////////////////////////////////////////////////////////////////
 
-        private Dictionary<string, object> LoadFile(string saveFile)
+        Dictionary<string, object> LoadFile(string saveFile)
         {
             string path = GetPathFromSaveFile(saveFile);
             if (!File.Exists(path))
@@ -120,7 +115,7 @@ namespace GameDevTV.Saving
             }
         }
 
-        private void SaveFile(string saveFile, object state)
+        void SaveFile(string saveFile, object state)
         {
             string path = GetPathFromSaveFile(saveFile);
             print("Saving to " + path);
@@ -131,7 +126,7 @@ namespace GameDevTV.Saving
             }
         }
 
-        private void CaptureState(Dictionary<string, object> state)
+        void CaptureState(Dictionary<string, object> state)
         {
             foreach (SaveableEntity saveable in FindObjectsOfType<SaveableEntity>())
             {
@@ -145,19 +140,29 @@ namespace GameDevTV.Saving
             }
         }
 
-        private void RestoreState(Dictionary<string, object> state)
+        void RestoreState(Dictionary<string, object> state, bool isLoadLastScene)
         {
+            if (isLoadLastScene)
+                restoredObjectsForLoadLastSavedScene.Clear();
             foreach (SaveableEntity saveable in FindObjectsOfType<SaveableEntity>())
             {
                 string id = saveable.GetUniqueIdentifier();
                 if (state.ContainsKey(id))
                 {
-                    saveable.RestoreState(state[id]);
+                    if (!restoredObjectsForLoadLastSavedScene.Contains(id))
+                    {
+                        saveable.RestoreState(state[id], true);
+                    }
+                    else
+                    {
+                        saveable.RestoreState(state[id], false);
+                    }
+                    restoredObjectsForLoadLastSavedScene.Add(id);
                 }
             }
         }
 
-        private string GetPathFromSaveFile(string saveFile)
+        string GetPathFromSaveFile(string saveFile)
         {
             return Path.Combine(Application.persistentDataPath, saveFile + ".sav");
         }

@@ -64,20 +64,16 @@ namespace PSmash.SceneManagement
             ////////////////////////////////////////////////////// NEXT SCENE LOADING /////////////////////////////////////////
 
             yield return SceneManager.LoadSceneAsync(sceneToLoad);
-            //yield return new WaitForSeconds(0.3f);
             ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
             if (OnPortalTriggered != null)
                 OnPortalTriggered(false);
             else
                 Debug.LogWarning("Portal cannot disable Player controller");
 
-            //yield return new WaitForSeconds(1);
             print("Other Scene Loaded");
             savingWrapper.Load();
-            //yield return new WaitForSeconds(1);
             Portal otherPortal = GetOtherPortal();
             UpdatePlayerPosition(otherPortal);
-            //Debug.Break();
 
             savingWrapper.Save();
 

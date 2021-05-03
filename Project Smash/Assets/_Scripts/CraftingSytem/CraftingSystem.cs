@@ -262,7 +262,7 @@ namespace PSmash.CraftingSystem
             return state;
         }
 
-        public void RestoreState(object state)
+        public void RestoreState(object state, bool isLoadLastScene)
         {
 
             Dictionary<int, bool> obj = (Dictionary<int, bool>)state;
