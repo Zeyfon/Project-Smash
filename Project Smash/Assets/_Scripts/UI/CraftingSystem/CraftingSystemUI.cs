@@ -82,7 +82,6 @@ namespace PSmash.UI.CraftingSytem
         void UpdateRings(SkillSlot skillSlot)
         {
             CraftingSystem.CraftingSystem craftingSystem = GetComponentInParent<CraftingSystem.CraftingSystem>();
-            //TO DO
             foreach(SkillSlot slot in GetComponentsInChildren<SkillSlot>())
             {
                 if(slot.IsUnlockable() && craftingSystem.DoIHaveTheNecessaryItemNumbersToUnlockThisSkill(slot) != null)
@@ -95,20 +94,12 @@ namespace PSmash.UI.CraftingSytem
                 }
             }
             skillSlot.SetRingToYellow(yellowMaterial);
-            //SET TO WHITE ALL THE RIGHTS WHOSE SKILLSLOT ISUNLOCKABLE AND HASALLTHECRAFTINGMATERIALSREQUIREDTOUNLOCK
-            //SET TO YELLOW THE CURRENT SELECTION
-            //if (previousGameObject != null && previousGameObject != skillSlot.gameObject)
-            //{
-            //    previousGameObject.GetComponent<SkillSlot>().SetRingMaterial(null);
-            //    UpdateSkillPanel();
-            //}
             
             //Update ToolTipWindow
             if (onSelectionChange != null)
             {
                 onSelectionChange(skillSlot);
             }
-            //skillSlot.SetRingMaterial(yellowMaterial);
 
             previousGameObject = skillSlot.gameObject;
         }

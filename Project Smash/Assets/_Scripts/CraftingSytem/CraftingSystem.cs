@@ -147,6 +147,35 @@ namespace PSmash.CraftingSystem
             }
         }
 
+        /// <summary>
+        /// Returns all the craftingMaterial necessary to unlock this skill only if you have all the necessary materials in your inventory
+        /// </summary>
+        /// <param name="skillSlot"></param>
+        /// <returns></returns>
+        public Dictionary<CraftingItem, int> DoIHaveTheNecessaryItemNumbersToUnlockThisSkill(SkillSlot skillSlot)
+        {
+            SkillSlot.CraftingItemSlot[] slots = skillSlot.GetRequiredCraftingItems();
+            Dictionary<CraftingItem, int> itemsNeeded = new Dictionary<CraftingItem, int>();
+
+            foreach (SkillSlot.CraftingItemSlot slot in slots)
+            {
+                //print(itemRequirement.item + "  " + inventory);
+                int numberNeeded = inventory.GetThisCraftingItemNumber(slot.item);
+                if (numberNeeded >= slot.number)
+                {
+                    itemsNeeded.Add(slot.item, slot.number);
+                    continue;
+                }
+                else
+                {
+                    //print("Items Criteria is not fulfilled to unlock skill");
+                    return null;
+                }
+            }
+            //print("Items criteria is fullfilled to unlock skill");
+            return itemsNeeded;
+        }
+
 
         ///////////////////////////////////////////////////////////////PRIVATE//////////////////////////////////////////////////////////////////
         /// <summary>
@@ -189,35 +218,6 @@ namespace PSmash.CraftingSystem
         }
 
         /// <summary>
-        /// Returns all the craftingMaterial necessary to unlock this skill only if you have all the necessary materials in your inventory
-        /// </summary>
-        /// <param name="skillSlot"></param>
-        /// <returns></returns>
-        public Dictionary<CraftingItem,int> DoIHaveTheNecessaryItemNumbersToUnlockThisSkill(SkillSlot skillSlot)
-        {
-            SkillSlot.CraftingItemSlot[] slots = skillSlot.GetRequiredCraftingItems();
-            Dictionary<CraftingItem, int> itemsNeeded = new Dictionary<CraftingItem, int>();
-
-            foreach (SkillSlot.CraftingItemSlot slot in slots)
-            {
-                //print(itemRequirement.item + "  " + inventory);
-                int numberNeeded = inventory.GetThisCraftingItemNumber(slot.item);
-                if (numberNeeded >= slot.number)
-                {
-                    itemsNeeded.Add(slot.item, slot.number);
-                    continue;
-                }
-                else
-                {
-                    //print("Items Criteria is not fulfilled to unlock skill");
-                    return null;
-                }
-            }
-            //print("Items criteria is fullfilled to unlock skill");
-            return itemsNeeded;        
-        }
-
-        /// <summary>
         /// Effects telling you that this skill cannot be unlocked.
         /// </summary>
         void CannotUnlockSkill()
@@ -235,7 +235,7 @@ namespace PSmash.CraftingSystem
             print(inventory);
             inventory.UnlockSkill(skillSlot.GetItem());
             SubstractItemsFromInventory(craftingItemsRequired);
-            skillSlot.Unlock();
+            skillSlot.SetIsUnlocked(true);
             audioSource.PlayOneShot(skillUnlockedSound, volume);
             OnSkillPanelUpdate(skillSlot);
         }
