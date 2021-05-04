@@ -133,10 +133,15 @@ namespace GameDevTV.Saving
                 //print("Saving the  " + saveable.gameObject.name);
                 state[saveable.GetUniqueIdentifier()] = saveable.CaptureState();
             }
-            PlayerPositionCheckpoint checkpoint = FindObjectOfType<PlayerPositionCheckpoint>();
+            Tent checkpoint = FindObjectOfType<Tent>();
+            
             if (checkpoint != null && checkpoint.IsPlayerInSavePoint())
             {
                 state["lastSceneBuildIndex"] = SceneManager.GetActiveScene().buildIndex;
+            }
+            else
+            {
+                Debug.LogWarning("No lastSceneBuildIndex was saved");
             }
         }
 
