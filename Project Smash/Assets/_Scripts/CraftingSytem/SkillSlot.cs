@@ -183,7 +183,7 @@ namespace PSmash.CraftingSystem
 
         public void SetRightToWhite()
         {
-            print(gameObject.name + "  white ring");
+            //print(gameObject.name + "  white ring");
             Image image = transform.GetChild(0).GetComponent<Image>();
             image.material = null;
             image.enabled = true;
@@ -192,14 +192,14 @@ namespace PSmash.CraftingSystem
 
         public void SetRingToNull()
         {
-            print(gameObject.name + "  no ring");
+            //print(gameObject.name + "  no ring");
             Image image = transform.GetChild(0).GetComponent<Image>();
             image.enabled = false;
         }
 
         public void SetRingToYellow(Material yellowMaterial)
         {
-            print(gameObject.name + "  yellow ring");
+            //print(gameObject.name + "  yellow ring");
             Image image = transform.GetChild(0).GetComponent<Image>();
             image.material = yellowMaterial;
             image.enabled = true;

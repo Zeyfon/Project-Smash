@@ -16,7 +16,7 @@ namespace PSmash.Checkpoints
         public static event Action OnTentMenuOpen;
         public static event Action OnCheckpointDone;
 
-
+        bool isPlayerInSavePoint = false;
         static int checkpointCounter = 0;
 
         public void Interact()
@@ -35,6 +35,11 @@ namespace PSmash.Checkpoints
             return checkpointCounter;
         }
 
+        public bool IsPlayerInSavePoint()
+        {
+            return isPlayerInSavePoint;
+        }
+
         IEnumerator CheckpointReset()
         {
             checkpointCounter++;
@@ -46,11 +51,29 @@ namespace PSmash.Checkpoints
             FindObjectOfType<SavingWrapper>().Save();
         }
 
-        private static void DestroyAllDamagingObjects()
+        static void DestroyAllDamagingObjects()
         {
             foreach (Projectile projectile in FindObjectsOfType<Projectile>())
             {
                 projectile.InstantDestroy();
+            }
+        }
+
+        private void OnTriggerEnter2D(Collider2D collision)
+        {
+            if (collision.CompareTag("Player"))
+            {
+                print("Player inside Checkpoint");
+                isPlayerInSavePoint = true;
+            }
+        }
+
+        private void OnTriggerExit2D(Collider2D collision)
+        {
+            if (collision.CompareTag("Player"))
+            {
+                isPlayerInSavePoint = false;
+                print("Player outside Checkpoint");
             }
         }
     }

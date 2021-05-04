@@ -691,7 +691,7 @@ namespace PSmash.Movement
 
         public object CaptureState()
         {
-            PlayerPositionCheckpoint checkpoint = FindObjectOfType<PlayerPositionCheckpoint>();
+            Tent checkpoint = FindObjectOfType<Tent>();
             if (checkpoint != null && checkpoint.IsPlayerInSavePoint())
             {
                 SerializableVector3 position = new SerializableVector3(transform.position);
