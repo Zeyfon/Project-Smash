@@ -51,7 +51,7 @@ namespace PSmash.Temporal
                 foreach (Collider2D coll in colls)
                 {
                     target = coll.GetComponent<EnemyHealth>();
-                    if (target != null) coll.GetComponent<IDamagable>().TakeDamage(null, weapon, AttackType.NotUnblockable,damage);
+                    if (target != null) coll.GetComponent<IDamagable>().TakeDamage(null, weapon, AttackType.NotUnblockable,damage, 0);
                 }
                 timer += damageInterval;
                 yield return new WaitForSeconds(damageInterval);

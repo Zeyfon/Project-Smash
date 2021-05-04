@@ -72,7 +72,7 @@ namespace PSmash.Attributes
 
         #region Damaged
 
-        public override void TakeDamage(Transform attacker, Weapon weapon, AttackType attackType, float damage)
+        public override void TakeDamage(Transform attacker, Weapon weapon, AttackType attackType, float damage, float attackForce)
         {
             if (isDead)
             {
@@ -86,6 +86,8 @@ namespace PSmash.Attributes
                 return;
             }
             Damaged(attacker, weapon, attackType, damage);
+            GetComponent<EnemyMovement>().ApplyAttackImpactReceived(attacker, attackForce);
+            //ApplyAttackForce(attacker, attackForce);
         }
 
         void Damaged(Transform attacker, Weapon attackedWeapon, AttackType attackType, float damage)
@@ -174,6 +176,13 @@ namespace PSmash.Attributes
             health -= damage;
             if (health <= 0) health = 0;
             return health;
+        }
+
+        void ApplyAttackForce(Transform attacker, float attackForce)
+        {
+
+            print("Applying attack force");
+            //TODO
         }
 
         public void Respawn()

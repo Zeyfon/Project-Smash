@@ -173,7 +173,7 @@ namespace PSmash.Combat
         {
             //print("NormalAttack");
             Vector2 attackArea = new Vector2(1.9f, 1.6f);
-            Attack(attackTransform, attackArea, fists);
+            Attack(attackTransform, attackArea, fists, 1.5f);
         }
 
         /// <summary>
@@ -182,7 +182,6 @@ namespace PSmash.Combat
         /// <returns></returns>
         void AttackImpulse()
         {
-            //print("AttackImpulse");
             GetComponent<PlayerMovement>().MovementImpulse(attackImpulse);
         }
 
@@ -201,7 +200,7 @@ namespace PSmash.Combat
         {
             //print("ToolAttack");
             Vector2 attackArea = new Vector2(2.5f, 1.75f);
-            Attack(attackTransform, attackArea, mace);
+            Attack(attackTransform, attackArea, mace, 15f);
         }
 
         //AnimEvent
@@ -213,7 +212,7 @@ namespace PSmash.Combat
 
         #endregion
 
-        void Attack(Transform attackOriginPosition, Vector2 attackArea, Weapon currentWeapon)
+        void Attack(Transform attackOriginPosition, Vector2 attackArea, Weapon currentWeapon, float attackForce)
         {
             //print("Looking to Damage Enemy");
             Collider2D[] colls = Physics2D.OverlapBoxAll(attackOriginPosition.position, attackArea, 0, whatIsDamagable);
@@ -228,7 +227,7 @@ namespace PSmash.Combat
                 if (target == null || coll.GetComponent<Projectile>())
                     continue;
                 //print(currentWeapon.name);
-                target.TakeDamage(transform, currentWeapon, AttackType.NotUnblockable, baseStats.GetStat(StatsList.Attack));
+                target.TakeDamage(transform, currentWeapon, AttackType.NotUnblockable, baseStats.GetStat(StatsList.Attack), attackForce);
                 //print("Sendingdamage from player to  " + target);
 
             }

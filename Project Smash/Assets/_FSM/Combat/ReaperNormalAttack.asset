@@ -24,8 +24,8 @@ MonoBehaviour:
       colorIndex: 0
       position:
         serializedVersion: 2
-        x: 288.6797
-        y: 481.35156
+        x: 333.40625
+        y: 435.28906
         width: 201
         height: 32
       isBreakpoint: 0
@@ -551,8 +551,8 @@ MonoBehaviour:
       colorIndex: 0
       position:
         serializedVersion: 2
-        x: 662.8047
-        y: 553.1953
+        x: 653.58594
+        y: 547.9219
         width: 137
         height: 48
       isBreakpoint: 0
@@ -578,25 +578,15 @@ MonoBehaviour:
       actionData:
         actionNames:
         - HutongGames.PlayMaker.Actions.HasComponent
-        - HutongGames.PlayMaker.Actions.HasComponent
         customNames:
         - 
-        - 
-        actionEnabled: 0001
-        actionIsOpen: 0001
-        actionStartIndex: 0000000007000000
-        actionHashCodes: d9574a02d9574a02
+        actionEnabled: 01
+        actionIsOpen: 01
+        actionStartIndex: 00000000
+        actionHashCodes: d9574a02
         unityObjectParams: []
         fsmGameObjectParams: []
         fsmOwnerDefaultParams:
-        - ownerOption: 1
-          gameObject:
-            useVariable: 1
-            name: collider
-            tooltip: 
-            showInInspector: 0
-            networkSync: 0
-            value: {fileID: 0}
         - ownerOption: 1
           gameObject:
             useVariable: 1
@@ -612,12 +602,6 @@ MonoBehaviour:
         fsmPropertyParams: []
         layoutOptionParams: []
         fsmStringParams:
-        - useVariable: 0
-          name: 
-          tooltip: 
-          showInInspector: 0
-          networkSync: 0
-          value: PSmash.Combat.PlayerGuard
         - useVariable: 0
           name: 
           tooltip: 
@@ -643,34 +627,20 @@ MonoBehaviour:
           showInInspector: 0
           networkSync: 0
           value: 0
-        - useVariable: 0
-          name: 
-          tooltip: 
-          showInInspector: 0
-          networkSync: 0
-          value: 0
-        - useVariable: 1
-          name: 
-          tooltip: 
-          showInInspector: 0
-          networkSync: 0
-          value: 0
         fsmVector2Params: []
         fsmVector3Params: []
         fsmColorParams: []
         fsmRectParams: []
         fsmQuaternionParams: []
         stringParams:
-        - ISPLAYERGUARD
-        - 
         - ISPLAYERHEALTH
         - 
-        byteData: 0000
+        byteData: 00
         arrayParamSizes: 
         arrayParamTypes: []
         customTypeSizes: 
         customTypeNames: []
-        paramDataType: 1400000012000000110000001700000017000000110000000100000014000000120000001100000017000000170000001100000001000000
+        paramDataType: 14000000120000001100000017000000170000001100000001000000
         paramName:
         - gameObject
         - component
@@ -679,15 +649,8 @@ MonoBehaviour:
         - falseEvent
         - store
         - everyFrame
-        - gameObject
-        - component
-        - removeOnExit
-        - trueEvent
-        - falseEvent
-        - store
-        - everyFrame
-        paramDataPos: 0000000000000000000000000000000001000000010000000000000001000000010000000200000002000000030000000300000001000000
-        paramByteDataSize: 0000000000000000000000000000000000000000000000000100000000000000000000000000000000000000000000000000000001000000
+        paramDataPos: 00000000000000000000000000000000010000000100000000000000
+        paramByteDataSize: 00000000000000000000000000000000000000000000000001000000
     - name: Set To Null Hit Collider
       description: 
       colorIndex: 0
@@ -1859,8 +1822,8 @@ MonoBehaviour:
       colorIndex: 0
       position:
         serializedVersion: 2
-        x: 497.9297
-        y: 526.64844
+        x: 651.8672
+        y: 629.27344
         width: 100
         height: 32
       isBreakpoint: 0
@@ -1871,7 +1834,7 @@ MonoBehaviour:
           name: FINISHED
           isSystemEvent: 1
           isGlobal: 0
-        toState: Listener
+        toState: State 2
         linkStyle: 0
         linkConstraint: 0
         colorIndex: 0
@@ -1879,15 +1842,13 @@ MonoBehaviour:
         actionNames:
         - HutongGames.PlayMaker.Actions.GetComponent
         - HutongGames.PlayMaker.Actions.CallMethod
-        - HutongGames.PlayMaker.Actions.CallMethod
         customNames:
         - 
         - 
-        - 
-        actionEnabled: 010101
-        actionIsOpen: 010101
-        actionStartIndex: 00000000030000000a000000
-        actionHashCodes: 04d81402ca51e900ca51e900
+        actionEnabled: 0101
+        actionIsOpen: 0101
+        actionStartIndex: 0000000003000000
+        actionHashCodes: 04d81402ca51e900
         unityObjectParams: []
         fsmGameObjectParams: []
         fsmOwnerDefaultParams:
@@ -1912,12 +1873,6 @@ MonoBehaviour:
           showInInspector: 0
           networkSync: 0
           value: GetStat
-        - useVariable: 0
-          name: 
-          tooltip: 
-          showInInspector: 0
-          networkSync: 0
-          value: TakeDamage
         fsmObjectParams:
         - useVariable: 1
           name: playerHealth
@@ -1932,13 +1887,6 @@ MonoBehaviour:
           showInInspector: 0
           networkSync: 0
           typeName: PSmash.Stats.BaseStats
-          value: {fileID: 0}
-        - useVariable: 1
-          name: playerHealth
-          tooltip: 
-          showInInspector: 0
-          networkSync: 0
-          typeName: PSmash.Attributes.PlayerHealth
           value: {fileID: 0}
         fsmVarParams:
         - variableName: attackStat
@@ -1989,6 +1937,92 @@ MonoBehaviour:
             stringValues: []
             vector4Values: []
             objectReferences: []
+        fsmArrayParams: []
+        fsmEnumParams: []
+        fsmFloatParams: []
+        fsmIntParams: []
+        fsmBoolParams: []
+        fsmVector2Params: []
+        fsmVector3Params: []
+        fsmColorParams: []
+        fsmRectParams: []
+        fsmQuaternionParams: []
+        stringParams: []
+        byteData: 000000
+        arrayParamSizes: 01000000
+        arrayParamTypes:
+        - HutongGames.PlayMaker.FsmVar
+        customTypeSizes: 
+        customTypeNames: []
+        paramDataType: 14000000180000000100000018000000120000000c00000027000000270000000100000001000000
+        paramName:
+        - gameObject
+        - storeComponent
+        - everyFrame
+        - behaviour
+        - methodName
+        - parameters
+        - 
+        - storeResult
+        - everyFrame
+        - manualUI
+        paramDataPos: 00000000000000000000000001000000000000000000000000000000010000000100000002000000
+        paramByteDataSize: 00000000000000000100000000000000000000000000000000000000000000000100000001000000
+    - name: State 2
+      description: 
+      colorIndex: 0
+      position:
+        serializedVersion: 2
+        x: 500.71094
+        y: 630.2422
+        width: 100
+        height: 32
+      isBreakpoint: 0
+      isSequence: 0
+      hideUnused: 0
+      transitions:
+      - fsmEvent:
+          name: FINISHED
+          isSystemEvent: 1
+          isGlobal: 0
+        toState: Listener
+        linkStyle: 0
+        linkConstraint: 0
+        colorIndex: 0
+      actionData:
+        actionNames:
+        - HutongGames.PlayMaker.Actions.CallMethod
+        customNames:
+        - 
+        actionEnabled: 01
+        actionIsOpen: 01
+        actionStartIndex: 00000000
+        actionHashCodes: ca51e900
+        unityObjectParams: []
+        fsmGameObjectParams: []
+        fsmOwnerDefaultParams: []
+        animationCurveParams: []
+        functionCallParams: []
+        fsmTemplateControlParams: []
+        fsmEventTargetParams: []
+        fsmPropertyParams: []
+        layoutOptionParams: []
+        fsmStringParams:
+        - useVariable: 0
+          name: 
+          tooltip: 
+          showInInspector: 0
+          networkSync: 0
+          value: TakeDamage
+        fsmObjectParams:
+        - useVariable: 1
+          name: playerHealth
+          tooltip: 
+          showInInspector: 0
+          networkSync: 0
+          typeName: PSmash.Attributes.PlayerHealth
+          value: {fileID: 0}
+        fsmVarParams:
         - variableName: transform
           objectType: UnityEngine.Transform
           useVariable: 1
@@ -2086,6 +2120,30 @@ MonoBehaviour:
             vector4Values: []
             objectReferences: []
         - variableName: 
+          objectType: UnityEngine.Object
+          useVariable: 0
+          type: 0
+          floatValue: 4
+          intValue: 0
+          boolValue: 0
+          stringValue: 
+          vector4Value: {x: 0, y: 0, z: 0, w: 0}
+          objectReference: {fileID: 0}
+          arrayValue:
+            useVariable: 0
+            name: 
+            tooltip: 
+            showInInspector: 0
+            networkSync: 0
+            type: -1
+            objectTypeName: 
+            floatValues: []
+            intValues: 
+            boolValues: 
+            stringValues: []
+            vector4Values: []
+            objectReferences: []
+        - variableName: 
           objectType: 
           useVariable: 0
           type: -1
@@ -2120,25 +2178,14 @@ MonoBehaviour:
         fsmRectParams: []
         fsmQuaternionParams: []
         stringParams: []
-        byteData: 0000000000
-        arrayParamSizes: 0100000004000000
+        byteData: 0000
+        arrayParamSizes: 05000000
         arrayParamTypes:
-        - HutongGames.PlayMaker.FsmVar
         - HutongGames.PlayMaker.FsmVar
         customTypeSizes: 
         customTypeNames: []
-        paramDataType: 14000000180000000100000018000000120000000c0000002700000027000000010000000100000018000000120000000c00000027000000270000002700000027000000270000000100000001000000
+        paramDataType: 18000000120000000c0000002700000027000000270000002700000027000000270000000100000001000000
         paramName:
-        - gameObject
-        - storeComponent
-        - everyFrame
-        - behaviour
-        - methodName
-        - parameters
-        - 
-        - storeResult
-        - everyFrame
-        - manualUI
         - behaviour
         - methodName
         - parameters
@@ -2146,11 +2193,12 @@ MonoBehaviour:
         - 
         - 
         - 
+        - 
         - storeResult
         - everyFrame
         - manualUI
-        paramDataPos: 0000000000000000000000000100000000000000000000000000000001000000010000000200000002000000010000000100000002000000030000000400000005000000060000000300000004000000
-        paramByteDataSize: 0000000000000000010000000000000000000000000000000000000000000000010000000100000000000000000000000000000000000000000000000000000000000000000000000100000001000000
+        paramDataPos: 0000000000000000000000000000000001000000020000000300000004000000050000000000000001000000
+        paramByteDataSize: 0000000000000000000000000000000000000000000000000000000000000000000000000100000001000000
     events:
     - name: FINISHED
       isSystemEvent: 1
@@ -2337,7 +2385,7 @@ MonoBehaviour:
         tooltip: 
         showInInspector: 0
         networkSync: 0
-        typeName: UnityEngine.Object
+        typeName: 
         value: {fileID: 0}
       - useVariable: 1
         name: 

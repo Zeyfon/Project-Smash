@@ -20,7 +20,7 @@ namespace PSmash.Items
         [SerializeField] AudioClip destroyedClip = null;
         [SerializeField] AudioClip damagedClip = null;
 
-        public void TakeDamage(Transform attacker, Weapon weapon, AttackType attackType, float damage)
+        public void TakeDamage(Transform attacker, Weapon weapon, AttackType attackType, float damage, float attackForce)
         {
             audioSource.PlayOneShot(damagedClip);
             if (weapon == this.weaknessWeapon)

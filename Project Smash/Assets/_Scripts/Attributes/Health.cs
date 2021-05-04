@@ -20,7 +20,7 @@ namespace PSmash.Attributes
         {
 
         }
-        public virtual void TakeDamage(Transform attacker, Weapon weapon, AttackType attackType, float damage)
+        public virtual void TakeDamage(Transform attacker, Weapon weapon, AttackType attackType, float damage, float attackForce)
         {
             //Used by child class
         }

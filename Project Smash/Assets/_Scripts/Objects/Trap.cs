@@ -23,7 +23,7 @@ namespace PSmash.Items.Traps
             if (collision.collider.CompareTag("Player"))
             {
                 IDamagable target = collision.collider.GetComponent<IDamagable>();
-                target.TakeDamage(transform, weapon, AttackType.NotUnblockable, damage);
+                target.TakeDamage(transform, weapon, AttackType.NotUnblockable, damage, 0);
                 StartCoroutine(ReturnPlayerToLastPosition(collision.transform));
             }
             if (collision.collider.CompareTag("Enemy"))

@@ -22,6 +22,7 @@ namespace PSmash.Items
         [SerializeField] AudioClip impactAudio = null;
         [SerializeField] ParticleSystem dust = null;
         [SerializeField] float damage = 100;
+        [SerializeField] float attackForce = 30;
 
         float direction;
         float timer = 0;
@@ -36,7 +37,7 @@ namespace PSmash.Items
             initialPosition = transform.position;
         }
 
-        public void TakeDamage(Transform attacker, Weapon weapon, AttackType attackType, float damage)
+        public void TakeDamage(Transform attacker, Weapon weapon, AttackType attackType, float damage, float attackForce)
         {
             if (weapon == interactiveWeapon)
             {
@@ -140,7 +141,7 @@ namespace PSmash.Items
         {
             if (isMoving && collision.CompareTag("Enemy"))
             {
-                collision.GetComponent<IDamagable>().TakeDamage(transform, interactiveWeapon, AttackType.NotUnblockable, damage);
+                collision.GetComponent<IDamagable>().TakeDamage(transform, interactiveWeapon, AttackType.NotUnblockable, damage, attackForce);
             }
         }
 

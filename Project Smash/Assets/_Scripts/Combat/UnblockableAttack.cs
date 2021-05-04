@@ -19,6 +19,7 @@ namespace PSmash.Combat
         [Header("Special Attack")]
         [Tooltip("This factor will multiply the base speed the entity has")]
         [SerializeField] float specialAttackSpeedFactor = 6;
+        [SerializeField] float specialAttackSpeedFactor2 = 4;
 
         [Header("Color Tint")]
         [SerializeField] Material defaultMaterial = null;
@@ -97,10 +98,14 @@ namespace PSmash.Combat
         /// This region of the script will have everything related to the performance of the attack
         /// </summary>
         //AnimEvent 
-        void StartSpecialAttackImpulse()
+        void StartSpecialAttackImpulse(int hitNumber)
         {
-            //print("StartSpecial Attack Impulse");
-            GetComponent<EnemyMovement>().SpecialAttackImpulse_Start(specialAttackSpeedFactor);
+            if(hitNumber == 1)   
+                GetComponent<EnemyMovement>().SpecialAttackImpulse_Start(specialAttackSpeedFactor);
+            else if(hitNumber == 2)
+            {
+                GetComponent<EnemyMovement>().SpecialAttackImpulse_Start(specialAttackSpeedFactor2);
+            }
         }
 
         public void SetUnblockableAttackData()
