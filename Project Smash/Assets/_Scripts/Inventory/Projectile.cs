@@ -180,6 +180,10 @@ namespace PSmash.Inventories
             Destroy(gameObject);
         }
 
+        public void InstantDestroy()
+        {
+            Destroy(gameObject, 0.1f);
+        }
 
         ////////////////////////////////////////////////////////////////////////COLLISION////////////////////////////////////////////////////////////
         void OnTriggerEnter2D(Collider2D collision)

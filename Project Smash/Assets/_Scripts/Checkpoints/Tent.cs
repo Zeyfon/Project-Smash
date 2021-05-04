@@ -1,4 +1,5 @@
 ﻿using PSmash.Core;
+using PSmash.Inventories;
 using PSmash.SceneManagement;
 using System;
 using System.Collections;
@@ -37,11 +38,20 @@ namespace PSmash.Checkpoints
         IEnumerator CheckpointReset()
         {
             checkpointCounter++;
-            GameObject sceneManager =  GameObject.FindGameObjectWithTag("SceneManager");
+            GameObject sceneManager = GameObject.FindGameObjectWithTag("SceneManager");
+            DestroyAllDamagingObjects();
             yield return sceneManager.GetComponent<ResetDestructibleObjects>().ResetDestructibleObjects_CR();
             yield return sceneManager.GetComponent<EnemiesReset>().ResetEnemies();
             yield return sceneManager.GetComponent<EnvironmentObjectsManager>().ResetEnvironmentalObjects();
             FindObjectOfType<SavingWrapper>().Save();
+        }
+
+        private static void DestroyAllDamagingObjects()
+        {
+            foreach (Projectile projectile in FindObjectsOfType<Projectile>())
+            {
+                projectile.InstantDestroy();
+            }
         }
     }
 
