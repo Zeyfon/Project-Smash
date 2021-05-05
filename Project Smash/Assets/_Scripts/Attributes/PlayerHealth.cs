@@ -65,7 +65,7 @@ namespace PSmash.Attributes
         /// <param name="weapon"></param>
         /// <param name="attackType"></param>
         /// <param name="damage"></param>
-        public override void TakeDamage(Transform attacker, Weapon weapon, AttackType attackType, float damage)
+        public override void TakeDamage(Transform attacker, Weapon weapon, AttackType attackType, float damage, float attackForce)
         {
             if (isDead) 
                 return;

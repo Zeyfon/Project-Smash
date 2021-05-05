@@ -38,7 +38,7 @@ namespace PSmash.Items
 
         int counter = 0;
 
-        public void TakeDamage(Transform attacker, Weapon weapon, AttackType attackType, float damage)
+        public void TakeDamage(Transform attacker, Weapon weapon, AttackType attackType, float damage, float attackForce)
         {
             counter++;
             if (counter > hitsToDestroy)

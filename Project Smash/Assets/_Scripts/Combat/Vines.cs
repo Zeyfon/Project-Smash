@@ -12,7 +12,7 @@ namespace PSmash.Tools
         [SerializeField] Weapon weaknessWeapon = null;
         [SerializeField] AudioSource noDamageAudio = null;
         [SerializeField] AudioSource damageAudio = null;
-        public void TakeDamage(Transform attacker, Weapon weapon, AttackType attackType, float damage)
+        public void TakeDamage(Transform attacker, Weapon weapon, AttackType attackType, float damage, float attackForce)
         {
             print("Attacker  " + attacker + "  weapon   " + weapon + "  damage  " + damage);
             if(weapon == weaknessWeapon)

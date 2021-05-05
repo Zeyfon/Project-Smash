@@ -102,12 +102,12 @@ namespace PSmash.Movement
             return canWalkOnSlope;
         }
 
-        public Vector2 GetSlopeNormalPerp(Vector2 checkPos, Vector2 transformRight, float slopeCheckDistance, float maxSlopeAngle, LayerMask whatIsGround)
+        public Vector2 GetSlopeNormalPerp(Vector2 checkPos, Vector2 direction, float slopeCheckDistance, float maxSlopeAngle, LayerMask whatIsGround)
         {
             RaycastHit2D hit = Physics2D.Raycast(checkPos + new Vector2(0, .2f), Vector2.down, slopeCheckDistance, whatIsGround);
             if (hit)
             {
-                Vector2 slopeNormalPerp = Vector2.Perpendicular(hit.normal).normalized * transformRight.x;
+                Vector2 slopeNormalPerp = Vector2.Perpendicular(hit.normal).normalized * direction.x;
                 return slopeNormalPerp;
             }
             return new Vector2(0, 0);

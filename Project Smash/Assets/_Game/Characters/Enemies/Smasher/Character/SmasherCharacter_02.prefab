@@ -1535,6 +1535,30 @@ MonoBehaviour:
             vector4Values: []
             objectReferences: []
         - variableName: 
+          objectType: UnityEngine.Object
+          useVariable: 0
+          type: 0
+          floatValue: 3
+          intValue: 0
+          boolValue: 0
+          stringValue: 
+          vector4Value: {x: 0, y: 0, z: 0, w: 0}
+          objectReference: {fileID: 0}
+          arrayValue:
+            useVariable: 0
+            name: 
+            tooltip: 
+            showInInspector: 0
+            networkSync: 0
+            type: -1
+            objectTypeName: 
+            floatValues: []
+            intValues: 
+            boolValues: 
+            stringValues: []
+            vector4Values: []
+            objectReferences: []
+        - variableName: 
           objectType: 
           useVariable: 0
           type: -1
@@ -1570,13 +1594,13 @@ MonoBehaviour:
         fsmQuaternionParams: []
         stringParams: []
         byteData: 0000000000
-        arrayParamSizes: 0100000004000000
+        arrayParamSizes: 0100000005000000
         arrayParamTypes:
         - HutongGames.PlayMaker.FsmVar
         - HutongGames.PlayMaker.FsmVar
         customTypeSizes: 
         customTypeNames: []
-        paramDataType: 14000000180000000100000018000000120000000c0000002700000027000000010000000100000018000000120000000c00000027000000270000002700000027000000270000000100000001000000
+        paramDataType: 14000000180000000100000018000000120000000c0000002700000027000000010000000100000018000000120000000c0000002700000027000000270000002700000027000000270000000100000001000000
         paramName:
         - gameObject
         - storeComponent
@@ -1595,11 +1619,12 @@ MonoBehaviour:
         - 
         - 
         - 
+        - 
         - storeResult
         - everyFrame
         - manualUI
-        paramDataPos: 0000000000000000000000000100000000000000000000000000000001000000010000000200000002000000010000000100000002000000030000000400000005000000060000000300000004000000
-        paramByteDataSize: 0000000000000000010000000000000000000000000000000000000000000000010000000100000000000000000000000000000000000000000000000000000000000000000000000100000001000000
+        paramDataPos: 000000000000000000000000010000000000000000000000000000000100000001000000020000000200000001000000010000000200000003000000040000000500000006000000070000000300000004000000
+        paramByteDataSize: 000000000000000001000000000000000000000000000000000000000000000001000000010000000000000000000000000000000000000000000000000000000000000000000000000000000100000001000000
     - name: Set Linear Drag
       description: 
       colorIndex: 0
@@ -3427,6 +3452,30 @@ MonoBehaviour:
             vector4Values: []
             objectReferences: []
         - variableName: 
+          objectType: UnityEngine.Object
+          useVariable: 0
+          type: 0
+          floatValue: 2
+          intValue: 0
+          boolValue: 0
+          stringValue: 
+          vector4Value: {x: 0, y: 0, z: 0, w: 0}
+          objectReference: {fileID: 0}
+          arrayValue:
+            useVariable: 0
+            name: 
+            tooltip: 
+            showInInspector: 0
+            networkSync: 0
+            type: -1
+            objectTypeName: 
+            floatValues: []
+            intValues: 
+            boolValues: 
+            stringValues: []
+            vector4Values: []
+            objectReferences: []
+        - variableName: 
           objectType: 
           useVariable: 0
           type: -1
@@ -3462,13 +3511,13 @@ MonoBehaviour:
         fsmQuaternionParams: []
         stringParams: []
         byteData: 0000000000
-        arrayParamSizes: 0100000004000000
+        arrayParamSizes: 0100000005000000
         arrayParamTypes:
         - HutongGames.PlayMaker.FsmVar
         - HutongGames.PlayMaker.FsmVar
         customTypeSizes: 
         customTypeNames: []
-        paramDataType: 14000000180000000100000018000000120000000c0000002700000027000000010000000100000018000000120000000c00000027000000270000002700000027000000270000000100000001000000
+        paramDataType: 14000000180000000100000018000000120000000c0000002700000027000000010000000100000018000000120000000c0000002700000027000000270000002700000027000000270000000100000001000000
         paramName:
         - gameObject
         - storeComponent
@@ -3487,11 +3536,12 @@ MonoBehaviour:
         - 
         - 
         - 
+        - 
         - storeResult
         - everyFrame
         - manualUI
-        paramDataPos: 0000000000000000000000000100000000000000000000000000000001000000010000000200000002000000010000000100000002000000030000000400000005000000060000000300000004000000
-        paramByteDataSize: 0000000000000000010000000000000000000000000000000000000000000000010000000100000000000000000000000000000000000000000000000000000000000000000000000100000001000000
+        paramDataPos: 000000000000000000000000010000000000000000000000000000000100000001000000020000000200000001000000010000000200000003000000040000000500000006000000070000000300000004000000
+        paramByteDataSize: 000000000000000001000000000000000000000000000000000000000000000001000000010000000000000000000000000000000000000000000000000000000000000000000000000000000100000001000000
     - name: Audio2
       description: 
       colorIndex: 4
@@ -4580,7 +4630,7 @@ MonoBehaviour:
     locked: 0
     manualUpdate: 0
     keepDelayedEventsOnStateExit: 0
-    preprocessed: 1
+    preprocessed: 0
     ExposedEvents: []
     RestartOnEnable: 1
     EnableDebugFlow: 0
@@ -4606,7 +4656,7 @@ MonoBehaviour:
     handleJointBreak: 0
     handleJointBreak2D: 0
     handleOnGUI: 0
-    handleFixedUpdate: 0
+    handleFixedUpdate: 1
     handleLateUpdate: 0
     handleApplicationEvents: 0
     handleUiEvents: 0
@@ -12188,7 +12238,8 @@ MonoBehaviour:
   whatIsEnemy:
     serializedVersion: 2
     m_Bits: 2048
-  specialAttackSpeedFactor: 2
+  specialAttackSpeedFactor: 2.2
+  specialAttackSpeedFactor2: 2
   defaultMaterial: {fileID: 2100000, guid: cb7f5b2c821dd1949a44c3a976d153e4, type: 2}
   redTintMaterial: {fileID: 2100000, guid: 8fc20065ec3045f43aaec2522ff212ca, type: 2}
   addedMaterial: {fileID: 0}

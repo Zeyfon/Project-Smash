@@ -42,6 +42,7 @@ namespace PSmash.Movement
         Coroutine coroutine;
 
         int test = 0;
+        bool isMovementInterruption = false;
 
         // Start is called before the first frame update
         void Awake()
@@ -103,41 +104,74 @@ namespace PSmash.Movement
             }
             else if (isGrounded)
             {
-                if (CanMove())
+                if (!isMovementInterruption)
                 {
-                    SlopeControl slope = new SlopeControl();
-                    //print("Is Grounded and can move");
-                    if (slope.IsOnSlope(transform.position, transform.right, slopeCheckDistance, whatIsGround))
+                    if (CanMove())
                     {
-                        //print("Is In Slope");
-                        if (slope.CanWalkOnSlope(transform.position, transform.right, slopeCheckDistance, maxSlopeAngle, whatIsGround))
+                        SlopeControl slope = new SlopeControl();
+                        //print("Is Grounded and can move");
+                        if (slope.IsOnSlope(transform.position, transform.right, slopeCheckDistance, whatIsGround))
                         {
-                            //print("Is Moving");
-                            Move(slope.GetSlopeNormalPerp(transform.position, transform.right, slopeCheckDistance, maxSlopeAngle, whatIsGround), speedFactor);
+                            //print("Is In Slope");
+                            if (slope.CanWalkOnSlope(transform.position, transform.right, slopeCheckDistance, maxSlopeAngle, whatIsGround))
+                            {
+                                //print("Is Moving");
+                                Move(slope.GetSlopeNormalPerp(transform.position, transform.right, slopeCheckDistance, maxSlopeAngle, whatIsGround), speedFactor);
+                            }
+                            else
+                            {
+                                //print("Is Not Moving");
+                                StayStill();
+                            }
                         }
                         else
                         {
-                            //print("Is Not Moving");
-                            DoNotMove();
+                            //print("IsMoving");
+                            Move(slope.GetSlopeNormalPerp(transform.position, transform.right, slopeCheckDistance, maxSlopeAngle, whatIsGround), speedFactor);
                         }
                     }
                     else
                     {
-                        //print("IsMoving");
-                        Move(slope.GetSlopeNormalPerp(transform.position, transform.right, slopeCheckDistance, maxSlopeAngle, whatIsGround), speedFactor);
+                        //print("Is Not Moving");
+                        StayStill();
                     }
                 }
                 else
                 {
-                    //print("Is Not Moving");
-                    DoNotMove();
+                    //DoNothing();
+                    //Let the Physics Engine takes control by itself
                 }
+
             }
             else
             {
                 Debug.LogWarning(gameObject.name + "  does not what to do in MoveTo Method ");
                 rb.velocity = new Vector2(0, rb.velocity.y);
             }
+        }
+
+        public void ApplyAttackImpactReceived(Transform attacker, float attackForce)
+        {
+
+            StartCoroutine(ApplyAttackImpactReceived_CR(attacker,attackForce));
+        }
+
+        IEnumerator ApplyAttackImpactReceived_CR(Transform attacker, float attackForce)
+        {
+            print("Force applyied to " + gameObject.name);
+            isMovementInterruption = true;
+            Vector2 attackDireciton = transform.position - attacker.position;
+            float timer = 0;
+            SlopeControl slope = new SlopeControl();
+            float speedFactor = attackForce / baseSpeed;
+            while (timer < 1f)
+            {
+                timer += Time.fixedDeltaTime;
+                print(timer);
+                Move(slope.GetSlopeNormalPerp(transform.position, attackDireciton, slopeCheckDistance, maxSlopeAngle, whatIsGround), speedFactor);
+                yield return new WaitForFixedUpdate();
+            }
+            isMovementInterruption = false;
         }
 
         /// <summary>
@@ -173,7 +207,7 @@ namespace PSmash.Movement
             }
             //print("Post velocity " + rb.velocity);
         }
-        void DoNotMove()
+        void StayStill()
         {
             //print("Not Moving");
                 rb.sharedMaterial = fullFriction;

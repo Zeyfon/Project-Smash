@@ -37,6 +37,7 @@ namespace PSmash.Inventories
 
         [Header("Weapon")]
         [SerializeField] Weapon weapon;
+        [SerializeField] float attackForce = 10;
 
         //STATE
         Transform parabolicMovementTarget;
@@ -61,12 +62,7 @@ namespace PSmash.Inventories
 
         /////////////////////////////////////////////////////////////////////PUBLIC///////////////////////////////////////////////////////
 
-        //public void SetWeapon(Weapon weapon)
-        //{
-        //    this.weapon = weapon;
-        //}
-
-        public void TakeDamage(Transform attacker, Weapon weapon, AttackType attackType, float damage)
+        public void TakeDamage(Transform attacker, Weapon weapon, AttackType attackType, float damage, float attackForce)
         {
             //print("Received the parry "  + hasHit);
             timer = 0;
@@ -153,7 +149,7 @@ namespace PSmash.Inventories
             if (target != null)
             {
                 float damage = owner.GetComponent<BaseStats>().GetStat(StatsList.Attack);
-                target.TakeDamage(transform, weapon, AttackType.NotUnblockable, damage);
+                target.TakeDamage(transform, weapon, AttackType.NotUnblockable, damage, attackForce);
             }
         }
 

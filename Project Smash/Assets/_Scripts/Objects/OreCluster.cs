@@ -13,7 +13,7 @@ namespace PSmash.Items
         [SerializeField] AudioSource audioSource = null;
         [SerializeField] AudioClip damageSound = null;
         [SerializeField] GameObject drop = null;
-        public void TakeDamage(Transform attacker, Weapon weapon, AttackType attackType, float damage)
+        public void TakeDamage(Transform attacker, Weapon weapon, AttackType attackType, float damage, float attackForce)
         {
             print("Ore Damaged");
             health -= damage;
