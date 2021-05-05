@@ -233,6 +233,7 @@ namespace PSmash.Attributes
         // have been correctly positioned for the animation to run
         public void StartFinisherAnimation()
         {
+            //Debug.Break();
             pm.SendEvent("STARTFINISHERANIMATION");
         }
 

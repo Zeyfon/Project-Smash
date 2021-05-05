@@ -100,6 +100,7 @@ namespace PSmash.Combat
         //AnimEvent 
         void StartSpecialAttackImpulse(int hitNumber)
         {
+            print("Start Special Attack Impulse");
             if(hitNumber == 1)   
                 GetComponent<EnemyMovement>().SpecialAttackImpulse_Start(specialAttackSpeedFactor);
             else if(hitNumber == 2)
@@ -116,7 +117,7 @@ namespace PSmash.Combat
         //This method can be called via Anim Event and via SpecialAttack State in the PlayMaker
         public void StopSpecialAttackImpulse()
         {
-            //print("Stop Special Attack Impulse");
+            print("Stop Special Attack Impulse");
             GetComponent<EnemyMovement>().SpecialAttackImpulse_Stop();
             ReturnToOriginalTint();
             GetComponent<Rigidbody2D>().drag = currentDrag;
