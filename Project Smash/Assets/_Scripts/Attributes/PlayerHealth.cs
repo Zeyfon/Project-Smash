@@ -88,7 +88,11 @@ namespace PSmash.Attributes
                 coroutine = StartCoroutine(DamageEffects());
                 StartCoroutine(ControlReset());
             }
-            onTakeDamage.Invoke(damage);
+            DamageSlot slot = new DamageSlot();
+            slot.damage = damage;
+            slot.damageType = DamageType.Health;
+            slot.criticalType = CriticalType.NoCritical;
+            onTakeDamage.Invoke(slot);
             onDamaged();
         }
 

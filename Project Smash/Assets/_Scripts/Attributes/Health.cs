@@ -15,8 +15,25 @@ namespace PSmash.Attributes
         protected bool isDead = false;
         //protected int initialHealth;
 
+        public enum CriticalType
+        {
+            Critical, NoCritical
+        }
+
+        public enum DamageType
+        {
+            Posture,Health
+        }
+
+        public class DamageSlot
+        {
+            public float damage;
+            public DamageType damageType;
+            public CriticalType criticalType;
+        }
+
         [System.Serializable]
-        public class TakeDamageEvent : UnityEvent<float>
+        public class TakeDamageEvent : UnityEvent<DamageSlot>
         {
 
         }
