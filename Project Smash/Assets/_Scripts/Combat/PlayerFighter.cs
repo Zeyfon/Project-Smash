@@ -169,7 +169,7 @@ namespace PSmash.Combat
 
         #region ComboAttack
         //Anim Event
-        void LightAttackDamage()
+        void AttackDamage(int index)
         {
             //print("NormalAttack");
             Vector2 attackArea = new Vector2(1.9f, 1.6f);
@@ -180,12 +180,12 @@ namespace PSmash.Combat
         /// AnimEvent for Attacks
         /// </summary>
         /// <returns></returns>
-        void AttackImpulse()
+        void AttackImpulse(int index)
         {
             GetComponent<PlayerMovement>().MovementImpulse(attackImpulse);
         }
 
-        void LightAttackSound()
+        void AttackSound(int index)
         {
             audioSource.pitch = UnityEngine.Random.Range(0.75f, 1.1f);
             audioSource.PlayOneShot(attackSound);
@@ -193,10 +193,10 @@ namespace PSmash.Combat
 
         #endregion
 
-        #region ToolAttack
+        #region SubWeaponAttack
 
         //Anim Event
-        void SubweaponAttack()
+        void SubWeaponAttackDamage()
         {
             //print("ToolAttack");
             Vector2 attackArea = new Vector2(2.5f, 1.75f);
@@ -204,10 +204,14 @@ namespace PSmash.Combat
         }
 
         //AnimEvent
-        void SbuweaponAttackSound()
+        void SubWeaponAttackSound(int index)
         {
-            audioSource.pitch = UnityEngine.Random.Range(0.75f, 1.1f);
-            audioSource.PlayOneShot(toolAttackSound);
+            if(index == 1)
+            {
+                audioSource.pitch = UnityEngine.Random.Range(0.75f, 1.1f);
+                audioSource.PlayOneShot(toolAttackSound);
+            }
+
         }
 
         #endregion

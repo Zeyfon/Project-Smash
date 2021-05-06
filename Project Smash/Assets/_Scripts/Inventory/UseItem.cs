@@ -31,7 +31,10 @@ namespace PSmash.Inventories
                 return;
             }
 
-            TintPlayerGreen();
+            if(slot.item.GetDisplayName() == "Potions")
+            {
+                TintPlayerGreen();
+            }
             //print("Spawning Item");
             audioSource.clip = slot.item.GetAudioClip();
             audioSource.Play();

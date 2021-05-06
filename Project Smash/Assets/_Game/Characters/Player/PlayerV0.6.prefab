@@ -1724,7 +1724,7 @@ Animator:
   m_GameObject: {fileID: 6581303975160096547}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 79c440de4bcd34e449d82718ae59637b, type: 2}
+  m_Controller: {fileID: 9100000, guid: 82f0e2480d0ab3f4dbb8322c5915ab2f, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 1
   m_ApplyRootMotion: 0
@@ -3223,7 +3223,7 @@ MonoBehaviour:
     locked: 0
     manualUpdate: 0
     keepDelayedEventsOnStateExit: 0
-    preprocessed: 1
+    preprocessed: 0
     ExposedEvents: []
     RestartOnEnable: 1
     EnableDebugFlow: 0
@@ -4601,7 +4601,7 @@ MonoBehaviour:
     locked: 0
     manualUpdate: 0
     keepDelayedEventsOnStateExit: 0
-    preprocessed: 1
+    preprocessed: 0
     ExposedEvents: []
     RestartOnEnable: 1
     EnableDebugFlow: 0
@@ -4627,7 +4627,7 @@ MonoBehaviour:
     handleJointBreak: 0
     handleJointBreak2D: 0
     handleOnGUI: 0
-    handleFixedUpdate: 1
+    handleFixedUpdate: 0
     handleLateUpdate: 0
     handleApplicationEvents: 0
     handleUiEvents: 0
@@ -4648,7 +4648,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f9db98c60740638449864eb028fbe7ad, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  skeletonDataAsset: {fileID: 11400000, guid: 116bc25edfd23b045b7eb4b6210369c2, type: 2}
+  skeletonDataAsset: {fileID: 11400000, guid: 07b5129944e246f46ab2df680659ac66, type: 2}
   initialSkinName: 
   initialFlipX: 0
   initialFlipY: 0
@@ -5913,7 +5913,7 @@ MonoBehaviour:
     locked: 0
     manualUpdate: 0
     keepDelayedEventsOnStateExit: 0
-    preprocessed: 1
+    preprocessed: 0
     ExposedEvents: []
     RestartOnEnable: 1
     EnableDebugFlow: 0
@@ -5939,7 +5939,7 @@ MonoBehaviour:
     handleJointBreak: 0
     handleJointBreak2D: 0
     handleOnGUI: 0
-    handleFixedUpdate: 1
+    handleFixedUpdate: 0
     handleLateUpdate: 0
     handleApplicationEvents: 0
     handleUiEvents: 0
@@ -6707,7 +6707,7 @@ MonoBehaviour:
     locked: 0
     manualUpdate: 0
     keepDelayedEventsOnStateExit: 0
-    preprocessed: 1
+    preprocessed: 0
     ExposedEvents: []
     RestartOnEnable: 1
     EnableDebugFlow: 0
@@ -6759,6 +6759,7 @@ MonoBehaviour:
   parrySound: {fileID: 8300000, guid: 150d0370936b1024e9cfcf307fe6d58b, type: 3}
   guardSound: {fileID: 8300000, guid: 4f7340b1234407d489f3a16352cb1558, type: 3}
   parryTime: 1
+  parryAttackForce: 10
 --- !u!114 &1573666812580184509
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7438,7 +7439,7 @@ MonoBehaviour:
     locked: 0
     manualUpdate: 0
     keepDelayedEventsOnStateExit: 0
-    preprocessed: 1
+    preprocessed: 0
     ExposedEvents: []
     RestartOnEnable: 1
     EnableDebugFlow: 0
@@ -7952,7 +7953,7 @@ MonoBehaviour:
     locked: 0
     manualUpdate: 0
     keepDelayedEventsOnStateExit: 0
-    preprocessed: 1
+    preprocessed: 0
     ExposedEvents: []
     RestartOnEnable: 1
     EnableDebugFlow: 0
@@ -7978,7 +7979,7 @@ MonoBehaviour:
     handleJointBreak: 0
     handleJointBreak2D: 0
     handleOnGUI: 0
-    handleFixedUpdate: 1
+    handleFixedUpdate: 0
     handleLateUpdate: 0
     handleApplicationEvents: 0
     handleUiEvents: 0
@@ -10446,7 +10447,7 @@ MonoBehaviour:
     locked: 0
     manualUpdate: 0
     keepDelayedEventsOnStateExit: 0
-    preprocessed: 1
+    preprocessed: 0
     ExposedEvents: []
     RestartOnEnable: 1
     EnableDebugFlow: 0
@@ -10472,7 +10473,7 @@ MonoBehaviour:
     handleJointBreak: 0
     handleJointBreak2D: 0
     handleOnGUI: 0
-    handleFixedUpdate: 1
+    handleFixedUpdate: 0
     handleLateUpdate: 0
     handleApplicationEvents: 0
     handleUiEvents: 0
@@ -11555,7 +11556,7 @@ MonoBehaviour:
     locked: 0
     manualUpdate: 0
     keepDelayedEventsOnStateExit: 0
-    preprocessed: 1
+    preprocessed: 0
     ExposedEvents: []
     RestartOnEnable: 1
     EnableDebugFlow: 0
@@ -11581,7 +11582,7 @@ MonoBehaviour:
     handleJointBreak: 0
     handleJointBreak2D: 0
     handleOnGUI: 0
-    handleFixedUpdate: 1
+    handleFixedUpdate: 0
     handleLateUpdate: 0
     handleApplicationEvents: 0
     handleUiEvents: 0
@@ -12810,7 +12811,7 @@ MonoBehaviour:
     locked: 0
     manualUpdate: 0
     keepDelayedEventsOnStateExit: 0
-    preprocessed: 1
+    preprocessed: 0
     ExposedEvents: []
     RestartOnEnable: 1
     EnableDebugFlow: 0
@@ -12836,7 +12837,7 @@ MonoBehaviour:
     handleJointBreak: 0
     handleJointBreak2D: 0
     handleOnGUI: 0
-    handleFixedUpdate: 1
+    handleFixedUpdate: 0
     handleLateUpdate: 0
     handleApplicationEvents: 0
     handleUiEvents: 0
@@ -13074,7 +13075,7 @@ MonoBehaviour:
       hideUnused: 0
       transitions:
       - fsmEvent:
-          name: ROLLMOVEMEMENT
+          name: ROLLMOVEMENT
           isSystemEvent: 0
           isGlobal: 0
         toState: State 2
@@ -14563,19 +14564,13 @@ MonoBehaviour:
     - name: ATTACKBUTTONPRESSED
       isSystemEvent: 0
       isGlobal: 0
-    - name: JUMP
-      isSystemEvent: 0
-      isGlobal: 0
     - name: JUMPBUTTONPRESSED
       isSystemEvent: 0
       isGlobal: 0
     - name: NO
       isSystemEvent: 0
       isGlobal: 0
-    - name: NORMALATTACK
-      isSystemEvent: 0
-      isGlobal: 0
-    - name: ROLLMOVEMEMENT
+    - name: ROLLMOVEMENT
       isSystemEvent: 0
       isGlobal: 0
     - name: SUBWEAPONBUTTONPRESSED
@@ -14776,7 +14771,7 @@ MonoBehaviour:
     locked: 0
     manualUpdate: 0
     keepDelayedEventsOnStateExit: 0
-    preprocessed: 1
+    preprocessed: 0
     ExposedEvents: []
     RestartOnEnable: 1
     EnableDebugFlow: 0
@@ -14802,7 +14797,7 @@ MonoBehaviour:
     handleJointBreak: 0
     handleJointBreak2D: 0
     handleOnGUI: 0
-    handleFixedUpdate: 1
+    handleFixedUpdate: 0
     handleLateUpdate: 0
     handleApplicationEvents: 0
     handleUiEvents: 0
@@ -15717,7 +15712,7 @@ MonoBehaviour:
     locked: 0
     manualUpdate: 0
     keepDelayedEventsOnStateExit: 0
-    preprocessed: 1
+    preprocessed: 0
     ExposedEvents: []
     RestartOnEnable: 1
     EnableDebugFlow: 0
@@ -15766,7 +15761,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   spawner: {fileID: 5414759444693801845}
   audioSource: {fileID: 5182340456630765313}
-  defaultMaterial: {fileID: 2100000, guid: c22ffe1f6fffc4e42b403ee070e9e607, type: 2}
+  defaultMaterial: {fileID: 2100000, guid: 29d0c2cd4235415488c86aa75d7126da, type: 2}
   greenMaterial: {fileID: 2100000, guid: 6f3fd7a79f1f4bc44b1e51323f7c861e, type: 2}
 --- !u!114 &7620525308625398330
 MonoBehaviour:
@@ -16764,7 +16759,7 @@ MonoBehaviour:
     locked: 0
     manualUpdate: 0
     keepDelayedEventsOnStateExit: 0
-    preprocessed: 1
+    preprocessed: 0
     ExposedEvents: []
     RestartOnEnable: 1
     EnableDebugFlow: 0
@@ -16790,7 +16785,7 @@ MonoBehaviour:
     handleJointBreak: 0
     handleJointBreak2D: 0
     handleOnGUI: 0
-    handleFixedUpdate: 1
+    handleFixedUpdate: 0
     handleLateUpdate: 0
     handleApplicationEvents: 0
     handleUiEvents: 0
