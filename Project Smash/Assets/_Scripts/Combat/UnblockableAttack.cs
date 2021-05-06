@@ -119,7 +119,6 @@ namespace PSmash.Combat
         {
             print("Stop Special Attack Impulse");
             GetComponent<EnemyMovement>().SpecialAttackImpulse_Stop();
-            ReturnToOriginalTint();
             GetComponent<Rigidbody2D>().drag = currentDrag;
             //Debug.Break();
         }
