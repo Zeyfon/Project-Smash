@@ -14,8 +14,10 @@ namespace PSmash.UI.DamageText
         {
             transform.rotation = Quaternion.identity;
         }
-        public void SetDamagaeValue(float amount)
+        public void Setup(float amount, Color color, float sizeFactor)
         {
+            text.fontSize *= sizeFactor;
+            text.color = color;
             text.text = String.Format("{0:0}", amount);
         }
         void DestroyText()

@@ -92,23 +92,26 @@ namespace PSmash.Attributes
 
         void Damaged(Transform attacker, Weapon attackedWeapon, AttackType attackType, float damage)
         {
+            CriticalType criticalType;
             float healthDamage;
             float totalPenetrationPercentage;
             if (weaknessWeapon == attackedWeapon)
             {
                 healthDamage = (damage + attackedWeapon.damage) * weaknessFactor ;
                 totalPenetrationPercentage = damagePenetrationPercentage + attackedWeapon.damagePenetrationValue * weaknessFactor;
+                criticalType = CriticalType.Critical;
             }
             else
             {
                 healthDamage = (damage + attackedWeapon.damage);
                 totalPenetrationPercentage = damagePenetrationPercentage + attackedWeapon.damagePenetrationValue;
+                criticalType = CriticalType.NoCritical;
             }
 
             //armorDestroyed = false;
             //Unity Event to instantiate a object to show the damage in the screen
             if (posture != null && posture.enabled)
-            { 
+            {
                 float postureDamage;
                 if (weaknessWeapon == attackedWeapon)
                 {
@@ -119,12 +122,14 @@ namespace PSmash.Attributes
                 {
                     postureDamage = damage + attackedWeapon.damage;
                 }
+
                 posture.posture = posture.SubstractDamageFromPosture(postureDamage);
+                OnDamageTaken(DamageType.Posture, criticalType, postureDamage);
                 if (posture.posture <= 0)
                 {
                     //print("DAMAGED_STUNNED Event to the fsm " + pm.FsmName);
                     posture.OnStunStateStart();
-                    DamageHealth(healthDamage, 100);
+                    DamageHealth(healthDamage, 100, criticalType);
                     pm.SendEvent("DAMAGED_STUNNED");
                 }
                 else
@@ -134,14 +139,14 @@ namespace PSmash.Attributes
                     myfsmEventData.FloatData = damage;
                     HutongGames.PlayMaker.Fsm.EventData = myfsmEventData;
                     //print("DAMAGED_NOSTUNNED Event to the fsm " + pm.FsmName);
-                    DamageHealth(healthDamage, totalPenetrationPercentage);
+                    DamageHealth(healthDamage, totalPenetrationPercentage, criticalType);
                     pm.SendEvent("DAMAGED_NOSTUNNED");
                 }
             }
             else
             {
                 //print("DAMAGED_NOSTUNNED Event to the fsm " + pm.FsmName);
-                DamageHealth(healthDamage, totalPenetrationPercentage);
+                DamageHealth(healthDamage, totalPenetrationPercentage, criticalType);
                 pm.SendEvent("DAMAGED_NOSTUNNED");
             }
             if (armorDestroyed)
@@ -150,13 +155,22 @@ namespace PSmash.Attributes
             }
         }
 
-        void DamageHealth(float damage, float damagePenetrationPercentage)
+        void OnDamageTaken(DamageType damageType, CriticalType criticalType, float postureDamage)
+        {
+            DamageSlot slot = new DamageSlot();
+            slot.damage = postureDamage;
+            slot.damageType = damageType;
+            slot.criticalType = criticalType;
+            onTakeDamage.Invoke(slot);
+        }
+
+        void DamageHealth(float damage, float damagePenetrationPercentage,  CriticalType criticalType)
         {
             //print(damage + " will be substracted from  " + health);
             damage *= (1 - baseStats.GetStat(StatsList.Defense) / 100);
 
             health = SubstractDamageFromHealth(damage, health);
-            onTakeDamage.Invoke(damage);
+            OnDamageTaken(DamageType.Health, criticalType, damage);
             if (health <= 0)
             {
                 GetComponent<AudioSource>().pitch = 1;
@@ -243,8 +257,7 @@ namespace PSmash.Attributes
             audioSource.PlayOneShot(finisherAudio);
             FlyObjectAway(attackerPosition);
             armorDestroyed = true;
-            DamageHealth(damage, 100);
-            onTakeDamage.Invoke(damage);
+            DamageHealth(damage, 100, CriticalType.Critical);
         }
 
         void FlyObjectAway(Vector3 attackerPosition)
