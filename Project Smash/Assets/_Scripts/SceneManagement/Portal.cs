@@ -73,18 +73,25 @@ namespace PSmash.SceneManagement
             print("Other Scene Loaded");
             savingWrapper.Load();
             Portal otherPortal = GetOtherPortal();
-            UpdatePlayerPosition(otherPortal);
+            if(otherPortal != null)
+            {
+                UpdatePlayerPosition(otherPortal);
 
-            savingWrapper.Save();
+                savingWrapper.Save();
 
-            yield return new WaitForSeconds(fadeWaitTime);
+                yield return new WaitForSeconds(fadeWaitTime);
 
-            yield return fader.FadeIn(fadeInTime);
+                yield return fader.FadeIn(fadeInTime);
 
-            if (OnPortalTriggered != null)
-                OnPortalTriggered(true);
+                if (OnPortalTriggered != null)
+                    OnPortalTriggered(true);
+                else
+                    Debug.LogWarning("Portal cannot enable Player controller");
+            }
             else
-                Debug.LogWarning("Portal cannot enable Player controller");
+            {
+                Destroy(FindObjectOfType<SavingWrapper>().transform.parent.gameObject, 0.1f);
+            }
             Destroy(gameObject);
         }
 
