@@ -194,24 +194,16 @@ MonoBehaviour:
       actionData:
         actionNames:
         - HutongGames.PlayMaker.Actions.GetParent
-        - HutongGames.PlayMaker.Actions.DestroyObject
         - HutongGames.PlayMaker.Actions.ActivateGameObject
         customNames:
         - 
         - 
-        - 
-        actionEnabled: 010001
-        actionIsOpen: 010101
-        actionStartIndex: 000000000200000005000000
-        actionHashCodes: d97b72029ff80c02b2cf1000
+        actionEnabled: 0101
+        actionIsOpen: 0101
+        actionStartIndex: 0000000002000000
+        actionHashCodes: d97b7202b2cf1000
         unityObjectParams: []
         fsmGameObjectParams:
-        - useVariable: 1
-          name: parent
-          tooltip: 
-          showInInspector: 0
-          networkSync: 0
-          value: {fileID: 0}
         - useVariable: 1
           name: parent
           tooltip: 
@@ -246,21 +238,9 @@ MonoBehaviour:
         fsmVarParams: []
         fsmArrayParams: []
         fsmEnumParams: []
-        fsmFloatParams:
-        - useVariable: 0
-          name: 
-          tooltip: 
-          showInInspector: 0
-          networkSync: 0
-          value: 0
+        fsmFloatParams: []
         fsmIntParams: []
         fsmBoolParams:
-        - useVariable: 0
-          name: 
-          tooltip: 
-          showInInspector: 0
-          networkSync: 0
-          value: 0
         - useVariable: 0
           name: 
           tooltip: 
@@ -284,20 +264,17 @@ MonoBehaviour:
         arrayParamTypes: []
         customTypeSizes: 
         customTypeNames: []
-        paramDataType: 1400000013000000130000000f000000110000001400000011000000110000000100000001000000
+        paramDataType: 14000000130000001400000011000000110000000100000001000000
         paramName:
         - gameObject
         - storeResult
-        - gameObject
-        - delay
-        - detachChildren
         - gameObject
         - activate
         - recursive
         - resetOnExit
         - everyFrame
-        paramDataPos: 00000000000000000100000000000000000000000100000001000000020000000000000001000000
-        paramByteDataSize: 00000000000000000000000000000000000000000000000000000000000000000100000001000000
+        paramDataPos: 00000000000000000100000000000000010000000000000001000000
+        paramByteDataSize: 00000000000000000000000000000000000000000100000001000000
     - name: Dead Audio
       description: 
       colorIndex: 4

@@ -158,7 +158,7 @@ namespace PSmash.Movement
 
         IEnumerator ApplyAttackImpactReceived_CR(Transform attacker, float attackForce)
         {
-            print("Force applyied to " + gameObject.name);
+            //print("Force applyied to " + gameObject.name);
             isMovementInterruption = true;
             Vector2 attackDireciton = transform.position - attacker.position;
             float timer = 0;
@@ -167,7 +167,7 @@ namespace PSmash.Movement
             while (timer < 1f)
             {
                 timer += Time.fixedDeltaTime;
-                print(timer);
+                //print(timer);
                 Move(slope.GetSlopeNormalPerp(transform.position, attackDireciton, slopeCheckDistance, maxSlopeAngle, whatIsGround), speedFactor);
                 yield return new WaitForFixedUpdate();
             }
@@ -182,7 +182,7 @@ namespace PSmash.Movement
         public void SetSpeedModifier(float speedFactor)
         {
             speedFactorModifier = speedFactor;
-            print("Movement Speed Increased");
+            //print("Movement Speed Increased");
         }
 
         bool CanMove()
