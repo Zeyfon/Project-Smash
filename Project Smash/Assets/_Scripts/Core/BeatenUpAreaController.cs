@@ -13,7 +13,7 @@ namespace PSmash.Core
         [SerializeField] Collider2D combatEnabler = null;
         [SerializeField] CinemachineVirtualCamera vCam = null;
         [SerializeField] ParticleSystem spawnParticles = null;
-        [SerializeField] Waves[] waves;
+        //[SerializeField] Waves[] waves;
 
         //STATE
         int index = 0;
