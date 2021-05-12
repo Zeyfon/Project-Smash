@@ -38,7 +38,6 @@ namespace PSmash.Checkpoints
         ///////////////////////////////////////////////////////////////////////PUBLIC/////////////////////////////////////////////////////////////////////////
         public IEnumerator ResetEnemies()
         {
-            ClearObjectsList();
             foreach (EnemySlot slot in slots)
             {
                 slot.id.gameObject.SetActive(false);
@@ -54,6 +53,7 @@ namespace PSmash.Checkpoints
         public void ClearObjectsList()
         {
             EnemyHealth.takenOutEnemies.Clear();
+            print("Enemy list is now clear");
             ResetEnemyStatsToInitial();
         }
 

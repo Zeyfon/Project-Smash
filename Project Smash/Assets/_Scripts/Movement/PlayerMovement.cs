@@ -304,6 +304,12 @@ namespace PSmash.Movement
             rb.velocity = new Vector2(direction.x * attackimpulse, direction.y * attackimpulse);
         }
 
+        public void UpdatePlayerStoredPosition()
+        {
+            print("Initializing Player StoredPosition");
+            storedPosition = transform.position;
+        }
+
         //////////////////////////////////////////////////////////////////////////////////////PRIVATE/////////////////////////////////////////////////////////////////////////////////////
 
         /// <summary>
@@ -488,7 +494,7 @@ namespace PSmash.Movement
             return Physics2D.Raycast(wallCheckMiddle.position, transform.right, 0.7f, whatIsGround);
         }
         //AnimEvent
-        void FinishClimbLedge()
+        void FinishClimbingLedge()
         {
             //print("Finish Ledge Climb");
             transform.position = finalPosition;
@@ -692,14 +698,18 @@ namespace PSmash.Movement
         public object CaptureState()
         {
             Tent checkpoint = FindObjectOfType<Tent>();
-            if (checkpoint != null && checkpoint.IsPlayerInSavePoint())
+            if ((checkpoint != null && checkpoint.IsPlayerInSavePoint()) || Mathf.Approximately(storedPosition.magnitude, 0))
             {
                 SerializableVector3 position = new SerializableVector3(transform.position);
+                print("Capture updating player stored position to  " + transform.position);
+                storedPosition = transform.position;
                 return position;
             }
             else
             {
                 SerializableVector3 position = new SerializableVector3(storedPosition);
+                print("Capture Player stored position remains the same  " + storedPosition);
+
                 return position;
             }
         }
@@ -709,10 +719,13 @@ namespace PSmash.Movement
             SerializableVector3 position = (SerializableVector3)state;
             storedPosition = position.ToVector();
 
-            if (isLoadLastScene)
+            if (isLoadLastScene && !Mathf.Approximately(storedPosition.magnitude,0))
             {
+                print("Restore Player position is updated to  " + storedPosition);
                 transform.position = storedPosition;
             }
+
+            print("Restore player restored position is  " + storedPosition);
             //TODO
             //HOW TO DIFFERENTIATE 
             //WHEN IS A RESTORE FOR THE CHECKPOINT

@@ -160,7 +160,7 @@ namespace PSmash.Items
                 bouldersMoved.Add(GetComponent<SaveableEntity>().GetUniqueIdentifier());
             }
             Info info = new Info();
-            info.checkpointCounter = FindObjectOfType<Tent>().GetCheckpointCounter();
+            info.checkpointCounter = FindObjectOfType<WorldManager>().GetCheckpointCounter();
             info.position = new SerializableVector3(transform.position);
             //print("Captured Boulder Position  " + transform.position);
             return info;
@@ -173,7 +173,7 @@ namespace PSmash.Items
             {
                 return;
             }
-            else if (!isLoadLastScene && info.checkpointCounter == FindObjectOfType<Tent>().GetCheckpointCounter())
+            else if (!isLoadLastScene && info.checkpointCounter == FindObjectOfType<WorldManager>().GetCheckpointCounter())
             {
                 //print("Boulder Restored");
                 SerializableVector3 position = info.position;

@@ -6,13 +6,14 @@ using PSmash.SceneManagement;
 
 namespace PSmash.Temporal
 {
-    public class DeadScene : MonoBehaviour
+    public class InitialScene : MonoBehaviour
     {
 
         // Start is called before the first frame update
         void Start()
         {
-            FindObjectOfType<SavingWrapper>().LoadLastSavedScene();
+            SceneManager.LoadSceneAsync(1);
+            //FindObjectOfType<SavingWrapper>().LoadLastSavedScene();
         }
     }
     // Update is called once per fram

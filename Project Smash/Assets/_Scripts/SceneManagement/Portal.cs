@@ -68,7 +68,7 @@ namespace PSmash.SceneManagement
             if (OnPortalTriggered != null)
                 OnPortalTriggered(false);
             else
-                Debug.LogWarning("Portal cannot disable Player controller");
+                Debug.LogWarning("Portal cannot disable new Player controller");
 
             print("Other Scene Loaded");
             savingWrapper.Load();

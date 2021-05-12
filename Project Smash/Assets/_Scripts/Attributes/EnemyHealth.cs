@@ -56,9 +56,22 @@ namespace PSmash.Attributes
 
         void Start()
         {
+            InitialState();
+        }
+
+        private bool InitialState()
+        {
             if (takenOutEnemies.Contains(GetComponent<SaveableEntity>().GetUniqueIdentifier()))
             {
+                //print(gameObject + "  Initial Setup to disabled");
                 transform.parent.gameObject.SetActive(false);
+                return false;
+            }
+            else
+            {
+                //print(gameObject + "  Initial Setup active");
+
+                return true;
             }
         }
 
@@ -375,7 +388,7 @@ namespace PSmash.Attributes
             Tent tent = FindObjectOfType<Tent>();
             if(tent != null)
             {
-                info.checkpointCounter = FindObjectOfType<Tent>().GetCheckpointCounter();
+                info.checkpointCounter = FindObjectOfType<WorldManager>().GetCheckpointCounter();
             }
             info.health = health;
             return info;
@@ -383,25 +396,25 @@ namespace PSmash.Attributes
 
         public void RestoreState(object state, bool isLoadLastScene)
         {
-            //print("Restoring Taken out enemy list " + gameObject.name + "  " + GetComponent<SaveableEntity>().GetUniqueIdentifier());
-            if (takenOutEnemies.Contains(GetComponent<SaveableEntity>().GetUniqueIdentifier()))
-            {
-                transform.parent.gameObject.SetActive(false);
-            }
-            else
+            ////print("Restoring Taken out enemy list " + gameObject.name + "  " + GetComponent<SaveableEntity>().GetUniqueIdentifier());
+            //if (InitialState()/*takenOutEnemies.Contains(GetComponent<SaveableEntity>().GetUniqueIdentifier()*/))
+            //{
+            //    transform.parent.gameObject.SetActive(false);
+            //}
+            if(InitialState())
             {
                 if (isLoadLastScene)
                     return;
                 Info info = (Info)state;
-                Tent tent = FindObjectOfType<Tent>();
-                if(tent == null)
+                WorldManager worldManager = FindObjectOfType<WorldManager>();
+                if(worldManager == null)
                 {
                     Debug.LogWarning("Cannot complete the restore state of this entity");
                     return;
                 }
-                if (info.checkpointCounter == tent.GetCheckpointCounter())
+                if (info.checkpointCounter == worldManager.GetCheckpointCounter())
                 {
-                    checkpointCounter = tent.GetCheckpointCounter();
+                    checkpointCounter = worldManager.GetCheckpointCounter();
                     //print(gameObject.name + "  is in same checkpointNumber");
                     //print("Armor Broken  " + info.isArmorDestroyed);
                     health = info.health;

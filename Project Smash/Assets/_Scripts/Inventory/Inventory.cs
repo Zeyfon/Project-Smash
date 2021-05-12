@@ -99,7 +99,7 @@ namespace PSmash.Inventories
 
         public void UnlockSkill(Item skill)
         {
-            print("In Inventory unlocking the skill  " + skill.name);
+            //print("In Inventory unlocking the skill  " + skill.name);
             if(skill is ToolItem)
             {
                 GetComponentInParent<Equipment>().UpgradeStock(skill);
@@ -117,6 +117,10 @@ namespace PSmash.Inventories
             foreach (CraftingSlot slot in craftingItemSlots)
             {
                 inventoryState.Add(slot.item.GetID(), slot.number);
+                if (slot.number != 0)
+                {
+                    print(slot.item.GetDisplayName() + "  was captured with  " + slot.number);
+                }
             }
             return inventoryState;
         }
@@ -124,6 +128,7 @@ namespace PSmash.Inventories
         public void RestoreState(object state, bool isLoadLastScene)
         {
             Dictionary<string, int> inventoryState = (Dictionary<string, int>)state;
+            //print("Restoring Inventory");
             foreach (string itemName in inventoryState.Keys)
             {
                 foreach (CraftingSlot slot in craftingItemSlots)
@@ -131,6 +136,10 @@ namespace PSmash.Inventories
                     if (slot.item.GetID() == itemName)
                     {
                         slot.number = inventoryState[itemName];
+                        if (slot.number != 0)
+                        {
+                            print("Restoring  " + slot.item.GetDisplayName() + "  with  " + slot.number);
+                        }
                     }
                 }
             }
