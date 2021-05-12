@@ -2,6 +2,8 @@
 using System.Collections;
 using UnityEngine;
 using GameDevTV.Saving;
+using PSmash.Movement;
+using System;
 
 namespace PSmash.SceneManagement
 {
@@ -24,22 +26,27 @@ namespace PSmash.SceneManagement
 
         private void Start()
         {
-            LoadLastSavedScene();
+            InitialLoad();
         }
 
         private void OnEnable()
         {
             _controller.GameManagement.Enable();
             _controller.GameManagement.Save.performed += ctx => Save();
-            _controller.GameManagement.Load.performed += ctx => LoadLastSavedScene();
+            _controller.GameManagement.Load.performed += ctx => InitialLoad();
             _controller.GameManagement.Delete.performed += ctx => Delete();
+        }
+        
+        void InitialLoad()
+        {
+            StartCoroutine(LoadLastScene(true));
         }
 
 
         //PUBLIC
         public void LoadLastSavedScene()
         {
-            StartCoroutine(LoadLastScene());
+            StartCoroutine(LoadLastScene(false));
         }
 
         public void Save()
@@ -59,12 +66,17 @@ namespace PSmash.SceneManagement
 
 
         //PRIVATE
-        IEnumerator LoadLastScene()
+        IEnumerator LoadLastScene(bool isInitialized)
         {
             if (!cr_Running)
             {
                 cr_Running = true;
-                yield return GetComponent<SavingSystem>().LoadLastScene(defaultSaveFile, true);
+                if (!isInitialized)
+                {
+                    GetComponent<SavingSystem>().Save(defaultSaveFile);
+                }
+                yield return GetComponent<SavingSystem>().LoadLastScene(defaultSaveFile, true, isInitialized);
+                GetComponent<SavingSystem>().Save(defaultSaveFile);
                 UIFader fader = FindObjectOfType<UIFader>();
                 fader.FadeOutInmediate();
                 yield return fader.FadeIn(fadeInTime);
@@ -72,7 +84,6 @@ namespace PSmash.SceneManagement
             }
             yield return null;
         }
-
     }
 }
 

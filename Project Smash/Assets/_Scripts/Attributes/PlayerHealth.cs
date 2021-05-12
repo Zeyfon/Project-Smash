@@ -186,9 +186,8 @@ namespace PSmash.Attributes
             gameObject.layer = LayerMask.NameToLayer("PlayerGhost");
             animator.SetInteger("Damage", 50);
             yield return new WaitForSeconds(2);
+            FindObjectOfType<WorldManager>().ClearLists();
             FindObjectOfType<SavingWrapper>().LoadLastSavedScene();
-            //SceneManager.LoadScene(0);
-            //FindObjectOfType<Tent>().PlayerDies();
         }
 
         public object CaptureState()

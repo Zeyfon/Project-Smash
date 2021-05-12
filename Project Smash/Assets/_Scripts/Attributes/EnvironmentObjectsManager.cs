@@ -26,7 +26,6 @@ namespace PSmash.Checkpoints
 
         public IEnumerator ResetEnvironmentalObjects()
         {
-            ClearObjectsList();
             foreach (ObjectSlot slot in slots)
             {
                 slot.transform.gameObject.SetActive(false);

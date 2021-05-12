@@ -43,7 +43,7 @@ namespace PSmash.UI.CraftingSytem
         /// </summary>
         public void UpdateSkillPanel(SkillSlot currentSelectedSkillSlot)
         {
-            print("Updating Panel");
+            //print("Updating Panel");
             foreach (SkillSlot slot in GetComponentsInChildren<SkillSlot>())
             {
                 slot.VisualUpdate();

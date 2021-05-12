@@ -30,8 +30,6 @@ namespace PSmash.Checkpoints
 
         public IEnumerator ResetDestructibleObjects_CR()
         {
-            ClearObjectsList();
-            //print("Enemies destroyed");
             foreach (ObjectSlot slot in slots)
             {
                 slot.destructibleObject.gameObject.SetActive(false);

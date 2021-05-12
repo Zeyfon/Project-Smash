@@ -110,12 +110,12 @@ namespace PSmash.Items
 
         public object CaptureState()
         {
-            Tent tent = FindObjectOfType<Tent>();
-            if (tent == null)
+            WorldManager worldManager = FindObjectOfType<WorldManager>();
+            if (worldManager == null)
                 return null;
 
             Info info = new Info();
-            info.checkpointCounter = tent.GetCheckpointCounter();
+            info.checkpointCounter = worldManager.GetCheckpointCounter();
             return info;
         }
 
@@ -124,14 +124,14 @@ namespace PSmash.Items
             if (state == null || isLoadLastScene)
                 return;
 
-            Tent tent = FindObjectOfType<Tent>();
-            if (tent == null)
+            WorldManager worldManager = FindObjectOfType<WorldManager>();
+            if (worldManager == null)
                 return;
 
             Info info = (Info)state;
-            if (info.checkpointCounter == tent.GetCheckpointCounter())
+            if (info.checkpointCounter == worldManager.GetCheckpointCounter())
             {
-                checkpointCounter = tent.GetCheckpointCounter();
+                checkpointCounter = worldManager.GetCheckpointCounter();
                 string identifier = GetComponent<SaveableEntity>().GetUniqueIdentifier();
                 if (destroyedObjects.Contains(identifier))
                 {

@@ -196,7 +196,7 @@ namespace PSmash.Inventories
                         if (subWeaponName == subWeapon.GetID())
                         {
                             this.subWeapon = subWeapon;
-                            print("I have the mace");
+                            //print("I have the mace");
                         }
                     }
                 }

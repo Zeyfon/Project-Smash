@@ -24,6 +24,7 @@ namespace GameDevTV.Saving
 
         //STATE
         List<string> restoredObjectsForLoadLastSavedScene = new List<string>();
+        int initialSceneBuildIndex = 0;
 
         /////////////////////////////////////////////////////////////////////PUBLIC//////////////////////////////////////////////////////////////////////
         public IEnumerator LoadDeadScene(int buildIndex, string saveFile)
@@ -36,25 +37,26 @@ namespace GameDevTV.Saving
         /// must be run as a coroutine.
         /// </summary>
         /// <param name="saveFile">The save file to consult for loading.</param>
-        public IEnumerator LoadLastScene(string saveFile, bool isLoadLastScene)
+        public IEnumerator LoadLastScene(string saveFile, bool isLoadLastScene, bool isInitialized)
         {
-            print("Trying to load a scene");
+            print("Loading Scene");
+            //print("Trying to load a scene");
             Dictionary<string, object> state = LoadFile(saveFile);
 
             if (state.ContainsKey("lastSceneBuildIndex"))
             {
-                print("Last Save Scene Loaded");
+                //print("Last Save Scene Loaded");
                 int buildIndex = SceneManager.GetActiveScene().buildIndex;
                 buildIndex = (int)state["lastSceneBuildIndex"];
 
                 if (buildIndex > SceneManager.sceneCountInBuildSettings)
                 {
-                    print("2");
-                    yield return null;
+                    Debug.LogWarning("The scene you want to load is not set in the Build Settings");
+                    //yield return null;
                 }
-                else //if (buildIndex != SceneManager.GetActiveScene().buildIndex)
+                else 
                 {
-                    print("3");
+                    //print("3");
                     print("Loading scene " + buildIndex);
                     yield return SceneManager.LoadSceneAsync(buildIndex);
                     print("Done Loading");
@@ -62,12 +64,23 @@ namespace GameDevTV.Saving
             }
             else
             {
-                print("5");
-                Debug.LogWarning("There is no lastSceneBuildIndex");
+                //print("5");
+                if (isInitialized)
+                {
+                    print("No scene was loaded");
+                    initialSceneBuildIndex = SceneManager.GetActiveScene().buildIndex;
+                }
+                else
+                {
+                    yield return SceneManager.LoadSceneAsync(initialSceneBuildIndex);
+                    print("The same scene was loaded again");
+                }
+                //Debug.LogWarning("There is no lastSceneBuildIndex");
             }
             RestoreState(state, isLoadLastScene);
             print("LoadLastScene ended");
             OnSaveEnds.Invoke();
+            yield return null;
         }
 
         /// <summary>
@@ -75,6 +88,7 @@ namespace GameDevTV.Saving
         /// </summary>
         public void Save(string saveFile)
         {
+            print("Saving");
             onSaveStart.Invoke();
             Dictionary<string, object> state = LoadFile(saveFile);
             CaptureState(state);
@@ -96,6 +110,7 @@ namespace GameDevTV.Saving
 
         public void Load(string saveFile, bool isLoadLastScene)
         {
+            print("Loading");
             RestoreState(LoadFile(saveFile), isLoadLastScene);
         }
 
@@ -128,6 +143,7 @@ namespace GameDevTV.Saving
 
         void CaptureState(Dictionary<string, object> state)
         {
+            print("Capturing Data");
             foreach (SaveableEntity saveable in FindObjectsOfType<SaveableEntity>())
             {
                 //print("Saving the  " + saveable.gameObject.name);
@@ -137,16 +153,19 @@ namespace GameDevTV.Saving
             
             if (checkpoint != null && checkpoint.IsPlayerInSavePoint())
             {
-                state["lastSceneBuildIndex"] = SceneManager.GetActiveScene().buildIndex;
+                int index = SceneManager.GetActiveScene().buildIndex;
+                print("lastSceneBuildIndex  " + index + " was captured");
+                state["lastSceneBuildIndex"] = index;
             }
             else
             {
-                Debug.LogWarning("No lastSceneBuildIndex was saved");
+                //Debug.LogWarning("No lastSceneBuildIndex was saved");
             }
         }
 
         void RestoreState(Dictionary<string, object> state, bool isLoadLastScene)
         {
+            print("Restoring Data");
             if (isLoadLastScene)
                 restoredObjectsForLoadLastSavedScene.Clear();
             foreach (SaveableEntity saveable in FindObjectsOfType<SaveableEntity>())

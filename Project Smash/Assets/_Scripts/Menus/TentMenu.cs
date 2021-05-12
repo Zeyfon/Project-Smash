@@ -64,7 +64,7 @@ namespace PSmash.Menus
         /// </summary>
         private void CloseAllMenus()
         {
-            print("Close All Menus");
+            //print("Close All Menus");
             CloseTentMenu();
         }
 
@@ -73,7 +73,7 @@ namespace PSmash.Menus
         /// </summary>
         private void BacktrackMenu()
         {
-            print("BackTracking in Menus");
+            //print("BackTracking in Menus");
             CloseTentMenu();
         }
 
@@ -82,7 +82,7 @@ namespace PSmash.Menus
             _controller.UI.Enable();
             _controller.UI.Cancel.performed += ctx => BacktrackMenu();
             _controller.UI.ButtonStart.performed += ctx => CloseAllMenus();
-            print("Enable Tent Menu Controller");
+            //print("Enable Tent Menu Controller");
 
         }
 
@@ -91,7 +91,7 @@ namespace PSmash.Menus
             _controller.UI.Disable();
             _controller.UI.Cancel.performed -= ctx => BacktrackMenu();
             _controller.UI.ButtonStart.performed -= ctx => CloseAllMenus();
-            print("Disable Tent Menu Controller");
+            //print("Disable Tent Menu Controller");
         }
 
 
@@ -131,11 +131,11 @@ namespace PSmash.Menus
 
         void CloseTentMenu()
         {
-            print("Closing Tent Menu");
+            //print("Closing Tent Menu");
             DisableMenuObjects();
             if(OnTentMenuClose == null)
             {
-                Debug.LogWarning("Player will not enable controller again");
+                //Debug.LogWarning("Player will not enable controller again");
                 return;
             }
                 OnTentMenuClose();
