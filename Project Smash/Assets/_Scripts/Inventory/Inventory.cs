@@ -46,6 +46,11 @@ namespace PSmash.Inventories
             Pickup.onDropCollected -= CraftingItemCollected;
         }
 
+        public List<CraftingSlot> GetCraftingItemsList()
+        {
+            return craftingItemSlots;
+        }
+
         private void CraftingItemCollected(Pickup.ItemSlot item)
         {
             //print("Crafting item Collected");
