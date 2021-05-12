@@ -16,8 +16,6 @@ namespace PSmash.Menus
         GameObject previousGameObject;
         EventSystem eventSystem;
 
-        int currentStarsQuantity = 0;
-
         private void Start()
         {
             eventSystem = GameObject.FindObjectOfType<EventSystem>();
@@ -40,7 +38,7 @@ namespace PSmash.Menus
             }
             StartCoroutine(SetInitialGeneralMenuSelection());
             //print("Main menu enabled");
-            UpdateSubMenu(initialSelection);
+            UpdateMenuToNewTabSelection(initialSelection);
         }
 
         IEnumerator SetInitialGeneralMenuSelection()
@@ -50,23 +48,26 @@ namespace PSmash.Menus
             eventSystem.SetSelectedGameObject(initialSelection);
         }
 
-        private void Update()
+        void Update()
         {
             if (!HasMenuSelectionChanged())
                 return;
 
-            if (IsCurrentSelectionATab())
+            if (IsNewSelectionATab())
             {
-                UpdateSubMenu(eventSystem.currentSelectedGameObject);
+                UpdateMenuToNewTabSelection(eventSystem.currentSelectedGameObject);
             }
-            else if(previousGameObject != null && previousGameObject.GetComponent<MenuTab>())
+            else if (HasNewSelectionPassedFromATabToAButton())
             {
-                DisableInteractionWithRestOfTabs(previousGameObject);
+                DisableInteractionCapacityOfOtherTabs(previousGameObject);
             }
             previousGameObject = eventSystem.currentSelectedGameObject;
         }
 
-        //SubFunction in Update
+        /// <summary>
+        /// Tells you when the selection has changed. Regardless if is a tab or button
+        /// </summary>
+        /// <returns></returns>
         bool HasMenuSelectionChanged()
         {
             if (eventSystem.currentSelectedGameObject == null || previousGameObject != eventSystem.currentSelectedGameObject)
@@ -75,8 +76,11 @@ namespace PSmash.Menus
                 return false;
         }
 
-        //SubFunction in Update
-        bool IsCurrentSelectionATab()
+        /// <summary>
+        /// Tells you if the new selection is a tab or not
+        /// </summary>
+        /// <returns></returns>
+        bool IsNewSelectionATab()
         {
             foreach (MenuTab tab in menuTabs)
             {
@@ -85,27 +89,73 @@ namespace PSmash.Menus
             return false;
         }
 
-        //SubFunction in Update
-        void UpdateSubMenu(GameObject selectedTab)
+        /// <summary>
+        /// 1. Disable all submenus components for the current selection
+        /// 2. Enable all tabs interaction capacity
+        /// 3. Enables the current tab selection sub menu
+        /// </summary>
+        /// <param name="selectedTab"></param>
+        void UpdateMenuToNewTabSelection(GameObject selectedTab)
         {
-           // print("Set Initial Selection Main menu");
-            foreach(MenuTab tab in menuTabs)
+
+            DisableAllSubMenus();
+            EnableInteractionCapacityForAllTabs();
+            EnableThisTabMenu(selectedTab);
+        }
+
+
+        /// <summary>
+        /// 1. Disable the submenu of the tab and enables the interaction capacity of it for the event system
+        /// </summary>
+        private void DisableAllSubMenus()
+        {
+            foreach (MenuTab tab in menuTabs)
             {
                 tab.DisableSubMenu();
                 tab.SetInteractionCapacity(true);
             }
-            foreach(MenuTab tab in menuTabs)
+        }
+
+        /// <summary>
+        /// 2. Enable all tabs interaction capacity
+        /// </summary>
+        private void EnableInteractionCapacityForAllTabs()
+        {
+            foreach (MenuTab tab in menuTabs)
+            {
+                tab.SetInteractionCapacity(true);
+            }
+        }
+
+        /// <summary>
+        /// 3. Enables the current tab selection sub menu
+        /// </summary>
+        /// <param name="selectedTab"></param>
+        private void EnableThisTabMenu(GameObject selectedTab)
+        {
+            foreach (MenuTab tab in menuTabs)
             {
                 if (selectedTab == tab.gameObject)
                 {
-                    //print("enabled tab  " + tab.gameObject.name);
                     tab.EnableSubMenu();
                 }
             }
         }
 
-        //SubFunction in Update
-        void DisableInteractionWithRestOfTabs(GameObject subMenuTab)
+        /// <summary>
+        /// Tells you if the new selection is passing from a tab to a button
+        /// </summary>
+        /// <returns></returns>
+        bool HasNewSelectionPassedFromATabToAButton()
+        {
+            return previousGameObject != null && previousGameObject.GetComponent<MenuTab>();
+        }
+
+        /// <summary>
+        /// Disable the interaction capacity of all the others tabs of the current selected one
+        /// </summary>
+        /// <param name="subMenuTab"></param>
+        void DisableInteractionCapacityOfOtherTabs(GameObject subMenuTab)
         {
             foreach(MenuTab tab in menuTabs)
             {
