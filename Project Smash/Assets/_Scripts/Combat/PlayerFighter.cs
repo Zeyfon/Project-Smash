@@ -22,6 +22,7 @@ namespace PSmash.Combat
         [SerializeField] AudioClip attackSound = null;
         [SerializeField] Weapon fists = null;
         [SerializeField] float attackImpulse = 10f; 
+        
 
         [Header("Tool Attack")]
         [SerializeField] Weapon mace = null;
@@ -36,6 +37,10 @@ namespace PSmash.Combat
         [Header("Guard")]
         [SerializeField] AudioClip guardFootstepSound = null;
 
+
+        [Header("AttackForces")]
+        [SerializeField] float fistAttackForce = 0.5f;
+        [SerializeField] float maceAttackForce = 10f;
         public event Action AirSmashAttackEffect;
         public static event Action OnCameraShake;
 
@@ -173,7 +178,7 @@ namespace PSmash.Combat
         {
             //print("NormalAttack");
             Vector2 attackArea = new Vector2(1.9f, 1.6f);
-            Attack(attackTransform, attackArea, fists, 1.5f);
+            Attack(attackTransform, attackArea, fists, fistAttackForce);
         }
 
         /// <summary>
@@ -200,7 +205,7 @@ namespace PSmash.Combat
         {
             //print("ToolAttack");
             Vector2 attackArea = new Vector2(2.5f, 1.75f);
-            Attack(attackTransform, attackArea, mace, 15f);
+            Attack(attackTransform, attackArea, mace, maceAttackForce);
         }
 
         //AnimEvent
@@ -208,7 +213,7 @@ namespace PSmash.Combat
         {
             if(index == 1)
             {
-                audioSource.pitch = UnityEngine.Random.Range(0.75f, 1.1f);
+                audioSource.pitch = UnityEngine.Random.Range(0.75f, 1.5f);
                 audioSource.PlayOneShot(toolAttackSound);
             }
 

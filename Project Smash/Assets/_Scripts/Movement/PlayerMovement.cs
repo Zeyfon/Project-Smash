@@ -299,7 +299,7 @@ namespace PSmash.Movement
 
         public void MovementImpulse(float attackimpulse)
         {
-            Vector2 direction = slope.GetSlopeNormalPerp(transform.position, transform.right, slopeCheckDistance, maxSlopeAngle, whatIsGround);
+            Vector2 direction = slope.GetMovementDirectionWithSlopecontrol(transform.position, transform.right, slopeCheckDistance, whatIsGround);
             direction *= -1;
             rb.velocity = new Vector2(direction.x * attackimpulse, direction.y * attackimpulse);
         }
@@ -388,17 +388,17 @@ namespace PSmash.Movement
                 rb.sharedMaterial = lowFriction;
             }
             input.y = 0;
-            Vector2 direction = slope.GetSlopeNormalPerp(transform.position, input, slopeCheckDistance, maxSlopeAngle, whatIsGround);
+            Vector2 direction = slope.GetMovementDirectionWithSlopecontrol(transform.position, input, slopeCheckDistance, whatIsGround);
             //print("Direction  " + direction);
             if(direction.sqrMagnitude == 0)
             {
                 MoveInAir(input, speedFactor);
                 return;
             }
-            float speed = baseSpeed * Mathf.Abs(input.x) * speedFactor;
+            float speedModified = baseSpeed * Mathf.Abs(input.x) * speedFactor;
             //print("Speed " + speed);
-            float xVelocity = -1 * speed * direction.x;
-            float yVelocity = -1 * speed * direction.y;
+            float xVelocity = direction.x * speedModified;
+            float yVelocity = direction.y * speedModified;
             rb.velocity = new Vector2(xVelocity, yVelocity);
         }
 

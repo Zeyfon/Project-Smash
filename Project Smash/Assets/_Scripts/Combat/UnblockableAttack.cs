@@ -12,7 +12,7 @@ namespace PSmash.Combat
         [Header("Special Attack Condition")]
         [SerializeField] float specialAttackRange=5;
         [SerializeField] float distanceCheckForObstacles = 1;
-        [SerializeField] float dragForImpulse = 6;
+        //[SerializeField] float dragForImpulse = 6;
         [SerializeField] LayerMask whatIsGround;
         [SerializeField] LayerMask whatIsEnemy;
 
@@ -28,7 +28,7 @@ namespace PSmash.Combat
         [SerializeField] float fadeIntTime = 0.5f;
 
         Transform playerTransform;
-        float currentDrag;
+        //float currentDrag;
 
         private void Awake()
         {
@@ -37,7 +37,7 @@ namespace PSmash.Combat
             {
                 GetComponent<SkeletonRenderer>().CustomMaterialOverride.Add(defaultMaterial, addedMaterial);
             }
-            currentDrag = GetComponent<Rigidbody2D>().drag;
+            //currentDrag = GetComponent<Rigidbody2D>().drag;
         }
 
 
@@ -111,7 +111,8 @@ namespace PSmash.Combat
 
         public void SetUnblockableAttackData()
         {
-            GetComponent<Rigidbody2D>().drag = dragForImpulse;
+            Debug.LogWarning("Entering something wrong");
+            //GetComponent<Rigidbody2D>().drag = dragForImpulse;
         }
 
         //This method can be called via Anim Event and via SpecialAttack State in the PlayMaker
@@ -119,7 +120,7 @@ namespace PSmash.Combat
         {
             //print("Stop Special Attack Impulse");
             GetComponent<EnemyMovement>().SpecialAttackImpulse_Stop();
-            GetComponent<Rigidbody2D>().drag = currentDrag;
+            //GetComponent<Rigidbody2D>().drag = currentDrag;
             //Debug.Break();
         }
         //Called from the Special Attack FSM

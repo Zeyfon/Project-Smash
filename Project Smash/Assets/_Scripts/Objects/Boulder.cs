@@ -22,7 +22,7 @@ namespace PSmash.Items
         [SerializeField] AudioClip impactAudio = null;
         [SerializeField] ParticleSystem dust = null;
         [SerializeField] float damage = 100;
-        [SerializeField] float attackForce = 30;
+        [SerializeField] float attackForce = 2;
 
         float direction;
         float timer = 0;
