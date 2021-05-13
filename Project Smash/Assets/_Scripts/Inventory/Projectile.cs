@@ -61,7 +61,21 @@ namespace PSmash.Inventories
 
 
         /////////////////////////////////////////////////////////////////////PUBLIC///////////////////////////////////////////////////////
+        
+        public void Setup()
+        {
 
+        }
+
+
+        /// <summary>
+        /// Checks the damage received and use it as a parried attack to change direction and owner
+        /// </summary>
+        /// <param name="attacker"></param>
+        /// <param name="weapon"></param>
+        /// <param name="attackType"></param>
+        /// <param name="damage"></param>
+        /// <param name="attackForce"></param>
         public void TakeDamage(Transform attacker, Weapon weapon, AttackType attackType, float damage, float attackForce)
         {
             //print("Received the parry "  + hasHit);
@@ -194,7 +208,7 @@ namespace PSmash.Inventories
             }
 
             Health health = collision.GetComponent<Health>();
-            if (health == null || health == owner || health.IsDead() || collision.tag == gameObject.tag)
+            if (health == null || health == owner || health.IsDead() || collision.tag == owner.tag)
                 return;
 
             hasHit = true;
