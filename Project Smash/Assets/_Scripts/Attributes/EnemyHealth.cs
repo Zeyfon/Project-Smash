@@ -63,14 +63,11 @@ namespace PSmash.Attributes
         {
             if (takenOutEnemies.Contains(GetComponent<SaveableEntity>().GetUniqueIdentifier()))
             {
-                //print(gameObject + "  Initial Setup to disabled");
                 transform.parent.gameObject.SetActive(false);
                 return false;
             }
             else
             {
-                //print(gameObject + "  Initial Setup active");
-
                 return true;
             }
         }
@@ -242,7 +239,7 @@ namespace PSmash.Attributes
             GetComponent<UnblockableAttack>().TakeArmorOff();
             posture.DisablePostureBar();
             ArmoredEnemy armored = GetComponent<ArmoredEnemy>();
-            GetComponent<EnemyMovement>().SetSpeedModifier(armored.GetSpeedFactorModifier());
+            GetComponent<EnemyMovement>().SetSpeedMovementModifierValue(armored.GetSpeedFactorModifier());
             GetComponent<Animator>().SetFloat("attackSpeed", armored.GetAttackSpeedFactor());
             GetComponent<AudioSource>().pitch = 1.4f;
         }

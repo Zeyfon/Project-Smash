@@ -13,7 +13,7 @@ namespace PSmash.Combat
         [SerializeField] AudioClip guardSound = null;
         [Range(0,2)]
         [SerializeField] float parryTime = 1;
-        [SerializeField] float parryAttackForce = 10;
+        [SerializeField] float parryAttackForce = 0.5f;
         //STATE
         bool canParry=false;
         float parryTimer = 0;

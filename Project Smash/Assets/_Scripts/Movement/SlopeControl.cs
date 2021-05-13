@@ -32,8 +32,6 @@ namespace PSmash.Movement
             {
                 isOnSlope = true;
                 slopeSideAngle = Vector2.Angle(slopeHitFront.normal, Vector2.up);
-                //Debug.Log(slopeHitFront.collider.gameObject);
-                //Debug.Log("frontal angle  " + slopeSideAngle);
             }
 
 
@@ -42,10 +40,6 @@ namespace PSmash.Movement
             {
                 isOnSlope = true;
                 slopeSideAngle = 0.0f;
-                //slopeSideAngle = Vector2.Angle(slopeHitBack.normal, Vector2.up);
-                //Debug.Log(slopeHitBack.collider.gameObject);
-                //Debug.Log("back angle  " + slopeSideAngle);
-
             }
             else
             {
@@ -102,12 +96,15 @@ namespace PSmash.Movement
             return canWalkOnSlope;
         }
 
-        public Vector2 GetSlopeNormalPerp(Vector2 checkPos, Vector2 direction, float slopeCheckDistance, float maxSlopeAngle, LayerMask whatIsGround)
+        public Vector2 GetMovementDirectionWithSlopecontrol(Vector2 checkPos, Vector2 direction, float slopeCheckDistance, LayerMask whatIsGround)
         {
             RaycastHit2D hit = Physics2D.Raycast(checkPos + new Vector2(0, .2f), Vector2.down, slopeCheckDistance, whatIsGround);
             if (hit)
             {
                 Vector2 slopeNormalPerp = Vector2.Perpendicular(hit.normal).normalized * direction.x;
+                slopeNormalPerp *= -1;
+                //Debug.Log(slopeNormalPerp);
+
                 return slopeNormalPerp;
             }
             return new Vector2(0, 0);
