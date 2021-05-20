@@ -10,22 +10,22 @@ namespace PSmash.UI
         [SerializeField] ToolItemSlotUI leftItem = null;
 
         Equipment playerEquipment;
-        private void Awake()
+        void Awake()
         {
             playerEquipment = Inventory.GetPlayerInventory().GetComponentInParent<Equipment>();
         }
 
-        private void OnEnable()
+        void OnEnable()
         {
             playerEquipment.onToolEquippedUpdate += EquipmentUIToolUpdate;
         }
 
-        private void OnDisable()
+        void OnDisable()
         {
             playerEquipment.onToolEquippedUpdate -= EquipmentUIToolUpdate;
         }
 
-        private void EquipmentUIToolUpdate(int index)
+        void EquipmentUIToolUpdate(int index)
         {
             Equipment.EquipmentSlots[] slots = playerEquipment.GetTools();
 

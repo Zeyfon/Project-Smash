@@ -1,20 +1,20 @@
-﻿using HutongGames.PlayMaker;
+﻿using GameDevTV.Saving;
+using HutongGames.PlayMaker;
+using PSmash.Checkpoints;
+using PSmash.Combat;
 using PSmash.Combat.Weapons;
+using PSmash.Movement;
 using PSmash.Stats;
 using System;
-using System.Collections;
-using UnityEngine;
-using UnityEngine.Events;
-using PSmash.Combat;
-using PSmash.Movement;
-using GameDevTV.Saving;
 using System.Collections.Generic;
-using PSmash.Checkpoints;
+using UnityEngine;
 
 namespace PSmash.Attributes
 {
     public class EnemyHealth : Health, ISaveable
     {
+
+        //CONFIG
         [SerializeField] bool isArmorEnabled = false;
         [Header("TestMode")]
         [SerializeField] bool isInvulnerable = true;
@@ -35,43 +35,32 @@ namespace PSmash.Attributes
         public static event Action onEnemyDead;
         public static List<string> takenOutEnemies = new List<string>();
 
+
+        //STATE
         EnemyPosture posture;
         PlayMakerFSM pm;
         BaseStats baseStats;
-        Vector3 initialPosition;
+        //Vector3 initialPosition;
 
         float damagePenetrationPercentage;
+        float armorModifier = 0;
         bool armorDestroyed = false;
 
         static int checkpointCounter = 0;
 
+        //INITIALIZE
         private void Awake()
         {
-            initialPosition = transform.position;
+            if (!GetComponent<EnemyPosture>())
+                GetComponentInChildren<PostureBar>().gameObject.SetActive(false);
+            //initialPosition = transform.position;
             baseStats = GetComponent<BaseStats>();
             health = baseStats.GetStat(StatsList.Health);
             audioSource = GetComponent<AudioSource>();
             posture = GetComponent<EnemyPosture>();
         }
 
-        void Start()
-        {
-            InitialState();
-        }
-
-        private bool InitialState()
-        {
-            if (takenOutEnemies.Contains(GetComponent<SaveableEntity>().GetUniqueIdentifier()))
-            {
-                transform.parent.gameObject.SetActive(false);
-                return false;
-            }
-            else
-            {
-                return true;
-            }
-        }
-
+        /////////////////////////////////////////////////////////////PUBLIC////////////////////////////////////////
         //This method will always be called from the AIController
         //when entering a new state
         public void SetCurrentStateInfo(PlayMakerFSM pm, float damagePenetrationPercentage)
@@ -79,8 +68,6 @@ namespace PSmash.Attributes
             this.pm = pm;
             this.damagePenetrationPercentage = damagePenetrationPercentage;
         }
-
-        #region Damaged
 
         public override void TakeDamage(Transform attacker, Weapon weapon, AttackType attackType, float damage, float attackForce)
         {
@@ -97,9 +84,132 @@ namespace PSmash.Attributes
             }
             Damaged(attacker, weapon, attackType, damage);
             GetComponent<EnemyMovement>().ApplyAttackImpactReceived(attacker, attackForce);
-            //ApplyAttackForce(attacker, attackForce);
         }
 
+        public void TakeArmorOff()
+        {
+            print("Armor taken off");
+            GetComponent<UnblockableAttack>().TakeArmorOff();
+            armorModifier = baseStats.GetStat(StatsList.Defense);
+            posture.DisablePostureBar();
+            ArmoredEnemy armored = GetComponent<ArmoredEnemy>();
+            GetComponent<EnemyMovement>().SetSpeedMovementModifierValue(armored.GetSpeedFactorModifier());
+            GetComponent<Animator>().SetFloat("attackSpeed", armored.GetAttackSpeedFactor());
+            GetComponent<AudioSource>().pitch = 1.4f;
+        }
+
+        //Inform the AI that the NPC is being Finished
+        public void SetStateToFinisher()
+        {
+            pm.SendEvent("FINISHER");
+        }
+
+        //Start the Finisher Animation once the player and this npc
+        // have been correctly positioned for the animation to run
+        public void StartFinisherAnimation()
+        {
+            //Debug.Break();
+            pm.SendEvent("STARTFINISHERANIMATION");
+        }
+
+        //The damage dealt by the player and the thrown away force of the impact
+        public void TakeFinisherAttackDamage(Vector3 attackerPosition, float damage)
+        {
+            audioSource.PlayOneShot(finisherAudio);
+            FlyObjectAway(attackerPosition);
+            if (isArmorEnabled)
+                armorDestroyed = true;
+            DamageHealth(damage, 100, CriticalType.Critical);
+        }
+
+        #region Sounds
+
+        public void ProtectedDamageSound()
+        {
+            if (GetComponent<ArmoredEnemy>() && !posture.isActiveAndEnabled)
+            {
+                FleshDamageSound();
+                return;
+            }
+            //print("Protected Audio");
+            audioSource.clip = protectedDamageAudio;
+            audioSource.Play();
+        }
+
+        public void FleshDamageSound()
+        {
+            //print("Flesh Audio");
+            audioSource.clip = fleshDamageAudio;
+            audioSource.Play();
+        }
+
+        public void StunnedAudio()
+        {
+            //print("Stunned Audio");
+            audioSource.clip = stunnedAudio;
+            audioSource.Play();
+        }
+
+        public void StaggerAudio()
+        {
+            //print("Stagger Audio");
+            audioSource.clip = staggerAuduio;
+            audioSource.Play();
+        }
+
+        #endregion
+
+        #region ExternalUse
+        public float GetHealthValue()
+        {
+            return health;
+        }
+
+        public float GetMaxHealth()
+        {
+            return baseStats.GetStat(StatsList.Health);
+        }
+
+        public override bool IsDead()
+        {
+            return isDead;
+        }
+
+        public bool IsStunned()
+        {
+            if (pm.FsmName == "Stun")
+            {
+                //print("Check if enemy is Stunned  " + fsm.FsmName);
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        /// <summary>
+        /// This one is used by the States the entity is.
+        /// </summary>
+        /// <returns></returns>
+        public bool IsDeadCheck()
+        {
+            return isDead;
+        }
+
+        /// <summary>
+        /// Used by the Stun State PlayMaker
+        /// </summary>
+        public void StunEnded()
+        {
+
+            audioSource.PlayOneShot(stunEndAudio);
+            posture.FullyRegenPosture();
+        }
+
+        #endregion
+
+        ////////////////////////////////////////////////////////PRIVATE///////////////////////////////////////////
         void Damaged(Transform attacker, Weapon attackedWeapon, AttackType attackType, float damage)
         {
             CriticalType criticalType;
@@ -177,7 +287,7 @@ namespace PSmash.Attributes
         void DamageHealth(float damage, float damagePenetrationPercentage,  CriticalType criticalType)
         {
             //print(damage + " will be substracted from  " + health);
-            damage *= (1 - baseStats.GetStat(StatsList.Defense) / 100);
+            damage *= (1 - (baseStats.GetStat(StatsList.Defense) - armorModifier) / 100);
 
             health = SubstractDamageFromHealth(damage, health);
             OnDamageTaken(DamageType.Health, criticalType, damage);
@@ -185,12 +295,7 @@ namespace PSmash.Attributes
             {
                 GetComponent<AudioSource>().pitch = 1;
                 isDead = true;
-                takenOutEnemies.Add(GetComponent<SaveableEntity>().GetUniqueIdentifier());
-                //print("Added to Taken out enemy list " + gameObject.name + "  " + GetComponent<SaveableEntity>().GetUniqueIdentifier());
-                if(onEnemyDead != null)
-                {
-                    onEnemyDead();
-                }
+                onDead.Invoke();
             }
         }
 
@@ -200,74 +305,6 @@ namespace PSmash.Attributes
             health -= damage;
             if (health <= 0) health = 0;
             return health;
-        }
-
-        void ApplyAttackForce(Transform attacker, float attackForce)
-        {
-
-            print("Applying attack force");
-            //TODO
-        }
-
-        public void Respawn()
-        {
-            //print(gameObject.name + "  Respawned");
-            transform.parent.gameObject.SetActive(true);
-            health = baseStats.GetStat(StatsList.Health);
-            isDead = false;
-            gameObject.layer = LayerMask.NameToLayer("Enemies");
-            transform.position = initialPosition;
-            if (posture == null)
-                return;
-            if (!posture.enabled)
-            {
-                posture.enabled = true;
-                PutArmorOn();
-            }
-            posture.FullyRegenPosture();
-        }
-
-        public void PutArmorOn()
-        {
-            GetComponent<UnblockableAttack>().PutBackArmorOn();
-            posture.EnablePostureBar();
-        }
-
-        public void TakeArmorOff()
-        {
-            print("Armor taken off");
-            GetComponent<UnblockableAttack>().TakeArmorOff();
-            posture.DisablePostureBar();
-            ArmoredEnemy armored = GetComponent<ArmoredEnemy>();
-            GetComponent<EnemyMovement>().SetSpeedMovementModifierValue(armored.GetSpeedFactorModifier());
-            GetComponent<Animator>().SetFloat("attackSpeed", armored.GetAttackSpeedFactor());
-            GetComponent<AudioSource>().pitch = 1.4f;
-        }
-        #endregion
-
-
-        #region Finisher
-        //Inform the AI that the NPC is being Finished
-        public void SetStateToFinisher()
-        {
-            pm.SendEvent("FINISHER");
-        }
-
-        //Start the Finisher Animation once the player and this npc
-        // have been correctly positioned for the animation to run
-        public void StartFinisherAnimation()
-        {
-            //Debug.Break();
-            pm.SendEvent("STARTFINISHERANIMATION");
-        }
-
-        //The damage dealt by the player and the thrown away force of the impact
-        public void TakeFinisherAttackDamage(Vector3 attackerPosition, float damage)
-        {
-            audioSource.PlayOneShot(finisherAudio);
-            FlyObjectAway(attackerPosition);
-            armorDestroyed = true;
-            DamageHealth(damage, 100, CriticalType.Critical);
         }
 
         void FlyObjectAway(Vector3 attackerPosition)
@@ -283,92 +320,7 @@ namespace PSmash.Attributes
             }
         }
 
-        #endregion
-
-        #region Sounds
-
-        public void ProtectedDamageSound()
-        {
-            if (GetComponent<ArmoredEnemy>() && !posture.isActiveAndEnabled)
-            {
-                FleshDamageSound();
-                return;
-            }
-            //print("Protected Audio");
-            audioSource.clip = protectedDamageAudio;
-            audioSource.Play();
-        }
-
-        public void FleshDamageSound()
-        {
-            //print("Flesh Audio");
-            audioSource.clip = fleshDamageAudio;
-            audioSource.Play();
-        }
-
-        public void StunnedAudio()
-        {
-            //print("Stunned Audio");
-            audioSource.clip = stunnedAudio;
-            audioSource.Play();
-        }
-
-        public void StaggerAudio()
-        {
-            //print("Stagger Audio");
-            audioSource.clip = staggerAuduio;
-            audioSource.Play();
-        }
-
-        #endregion
-
-        #region ExternalUse
-        public float GetHealthValue()
-        {
-            return health;
-        }
-
-        public float GetMaxHealth()
-        {
-            return baseStats.GetStat(StatsList.Health);
-        }
-
-        public override bool IsDead()
-        {
-            return isDead;
-        }
-
-        public bool IsStunned()
-        {
-            if(pm.FsmName == "Stun")
-            {
-                //print("Check if enemy is Stunned  " + fsm.FsmName);
-                return true;
-            }
-            else
-            {
-                return false;
-            }
-        }
-
-        /// <summary>
-        /// This one is used by the States the entity is.
-        /// </summary>
-        /// <returns></returns>
-        public bool IsDeadCheck()
-        {
-            return isDead;
-        }
-
-        /// <summary>
-        /// Used by the Stun State PlayMaker
-        /// </summary>
-        public void StunEnded()
-        {
-
-            audioSource.PlayOneShot(stunEndAudio);
-            posture.FullyRegenPosture();
-        }
+        //////////////////////////////////////////////SAVE SYSTEM///////////////////////////////////////
 
         [System.Serializable]
         struct Info
@@ -382,55 +334,62 @@ namespace PSmash.Attributes
         {
             Info info = new Info();
             info.isArmorDestroyed = armorDestroyed;
-            Tent tent = FindObjectOfType<Tent>();
-            if(tent != null)
-            {
-                info.checkpointCounter = FindObjectOfType<WorldManager>().GetCheckpointCounter();
-            }
+            info.checkpointCounter = FindObjectOfType<WorldManager>().GetCheckpointCounter();
+            print(gameObject.name + "  was saved with the Checkpoint Counter of  " + info.checkpointCounter);
             info.health = health;
             return info;
         }
 
         public void RestoreState(object state, bool isLoadLastScene)
         {
-            ////print("Restoring Taken out enemy list " + gameObject.name + "  " + GetComponent<SaveableEntity>().GetUniqueIdentifier());
-            //if (InitialState()/*takenOutEnemies.Contains(GetComponent<SaveableEntity>().GetUniqueIdentifier()*/))
-            //{
-            //    transform.parent.gameObject.SetActive(false);
-            //}
-            if(InitialState())
+            //Will restore everytime the save system ask for it
+            //Depending on the counter in the WorldManager it will overwrite the data or not
+            Info info = (Info)state;
+            WorldManager worldManager = FindObjectOfType<WorldManager>();
+            if (worldManager == null)
             {
-                if (isLoadLastScene)
-                    return;
-                Info info = (Info)state;
-                WorldManager worldManager = FindObjectOfType<WorldManager>();
-                if(worldManager == null)
-                {
-                    Debug.LogWarning("Cannot complete the restore state of this entity");
-                    return;
-                }
-                if (info.checkpointCounter == worldManager.GetCheckpointCounter())
-                {
-                    checkpointCounter = worldManager.GetCheckpointCounter();
-                    //print(gameObject.name + "  is in same checkpointNumber");
-                    //print("Armor Broken  " + info.isArmorDestroyed);
-                    health = info.health;
-                    if (Mathf.Approximately(health, 0))
-                    {
-                        transform.parent.gameObject.SetActive(false);
-                    }
-                    if (info.isArmorDestroyed)
-                    {
-                        armorDestroyed = info.isArmorDestroyed;
-                        print("Restoring Armor Off");
-                        TakeArmorOff();
-                    }
-                }
+                Debug.LogWarning("Cannot complete the restore state of this entity");
+                return;
+            }
 
+            checkpointCounter = info.checkpointCounter;
+            if (checkpointCounter != worldManager.GetCheckpointCounter())
+            {
+                print("No overwrite was applied to  " + gameObject.name);
+                return;
+            }
+            else
+            {
+                health = info.health;
+                if (Mathf.Approximately(health, 0))
+                    DisableEnemy();
+                else if (info.isArmorDestroyed)
+                {
+                    armorDestroyed = info.isArmorDestroyed;
+                    print("Restoring Armor Off");
+                    TakeArmorOff();
+                }
             }
         }
-        #endregion
+
+        void DisableEnemy()
+        {
+
+            foreach (PlayMakerFSM pm in GetComponents<PlayMakerFSM>())
+            {
+                pm.enabled = false;
+            }
+            Animator anim = GetComponent<Animator>();
+            if (anim != null)
+                anim.enabled = false;
+            for (int i = 0; i < transform.childCount; i++)
+            {
+                transform.GetChild(i).gameObject.SetActive(false);
+            }
+            gameObject.layer = LayerMask.NameToLayer("Dead");
+        }
     }
+
 }
 
 

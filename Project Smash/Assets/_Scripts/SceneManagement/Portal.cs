@@ -48,22 +48,24 @@ namespace PSmash.SceneManagement
 
             UIFader fader = FindObjectOfType<UIFader>();
             print(fader.gameObject.name);
-            SavingWrapper savingWrapper = GameObject.FindObjectOfType<SavingWrapper>();
             if(OnPortalTriggered != null)
             {
                 OnPortalTriggered(false);
             }
             else
             {
-                Debug.LogWarning("Portal cannot disable Player controller");
+                Debug.LogWarning("Portal cannot disable current Player controller");
             }
             yield return fader.FadeOut(fadeOutTime);
 
+            
+            SavingWrapper savingWrapper = GameObject.FindObjectOfType<SavingWrapper>();
             savingWrapper.Save();
 
             ////////////////////////////////////////////////////// NEXT SCENE LOADING /////////////////////////////////////////
 
             yield return SceneManager.LoadSceneAsync(sceneToLoad);
+
             ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
             if (OnPortalTriggered != null)
                 OnPortalTriggered(false);
@@ -86,7 +88,7 @@ namespace PSmash.SceneManagement
                 if (OnPortalTriggered != null)
                     OnPortalTriggered(true);
                 else
-                    Debug.LogWarning("Portal cannot enable Player controller");
+                    Debug.LogWarning("Portal cannot enable new Player controller");
             }
             else
             {

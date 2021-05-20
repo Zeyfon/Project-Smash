@@ -160,18 +160,21 @@ namespace PSmash.Inventories
             return toolsForSerialization;
         }
 
-        public void RestoreState(object state, bool isLoadLastScene)
+        public void RestoreState(object state, bool isLoadingLastSavedScene)
         {
             ///
             var equippedItemsForSerialization = (Dictionary<string, object>)state;
-
+            //print("X");
             foreach (string name in equippedItemsForSerialization.Keys)
             {
                 var item = (ToolItem)Item.GetFromID(name);
-                if (item != null && !isLoadLastScene)
+                //print("y");
+                if (item != null /*&& !isLoadLastScene*/)
                 {
+                    //print("W");
                     foreach(EquipmentSlots slot in slots)
                     {
+                        //print("Z");
                         if(item == slot.item)
                         {
                             List<int> tests = (List<int>)equippedItemsForSerialization[name];
@@ -201,6 +204,10 @@ namespace PSmash.Inventories
                     }
                 }
                 
+            }
+            if (isLoadingLastSavedScene)
+            {
+                RestoreToolsNumber2();
             }
             onToolEquippedUpdate(currentIndex);
             onSubWeaponChange(subWeapon);

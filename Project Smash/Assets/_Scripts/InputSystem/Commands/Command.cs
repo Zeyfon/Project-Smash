@@ -101,13 +101,13 @@ namespace PSmash.InputSystem
         {
             if(buttonState==1 && buttonState != prevButtonState)
             {
-                Debug.Log("Button was pressed");
+                //Debug.Log("Button was pressed");
                 pm.SendEvent("GUARDBUTTONPRESSED");
                 guardButtonState.Value = true;
             }
             else if(buttonState ==0 && buttonState!= prevButtonState)
             {
-                Debug.Log("Button was released");
+                //Debug.Log("Button was released");
                 pm.SendEvent("GUARDBUTTONRELEASED");
                 guardButtonState.Value = false;
             }

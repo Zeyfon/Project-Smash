@@ -1,4 +1,5 @@
-﻿using PSmash.Inventories;
+﻿using PSmash.Core;
+using PSmash.Inventories;
 using PSmash.SceneManagement;
 using System.Collections;
 using UnityEngine;
@@ -7,9 +8,10 @@ namespace PSmash.Checkpoints
 {
     public class WorldManager : MonoBehaviour
     {
-
+        //STATE
         static int checkpointCounter = 0;
 
+        //INITIALIZE
         private void OnEnable()
         {
             Tent.OnCheckpointDone += Tent_OnCheckpointDone;
@@ -18,49 +20,51 @@ namespace PSmash.Checkpoints
         private void OnDisable()
         {
             Tent.OnCheckpointDone -= Tent_OnCheckpointDone;
-
         }
 
-        private void Tent_OnCheckpointDone()
-        {
-            ClearLists();
-            ResetObjects();
-            Save();
-        }
-
-        private void ResetObjects()
-        {
-            StartCoroutine(ResetObjects_CR());
-        }
-
+        /////////////////////////////////////////PUBLIC//////////////////////////////////////
         public int GetCheckpointCounter()
         {
             return checkpointCounter;
         }
+        //public void ClearLists()
+        //{
+        //    GetComponentInChildren<ResetDestructibleObjects>().ClearObjectsList();
+        //    GetComponentInChildren<EnemiesReset>().ClearObjectsList();
+        //    GetComponentInChildren<EnvironmentObjectsManager>().ClearObjectsList();
+        //}
 
-        public void ResetWorld()
+
+
+        /////////////////////////////////////////////PRIVATE/////////////////////////////////
+        private void Tent_OnCheckpointDone()
         {
-            print("World is reset");
-            //StartCoroutine(ResetWorld_CR());
+            IncreaseCheckpointCounter();
+            //ClearLists();
+            ResetObjects();
+            Save();
         }
 
-        public void ClearLists()
+        public void IncreaseCheckpointCounter()
         {
-            GetComponentInChildren<ResetDestructibleObjects>().ClearObjectsList();
-            GetComponentInChildren<EnemiesReset>().ClearObjectsList();
-            GetComponentInChildren<EnvironmentObjectsManager>().ClearObjectsList();
+            checkpointCounter++;
+            print("Checkpoint Counter is  " + checkpointCounter);
+        }
+
+        void ResetObjects()
+        {
+            StartCoroutine(ResetObjects_CR());
         }
 
         IEnumerator ResetObjects_CR()
         {
-            checkpointCounter++;
             DestroyAllDamagingObjects();
-            yield return GetComponentInChildren<ResetDestructibleObjects>().ResetDestructibleObjects_CR();
+            //yield return GetComponentInChildren<ResetDestructibleObjects>().ResetDestructibleObjects_CR();
             yield return GetComponentInChildren<EnemiesReset>().ResetEnemies();
-            yield return GetComponentInChildren<EnvironmentObjectsManager>().ResetEnvironmentalObjects();
+            //yield return GetComponentInChildren<EnvironmentObjectsManager>().ResetEnvironmentalObjects();
         }
 
-        static void DestroyAllDamagingObjects()
+        void DestroyAllDamagingObjects()
         {
             foreach (Projectile projectile in FindObjectsOfType<Projectile>())
             {

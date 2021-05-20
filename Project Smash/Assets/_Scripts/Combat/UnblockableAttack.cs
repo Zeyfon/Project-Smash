@@ -127,7 +127,7 @@ namespace PSmash.Combat
 
         public void TintMaterialToRed()
         {
-            SkeletonRenderer skeletonRenderer = GetComponent<SkeletonRenderer>();
+            SkeletonRenderer skeletonRenderer = GetComponentInChildren<SkeletonRenderer>();
             if (addedMaterial != null)
             {
                 skeletonRenderer.CustomMaterialOverride.Remove(defaultMaterial);
@@ -138,7 +138,7 @@ namespace PSmash.Combat
 
         public void ReturnToOriginalTint()
         {
-            SkeletonRenderer skeletonRenderer = GetComponent<SkeletonRenderer>();
+            SkeletonRenderer skeletonRenderer = GetComponentInChildren<SkeletonRenderer>();
             skeletonRenderer.CustomMaterialOverride.Remove(defaultMaterial);
             if (addedMaterial != null)
             {
@@ -185,7 +185,7 @@ namespace PSmash.Combat
         public void TakeArmorOff()
         {
             ChangeSkin("default");
-            GetComponent<BaseStats>().SetStat(StatsList.Defense, 0);         
+            //GetComponent<BaseStats>().SetStat(StatsList.Defense, 0);         
         }
 
         public void PutBackArmorOn()
@@ -199,7 +199,7 @@ namespace PSmash.Combat
         public void ChangeSkin(string skinName)
         {
             //print("Changed Skin");
-            SkeletonMecanim skeleton = GetComponent<SkeletonMecanim>();
+            SkeletonAnimation skeleton = GetComponentInChildren<SkeletonAnimation>();
             skeleton.skeleton.SetSkin(skinName);
             skeleton.skeleton.SetSlotsToSetupPose();
             //print(skeleton.skeleton.Skin);

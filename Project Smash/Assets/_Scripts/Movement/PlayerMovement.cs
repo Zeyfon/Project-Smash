@@ -701,14 +701,14 @@ namespace PSmash.Movement
             if ((checkpoint != null && checkpoint.IsPlayerInSavePoint()) || Mathf.Approximately(storedPosition.magnitude, 0))
             {
                 SerializableVector3 position = new SerializableVector3(transform.position);
-                print("Capture updating player stored position to  " + transform.position);
+                //print("Capture updating player stored position to  " + transform.position);
                 storedPosition = transform.position;
                 return position;
             }
             else
             {
                 SerializableVector3 position = new SerializableVector3(storedPosition);
-                print("Capture Player stored position remains the same  " + storedPosition);
+                //print("Capture Player stored position remains the same  " + storedPosition);
 
                 return position;
             }
@@ -721,11 +721,11 @@ namespace PSmash.Movement
 
             if (isLoadLastScene && !Mathf.Approximately(storedPosition.magnitude,0))
             {
-                print("Restore Player position is updated to  " + storedPosition);
+                //print("Restore Player position is updated to  " + storedPosition);
                 transform.position = storedPosition;
             }
 
-            print("Restore player restored position is  " + storedPosition);
+            //print("Restore player restored position is  " + storedPosition);
             //TODO
             //HOW TO DIFFERENTIATE 
             //WHEN IS A RESTORE FOR THE CHECKPOINT

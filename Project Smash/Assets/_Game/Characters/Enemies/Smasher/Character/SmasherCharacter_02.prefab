@@ -1,18 +1,5 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &4646735505274559315
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6285349636030742712}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: -1043544612, guid: e743331561ef77147ae48cda9bcb8209, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  TargetFSMs: []
 --- !u!33 &3805381120273904507
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -15429,6 +15416,9 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  onDead:
+    m_PersistentCalls:
+      m_Calls: []
   health: 0
   isArmorEnabled: 1
   isInvulnerable: 0
@@ -15455,6 +15445,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3aa6bf3de29008b419bcdfbd9577c1a6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &4646735505274559315
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6285349636030742712}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1043544612, guid: e743331561ef77147ae48cda9bcb8209, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  TargetFSMs: []
 --- !u!1001 &2724296443517035617
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -15462,6 +15465,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 832027454039813225, guid: 587e06734df96fb45836c4df01ad03a7,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 2.6599998
+      objectReference: {fileID: 0}
     - target: {fileID: 2297644081278653716, guid: 587e06734df96fb45836c4df01ad03a7,
         type: 3}
       propertyPath: defense
@@ -15546,6 +15554,11 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 11400000, guid: 479eddc0cbc18cb4e86b0f183af762ae,
         type: 2}
+    - target: {fileID: 6633668612817146420, guid: 587e06734df96fb45836c4df01ad03a7,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 2.81
+      objectReference: {fileID: 0}
     - target: {fileID: 8851278654538908370, guid: 587e06734df96fb45836c4df01ad03a7,
         type: 3}
       propertyPath: m_Mass
