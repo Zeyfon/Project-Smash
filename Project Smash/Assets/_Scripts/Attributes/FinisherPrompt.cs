@@ -14,12 +14,19 @@ namespace PSmash.Attributes
         // Start is called before the first frame update
         void Awake()
         {
+            if (!GetComponentInParent<EnemyPosture>())
+                Destroy(gameObject);
             controlSprite.color = new Color(1, 1, 1, 0);
             keyboardSprite.color = new Color(1, 1, 1, 0);
             redlightSprite.color = new Color(1, 1, 1, 0);
             Transform controller = GameObject.FindGameObjectWithTag("Player").transform.GetChild(0);
             playerInput = controller.GetComponent<PlayerInput>();
             CheckControlInput(playerInput);
+        }
+
+        private void Update()
+        {
+            transform.rotation = Quaternion.identity;
         }
 
         private void OnEnable()
