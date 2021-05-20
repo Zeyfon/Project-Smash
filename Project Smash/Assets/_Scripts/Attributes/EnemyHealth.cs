@@ -40,8 +40,6 @@ namespace PSmash.Attributes
         EnemyPosture posture;
         PlayMakerFSM pm;
         BaseStats baseStats;
-        //Vector3 initialPosition;
-
         float damagePenetrationPercentage;
         float armorModifier = 0;
         bool armorDestroyed = false;
