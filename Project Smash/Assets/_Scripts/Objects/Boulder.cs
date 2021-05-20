@@ -1,15 +1,16 @@
-﻿using PSmash.Attributes;
+﻿using GameDevTV.Saving;
+using PSmash.Attributes;
+using PSmash.Checkpoints;
+using PSmash.Combat;
 using PSmash.Combat.Weapons;
 using UnityEngine;
-using PSmash.Combat;
-using GameDevTV.Saving;
-using System.Collections.Generic;
-using PSmash.Checkpoints;
 
 namespace PSmash.Items
 {
     public class Boulder : MonoBehaviour, IDamagable, ISaveable
     {
+
+        //CONFIG
         [SerializeField] Weapon interactiveWeapon = null;
         [SerializeField] Rigidbody2D rb;
         [SerializeField] float value = 15f;
@@ -24,34 +25,13 @@ namespace PSmash.Items
         [SerializeField] float damage = 100;
         [SerializeField] float attackForce = 2;
 
+        //STATE
         float direction;
         float timer = 0;
         bool isMoving = false;
         float previousAngularVelocity;
-        Vector3 initialPosition;
+        int checkpointCounter = 0;
 
-        public static List<string> bouldersMoved = new List<string>();
-
-        void Awake()
-        {
-            initialPosition = transform.position;
-        }
-
-        public void TakeDamage(Transform attacker, Weapon weapon, AttackType attackType, float damage, float attackForce)
-        {
-            if (weapon == interactiveWeapon)
-            {
-                direction = GetDirection(attacker);
-                audioSource.PlayOneShot(correctHit);
-                timer = applyForcetime;
-                rb.angularDrag = 0.5f;
-            }
-            else
-            {
-                audioSource.PlayOneShot(incorrectHit);
-                //print("Was not hit with correct weapon");
-            }
-        }
 
         // Update is called once per frame
         void FixedUpdate()
@@ -103,13 +83,33 @@ namespace PSmash.Items
 
         }
 
-        private void Move()
+        ///////////////////////////////////////////////////////////////PUBLIC///////////////////////////////////////////////////////////////
+        public void TakeDamage(Transform attacker, Weapon weapon, AttackType attackType, float damage, float attackForce)
+        {
+            if (weapon == interactiveWeapon)
+            {
+                direction = GetDirection(attacker);
+                audioSource.PlayOneShot(correctHit);
+                timer = applyForcetime;
+                rb.angularDrag = 0.5f;
+            }
+            else
+            {
+                audioSource.PlayOneShot(incorrectHit);
+                //print("Was not hit with correct weapon");
+            }
+        }
+
+
+        /////////////////////////////////////////////////////////PRIVATE////////////////////////////////////////////////////////////////////
+
+        void Move()
         {
             rb.angularVelocity += (value * direction);
             isMoving = true;
         }
 
-        private void StopMovement()
+        void StopMovement()
         {
             isMoving = false;
             rb.angularDrag = 10;
@@ -125,9 +125,7 @@ namespace PSmash.Items
                 return -1;
         }
 
-
-
-        private void OnCollisionStay2D(Collision2D collision)
+        void OnCollisionStay2D(Collision2D collision)
         {
             if (collision.collider.CompareTag("Ground"))
             {
@@ -137,13 +135,15 @@ namespace PSmash.Items
             }
         }
 
-        private void OnTriggerEnter2D(Collider2D collision)
+        void OnTriggerEnter2D(Collider2D collision)
         {
             if (isMoving && collision.CompareTag("Enemy"))
             {
                 collision.GetComponent<IDamagable>().TakeDamage(transform, interactiveWeapon, AttackType.NotUnblockable, damage, attackForce);
             }
         }
+
+        //////////////////////////////////////////////////////SAVING SYSTEM////////////////////////////////////////////////////////
 
         [System.Serializable]
         struct Info
@@ -154,32 +154,33 @@ namespace PSmash.Items
 
         public object CaptureState()
         {
-            if(Mathf.Abs(initialPosition.magnitude - transform.position.magnitude) < 1)
-            {
-                //print("Boulder Captured");
-                bouldersMoved.Add(GetComponent<SaveableEntity>().GetUniqueIdentifier());
-            }
             Info info = new Info();
             info.checkpointCounter = FindObjectOfType<WorldManager>().GetCheckpointCounter();
             info.position = new SerializableVector3(transform.position);
-            //print("Captured Boulder Position  " + transform.position);
             return info;
         }
 
         public void RestoreState(object state, bool isLoadLastScene)
         {
             Info info = (Info)state;
-            if (bouldersMoved.Contains(GetComponent<SaveableEntity>().GetUniqueIdentifier()))
+            WorldManager worldManager = FindObjectOfType<WorldManager>();
+            if (worldManager == null)
             {
+                //.LogWarning("Cannot complete the restore state of this entity");
                 return;
             }
-            else if (!isLoadLastScene && info.checkpointCounter == FindObjectOfType<WorldManager>().GetCheckpointCounter())
+
+            checkpointCounter = info.checkpointCounter;
+            if (checkpointCounter != worldManager.GetCheckpointCounter())
             {
-                //print("Boulder Restored");
+                //print("No overwrite was applied to  " + gameObject.name);
+                return;
+            }
+            else 
+            {
                 SerializableVector3 position = info.position;
                 Vector3 newPosition = position.ToVector();
                 transform.position = newPosition;
-                //print("Restored Boulder position  " + newPosition);
             }
         }
     }

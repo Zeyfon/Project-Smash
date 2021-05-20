@@ -17,8 +17,17 @@ MonoBehaviour:
   scale: 0.0033
   skeletonJSON: {fileID: 4900000, guid: b91e86f35d4d7ab4f918af6623677d42, type: 3}
   skeletonDataModifiers: []
-  fromAnimation: []
-  toAnimation: []
-  duration: []
+  fromAnimation:
+  - Reaper01_LoopStun
+  - Reaper01_StartStun
+  - Reaper01_EndStun
+  toAnimation:
+  - Reaper01_Finisher_Dead
+  - Reaper01_Finisher_Dead
+  - Reaper01_Finisher_Dead
+  duration:
+  - 0.05
+  - 0.05
+  - 0.05
   defaultMix: 0.2
   controller: {fileID: 9100000, guid: 7bf181b78756e9c4ab079c69643f1a87, type: 2}

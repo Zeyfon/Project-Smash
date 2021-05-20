@@ -13,10 +13,20 @@ namespace PSmash.Attributes
         private void Awake()
         {
             enemyHealth = transform.parent.transform.GetComponentInChildren<EnemyHealth>();
+            if(enemyHealth == null)
+                enemyHealth = GetComponentInParent<EnemyHealth>();
+
         }
         private void Update()
         {
+            transform.rotation = Quaternion.identity;
             bar.localScale = new Vector2(enemyHealth.GetHealthValue() / enemyHealth.GetMaxHealth(), transform.localScale.y) ;
+        }
+
+        //UNITY EVENT
+        public void DisableGameObject()
+        {
+            gameObject.SetActive(false);
         }
     }
 }

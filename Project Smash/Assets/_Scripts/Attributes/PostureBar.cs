@@ -15,13 +15,21 @@ namespace PSmash.Attributes
         private void Awake()
         {
             posture = transform.parent.transform.GetComponentInChildren<EnemyPosture>();
-            if (posture == null)
+            if(posture == null)
+                posture = GetComponentInParent<EnemyPosture>();
+            if(posture == null)
                 Destroy(gameObject);
         }
 
         private void Update()
         {
+            transform.rotation = Quaternion.identity;
             guardBar.localScale = new Vector2(posture.GetPosture() / posture.GetInitialPosture(), transform.localScale.y);
+        }
+
+        public void DisableGameObject()
+        {
+            gameObject.SetActive(false);
         }
 
         public void FullyRegenPosture()

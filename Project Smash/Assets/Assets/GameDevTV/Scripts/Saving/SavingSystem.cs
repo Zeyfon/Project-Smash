@@ -149,8 +149,9 @@ namespace GameDevTV.Saving
                 //print("Saving the  " + saveable.gameObject.name);
                 state[saveable.GetUniqueIdentifier()] = saveable.CaptureState();
             }
+
             Tent checkpoint = FindObjectOfType<Tent>();
-            
+               
             if (checkpoint != null && checkpoint.IsPlayerInSavePoint())
             {
                 int index = SceneManager.GetActiveScene().buildIndex;
@@ -168,21 +169,29 @@ namespace GameDevTV.Saving
             print("Restoring Data");
             if (isLoadLastScene)
                 restoredObjectsForLoadLastSavedScene.Clear();
+
+
+
             foreach (SaveableEntity saveable in FindObjectsOfType<SaveableEntity>())
             {
                 string id = saveable.GetUniqueIdentifier();
-                if (state.ContainsKey(id))
-                {
-                    if (!restoredObjectsForLoadLastSavedScene.Contains(id))
-                    {
-                        saveable.RestoreState(state[id], true);
-                    }
-                    else
-                    {
-                        saveable.RestoreState(state[id], false);
-                    }
-                    restoredObjectsForLoadLastSavedScene.Add(id);
-                }
+                //if (state.ContainsKey(id))
+                //{
+                //    if (!restoredObjectsForLoadLastSavedScene.Contains(id))
+                //    {
+                //        saveable.RestoreState(state[id], true);
+                //    }
+                //    else
+                //    {
+                //        saveable.RestoreState(state[id], false);
+                //    }
+                //    restoredObjectsForLoadLastSavedScene.Add(id);
+                //}
+                //print("X");
+                if (!state.ContainsKey(id))
+                    continue;
+                saveable.RestoreState(state[id], isLoadLastScene);
+                
             }
         }
 

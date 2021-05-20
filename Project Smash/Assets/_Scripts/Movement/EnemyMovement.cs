@@ -278,7 +278,7 @@ namespace PSmash.Movement
             float speedFactor = attackForce / baseSpeed;
             rb.velocity = new Vector2(0, 0);
             float timerLimit = Mathf.Log10(attackForce)/ ((attackForce/2.4f)+1) ;
-            print("Timerlimit  " + timerLimit);
+            //print("Timerlimit  " + timerLimit);
             while (timer < timerLimit)
             {
                 //print("Force applied is " + speedFactor);
@@ -310,17 +310,7 @@ namespace PSmash.Movement
             float xVelocity = speed * direction.x;
             float yVelocity = speed * direction.y;
 
-            //print(xVelocity + "  " + yVelocity);
             rb.velocity = new Vector2(xVelocity, yVelocity);
-            //print("Pre velocity " + rb.velocity + " and modifier  " + speedModifier);
-
-            //if (rb.velocity.magnitude > speed)
-            //{
-            //    Vector2 newVelocity = rb.velocity;
-            //    newVelocity = newVelocity.normalized * speed;
-            //    rb.velocity = newVelocity;
-            //}
-            //print("Post velocity " + rb.velocity);
         }
         void StayStill()
         {

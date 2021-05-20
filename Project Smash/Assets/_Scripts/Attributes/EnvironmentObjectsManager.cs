@@ -8,6 +8,7 @@ namespace PSmash.Checkpoints
 {
     public class EnvironmentObjectsManager : MonoBehaviour
     {
+        //CONFIG
         [SerializeField] GameObject boulderPrefab = null;
 
         struct ObjectSlot
@@ -17,13 +18,18 @@ namespace PSmash.Checkpoints
             public string identifier;
         }
 
+        //STATE
         List<ObjectSlot> slots = new List<ObjectSlot>();
+        
+        //INITIALIZE
         // Start is called before the first frame update
         void Awake()
         {
             SetObjectsRecord();
         }
 
+
+        ////////////////////////////////////////////////////PUBLIC////////////////////////////////////////
         public IEnumerator ResetEnvironmentalObjects()
         {
             foreach (ObjectSlot slot in slots)
@@ -37,11 +43,8 @@ namespace PSmash.Checkpoints
             yield return null;
         }
 
-        public void ClearObjectsList()
-        {
-            Boulder.bouldersMoved.Clear();
-        }
 
+        //////////////////////////////////////////////////PRIVATE///////////////////////////////////////////
         void SetObjectsRecord()
         {
             slots.Clear();

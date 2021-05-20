@@ -9,6 +9,7 @@ namespace PSmash.Attributes
     {
         [Header("General")]
         [SerializeField] protected TakeDamageEvent onTakeDamage;
+        [SerializeField] protected UnityEvent onDead;
 
         [SerializeField] protected float health = 0;
         protected AudioSource audioSource;

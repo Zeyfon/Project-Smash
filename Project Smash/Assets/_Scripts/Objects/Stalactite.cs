@@ -10,6 +10,8 @@ namespace PSmash.Items
 {
     public class Stalactite : MonoBehaviour, IDamagable, ISaveable
     {
+
+        //CONFIG
         [Header("CONFIG")]
         [SerializeField] bool isDestroyedByMace = false;
 
@@ -20,6 +22,8 @@ namespace PSmash.Items
         [SerializeField] AudioClip destroyedClip = null;
         [SerializeField] AudioClip damagedClip = null;
 
+
+        //////////////////////////////////////////////PUBLIC////////////////////////////////////////
         public void TakeDamage(Transform attacker, Weapon weapon, AttackType attackType, float damage, float attackForce)
         {
             audioSource.PlayOneShot(damagedClip);
@@ -32,6 +36,8 @@ namespace PSmash.Items
                 }
             }
         }
+
+        /////////////////////////////////////////////PRIVATE/////////////////////////////////////////
 
         void Break()
         {
@@ -54,6 +60,8 @@ namespace PSmash.Items
                 Break();
             }
         }
+
+        //////////////////////////SAVE SYSTEM/////////////////
 
         public object CaptureState()
         {

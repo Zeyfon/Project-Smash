@@ -1,7 +1,5 @@
 ﻿using GameDevTV.Saving;
-using PSmash.Attributes;
 using PSmash.Core;
-using PSmash.Stats;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -27,12 +25,12 @@ namespace PSmash.Checkpoints
         }
 
         List<EnemySlot> slots = new List<EnemySlot>();
-        ////////////////////////////////////////////////////////////////////INITIALIZE/////////////////////////////////////////////////////////////////////////////
-        // Start is called before the first frame update
+
+
+        //INITIALIZE
         void Awake()
         {
-            SetEnemyRecord();
-
+            SetResetRecord();
         }
 
         ///////////////////////////////////////////////////////////////////////PUBLIC/////////////////////////////////////////////////////////////////////////
@@ -40,34 +38,21 @@ namespace PSmash.Checkpoints
         {
             foreach (EnemySlot slot in slots)
             {
+                if (slot.id == null)
+                    continue;
                 slot.id.gameObject.SetActive(false);
-                Destroy(slot.id.gameObject,1);
-                GameObject prefabClone = Instantiate(GetPrefab(slot), slot.position, Quaternion.identity, transform);
+                Destroy(slot.id.gameObject,1f);
+                GameObject prefabClone = Instantiate(GetPrefab(slot), slot.position, Quaternion.identity);
+                yield return null;
                 prefabClone.GetComponentInChildren<SaveableEntity>().OverwriteUniqueIdentifer(slot.identifier);
             }
-            SetEnemyRecord();
-            print("Enemies respawned");
+            SetResetRecord();
             yield return null;
-        }
-
-        public void ClearObjectsList()
-        {
-            EnemyHealth.takenOutEnemies.Clear();
-            print("Enemy list is now clear");
-            ResetEnemyStatsToInitial();
-        }
-
-        private void ResetEnemyStatsToInitial()
-        {
-            foreach (EnemySlot slot in slots)
-            {
-                slot.id.GetComponentInChildren<BaseStats>().SetToInitialValues();
-            }
         }
 
 
         ///////////////////////////////////////////////////////////////////////PRIVATE/////////////////////////////////////////////////////////////////////////
-        void SetEnemyRecord()
+        void SetResetRecord()
         {
             slots.Clear();
             foreach (EnemyID id in FindObjectsOfType<EnemyID>())
@@ -77,12 +62,12 @@ namespace PSmash.Checkpoints
                 slot.position = id.transform.position;
                 slot.isLookingRight = true;
                 slot.enemyType = id.GetEnemyType();
-                string identifier = id.GetComponentInChildren<SaveableEntity>().GetUniqueIdentifier();
-                slot.identifier = identifier;
+                slot.identifier = id.GetComponent<SaveableEntity>().GetUniqueIdentifier();
+                print(slot.identifier);
                 slots.Add(slot);
             }
-            ResetEnemyStatsToInitial();
         }
+
 
         GameObject GetPrefab(EnemySlot slot)
         {

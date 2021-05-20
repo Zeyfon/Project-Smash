@@ -13,7 +13,7 @@ namespace PSmash.Menus
 
         private void OnEnable()
         {
-            print("Enabling");
+            //print("Enabling");
             Inventory inventory = Inventory.GetPlayerInventory();
             List<Inventory.CraftingSlot> craftingItemsList = inventory.GetCraftingItemsList();
             foreach (Inventory.CraftingSlot slot in craftingItemsList)
@@ -25,7 +25,7 @@ namespace PSmash.Menus
 
         private void OnDisable()
         {
-            print("Disabling");
+            //print("Disabling");
             foreach (ItemSubMenu item in GetComponentsInChildren<ItemSubMenu>())
             {
                 Destroy(item.gameObject);
