@@ -1,7 +1,5 @@
 ﻿using GameDevTV.Saving;
-using PSmash.Attributes;
 using PSmash.Core;
-using PSmash.Stats;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -60,6 +58,7 @@ namespace PSmash.Checkpoints
         ///////////////////////////////////////////////////////////////////////PRIVATE/////////////////////////////////////////////////////////////////////////
         void SetResetRecord()
         {
+            slots.Clear();
             foreach (EnemyID id in FindObjectsOfType<EnemyID>())
             {
                 EnemySlot slot = new EnemySlot();

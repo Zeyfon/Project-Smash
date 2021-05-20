@@ -59,7 +59,7 @@ namespace PSmash.Checkpoints
         IEnumerator ResetObjects_CR()
         {
             DestroyAllDamagingObjects();
-            //yield return GetComponentInChildren<ResetDestructibleObjects>().ResetDestructibleObjects_CR();
+            yield return GetComponentInChildren<ResetDestructibleObjects>().ResetDestructibleObjects_CR();
             yield return GetComponentInChildren<EnemiesReset>().ResetEnemies();
             //yield return GetComponentInChildren<EnvironmentObjectsManager>().ResetEnvironmentalObjects();
         }

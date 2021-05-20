@@ -335,7 +335,7 @@ namespace PSmash.Attributes
             Info info = new Info();
             info.isArmorDestroyed = armorDestroyed;
             info.checkpointCounter = FindObjectOfType<WorldManager>().GetCheckpointCounter();
-            print(gameObject.name + "  was saved with the Checkpoint Counter of  " + info.checkpointCounter);
+            //print(gameObject.name + "  was saved with the Checkpoint Counter of  " + info.checkpointCounter);
             info.health = health;
             return info;
         }
@@ -348,14 +348,14 @@ namespace PSmash.Attributes
             WorldManager worldManager = FindObjectOfType<WorldManager>();
             if (worldManager == null)
             {
-                Debug.LogWarning("Cannot complete the restore state of this entity");
+                //Debug.LogWarning("Cannot complete the restore state of this entity");
                 return;
             }
 
             checkpointCounter = info.checkpointCounter;
             if (checkpointCounter != worldManager.GetCheckpointCounter())
             {
-                print("No overwrite was applied to  " + gameObject.name);
+                //print("No overwrite was applied to  " + gameObject.name);
                 return;
             }
             else
@@ -366,7 +366,7 @@ namespace PSmash.Attributes
                 else if (info.isArmorDestroyed)
                 {
                     armorDestroyed = info.isArmorDestroyed;
-                    print("Restoring Armor Off");
+                    //print("Restoring Armor Off");
                     TakeArmorOff();
                 }
             }

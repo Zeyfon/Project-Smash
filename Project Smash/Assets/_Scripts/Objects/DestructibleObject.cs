@@ -26,7 +26,7 @@ namespace PSmash.Items
 
         [SerializeField] ObjectType objectType;
 
-        static int checkpointCounter = 0;
+        int checkpointCounter = 0;
         public static List<string> destroyedObjects = new List<string>();
 
         public enum ObjectType
@@ -40,10 +40,8 @@ namespace PSmash.Items
 
         public void TakeDamage(Transform attacker, Weapon weapon, AttackType attackType, float damage, float attackForce)
         {
-            counter++;
-            if (counter > hitsToDestroy)
-                return;
-            if (counter == hitsToDestroy)
+            hitsToDestroy--;
+            if (hitsToDestroy <=0)
                 Destroy();
             else
                 Damage();
@@ -61,30 +59,34 @@ namespace PSmash.Items
             destroyedAudioSource.Play();
             GameObject psClone = Instantiate(ps, transform.position, Quaternion.identity, transform);
             StartCoroutine(DestroyParticles(psClone));
-            DestroyedState();
+            StartCoroutine(DestroyedState());
             GetComponent<ItemDropper>().RandomDrop();
-            string uniqueIdentifier = GetComponent<SaveableEntity>().GetUniqueIdentifier();
-            destroyedObjects.Add(uniqueIdentifier);
+            //string uniqueIdentifier = GetComponent<SaveableEntity>().GetUniqueIdentifier();
+            //destroyedObjects.Add(uniqueIdentifier);
         }
 
-        private void DestroyedState()
+        IEnumerator DestroyedState()
         {
-            GetComponent<Collider2D>().enabled = false;
-
+            //GetComponent<Collider2D>().enabled = false;
+            gameObject.layer = LayerMask.NameToLayer("Dead");
             ///ENABLE A DESTROYED SPRITE
-            if (destroyedSprite == null)
-            {
-                spriteRender.enabled = false;
-            }
-            else
+            if (destroyedSprite != null)
             {
                 spriteRender.sprite = destroyedSprite;
             }
-            /// DISABLE THE GAMEOBJECT
-           
+            else
+            {
+                spriteRender.enabled = false;
+                while (destroyedAudioSource.isPlaying)
+                {
+                    yield return null;
+                }
+                for (int i = 0; i < transform.childCount; i++)
+                {
+                    transform.GetChild(i).gameObject.SetActive(false);
+                }
 
-
-            /// DESTROYS THE OBJECT
+            }
         }
 
         IEnumerator DestroyParticles(GameObject psClone)
@@ -102,40 +104,55 @@ namespace PSmash.Items
             return objectType;
         }
 
+
+        //////////////////////////////////////////////////////////SAVE SYSTEM//////////////////////////////////////////////
         [System.Serializable]
         struct Info
         {
             public int checkpointCounter;
+            public int hitsToGetDestroyed;
         }
 
         public object CaptureState()
         {
-            WorldManager worldManager = FindObjectOfType<WorldManager>();
-            if (worldManager == null)
-                return null;
-
+            print("Capturing state  " + gameObject.name);
             Info info = new Info();
-            info.checkpointCounter = worldManager.GetCheckpointCounter();
+            info.checkpointCounter = FindObjectOfType<WorldManager>().GetCheckpointCounter();
+            info.hitsToGetDestroyed = hitsToDestroy;
             return info;
         }
 
         public void RestoreState(object state, bool isLoadLastScene)
         {
-            if (state == null || isLoadLastScene)
-                return;
-
+            print("REstoring State  " + gameObject.name);
+            Info info = (Info)state;
             WorldManager worldManager = FindObjectOfType<WorldManager>();
             if (worldManager == null)
-                return;
-
-            Info info = (Info)state;
-            if (info.checkpointCounter == worldManager.GetCheckpointCounter())
             {
-                checkpointCounter = worldManager.GetCheckpointCounter();
-                string identifier = GetComponent<SaveableEntity>().GetUniqueIdentifier();
-                if (destroyedObjects.Contains(identifier))
+                Debug.LogWarning("Cannot complete the restore state of this entity");
+                return;
+            }
+            print("1");
+            
+            checkpointCounter = info.checkpointCounter;
+            if (checkpointCounter != worldManager.GetCheckpointCounter())
+            {
+                print("No overwrite was applied to  " + gameObject.name);
+                return;
+            }
+            else
+            {
+                print("2");
+                hitsToDestroy = info.hitsToGetDestroyed;
+                if (hitsToDestroy <= 0)
                 {
-                    DestroyedState();
+                    print("Restored to Destroyed State");
+                    gameObject.layer = LayerMask.NameToLayer("Dead");
+                    for (int i = 0; i < transform.childCount; i++)
+                    {
+                        transform.GetChild(i).gameObject.SetActive(false);
+                    }
+                    //DestroyedState();
                 }
             }
         }

@@ -8,10 +8,13 @@ namespace PSmash.Checkpoints
 {
     public class ResetDestructibleObjects : MonoBehaviour
     {
+
+        //CONFIG
         [SerializeField] GameObject barrelPrefab = null;
         [SerializeField] GameObject cratePrefab = null;
         [SerializeField] GameObject rockPrefab = null;
 
+        //STATE
         struct ObjectSlot
         {
             public DestructibleObject destructibleObject;
@@ -20,13 +23,14 @@ namespace PSmash.Checkpoints
         }
 
         List<ObjectSlot> slots = new List<ObjectSlot>();
-    // Start is called before the first frame update
+
+        //INITIALIZE
         void Awake()
         {
             SetObjectsRecord();
         }
 
-
+        //////////////////////////////////////////////////////PUBLIC///////////////////////////////////////////////////
 
         public IEnumerator ResetDestructibleObjects_CR()
         {
@@ -42,13 +46,8 @@ namespace PSmash.Checkpoints
             yield return null;
         }
 
-        public void ClearObjectsList()
-        {
-            DestructibleObject.destroyedObjects.Clear();
-            //SetObjectsRecord();
 
-        }
-
+        ///////////////////////////////////////////////////PRIVATE//////////////////////////////////////////////////////
         void SetObjectsRecord()
         {
             slots.Clear();
