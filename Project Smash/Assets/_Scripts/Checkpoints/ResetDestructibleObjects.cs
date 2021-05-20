@@ -42,7 +42,6 @@ namespace PSmash.Checkpoints
                 clone.GetComponentInChildren<SaveableEntity>().OverwriteUniqueIdentifer(slot.identifier);
             }
             SetObjectsRecord();
-            //print("Enemies respawned");
             yield return null;
         }
 

@@ -44,13 +44,9 @@ namespace PSmash.Checkpoints
                 Destroy(slot.id.gameObject,1f);
                 GameObject prefabClone = Instantiate(GetPrefab(slot), slot.position, Quaternion.identity);
                 yield return null;
-                //print(prefabClone.name);
                 prefabClone.GetComponentInChildren<SaveableEntity>().OverwriteUniqueIdentifer(slot.identifier);
-                //print("current id  " + prefabClone.GetComponentInChildren<SaveableEntity>().GetUniqueIdentifier() + "  new id  " + slot.identifier);
             }
-            yield return new WaitForSeconds(0.5f);
             SetResetRecord();
-            //print("Enemies respawned");
             yield return null;
         }
 

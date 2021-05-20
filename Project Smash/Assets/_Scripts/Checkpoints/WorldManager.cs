@@ -1,5 +1,4 @@
-﻿using PSmash.Core;
-using PSmash.Inventories;
+﻿using PSmash.Inventories;
 using PSmash.SceneManagement;
 using System.Collections;
 using UnityEngine;
@@ -27,28 +26,20 @@ namespace PSmash.Checkpoints
         {
             return checkpointCounter;
         }
-        //public void ClearLists()
-        //{
-        //    GetComponentInChildren<ResetDestructibleObjects>().ClearObjectsList();
-        //    GetComponentInChildren<EnemiesReset>().ClearObjectsList();
-        //    GetComponentInChildren<EnvironmentObjectsManager>().ClearObjectsList();
-        //}
-
-
-
-        /////////////////////////////////////////////PRIVATE/////////////////////////////////
-        private void Tent_OnCheckpointDone()
-        {
-            IncreaseCheckpointCounter();
-            //ClearLists();
-            ResetObjects();
-            Save();
-        }
 
         public void IncreaseCheckpointCounter()
         {
             checkpointCounter++;
             print("Checkpoint Counter is  " + checkpointCounter);
+        }
+
+        /////////////////////////////////////////////PRIVATE/////////////////////////////////     
+        void Tent_OnCheckpointDone()
+        {
+            IncreaseCheckpointCounter();
+            //ClearLists();
+            ResetObjects();
+            Save();
         }
 
         void ResetObjects()
@@ -61,7 +52,7 @@ namespace PSmash.Checkpoints
             DestroyAllDamagingObjects();
             yield return GetComponentInChildren<ResetDestructibleObjects>().ResetDestructibleObjects_CR();
             yield return GetComponentInChildren<EnemiesReset>().ResetEnemies();
-            //yield return GetComponentInChildren<EnvironmentObjectsManager>().ResetEnvironmentalObjects();
+            yield return GetComponentInChildren<EnvironmentObjectsManager>().ResetEnvironmentalObjects();
         }
 
         void DestroyAllDamagingObjects()
