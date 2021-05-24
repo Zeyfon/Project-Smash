@@ -64,6 +64,11 @@ namespace PSmash.SceneManagement
             GetComponent<SavingSystem>().Delete(defaultSaveFile);
         }
 
+        public void QuitGame()
+        {
+            StartCoroutine(QuitGame_CR());
+        }
+
 
         //PRIVATE
         IEnumerator LoadLastScene(bool isInitialized)
@@ -83,6 +88,17 @@ namespace PSmash.SceneManagement
                 cr_Running = false;
             }
             yield return null;
+        }
+
+        IEnumerator QuitGame_CR()
+        {
+            GetComponent<SavingSystem>().Save(defaultSaveFile);
+            UIFader fader = FindObjectOfType<UIFader>();
+            fader.FadeOutInmediate();
+            print("Fading");
+            yield return fader.FadeOut(3);
+            print("Fade Ended");
+            Application.Quit();
         }
     }
 }

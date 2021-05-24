@@ -1,6 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using PSmash.SceneManagement;
+using PSmash.Attributes;
 
 namespace PSmash.Menus
 {
@@ -9,7 +11,9 @@ namespace PSmash.Menus
         public void QuitGame()
         {
             print("Quitting Game");
-            Application.Quit();
+            FindObjectOfType<PlayerHealth>().gameObject.layer = LayerMask.NameToLayer("Dead");
+            FindObjectOfType<SavingWrapper>().QuitGame();
+            GetComponentInParent<MainMenu>().CloseMainMenu();
         }
     }
 }

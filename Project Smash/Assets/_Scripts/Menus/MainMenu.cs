@@ -32,32 +32,34 @@ namespace PSmash.Menus
             InputHandler.OnPlayerStartButtonPressed -= OpenMainMenu;
         }
 
-        public void CloseMainMenu()
+        public void CloseMainMenuAndEnablePlayerInput()
         {
-            CloseMenu();
+            CloseMainMenu();
             if(OnMenuClose != null)
             {
                 OnMenuClose();
             }
-            _controller.UI.Disable();
-            _controller.UI.ButtonStart.started -= ctx => CloseMainMenu();
+
         }
 
         void OpenMainMenu()
         {
-            _controller.UI.Enable();
-            _controller.UI.ButtonStart.started += ctx => CloseMainMenu();
+
             OpenMenu();
         }
 
         void OpenMenu()
         {
             SetChildObjects(true);
+            _controller.UI.Enable();
+            _controller.UI.ButtonStart.started += ctx => CloseMainMenuAndEnablePlayerInput();
         }
 
-        void CloseMenu()
+        public void CloseMainMenu()
         {
             SetChildObjects(false);
+            _controller.UI.Disable();
+            _controller.UI.ButtonStart.started -= ctx => CloseMainMenuAndEnablePlayerInput();
         }
 
         private void SetChildObjects(bool isEnabled)
