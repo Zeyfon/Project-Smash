@@ -353,7 +353,7 @@ namespace PSmash.Attributes
             checkpointCounter = info.checkpointCounter;
             if (checkpointCounter != worldManager.GetCheckpointCounter())
             {
-                //print("No overwrite was applied to  " + gameObject.name);
+                print("No overwrite was applied to  " + gameObject.name);
                 return;
             }
             else
