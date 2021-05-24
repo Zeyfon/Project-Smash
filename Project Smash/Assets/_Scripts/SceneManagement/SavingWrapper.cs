@@ -80,6 +80,7 @@ namespace PSmash.SceneManagement
                 if (!isInitialized)
                 {
                     GetComponent<SavingSystem>().Save(defaultSaveFile);
+                    FindObjectOfType<WorldManager>().IncreaseCheckpointCounter();
                 }
                 yield return GetComponent<SavingSystem>().LoadLastScene(defaultSaveFile, true, isInitialized);
                 GetComponent<SavingSystem>().Save(defaultSaveFile);

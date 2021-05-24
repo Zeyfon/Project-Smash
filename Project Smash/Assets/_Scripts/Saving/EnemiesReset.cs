@@ -63,7 +63,7 @@ namespace PSmash.Checkpoints
                 slot.isLookingRight = true;
                 slot.enemyType = id.GetEnemyType();
                 slot.identifier = id.GetComponent<SaveableEntity>().GetUniqueIdentifier();
-                print(slot.identifier);
+                //print(slot.identifier);
                 slots.Add(slot);
             }
         }
