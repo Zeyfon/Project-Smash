@@ -8,6 +8,11 @@ namespace PSmash.SceneManagement
     {
         [SerializeField] CanvasGroup canvasGroup = null;
 
+        /// <summary>
+        /// Turns the screen from black to colored in the given time
+        /// </summary>
+        /// <param name="time"></param>
+        /// <returns></returns>
         public IEnumerator FadeIn(float time)
         {
             //print("Fading in");
@@ -15,13 +20,21 @@ namespace PSmash.SceneManagement
             yield return fader.FadeIn(canvasGroup, time);
         }
 
+        /// <summary>
+        /// Turns the screen from colored to black in the given time
+        /// </summary>
+        /// <param name="time"></param>
+        /// <returns></returns>
         public IEnumerator FadeOut(float time)
         {
             //print("Fading Out");
             Fader fader = new Fader();
             yield return fader.FadeOut(canvasGroup, time);
         }
-
+        
+        /// <summary>
+        /// Turns the screen to black inmediately
+        /// </summary>
         public void FadeOutInmediate()
         {
             Fader fader = new Fader();
