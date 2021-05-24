@@ -36,7 +36,7 @@ namespace PSmash.Checkpoints
         /////////////////////////////////////////////PRIVATE/////////////////////////////////     
         void Tent_OnCheckpointDone()
         {
-            //IncreaseCheckpointCounter();
+            IncreaseCheckpointCounter();
             //ClearLists();
             ResetObjects();
             Save();
