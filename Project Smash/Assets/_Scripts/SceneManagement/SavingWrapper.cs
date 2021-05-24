@@ -2,6 +2,7 @@
 using System.Collections;
 using UnityEngine;
 using GameDevTV.Saving;
+using PSmash.Checkpoints;
 using PSmash.Movement;
 using System;
 
@@ -82,6 +83,7 @@ namespace PSmash.SceneManagement
                 }
                 yield return GetComponent<SavingSystem>().LoadLastScene(defaultSaveFile, true, isInitialized);
                 GetComponent<SavingSystem>().Save(defaultSaveFile);
+                FindObjectOfType<WorldManager>().IncreaseCheckpointCounter();
                 UIFader fader = FindObjectOfType<UIFader>();
                 fader.FadeOutInmediate();
                 yield return fader.FadeIn(fadeInTime);
