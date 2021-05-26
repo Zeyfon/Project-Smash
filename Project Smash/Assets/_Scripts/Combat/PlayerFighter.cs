@@ -53,6 +53,7 @@ namespace PSmash.Combat
         AudioSource audioSource;
         Transform targetTransform;
 
+
         //bool isFinishinAnEnemy = false;
 
         void Awake()
@@ -82,29 +83,29 @@ namespace PSmash.Combat
         {
             targetTransform.GetComponent<EnemyHealth>().SetStateToFinisher();
             gameObject.layer = LayerMask.NameToLayer("PlayerGhost");
-            RaycastHit2D hit = PositionPlayerInFronOfEnemy();
+            PositionPlayerInFronOfEnemy();
             OnFinisherCamera(true);
             //targetTransform = hit.transform;
-            StartCoroutine(StartPlayerAndTargetFinisherAnimations(hit.transform));
+            StartCoroutine(StartPlayerAndTargetFinisherAnimations(targetTransform));
 
             //isFinishinAnEnemy = false;
             yield return null;
         }
 
-        RaycastHit2D PositionPlayerInFronOfEnemy()
+        void PositionPlayerInFronOfEnemy()
         {
-            RaycastHit2D hit = Physics2D.Raycast(transform.position + new Vector3(0, 1), transform.right, 2, whatIsEnemy);
-            if (transform.position.x - hit.transform.position.x > 0)
+           // RaycastHit2D hit = Physics2D.Raycast(transform.position + new Vector3(0, 1), transform.right, 2, whatIsEnemy);
+            if (transform.position.x - targetTransform.transform.position.x > 0)
             {
                 //Player is at right side of enemy
-                GetComponent<Rigidbody2D>().MovePosition(hit.transform.position + new Vector3(1, 0, 0));
+                GetComponent<Rigidbody2D>().MovePosition(targetTransform.position + new Vector3(1, 0, 0));
             }
             else
             {
                 //Player is at left side of enemy
-                GetComponent<Rigidbody2D>().MovePosition(hit.transform.position + new Vector3(-1, 0, 0));
+                GetComponent<Rigidbody2D>().MovePosition(targetTransform.position + new Vector3(-1, 0, 0));
             }
-            return hit;
+            //return hit;
         }
         IEnumerator StartPlayerAndTargetFinisherAnimations(Transform targetTransform)
         {
@@ -138,17 +139,21 @@ namespace PSmash.Combat
         //Anim Event
         void FinisherAttack()
         {
-            if (targetTransform == null) return;
-            RaycastHit2D hit = Physics2D.Raycast(transform.position + new Vector3(0, 1), transform.right, 2, whatIsEnemy);
-            if (hit)
-            {
-                hit.collider.GetComponent<EnemyHealth>().TakeFinisherAttackDamage(transform.position, (int)baseStats.GetStat(StatsList.Attack) * finisherAttackFactor);
-                Instantiate(finisherPS, attackTransform.position, Quaternion.identity);
-            }
-            else
-            {
-                Debug.LogWarning("Enemy not spotted for finisher attack");
-            }
+            //if (targetTransform == null) return;
+            //RaycastHit2D hit = Physics2D.Raycast(transform.position + new Vector3(0, 1), transform.right, 2, whatIsEnemy);
+            //if (hit)
+            //{
+            //    hit.collider.GetComponent<EnemyHealth>().TakeFinisherAttackDamage(transform.position, (int)baseStats.GetStat(StatsList.Attack) * finisherAttackFactor);
+            //    Instantiate(finisherPS, attackTransform.position, Quaternion.identity);
+            //}
+            //else
+            //{
+            //    Debug.LogWarning("Enemy not spotted for finisher attack");
+            //}
+
+            targetTransform.GetComponent<EnemyHealth>().TakeFinisherAttackDamage(transform.position, (int)baseStats.GetStat(StatsList.Attack) * finisherAttackFactor);
+            Instantiate(finisherPS, attackTransform.position, Quaternion.identity);
+
             //Camera Shake
             print("Camera Effect");
             OnCameraShake();
