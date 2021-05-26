@@ -78,6 +78,7 @@ namespace PSmash.Inventories
         /// <param name="attackForce"></param>
         public void TakeDamage(Transform attacker, Weapon weapon, AttackType attackType, float damage, float attackForce)
         {
+            SetObject(true);
             //print("Received the parry "  + hasHit);
             timer = 0;
             skeletonAnim.AnimationState.SetAnimation(0, idleLoop, true);
@@ -151,17 +152,26 @@ namespace PSmash.Inventories
                 effectsOrigin = transform.position + new Vector3(GetComponent<BoxCollider2D>().size.x / 2 * transform.right.x, 0);
             else
                 effectsOrigin = transform.position + new Vector3(GetComponent<CircleCollider2D>().radius * transform.right.x, 0);
+            SetObject(false);
             Instantiate(wallHitEWffect, effectsOrigin, Quaternion.identity);
             WallHitSound();
-            ProjectileCollisionImpact(collision, impactOnWall);
+            SendDamageToIDamagableObject(collision, impactOnWall);
         }
 
-        void ProjectileCollisionImpact(Collider2D collision, AnimationReferenceAsset anim)
+        void SetObject(bool isEnabled)
+        {
+            GetComponent<Collider2D>().enabled = isEnabled;
+            print("Collider is  " + isEnabled);
+            //Debug.Break();
+        }
+
+        void SendDamageToIDamagableObject(Collider2D collision, AnimationReferenceAsset anim)
         {
             StopProjectile(anim);
             IDamagable target = collision.GetComponent<IDamagable>();
             if (target != null)
             {
+                SetObject(false);
                 float damage = owner.GetComponent<BaseStats>().GetStat(StatsList.Attack);
                 target.TakeDamage(transform, weapon, AttackType.NotUnblockable, damage, attackForce);
             }
@@ -200,7 +210,9 @@ namespace PSmash.Inventories
         {
             if (collision.CompareTag("Destructible"))
                 return;
-            else if (collision.CompareTag("Ground"))
+
+
+            if (collision.CompareTag("Ground"))
             {
                 hasHit = true;
                 HitGround(collision);
@@ -214,7 +226,7 @@ namespace PSmash.Inventories
             hasHit = true;
             Instantiate(enemyHitEffect, transform.position, Quaternion.identity);
             NPCHitSound();
-            ProjectileCollisionImpact(collision, impactOnNPC);
+            SendDamageToIDamagableObject(collision, impactOnNPC);
         }
 
     }
