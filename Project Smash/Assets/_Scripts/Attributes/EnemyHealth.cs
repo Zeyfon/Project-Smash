@@ -208,6 +208,15 @@ namespace PSmash.Attributes
         #endregion
 
         ////////////////////////////////////////////////////////PRIVATE///////////////////////////////////////////
+        
+        /// <summary>
+        /// Set the damage that will be applied to the entity
+        /// The final damage will be a combination of the base player damage, the weapon damage and several modifiers
+        /// </summary>
+        /// <param name="attacker"></param>
+        /// <param name="attackedWeapon"></param>
+        /// <param name="attackType"></param>
+        /// <param name="damage"></param>
         void Damaged(Transform attacker, Weapon attackedWeapon, AttackType attackType, float damage)
         {
             CriticalType criticalType;
