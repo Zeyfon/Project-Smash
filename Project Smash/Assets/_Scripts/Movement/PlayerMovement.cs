@@ -372,6 +372,7 @@ namespace PSmash.Movement
             }
             else
             {
+                rb.sharedMaterial = noFriction;
                 MoveInAir(input, speedFactor);
             }
 
@@ -379,9 +380,8 @@ namespace PSmash.Movement
 
         void GroundMovement(Vector2 input, float speedFactor)
         {
-            //print("Grounded Movement");
+            print("Grounded Movement");
             //print(" Input  " +input);
-            rb.sharedMaterial = noFriction;
             if (input.magnitude == 0)
             {
                 //print("input = 0");
@@ -392,9 +392,12 @@ namespace PSmash.Movement
             //print("Direction  " + direction);
             if(direction.sqrMagnitude == 0)
             {
+                print("Do not know why it enters here");
+                rb.sharedMaterial = fullFriction;
                 MoveInAir(input, speedFactor);
                 return;
             }
+            rb.sharedMaterial = noFriction;
             float speedModified = baseSpeed * Mathf.Abs(input.x) * speedFactor;
             //print("Speed " + speed);
             float xVelocity = direction.x * speedModified;
@@ -404,7 +407,7 @@ namespace PSmash.Movement
 
         void DoNotMove()
         {
-            //print("Uncontrolled Movement");
+            print("Uncontrolled Movement");
             rb.sharedMaterial = noFriction;
         }
 
@@ -414,9 +417,8 @@ namespace PSmash.Movement
         /// <param name="speedFactor"></param>
         void MoveInAir(Vector2 input, float speedFactor)
         {
-            //print("Not Grounded Movement");
+            print("Not Grounded Movement");
             rb.velocity = new Vector2(input.x * speedFactor * baseSpeed, rb.velocity.y);
-            rb.sharedMaterial = noFriction;
         }
 
         void CreateDust()
