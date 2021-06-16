@@ -1,20 +1,22 @@
-﻿using PSmash.Attributes;
-using System;
-using System.Collections;
+﻿using System.Collections;
 using UnityEngine;
 
 namespace PSmash.Movement
 {
-    public class EnemyMovement : MonoBehaviour
+    public class EnemyMovement : CharacterMovement
     {
+        [System.Serializable]
+        struct AttackMovements
+        {
+            public float impulseTime;
+            public float speedFactor;
+        }
         //CONFIG
         [Header("Speed Values")]
-        [SerializeField] float baseSpeed = 5;
-        //[SerializeField] float chaseFactor = 1;
-        //[SerializeField] float patrolingFactor = 0.5f;
+        [SerializeField] float speedFactor = 1;
+        
 
         [Header("Slope Control")]
-        [SerializeField] float slopeCheckDistance = 0.5f;
         [SerializeField] float maxSlopeAngle = 40f;
 
         [Header("General Info")]
@@ -23,31 +25,36 @@ namespace PSmash.Movement
         [SerializeField] float distanceCheckForObstacles = 1;
         [SerializeField] float groundCheckRadius = 0.5f;
 
-        [Header("Physics Materials")]
-        [SerializeField] PhysicsMaterial2D lowFriction = null;
-        [SerializeField] PhysicsMaterial2D fullFriction = null;
-
         [Header("Layers Masks")]
-        [SerializeField] LayerMask whatIsGround;
         [SerializeField] LayerMask whatIsObstacle;
         [SerializeField] LayerMask whatIsPlayer;
-        
+
+        [Header("Attack/Damage Movements")]
+        [Tooltip("The times each attack impulse will be active")]
+        [SerializeField] AttackMovements[] attackMovements;
+
 
         //STATE
         Animator animator;
-        Rigidbody2D rb;
+        Vector2 impulseDirection;
         bool isGrounded;
         float currentYAngle = 0;
         float speedMovementModifier = 1;
         Coroutine coroutine;
-
-        int test = 0;
-        bool isMovementInterruption = false;
+        bool isMovementOverriden = false;
+        bool isAttackingWithImpulse = false;
+        float impulseTime = 0;
+        float timer = Mathf.Infinity;
+        float speedModifier = 1;
+        Transform player;
+        Vector2 direction;
+        bool hasFinished = false;
 
         //INITIALIZE
         // Start is called before the first frame update
         void Awake()
         {
+            player = GameObject.FindGameObjectWithTag("Player").transform;
             rb = GetComponent<Rigidbody2D>();
             animator = GetComponent<Animator>();
             if (animator == null)
@@ -58,9 +65,57 @@ namespace PSmash.Movement
         {
             GroundCheck();
             SetXVelocityInAnimator();
-            if (isMovementInterruption)
+            if (timer < impulseTime)
             {
-                //print("velocity " + rb.velocity);
+                CombatImpulse();
+                print(timer);
+                hasFinished = true;
+            }
+            else if (hasFinished)
+            {
+                rb.velocity = new Vector2(0, 0);
+                hasFinished = false;
+            }
+
+            timer += Time.deltaTime;
+        }
+
+        void SetAttackImpulseDirection()
+        {
+            direction = GetMovementDirection();
+        }
+
+        /// <summary>
+        /// Anim Event to start the movement caused by attack. Completely optional
+        /// </summary>
+        /// <param name="index"></param>
+        void StartAttackImpulse(int index)
+        {
+            impulseTime = attackMovements[index].impulseTime;
+            speedFactor = attackMovements[index].speedFactor;
+            timer = 0;
+        }
+
+        void CombatImpulse()
+        {
+            
+            print("impulsing" + direction + "  " + speedFactor + "  " + speedModifier);
+            Movement(direction, true, speedFactor, speedModifier);
+        }
+
+        Vector2 GetMovementDirection()
+        {
+            float xPosition = player.position.x - transform.position.x;
+            if (xPosition > 0)
+            {
+                print("Moving to the right");
+                return new Vector2(1, 0);
+
+            }
+            else
+            {
+                print("Moving to the left");
+                return new Vector2(-1, 0);
             }
         }
 
@@ -73,68 +128,46 @@ namespace PSmash.Movement
         //MoveTo and MoveAwayFrom must be combined in the future
         public void MoveTo(Vector3 targetPosition, float speedFactor, bool isMovingTowardsTarget, PlayMakerFSM pm)
         {
+            if (Mathf.Abs(targetPosition.x - transform.position.x) < 0.2f)
+                return;
             CheckWhereToFace(targetPosition, isMovingTowardsTarget);
             if (IsTargetAbove())
             {
                 //print("Player is above");
                 MoveAwayFrom(targetPosition, 0.9f);
             }
-            else if (!isGrounded)
+            else if (!IsAtOrigin(targetPosition)&& CanMove())
             {
-               // rb.velocity = new Vector2(0, rb.velocity.y);
-            }
-            else if (isGrounded && !IsAtOrigin(targetPosition))
-            {
-                if (!isMovementInterruption)
+                 //print("Is In Slope");
+                if (!slope.CanWalkOnThisGround(transform.position, transform.right, slopeCheckDistance, maxSlopeAngle, whatIsGround))
                 {
-                    if (CanMove())
-                    {
-                        SlopeControl slope = new SlopeControl();
-                        //print("Is Grounded and can move");
-                        if (slope.IsOnSlope(transform.position, transform.right, slopeCheckDistance, whatIsGround))
-                        {
-                            //print("Is In Slope");
-                            if (slope.CanWalkOnSlope(transform.position, transform.right, slopeCheckDistance, maxSlopeAngle, whatIsGround))
-                            {
-                                //print("Is Moving");
-                                rb.sharedMaterial = lowFriction;
-                                Vector2 direction = slope.GetMovementDirectionWithSlopecontrol(transform.position, transform.right, slopeCheckDistance, whatIsGround);
-                                Move(direction, speedFactor, speedMovementModifier);
-                            }
-                            else
-                            {
-                                //print("Not Moving");
-                                rb.sharedMaterial = fullFriction;
-                                Move(new Vector2(0, 0), 0, 0);
-                            }
-                        }
-                        else
-                        {
-                            //print("IsMoving");
-                            rb.sharedMaterial = lowFriction;
-                            Vector2 direction = slope.GetMovementDirectionWithSlopecontrol(transform.position, transform.right, slopeCheckDistance, whatIsGround);
-                            Move(direction, speedFactor, speedMovementModifier);
-                        }
-                    }
-                    else
-                    {
-                        //print("Not Moving");
-                        rb.sharedMaterial = fullFriction;
-                        Move(new Vector2(0, 0), 0, 0);
-                    }
+                rb.sharedMaterial = noFriction;
                 }
                 else
                 {
-                    print("Being moved by attack force");
-                    //Let the Physics Engine takes control by itself
+                    rb.sharedMaterial = lowFriction;
+                    if (!isMovingTowardsTarget)
+                    {
+                        targetPosition = InvertTargetPosition(targetPosition);
+                    }
+                    Vector2 movementDirectionNormalized = (targetPosition - transform.position).normalized;
+                    Movement(movementDirectionNormalized, isGrounded, speedFactor, speedMovementModifier);
                 }
-
             }
             else
             {
-                //Debug.LogWarning(gameObject.name + "  does not what to do in MoveTo Method ");
-                rb.velocity = new Vector2(0, rb.velocity.y);
+                rb.sharedMaterial = lowFriction;
             }
+        }
+
+        Vector3 InvertTargetPosition(Vector3 positionToInvert)
+        {
+            float distance = positionToInvert.x - transform.position.x;
+            if (distance > 0)
+                return new Vector3(transform.position.x + distance, positionToInvert.y, positionToInvert.z);
+            else
+                return new Vector3(transform.position.x - distance, positionToInvert.y, positionToInvert.z);
+
         }
 
         /// <summary>
@@ -146,6 +179,8 @@ namespace PSmash.Movement
         /// <param name="attackForce"></param>
         public void ApplyAttackImpactReceived(Transform attacker, float attackForce)
         {
+            isMovementOverriden = true;
+            
             StartCoroutine(ApplyAttackImpactReceived_CR(attacker,attackForce));
         }
 
@@ -173,28 +208,26 @@ namespace PSmash.Movement
         }
 
         //Used by FSMs
-        public void CheckWhereToFace(Vector3 targetPosition, bool isFacingTarget)
+        public void CheckWhereToFace(Vector3 targetPosition, bool isMovingTowardsTarget)
         {
-            bool playerIsAtRight = targetPosition.x - transform.position.x > 0;
-            bool isLookingRight = transform.right.x > 0;
+            Vector3 forward = transform.TransformDirection(Vector3.right);
+            Vector3 toOther = (targetPosition - transform.position).normalized;
+            //print(forward + "  " + toOther + "  "  +  Vector3.Dot(forward,toOther));
+            bool isPlayerInFront = Vector3.Dot(forward, toOther) >  0 ;
 
-            if (playerIsAtRight && isLookingRight && isFacingTarget)
-                return;
-            else if (playerIsAtRight && isLookingRight && !isFacingTarget)
-                Flip();
-            else if (playerIsAtRight && !isLookingRight && isFacingTarget)
-                Flip();
-            else if (playerIsAtRight && !isLookingRight && !isFacingTarget)
-                return;
+            //To rotate and moves towards the target
+            if(!isPlayerInFront && isMovingTowardsTarget)
+            {
 
-            else if (!playerIsAtRight && isLookingRight && isFacingTarget)
                 Flip();
-            else if (!playerIsAtRight && isLookingRight && !isFacingTarget)
-                return;
-            else if (!playerIsAtRight && !isLookingRight && isFacingTarget)
-                return;
-            else if (!playerIsAtRight && !isLookingRight && !isFacingTarget)
+            }
+
+            //To rotate and moves away from target without facing it. RUNNING AWAY
+            else if(isPlayerInFront && !isMovingTowardsTarget)
+            {
                 Flip();
+            }
+
         }
 
         public void Flip()
@@ -237,15 +270,25 @@ namespace PSmash.Movement
                 return false;
             }
         }
+
+        bool IsTargetAbove()
+        {
+            RaycastHit2D hit = Physics2D.Raycast(transform.position, Vector2.up, 2.3f, whatIsPlayer);
+            if (hit)
+            {
+                return true;
+            }
+            else return false;
+        }
         IEnumerator SpecialAttackImpulse_CR(float speedFactor)
         {
             SlopeControl slope = new SlopeControl();
-            Vector2 slopeNormalPerp;
+            Vector2 direction;
             while (true)
             {
                 yield return new WaitForFixedUpdate();
-                slopeNormalPerp = slope.GetMovementDirectionWithSlopecontrol(transform.position, transform.right, slopeCheckDistance, whatIsGround);
-                Move(slopeNormalPerp, speedFactor,1);
+                direction = slope.GetMovementDirectionWithSlopecontrol(transform.position, transform.right, slopeCheckDistance, whatIsGround);
+                Movement(direction, isGrounded, speedFactor, speedMovementModifier);
             }
         }
 
@@ -265,69 +308,39 @@ namespace PSmash.Movement
 
         IEnumerator ApplyAttackImpactReceived_CR(Transform attacker, float attackForce)
         {
-            //print("Force applyied to " + gameObject.name);
-            isMovementInterruption = true;
+            isMovementOverriden = true;
             yield return null;
             float tempDrag = rb.drag;
             PhysicsMaterial2D tempPhysicsMaterial = rb.sharedMaterial;
-            rb.sharedMaterial = lowFriction;
-            rb.drag = 2;
             Vector2 attackDirection = (transform.position - attacker.position).normalized;
             float timer = 0;
-            SlopeControl slope = new SlopeControl();
             float speedFactor = attackForce / baseSpeed;
-            rb.velocity = new Vector2(0, 0);
-            float timerLimit = Mathf.Log10(attackForce)/ ((attackForce/2.4f)+1) ;
-            //print("Timerlimit  " + timerLimit);
+            float timerLimit = Mathf.Log10(attackForce)/ ((attackForce/2.4f)+1);
+
+            rb.sharedMaterial = lowFriction;
+            rb.drag = 2;
+
             while (timer < timerLimit)
             {
-                //print("Force applied is " + speedFactor);
                 timer += Time.fixedDeltaTime;
-                //print(timer);
 
-                Vector2 direction = slope.GetMovementDirectionWithSlopecontrol(transform.position, attackDirection, slopeCheckDistance, whatIsGround);
-                //print(direction + "  " + speedFactor);
-                Move(direction, speedFactor, 1);
+                impulseDirection = slope.GetMovementDirectionWithSlopecontrol(transform.position, attackDirection, slopeCheckDistance, whatIsGround);
+                Movement(impulseDirection, isGrounded, speedFactor, speedMovementModifier);
                 yield return new WaitForFixedUpdate();
             }
             rb.drag = tempDrag;
             rb.sharedMaterial = tempPhysicsMaterial;
-            isMovementInterruption = false;
+            isMovementOverriden = false;
         }
 
 
 
         bool CanMove()
         {
-            if (IsGroundInFront() && !IsObstacleInFront()) return true;
+            if (IsGroundInFront() && !IsObstacleInFront() && !isMovementOverriden) return true;
             else return false;
         }
 
-        void Move(Vector2 direction, float speedFactor, float speedModifier)
-        {
-            float speed = baseSpeed * speedFactor * speedModifier;
-
-            float xVelocity = speed * direction.x;
-            float yVelocity = speed * direction.y;
-
-            rb.velocity = new Vector2(xVelocity, yVelocity);
-        }
-        void StayStill()
-        {
-
-            //rb.velocity = new Vector2(0, rb.velocity.y);
-        }
-
-        bool IsTargetAbove()
-        {
-            RaycastHit2D hit = Physics2D.Raycast(transform.position, Vector2.up, 2.3f, whatIsPlayer);
-            if (hit)
-            {
-                //Debug.LogWarning("Player is above");
-                return true;
-            }
-            else return false;
-        }
 
         bool IsGroundInFront()
         {

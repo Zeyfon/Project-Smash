@@ -1318,7 +1318,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5443774675299684674}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.18, z: 0}
+  m_LocalPosition: {x: 0, y: 0.19, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 5160043310986458569}
@@ -7819,7 +7819,7 @@ MonoBehaviour:
           tooltip: 
           showInInspector: 0
           networkSync: 0
-          value: 0
+          value: 0.05
         fsmIntParams: []
         fsmBoolParams: []
         fsmVector2Params: []
@@ -8108,13 +8108,19 @@ MonoBehaviour:
         actionNames:
         - HutongGames.PlayMaker.Actions.CallMethodAdvanced
         - HutongGames.PlayMaker.Actions.CallMethodAdvanced
+        - HutongGames.PlayMaker.Actions.CallMethodAdvanced
+        - HutongGames.PlayMaker.Actions.BoolTest
+        - HutongGames.PlayMaker.Actions.BoolTest
         customNames:
         - 
         - 
-        actionEnabled: 0101
-        actionIsOpen: 0101
-        actionStartIndex: 000000000a000000
-        actionHashCodes: 6d6181036d618103
+        - 
+        - 
+        - 
+        actionEnabled: 0101010101
+        actionIsOpen: 0101010101
+        actionStartIndex: 000000000a00000011000000190000001d000000
+        actionHashCodes: 6d6181036d6181036d618103a4c8bf00a4c8bf00
         unityObjectParams: []
         fsmGameObjectParams: []
         fsmOwnerDefaultParams: []
@@ -8136,8 +8142,21 @@ MonoBehaviour:
           tooltip: 
           showInInspector: 0
           networkSync: 0
+          value: IsLedgeFound
+        - useVariable: 0
+          name: 
+          tooltip: 
+          showInInspector: 0
+          networkSync: 0
           value: CheckForLadder
         fsmObjectParams:
+        - useVariable: 1
+          name: movement
+          tooltip: 
+          showInInspector: 0
+          networkSync: 0
+          typeName: PSmash.Movement.PlayerMovement
+          value: {fileID: 8235024681204614677}
         - useVariable: 1
           name: movement
           tooltip: 
@@ -8249,6 +8268,30 @@ MonoBehaviour:
             stringValues: []
             vector4Values: []
             objectReferences: []
+        - variableName: isOnLedge
+          objectType: UnityEngine.Object
+          useVariable: 1
+          type: 2
+          floatValue: 0
+          intValue: 0
+          boolValue: 0
+          stringValue: 
+          vector4Value: {x: 0, y: 0, z: 0, w: 0}
+          objectReference: {fileID: 0}
+          arrayValue:
+            useVariable: 0
+            name: 
+            tooltip: 
+            showInInspector: 0
+            networkSync: 0
+            type: -1
+            objectTypeName: 
+            floatValues: []
+            intValues: 
+            boolValues: 
+            stringValues: []
+            vector4Values: []
+            objectReferences: []
         - variableName: movementInput
           objectType: UnityEngine.Object
           useVariable: 1
@@ -8273,10 +8316,10 @@ MonoBehaviour:
             stringValues: []
             vector4Values: []
             objectReferences: []
-        - variableName: 
-          objectType: 
-          useVariable: 0
-          type: -1
+        - variableName: isMovingOnLadder
+          objectType: UnityEngine.Object
+          useVariable: 1
+          type: 2
           floatValue: 0
           intValue: 0
           boolValue: 0
@@ -8301,21 +8344,38 @@ MonoBehaviour:
         fsmEnumParams: []
         fsmFloatParams: []
         fsmIntParams: []
-        fsmBoolParams: []
+        fsmBoolParams:
+        - useVariable: 1
+          name: isMovingOnLadder
+          tooltip: 
+          showInInspector: 0
+          networkSync: 0
+          value: 0
+        - useVariable: 1
+          name: isOnLedge
+          tooltip: 
+          showInInspector: 0
+          networkSync: 0
+          value: 0
         fsmVector2Params: []
         fsmVector3Params: []
         fsmColorParams: []
         fsmRectParams: []
         fsmQuaternionParams: []
-        stringParams: []
-        byteData: 000102000000000102000000
-        arrayParamSizes: 0300000001000000
+        stringParams:
+        - LADDERCLIMB
+        - 
+        - CLIMBINGLEDGE
+        - 
+        byteData: 0001020000000001020000000001020000000101
+        arrayParamSizes: 030000000000000001000000
         arrayParamTypes:
+        - HutongGames.PlayMaker.FsmVar
         - HutongGames.PlayMaker.FsmVar
         - HutongGames.PlayMaker.FsmVar
         customTypeSizes: 
         customTypeNames: []
-        paramDataType: 18000000120000000c0000002700000027000000270000002700000001000000010000000700000018000000120000000c0000002700000027000000010000000100000007000000
+        paramDataType: 18000000120000000c0000002700000027000000270000002700000001000000010000000700000018000000120000000c0000002700000001000000010000000700000018000000120000000c00000027000000270000000100000001000000070000001100000017000000170000000100000011000000170000001700000001000000
         paramName:
         - behaviour
         - methodName
@@ -8330,13 +8390,28 @@ MonoBehaviour:
         - behaviour
         - methodName
         - parameters
+        - storeResult
+        - manualUI
+        - everyFrame
+        - updateType
+        - behaviour
+        - methodName
+        - parameters
         - 
         - storeResult
         - manualUI
         - everyFrame
         - updateType
-        paramDataPos: 000000000000000000000000000000000100000002000000030000000000000001000000020000000100000001000000010000000400000005000000060000000700000008000000
-        paramByteDataSize: 000000000000000000000000000000000000000000000000000000000100000001000000040000000000000000000000000000000000000000000000010000000100000004000000
+        - boolVariable
+        - isTrue
+        - isFalse
+        - everyFrame
+        - boolVariable
+        - isTrue
+        - isFalse
+        - everyFrame
+        paramDataPos: 000000000000000000000000000000000100000002000000030000000000000001000000020000000100000001000000010000000400000006000000070000000800000002000000020000000200000005000000060000000c0000000d0000000e0000000000000000000000010000001200000001000000020000000300000013000000
+        paramByteDataSize: 000000000000000000000000000000000000000000000000000000000100000001000000040000000000000000000000000000000000000001000000010000000400000000000000000000000000000000000000000000000100000001000000040000000000000000000000000000000100000000000000000000000000000001000000
     - name: NORMALATTACK
       description: 
       colorIndex: 2
@@ -8848,14 +8923,18 @@ MonoBehaviour:
       actionData:
         actionNames:
         - HutongGames.PlayMaker.Actions.CallMethod
+        - HutongGames.PlayMaker.Actions.SetBoolValue
+        - HutongGames.PlayMaker.Actions.SetBoolValue
         - HutongGames.PlayMaker.Actions.NextFrameEvent
         customNames:
         - 
         - 
-        actionEnabled: 0101
-        actionIsOpen: 0101
-        actionStartIndex: 0000000007000000
-        actionHashCodes: ca51e90088611604
+        - 
+        - 
+        actionEnabled: 01010101
+        actionIsOpen: 01010101
+        actionStartIndex: 00000000070000000a0000000d000000
+        actionHashCodes: ca51e90027fbe10327fbe10388611604
         unityObjectParams: []
         fsmGameObjectParams: []
         fsmOwnerDefaultParams: []
@@ -8934,7 +9013,31 @@ MonoBehaviour:
         fsmEnumParams: []
         fsmFloatParams: []
         fsmIntParams: []
-        fsmBoolParams: []
+        fsmBoolParams:
+        - useVariable: 1
+          name: isMovingOnLadder
+          tooltip: 
+          showInInspector: 0
+          networkSync: 0
+          value: 0
+        - useVariable: 0
+          name: 
+          tooltip: 
+          showInInspector: 0
+          networkSync: 0
+          value: 0
+        - useVariable: 1
+          name: isOnLedge
+          tooltip: 
+          showInInspector: 0
+          networkSync: 0
+          value: 0
+        - useVariable: 0
+          name: 
+          tooltip: 
+          showInInspector: 0
+          networkSync: 0
+          value: 0
         fsmVector2Params: []
         fsmVector3Params: []
         fsmColorParams: []
@@ -8942,13 +9045,13 @@ MonoBehaviour:
         fsmQuaternionParams: []
         stringParams:
         - FINISHED
-        byteData: 0000
+        byteData: 00000000
         arrayParamSizes: 01000000
         arrayParamTypes:
         - HutongGames.PlayMaker.FsmVar
         customTypeSizes: 
         customTypeNames: []
-        paramDataType: 18000000120000000c0000002700000027000000010000000100000017000000
+        paramDataType: 18000000120000000c0000002700000027000000010000000100000011000000110000000100000011000000110000000100000017000000
         paramName:
         - behaviour
         - methodName
@@ -8957,9 +9060,15 @@ MonoBehaviour:
         - storeResult
         - everyFrame
         - manualUI
+        - boolVariable
+        - boolValue
+        - everyFrame
+        - boolVariable
+        - boolValue
+        - everyFrame
         - sendEvent
-        paramDataPos: 0000000000000000000000000000000001000000000000000100000000000000
-        paramByteDataSize: 0000000000000000000000000000000000000000010000000100000000000000
+        paramDataPos: 0000000000000000000000000000000001000000000000000100000000000000010000000200000002000000030000000300000000000000
+        paramByteDataSize: 0000000000000000000000000000000000000000010000000100000000000000000000000100000000000000000000000100000000000000
     - name: LADDER CLIMB
       description: 
       colorIndex: 2
@@ -9085,37 +9194,15 @@ MonoBehaviour:
         colorIndex: 0
       actionData:
         actionNames:
-        - HutongGames.PlayMaker.Actions.GetEventInfo
-        - HutongGames.PlayMaker.Actions.SetEventData
         - HutongGames.PlayMaker.Actions.CallMethodAdvanced
         customNames:
         - 
-        - 
-        - 
-        actionEnabled: 010101
-        actionIsOpen: 010101
-        actionStartIndex: 000000000f0000001c000000
-        actionHashCodes: d9ade60327ffbc036d618103
+        actionEnabled: 01
+        actionIsOpen: 01
+        actionStartIndex: 00000000
+        actionHashCodes: 6d618103
         unityObjectParams: []
-        fsmGameObjectParams:
-        - useVariable: 1
-          name: 
-          tooltip: 
-          showInInspector: 0
-          networkSync: 0
-          value: {fileID: 0}
-        - useVariable: 1
-          name: 
-          tooltip: 
-          showInInspector: 0
-          networkSync: 0
-          value: {fileID: 0}
-        - useVariable: 1
-          name: 
-          tooltip: 
-          showInInspector: 0
-          networkSync: 0
-          value: {fileID: 0}
+        fsmGameObjectParams: []
         fsmOwnerDefaultParams: []
         animationCurveParams: []
         functionCallParams: []
@@ -9124,24 +9211,6 @@ MonoBehaviour:
         fsmPropertyParams: []
         layoutOptionParams: []
         fsmStringParams:
-        - useVariable: 1
-          name: 
-          tooltip: 
-          showInInspector: 0
-          networkSync: 0
-          value: 
-        - useVariable: 1
-          name: 
-          tooltip: 
-          showInInspector: 0
-          networkSync: 0
-          value: 
-        - useVariable: 1
-          name: 
-          tooltip: 
-          showInInspector: 0
-          networkSync: 0
-          value: 
         - useVariable: 0
           name: 
           tooltip: 
@@ -9150,48 +9219,6 @@ MonoBehaviour:
           value: ClimbingLedge
         fsmObjectParams:
         - useVariable: 1
-          name: 
-          tooltip: 
-          showInInspector: 0
-          networkSync: 0
-          typeName: 
-          value: {fileID: 0}
-        - useVariable: 1
-          name: 
-          tooltip: 
-          showInInspector: 0
-          networkSync: 0
-          typeName: 
-          value: {fileID: 0}
-        - useVariable: 1
-          name: 
-          tooltip: 
-          showInInspector: 0
-          networkSync: 0
-          typeName: 
-          value: {fileID: 0}
-        - useVariable: 1
-          name: 
-          tooltip: 
-          showInInspector: 0
-          networkSync: 0
-          typeName: 
-          value: {fileID: 0}
-        - useVariable: 1
-          name: 
-          tooltip: 
-          showInInspector: 0
-          networkSync: 0
-          typeName: 
-          value: {fileID: 0}
-        - useVariable: 1
-          name: 
-          tooltip: 
-          showInInspector: 0
-          networkSync: 0
-          typeName: UnityEngine.Object
-          value: {fileID: 0}
-        - useVariable: 1
           name: movement
           tooltip: 
           showInInspector: 0
@@ -9199,30 +9226,6 @@ MonoBehaviour:
           typeName: PSmash.Movement.PlayerMovement
           value: {fileID: 8235024681204614677}
         fsmVarParams:
-        - variableName: ledge
-          objectType: UnityEngine.Object
-          useVariable: 1
-          type: 5
-          floatValue: 0
-          intValue: 0
-          boolValue: 0
-          stringValue: 
-          vector4Value: {x: 0, y: 0, z: 0, w: 0}
-          objectReference: {fileID: 0}
-          arrayValue:
-            useVariable: 0
-            name: 
-            tooltip: 
-            showInInspector: 0
-            networkSync: 0
-            type: -1
-            objectTypeName: 
-            floatValues: []
-            intValues: 
-            boolValues: 
-            stringValues: []
-            vector4Values: []
-            objectReferences: []
         - variableName: 
           objectType: 
           useVariable: 0
@@ -9249,167 +9252,32 @@ MonoBehaviour:
             objectReferences: []
         fsmArrayParams: []
         fsmEnumParams: []
-        fsmFloatParams:
-        - useVariable: 1
-          name: 
-          tooltip: 
-          showInInspector: 0
-          networkSync: 0
-          value: 0
-        - useVariable: 1
-          name: 
-          tooltip: 
-          showInInspector: 0
-          networkSync: 0
-          value: 0
-        fsmIntParams:
-        - useVariable: 1
-          name: 
-          tooltip: 
-          showInInspector: 0
-          networkSync: 0
-          value: 0
-        - useVariable: 1
-          name: 
-          tooltip: 
-          showInInspector: 0
-          networkSync: 0
-          value: 0
-        fsmBoolParams:
-        - useVariable: 1
-          name: 
-          tooltip: 
-          showInInspector: 0
-          networkSync: 0
-          value: 0
-        - useVariable: 1
-          name: 
-          tooltip: 
-          showInInspector: 0
-          networkSync: 0
-          value: 0
-        fsmVector2Params:
-        - useVariable: 1
-          name: ledge
-          tooltip: 
-          showInInspector: 0
-          networkSync: 0
-          value: {x: 0, y: 0}
-        - useVariable: 1
-          name: ledge
-          tooltip: 
-          showInInspector: 0
-          networkSync: 0
-          value: {x: 0, y: 0}
-        fsmVector3Params:
-        - useVariable: 1
-          name: 
-          tooltip: 
-          showInInspector: 0
-          networkSync: 0
-          value: {x: 0, y: 0, z: 0}
-        - useVariable: 1
-          name: 
-          tooltip: 
-          showInInspector: 0
-          networkSync: 0
-          value: {x: 0, y: 0, z: 0}
-        fsmColorParams:
-        - useVariable: 1
-          name: 
-          tooltip: 
-          showInInspector: 0
-          networkSync: 0
-          value: {r: 0, g: 0, b: 0, a: 1}
-        - useVariable: 1
-          name: 
-          tooltip: 
-          showInInspector: 0
-          networkSync: 0
-          value: {r: 0, g: 0, b: 0, a: 1}
-        fsmRectParams:
-        - useVariable: 1
-          name: 
-          tooltip: 
-          showInInspector: 0
-          networkSync: 0
-          value:
-            serializedVersion: 2
-            x: 0
-            y: 0
-            width: 0
-            height: 0
-        - useVariable: 1
-          name: 
-          tooltip: 
-          showInInspector: 0
-          networkSync: 0
-          value:
-            serializedVersion: 2
-            x: 0
-            y: 0
-            width: 0
-            height: 0
-        fsmQuaternionParams:
-        - useVariable: 1
-          name: 
-          tooltip: 
-          showInInspector: 0
-          networkSync: 0
-          value: {x: 0, y: 0, z: 0, w: 0}
-        - useVariable: 1
-          name: 
-          tooltip: 
-          showInInspector: 0
-          networkSync: 0
-          value: {x: 0, y: 0, z: 0, w: 0}
+        fsmFloatParams: []
+        fsmIntParams: []
+        fsmBoolParams: []
+        fsmVector2Params: []
+        fsmVector3Params: []
+        fsmColorParams: []
+        fsmRectParams: []
+        fsmQuaternionParams: []
         stringParams: []
-        byteData: 000000000000
-        arrayParamSizes: 01000000
+        byteData: 000002000000
+        arrayParamSizes: 00000000
         arrayParamTypes:
         - HutongGames.PlayMaker.FsmVar
         customTypeSizes: 
         customTypeNames: []
-        paramDataType: 130000001200000011000000100000000f000000250000001c00000012000000130000001e000000230000002000000021000000190000001800000013000000100000000f0000001200000011000000250000001c0000001e000000230000001900000020000000210000001800000018000000120000000c0000002700000027000000010000000100000007000000
+        paramDataType: 18000000120000000c00000027000000010000000100000007000000
         paramName:
-        - sentByGameObject
-        - fsmName
-        - getBoolData
-        - getIntData
-        - getFloatData
-        - getVector2Data
-        - getVector3Data
-        - getStringData
-        - getGameObjectData
-        - getRectData
-        - getQuaternionData
-        - getMaterialData
-        - getTextureData
-        - getColorData
-        - getObjectData
-        - setGameObjectData
-        - setIntData
-        - setFloatData
-        - setStringData
-        - setBoolData
-        - setVector2Data
-        - setVector3Data
-        - setRectData
-        - setQuaternionData
-        - setColorData
-        - setMaterialData
-        - setTextureData
-        - setObjectData
         - behaviour
         - methodName
         - parameters
-        - 
         - storeResult
         - manualUI
         - everyFrame
         - updateType
-        paramDataPos: 000000000000000000000000000000000000000000000000000000000100000001000000000000000000000000000000010000000000000002000000020000000100000001000000020000000100000001000000010000000100000001000000010000000300000004000000050000000600000003000000000000000000000001000000000000000100000002000000
-        paramByteDataSize: 000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000010000000100000004000000
+        paramDataPos: 00000000000000000000000000000000000000000100000002000000
+        paramByteDataSize: 00000000000000000000000000000000010000000100000004000000
     - name: TOOLACTION
       description: 
       colorIndex: 2
@@ -10298,6 +10166,12 @@ MonoBehaviour:
         showInInspector: 0
         networkSync: 0
         value: 0
+      - useVariable: 1
+        name: 
+        tooltip: 
+        showInInspector: 0
+        networkSync: 0
+        value: 0
       intVariables:
       - useVariable: 1
         name: 
@@ -10354,6 +10228,18 @@ MonoBehaviour:
         showInInspector: 0
         networkSync: 0
         value: 0
+      - useVariable: 1
+        name: isOnLedge
+        tooltip: 
+        showInInspector: 0
+        networkSync: 0
+        value: 0
+      - useVariable: 1
+        name: isMovingOnLadder
+        tooltip: 
+        showInInspector: 0
+        networkSync: 0
+        value: 0
       stringVariables:
       - useVariable: 1
         name: 
@@ -10369,7 +10255,7 @@ MonoBehaviour:
         networkSync: 0
         value: {x: 0, y: 0}
       - useVariable: 1
-        name: ledge
+        name: 
         tooltip: 
         showInInspector: 0
         networkSync: 0
@@ -10418,7 +10304,7 @@ MonoBehaviour:
         tooltip: 
         showInInspector: 0
         networkSync: 0
-        typeName: 
+        typeName: UnityEngine.Object
         value: {fileID: 0}
       - useVariable: 1
         name: 
@@ -10442,7 +10328,7 @@ MonoBehaviour:
       - 
       - Exposed
       - InputProxy
-      variableCategoryIDs: 00000000000000000000000000000000000000000000000001000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+      variableCategoryIDs: 00000000000000000000000000000000000000000000000001000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
     description: 
     docUrl: 
     showStateLabel: 0
@@ -10620,18 +10506,38 @@ MonoBehaviour:
         colorIndex: 0
       actionData:
         actionNames:
+        - HutongGames.PlayMaker.Actions.SetVelocity2d
         - HutongGames.PlayMaker.Actions.SetAnimatorInt
         - HutongGames.PlayMaker.Actions.CallMethodAdvanced
+        - HutongGames.PlayMaker.Actions.SetGravity2dScale
         customNames:
         - 
         - 
-        actionEnabled: 0101
-        actionIsOpen: 0101
-        actionStartIndex: 0000000005000000
-        actionHashCodes: f91525036d618103
+        - 
+        - 
+        actionEnabled: 00010000
+        actionIsOpen: 01010101
+        actionStartIndex: 00000000050000000a00000011000000
+        actionHashCodes: efa8d304f91525036d618103e8ea3902
         unityObjectParams: []
         fsmGameObjectParams: []
         fsmOwnerDefaultParams:
+        - ownerOption: 0
+          gameObject:
+            useVariable: 0
+            name: 
+            tooltip: 
+            showInInspector: 0
+            networkSync: 0
+            value: {fileID: 0}
+        - ownerOption: 0
+          gameObject:
+            useVariable: 0
+            name: 
+            tooltip: 
+            showInInspector: 0
+            networkSync: 0
+            value: {fileID: 0}
         - ownerOption: 0
           gameObject:
             useVariable: 0
@@ -10694,7 +10600,25 @@ MonoBehaviour:
             objectReferences: []
         fsmArrayParams: []
         fsmEnumParams: []
-        fsmFloatParams: []
+        fsmFloatParams:
+        - useVariable: 1
+          name: 
+          tooltip: 
+          showInInspector: 0
+          networkSync: 0
+          value: 0
+        - useVariable: 1
+          name: 
+          tooltip: 
+          showInInspector: 0
+          networkSync: 0
+          value: 0
+        - useVariable: 0
+          name: 
+          tooltip: 
+          showInInspector: 0
+          networkSync: 0
+          value: 0
         fsmIntParams:
         - useVariable: 0
           name: 
@@ -10703,20 +10627,31 @@ MonoBehaviour:
           networkSync: 0
           value: 1
         fsmBoolParams: []
-        fsmVector2Params: []
+        fsmVector2Params:
+        - useVariable: 0
+          name: 
+          tooltip: 
+          showInInspector: 0
+          networkSync: 0
+          value: {x: 0, y: 0}
         fsmVector3Params: []
         fsmColorParams: []
         fsmRectParams: []
         fsmQuaternionParams: []
         stringParams: []
-        byteData: 0000000000000002000000
+        byteData: 000000000000000002000000
         arrayParamSizes: 00000000
         arrayParamTypes:
         - HutongGames.PlayMaker.FsmVar
         customTypeSizes: 
         customTypeNames: []
-        paramDataType: 140000001200000010000000010000000700000018000000120000000c00000027000000010000000100000007000000
+        paramDataType: 14000000250000000f0000000f00000001000000140000001200000010000000010000000700000018000000120000000c00000027000000010000000100000007000000140000000f000000
         paramName:
+        - gameObject
+        - vector
+        - x
+        - y
+        - everyFrame
         - gameObject
         - parameter
         - Value
@@ -10729,8 +10664,10 @@ MonoBehaviour:
         - manualUI
         - everyFrame
         - updateType
-        paramDataPos: 000000000000000000000000000000000100000000000000010000000000000000000000050000000600000007000000
-        paramByteDataSize: 000000000000000000000000010000000400000000000000000000000000000000000000010000000100000004000000
+        - gameObject
+        - gravityScale
+        paramDataPos: 00000000000000000000000001000000000000000100000000000000000000000100000002000000000000000100000000000000000000000600000007000000080000000200000002000000
+        paramByteDataSize: 00000000000000000000000000000000010000000000000000000000000000000100000004000000000000000000000000000000000000000100000001000000040000000000000000000000
     - name: Climbing Ladder
       description: 
       colorIndex: 0
@@ -10905,8 +10842,8 @@ MonoBehaviour:
       colorIndex: 2
       position:
         serializedVersion: 2
-        x: 55.515625
-        y: 439.5703
+        x: 58.515625
+        y: 524.66406
         width: 132
         height: 16
       isBreakpoint: 0
@@ -11019,7 +10956,7 @@ MonoBehaviour:
           name: ACTIONFINISHED
           isSystemEvent: 0
           isGlobal: 0
-        toState: ACTIONFINISHED
+        toState: Moving Outside of ladder
         linkStyle: 0
         linkConstraint: 0
         colorIndex: 0
@@ -11042,12 +10979,16 @@ MonoBehaviour:
       actionData:
         actionNames:
         - HutongGames.PlayMaker.Actions.CallMethodAdvanced
+        - HutongGames.PlayMaker.Actions.CallMethodAdvanced
+        - HutongGames.PlayMaker.Actions.BoolTest
         customNames:
         - 
-        actionEnabled: 01
-        actionIsOpen: 01
-        actionStartIndex: 00000000
-        actionHashCodes: 6d618103
+        - 
+        - 
+        actionEnabled: 010101
+        actionIsOpen: 010101
+        actionStartIndex: 000000000900000011000000
+        actionHashCodes: 6d6181036d618103a4c8bf00
         unityObjectParams: []
         fsmGameObjectParams: []
         fsmOwnerDefaultParams: []
@@ -11064,7 +11005,20 @@ MonoBehaviour:
           showInInspector: 0
           networkSync: 0
           value: LadderMovement
+        - useVariable: 0
+          name: 
+          tooltip: 
+          showInInspector: 0
+          networkSync: 0
+          value: IsMovingOutsideOfLadder
         fsmObjectParams:
+        - useVariable: 1
+          name: movement
+          tooltip: 
+          showInInspector: 0
+          networkSync: 0
+          typeName: PSmash.Movement.PlayerMovement
+          value: {fileID: 8235024681204614677}
         - useVariable: 1
           name: movement
           tooltip: 
@@ -11145,24 +11099,81 @@ MonoBehaviour:
             stringValues: []
             vector4Values: []
             objectReferences: []
+        - variableName: movementInput
+          objectType: UnityEngine.Object
+          useVariable: 1
+          type: 5
+          floatValue: 0
+          intValue: 0
+          boolValue: 0
+          stringValue: 
+          vector4Value: {x: 0, y: 0, z: 0, w: 0}
+          objectReference: {fileID: 0}
+          arrayValue:
+            useVariable: 0
+            name: 
+            tooltip: 
+            showInInspector: 0
+            networkSync: 0
+            type: -1
+            objectTypeName: 
+            floatValues: []
+            intValues: 
+            boolValues: 
+            stringValues: []
+            vector4Values: []
+            objectReferences: []
+        - variableName: isMovingOutsideOfLadder
+          objectType: UnityEngine.Object
+          useVariable: 1
+          type: 2
+          floatValue: 0
+          intValue: 0
+          boolValue: 0
+          stringValue: 
+          vector4Value: {x: 0, y: 0, z: 0, w: 0}
+          objectReference: {fileID: 0}
+          arrayValue:
+            useVariable: 0
+            name: 
+            tooltip: 
+            showInInspector: 0
+            networkSync: 0
+            type: -1
+            objectTypeName: 
+            floatValues: []
+            intValues: 
+            boolValues: 
+            stringValues: []
+            vector4Values: []
+            objectReferences: []
         fsmArrayParams: []
         fsmEnumParams: []
         fsmFloatParams: []
         fsmIntParams: []
-        fsmBoolParams: []
+        fsmBoolParams:
+        - useVariable: 1
+          name: isMovingOutsideOfLadder
+          tooltip: 
+          showInInspector: 0
+          networkSync: 0
+          value: 0
         fsmVector2Params: []
         fsmVector3Params: []
         fsmColorParams: []
         fsmRectParams: []
         fsmQuaternionParams: []
-        stringParams: []
-        byteData: 000102000000
-        arrayParamSizes: 02000000
+        stringParams:
+        - ACTIONFINISHED
+        - 
+        byteData: 00010200000000010200000001
+        arrayParamSizes: 0200000001000000
         arrayParamTypes:
+        - HutongGames.PlayMaker.FsmVar
         - HutongGames.PlayMaker.FsmVar
         customTypeSizes: 
         customTypeNames: []
-        paramDataType: 18000000120000000c000000270000002700000027000000010000000100000007000000
+        paramDataType: 18000000120000000c00000027000000270000002700000001000000010000000700000018000000120000000c000000270000002700000001000000010000000700000011000000170000001700000001000000
         paramName:
         - behaviour
         - methodName
@@ -11173,8 +11184,20 @@ MonoBehaviour:
         - manualUI
         - everyFrame
         - updateType
-        paramDataPos: 000000000000000000000000000000000100000002000000000000000100000002000000
-        paramByteDataSize: 000000000000000000000000000000000000000000000000010000000100000004000000
+        - behaviour
+        - methodName
+        - parameters
+        - 
+        - storeResult
+        - manualUI
+        - everyFrame
+        - updateType
+        - boolVariable
+        - isTrue
+        - isFalse
+        - everyFrame
+        paramDataPos: 00000000000000000000000000000000010000000200000000000000010000000200000001000000010000000100000003000000040000000600000007000000080000000000000000000000010000000c000000
+        paramByteDataSize: 000000000000000000000000000000000000000000000000010000000100000004000000000000000000000000000000000000000000000001000000010000000400000000000000000000000000000001000000
     - name: JUMP
       description: 
       colorIndex: 2
@@ -11440,6 +11463,116 @@ MonoBehaviour:
         - everyFrame
         paramDataPos: 00000000000000000000000001000000000000000100000000000000010000000200000005000000
         paramByteDataSize: 00000000000000000000000000000000010000000400000000000000000000000000000001000000
+    - name: Moving Outside of ladder
+      description: 
+      colorIndex: 0
+      position:
+        serializedVersion: 2
+        x: 61
+        y: 461
+        width: 178
+        height: 32
+      isBreakpoint: 0
+      isSequence: 0
+      hideUnused: 0
+      transitions:
+      - fsmEvent:
+          name: ACTIONFINISHED
+          isSystemEvent: 0
+          isGlobal: 0
+        toState: ACTIONFINISHED
+        linkStyle: 0
+        linkConstraint: 0
+        colorIndex: 0
+      actionData:
+        actionNames:
+        - HutongGames.PlayMaker.Actions.GetAnimatorInt
+        - HutongGames.PlayMaker.Actions.IntCompare
+        customNames:
+        - 
+        - 
+        actionEnabled: 0101
+        actionIsOpen: 0101
+        actionStartIndex: 0000000005000000
+        actionHashCodes: f915250309faa102
+        unityObjectParams: []
+        fsmGameObjectParams: []
+        fsmOwnerDefaultParams:
+        - ownerOption: 0
+          gameObject:
+            useVariable: 0
+            name: 
+            tooltip: 
+            showInInspector: 0
+            networkSync: 0
+            value: {fileID: 0}
+        animationCurveParams: []
+        functionCallParams: []
+        fsmTemplateControlParams: []
+        fsmEventTargetParams: []
+        fsmPropertyParams: []
+        layoutOptionParams: []
+        fsmStringParams:
+        - useVariable: 0
+          name: 
+          tooltip: 
+          showInInspector: 0
+          networkSync: 0
+          value: LadderMovement
+        fsmObjectParams: []
+        fsmVarParams: []
+        fsmArrayParams: []
+        fsmEnumParams: []
+        fsmFloatParams: []
+        fsmIntParams:
+        - useVariable: 1
+          name: ladderMovement
+          tooltip: 
+          showInInspector: 0
+          networkSync: 0
+          value: 0
+        - useVariable: 1
+          name: ladderMovement
+          tooltip: 
+          showInInspector: 0
+          networkSync: 0
+          value: 0
+        - useVariable: 0
+          name: 
+          tooltip: 
+          showInInspector: 0
+          networkSync: 0
+          value: 100
+        fsmBoolParams: []
+        fsmVector2Params: []
+        fsmVector3Params: []
+        fsmColorParams: []
+        fsmRectParams: []
+        fsmQuaternionParams: []
+        stringParams:
+        - ACTIONFINISHED
+        - 
+        - 
+        byteData: 010000000001
+        arrayParamSizes: 
+        arrayParamTypes: []
+        customTypeSizes: 
+        customTypeNames: []
+        paramDataType: 1400000012000000100000000100000007000000100000001000000017000000170000001700000001000000
+        paramName:
+        - gameObject
+        - parameter
+        - result
+        - everyFrame
+        - everyFrameOption
+        - integer1
+        - integer2
+        - equal
+        - lessThan
+        - greaterThan
+        - everyFrame
+        paramDataPos: 0000000000000000000000000000000001000000010000000200000000000000010000000200000005000000
+        paramByteDataSize: 0000000000000000000000000100000004000000000000000000000000000000000000000000000001000000
     events:
     - name: FINISHED
       isSystemEvent: 1
@@ -11477,7 +11610,13 @@ MonoBehaviour:
         showInInspector: 0
         networkSync: 0
         value: 2
-      intVariables: []
+      intVariables:
+      - useVariable: 1
+        name: ladderMovement
+        tooltip: 
+        showInInspector: 0
+        networkSync: 0
+        value: 0
       boolVariables:
       - useVariable: 1
         name: 
@@ -11499,6 +11638,12 @@ MonoBehaviour:
         value: 0
       - useVariable: 1
         name: 
+        tooltip: 
+        showInInspector: 0
+        networkSync: 0
+        value: 0
+      - useVariable: 1
+        name: isMovingOutsideOfLadder
         tooltip: 
         showInInspector: 0
         networkSync: 0
@@ -11551,7 +11696,7 @@ MonoBehaviour:
       categories:
       - 
       - InputProxy
-      variableCategoryIDs: 0000000000000000010000000100000000000000010000000000000001000000000000000000000000000000
+      variableCategoryIDs: 00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
     description: 
     docUrl: 
     showStateLabel: 0
@@ -15797,13 +15942,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3af8402e7acf0a243b2e55a862a34bfe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  baseSpeed: 8
+  maxRunningSpeed: 8
+  maxInteractingSpeed: 2
+  raycastFrameInterval: 10
+  footStepAudioSource: {fileID: 7923322884189893466}
   whatIsGround:
     serializedVersion: 2
     m_Bits: 1048832
-  groundCheckRadius: 0.21
+  groundCheckRadius: 0.25
+  groundCheckPosition: {x: 0, y: 0.19}
   groundCheck: {fileID: 5443774675299684673}
-  footStepAudioSource: {fileID: 7923322884189893466}
-  climbingLegeAudioSource: {fileID: 6980760019153880000}
+  slopeCheckDistance: 0.5
+  maxSlopeAngle: 40
+  jumpSound: {fileID: 8300000, guid: e37524d7545066a4e8752c953056cd0d, type: 3}
+  canDoubleJump: 1
   landingSound: {fileID: 8300000, guid: 6ea10d94283298640bf22da6945ea8c1, type: 3}
   climbingLadderSpeedFactor: 0.4
   checkLadderDistance: 1.2
@@ -15816,21 +15969,14 @@ MonoBehaviour:
   ladderCheck: {fileID: 261638900147641167}
   climbingLadderSound: {fileID: 8300000, guid: a3feb468145941246b56f9f29283c063, type: 3}
   climbingWallSound: {fileID: 8300000, guid: a3feb468145941246b56f9f29283c063, type: 3}
-  baseSpeed: 8
-  maxRunningSpeed: 8
-  maxInteractingSpeed: 2
-  raycastFrameInterval: 10
-  jumpSound: {fileID: 8300000, guid: e37524d7545066a4e8752c953056cd0d, type: 3}
   wallCheckUpper: {fileID: 2103609530526705770}
   wallCheckMiddle: {fileID: 2091369723035283744}
-  slopeCheckDistance: 0.5
+  climbingLegeAudioSource: {fileID: 6980760019153880000}
+  backJumpSound: {fileID: 8300000, guid: f2efa23650d27ba49a27c03a52428d73, type: 3}
+  rollsound: {fileID: 8300000, guid: 58648815a1ab21848aa73501bcec5415, type: 3}
   noFriction: {fileID: 6200000, guid: 22229002b67e3954cb0b31741f9095cd, type: 2}
   lowFriction: {fileID: 6200000, guid: 65236b81a583a484aa33d4c136233544, type: 2}
   fullFriction: {fileID: 6200000, guid: 4b501e885db70b54faf1caa7979b5f5f, type: 2}
-  maxSlopeAngle: 40
-  backJumpSound: {fileID: 8300000, guid: f2efa23650d27ba49a27c03a52428d73, type: 3}
-  rollsound: {fileID: 8300000, guid: 58648815a1ab21848aa73501bcec5415, type: 3}
-  canDoubleJump: 1
   dust: {fileID: 6048441312559774933}
 --- !u!114 &8711499913422244330
 MonoBehaviour:

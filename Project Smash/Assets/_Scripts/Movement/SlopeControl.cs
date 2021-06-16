@@ -68,7 +68,7 @@ namespace PSmash.Movement
 
         }
 
-        public bool CanWalkOnSlope(Vector2 checkPos, Vector2 transformRight, float slopeCheckDistance, float maxSlopeAngle, LayerMask whatIsGround)
+        public bool CanWalkOnThisGround(Vector2 checkPos, Vector2 transformRight, float slopeCheckDistance, float maxSlopeAngle, LayerMask whatIsGround)
         {
             bool canWalkOnSlope;
             float slopeDownAngle = 0 ;
