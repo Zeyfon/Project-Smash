@@ -551,8 +551,8 @@ MonoBehaviour:
       colorIndex: 0
       position:
         serializedVersion: 2
-        x: 653.58594
-        y: 547.9219
+        x: 686.4219
+        y: 555.03906
         width: 137
         height: 48
       isBreakpoint: 0
@@ -1822,8 +1822,8 @@ MonoBehaviour:
       colorIndex: 0
       position:
         serializedVersion: 2
-        x: 651.8672
-        y: 629.27344
+        x: 674.7031
+        y: 660.6797
         width: 100
         height: 32
       isBreakpoint: 0
@@ -1834,7 +1834,7 @@ MonoBehaviour:
           name: FINISHED
           isSystemEvent: 1
           isGlobal: 0
-        toState: State 2
+        toState: SendDamage To Target
         linkStyle: 0
         linkConstraint: 0
         colorIndex: 0
@@ -1968,16 +1968,16 @@ MonoBehaviour:
         - manualUI
         paramDataPos: 00000000000000000000000001000000000000000000000000000000010000000100000002000000
         paramByteDataSize: 00000000000000000100000000000000000000000000000000000000000000000100000001000000
-    - name: State 2
+    - name: SendDamage To Target
       description: 
       colorIndex: 0
       position:
         serializedVersion: 2
-        x: 500.71094
-        y: 630.2422
-        width: 100
+        x: 463.54688
+        y: 688.78906
+        width: 170
         height: 32
-      isBreakpoint: 0
+      isBreakpoint: 1
       isSequence: 0
       hideUnused: 0
       transitions:
@@ -2123,7 +2123,7 @@ MonoBehaviour:
           objectType: UnityEngine.Object
           useVariable: 0
           type: 0
-          floatValue: 4
+          floatValue: 2
           intValue: 0
           boolValue: 0
           stringValue: 

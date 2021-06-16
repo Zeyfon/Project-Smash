@@ -67,6 +67,10 @@ namespace PSmash.Attributes
         /// <param name="damage"></param>
         public override void TakeDamage(Transform attacker, Weapon weapon, AttackType attackType, float damage, float attackForce)
         {
+            //TODO
+            //I cannot find the Knockack Movement applied to Merle when attacked
+            //The knockback movement must be applied using the attackForce value received in the Method
+            //Right now the movement is constant and do not use the variable
             if (isDead) 
                 return;
             if (attackType == AttackType.NotUnblockable && GetComponent<PlayerGuard>().IsGuarding(attacker, weapon))
