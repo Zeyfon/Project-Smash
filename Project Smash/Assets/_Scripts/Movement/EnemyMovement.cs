@@ -68,7 +68,7 @@ namespace PSmash.Movement
             if (timer < impulseTime)
             {
                 CombatImpulse();
-                print(timer);
+                //print(timer);
                 hasFinished = true;
             }
             else if (hasFinished)
@@ -148,6 +148,9 @@ namespace PSmash.Movement
                     rb.sharedMaterial = lowFriction;
                     if (!isMovingTowardsTarget)
                     {
+                        //TODO
+                        //The enemy is suppossed to be running frontly away from the player
+                        //Right not it rotates accordingly, but the movement is backwards and not frontwards
                         targetPosition = InvertTargetPosition(targetPosition);
                     }
                     Vector2 movementDirectionNormalized = (targetPosition - transform.position).normalized;
@@ -181,7 +184,7 @@ namespace PSmash.Movement
         {
             isMovementOverriden = true;
             
-            StartCoroutine(ApplyAttackImpactReceived_CR(attacker,attackForce));
+            StartCoroutine(ApplyKnockback_CR(attacker,attackForce));
         }
 
         /// <summary>
@@ -306,7 +309,7 @@ namespace PSmash.Movement
             animator.SetFloat("xVelocity", xVelocity);
         }
 
-        IEnumerator ApplyAttackImpactReceived_CR(Transform attacker, float attackForce)
+        IEnumerator ApplyKnockback_CR(Transform attacker, float attackForce)
         {
             isMovementOverriden = true;
             yield return null;

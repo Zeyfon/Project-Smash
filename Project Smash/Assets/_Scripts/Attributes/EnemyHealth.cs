@@ -81,6 +81,7 @@ namespace PSmash.Attributes
                 return;
             }
             Damaged(attacker, weapon, attackType, damage);
+            ///
             GetComponent<EnemyMovement>().ApplyAttackImpactReceived(attacker, attackForce);
         }
 

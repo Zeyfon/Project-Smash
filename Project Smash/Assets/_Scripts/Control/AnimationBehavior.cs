@@ -17,8 +17,9 @@ namespace PSmash.Control
         {
             spine = animator.GetComponentInChildren<SkeletonAnimation>();
             TrackEntry entry = spine.AnimationState.SetAnimation(0, animation, loop);
-
-            entry.TimeScale = animator.speed * stateInfo.speedMultiplier;
+            
+            entry.TimeScale = stateInfo.speed* stateInfo.speedMultiplier;
+            Debug.Log(entry.TimeScale + "  "  + stateInfo.speed);
             spine.loop = loop;
             if (parameter != "")
                 animator.SetInteger(parameter, animator.GetInteger(parameter) + 1);

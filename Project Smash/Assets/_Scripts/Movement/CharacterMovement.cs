@@ -57,8 +57,8 @@ namespace PSmash.Movement
                     xVelocity = directionAfterSlope.x * speedModified;
                     float yVelocity = directionAfterSlope.y * speedModified;
                     rb.velocity = new Vector2(xVelocity, yVelocity);
-                    if (!gameObject.CompareTag("Player"))
-                        print(gameObject.name + "  " + rb.velocity);
+                    //if (!gameObject.CompareTag("Player"))
+                        //print(gameObject.name + "  " + rb.velocity);
                 }
             }
         }
