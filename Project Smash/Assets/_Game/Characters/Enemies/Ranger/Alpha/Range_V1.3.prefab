@@ -2869,7 +2869,7 @@ MonoBehaviour:
     locked: 0
     manualUpdate: 0
     keepDelayedEventsOnStateExit: 0
-    preprocessed: 1
+    preprocessed: 0
     ExposedEvents: []
     RestartOnEnable: 1
     EnableDebugFlow: 0
@@ -2895,7 +2895,7 @@ MonoBehaviour:
     handleJointBreak: 0
     handleJointBreak2D: 0
     handleOnGUI: 0
-    handleFixedUpdate: 1
+    handleFixedUpdate: 0
     handleLateUpdate: 0
     handleApplicationEvents: 0
     handleUiEvents: 0
@@ -10023,21 +10023,24 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   baseSpeed: 6.5
   slopeCheckDistance: 0.5
+  whatIsGround:
+    serializedVersion: 2
+    m_Bits: 2097408
+  noFriction: {fileID: 0}
+  lowFriction: {fileID: 6200000, guid: 65236b81a583a484aa33d4c136233544, type: 2}
+  fullFriction: {fileID: 6200000, guid: 4b501e885db70b54faf1caa7979b5f5f, type: 2}
+  speedFactor: 1
   maxSlopeAngle: 40
   groundCheck: {fileID: 8772356922390346027}
   distanceCheckForObstacles: 1
   groundCheckRadius: 0.5
-  lowFriction: {fileID: 6200000, guid: 65236b81a583a484aa33d4c136233544, type: 2}
-  fullFriction: {fileID: 6200000, guid: 4b501e885db70b54faf1caa7979b5f5f, type: 2}
-  whatIsGround:
-    serializedVersion: 2
-    m_Bits: 2097408
   whatIsObstacle:
     serializedVersion: 2
     m_Bits: 1024
   whatIsPlayer:
     serializedVersion: 2
     m_Bits: 2048
+  attackMovements: []
 --- !u!114 &7852469771817071823
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -13781,7 +13784,7 @@ MonoBehaviour:
     locked: 0
     manualUpdate: 0
     keepDelayedEventsOnStateExit: 0
-    preprocessed: 1
+    preprocessed: 0
     ExposedEvents: []
     RestartOnEnable: 1
     EnableDebugFlow: 0
@@ -13807,7 +13810,7 @@ MonoBehaviour:
     handleJointBreak: 0
     handleJointBreak2D: 0
     handleOnGUI: 0
-    handleFixedUpdate: 1
+    handleFixedUpdate: 0
     handleLateUpdate: 0
     handleApplicationEvents: 0
     handleUiEvents: 0
@@ -13840,6 +13843,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_RootOrder
       value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 1390539539241677357, guid: 587e06734df96fb45836c4df01ad03a7,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 1542648066500279022, guid: 587e06734df96fb45836c4df01ad03a7,
         type: 3}
@@ -14003,7 +14011,7 @@ PrefabInstance:
     - target: {fileID: 8851278654538908373, guid: 587e06734df96fb45836c4df01ad03a7,
         type: 3}
       propertyPath: m_Name
-      value: Ranger01_03
+      value: Range_V1.3
       objectReference: {fileID: 0}
     - target: {fileID: 8851278654538908375, guid: 587e06734df96fb45836c4df01ad03a7,
         type: 3}
