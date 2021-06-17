@@ -6,17 +6,17 @@ namespace PSmash.Attributes
 {
     public class ArmoredEnemy : MonoBehaviour
     {
-        [SerializeField] float unarmoredSpeedFactor;
-        [SerializeField] float unarmoredAttackSpeedFactor;
+        [SerializeField] float unarmoredMovementSpeedModifier;
+        [SerializeField] float unarmoredAttackSpeedModifier;
 
         public float GetSpeedFactorModifier()
         {
-            return unarmoredSpeedFactor;
+            return unarmoredMovementSpeedModifier;
         }
 
-        public float GetAttackSpeedFactor()
+        public float GetAttackSpeedModifier()
         {
-            return unarmoredAttackSpeedFactor;
+            return unarmoredAttackSpeedModifier;
         }
     }
 

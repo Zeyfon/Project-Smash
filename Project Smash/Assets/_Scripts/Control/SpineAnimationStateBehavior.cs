@@ -1,29 +1,47 @@
 ﻿using UnityEngine;
 using Spine;
 using Spine.Unity;
+using PSmash.Movement;
 
 namespace PSmash.Control
 {
 
-    public class AnimationBehavior : StateMachineBehaviour
+    public class SpineAnimationStateBehavior : StateMachineBehaviour
     {
         [SerializeField] AnimationReferenceAsset animation = null;
         [SerializeField] string parameter = null;
         [SerializeField] bool loop = false;
+        [SerializeField] bool animSpeedModifiable = false;
         SkeletonAnimation spine = null;
+
 
         // OnStateEnter is called before OnStateEnter is called on any state inside this state machine
         override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
         {
             spine = animator.GetComponentInChildren<SkeletonAnimation>();
             TrackEntry entry = spine.AnimationState.SetAnimation(0, animation, loop);
-            
-            entry.TimeScale = stateInfo.speed* stateInfo.speedMultiplier;
-            Debug.Log(entry.TimeScale + "  "  + stateInfo.speed);
+            //float speedModifier = GetAnimSpeedModifier(animator, ref stateInfo);
+            entry.TimeScale = stateInfo.speed * stateInfo.speedMultiplier;
             spine.loop = loop;
-            if (parameter != "")
-                animator.SetInteger(parameter, animator.GetInteger(parameter) + 1);
+
+            Debug.Log(entry.TimeScale + "  " + stateInfo.speed);
+
         }
+
+        //private float GetAnimSpeedModifier(Animator animator, ref AnimatorStateInfo stateInfo)
+        //{
+        //    float speedModifier;
+        //    if (animSpeedModifiable)
+        //    {
+        //        animator.s
+        //        speedModifier = stateInfo.speed * animator.GetComponent<EnemyMovement>().GetAnimSpeedModifier();
+        //    }
+        //    else
+        //    {
+        //        speedModifier = stateInfo.speedMultiplier;
+        //    }
+        //    return speedModifier;
+        //}
 
         // OnStateUpdate is called before OnStateUpdate is called on any state inside this state machine
         //override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
@@ -49,23 +67,6 @@ namespace PSmash.Control
         //    
         //}
 
-        // OnStateMachineEnter is called when entering a state machine via its Entry Node
-        override public void OnStateMachineEnter(Animator animator, int stateMachinePathHash)
-        {
-            animator.SetInteger(parameter, animator.GetInteger(parameter) + 1);
-        }
-
-        // OnStateMachineExit is called when exiting a state machine via its Exit Node
-        override public void OnStateMachineExit(Animator animator, int stateMachinePathHash)
-        {
-            animator.SetInteger(parameter, 100);
-            //Debug.Break();
-            //print(action + " set to 0");
-            //Next lines are for PlayMaker Use only
-            //PlayMakerFSM fsm = animator.gameObject.GetComponent<PlayMakerFSM>();
-            //if(fsm != null) 
-            //    animator.gameObject.GetComponent<PlayMakerFSM>().   .SendEvent("ANIMATIONFINISHED");
-        }
     }
 }
 

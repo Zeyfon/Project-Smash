@@ -139,18 +139,6 @@ namespace PSmash.Combat
         //Anim Event
         void FinisherAttack()
         {
-            //if (targetTransform == null) return;
-            //RaycastHit2D hit = Physics2D.Raycast(transform.position + new Vector3(0, 1), transform.right, 2, whatIsEnemy);
-            //if (hit)
-            //{
-            //    hit.collider.GetComponent<EnemyHealth>().TakeFinisherAttackDamage(transform.position, (int)baseStats.GetStat(StatsList.Attack) * finisherAttackFactor);
-            //    Instantiate(finisherPS, attackTransform.position, Quaternion.identity);
-            //}
-            //else
-            //{
-            //    Debug.LogWarning("Enemy not spotted for finisher attack");
-            //}
-
             targetTransform.GetComponent<EnemyHealth>().TakeFinisherAttackDamage(transform.position, (int)baseStats.GetStat(StatsList.Attack) * finisherAttackFactor);
             Instantiate(finisherPS, attackTransform.position, Quaternion.identity);
 

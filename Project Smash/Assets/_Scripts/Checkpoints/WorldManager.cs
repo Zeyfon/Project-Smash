@@ -30,7 +30,7 @@ namespace PSmash.Checkpoints
         public void IncreaseCheckpointCounter()
         {
             checkpointCounter++;
-            print("Checkpoint Counter is  " + checkpointCounter);
+            //print("Checkpoint Counter is  " + checkpointCounter);
         }
 
         /////////////////////////////////////////////PRIVATE/////////////////////////////////     

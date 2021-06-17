@@ -840,7 +840,7 @@ MonoBehaviour:
           tooltip: 
           showInInspector: 0
           networkSync: 0
-          value: 100
+          value: 14
         fsmBoolParams: []
         fsmVector2Params: []
         fsmVector3Params: []
@@ -902,15 +902,17 @@ MonoBehaviour:
         actionNames:
         - HutongGames.PlayMaker.Actions.GetComponent
         - HutongGames.PlayMaker.Actions.CallMethod
+        - HutongGames.PlayMaker.Actions.FloatOperator
         - HutongGames.PlayMaker.Actions.CallMethod
         customNames:
         - 
         - 
         - 
-        actionEnabled: 010101
-        actionIsOpen: 010101
-        actionStartIndex: 00000000030000000a000000
-        actionHashCodes: 04d81402ca51e900ca51e900
+        - 
+        actionEnabled: 01010101
+        actionIsOpen: 01010101
+        actionStartIndex: 00000000030000000a0000000f000000
+        actionHashCodes: 04d81402ca51e9000cdb0405ca51e900
         unityObjectParams: []
         fsmGameObjectParams: []
         fsmOwnerDefaultParams:
@@ -1159,7 +1161,25 @@ MonoBehaviour:
             objectReferences: []
         fsmArrayParams: []
         fsmEnumParams: []
-        fsmFloatParams: []
+        fsmFloatParams:
+        - useVariable: 1
+          name: attackDamage
+          tooltip: 
+          showInInspector: 0
+          networkSync: 0
+          value: 0
+        - useVariable: 1
+          name: attack1DamageFactor
+          tooltip: 
+          showInInspector: 1
+          networkSync: 0
+          value: 1
+        - useVariable: 1
+          name: attackDamage
+          tooltip: 
+          showInInspector: 0
+          networkSync: 0
+          value: 0
         fsmIntParams: []
         fsmBoolParams: []
         fsmVector2Params: []
@@ -1168,14 +1188,14 @@ MonoBehaviour:
         fsmRectParams: []
         fsmQuaternionParams: []
         stringParams: []
-        byteData: 0000000000
+        byteData: 00000002000000000000
         arrayParamSizes: 0100000005000000
         arrayParamTypes:
         - HutongGames.PlayMaker.FsmVar
         - HutongGames.PlayMaker.FsmVar
         customTypeSizes: 
         customTypeNames: []
-        paramDataType: 14000000180000000100000018000000120000000c0000002700000027000000010000000100000018000000120000000c0000002700000027000000270000002700000027000000270000000100000001000000
+        paramDataType: 14000000180000000100000018000000120000000c000000270000002700000001000000010000000f0000000f000000070000000f0000000100000018000000120000000c0000002700000027000000270000002700000027000000270000000100000001000000
         paramName:
         - gameObject
         - storeComponent
@@ -1187,6 +1207,11 @@ MonoBehaviour:
         - storeResult
         - everyFrame
         - manualUI
+        - float1
+        - float2
+        - operation
+        - storeResult
+        - everyFrame
         - behaviour
         - methodName
         - parameters
@@ -1198,8 +1223,8 @@ MonoBehaviour:
         - storeResult
         - everyFrame
         - manualUI
-        paramDataPos: 000000000000000000000000010000000000000000000000000000000100000001000000020000000200000001000000010000000200000003000000040000000500000006000000070000000300000004000000
-        paramByteDataSize: 000000000000000001000000000000000000000000000000000000000000000001000000010000000000000000000000000000000000000000000000000000000000000000000000000000000100000001000000
+        paramDataPos: 0000000000000000000000000100000000000000000000000000000001000000010000000200000000000000010000000300000002000000070000000200000001000000010000000200000003000000040000000500000006000000070000000800000009000000
+        paramByteDataSize: 0000000000000000010000000000000000000000000000000000000000000000010000000100000000000000000000000400000000000000010000000000000000000000000000000000000000000000000000000000000000000000000000000100000001000000
     - name: Set Linear Drag
       description: 
       colorIndex: 0
@@ -2347,15 +2372,17 @@ MonoBehaviour:
         actionNames:
         - HutongGames.PlayMaker.Actions.GetComponent
         - HutongGames.PlayMaker.Actions.CallMethod
+        - HutongGames.PlayMaker.Actions.FloatOperator
         - HutongGames.PlayMaker.Actions.CallMethod
         customNames:
         - 
         - 
         - 
-        actionEnabled: 010101
-        actionIsOpen: 010101
-        actionStartIndex: 00000000030000000a000000
-        actionHashCodes: 04d81402ca51e900ca51e900
+        - 
+        actionEnabled: 01010101
+        actionIsOpen: 01010101
+        actionStartIndex: 00000000030000000a0000000f000000
+        actionHashCodes: 04d81402ca51e9000cdb0405ca51e900
         unityObjectParams: []
         fsmGameObjectParams: []
         fsmOwnerDefaultParams:
@@ -2604,7 +2631,25 @@ MonoBehaviour:
             objectReferences: []
         fsmArrayParams: []
         fsmEnumParams: []
-        fsmFloatParams: []
+        fsmFloatParams:
+        - useVariable: 1
+          name: attackDamage
+          tooltip: 
+          showInInspector: 0
+          networkSync: 0
+          value: 0
+        - useVariable: 1
+          name: attack2DamageFactor
+          tooltip: 
+          showInInspector: 1
+          networkSync: 0
+          value: 0.83
+        - useVariable: 1
+          name: attackDamage
+          tooltip: 
+          showInInspector: 0
+          networkSync: 0
+          value: 0
         fsmIntParams: []
         fsmBoolParams: []
         fsmVector2Params: []
@@ -2613,14 +2658,14 @@ MonoBehaviour:
         fsmRectParams: []
         fsmQuaternionParams: []
         stringParams: []
-        byteData: 0000000000
+        byteData: 00000002000000000000
         arrayParamSizes: 0100000005000000
         arrayParamTypes:
         - HutongGames.PlayMaker.FsmVar
         - HutongGames.PlayMaker.FsmVar
         customTypeSizes: 
         customTypeNames: []
-        paramDataType: 14000000180000000100000018000000120000000c0000002700000027000000010000000100000018000000120000000c0000002700000027000000270000002700000027000000270000000100000001000000
+        paramDataType: 14000000180000000100000018000000120000000c000000270000002700000001000000010000000f0000000f000000070000000f0000000100000018000000120000000c0000002700000027000000270000002700000027000000270000000100000001000000
         paramName:
         - gameObject
         - storeComponent
@@ -2632,6 +2677,11 @@ MonoBehaviour:
         - storeResult
         - everyFrame
         - manualUI
+        - float1
+        - float2
+        - operation
+        - storeResult
+        - everyFrame
         - behaviour
         - methodName
         - parameters
@@ -2643,8 +2693,8 @@ MonoBehaviour:
         - storeResult
         - everyFrame
         - manualUI
-        paramDataPos: 000000000000000000000000010000000000000000000000000000000100000001000000020000000200000001000000010000000200000003000000040000000500000006000000070000000300000004000000
-        paramByteDataSize: 000000000000000001000000000000000000000000000000000000000000000001000000010000000000000000000000000000000000000000000000000000000000000000000000000000000100000001000000
+        paramDataPos: 0000000000000000000000000100000000000000000000000000000001000000010000000200000000000000010000000300000002000000070000000200000001000000010000000200000003000000040000000500000006000000070000000800000009000000
+        paramByteDataSize: 0000000000000000010000000000000000000000000000000000000000000000010000000100000000000000000000000400000000000000010000000000000000000000000000000000000000000000000000000000000000000000000000000100000001000000
     - name: Audio2
       description: 
       colorIndex: 4
@@ -3615,7 +3665,7 @@ MonoBehaviour:
           tooltip: 
           showInInspector: 0
           networkSync: 0
-          value: 100
+          value: 14
         fsmBoolParams: []
         fsmVector2Params: []
         fsmVector3Params: []
@@ -4002,17 +4052,29 @@ MonoBehaviour:
         networkSync: 0
         value: 1
       - useVariable: 1
-        name: speedFactor
+        name: 
         tooltip: 
         showInInspector: 0
         networkSync: 0
         value: 0
       - useVariable: 1
-        name: speedModifier
+        name: 
         tooltip: 
         showInInspector: 0
         networkSync: 0
         value: 0
+      - useVariable: 1
+        name: attack1DamageFactor
+        tooltip: 
+        showInInspector: 1
+        networkSync: 0
+        value: 1
+      - useVariable: 1
+        name: attack2DamageFactor
+        tooltip: 
+        showInInspector: 1
+        networkSync: 0
+        value: 0.83
       intVariables:
       - useVariable: 1
         name: 
@@ -4054,13 +4116,13 @@ MonoBehaviour:
       stringVariables: []
       vector2Variables:
       - useVariable: 1
-        name: target2Pos
+        name: 
         tooltip: 
         showInInspector: 0
         networkSync: 0
         value: {x: 0, y: 0}
       - useVariable: 1
-        name: myPosition
+        name: 
         tooltip: 
         showInInspector: 0
         networkSync: 0
@@ -4187,7 +4249,7 @@ MonoBehaviour:
       - 
       - Exposed
       - PreviouslyInitialized
-      variableCategoryIDs: 0000000000000000000000000000000000000000010000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000020000000000000000000000000000000000000000000000
+      variableCategoryIDs: 00000000000000000000000000000000000000000100000000000000000000000000000000000000000000000100000001000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000020000000000000000000000000000000000000000000000
     description: 'Special Attack State
 
       This FSM is in charge of the actions
@@ -4256,6 +4318,7 @@ MonoBehaviour:
   lowFriction: {fileID: 6200000, guid: 65236b81a583a484aa33d4c136233544, type: 2}
   fullFriction: {fileID: 6200000, guid: 4b501e885db70b54faf1caa7979b5f5f, type: 2}
   speedFactor: 1
+  speedAnimModifier: 1
   maxSlopeAngle: 35
   groundCheck: {fileID: 1910916254316680253}
   distanceCheckForObstacles: 1
@@ -8631,8 +8694,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b584a9918e6417044bcd27c31050bd3d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  unarmoredSpeedFactor: 1.8
-  unarmoredAttackSpeedFactor: 1.9
+  unarmoredMovementSpeedModifier: 1.8
+  unarmoredAttackSpeedModifier: 2
 --- !u!114 &3675793518646679043
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -15074,7 +15137,7 @@ PrefabInstance:
     - target: {fileID: 2297644081278653716, guid: 587e06734df96fb45836c4df01ad03a7,
         type: 3}
       propertyPath: slots.Array.data[0].number
-      value: 50
+      value: 23
       objectReference: {fileID: 0}
     - target: {fileID: 2297644081278653716, guid: 587e06734df96fb45836c4df01ad03a7,
         type: 3}

@@ -2,9 +2,13 @@
 
 namespace PSmash.Control
 {
-    public class ActionBehavior : StateMachineBehaviour
+    /// <summary>
+    /// In Charge of the incremental int for the animation tracking
+    /// </summary>
+    public class ActionStateMachineBehavior : StateMachineBehaviour
     {
         [SerializeField] string action = null;
+
         // OnStateEnter is called before OnStateEnter is called on any state inside this state machine
         override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
         {
@@ -45,12 +49,6 @@ namespace PSmash.Control
         override public void OnStateMachineExit(Animator animator, int stateMachinePathHash)
         {
             animator.SetInteger(action, 100);
-            //Debug.Break();
-            //print(action + " set to 0");
-            //Next lines are for PlayMaker Use only
-            //PlayMakerFSM fsm = animator.gameObject.GetComponent<PlayMakerFSM>();
-            //if(fsm != null) 
-            //    animator.gameObject.GetComponent<PlayMakerFSM>().   .SendEvent("ANIMATIONFINISHED");
         }
     }
 }

@@ -182,10 +182,9 @@ namespace PSmash.Combat
 
         #region ChangeSkin
 
-        public void TakeArmorOff()
+        public void TakeArmorOffSpineSkins()
         {
             ChangeSkin("default");
-            //GetComponent<BaseStats>().SetStat(StatsList.Defense, 0);         
         }
 
         public void PutBackArmorOn()
