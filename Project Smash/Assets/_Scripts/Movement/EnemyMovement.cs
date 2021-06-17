@@ -11,9 +11,11 @@ namespace PSmash.Movement
             public float impulseTime;
             public float speedFactor;
         }
+
         //CONFIG
         [Header("Speed Values")]
         [SerializeField] float speedFactor = 1;
+        [SerializeField] float speedAnimModifier = 1;
         
 
         [Header("Slope Control")]
@@ -148,11 +150,14 @@ namespace PSmash.Movement
                     rb.sharedMaterial = lowFriction;
                     if (!isMovingTowardsTarget)
                     {
+                        print(targetPosition);
                         //TODO
                         //The enemy is suppossed to be running frontly away from the player
                         //Right not it rotates accordingly, but the movement is backwards and not frontwards
                         targetPosition = InvertTargetPosition(targetPosition);
+                        print(targetPosition);
                     }
+
                     Vector2 movementDirectionNormalized = (targetPosition - transform.position).normalized;
                     Movement(movementDirectionNormalized, isGrounded, speedFactor, speedMovementModifier);
                 }
@@ -166,10 +171,13 @@ namespace PSmash.Movement
         Vector3 InvertTargetPosition(Vector3 positionToInvert)
         {
             float distance = positionToInvert.x - transform.position.x;
-            if (distance > 0)
-                return new Vector3(transform.position.x + distance, positionToInvert.y, positionToInvert.z);
-            else
-                return new Vector3(transform.position.x - distance, positionToInvert.y, positionToInvert.z);
+            print(distance);
+            return new Vector3(transform.position.x - distance, positionToInvert.y, positionToInvert.z);
+
+            //if (distance > 0)
+            //    return new Vector3(transform.position.x - distance, positionToInvert.y, positionToInvert.z);
+            //else
+            //    return new Vector3(transform.position.x - distance, positionToInvert.y, positionToInvert.z);
 
         }
 
@@ -192,9 +200,11 @@ namespace PSmash.Movement
         /// Example: The speed of the smasher after losing its armor will be greater than before.
         /// </summary>
         /// <param name="speedMovementModifier"></param>
-        public void SetSpeedMovementModifierValue(float speedMovementModifier)
+        public void SetSpeedMovementModifierValue(float speedMovementModifier, float attackSpeedModifier)
         {
             this.speedMovementModifier = speedMovementModifier;
+            animator.SetFloat("attackModSpeed1",animator.GetFloat("attackModSpeed1") * attackSpeedModifier);
+            animator.SetFloat("attackModSpeed2", animator.GetFloat("attackModSpeed2") * attackSpeedModifier);
             //print("Movement Speed Increased");
         }
 
@@ -259,6 +269,11 @@ namespace PSmash.Movement
             {
                 StopCoroutine(coroutine);
             }
+        }
+
+        public float GetAnimSpeedModifier()
+        {
+            return speedAnimModifier;
         }
 
         //////////////////////////////////////////////////////////////////////////////PRIVATE//////////////////////////////////////////////////////////////////////////

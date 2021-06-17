@@ -39,7 +39,7 @@ namespace GameDevTV.Saving
         /// <param name="saveFile">The save file to consult for loading.</param>
         public IEnumerator LoadLastScene(string saveFile, bool isLoadLastScene, bool isInitialized)
         {
-            print("Loading Scene");
+            //print("Loading Scene");
             //print("Trying to load a scene");
             Dictionary<string, object> state = LoadFile(saveFile);
 
@@ -57,9 +57,9 @@ namespace GameDevTV.Saving
                 else 
                 {
                     //print("3");
-                    print("Loading scene " + buildIndex);
+                    //print("Loading scene " + buildIndex);
                     yield return SceneManager.LoadSceneAsync(buildIndex);
-                    print("Done Loading");
+                    //print("Done Loading");
                 }
             }
             else
@@ -67,18 +67,18 @@ namespace GameDevTV.Saving
                 //print("5");
                 if (isInitialized)
                 {
-                    print("No scene was loaded");
+                    //print("No scene was loaded");
                     initialSceneBuildIndex = SceneManager.GetActiveScene().buildIndex;
                 }
                 else
                 {
                     yield return SceneManager.LoadSceneAsync(initialSceneBuildIndex);
-                    print("The same scene was loaded again");
+                    //print("The same scene was loaded again");
                 }
                 //Debug.LogWarning("There is no lastSceneBuildIndex");
             }
             RestoreState(state, isLoadLastScene);
-            print("LoadLastScene ended");
+            //print("LoadLastScene ended");
             OnSaveEnds.Invoke();
             yield return null;
         }
@@ -88,7 +88,7 @@ namespace GameDevTV.Saving
         /// </summary>
         public void Save(string saveFile)
         {
-            print("Saving");
+            //print("Saving");
             onSaveStart.Invoke();
             Dictionary<string, object> state = LoadFile(saveFile);
             CaptureState(state);
@@ -110,7 +110,7 @@ namespace GameDevTV.Saving
 
         public void Load(string saveFile, bool isLoadLastScene)
         {
-            print("Loading");
+            //print("Loading");
             RestoreState(LoadFile(saveFile), isLoadLastScene);
         }
 
@@ -133,7 +133,7 @@ namespace GameDevTV.Saving
         void SaveFile(string saveFile, object state)
         {
             string path = GetPathFromSaveFile(saveFile);
-            print("Saving to " + path);
+            //print("Saving to " + path);
             using (FileStream stream = File.Open(path, FileMode.Create))
             {
                 BinaryFormatter formatter = new BinaryFormatter();
@@ -143,7 +143,7 @@ namespace GameDevTV.Saving
 
         void CaptureState(Dictionary<string, object> state)
         {
-            print("Capturing Data");
+            //print("Capturing Data");
             foreach (SaveableEntity saveable in FindObjectsOfType<SaveableEntity>())
             {
                 //print("Saving the  " + saveable.gameObject.name);
@@ -166,7 +166,7 @@ namespace GameDevTV.Saving
 
         void RestoreState(Dictionary<string, object> state, bool isLoadLastScene)
         {
-            print("Restoring Data");
+            //print("Restoring Data");
             if (isLoadLastScene)
                 restoredObjectsForLoadLastSavedScene.Clear();
 

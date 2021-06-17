@@ -51,7 +51,6 @@ namespace PSmash.Attributes
         {
             if (!GetComponent<EnemyPosture>())
                 GetComponentInChildren<PostureBar>().gameObject.SetActive(false);
-            //initialPosition = transform.position;
             baseStats = GetComponent<BaseStats>();
             health = baseStats.GetStat(StatsList.Health);
             audioSource = GetComponent<AudioSource>();
@@ -85,17 +84,9 @@ namespace PSmash.Attributes
             GetComponent<EnemyMovement>().ApplyAttackImpactReceived(attacker, attackForce);
         }
 
-        public void TakeArmorOff()
-        {
-            print("Armor taken off");
-            GetComponent<UnblockableAttack>().TakeArmorOff();
-            armorModifier = baseStats.GetStat(StatsList.Defense);
-            posture.DisablePostureBar();
-            ArmoredEnemy armored = GetComponent<ArmoredEnemy>();
-            GetComponent<EnemyMovement>().SetSpeedMovementModifierValue(armored.GetSpeedFactorModifier());
-            GetComponent<Animator>().SetFloat("attackSpeed", armored.GetAttackSpeedFactor());
-            GetComponent<AudioSource>().pitch = 1.4f;
-        }
+        //This is done every time the player hits the enemy after the armor was off
+        //TODO 
+        //Fix this issue. This must be used only once
 
         //Inform the AI that the NPC is being Finished
         public void SetStateToFinisher()
@@ -114,11 +105,12 @@ namespace PSmash.Attributes
         //The damage dealt by the player and the thrown away force of the impact
         public void TakeFinisherAttackDamage(Vector3 attackerPosition, float damage)
         {
+            print("Taking Finisher Damage");
             audioSource.PlayOneShot(finisherAudio);
             FlyObjectAway(attackerPosition);
-            if (isArmorEnabled)
-                armorDestroyed = true;
             DamageHealth(damage, 100, CriticalType.Critical);
+            if(isArmorEnabled)
+                armorDestroyed = true;
         }
 
         #region Sounds
@@ -277,10 +269,6 @@ namespace PSmash.Attributes
                 DamageHealth(healthDamage, totalPenetrationPercentage, criticalType);
                 pm.SendEvent("DAMAGED_NOSTUNNED");
             }
-            if (armorDestroyed)
-            {
-                TakeArmorOff();
-            }
         }
 
         void OnDamageTaken(DamageType damageType, CriticalType criticalType, float postureDamage)
@@ -313,6 +301,21 @@ namespace PSmash.Attributes
             health -= damage;
             if (health <= 0) health = 0;
             return health;
+        }
+
+        /// <summary>
+        /// Sets the enemy without armor. Used in the Restored State 
+        /// and as an Anim Event in the FnisherAttackDamaged Animation
+        /// </summary>
+        void TakeArmorOff()
+        {
+            print("Armor taken off");
+            GetComponent<UnblockableAttack>().TakeArmorOffSpineSkins();
+            armorModifier = baseStats.GetStat(StatsList.Defense);
+            posture.DisablePostureBar();
+            ArmoredEnemy armored = GetComponent<ArmoredEnemy>();
+            GetComponent<EnemyMovement>().SetSpeedMovementModifierValue(armored.GetSpeedFactorModifier(),armored.GetAttackSpeedModifier());
+            GetComponent<AudioSource>().pitch = 1.4f;
         }
 
         void FlyObjectAway(Vector3 attackerPosition)
