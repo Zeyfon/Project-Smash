@@ -22,12 +22,12 @@ namespace PSmash.Movement
         private void OnEnable()
         {
             if (playerMovement == null) return;
-            playerMovement.OnPlayerWallState += IsPlayerMovingOnWall;
+            //playerMovement.OnPlayerWallState += IsPlayerMovingOnWall;
         }
         private void OnDisable()
         {
             if (playerMovement == null) return;
-            playerMovement.OnPlayerWallState -= IsPlayerMovingOnWall;
+            //playerMovement.OnPlayerWallState -= IsPlayerMovingOnWall;
         }
 
         void IsPlayerMovingOnWall(bool isPlayerOnWall)
@@ -99,7 +99,7 @@ namespace PSmash.Movement
                 if (playerMovement == null)
                 {
                     playerMovement = collision.GetComponent<PlayerMovement>();
-                    playerMovement.OnPlayerWallState += IsPlayerMovingOnWall;
+                    //playerMovement.OnPlayerWallState += IsPlayerMovingOnWall;
                 }
                 if (cr_Running) StopAllCoroutines();//StopCoroutine(currentCoroutine);
                 StartCoroutine(ShowHelp());

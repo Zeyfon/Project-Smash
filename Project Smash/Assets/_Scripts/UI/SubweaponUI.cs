@@ -23,7 +23,7 @@ namespace PSmash.UI
             Equipment.onSubWeaponChange -= UpdateSubWeaponDisplay;
         }
 
-        private void UpdateSubWeaponDisplay(SubWeaponItem subWeapon)
+        private void UpdateSubWeaponDisplay(Weapon subWeapon)
         {
             if (subWeapon == null)
                 return;

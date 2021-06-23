@@ -17,17 +17,17 @@ namespace PSmash.UI
 
         void OnEnable()
         {
-            playerEquipment.onToolEquippedUpdate += EquipmentUIToolUpdate;
+            playerEquipment.onCurrentToolEquippedChange += EquipmentUIToolUpdate;
         }
 
         void OnDisable()
         {
-            playerEquipment.onToolEquippedUpdate -= EquipmentUIToolUpdate;
+            playerEquipment.onCurrentToolEquippedChange -= EquipmentUIToolUpdate;
         }
 
         void EquipmentUIToolUpdate(int index)
         {
-            Equipment.EquipmentSlots[] slots = playerEquipment.GetTools();
+            Equipment.ToolSlot[] slots = playerEquipment.GetTools();
 
             int previousIndex = GetPreviousIndex(slots, index);
             leftItem.UpdateItemInfo(slots[previousIndex]);
@@ -35,7 +35,7 @@ namespace PSmash.UI
             centerItem.UpdateItemInfo(slots[index]);
         }
 
-        int GetPreviousIndex(Equipment.EquipmentSlots[] slots, int index)
+        int GetPreviousIndex(Equipment.ToolSlot[] slots, int index)
         {
             int newIndex;
             if (index == 0)

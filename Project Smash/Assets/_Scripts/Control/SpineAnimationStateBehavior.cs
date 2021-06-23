@@ -24,7 +24,7 @@ namespace PSmash.Control
             entry.TimeScale = stateInfo.speed * stateInfo.speedMultiplier;
             spine.loop = loop;
 
-            Debug.Log(entry.TimeScale + "  " + stateInfo.speed);
+            //Debug.Log(entry.TimeScale + "  " + stateInfo.speed);
 
         }
 

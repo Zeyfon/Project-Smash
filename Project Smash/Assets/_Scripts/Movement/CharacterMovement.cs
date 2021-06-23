@@ -1,5 +1,5 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using PSmash.Inventories;
+using System.Collections;
 using UnityEngine;
 
 namespace PSmash.Movement
@@ -18,6 +18,12 @@ namespace PSmash.Movement
 
         protected SlopeControl slope = new SlopeControl();
         protected Rigidbody2D rb;
+        protected bool isMovementOverriden = false;
+
+        protected bool isGrounded;
+        protected float speedMovementModifier = 1;
+
+        Vector2 impulseDirection;
 
 
         /// <summary>
@@ -60,6 +66,65 @@ namespace PSmash.Movement
                     //if (!gameObject.CompareTag("Player"))
                         //print(gameObject.name + "  " + rb.velocity);
                 }
+            }
+        }
+
+        /// <summary>
+        /// Disables movement control by other objects.
+        /// Apply the attack force to the entity.
+        /// Waits till it passes the force to restore movement control.
+        /// </summary>
+        /// <param name="attacker"></param>
+        /// <param name="attackForce"></param>
+        public virtual void ApplyAttackImpactReceived(Transform attacker, Weapon weapon, int layer1, int layer2)
+        {
+            StartCoroutine(ApplyKnockback_CR(attacker, weapon, layer1, layer2));
+        }
+
+        IEnumerator ApplyKnockback_CR(Transform attacker, Weapon weapon,int layer1, int layer2)
+        {
+            isMovementOverriden = true;
+            gameObject.layer = layer1;
+            yield return null;
+            float tempDrag = rb.drag;
+            PhysicsMaterial2D tempPhysicsMaterial = rb.sharedMaterial;
+            Vector2 attackDirection = (transform.position - attacker.position).normalized;
+            float timer = 0;
+            //float speedFactor = attackForce / baseSpeed;
+            //TODO
+            //The time must be adjusted accordingly to the weapon with was damaged. 
+            //float timerLimit = Mathf.Log10(attackForce)/ ((attackForce/2.4f)+1);
+            //// 
+            float speedFactor = weapon.GetAttackForce();
+            float timerLimit = weapon.GetAttackForceTime();
+
+
+            rb.sharedMaterial = lowFriction;
+            rb.drag = 2;
+
+            while (timer < timerLimit)
+            {
+                timer += Time.fixedDeltaTime;
+                print(timer);
+                impulseDirection = slope.GetMovementDirectionWithSlopecontrol(transform.position, attackDirection, slopeCheckDistance, whatIsGround);
+                Movement(impulseDirection, isGrounded, speedFactor, speedMovementModifier);
+                yield return new WaitForFixedUpdate();
+            }
+            rb.drag = tempDrag;
+            rb.sharedMaterial = tempPhysicsMaterial;
+            
+
+            isMovementOverriden = false;
+
+            if (gameObject.CompareTag("Player"))
+            {
+                timer = 0;
+                while(timer < 0.5f)
+                {
+                    timer += Time.fixedDeltaTime;
+                    yield return new WaitForFixedUpdate();
+                }
+                gameObject.layer = layer2;
             }
         }
     }

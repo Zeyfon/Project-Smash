@@ -3,7 +3,7 @@ using Spine;
 using Spine.Unity;
 using System.Collections;
 using UnityEngine;
-using PSmash.Combat.Weapons;
+using PSmash.Inventories;
 using PSmash.Combat;
 using PSmash.Stats;
 
@@ -145,18 +145,18 @@ namespace PSmash.Inventories
         }
 
 
-        void HitGround(Collider2D collision)
-        {
-            Vector3 effectsOrigin;
-            if (GetComponent<BoxCollider2D>())
-                effectsOrigin = transform.position + new Vector3(GetComponent<BoxCollider2D>().size.x / 2 * transform.right.x, 0);
-            else
-                effectsOrigin = transform.position + new Vector3(GetComponent<CircleCollider2D>().radius * transform.right.x, 0);
-            SetObject(false);
-            Instantiate(wallHitEWffect, effectsOrigin, Quaternion.identity);
-            WallHitSound();
-            SendDamageToIDamagableObject(collision, impactOnWall);
-        }
+        //void HitGround(Collider2D collision)
+        //{
+        //    Vector3 effectsOrigin;
+        //    if (GetComponent<BoxCollider2D>())
+        //        effectsOrigin = transform.position + new Vector3(GetComponent<BoxCollider2D>().size.x / 2 * transform.right.x, 0);
+        //    else
+        //        effectsOrigin = transform.position + new Vector3(GetComponent<CircleCollider2D>().radius * transform.right.x, 0);
+        //    SetObject(false);
+        //    Instantiate(wallHitEWffect, effectsOrigin, Quaternion.identity);
+        //    WallHitSound();
+        //    SendDamageToIDamagableObject(collision, impactOnWall);
+        //}
 
         void SetObject(bool isEnabled)
         {
@@ -212,12 +212,12 @@ namespace PSmash.Inventories
                 return;
 
 
-            if (collision.CompareTag("Ground"))
-            {
-                hasHit = true;
-                HitGround(collision);
-                return;
-            }
+            //if (collision.CompareTag("Ground"))
+            //{
+            //    hasHit = true;
+            //    HitGround(collision);
+            //    return;
+            //}
 
             Health health = collision.GetComponent<Health>();
             if (health == null || health == owner || health.IsDead() || collision.tag == owner.tag)

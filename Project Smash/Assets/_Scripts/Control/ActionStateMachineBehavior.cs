@@ -12,6 +12,7 @@ namespace PSmash.Control
         // OnStateEnter is called before OnStateEnter is called on any state inside this state machine
         override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
         {
+            //Debug.Log("Entered State");
             animator.SetInteger(action, animator.GetInteger(action) + 1);
         }
 
@@ -42,6 +43,7 @@ namespace PSmash.Control
         // OnStateMachineEnter is called when entering a state machine via its Entry Node
         override public void OnStateMachineEnter(Animator animator, int stateMachinePathHash)
         {
+            //Debug.Log("Entered State Machine");
             animator.SetInteger(action, animator.GetInteger(action) + 1);
         }
 
@@ -49,6 +51,7 @@ namespace PSmash.Control
         override public void OnStateMachineExit(Animator animator, int stateMachinePathHash)
         {
             animator.SetInteger(action, 100);
+            //Debug.Log(animator.gameObject + "  Exited Animation");
         }
     }
 }

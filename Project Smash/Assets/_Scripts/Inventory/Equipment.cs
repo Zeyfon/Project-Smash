@@ -9,26 +9,32 @@ namespace PSmash.Inventories
 {
     public class Equipment : MonoBehaviour, ISaveable
     {
-        [SerializeField] EquipmentSlots[] slots;
-        [SerializeField] SubWeaponItem subWeapon;
+        [SerializeField] ToolSlot[] slots;
+        [Tooltip("Acquired subweapon to use alternatively to the punches")]
+        [SerializeField] Weapon subWeapon;
 
         public delegate void ToolChange(int index);
-        public event ToolChange onToolEquippedUpdate;
+        public event ToolChange onCurrentToolEquippedChange;
 
-        public delegate void SubWeaponChange(SubWeaponItem item);
+        public delegate void SubWeaponChange(Weapon item);
         public static event SubWeaponChange onSubWeaponChange;
 
-        List<SubWeaponItem> subWeapons = new List<SubWeaponItem>();
+        List<Weapon> subWeapons = new List<Weapon>();
         int currentIndex = 0;
+
+        //INITIALIZE/////////////////////
         private void Awake()
         {
             GetWeapons();
-            RestoreToolsNumber();
+            RestockToolNumbers();
         }
 
-        private void GetWeapons()
+        /// <summary>
+        /// Get all the ScriptableObjects "Weapons" for the player to use
+        /// </summary>
+        void GetWeapons()
         {
-            foreach (SubWeaponItem item in Resources.LoadAll<SubWeaponItem>(""))
+            foreach (Weapon item in Resources.LoadAll<Weapon>(""))
             {
                 subWeapons.Add(item);
             }
@@ -36,53 +42,54 @@ namespace PSmash.Inventories
 
         void Start()
         {
-            onToolEquippedUpdate(currentIndex);
+            onCurrentToolEquippedChange(currentIndex);
             onSubWeaponChange(subWeapon);
         }
 
         private void OnEnable()
         {
-            Tent.OnCheckpointDone += RestoreToolsNumber2;
+            Tent.OnCheckpointDone += RestockToolNumbersAndUpdateUI;
         }
 
         private void OnDisable()
         {
-            Tent.OnCheckpointDone -= RestoreToolsNumber2;
+            Tent.OnCheckpointDone -= RestockToolNumbersAndUpdateUI;
         }
 
-        public void SetSubWeapon(SubWeaponItem subWeapon)
+        /////////////////////////////////////////PUBLIC//////////////
+
+        /// <summary>
+        /// Set the current subweapon to whatever weapon is passed
+        /// </summary>
+        /// <param name="subWeapon"></param>
+        public void SetSubWeapon(Weapon subWeapon)
         {
             this.subWeapon = subWeapon; 
         }
 
-        public SubWeaponItem GetSubWeapon()
+        /// <summary>
+        /// Pass the current equipped subweapon. This can be null
+        /// </summary>
+        /// <returns></returns>
+        public Weapon GetSubWeapon()
         {
             return subWeapon;
         }
 
-        void RestoreToolsNumber2()
-        {
-            RestoreToolsNumber();
-            onToolEquippedUpdate(currentIndex);
-        }
-        void RestoreToolsNumber()
-        {
-            foreach (EquipmentSlots slot in slots)
-            {
-                slot.number = slot.maxNumber;
-            }
-        }
 
-
-        public EquipmentSlots GetEquipmentSlot()
+        public ToolSlot GetCurrentEquipmentSlot()
         {
             return slots[currentIndex];
         }
 
-        public void ChangeItem(float movementDirection)
+        /// <summary>
+        /// Change the current equipped tool. Accepts 1 and -1
+        /// </summary>
+        /// <param name="movementDirection"></param>
+        public void UpdateCurrentEquippedTool(float movementDirection)
         {
             //print(currentIndex);
-            if (movementDirection==1)
+            if (movementDirection == 1)
             {
                 currentIndex++;
                 //print("Moving right" + currentIndex);
@@ -100,50 +107,83 @@ namespace PSmash.Inventories
                     currentIndex = slots.Length - 1;
                 }
             }
-            onToolEquippedUpdate(currentIndex);
+            onCurrentToolEquippedChange(currentIndex);
         }
 
-        public void ItemUsed(EquipmentSlots slot)
+
+        public void ItemUsed(ToolSlot slot)
         {
             slot.number -= 1;
-            onToolEquippedUpdate(currentIndex);
+            onCurrentToolEquippedChange(currentIndex);
         }
 
-        public EquipmentSlots[] GetTools()
+        /// <summary>
+        /// Get all the tools information. ToolItem, currentNumber, maxNumber
+        /// </summary>
+        /// <returns></returns>
+        public ToolSlot[] GetTools()
         {
             return slots;
         }
 
 
         [System.Serializable]
-        public class EquipmentSlots
+        public class ToolSlot
         {
             public ToolItem item;
             public int number;
             public int maxNumber;
         }
 
+        /// <summary>
+        /// Expand the capacity of the paramiter item.
+        /// </summary>
+        /// <param name="item"></param>
         public void UpgradeStock(Item item)
         {
-            foreach(EquipmentSlots slot in slots)
+            foreach (ToolSlot slot in slots)
             {
-                if(item == slot.item)
+                if (item == slot.item)
                 {
-                    slot.maxNumber +=1;
+                    slot.maxNumber += 1;
                     //print("The " + item.name + "  increase to  " + slot.maxNumber);
-                    RestoreToolsNumber();
-                    onToolEquippedUpdate(currentIndex);
+                    RestockToolNumbers();
+                    onCurrentToolEquippedChange(currentIndex);
                     return;
                 }
             }
-
         }
+
+        ///////////////////////////PRIVATE//////////////////////
+
+        /// <summary>
+        /// Restock and Update UI
+        /// </summary>
+        void RestockToolNumbersAndUpdateUI()
+        {
+            RestockToolNumbers();
+            onCurrentToolEquippedChange(currentIndex);
+        }
+
+        /// <summary>
+        /// Set the tool currentNumber to maxNumber
+        /// </summary>
+        void RestockToolNumbers()
+        {
+            foreach (ToolSlot slot in slots)
+            {
+                slot.number = slot.maxNumber;
+            }
+        }
+
+
+        //////////////////////////////////SAVE SYSTEM////////////////////////
 
         public object CaptureState()
         {
             ///Save the quantity of each tool
             Dictionary<string, object> toolsForSerialization = new Dictionary<string, object>();
-            foreach(EquipmentSlots slot in slots)
+            foreach(ToolSlot slot in slots)
             {
                 List<int> numbers = new List<int>();
                 numbers.Add(slot.number);
@@ -172,7 +212,7 @@ namespace PSmash.Inventories
                 if (item != null /*&& !isLoadLastScene*/)
                 {
                     //print("W");
-                    foreach(EquipmentSlots slot in slots)
+                    foreach(ToolSlot slot in slots)
                     {
                         //print("Z");
                         if(item == slot.item)
@@ -193,7 +233,7 @@ namespace PSmash.Inventories
 
                 if(name == "Mace")
                 {
-                    foreach (SubWeaponItem subWeapon in subWeapons)
+                    foreach (Weapon subWeapon in subWeapons)
                     {
                         string subWeaponName = (string)equippedItemsForSerialization[name];
                         if (subWeaponName == subWeapon.GetID())
@@ -207,9 +247,9 @@ namespace PSmash.Inventories
             }
             if (isLoadingLastSavedScene)
             {
-                RestoreToolsNumber2();
+                RestockToolNumbersAndUpdateUI();
             }
-            onToolEquippedUpdate(currentIndex);
+            onCurrentToolEquippedChange(currentIndex);
             onSubWeaponChange(subWeapon);
         }
     }

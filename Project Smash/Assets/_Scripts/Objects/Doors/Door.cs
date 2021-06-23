@@ -2,7 +2,7 @@
 using Cinemachine;
 using PSmash.Combat;
 using PSmash.Attributes;
-using PSmash.Combat.Weapons;
+using PSmash.Inventories;
 
 namespace PSmash.Items.Doors
 {

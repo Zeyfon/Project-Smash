@@ -1,11 +1,8 @@
-﻿using HutongGames.PlayMaker;
-using PSmash.Attributes;
-using PSmash.SceneManagement;
-using Spine.Unity;
-using System.Collections;
-using UnityEngine;
-using GameDevTV.Saving;
+﻿using GameDevTV.Saving;
+using HutongGames.PlayMaker;
 using PSmash.Checkpoints;
+using PSmash.SceneManagement;
+using UnityEngine;
 
 namespace PSmash.Movement
 {
@@ -54,9 +51,6 @@ namespace PSmash.Movement
 
         #endregion
 
-        public delegate void PlayerOnWall(bool state);
-        public event PlayerOnWall OnPlayerWallState;
-
         FsmObject currentFSM;
         LedgeControl ledgeControl = new LedgeControl();
         LadderMovementControl ladderControl = new LadderMovementControl();
@@ -71,7 +65,6 @@ namespace PSmash.Movement
         float jumpTimer = 0;
         bool isFalling = false;
         bool isLookingRight = true;
-        bool isGrounded;
         bool isJumping;
         bool canWalkOnSlope;
         bool isCollidingWithOneWayPlatform = false;

@@ -24,7 +24,7 @@ MonoBehaviour:
       colorIndex: 0
       position:
         serializedVersion: 2
-        x: 333.40625
+        x: 109.40625
         y: 435.28906
         width: 201
         height: 32
@@ -144,7 +144,7 @@ MonoBehaviour:
       colorIndex: 5
       position:
         serializedVersion: 2
-        x: 283.0078
+        x: 59.007812
         y: 577.84375
         width: 132
         height: 32
@@ -254,7 +254,7 @@ MonoBehaviour:
       colorIndex: 2
       position:
         serializedVersion: 2
-        x: 278.60938
+        x: 54.609375
         y: 736.0625
         width: 132
         height: 16
@@ -356,7 +356,7 @@ MonoBehaviour:
       colorIndex: 0
       position:
         serializedVersion: 2
-        x: 665.4375
+        x: 441.4375
         y: 489.34375
         width: 100
         height: 32
@@ -551,7 +551,7 @@ MonoBehaviour:
       colorIndex: 0
       position:
         serializedVersion: 2
-        x: 686.4219
+        x: 462.42188
         y: 555.03906
         width: 137
         height: 48
@@ -656,7 +656,7 @@ MonoBehaviour:
       colorIndex: 0
       position:
         serializedVersion: 2
-        x: 675.3828
+        x: 451.3828
         y: 373.9297
         width: 161
         height: 32
@@ -733,7 +733,7 @@ MonoBehaviour:
       colorIndex: 0
       position:
         serializedVersion: 2
-        x: 281.82812
+        x: 57.828125
         y: 654.28906
         width: 100
         height: 32
@@ -865,7 +865,7 @@ MonoBehaviour:
       colorIndex: 4
       position:
         serializedVersion: 2
-        x: 671.6953
+        x: 447.6953
         y: 427.64062
         width: 110
         height: 32
@@ -960,7 +960,7 @@ MonoBehaviour:
       colorIndex: 0
       position:
         serializedVersion: 2
-        x: 302.4375
+        x: 78.4375
         y: 217.42969
         width: 127
         height: 32
@@ -1048,84 +1048,12 @@ MonoBehaviour:
         - everyFrame
         paramDataPos: 0000000000000000000000000100000000000000
         paramByteDataSize: 0000000000000000000000000000000001000000
-    - name: Wait
-      description: 
-      colorIndex: 0
-      position:
-        serializedVersion: 2
-        x: 55.039062
-        y: 466.8047
-        width: 100
-        height: 32
-      isBreakpoint: 0
-      isSequence: 0
-      hideUnused: 0
-      transitions:
-      - fsmEvent:
-          name: FINISHED
-          isSystemEvent: 1
-          isGlobal: 0
-        toState: StartNormalAttackAnimation
-        linkStyle: 0
-        linkConstraint: 0
-        colorIndex: 0
-      actionData:
-        actionNames:
-        - HutongGames.PlayMaker.Actions.Wait
-        customNames:
-        - 
-        actionEnabled: 01
-        actionIsOpen: 01
-        actionStartIndex: 00000000
-        actionHashCodes: 48c01101
-        unityObjectParams: []
-        fsmGameObjectParams: []
-        fsmOwnerDefaultParams: []
-        animationCurveParams: []
-        functionCallParams: []
-        fsmTemplateControlParams: []
-        fsmEventTargetParams: []
-        fsmPropertyParams: []
-        layoutOptionParams: []
-        fsmStringParams: []
-        fsmObjectParams: []
-        fsmVarParams: []
-        fsmArrayParams: []
-        fsmEnumParams: []
-        fsmFloatParams:
-        - useVariable: 0
-          name: 
-          tooltip: 
-          showInInspector: 0
-          networkSync: 0
-          value: 0.5
-        fsmIntParams: []
-        fsmBoolParams: []
-        fsmVector2Params: []
-        fsmVector3Params: []
-        fsmColorParams: []
-        fsmRectParams: []
-        fsmQuaternionParams: []
-        stringParams:
-        - FINISHED
-        byteData: 00
-        arrayParamSizes: 
-        arrayParamTypes: []
-        customTypeSizes: 
-        customTypeNames: []
-        paramDataType: 0f0000001700000001000000
-        paramName:
-        - time
-        - finishEvent
-        - realTime
-        paramDataPos: 000000000000000000000000
-        paramByteDataSize: 000000000000000001000000
     - name: IsAlreadyInitialized
       description: 
       colorIndex: 0
       position:
         serializedVersion: 2
-        x: 303.4297
+        x: 79.42969
         y: 104.890625
         width: 142
         height: 48
@@ -1207,7 +1135,7 @@ MonoBehaviour:
       colorIndex: 0
       position:
         serializedVersion: 2
-        x: 499.1875
+        x: 275.1875
         y: 183.625
         width: 100
         height: 32
@@ -1387,7 +1315,7 @@ MonoBehaviour:
       colorIndex: 0
       position:
         serializedVersion: 2
-        x: 293.58594
+        x: 69.58594
         y: 390.40625
         width: 143
         height: 32
@@ -1543,7 +1471,7 @@ MonoBehaviour:
       colorIndex: 0
       position:
         serializedVersion: 2
-        x: 297.01562
+        x: 73.015625
         y: 305.92188
         width: 153
         height: 32
@@ -1615,7 +1543,7 @@ MonoBehaviour:
       colorIndex: 0
       position:
         serializedVersion: 2
-        x: 300.0625
+        x: 76.0625
         y: 261.78125
         width: 171
         height: 32
@@ -1721,7 +1649,7 @@ MonoBehaviour:
       colorIndex: 0
       position:
         serializedVersion: 2
-        x: 296
+        x: 72
         y: 348
         width: 141
         height: 32
@@ -1822,7 +1750,7 @@ MonoBehaviour:
       colorIndex: 0
       position:
         serializedVersion: 2
-        x: 674.7031
+        x: 450.70312
         y: 660.6797
         width: 100
         height: 32
@@ -1834,7 +1762,7 @@ MonoBehaviour:
           name: FINISHED
           isSystemEvent: 1
           isGlobal: 0
-        toState: SendDamage To Target
+        toState: State 1
         linkStyle: 0
         linkConstraint: 0
         colorIndex: 0
@@ -1845,8 +1773,8 @@ MonoBehaviour:
         customNames:
         - 
         - 
-        actionEnabled: 0101
-        actionIsOpen: 0101
+        actionEnabled: 0100
+        actionIsOpen: 0100
         actionStartIndex: 0000000003000000
         actionHashCodes: 04d81402ca51e900
         unityObjectParams: []
@@ -1968,14 +1896,14 @@ MonoBehaviour:
         - manualUI
         paramDataPos: 00000000000000000000000001000000000000000000000000000000010000000100000002000000
         paramByteDataSize: 00000000000000000100000000000000000000000000000000000000000000000100000001000000
-    - name: SendDamage To Target
+    - name: State 1
       description: 
       colorIndex: 0
       position:
         serializedVersion: 2
-        x: 463.54688
-        y: 688.78906
-        width: 170
+        x: 280.35156
+        y: 695.53906
+        width: 100
         height: 32
       isBreakpoint: 0
       isSequence: 0
@@ -1991,13 +1919,13 @@ MonoBehaviour:
         colorIndex: 0
       actionData:
         actionNames:
-        - HutongGames.PlayMaker.Actions.CallMethod
+        - HutongGames.PlayMaker.Actions.CallMethodAdvanced
         customNames:
         - 
         actionEnabled: 01
         actionIsOpen: 01
         actionStartIndex: 00000000
-        actionHashCodes: ca51e900
+        actionHashCodes: 6d618103
         unityObjectParams: []
         fsmGameObjectParams: []
         fsmOwnerDefaultParams: []
@@ -2047,9 +1975,9 @@ MonoBehaviour:
             stringValues: []
             vector4Values: []
             objectReferences: []
-        - variableName: weapon
-          objectType: PSmash.Combat.Weapons.Weapon
-          useVariable: 1
+        - variableName: 
+          objectType: PSmash.Inventories.Weapon
+          useVariable: 0
           type: 12
           floatValue: 0
           intValue: 0
@@ -2076,7 +2004,7 @@ MonoBehaviour:
           useVariable: 0
           type: 14
           floatValue: 0
-          intValue: 0
+          intValue: 1
           boolValue: 0
           stringValue: 
           vector4Value: {x: 0, y: 0, z: 0, w: 0}
@@ -2119,11 +2047,11 @@ MonoBehaviour:
             stringValues: []
             vector4Values: []
             objectReferences: []
-        - variableName: 
+        - variableName: attackForce
           objectType: UnityEngine.Object
-          useVariable: 0
+          useVariable: 1
           type: 0
-          floatValue: 2
+          floatValue: 4
           intValue: 0
           boolValue: 0
           stringValue: 
@@ -2178,13 +2106,13 @@ MonoBehaviour:
         fsmRectParams: []
         fsmQuaternionParams: []
         stringParams: []
-        byteData: 0000
+        byteData: 000000000000
         arrayParamSizes: 05000000
         arrayParamTypes:
         - HutongGames.PlayMaker.FsmVar
         customTypeSizes: 
         customTypeNames: []
-        paramDataType: 18000000120000000c0000002700000027000000270000002700000027000000270000000100000001000000
+        paramDataType: 18000000120000000c000000270000002700000027000000270000002700000027000000010000000100000007000000
         paramName:
         - behaviour
         - methodName
@@ -2195,10 +2123,11 @@ MonoBehaviour:
         - 
         - 
         - storeResult
-        - everyFrame
         - manualUI
-        paramDataPos: 0000000000000000000000000000000001000000020000000300000004000000050000000000000001000000
-        paramByteDataSize: 0000000000000000000000000000000000000000000000000000000000000000000000000100000001000000
+        - everyFrame
+        - updateType
+        paramDataPos: 000000000000000000000000000000000100000002000000030000000400000005000000000000000100000002000000
+        paramByteDataSize: 000000000000000000000000000000000000000000000000000000000000000000000000010000000100000004000000
     events:
     - name: FINISHED
       isSystemEvent: 1
@@ -2295,9 +2224,15 @@ MonoBehaviour:
       - useVariable: 1
         name: attackDamage
         tooltip: 
-        showInInspector: 0
+        showInInspector: 1
         networkSync: 0
         value: 0
+      - useVariable: 1
+        name: attackForce
+        tooltip: 
+        showInInspector: 1
+        networkSync: 0
+        value: 4
       intVariables:
       - useVariable: 1
         name: attack
@@ -2451,11 +2386,11 @@ MonoBehaviour:
         typeName: PSmash.Movement.EnemyMovement
         value: {fileID: 0}
       - useVariable: 1
-        name: weapon
+        name: 
         tooltip: 
         showInInspector: 1
         networkSync: 0
-        typeName: PSmash.Combat.Weapons.Weapon
+        typeName: UnityEngine.Object
         value: {fileID: 0}
       - useVariable: 1
         name: iDamagable
@@ -2485,7 +2420,7 @@ MonoBehaviour:
       categories:
       - 
       - Exposed
-      variableCategoryIDs: 00000000000000000000000000000000000000000000000001000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000010000000000000000000000000000000000000001000000000000000000000000000000
+      variableCategoryIDs: 0000000000000000000000000000000000000000000000000100000000000000000000000000000001000000010000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000010000000000000000000000000000000000000001000000000000000000000000000000
     description: 'Normal Attack State
 
       This FSM is the one in charge of the

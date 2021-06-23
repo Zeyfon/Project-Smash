@@ -10,7 +10,7 @@ namespace PSmash.UI
         [SerializeField] TextMeshProUGUI text = null;
         [SerializeField] Image image = null;
 
-        public void UpdateItemInfo(Equipment.EquipmentSlots slot)
+        public void UpdateItemInfo(Equipment.ToolSlot slot)
         {
             //print(actionableItem.name);
             //print(actionableItem.GetNumber());

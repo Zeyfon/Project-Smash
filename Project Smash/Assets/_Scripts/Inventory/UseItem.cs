@@ -16,7 +16,7 @@ namespace PSmash.Inventories
         //Called by the UseItemState FSM in Playmaker
         public void UseEquippedItem()
         {
-            Equipment.EquipmentSlots slot = GetComponentInChildren<Equipment>().GetEquipmentSlot();
+            Equipment.ToolSlot slot = GetComponentInChildren<Equipment>().GetCurrentEquipmentSlot();
             GetComponent<Animator>().SetInteger("UseItem", slot.item.GetAnimatorInt());
             print("Using Equipped Tool");
         }
@@ -24,7 +24,7 @@ namespace PSmash.Inventories
         //AnimEvent
         public void SpawnItem()
         {
-            Equipment.EquipmentSlots slot = GetComponentInChildren<Equipment>().GetEquipmentSlot();
+            Equipment.ToolSlot slot = GetComponentInChildren<Equipment>().GetCurrentEquipmentSlot();
             if (slot.number <= 0)
             {
                 print("Cannot spawn item");

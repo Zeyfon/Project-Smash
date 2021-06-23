@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using PSmash.Attributes;
-using PSmash.Combat.Weapons;
+using PSmash.Inventories;
 using PSmash.Combat;
 using PSmash.Inventories;
 using GameDevTV.Saving;

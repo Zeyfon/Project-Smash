@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using PSmash.Combat.Weapons;
+using PSmash.Inventories;
 using PSmash.Combat;
 
 namespace PSmash.Attributes
