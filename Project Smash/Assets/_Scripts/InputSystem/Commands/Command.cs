@@ -162,7 +162,7 @@ namespace PSmash.InputSystem
 
             if(buttonState != previousButtonState && buttonState != 0)
             {
-                transform.parent.GetComponent<Equipment>().ChangeItem(buttonState);
+                transform.parent.GetComponent<Equipment>().UpdateCurrentEquippedTool(buttonState);
 
             }
             previousButtonState = buttonState;

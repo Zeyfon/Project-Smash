@@ -1,4 +1,4 @@
-﻿using PSmash.Combat.Weapons;
+﻿using PSmash.Inventories;
 using PSmash.Combat;
 using System.Collections;
 using System.Collections.Generic;

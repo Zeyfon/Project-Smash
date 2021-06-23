@@ -1,4 +1,4 @@
-﻿using PSmash.Combat.Weapons;
+﻿using PSmash.Inventories;
 using PSmash.Combat;
 using UnityEngine;
 using UnityEngine.Events;

@@ -1,5 +1,5 @@
 ﻿using PSmash.Attributes;
-using PSmash.Combat.Weapons;
+using PSmash.Inventories;
 using PSmash.Combat;
 using PSmash.Core;
 using System.Collections;

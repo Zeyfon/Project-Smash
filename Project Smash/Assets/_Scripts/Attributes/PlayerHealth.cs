@@ -1,5 +1,5 @@
 ﻿using PSmash.Analytics;
-using PSmash.Combat.Weapons;
+using PSmash.Inventories;
 using PSmash.Checkpoints;
 using PSmash.Stats;
 using System.Collections;
@@ -10,6 +10,7 @@ using UnityEngine.SceneManagement;
 using PSmash.Combat;
 using GameDevTV.Saving;
 using PSmash.SceneManagement;
+using PSmash.Movement;
 
 namespace PSmash.Attributes
 {
@@ -71,6 +72,8 @@ namespace PSmash.Attributes
             //I cannot find the Knockack Movement applied to Merle when attacked
             //The knockback movement must be applied using the attackForce value received in the Method
             //Right now the movement is constant and do not use the variable
+
+            print("player damagedd " + damage);
             if (isDead) 
                 return;
             if (attackType == AttackType.NotUnblockable && GetComponent<PlayerGuard>().IsGuarding(attacker, weapon))
@@ -80,6 +83,7 @@ namespace PSmash.Attributes
                 StopCoroutine(coroutine);
             damage *= (1 - baseStats.GetStat(StatsList.Defense)/100);
             health -= damage;
+            print("Player Health " + health);
             playerControllerPM.enabled = false;
             if (health <= 0)
             {
@@ -92,6 +96,9 @@ namespace PSmash.Attributes
                 coroutine = StartCoroutine(DamageEffects());
                 StartCoroutine(ControlReset());
             }
+
+            GetComponent<PlayerMovement>().ApplyAttackImpactReceived(attacker, weapon, LayerMask.NameToLayer("PlayerGhost"),LayerMask.NameToLayer("Player"));
+
             DamageSlot slot = new DamageSlot();
             slot.damage = damage;
             slot.damageType = DamageType.Health;

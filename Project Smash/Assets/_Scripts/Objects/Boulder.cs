@@ -2,7 +2,7 @@
 using PSmash.Attributes;
 using PSmash.Checkpoints;
 using PSmash.Combat;
-using PSmash.Combat.Weapons;
+using PSmash.Inventories;
 using UnityEngine;
 
 namespace PSmash.Items

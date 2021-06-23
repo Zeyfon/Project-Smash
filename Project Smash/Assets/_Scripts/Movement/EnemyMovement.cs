@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using PSmash.Inventories;
+using System.Collections;
 using UnityEngine;
 
 namespace PSmash.Movement
@@ -38,13 +39,8 @@ namespace PSmash.Movement
 
         //STATE
         Animator animator;
-        Vector2 impulseDirection;
-        bool isGrounded;
         float currentYAngle = 0;
-        float speedMovementModifier = 1;
         Coroutine coroutine;
-        bool isMovementOverriden = false;
-        bool isAttackingWithImpulse = false;
         float impulseTime = 0;
         float timer = Mathf.Infinity;
         float speedModifier = 1;
@@ -101,7 +97,7 @@ namespace PSmash.Movement
         void CombatImpulse()
         {
             
-            print("impulsing" + direction + "  " + speedFactor + "  " + speedModifier);
+            //print("impulsing" + direction + "  " + speedFactor + "  " + speedModifier);
             Movement(direction, true, speedFactor, speedModifier);
         }
 
@@ -110,13 +106,13 @@ namespace PSmash.Movement
             float xPosition = player.position.x - transform.position.x;
             if (xPosition > 0)
             {
-                print("Moving to the right");
+                //print("Moving to the right");
                 return new Vector2(1, 0);
 
             }
             else
             {
-                print("Moving to the left");
+                //print("Moving to the left");
                 return new Vector2(-1, 0);
             }
         }
@@ -181,19 +177,7 @@ namespace PSmash.Movement
 
         }
 
-        /// <summary>
-        /// Disables movement control by other objects.
-        /// Apply the attack force to the entity.
-        /// Waits till it passes the force to restore movement control.
-        /// </summary>
-        /// <param name="attacker"></param>
-        /// <param name="attackForce"></param>
-        public void ApplyAttackImpactReceived(Transform attacker, float attackForce)
-        {
-            isMovementOverriden = true;
-            
-            StartCoroutine(ApplyKnockback_CR(attacker,attackForce));
-        }
+
 
         /// <summary>
         /// Will update the movemement speed by its factor from 0 to 1;
@@ -324,31 +308,9 @@ namespace PSmash.Movement
             animator.SetFloat("xVelocity", xVelocity);
         }
 
-        IEnumerator ApplyKnockback_CR(Transform attacker, float attackForce)
+        public void SetTGhostLayer()
         {
-            isMovementOverriden = true;
-            yield return null;
-            float tempDrag = rb.drag;
-            PhysicsMaterial2D tempPhysicsMaterial = rb.sharedMaterial;
-            Vector2 attackDirection = (transform.position - attacker.position).normalized;
-            float timer = 0;
-            float speedFactor = attackForce / baseSpeed;
-            float timerLimit = Mathf.Log10(attackForce)/ ((attackForce/2.4f)+1);
-
-            rb.sharedMaterial = lowFriction;
-            rb.drag = 2;
-
-            while (timer < timerLimit)
-            {
-                timer += Time.fixedDeltaTime;
-
-                impulseDirection = slope.GetMovementDirectionWithSlopecontrol(transform.position, attackDirection, slopeCheckDistance, whatIsGround);
-                Movement(impulseDirection, isGrounded, speedFactor, speedMovementModifier);
-                yield return new WaitForFixedUpdate();
-            }
-            rb.drag = tempDrag;
-            rb.sharedMaterial = tempPhysicsMaterial;
-            isMovementOverriden = false;
+            gameObject.layer = LayerMask.NameToLayer("EnemiesGhost");
         }
 
 

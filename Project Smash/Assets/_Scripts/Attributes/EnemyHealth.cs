@@ -2,7 +2,7 @@
 using HutongGames.PlayMaker;
 using PSmash.Checkpoints;
 using PSmash.Combat;
-using PSmash.Combat.Weapons;
+using PSmash.Inventories;
 using PSmash.Movement;
 using PSmash.Stats;
 using System;
@@ -28,6 +28,7 @@ namespace PSmash.Attributes
         [SerializeField] AudioClip stunEndAudio = null;
         [SerializeField] AudioClip finisherAudio = null;
         [SerializeField] float volume = 1;
+        [SerializeField] float damageMitigator = 0;
 
         [Header("Finisher")]
         [SerializeField] Vector2 finisherImpulse = new Vector2(15, 7);
@@ -40,8 +41,6 @@ namespace PSmash.Attributes
         EnemyPosture posture;
         PlayMakerFSM pm;
         BaseStats baseStats;
-        float damagePenetrationPercentage;
-        float armorModifier = 0;
         bool armorDestroyed = false;
 
         static int checkpointCounter = 0;
@@ -63,10 +62,9 @@ namespace PSmash.Attributes
         public void SetCurrentStateInfo(PlayMakerFSM pm, float damagePenetrationPercentage)
         {
             this.pm = pm;
-            this.damagePenetrationPercentage = damagePenetrationPercentage;
         }
 
-        public override void TakeDamage(Transform attacker, Weapon weapon, AttackType attackType, float damage, float attackForce)
+        public override void TakeDamage(Transform attacker, Weapon weapon, AttackType attackType, float characterDamage, float attackForce)
         {
             if (isDead)
             {
@@ -79,9 +77,9 @@ namespace PSmash.Attributes
                 Debug.LogWarning("No Enemy State set to return DAMAGE Event");
                 return;
             }
-            Damaged(attacker, weapon, attackType, damage);
+            Damaged(weapon, characterDamage);
             ///
-            GetComponent<EnemyMovement>().ApplyAttackImpactReceived(attacker, attackForce);
+            GetComponent<EnemyMovement>().ApplyAttackImpactReceived(attacker, weapon, LayerMask.NameToLayer("EnemiesGhost"), LayerMask.NameToLayer("Enemies"));
         }
 
         //This is done every time the player hits the enemy after the armor was off
@@ -108,7 +106,7 @@ namespace PSmash.Attributes
             print("Taking Finisher Damage");
             audioSource.PlayOneShot(finisherAudio);
             FlyObjectAway(attackerPosition);
-            DamageHealth(damage, 100, CriticalType.Critical);
+            DamageHealth(damage);
             if(isArmorEnabled)
                 armorDestroyed = true;
         }
@@ -209,84 +207,68 @@ namespace PSmash.Attributes
         /// <param name="attacker"></param>
         /// <param name="attackedWeapon"></param>
         /// <param name="attackType"></param>
-        /// <param name="damage"></param>
-        void Damaged(Transform attacker, Weapon attackedWeapon, AttackType attackType, float damage)
+        /// <param name="characterDamage"></param>
+        void Damaged(Weapon attackedWeapon, float characterDamage)
         {
-            CriticalType criticalType;
-            float healthDamage;
-            float totalPenetrationPercentage;
-            if (weaknessWeapon == attackedWeapon)
-            {
-                healthDamage = (damage + attackedWeapon.damage) * weaknessFactor ;
-                totalPenetrationPercentage = damagePenetrationPercentage + attackedWeapon.damagePenetrationValue * weaknessFactor;
-                criticalType = CriticalType.Critical;
-            }
-            else
-            {
-                healthDamage = (damage + attackedWeapon.damage);
-                totalPenetrationPercentage = damagePenetrationPercentage + attackedWeapon.damagePenetrationValue;
-                criticalType = CriticalType.NoCritical;
-            }
+            print("Damaged with " + attackedWeapon + "  " + "characterDamage "   + characterDamage + "  weaponDamage  " + attackedWeapon.GetDamage());
 
+            float healthDamage = (characterDamage + attackedWeapon.GetDamage());
             //armorDestroyed = false;
             //Unity Event to instantiate a object to show the damage in the screen
             if (posture != null && posture.enabled)
             {
-                float postureDamage;
-                if (weaknessWeapon == attackedWeapon)
-                {
-                    postureDamage = (damage + attackedWeapon.damage) * weaknessFactor;
-                }
+                //TODO MITIGATOR FACTOR WHEN POSTURE ENABLED
 
-                else
-                {
-                    postureDamage = damage + attackedWeapon.damage;
-                }
-
+                float postureDamage = characterDamage + attackedWeapon.GetDamage();
+                healthDamage -= baseStats.GetStat(StatsList.Defense);
+                if (healthDamage <= 0)
+                    healthDamage = 0;
+                Debug.Log("Damage after Mitigation is " + healthDamage);
                 posture.posture = posture.SubstractDamageFromPosture(postureDamage);
-                OnDamageTaken(DamageType.Posture, criticalType, postureDamage);
+                OnDamageTaken(DamageType.Posture, postureDamage);
                 if (posture.posture <= 0)
                 {
-                    //print("DAMAGED_STUNNED Event to the fsm " + pm.FsmName);
+                    //print("1_DAMAGED_STUNNED Event to the fsm " + pm.FsmName);
                     posture.OnStunStateStart();
-                    DamageHealth(healthDamage, 100, criticalType);
+                    DamageHealth(healthDamage);
                     pm.SendEvent("DAMAGED_STUNNED");
                 }
                 else
                 {
 
                     FsmEventData myfsmEventData = new FsmEventData();
-                    myfsmEventData.FloatData = damage;
+                    myfsmEventData.FloatData = characterDamage;
                     HutongGames.PlayMaker.Fsm.EventData = myfsmEventData;
-                    //print("DAMAGED_NOSTUNNED Event to the fsm " + pm.FsmName);
-                    DamageHealth(healthDamage, totalPenetrationPercentage, criticalType);
+                    //print("2_DAMAGED_NOSTUNNED Event to the fsm " + pm.FsmName);
+                    DamageHealth(healthDamage);
                     pm.SendEvent("DAMAGED_NOSTUNNED");
                 }
             }
             else
             {
-                //print("DAMAGED_NOSTUNNED Event to the fsm " + pm.FsmName);
-                DamageHealth(healthDamage, totalPenetrationPercentage, criticalType);
+                Debug.Log("Full Damage" + healthDamage);
+                //print("3_DAMAGED_NOSTUNNED Event to the fsm " + pm.FsmName);
+                DamageHealth(healthDamage);
                 pm.SendEvent("DAMAGED_NOSTUNNED");
             }
+            print("My Current health  " + health);
         }
 
-        void OnDamageTaken(DamageType damageType, CriticalType criticalType, float postureDamage)
+        void OnDamageTaken(DamageType damageType, float damage)
         {
             DamageSlot slot = new DamageSlot();
-            slot.damage = postureDamage;
+            slot.damage = damage;
             slot.damageType = damageType;
-            slot.criticalType = criticalType;
             onTakeDamage.Invoke(slot);
         }
 
-        void DamageHealth(float damage, float damagePenetrationPercentage,  CriticalType criticalType)
+        void DamageHealth(float damage)
         {
             //print(damage + " will be substracted from  " + health);
-            damage *= (1 - (baseStats.GetStat(StatsList.Defense) - armorModifier) / 100);
+            //damage *= (1 - (baseStats.GetStat(StatsList.Defense)) / 100);
 
             health = SubstractDamageFromHealth(damage, health);
-            OnDamageTaken(DamageType.Health, criticalType, damage);
+            OnDamageTaken(DamageType.Health, damage);
             if (health <= 0)
             {
                 GetComponent<AudioSource>().pitch = 1;
@@ -309,10 +291,11 @@ namespace PSmash.Attributes
         /// </summary>
         void TakeArmorOff()
         {
-            print("Armor taken off");
+            //print("Armor taken off");
             GetComponent<UnblockableAttack>().TakeArmorOffSpineSkins();
-            armorModifier = baseStats.GetStat(StatsList.Defense);
+            //armorModifier = baseStats.GetStat(StatsList.Defense);
             posture.DisablePostureBar();
+            damageMitigator = 0;
             ArmoredEnemy armored = GetComponent<ArmoredEnemy>();
             GetComponent<EnemyMovement>().SetSpeedMovementModifierValue(armored.GetSpeedFactorModifier(),armored.GetAttackSpeedModifier());
             GetComponent<AudioSource>().pitch = 1.4f;

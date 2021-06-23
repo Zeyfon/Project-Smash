@@ -2,7 +2,6 @@
 using System;
 using System.Collections;
 using UnityEngine;
-using PSmash.Combat.Weapons;
 using PSmash.Inventories;
 using PSmash.Stats;
 using PSmash.Movement;
@@ -21,15 +20,14 @@ namespace PSmash.Combat
         [SerializeField] Vector2 comboAttackArea = new Vector2(1.5f, 1.5f);
         [SerializeField] AudioClip attackSound = null;
         [SerializeField] Weapon fists = null;
-        [SerializeField] float attackImpulse = 10f; 
+        [SerializeField] float attackImpulse = 12f; 
         
 
         [Header("Tool Attack")]
-        [SerializeField] Weapon mace = null;
         [SerializeField] AudioClip toolAttackSound = null;
 
         [Header("Finishing Move")]
-        [SerializeField] int finisherAttackFactor = 10;
+        //[SerializeField] int finisherAttackFactor = 10;
         [SerializeField] AudioClip finisherSound = null;
         [SerializeField] Transform steamTransform = null;
         [SerializeField]  GameObject finisherPS = null;
@@ -41,7 +39,7 @@ namespace PSmash.Combat
         [Header("AttackForces")]
         [SerializeField] float fistAttackForce = 0.5f;
         [SerializeField] float maceAttackForce = 10f;
-        public event Action AirSmashAttackEffect;
+        //public event Action AirSmashAttackEffect;
         public static event Action OnCameraShake;
 
         public delegate void FinisherCamera(bool enableFinisherCamera);
@@ -139,11 +137,9 @@ namespace PSmash.Combat
         //Anim Event
         void FinisherAttack()
         {
-            targetTransform.GetComponent<EnemyHealth>().TakeFinisherAttackDamage(transform.position, (int)baseStats.GetStat(StatsList.Attack) * finisherAttackFactor);
+            float finisherDamage = ((int)baseStats.GetStat(StatsList.Attack) + fists.GetDamage()) * 2;
+            targetTransform.GetComponent<EnemyHealth>().TakeFinisherAttackDamage(transform.position, finisherDamage);
             Instantiate(finisherPS, attackTransform.position, Quaternion.identity);
-
-            //Camera Shake
-            print("Camera Effect");
             OnCameraShake();
         }
 
@@ -198,7 +194,7 @@ namespace PSmash.Combat
         {
             //print("ToolAttack");
             Vector2 attackArea = new Vector2(2.5f, 1.75f);
-            Attack(attackTransform, attackArea, mace, maceAttackForce);
+            Attack(attackTransform, attackArea, GetComponent<Equipment>().GetSubWeapon(), maceAttackForce);
         }
 
         //AnimEvent

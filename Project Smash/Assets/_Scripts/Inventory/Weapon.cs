@@ -5,7 +5,7 @@ using UnityEngine;
 namespace PSmash.Inventories
 {
     [CreateAssetMenu(menuName = "Items/SubWeapon")]
-    public class SubWeaponItem : Item
+    public class Weapon : Item
     {
         [Header("Animation Info")]
 
@@ -14,17 +14,24 @@ namespace PSmash.Inventories
 
         [Header("DamageValues")]
         [SerializeField] float damage;
-        [SerializeField] float damagaPenetrationValue;
-
+        [Range(0,2)]
+        [SerializeField] float attackForce;
+        [Range(0,1f)]
+        [SerializeField] float attackForceTime;
 
         public float GetDamage()
         {
             return damage;
         }
 
-        public float GetDamagePenetrationValue()
+        public float GetAttackForce()
         {
-            return damagaPenetrationValue;
+            return attackForce;
+        }
+
+        public float GetAttackForceTime()
+        {
+            return attackForceTime;
         }
 
         public int GetAnimatorInt()

@@ -1,5 +1,5 @@
 ﻿using PSmash.Attributes;
-using PSmash.Combat.Weapons;
+using PSmash.Inventories;
 using UnityEngine;
 
 namespace PSmash.Combat
