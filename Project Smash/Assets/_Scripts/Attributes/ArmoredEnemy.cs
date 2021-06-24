@@ -1,4 +1,5 @@
 ﻿using GameDevTV.Saving;
+using PSmash.Checkpoints;
 using PSmash.Combat;
 using PSmash.Movement;
 using System.Collections;
@@ -13,6 +14,8 @@ namespace PSmash.Attributes
         [SerializeField] float unarmoredAttackSpeedModifier;
 
         bool isArmorEnable = true;
+
+        static int checkpointCounter = 0;
 
         public float GetSpeedFactorModifier()
         {
@@ -39,15 +42,32 @@ namespace PSmash.Attributes
             isArmorEnable = false;
         }
 
+        [System.Serializable]
+        struct Info
+        {
+            public int checkpointCounter;
+            public bool isArmorEnable;
+        }
+
         public object CaptureState()
         {
-            return isArmorEnable;
+            Info info = new Info();
+            info.checkpointCounter = FindObjectOfType<WorldManager>().GetCheckpointCounter();
+            return info;
         }
 
         public void RestoreState(object state, bool isLoadLastScene)
         {
+            WorldManager worldManager = FindObjectOfType<WorldManager>();
+            Info info = (Info)state;
+            checkpointCounter = info.checkpointCounter;
+            if (checkpointCounter != worldManager.GetCheckpointCounter())
+            {
+                print("No overwrite was applied to  " + gameObject.name);
+                return;
+            }
             print("Enemy without armor");
-            isArmorEnable = (bool)state;
+            isArmorEnable = info.isArmorEnable;
             if (!isArmorEnable)
             {
                 print("Enemy without armor");
