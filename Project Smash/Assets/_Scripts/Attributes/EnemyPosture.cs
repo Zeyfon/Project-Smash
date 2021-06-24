@@ -96,7 +96,7 @@ namespace PSmash.Attributes
 
         public void EnablePostureBar()
         {
-            print("Disabling Posture Bar");
+            print("Enable Posture Bar");
             onEnablePostureBar.Invoke();
             this.enabled = true;
         }

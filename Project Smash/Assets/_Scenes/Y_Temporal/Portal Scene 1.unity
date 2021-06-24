@@ -408,6 +408,16 @@ PrefabInstance:
       propertyPath: m_Mesh
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 4191859700395274613, guid: 0015cb2a3df921b46b0761db53f9471b,
+        type: 3}
+      propertyPath: slots.Array.data[2].number
+      value: 250
+      objectReference: {fileID: 0}
+    - target: {fileID: 5498729551461002954, guid: 0015cb2a3df921b46b0761db53f9471b,
+        type: 3}
+      propertyPath: posture
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6852413905604142772, guid: 0015cb2a3df921b46b0761db53f9471b,
         type: 3}
       propertyPath: m_Name
@@ -718,7 +728,7 @@ PrefabInstance:
     - target: {fileID: 4333015027581209506, guid: b5a8a99dbc1867e45924719b94729ed1,
         type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b5a8a99dbc1867e45924719b94729ed1, type: 3}
@@ -11461,36 +11471,12 @@ MonoBehaviour:
         networkSync: 0
         value: 1
       - useVariable: 1
-        name: 
-        tooltip: 
-        showInInspector: 0
-        networkSync: 0
-        value: 0
-      - useVariable: 1
-        name: 
-        tooltip: 
-        showInInspector: 0
-        networkSync: 0
-        value: 0
-      - useVariable: 1
         name: damagePenetrationPercentage
         tooltip: 
         showInInspector: 1
         networkSync: 0
         value: 100
-      intVariables:
-      - useVariable: 1
-        name: 
-        tooltip: 
-        showInInspector: 0
-        networkSync: 0
-        value: 0
-      - useVariable: 1
-        name: 
-        tooltip: 
-        showInInspector: 1
-        networkSync: 0
-        value: 0
+      intVariables: []
       boolVariables:
       - useVariable: 1
         name: isAttacking
@@ -11519,13 +11505,6 @@ MonoBehaviour:
       gameObjectVariables: []
       objectVariables:
       - useVariable: 1
-        name: 
-        tooltip: 
-        showInInspector: 0
-        networkSync: 0
-        typeName: 
-        value: {fileID: 0}
-      - useVariable: 1
         name: damageOnlySound
         tooltip: 
         showInInspector: 1
@@ -11549,19 +11528,12 @@ MonoBehaviour:
       materialVariables: []
       textureVariables: []
       arrayVariables: []
-      enumVariables:
-      - useVariable: 1
-        name: 
-        tooltip: 
-        showInInspector: 0
-        networkSync: 0
-        enumName: PSmash.Combat.AttackType
-        intValue: 0
+      enumVariables: []
       categories:
       - 
       - Exposed
       - PreviouslyInitialized
-      variableCategoryIDs: 0100000000000000000000000100000000000000000000000000000000000000000000000000000001000000020000000200000000000000
+      variableCategoryIDs: 0100000001000000000000000000000000000000010000000200000002000000
     description: 'NormalAttack State
 
       This FSM is the one in charge of reactions
@@ -14645,6 +14617,7 @@ MonoBehaviour:
     speedFactor: 0.9
   - impulseTime: 0.25
     speedFactor: 3.5
+  finisherImpulse: {x: 15, y: 7}
 --- !u!114 &1411232753804579726
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -19304,7 +19277,7 @@ PrefabInstance:
     - target: {fileID: 8851278654538908373, guid: 587e06734df96fb45836c4df01ad03a7,
         type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8851278654538908375, guid: 587e06734df96fb45836c4df01ad03a7,
         type: 3}
@@ -32090,8 +32063,6 @@ MonoBehaviour:
   health: 0
   isArmorEnabled: 0
   isInvulnerable: 1
-  weaknessWeapon: {fileID: 0}
-  weaknessFactor: 3
   protectedDamageAudio: {fileID: 8300000, guid: 4f7340b1234407d489f3a16352cb1558,
     type: 3}
   fleshDamageAudio: {fileID: 8300000, guid: a2c4afa4edc26494c9d118b432321eaa, type: 3}
@@ -32099,6 +32070,3 @@ MonoBehaviour:
   staggerAuduio: {fileID: 8300000, guid: 2829b78c6bb193e48a1d92f8f4da2dce, type: 3}
   stunEndAudio: {fileID: 8300000, guid: f3c2f312bf5e78242ad3f1edf5d3f3ff, type: 3}
   finisherAudio: {fileID: 8300000, guid: d11bec2d3b46cad4ab13f62a2a332b02, type: 3}
-  volume: 1
-  damageMitigator: 0
-  finisherImpulse: {x: 15, y: 7}
