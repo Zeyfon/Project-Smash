@@ -36,6 +36,9 @@ namespace PSmash.Movement
         [Tooltip("The times each attack impulse will be active")]
         [SerializeField] AttackMovements[] attackMovements;
 
+        [Header("Finisher")]
+        [SerializeField] Vector2 finisherImpulse = new Vector2(15, 7);
+
 
         //STATE
         Animator animator;
@@ -252,6 +255,19 @@ namespace PSmash.Movement
             if (coroutine != null)
             {
                 StopCoroutine(coroutine);
+            }
+        }
+
+        public void FlyObjectAway(Vector3 attackerPosition)
+        {
+            float position = attackerPosition.x - transform.position.x;
+            if (position > 0)
+            {
+                GetComponent<Rigidbody2D>().velocity = new Vector2(-finisherImpulse.x, finisherImpulse.y);
+            }
+            else
+            {
+                GetComponent<Rigidbody2D>().velocity = finisherImpulse;
             }
         }
 

@@ -35,7 +35,7 @@ namespace PSmash.Core
 
         void OnDisable()
         {
-            EnemyHealth.onEnemyDead -= EnemyDied;
+            //EnemyHealth.onEnemyDead -= EnemyDied;
         }
 
 
@@ -59,7 +59,7 @@ namespace PSmash.Core
             {
                 door.CloseDoor();
             }
-            EnemyHealth.onEnemyDead += EnemyDied;
+            //EnemyHealth.onEnemyDead += EnemyDied;
             StartCoroutine(SpawnEnemies(0));
             GameObject.FindObjectOfType<MusicManager>().PlayBossMusic();
         }
