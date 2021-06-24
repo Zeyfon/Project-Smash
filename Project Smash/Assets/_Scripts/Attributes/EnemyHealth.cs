@@ -293,14 +293,13 @@ namespace PSmash.Attributes
         {
             //Will restore everytime the save system ask for it
             //Depending on the counter in the WorldManager it will overwrite the data or not
-            Info info = (Info)state;
             WorldManager worldManager = FindObjectOfType<WorldManager>();
             if (worldManager == null)
             {
                 //Debug.LogWarning("Cannot complete the restore state of this entity");
                 return;
             }
-
+            Info info = (Info)state;
             checkpointCounter = info.checkpointCounter;
             if (checkpointCounter != worldManager.GetCheckpointCounter())
             {
