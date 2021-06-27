@@ -17,6 +17,7 @@ namespace PSmash.Attributes
         //CONFIG
         [Header("TestMode")]
         [SerializeField] bool isInvulnerable = false;
+        [SerializeField] bool canBeKnockbacked = true;
 
         [Header("Extras")]
         [SerializeField] AudioClip protectedDamageAudio = null;
@@ -71,7 +72,8 @@ namespace PSmash.Attributes
             }
             Damaged(weapon, characterDamage);
             ///
-            GetComponent<EnemyMovement>().ApplyAttackImpactReceived(attacker, weapon, LayerMask.NameToLayer("EnemiesGhost"), LayerMask.NameToLayer("Enemies"));
+            if(canBeKnockbacked)
+                GetComponent<EnemyMovement>().ApplyAttackImpactReceived(attacker, weapon, LayerMask.NameToLayer("EnemiesGhost"), LayerMask.NameToLayer("Enemies"));
         }
 
         //This is done every time the player hits the enemy after the armor was off
