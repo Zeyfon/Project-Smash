@@ -152,12 +152,19 @@ namespace PSmash.Movement
             {
                 return true;
             }
+            else
+                return false;
+        }
+
+        public bool CanDoubleJump()
+        {
             if (!isGrounded && canDoubleJump)
             {
                 canDoubleJump = false;
                 return true;
             }
-            return false;
+            else
+                return false;
         }
 
         /// <summary>

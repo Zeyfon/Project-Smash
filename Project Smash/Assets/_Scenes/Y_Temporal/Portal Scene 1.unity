@@ -1902,6 +1902,11 @@ PrefabInstance:
       propertyPath: m_LocalPosition.y
       value: 0.009999812
       objectReference: {fileID: 0}
+    - target: {fileID: 592091583155549713, guid: 0c292b7de4920264087b71a5ce9ec610,
+        type: 3}
+      propertyPath: fsm.editorFlags
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 1961288071010327238, guid: 0c292b7de4920264087b71a5ce9ec610,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -30272,6 +30277,21 @@ MonoBehaviour:
     - name: HIT
       isSystemEvent: 0
       isGlobal: 0
+    - name: FINISHED
+      isSystemEvent: 1
+      isGlobal: 0
+    - name: ACTIONFINISHED
+      isSystemEvent: 0
+      isGlobal: 0
+    - name: ISPLAYERHEALTH
+      isSystemEvent: 0
+      isGlobal: 0
+    - name: YES
+      isSystemEvent: 0
+      isGlobal: 0
+    - name: NO
+      isSystemEvent: 0
+      isGlobal: 0
     globalTransitions:
     - fsmEvent:
         name: HIT
@@ -32061,7 +32081,6 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
   health: 0
-  isArmorEnabled: 0
   isInvulnerable: 1
   protectedDamageAudio: {fileID: 8300000, guid: 4f7340b1234407d489f3a16352cb1558,
     type: 3}
