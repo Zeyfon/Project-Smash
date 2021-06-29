@@ -17,7 +17,6 @@ namespace PSmash.Combat
 
         [Header("Combo Attack")]
         [SerializeField] Transform attackTransform = null;
-        [SerializeField] Vector2 comboAttackArea = new Vector2(1.5f, 1.5f);
         [SerializeField] AudioClip attackSound = null;
         [SerializeField] Weapon fists = null;
         [SerializeField] float attackImpulse = 12f; 
@@ -50,6 +49,7 @@ namespace PSmash.Combat
         Animator animator;
         AudioSource audioSource;
         Transform targetTransform;
+        Vector2 damageArea;
 
 
         //bool isFinishinAnEnemy = false;
@@ -166,8 +166,8 @@ namespace PSmash.Combat
         void AttackDamage(int index)
         {
             //print("NormalAttack");
-            Vector2 attackArea = new Vector2(1.9f, 1.6f);
-            Attack(attackTransform, attackArea, fists, fistAttackForce);
+            damageArea = new Vector2(1.9f, 1.6f);
+            Attack(attackTransform, fists, fistAttackForce);
         }
 
         /// <summary>
@@ -193,8 +193,8 @@ namespace PSmash.Combat
         void SubWeaponAttackDamage()
         {
             //print("ToolAttack");
-            Vector2 attackArea = new Vector2(2.5f, 1.75f);
-            Attack(attackTransform, attackArea, GetComponent<Equipment>().GetSubWeapon(), maceAttackForce);
+            damageArea = new Vector2(4.5f, 1.75f);
+            Attack(attackTransform, GetComponent<Equipment>().GetSubWeapon(), maceAttackForce);
         }
 
         //AnimEvent
@@ -210,10 +210,10 @@ namespace PSmash.Combat
 
         #endregion
 
-        void Attack(Transform attackOriginPosition, Vector2 attackArea, Weapon currentWeapon, float attackForce)
+        void Attack(Transform attackOriginPosition, Weapon currentWeapon, float attackForce)
         {
             //print("Looking to Damage Enemy");
-            Collider2D[] colls = Physics2D.OverlapBoxAll(attackOriginPosition.position, attackArea, 0, whatIsDamagable);
+            Collider2D[] colls = Physics2D.OverlapBoxAll(attackOriginPosition.position, damageArea, 0, whatIsDamagable);
             if (colls.Length == 0)
             {
                 //print("Nothing was damaged");
@@ -233,8 +233,7 @@ namespace PSmash.Combat
 
         void OnDrawGizmosSelected()
         {
-            Gizmos.DrawWireCube(attackTransform.position, comboAttackArea);
-
+            Gizmos.DrawWireCube(attackTransform.position, damageArea);
         }
     }
 }
