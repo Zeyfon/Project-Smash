@@ -7,12 +7,12 @@ namespace PSmash.Inventories
     [CreateAssetMenu(menuName = "Items/SubWeapon")]
     public class Weapon : Item
     {
-        [Header("Animation Info")]
-
+        [Header("ANIMATION INFO")]
         [SerializeField] int animatorIntValue = 0;
-        [SerializeField] AudioClip useItemClip = null;
+        [SerializeField] AudioClip weaponAttackAudioClip = null;
 
-        [Header("DamageValues")]
+        [Header("VALUES")]
+        [SerializeField] Vector2 weaponDamageArea;
         [SerializeField] float damage;
         [Range(0,2)]
         [SerializeField] float attackForce;
@@ -38,9 +38,14 @@ namespace PSmash.Inventories
         {
             return animatorIntValue;
         }
-        public AudioClip GetAudioClip()
+
+        public Vector2 GetWeaponDamageArea()
         {
-            return useItemClip;
+            return weaponDamageArea;
+        }
+        public AudioClip GetWeaponAttackAudioClip()
+        {
+            return weaponAttackAudioClip;
         }
 
     }

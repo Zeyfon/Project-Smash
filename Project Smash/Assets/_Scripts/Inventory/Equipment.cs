@@ -21,7 +21,7 @@ namespace PSmash.Inventories
 
         List<Weapon> subWeapons = new List<Weapon>();
         int currentIndex = 0;
-
+        Weapon mainWeapon;
         //INITIALIZE/////////////////////
         private void Awake()
         {
@@ -36,8 +36,11 @@ namespace PSmash.Inventories
         {
             foreach (Weapon item in Resources.LoadAll<Weapon>(""))
             {
+                if (item.GetID() == "22fb0e72-60f1-4908-81f3-ed22b0195c88")
+                    mainWeapon = item;
                 subWeapons.Add(item);
             }
+
         }
 
         void Start()
@@ -58,6 +61,11 @@ namespace PSmash.Inventories
 
         /////////////////////////////////////////PUBLIC//////////////
 
+        public Weapon GetMainWeapon()
+        {
+            return mainWeapon;
+        }
+
         /// <summary>
         /// Set the current subweapon to whatever weapon is passed
         /// </summary>
@@ -74,6 +82,12 @@ namespace PSmash.Inventories
         public Weapon GetSubWeapon()
         {
             return subWeapon;
+        }
+
+        public int GetSubWeaponAnimationValue()
+        {
+            print(subWeapon.GetAnimatorInt());
+            return subWeapon.GetAnimatorInt();
         }
 
 
