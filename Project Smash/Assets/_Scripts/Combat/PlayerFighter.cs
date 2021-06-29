@@ -14,19 +14,15 @@ namespace PSmash.Combat
         [Header("General Info")]
         [SerializeField] LayerMask whatIsDamagable;
         [SerializeField] LayerMask whatIsEnemy;
+        [SerializeField] float attackImpulse = 12f;
 
         [Header("Combo Attack")]
         [SerializeField] Transform attackTransform = null;
-        [SerializeField] AudioClip attackSound = null;
-        [SerializeField] Weapon fists = null;
-        [SerializeField] float attackImpulse = 12f; 
-        
 
         [Header("Tool Attack")]
         [SerializeField] AudioClip toolAttackSound = null;
 
         [Header("Finishing Move")]
-        //[SerializeField] int finisherAttackFactor = 10;
         [SerializeField] AudioClip finisherSound = null;
         [SerializeField] Transform steamTransform = null;
         [SerializeField]  GameObject finisherPS = null;
@@ -34,11 +30,6 @@ namespace PSmash.Combat
         [Header("Guard")]
         [SerializeField] AudioClip guardFootstepSound = null;
 
-
-        [Header("AttackForces")]
-        [SerializeField] float fistAttackForce = 0.5f;
-        [SerializeField] float maceAttackForce = 10f;
-        //public event Action AirSmashAttackEffect;
         public static event Action OnCameraShake;
 
         public delegate void FinisherCamera(bool enableFinisherCamera);
@@ -50,9 +41,6 @@ namespace PSmash.Combat
         AudioSource audioSource;
         Transform targetTransform;
         Vector2 damageArea;
-
-
-        //bool isFinishinAnEnemy = false;
 
         void Awake()
         {
@@ -137,7 +125,7 @@ namespace PSmash.Combat
         //Anim Event
         void FinisherAttack()
         {
-            float finisherDamage = ((int)baseStats.GetStat(StatsList.Attack) + fists.GetDamage()) * 2;
+            float finisherDamage = ((int)baseStats.GetStat(StatsList.Attack) + GetComponent<Equipment>().GetMainWeapon().GetDamage()) * 2;
             targetTransform.GetComponent<EnemyHealth>().TakeFinisherAttackDamage(transform.position, finisherDamage);
             Instantiate(finisherPS, attackTransform.position, Quaternion.identity);
             OnCameraShake();
@@ -166,8 +154,10 @@ namespace PSmash.Combat
         void AttackDamage(int index)
         {
             //print("NormalAttack");
-            damageArea = new Vector2(1.9f, 1.6f);
-            Attack(attackTransform, fists, fistAttackForce);
+            Weapon weapon = GetComponent<Equipment>().GetMainWeapon();
+            damageArea = weapon.GetWeaponDamageArea();
+            //damageArea = new Vector2(1.9f, 1.6f);
+            Attack(attackTransform, weapon);
         }
 
         /// <summary>
@@ -182,7 +172,7 @@ namespace PSmash.Combat
         void AttackSound(int index)
         {
             audioSource.pitch = UnityEngine.Random.Range(0.75f, 1.1f);
-            audioSource.PlayOneShot(attackSound);
+            audioSource.PlayOneShot(GetComponent<Equipment>().GetMainWeapon().GetWeaponAttackAudioClip());
         }
 
         #endregion
@@ -192,25 +182,27 @@ namespace PSmash.Combat
         //Anim Event
         void SubWeaponAttackDamage()
         {
-            //print("ToolAttack");
-            damageArea = new Vector2(4.5f, 1.75f);
-            Attack(attackTransform, GetComponent<Equipment>().GetSubWeapon(), maceAttackForce);
+            //print("SubWeapon Damage");
+            Weapon weapon = GetComponent<Equipment>().GetSubWeapon();
+            damageArea = weapon.GetWeaponDamageArea();
+            //damageArea = new Vector2(4.5f, 1.75f);
+            Attack(attackTransform, weapon);
         }
 
         //AnimEvent
         void SubWeaponAttackSound(int index)
         {
-            if(index == 1)
-            {
+            //if(index == 1)
+            //{
                 audioSource.pitch = UnityEngine.Random.Range(0.75f, 1.5f);
-                audioSource.PlayOneShot(toolAttackSound);
-            }
+                audioSource.PlayOneShot(GetComponent<Equipment>().GetSubWeapon().GetWeaponAttackAudioClip());
+            //}
 
         }
 
         #endregion
 
-        void Attack(Transform attackOriginPosition, Weapon currentWeapon, float attackForce)
+        void Attack(Transform attackOriginPosition, Weapon weapon)
         {
             //print("Looking to Damage Enemy");
             Collider2D[] colls = Physics2D.OverlapBoxAll(attackOriginPosition.position, damageArea, 0, whatIsDamagable);
@@ -225,7 +217,7 @@ namespace PSmash.Combat
                 if (target == null || coll.GetComponent<Projectile>())
                     continue;
                 //print(currentWeapon.name);
-                target.TakeDamage(transform, currentWeapon, AttackType.NotUnblockable, baseStats.GetStat(StatsList.Attack), attackForce);
+                target.TakeDamage(transform, weapon, AttackType.NotUnblockable, baseStats.GetStat(StatsList.Attack), weapon.GetAttackForce());
                 //print("Sendingdamage from player to  " + target);
 
             }
