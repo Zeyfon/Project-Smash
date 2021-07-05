@@ -113,6 +113,14 @@ public class @_Controller : IInputActionCollection, IDisposable
                     ""expectedControlType"": ""Axis"",
                     ""processors"": """",
                     ""interactions"": """"
+                },
+                {
+                    ""name"": ""Action8"",
+                    ""type"": ""Button"",
+                    ""id"": ""330ef5a3-f7a2-40a5-906a-289e1136d786"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
                 }
             ],
             ""bindings"": [
@@ -219,7 +227,7 @@ public class @_Controller : IInputActionCollection, IDisposable
                     ""name"": """",
                     ""id"": ""d5f46185-42ed-40b7-9dee-eadd5a901763"",
                     ""path"": ""<Keyboard>/space"",
-                    ""interactions"": """",
+                    ""interactions"": ""Hold(duration=0.15)"",
                     ""processors"": """",
                     ""groups"": ""Keyboard&Mouse"",
                     ""action"": ""Action1"",
@@ -456,6 +464,17 @@ public class @_Controller : IInputActionCollection, IDisposable
                     ""action"": ""Action7"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""d6550cdb-52bf-45a3-bdca-58386ca8fd6b"",
+                    ""path"": ""<Keyboard>/g"",
+                    ""interactions"": ""Hold(duration=0.1,pressPoint=0.1)"",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard&Mouse"",
+                    ""action"": ""Action8"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         },
@@ -1090,6 +1109,7 @@ public class @_Controller : IInputActionCollection, IDisposable
         m_Player_Quit = m_Player.FindAction("Quit", throwIfNotFound: true);
         m_Player_ButtonStart = m_Player.FindAction("ButtonStart", throwIfNotFound: true);
         m_Player_Action7 = m_Player.FindAction("Action7", throwIfNotFound: true);
+        m_Player_Action8 = m_Player.FindAction("Action8", throwIfNotFound: true);
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
         m_UI_Navigate = m_UI.FindAction("Navigate", throwIfNotFound: true);
@@ -1175,6 +1195,7 @@ public class @_Controller : IInputActionCollection, IDisposable
     private readonly InputAction m_Player_Quit;
     private readonly InputAction m_Player_ButtonStart;
     private readonly InputAction m_Player_Action7;
+    private readonly InputAction m_Player_Action8;
     public struct PlayerActions
     {
         private @_Controller m_Wrapper;
@@ -1191,6 +1212,7 @@ public class @_Controller : IInputActionCollection, IDisposable
         public InputAction @Quit => m_Wrapper.m_Player_Quit;
         public InputAction @ButtonStart => m_Wrapper.m_Player_ButtonStart;
         public InputAction @Action7 => m_Wrapper.m_Player_Action7;
+        public InputAction @Action8 => m_Wrapper.m_Player_Action8;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -1236,6 +1258,9 @@ public class @_Controller : IInputActionCollection, IDisposable
                 @Action7.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnAction7;
                 @Action7.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnAction7;
                 @Action7.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnAction7;
+                @Action8.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnAction8;
+                @Action8.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnAction8;
+                @Action8.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnAction8;
             }
             m_Wrapper.m_PlayerActionsCallbackInterface = instance;
             if (instance != null)
@@ -1276,6 +1301,9 @@ public class @_Controller : IInputActionCollection, IDisposable
                 @Action7.started += instance.OnAction7;
                 @Action7.performed += instance.OnAction7;
                 @Action7.canceled += instance.OnAction7;
+                @Action8.started += instance.OnAction8;
+                @Action8.performed += instance.OnAction8;
+                @Action8.canceled += instance.OnAction8;
             }
         }
     }
@@ -1558,6 +1586,7 @@ public class @_Controller : IInputActionCollection, IDisposable
         void OnQuit(InputAction.CallbackContext context);
         void OnButtonStart(InputAction.CallbackContext context);
         void OnAction7(InputAction.CallbackContext context);
+        void OnAction8(InputAction.CallbackContext context);
     }
     public interface IUIActions
     {

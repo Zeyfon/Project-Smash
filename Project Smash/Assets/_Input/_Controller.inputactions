@@ -100,6 +100,14 @@
                     "expectedControlType": "Axis",
                     "processors": "",
                     "interactions": ""
+                },
+                {
+                    "name": "Action8",
+                    "type": "Button",
+                    "id": "330ef5a3-f7a2-40a5-906a-289e1136d786",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
                 }
             ],
             "bindings": [
@@ -206,7 +214,7 @@
                     "name": "",
                     "id": "d5f46185-42ed-40b7-9dee-eadd5a901763",
                     "path": "<Keyboard>/space",
-                    "interactions": "",
+                    "interactions": "Hold(duration=0.15)",
                     "processors": "",
                     "groups": "Keyboard&Mouse",
                     "action": "Action1",
@@ -443,6 +451,17 @@
                     "action": "Action7",
                     "isComposite": false,
                     "isPartOfComposite": true
+                },
+                {
+                    "name": "",
+                    "id": "d6550cdb-52bf-45a3-bdca-58386ca8fd6b",
+                    "path": "<Keyboard>/g",
+                    "interactions": "Hold(duration=0.1,pressPoint=0.1)",
+                    "processors": "",
+                    "groups": "Keyboard&Mouse",
+                    "action": "Action8",
+                    "isComposite": false,
+                    "isPartOfComposite": false
                 }
             ]
         },

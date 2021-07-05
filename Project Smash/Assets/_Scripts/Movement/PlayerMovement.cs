@@ -48,6 +48,7 @@ namespace PSmash.Movement
 
         [Header("Extra")]
         [SerializeField] ParticleSystem dust = null;
+        [SerializeField] float maxGlideTimer = 5;
 
         #endregion
 
@@ -60,6 +61,7 @@ namespace PSmash.Movement
         Vector2 colliderSize;
         Vector3 storedPosition;
 
+        float glideTimer = 0;
         float gravityScale;
         float ladderPositionX;
         float jumpTimer = 0;
@@ -234,10 +236,16 @@ namespace PSmash.Movement
             return ladderControl.CheckToExitLadder(input.y, transform, colliderSize, whatIsLadderTop, animator, rb, gravityScale, whatIsGround, isGrounded, isCollidingWithOneWayPlatform, checkLadderDistance);
         }
 
-        public void RollMovement(float inputX, float speedFactor)
+        public void RollMovement(Vector2 input, float speedFactor)
         {
-            Vector2 input = new Vector2(inputX, 0);
+            //Vector2 input = new Vector2(inputX, 0);
+            ResetGravityScale();
             Move(input, speedFactor);
+        }
+
+        public void ResetGravityScale()
+        {
+            rb.gravityScale = gravityScale;
         }
 
         public void SetPhysicsAttack(PhysicsMaterial2D physicsMaterial)
@@ -262,6 +270,25 @@ namespace PSmash.Movement
             storedPosition = transform.position;
         }
 
+
+        public void Gliding(Vector2 input)
+        {
+            Flip(input.x);
+            rb.gravityScale = 0.05f;
+            rb.sharedMaterial = noFriction;
+            Move(input, 1);
+            glideTimer -= Time.fixedDeltaTime;
+        }
+
+        public float GetGlideTimer()
+        {
+            return glideTimer;
+        }
+
+        public float GetMaxGliderTimer()
+        {
+            return maxGlideTimer;
+        }
         //////////////////////////////////////////////////////////////////////////////////////PRIVATE/////////////////////////////////////////////////////////////////////////////////////
 
         /// <summary>
@@ -269,12 +296,13 @@ namespace PSmash.Movement
         /// </summary>
         void GroundCheck()
         {
-            isGrounded = Physics2D.OverlapCircle((Vector2)transform.position + groundCheckPosition, groundCheckRadius, whatIsGround);
+            isGrounded = IsGrounded();
             animator.SetBool("Grounded", isGrounded);
             canWalkOnSlope = slope.CanWalkOnThisGround(transform.position, transform.right, slopeCheckDistance, maxSlopeAngle, whatIsGround);
             if (isGrounded && canWalkOnSlope)
             {
                 canDoubleJump = true;
+                glideTimer = maxGlideTimer;
             }
             if (isFalling && isGrounded)
             {
@@ -291,6 +319,11 @@ namespace PSmash.Movement
 
                 isJumping = false;
             }
+        }
+
+        public bool IsGrounded()
+        {
+            return Physics2D.OverlapCircle((Vector2)transform.position + groundCheckPosition, groundCheckRadius, whatIsGround);
         }
 
         void Move(Vector2 input, float speedFactor)
