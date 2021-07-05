@@ -182,7 +182,7 @@ namespace PSmash.Inventories
             rb.velocity = new Vector2(0, 0);
             rb.angularVelocity = 0;
             skeletonAnim.AnimationState.SetAnimation(0, anim, false);
-            print("ProjectileStopped");
+            //print("ProjectileStopped");
         }
 
         void OnSpineAnimationEnd(TrackEntry trackEntry)
@@ -192,7 +192,7 @@ namespace PSmash.Inventories
         }
         IEnumerator Destroy()
         {
-            print("About to destroy the dagger");
+            //print("About to destroy the dagger");
             while (audioSource.isPlaying)
             {
                 yield return new WaitForEndOfFrame();

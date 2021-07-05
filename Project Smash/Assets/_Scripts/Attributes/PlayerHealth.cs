@@ -11,6 +11,7 @@ using PSmash.Combat;
 using GameDevTV.Saving;
 using PSmash.SceneManagement;
 using PSmash.Movement;
+using HutongGames.PlayMaker;
 
 namespace PSmash.Attributes
 {
@@ -29,10 +30,11 @@ namespace PSmash.Attributes
         public event PlayerDamaged onDamaged;
         public delegate void PlayerHealed();
         public event PlayerHealed onHealed;
-        Coroutine coroutine;
+        //Coroutine coroutine;
         Animator animator;
         BaseStats baseStats;
         bool isDamaged;
+        FsmObject currentFSM;
 
         ////////INITIALIZE///////////
 
@@ -41,6 +43,7 @@ namespace PSmash.Attributes
             baseStats = GetComponent<BaseStats>();
             audioSource = GetComponent<AudioSource>();
             animator = GetComponent<Animator>();
+            currentFSM = FsmVariables.GlobalVariables.FindFsmObject("currentFSM");
             InitializeHealth();
 
         }
@@ -73,18 +76,18 @@ namespace PSmash.Attributes
             //The knockback movement must be applied using the attackForce value received in the Method
             //Right now the movement is constant and do not use the variable
 
-            print("player damagedd " + damage);
-            if (isDead) 
+            print("player damaged " + damage);
+            if (isDead)
                 return;
-            if (attackType == AttackType.NotUnblockable && GetComponent<PlayerGuard>().IsGuarding(attacker, weapon))
+            if (IsNotUnblockableAttackAndIsParrying(attacker, weapon, attackType))
                 return;
-            isDamaged = true;
-            if (coroutine != null) 
-                StopCoroutine(coroutine);
-            damage *= (1 - baseStats.GetStat(StatsList.Defense)/100);
+            //if (animator.GetInteger("Damage") == 0 || animator.GetInteger("Damage") == 100)
+            //    return;
+
+            print("player damage will be applied " + damage);
+            
+            damage *= (1 - baseStats.GetStat(StatsList.Defense) / 100);
             health -= damage;
-            print("Player Health " + health);
-            playerControllerPM.enabled = false;
             if (health <= 0)
             {
                 health = 0;
@@ -93,11 +96,12 @@ namespace PSmash.Attributes
             }
             else
             {
-                coroutine = StartCoroutine(DamageEffects());
-                StartCoroutine(ControlReset());
+                playerControllerPM.SendEvent("DAMAGED");
             }
 
-            GetComponent<PlayerMovement>().ApplyAttackImpactReceived(attacker, weapon, LayerMask.NameToLayer("PlayerGhost"),LayerMask.NameToLayer("Player"));
+            PlayerMovement movement = GetComponent<PlayerMovement>();
+            movement.ResetGravityScale();
+            movement.ApplyAttackImpactReceived(attacker, weapon, LayerMask.NameToLayer("PlayerGhost"), LayerMask.NameToLayer("Player"));
 
             DamageSlot slot = new DamageSlot();
             slot.damage = damage;
@@ -105,6 +109,11 @@ namespace PSmash.Attributes
             slot.criticalType = CriticalType.NoCritical;
             onTakeDamage.Invoke(slot);
             onDamaged();
+        }
+
+        private bool IsNotUnblockableAttackAndIsParrying(Transform attacker, Weapon weapon, AttackType attackType)
+        {
+            return attackType == AttackType.NotUnblockable && GetComponent<PlayerGuard>().IsGuarding(attacker, weapon);
         }
 
         public float GetMaxHealthPoints()
@@ -168,24 +177,24 @@ namespace PSmash.Attributes
             onHealed();
         }
 
-        IEnumerator DamageEffects()
-        {
-            //print("Playing player damage sound");
-            animator.SetInteger("Damage", 1);
-            while(animator.GetInteger("Damage") != 100)
-            {
-                yield return new WaitForEndOfFrame();
-            }
-            animator.SetInteger("Damage", 0);
-            coroutine = null;
-        }
+        //IEnumerator DamageEffects()
+        //{
+        //    //print("Playing player damage sound");
+        //    animator.SetInteger("Damage", 1);
+        //    while(animator.GetInteger("Damage") != 100)
+        //    {
+        //        yield return new WaitForEndOfFrame();
+        //    }
+        //    animator.SetInteger("Damage", 0);
+        //    coroutine = null;
+        //}
 
-        IEnumerator ControlReset()
-        {
-            yield return new WaitForSeconds(timeToRecoverControlAfterDamage);
-            isDamaged = false;
-            playerControllerPM.enabled = true;
-        }
+        //IEnumerator ControlReset()
+        //{
+        //    yield return new WaitForSeconds(timeToRecoverControlAfterDamage);
+        //    isDamaged = false;
+        //    playerControllerPM.enabled = true;
+        //}
 
         IEnumerator EntityDied()
         {
@@ -197,7 +206,6 @@ namespace PSmash.Attributes
             gameObject.layer = LayerMask.NameToLayer("PlayerGhost");
             animator.SetInteger("Damage", 50);
             yield return new WaitForSeconds(2);
-            //FindObjectOfType<WorldManager>().IncreaseCheckpointCounter();
             FindObjectOfType<SavingWrapper>().LoadLastSavedScene();
         }
 

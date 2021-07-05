@@ -149,12 +149,12 @@ namespace PSmash.Movement
                     rb.sharedMaterial = lowFriction;
                     if (!isMovingTowardsTarget)
                     {
-                        print(targetPosition);
+                        //print(targetPosition);
                         //TODO
                         //The enemy is suppossed to be running frontly away from the player
                         //Right not it rotates accordingly, but the movement is backwards and not frontwards
                         targetPosition = InvertTargetPosition(targetPosition);
-                        print(targetPosition);
+                        //print(targetPosition);
                     }
 
                     Vector2 movementDirectionNormalized = (targetPosition - transform.position).normalized;
@@ -170,7 +170,7 @@ namespace PSmash.Movement
         Vector3 InvertTargetPosition(Vector3 positionToInvert)
         {
             float distance = positionToInvert.x - transform.position.x;
-            print(distance);
+            //print(distance);
             return new Vector3(transform.position.x - distance, positionToInvert.y, positionToInvert.z);
 
             //if (distance > 0)

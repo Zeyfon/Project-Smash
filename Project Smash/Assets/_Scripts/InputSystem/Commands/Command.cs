@@ -65,11 +65,11 @@ namespace PSmash.InputSystem
 
             if (Mathf.Abs(input.x) > 0.4f)
             {
-                pm.SendEvent("ROLL");
+                pm.SendEvent("ROLLCOMMAND");
             }
             else
             {
-                pm.SendEvent("BACKJUMP");
+                pm.SendEvent("BACKJUMPCOMMAND");
             }
         }
 
@@ -83,7 +83,7 @@ namespace PSmash.InputSystem
     {
         public override void ButtonPressed(Transform transform, InputHandler inputHandler, PlayMakerFSM pm, Vector2 input, float buttonState)
         {
-            pm.SendEvent("ATTACKBUTTONPRESSED");
+            pm.SendEvent("MAINWEAPONATTACKCOMMAND");
         }
 
         public override void ButtonReleased(Transform transform, InputHandler inputHandler, PlayMakerFSM pm, Vector2 input, float buttonState)
@@ -187,5 +187,20 @@ namespace PSmash.InputSystem
         {
             //throw new System.NotImplementedException();
         }
+    }                
+
+    public class GlideCommand : Command
+    {
+        public override void ButtonPressed(Transform transform, InputHandler inputHandler, PlayMakerFSM pm, Vector2 input, float buttonState)
+        {
+            Debug.Log(pm.Fsm.Name);
+            pm.SendEvent("GLIDE");
+        }
+
+        public override void ButtonReleased(Transform transform, InputHandler inputHandler, PlayMakerFSM pm, Vector2 input, float buttonState)
+        {
+            //throw new System.NotImplementedException();
+        }
     }
+
 }

@@ -25,6 +25,7 @@ namespace PSmash.InputSystem
         Command action5;
         Command action6;
         Command action7;
+        Command action8;
         
         float action5State = 0;
         float action7State = 0;
@@ -61,6 +62,7 @@ namespace PSmash.InputSystem
             action5 = new GuardCommand();
             action6 = new ToolCommand();
             action7 = new ToolSelectionCommand();
+            action8 = new GlideCommand();
         }
 
         //Method used by each state in PlayMaker to inform to which state the inputs will be sent
@@ -84,6 +86,8 @@ namespace PSmash.InputSystem
             _controller.Player.Action4.canceled += ctx => Action4Released();
             _controller.Player.Action6.started += ctx => Action6Pressed();
             _controller.Player.Action6.canceled += ctx => Action6Released();
+            _controller.Player.Action1.performed += ctx => Action8Pressed();
+            //_controller.Player.Action6.canceled += ctx => Action6Released();
 
             _controller.Player.Quit.performed += ctx => QuitKeyPressed();
             _controller.Player.ButtonStart.started += ctx => ButtonStartPressed();
@@ -116,6 +120,7 @@ namespace PSmash.InputSystem
             _controller.Player.Action4.canceled -= ctx => Action4Released();
             _controller.Player.Action6.started -= ctx => Action6Pressed();
             _controller.Player.Action6.canceled -= ctx => Action6Released();
+            _controller.Player.Action1.performed -= ctx => Action8Pressed();
 
 
             _controller.Player.Quit.performed -= ctx => QuitKeyPressed();
@@ -195,6 +200,12 @@ namespace PSmash.InputSystem
         private void Action6Pressed()
         {
             action6.ButtonPressed(transform, this, currentFSM.Value as PlayMakerFSM, movement, action5State);
+        }
+
+        private void Action8Pressed()
+        {
+            print("Want to glide");
+            action8.ButtonPressed(transform, this, currentFSM.Value as PlayMakerFSM, movement, action5State);
         }
 
 
