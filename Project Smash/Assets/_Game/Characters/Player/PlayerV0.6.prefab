@@ -1789,7 +1789,8 @@ MeshRenderer:
   m_RayTracingMode: 2
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
-  m_Materials: []
+  m_Materials:
+  - {fileID: 2100000, guid: 9d07d23790e3df548ac4fc9d1eba4e95, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1820,7 +1821,7 @@ Animator:
   m_GameObject: {fileID: 6581303975160096547}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 82f0e2480d0ab3f4dbb8322c5915ab2f, type: 2}
+  m_Controller: {fileID: 9100000, guid: d8bb0157794e7f145b57bcfba2a4fa16, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 1
   m_ApplyRootMotion: 0
@@ -5128,7 +5129,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f9db98c60740638449864eb028fbe7ad, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  skeletonDataAsset: {fileID: 11400000, guid: 07b5129944e246f46ab2df680659ac66, type: 2}
+  skeletonDataAsset: {fileID: 11400000, guid: b7423262dee12144da2070ffd9af2314, type: 2}
   initialSkinName: 
   initialFlipX: 0
   initialFlipY: 0
@@ -13881,7 +13882,7 @@ MonoBehaviour:
       colorIndex: 0
       position:
         serializedVersion: 2
-        x: 75.07031
+        x: 219.07031
         y: 115.39844
         width: 305
         height: 32
@@ -13960,7 +13961,7 @@ MonoBehaviour:
       colorIndex: 0
       position:
         serializedVersion: 2
-        x: 73
+        x: 217
         y: 223
         width: 160
         height: 32
@@ -14145,7 +14146,7 @@ MonoBehaviour:
       colorIndex: 0
       position:
         serializedVersion: 2
-        x: 68
+        x: 212
         y: 297.0078
         width: 127
         height: 32
@@ -14314,7 +14315,7 @@ MonoBehaviour:
       colorIndex: 2
       position:
         serializedVersion: 2
-        x: 58.515625
+        x: 202.51562
         y: 524.66406
         width: 132
         height: 16
@@ -14416,19 +14417,19 @@ MonoBehaviour:
       colorIndex: 0
       position:
         serializedVersion: 2
-        x: 63.828125
+        x: 207.82812
         y: 345.1953
         width: 171
-        height: 64
+        height: 80
       isBreakpoint: 0
       isSequence: 0
       hideUnused: 0
       transitions:
       - fsmEvent:
-          name: ACTIONFINISHED
+          name: CLIMBINGLEDGE
           isSystemEvent: 0
           isGlobal: 0
-        toState: Moving Outside of ladder
+        toState: CLIMBING LEDGE
         linkStyle: 0
         linkConstraint: 0
         colorIndex: 0
@@ -14448,19 +14449,31 @@ MonoBehaviour:
         linkStyle: 0
         linkConstraint: 0
         colorIndex: 0
+      - fsmEvent:
+          name: ACTIONFINISHED
+          isSystemEvent: 0
+          isGlobal: 0
+        toState: Moving Outside of ladder
+        linkStyle: 0
+        linkConstraint: 0
+        colorIndex: 0
       actionData:
         actionNames:
         - HutongGames.PlayMaker.Actions.CallMethodAdvanced
+        - HutongGames.PlayMaker.Actions.CallMethodAdvanced
+        - HutongGames.PlayMaker.Actions.BoolTest
         - HutongGames.PlayMaker.Actions.CallMethodAdvanced
         - HutongGames.PlayMaker.Actions.BoolTest
         customNames:
         - 
         - 
         - 
-        actionEnabled: 010101
-        actionIsOpen: 010101
-        actionStartIndex: 000000000900000011000000
-        actionHashCodes: 6d6181036d618103a4c8bf00
+        - 
+        - 
+        actionEnabled: 0101010101
+        actionIsOpen: 0101010101
+        actionStartIndex: 000000000900000011000000150000001c000000
+        actionHashCodes: 6d6181036d618103a4c8bf006d618103a4c8bf00
         unityObjectParams: []
         fsmGameObjectParams: []
         fsmOwnerDefaultParams: []
@@ -14483,7 +14496,20 @@ MonoBehaviour:
           showInInspector: 0
           networkSync: 0
           value: IsMovingOutsideOfLadder
+        - useVariable: 0
+          name: 
+          tooltip: 
+          showInInspector: 0
+          networkSync: 0
+          value: IsLedgeFound
         fsmObjectParams:
+        - useVariable: 1
+          name: movement
+          tooltip: 
+          showInInspector: 0
+          networkSync: 0
+          typeName: PSmash.Movement.PlayerMovement
+          value: {fileID: 8235024681204614677}
         - useVariable: 1
           name: movement
           tooltip: 
@@ -14619,6 +14645,30 @@ MonoBehaviour:
             stringValues: []
             vector4Values: []
             objectReferences: []
+        - variableName: isLedgeFound
+          objectType: UnityEngine.Object
+          useVariable: 1
+          type: 2
+          floatValue: 0
+          intValue: 0
+          boolValue: 0
+          stringValue: 
+          vector4Value: {x: 0, y: 0, z: 0, w: 0}
+          objectReference: {fileID: 0}
+          arrayValue:
+            useVariable: 0
+            name: 
+            tooltip: 
+            showInInspector: 0
+            networkSync: 0
+            type: -1
+            objectTypeName: 
+            floatValues: []
+            intValues: 
+            boolValues: 
+            stringValues: []
+            vector4Values: []
+            objectReferences: []
         fsmArrayParams: []
         fsmEnumParams: []
         fsmFloatParams: []
@@ -14626,6 +14676,12 @@ MonoBehaviour:
         fsmBoolParams:
         - useVariable: 1
           name: isMovingOutsideOfLadder
+          tooltip: 
+          showInInspector: 0
+          networkSync: 0
+          value: 0
+        - useVariable: 1
+          name: isLedgeFound
           tooltip: 
           showInInspector: 0
           networkSync: 0
@@ -14638,14 +14694,17 @@ MonoBehaviour:
         stringParams:
         - ACTIONFINISHED
         - 
-        byteData: 00010200000000010200000001
-        arrayParamSizes: 0200000001000000
+        - CLIMBINGLEDGE
+        - 
+        byteData: 0001020000000001020000000100010200000001
+        arrayParamSizes: 020000000100000000000000
         arrayParamTypes:
+        - HutongGames.PlayMaker.FsmVar
         - HutongGames.PlayMaker.FsmVar
         - HutongGames.PlayMaker.FsmVar
         customTypeSizes: 
         customTypeNames: []
-        paramDataType: 18000000120000000c00000027000000270000002700000001000000010000000700000018000000120000000c000000270000002700000001000000010000000700000011000000170000001700000001000000
+        paramDataType: 18000000120000000c00000027000000270000002700000001000000010000000700000018000000120000000c00000027000000270000000100000001000000070000001100000017000000170000000100000018000000120000000c0000002700000001000000010000000700000011000000170000001700000001000000
         paramName:
         - behaviour
         - methodName
@@ -14668,14 +14727,25 @@ MonoBehaviour:
         - isTrue
         - isFalse
         - everyFrame
-        paramDataPos: 00000000000000000000000000000000010000000200000000000000010000000200000001000000010000000100000003000000040000000600000007000000080000000000000000000000010000000c000000
-        paramByteDataSize: 000000000000000000000000000000000000000000000000010000000100000004000000000000000000000000000000000000000000000001000000010000000400000000000000000000000000000001000000
+        - behaviour
+        - methodName
+        - parameters
+        - storeResult
+        - manualUI
+        - everyFrame
+        - updateType
+        - boolVariable
+        - isTrue
+        - isFalse
+        - everyFrame
+        paramDataPos: 00000000000000000000000000000000010000000200000000000000010000000200000001000000010000000100000003000000040000000600000007000000080000000000000000000000010000000c000000020000000200000002000000050000000d0000000e0000000f00000001000000020000000300000013000000
+        paramByteDataSize: 0000000000000000000000000000000000000000000000000100000001000000040000000000000000000000000000000000000000000000010000000100000004000000000000000000000000000000010000000000000000000000000000000000000001000000010000000400000000000000000000000000000001000000
     - name: JUMP
       description: 
       colorIndex: 2
       position:
         serializedVersion: 2
-        x: 297.91406
+        x: 441.91406
         y: 371.6797
         width: 100
         height: 16
@@ -14804,7 +14874,7 @@ MonoBehaviour:
       colorIndex: 2
       position:
         serializedVersion: 2
-        x: 320.22656
+        x: 464.22656
         y: 419.25
         width: 137
         height: 16
@@ -14940,8 +15010,8 @@ MonoBehaviour:
       colorIndex: 0
       position:
         serializedVersion: 2
-        x: 61
-        y: 461
+        x: 427
+        y: 519
         width: 178
         height: 32
       isBreakpoint: 0
@@ -15045,11 +15115,121 @@ MonoBehaviour:
         - everyFrame
         paramDataPos: 0000000000000000000000000000000001000000010000000200000000000000010000000200000005000000
         paramByteDataSize: 0000000000000000000000000100000004000000000000000000000000000000000000000000000001000000
+    - name: CLIMBING LEDGE
+      description: 
+      colorIndex: 0
+      position:
+        serializedVersion: 2
+        x: 61.273438
+        y: 415.08594
+        width: 132
+        height: 32
+      isBreakpoint: 0
+      isSequence: 1
+      hideUnused: 0
+      transitions:
+      - fsmEvent:
+          name: ACTIONFINISHED
+          isSystemEvent: 0
+          isGlobal: 0
+        toState: ACTIONFINISHED
+        linkStyle: 0
+        linkConstraint: 0
+        colorIndex: 0
+      actionData:
+        actionNames:
+        - HutongGames.PlayMaker.Actions.CallMethodAdvanced
+        customNames:
+        - 
+        actionEnabled: 01
+        actionIsOpen: 01
+        actionStartIndex: 00000000
+        actionHashCodes: 6d618103
+        unityObjectParams: []
+        fsmGameObjectParams: []
+        fsmOwnerDefaultParams: []
+        animationCurveParams: []
+        functionCallParams: []
+        fsmTemplateControlParams: []
+        fsmEventTargetParams: []
+        fsmPropertyParams: []
+        layoutOptionParams: []
+        fsmStringParams:
+        - useVariable: 0
+          name: 
+          tooltip: 
+          showInInspector: 0
+          networkSync: 0
+          value: ClimbingLedge
+        fsmObjectParams:
+        - useVariable: 1
+          name: movement
+          tooltip: 
+          showInInspector: 0
+          networkSync: 0
+          typeName: PSmash.Movement.PlayerMovement
+          value: {fileID: 8235024681204614677}
+        fsmVarParams:
+        - variableName: 
+          objectType: 
+          useVariable: 0
+          type: -1
+          floatValue: 0
+          intValue: 0
+          boolValue: 0
+          stringValue: 
+          vector4Value: {x: 0, y: 0, z: 0, w: 0}
+          objectReference: {fileID: 0}
+          arrayValue:
+            useVariable: 0
+            name: 
+            tooltip: 
+            showInInspector: 0
+            networkSync: 0
+            type: -1
+            objectTypeName: 
+            floatValues: []
+            intValues: 
+            boolValues: 
+            stringValues: []
+            vector4Values: []
+            objectReferences: []
+        fsmArrayParams: []
+        fsmEnumParams: []
+        fsmFloatParams: []
+        fsmIntParams: []
+        fsmBoolParams: []
+        fsmVector2Params: []
+        fsmVector3Params: []
+        fsmColorParams: []
+        fsmRectParams: []
+        fsmQuaternionParams: []
+        stringParams: []
+        byteData: 000002000000
+        arrayParamSizes: 00000000
+        arrayParamTypes:
+        - HutongGames.PlayMaker.FsmVar
+        customTypeSizes: 
+        customTypeNames: []
+        paramDataType: 18000000120000000c00000027000000010000000100000007000000
+        paramName:
+        - behaviour
+        - methodName
+        - parameters
+        - storeResult
+        - manualUI
+        - everyFrame
+        - updateType
+        paramDataPos: 00000000000000000000000000000000000000000100000002000000
+        paramByteDataSize: 00000000000000000000000000000000010000000100000004000000
     events:
     - name: FINISHED
       isSystemEvent: 1
       isGlobal: 0
     - name: ACTIONFINISHED
+      isSystemEvent: 0
+      isGlobal: 0
+    - name: CLIMBINGLEDGE
       isSystemEvent: 0
       isGlobal: 0
     - name: JUMP
@@ -15120,6 +15300,12 @@ MonoBehaviour:
         showInInspector: 0
         networkSync: 0
         value: 0
+      - useVariable: 1
+        name: isLedgeFound
+        tooltip: 
+        showInInspector: 0
+        networkSync: 0
+        value: 0
       stringVariables:
       - useVariable: 1
         name: 
@@ -15168,7 +15354,7 @@ MonoBehaviour:
       categories:
       - 
       - InputProxy
-      variableCategoryIDs: 00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+      variableCategoryIDs: 0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
     description: 
     docUrl: 
     showStateLabel: 0
@@ -15493,7 +15679,7 @@ MonoBehaviour:
         serializedVersion: 2
         x: 470.57812
         y: 336.4922
-        width: 190
+        width: 234
         height: 48
       isBreakpoint: 0
       isSequence: 0
@@ -15508,7 +15694,7 @@ MonoBehaviour:
         linkConstraint: 0
         colorIndex: 0
       - fsmEvent:
-          name: ATTACKBUTTONPRESSED
+          name: MAINWEAPONATTACKCOMMAND
           isSystemEvent: 0
           isGlobal: 0
         toState: Is Enemy Stunned?
@@ -16285,6 +16471,9 @@ MonoBehaviour:
       isSystemEvent: 0
       isGlobal: 0
     - name: COMBOWINDOWENABLED
+      isSystemEvent: 0
+      isGlobal: 0
+    - name: MAINWEAPONATTACKCOMMAND
       isSystemEvent: 0
       isGlobal: 0
     - name: NO
@@ -20467,7 +20656,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &5251025299182577568
 Transform:
   m_ObjectHideFlags: 0

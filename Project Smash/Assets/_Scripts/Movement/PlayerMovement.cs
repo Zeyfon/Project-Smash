@@ -56,21 +56,19 @@ namespace PSmash.Movement
         LedgeControl ledgeControl = new LedgeControl();
         LadderMovementControl ladderControl = new LadderMovementControl();
         Transform oneWayPlatform;
+        Transform ladderTransform;
         Animator animator;
         AudioSource audioSource;
         Vector2 colliderSize;
+        //TODO 
+        //This variable must go away
         Vector3 storedPosition;
 
         float glideTimer = 0;
         float gravityScale;
-        float ladderPositionX;
-        float jumpTimer = 0;
         bool isFalling = false;
-        bool isLookingRight = true;
         bool isJumping;
         bool canWalkOnSlope;
-        bool isCollidingWithOneWayPlatform = false;
-        bool isPlayerDetectingLadder = false;
 
         // Start is called before the first frame update
         void Awake()
@@ -92,7 +90,6 @@ namespace PSmash.Movement
         {
             GroundCheck();
             SetVelocityInAnimator();
-            jumpTimer += Time.deltaTime;
         }
 
         private void SetVelocityInAnimator()
@@ -101,7 +98,6 @@ namespace PSmash.Movement
             float yVelocity = rb.velocity.y;
             animator.SetFloat("xVelocity", xVelocity);
             animator.SetFloat("yVelocity", yVelocity);
-
         }
         ////////////////////////////////////////////////////////////////////////////PUBLIC ///////////////////////////////////////////////////////////////////////////////////////
 
@@ -124,23 +120,24 @@ namespace PSmash.Movement
         {
             //The use of this method implies that you can Flip
             //If Flip is not allow please put that instruction outside this method
+            print(xInput + "   " + transform.rotation.eulerAngles.y +"  " + transform.localEulerAngles.y + "  "  +transform.right.x);
             Quaternion currentRotation = new Quaternion(0, 0, 0, 0);
-            if (xInput > 0 && !isLookingRight)
+
+
+            if (xInput > 0 && transform.rotation.eulerAngles.y == 180)
             {
                 CreateDust();
                 //print("Change To Look Right");
                 Vector3 rotation = new Vector3(0, 0, 0);
                 currentRotation.eulerAngles = rotation;
                 transform.rotation = currentRotation;
-                isLookingRight = true;
             }
-            else if (xInput < 0 && isLookingRight)
+            else if (xInput < 0 && transform.rotation.eulerAngles.y == 0)
             {
                 //print("Change To Look Left");
                 Vector3 rotation = new Vector3(0, 180, 0);
                 currentRotation.eulerAngles = rotation;
                 transform.rotation = currentRotation;
-                isLookingRight = false;
             }
         }
 
@@ -176,7 +173,6 @@ namespace PSmash.Movement
         /// <param name="jumpSpeed"></param>
         public void ApplyJump(PhysicsMaterial2D noFriction, float jumpSpeed)
         {
-            jumpTimer = 0;
             rb.gravityScale = gravityScale;
             rb.sharedMaterial = noFriction;
             rb.velocity = new Vector2(rb.velocity.x, jumpSpeed);
@@ -204,12 +200,12 @@ namespace PSmash.Movement
         /// <param name="input"></param>
         public bool CheckForLadder(Vector2 input)
         {
-            if (isPlayerDetectingLadder)
+            if (IsPlayerInLadder())
             {
-                if (ladderControl.CheckForClimbingLadder(oneWayPlatform, input.y, isGrounded, isCollidingWithOneWayPlatform))
+                if (ladderControl.CheckForClimbingLadder(oneWayPlatform, transform, ladderTransform, input.y, isGrounded, IsCollidingWithOneWayPlatform()))
                 {
                     print("Entering Ladder Movement State");
-                    ladderControl.LadderMovementSetup(transform, ladderPositionX);
+                    ladderControl.LadderMovementSetup(transform, ladderTransform);
                     canDoubleJump = true;
                     return true;
                 }
@@ -220,6 +216,16 @@ namespace PSmash.Movement
                 return false;
         }
 
+        private bool IsCollidingWithOneWayPlatform()
+        {
+            return oneWayPlatform != null;
+        }
+
+        private bool IsPlayerInLadder()
+        {
+            return ladderTransform != null;
+        }
+
         /// <summary>
         /// The controlled movement on the ladder
         /// Used by the LadderClimbingState
@@ -228,12 +234,13 @@ namespace PSmash.Movement
         /// <param name="maxLadderMovementSpeed"></param>
         public void LadderMovement(Vector2 input, float maxLadderMovementSpeed)
         {
-            ladderControl.LadderMovement(input, maxLadderMovementSpeed, transform, colliderSize, whatIsLadderTop, animator, rb, gravityScale, whatIsGround, isGrounded, isCollidingWithOneWayPlatform, checkLadderDistance);
+            ladderControl.LadderMovement(input, maxLadderMovementSpeed, animator, rb);
+        
         }
 
         public bool IsMovingOutsideOfLadder(Vector2 input)
         {
-            return ladderControl.CheckToExitLadder(input.y, transform, colliderSize, whatIsLadderTop, animator, rb, gravityScale, whatIsGround, isGrounded, isCollidingWithOneWayPlatform, checkLadderDistance);
+            return ladderControl.CheckToExitLadder(input.y, transform, colliderSize, animator, rb, gravityScale, whatIsGround, isGrounded, checkLadderDistance);
         }
 
         public void RollMovement(Vector2 input, float speedFactor)
@@ -397,7 +404,6 @@ namespace PSmash.Movement
             //print("Collision Enter");
             if (collision.collider.CompareTag("ThinPlatform"))
             {
-                isCollidingWithOneWayPlatform = true;
                 oneWayPlatform = collision.collider.transform;
             }
         }
@@ -407,7 +413,6 @@ namespace PSmash.Movement
             //print("Collision Enter");
             if (collision.collider.CompareTag("ThinPlatform"))
             {
-                isCollidingWithOneWayPlatform = false;
                 oneWayPlatform = null;
             }
         }
@@ -417,9 +422,7 @@ namespace PSmash.Movement
         {
             if (collision.CompareTag("Ladder")) 
             {
-                //print("Ladder is detected");
-                isPlayerDetectingLadder = true;
-                ladderPositionX = collision.transform.position.x;
+                ladderTransform = collision.transform;
             }
 
             if (collision.CompareTag("VirtualCamera"))
@@ -432,8 +435,7 @@ namespace PSmash.Movement
         {
             if (collision.CompareTag("Ladder"))
             {
-                isPlayerDetectingLadder = false;
-                ladderPositionX = 0;
+                ladderTransform = null;
             }
 
             if (collision.CompareTag("VirtualCamera"))

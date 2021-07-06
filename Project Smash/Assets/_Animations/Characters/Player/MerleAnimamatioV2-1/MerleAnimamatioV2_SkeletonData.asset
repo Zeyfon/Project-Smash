@@ -14,11 +14,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   atlasAssets:
   - {fileID: 11400000, guid: 68fc17ca156e64d4ca0a9bfc21f9b563, type: 2}
-  scale: 0.01
+  scale: 0.0033
   skeletonJSON: {fileID: 4900000, guid: 54d4e3498bd206948a9894a2c2454bf0, type: 3}
   skeletonDataModifiers: []
-  fromAnimation: []
-  toAnimation: []
-  duration: []
+  fromAnimation:
+  - Merle_Item_Potion
+  toAnimation:
+  - Merle_Idle
+  duration:
+  - 0.1
   defaultMix: 0.2
-  controller: {fileID: 0}
+  controller: {fileID: 9100000, guid: d8bb0157794e7f145b57bcfba2a4fa16, type: 2}
