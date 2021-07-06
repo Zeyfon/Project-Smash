@@ -4,13 +4,14 @@ public class LedgeControl
 {
     Vector2 finalPosition;
     Vector2 ledge;
+    float rayDistance = 0.7f;
     public bool IsLedgeFound(Transform transform,float yVelocity, LayerMask whatIsGround, Transform wallCheckUpper, Transform wallCheckMiddle)
     {
         RaycastHit2D isTouchingUpperWall;
         RaycastHit2D isTouchingMiddleWall;
         if (yVelocity > 0)
         {
-            //Debug.Log("Ledge check Upwards");
+            Debug.Log("Ledge check Upwards");
             isTouchingMiddleWall = GetIsTouchingMiddleWall(transform, wallCheckMiddle, whatIsGround);
             if (!isTouchingMiddleWall) return false;
             isTouchingUpperWall = GetIsTouchingUpperWall(transform, wallCheckUpper,whatIsGround);
@@ -32,6 +33,7 @@ public class LedgeControl
 
     public void ClimbingLedge(Transform transform, Rigidbody2D rb, Animator animator, Vector2 colliderSize)
     {
+        //Debug.Break();
         transform.gameObject.layer = LayerMask.NameToLayer("PlayerGhost");
         rb.velocity = new Vector2(0, 0);
         animator.SetFloat("xVelocity", 0);
@@ -55,12 +57,14 @@ public class LedgeControl
 
     RaycastHit2D GetIsTouchingUpperWall(Transform transform, Transform wallCheckUpper, LayerMask whatIsGround)
     {
-        return Physics2D.Raycast(wallCheckUpper.position, transform.right, 0.7f, whatIsGround);
+        Debug.DrawRay(wallCheckUpper.position, transform.right * rayDistance, Color.blue);
+        return Physics2D.Raycast(wallCheckUpper.position, transform.right, rayDistance, whatIsGround);
     }
 
     RaycastHit2D GetIsTouchingMiddleWall(Transform transform, Transform wallCheckMiddle, LayerMask whatIsGround)
     {
-        return Physics2D.Raycast(wallCheckMiddle.position, transform.right, 0.7f, whatIsGround);
+        Debug.DrawRay(wallCheckMiddle.position, transform.right * rayDistance, Color.blue);
+        return Physics2D.Raycast(wallCheckMiddle.position, transform.right, rayDistance, whatIsGround);
     }
 
 

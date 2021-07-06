@@ -29,12 +29,5 @@ namespace PSmash.Core
             }
             skeleton.SetSkin(combinedSkin);
         }
-
-        // Update is called once per frame
-        void Update()
-        {
-
-        }
     }
 }
-

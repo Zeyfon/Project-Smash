@@ -2,17 +2,22 @@
 using System.Collections.Generic;
 using UnityEngine;
 using PSmash.Attributes;
+using System;
 
 namespace PSmash.Movement
 {
     public class LadderMovementControl
     {
-        public bool CheckForClimbingLadder(Transform oneWayPlatform, float yInput, bool isGrounded, bool isCollidingWithOneWayPlatform)
+        public bool CheckForClimbingLadder(Transform oneWayPlatform, Transform playerTransform, Transform ladderTransform, float yInput, bool isGrounded, bool isCollidingWithOneWayPlatform)
         {
             //Debug.Log("Looking for Ladder");
-            if (isCollidingWithOneWayPlatform && yInput < -0.9f)
+            if (isCollidingWithOneWayPlatform && yInput < -0.8f)
             {
-                oneWayPlatform.GetComponent<OneWayPlatform>().RotatePlatform();
+                Debug.Log("Entering Ladder with One Way Platform on top");
+                //oneWayPlatform.GetComponent<OneWayPlatform>().RotatePlatform();
+                LadderMovementSetup(playerTransform, ladderTransform);
+                RunGoingDownAnimation(playerTransform);
+                SetPlayerBeneathTheOneWayPlatform(oneWayPlatform, playerTransform);
                 return true;
             }
             else if (!isGrounded && Mathf.Abs(yInput) > 0.9f)
@@ -30,16 +35,49 @@ namespace PSmash.Movement
             else
                 return false;
         }
+
+        private void RunGoingDownAnimation( Transform playerTransform)
+        {
+            //TODO 
+            //Here must be the animation running for the player to go beneath the OneWayPlatform. 
+            //(Like the ClimgingEdge Animation with the displacement included)
+            //playerTransform.GetComponent<Animator>().SetInteger("ladder",80);
+        }
+
+        private void SetPlayerBeneathTheOneWayPlatform(Transform oneWayPlatform, Transform playerTransform)
+        {
+            float newYPosition = playerTransform.position.y - (oneWayPlatform.GetComponent<BoxCollider2D>().size.y + playerTransform.GetComponent<CapsuleCollider2D>().size.y + 0.1f);
+           // Debug.Log(newPlayerPosition);
+            //playerTransform.GetComponent<Rigidbody2D>().MovePosition(newPlayerPosition);
+            playerTransform.position = new Vector3(playerTransform.position.x, newYPosition);
+            //Debug.Break();
+
+        }
+
         /// <summary>
         /// Sets the player to climb the ladder.
         /// Used by the LadderClimbingState
         /// </summary>
-        public void LadderMovementSetup(Transform transform, float ladderPositionX)
+        public void LadderMovementSetup(Transform transform, Transform ladderTransform)
         {
             Rigidbody2D rb = transform.GetComponent<Rigidbody2D>();
-            rb.position = new Vector3(ladderPositionX, transform.position.y, 0);
+            transform.position = new Vector3(ladderTransform.position.x, transform.position.y, 0);
             rb.velocity = new Vector2(0, 0);
             rb.gravityScale = 0;
+            transform.rotation = SetPlayerOrientation(ladderTransform);
+        }
+
+        private Quaternion SetPlayerOrientation(Transform ladderTransform)
+        {
+            bool isLadderLookingRight = ladderTransform.GetComponent<Ladder>().GetLadderOrientation();
+            if (isLadderLookingRight)
+            {
+                return Quaternion.Euler(0, 0, 0);
+            }
+            else
+            {
+                return Quaternion.Euler(0, 180, 0);
+            }
         }
 
 
@@ -49,9 +87,9 @@ namespace PSmash.Movement
         /// </summary>
         /// <param name="input"></param>
         /// <param name="maxLadderMovementSpeed"></param>
-        public void LadderMovement(Vector2 input, float maxLadderMovementSpeed, Transform transform, Vector2 colliderSize, LayerMask whatIsLadderTop, Animator animator, Rigidbody2D rb,   float gravityScale, LayerMask whatIsGround, bool isGrounded, bool isCollidingWithOneWayPlatform, float checkLadderDistance)
+        public void LadderMovement(Vector2 input, float maxLadderMovementSpeed, Animator animator, Rigidbody2D rb)
         {
-            animator.SetFloat("climbingSpeed", Mathf.Abs(input.y));
+            animator.SetFloat("climbingSpeed", input.y);
             rb.velocity = new Vector2(0, input.y * maxLadderMovementSpeed);
         }
 
@@ -59,18 +97,9 @@ namespace PSmash.Movement
         /// The options for the player to exit the ladder without any additional input
         /// </summary>
         /// <param name="yInput"></param>
-        public bool CheckToExitLadder(float yInput, Transform transform, Vector2 colliderSize, LayerMask whatIsLadderTop, Animator animator, Rigidbody2D rb, float gravityScale, LayerMask whatIsGround, bool isGrounded, bool isCollidingWithOneWayPlatform, float checkLadderDistance)
+        public bool CheckToExitLadder(float yInput, Transform transform, Vector2 colliderSize, Animator animator, Rigidbody2D rb, float gravityScale, LayerMask whatIsGround, bool isGrounded, float checkLadderDistance)
         {
-            if (yInput > 0 && IsOneWayPlatformBeneathMe(transform, colliderSize, whatIsLadderTop))
-            {        
-                FinishClimbingFromAbove(animator, rb, gravityScale);
-                RaycastHit2D hit = Physics2D.Raycast(transform.position, Vector2.down, colliderSize.y / 2, whatIsLadderTop);
-                rb.MovePosition(hit.point);
-                //Debug.Break();
-                return true;
-            }
-
-            else if (yInput < 0 && isGrounded && !isCollidingWithOneWayPlatform)
+            if (yInput < 0 && isGrounded)
             {
                 //print("Exiting Ladder from below");
                 RaycastHit2D hit = Physics2D.Raycast(transform.position + new Vector3(0, colliderSize.y / 2), Vector2.down, checkLadderDistance, whatIsGround);
@@ -80,7 +109,8 @@ namespace PSmash.Movement
                 }
                 else
                 {
-                    FinishClimbingFromBelow(animator, rb, gravityScale);
+                    rb.gravityScale = gravityScale;
+                    animator.SetInteger("LadderMovement", 10);
                     return true;
                 }
             }
@@ -88,40 +118,6 @@ namespace PSmash.Movement
             {
                 return false;
             }
-        }
-
-        /// <summary>
-        /// Returns true if a One Way Platform is below the player 
-        /// </summary>
-        /// <returns></returns>
-        bool IsOneWayPlatformBeneathMe(Transform transform, Vector2 colliderSize, LayerMask whatIsLadderTop)
-        {
-            RaycastHit2D hit = Physics2D.Raycast(transform.position, Vector2.down, colliderSize.y / 2, whatIsLadderTop);
-            Debug.DrawRay(transform.position, Vector2.down * colliderSize.y / 2,Color.red);
-            if (hit && hit.collider.CompareTag("ThinPlatform"))
-            {
-                return true;
-            }
-            else 
-                return false;
-        }
-
-        /// <summary>
-        /// End Ladder Climbing going back to idle inmediately
-        /// </summary>
-        void FinishClimbingFromBelow(Animator animator, Rigidbody2D rb, float gravityScale)
-        {
-            rb.gravityScale = gravityScale;
-            animator.SetInteger("LadderMovement", 10);
-        }
-
-        /// <summary>
-        /// End Ladder Climbing using the Finish Climbing Ladder Animation
-        /// </summary>
-        void FinishClimbingFromAbove(Animator animator, Rigidbody2D rb, float gravityScale)
-        {
-            rb.velocity = new Vector2(0, 0);
-            animator.SetInteger("LadderMovement", 5);
         }
     }
 
