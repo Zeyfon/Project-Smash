@@ -47,10 +47,7 @@ namespace PSmash.Movement
         private void SetPlayerBeneathTheOneWayPlatform(Transform oneWayPlatform, Transform playerTransform)
         {
             float newYPosition = playerTransform.position.y - (oneWayPlatform.GetComponent<BoxCollider2D>().size.y + playerTransform.GetComponent<CapsuleCollider2D>().size.y + 0.1f);
-           // Debug.Log(newPlayerPosition);
-            //playerTransform.GetComponent<Rigidbody2D>().MovePosition(newPlayerPosition);
             playerTransform.position = new Vector3(playerTransform.position.x, newYPosition);
-            //Debug.Break();
 
         }
 

@@ -35,7 +35,6 @@ namespace PSmash.Combat
         public delegate void FinisherCamera(bool enableFinisherCamera);
         public static event FinisherCamera OnFinisherCamera;
 
-
         BaseStats baseStats;
         Animator animator;
         AudioSource audioSource;
@@ -48,13 +47,13 @@ namespace PSmash.Combat
             animator = GetComponent<Animator>();
             audioSource = GetComponent<AudioSource>();
         }
-
         #region Finisher
 
         public bool IsEnemyStunned()
         {
             RaycastHit2D hit = Physics2D.Raycast(transform.position + new Vector3(0, 1), transform.right, 2, whatIsEnemy);
-            if (!hit) return false;
+            if (!hit) 
+                return false;
             targetTransform = hit.transform;
             return hit.transform.GetComponent<EnemyHealth>().IsStunned();
         }
@@ -80,7 +79,6 @@ namespace PSmash.Combat
 
         void PositionPlayerInFronOfEnemy()
         {
-           // RaycastHit2D hit = Physics2D.Raycast(transform.position + new Vector3(0, 1), transform.right, 2, whatIsEnemy);
             if (transform.position.x - targetTransform.transform.position.x > 0)
             {
                 //Player is at right side of enemy
@@ -91,7 +89,6 @@ namespace PSmash.Combat
                 //Player is at left side of enemy
                 GetComponent<Rigidbody2D>().MovePosition(targetTransform.position + new Vector3(-1, 0, 0));
             }
-            //return hit;
         }
         IEnumerator StartPlayerAndTargetFinisherAnimations(Transform targetTransform)
         {
@@ -107,9 +104,81 @@ namespace PSmash.Combat
         public void EndingFinisherMove()
         {
             OnFinisherCamera(false);
-
         }
 
+        public void GrapingHook()
+        {
+            RaycastHit2D hit = Physics2D.Raycast(attackTransform.position, transform.right, 10, whatIsEnemy);
+            
+            if (hit)
+            {
+                print("Enemy Detected");
+                targetTransform = hit.collider.transform;
+                if (CanEnemyBePulled())
+                {
+                    print("Enemy can be hooked");
+                    //TODO
+                    // Stagger Enemy
+                    targetTransform.GetComponent<IGrapingHook>().Hooked(transform);
+                }
+                else
+                {
+                    print("Enemy cannot be hooked");
+                    //TODO
+                    //PLAY NOT HOOKING SOUND
+                    //StartCoroutine(BeingPullingTowardsEnemyWithGrapinHook(targetTransform));
+                }
+            }
+            else
+                animator.SetInteger("Attack", 75);
+        }
+
+        private bool CanEnemyBePulled()
+        {
+            return !targetTransform.GetComponent<IWeight>().IWeight();
+        }
+
+        //Anim Event
+        public void PullEnemyAction()
+        {
+            StartCoroutine(PullingEnemyWithGrapingHook());
+        }
+
+        IEnumerator PullingEnemyWithGrapingHook()
+        {
+            
+            float distance = Mathf.Infinity;
+            targetTransform.GetComponent<IGrapingHook>().Pulled();
+            while (distance>1.25)
+            {
+                print("Checking Distance");
+                distance = Vector3.Distance(targetTransform.position, transform.position);
+                print(distance);
+                yield return null;
+            }
+            animator.SetInteger("Attack", 75);
+        }
+
+
+        //DO NOT DELETE. POSSIBLE USAGE IN THE FUTURE
+        IEnumerator BeingPullingTowardsEnemyWithGrapinHook(Transform targetTransform)
+        {
+            animator.SetInteger("Attack", 73);
+            float speed = 10;
+            float y = transform.position.y + 0.3f;
+            Movement(speed, y);
+            while (Vector3.Distance(targetTransform.position, transform.position) > 1.5)
+            {
+                yield return new WaitForFixedUpdate();
+                Movement(speed, y);
+            }
+            animator.SetInteger("Attack", 75);
+        }
+        void Movement(float speed, float y)
+        {
+            float x = transform.position.x + (speed * transform.right.x  * Time.fixedDeltaTime);
+            transform.position = new Vector3(x, y, transform.position.z);
+        }
         //Anim Event
         void StartSteam()
         {

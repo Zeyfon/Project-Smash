@@ -6,15 +6,18 @@ using PSmash.Inventories;
 using PSmash.Movement;
 using PSmash.Stats;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 namespace PSmash.Attributes
 {
-    public class EnemyHealth : Health, ISaveable
+    public class EnemyHealth : Health, ISaveable, IGrapingHook,IWeight
     {
 
         //CONFIG
+        [SerializeField] PlayMakerFSM aiController = null;
+
         [Header("TestMode")]
         [SerializeField] bool isInvulnerable = false;
         [SerializeField] bool canBeKnockbacked = true;
@@ -27,7 +30,14 @@ namespace PSmash.Attributes
         [SerializeField] AudioClip stunEndAudio = null;
         [SerializeField] AudioClip finisherAudio = null;
 
-        //public static event Action onEnemyDead;
+        public enum Weight
+        {
+            low,
+            heavy
+        }
+
+        [SerializeField] Weight weight;
+
         public static List<string> takenOutEnemies = new List<string>();
 
 
@@ -36,6 +46,7 @@ namespace PSmash.Attributes
         PlayMakerFSM pm;
         BaseStats baseStats;
 
+        //bool isGrapingHookFinished = false;
         static int checkpointCounter = 0;
 
         //INITIALIZE
@@ -101,9 +112,27 @@ namespace PSmash.Attributes
             audioSource.PlayOneShot(finisherAudio);
             GetComponent<EnemyMovement>().FlyObjectAway(attackerPosition);
             DamageHealth(damage);
-            //if(isArmorEnabled)
-            //    armorDestroyed = true;
         }
+
+        public void Hooked(Transform attackerTransform)
+        {
+            aiController.SendEvent("STAGGER");
+        }
+
+        public void Pulled()
+        {
+            aiController.SendEvent("HOOKED");
+        }
+
+        public bool IWeight()
+        {
+            if (weight == Weight.low)
+                return false;
+            else
+                return true;
+        }
+
+
 
         #region Sounds
 
@@ -332,6 +361,8 @@ namespace PSmash.Attributes
             }
             gameObject.layer = LayerMask.NameToLayer("Dead");
         }
+
+
     }
 
 }

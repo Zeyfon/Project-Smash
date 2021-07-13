@@ -120,7 +120,7 @@ namespace PSmash.Movement
         {
             //The use of this method implies that you can Flip
             //If Flip is not allow please put that instruction outside this method
-            print(xInput + "   " + transform.rotation.eulerAngles.y +"  " + transform.localEulerAngles.y + "  "  +transform.right.x);
+            //print(xInput + "   " + transform.rotation.eulerAngles.y +"  " + transform.localEulerAngles.y + "  "  +transform.right.x);
             Quaternion currentRotation = new Quaternion(0, 0, 0, 0);
 
 
@@ -216,6 +216,11 @@ namespace PSmash.Movement
                 return false;
         }
 
+        /// <summary>
+        /// Checks if the player is colliding with one way platforms. 
+        /// The update of the variables is done in the TRIGGERS AND COLLISION DETECTION Section on the script
+        /// </summary>
+        /// <returns></returns>
         private bool IsCollidingWithOneWayPlatform()
         {
             return oneWayPlatform != null;
@@ -296,6 +301,8 @@ namespace PSmash.Movement
         {
             return maxGlideTimer;
         }
+
+
         //////////////////////////////////////////////////////////////////////////////////////PRIVATE/////////////////////////////////////////////////////////////////////////////////////
 
         /// <summary>
