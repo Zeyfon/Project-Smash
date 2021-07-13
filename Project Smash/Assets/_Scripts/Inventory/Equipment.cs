@@ -86,7 +86,7 @@ namespace PSmash.Inventories
 
         public int GetSubWeaponAnimationValue()
         {
-            print(subWeapon.GetAnimatorInt());
+            //print(subWeapon.GetAnimatorInt());
             return subWeapon.GetAnimatorInt();
         }
 
