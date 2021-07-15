@@ -18,14 +18,14 @@ public class EnemyDummy : MonoBehaviour, IGrapingHook, IWeight
 
 
     //////////////////////////////////////////////////////////////////////////////PUBLIC///////
-    public void Hooked(Transform attackerTransform)
+    public void Hooked()
     {
         isGrapingHookFinished = false;
         if (weight == Weight.low)
         {
             //TODO 
             //MOVE TO THE FRONT OF THE PLAYER
-            StartCoroutine(MoveToTheFrontOfThePlayer(attackerTransform));
+            //StartCoroutine(MoveToTheFrontOfThePlayer(attackerTransform));
             //STAGGER
             isHeavy = false;
         }

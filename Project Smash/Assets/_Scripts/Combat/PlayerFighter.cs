@@ -13,6 +13,7 @@ namespace PSmash.Combat
 
         [Header("General Info")]
         [SerializeField] LayerMask whatIsDamagable;
+        [SerializeField] LayerMask whatIsHooked;
         [SerializeField] LayerMask whatIsEnemy;
         [SerializeField] float attackImpulse = 12f;
 
@@ -21,6 +22,9 @@ namespace PSmash.Combat
 
         [Header("Tool Attack")]
         [SerializeField] AudioClip toolAttackSound = null;
+        [SerializeField] AudioClip noHookSound = null;
+        [SerializeField] Weapon grapingHook = null;
+        [SerializeField] float grapingHookRadius = 11;
 
         [Header("Finishing Move")]
         [SerializeField] AudioClip finisherSound = null;
@@ -39,14 +43,18 @@ namespace PSmash.Combat
         Animator animator;
         AudioSource audioSource;
         Transform targetTransform;
+        Transform enemyTargetTransform;
         Vector2 damageArea;
+        PlayerMovement movement;
 
         void Awake()
         {
             baseStats = GetComponent<BaseStats>();
             animator = GetComponent<Animator>();
             audioSource = GetComponent<AudioSource>();
+            movement = GetComponent<PlayerMovement>();
         }
+
         #region Finisher
 
         public bool IsEnemyStunned()
@@ -70,10 +78,7 @@ namespace PSmash.Combat
             gameObject.layer = LayerMask.NameToLayer("PlayerGhost");
             PositionPlayerInFronOfEnemy();
             OnFinisherCamera(true);
-            //targetTransform = hit.transform;
             StartCoroutine(StartPlayerAndTargetFinisherAnimations(targetTransform));
-
-            //isFinishinAnEnemy = false;
             yield return null;
         }
 
@@ -108,29 +113,32 @@ namespace PSmash.Combat
 
         public void GrapingHook()
         {
-            RaycastHit2D hit = Physics2D.Raycast(attackTransform.position, transform.right, 10, whatIsEnemy);
-            
+            if (GrapingHookTarget.TargetTransform !=null)
+            {
+                StartCoroutine(BeingPullingTowardsEnemyWithGrapinHook(GrapingHookTarget.TargetTransform));
+                return;
+            }
+
+            RaycastHit2D hit = Physics2D.Raycast(attackTransform.position, transform.right, 10, whatIsHooked);    
             if (hit)
             {
                 print("Enemy Detected");
-                targetTransform = hit.collider.transform;
+                enemyTargetTransform = hit.collider.transform;
                 if (CanEnemyBePulled())
                 {
                     print("Enemy can be hooked");
-                    //TODO
-                    // Stagger Enemy
-                    targetTransform.GetComponent<IGrapingHook>().Hooked(transform);
+                    enemyTargetTransform.GetComponent<IGrapingHook>().Hooked();
                 }
                 else
                 {
                     print("Enemy cannot be hooked");
-                    //TODO
-                    //PLAY NOT HOOKING SOUND
-                    //StartCoroutine(BeingPullingTowardsEnemyWithGrapinHook(targetTransform));
+                    audioSource.PlayOneShot(noHookSound);
                 }
             }
             else
+            {
                 animator.SetInteger("Attack", 75);
+            }
         }
 
         private bool CanEnemyBePulled()
@@ -164,21 +172,21 @@ namespace PSmash.Combat
         IEnumerator BeingPullingTowardsEnemyWithGrapinHook(Transform targetTransform)
         {
             animator.SetInteger("Attack", 73);
-            float speed = 10;
-            float y = transform.position.y + 0.3f;
-            Movement(speed, y);
-            while (Vector3.Distance(targetTransform.position, transform.position) > 1.5)
+            float speed = 25;
+            Vector2 direction = ((targetTransform.position + new Vector3(0, 2)) - transform.position).normalized;
+            movement.GrapingHookMovement(direction, speed);
+            float distance = Mathf.Infinity;
+            while ( distance> 5)
             {
+                print("Distance from player to " + targetTransform.name + " is  "  + distance );
+                distance = Vector3.Distance(targetTransform.position, transform.position);
+                movement.GrapingHookMovement(direction, speed);
                 yield return new WaitForFixedUpdate();
-                Movement(speed, y);
+
             }
             animator.SetInteger("Attack", 75);
         }
-        void Movement(float speed, float y)
-        {
-            float x = transform.position.x + (speed * transform.right.x  * Time.fixedDeltaTime);
-            transform.position = new Vector3(x, y, transform.position.z);
-        }
+
         //Anim Event
         void StartSteam()
         {
@@ -289,6 +297,24 @@ namespace PSmash.Combat
                 target.TakeDamage(transform, weapon, AttackType.NotUnblockable, baseStats.GetStat(StatsList.Attack), weapon.GetAttackForce());
                 //print("Sendingdamage from player to  " + target);
 
+            }
+        }
+
+        private void OnTriggerEnter2D(Collider2D collision)
+        {
+            if (collision.CompareTag("HookTarget"))
+            {
+                targetTransform = collision.transform;
+                print("Target is Detected");
+            }
+        }
+
+        private void OnTriggerExit2D(Collider2D collision)
+        {
+            if (collision.CompareTag("HookTarget"))
+            {
+                targetTransform = null;
+                print("Target is not detected");
             }
         }
 
