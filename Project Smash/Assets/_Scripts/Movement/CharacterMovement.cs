@@ -46,7 +46,7 @@ namespace PSmash.Movement
             else if (movementDirection.magnitude == 0)
             {
                 rb.sharedMaterial = lowFriction;
-                rb.velocity = new Vector2(0, 0);
+                rb.velocity = new Vector2(0, rb.velocity.y);
             }
             else
             {
@@ -67,6 +67,12 @@ namespace PSmash.Movement
                         //print(gameObject.name + "  " + rb.velocity);
                 }
             }
+        }
+
+        public void GrapingHookMovement(Vector2 movementDirection, float speed)
+        {
+            rb.velocity = movementDirection*speed;
+
         }
 
         /// <summary>

@@ -45,8 +45,10 @@ namespace PSmash.Inventories
 
         void Start()
         {
-            onCurrentToolEquippedChange(currentIndex);
-            onSubWeaponChange(subWeapon);
+            if(onCurrentToolEquippedChange != null)
+                onCurrentToolEquippedChange(currentIndex);
+            if(onSubWeaponChange != null)
+                onSubWeaponChange(subWeapon);
         }
 
         private void OnEnable()

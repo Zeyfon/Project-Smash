@@ -5,20 +5,23 @@ namespace PSmash.Movement
 {
     public class OneWayPlatform : MonoBehaviour
     {
-        [SerializeField] PlatformEffector2D effector;
+        [SerializeField] PlatformEffector2D effector = null;
+        [SerializeField] Collider2D playerFloorCollider = null;
         bool canDetectExitCollision = false;
 
         public void RotatePlatform()
         {
-            effector.rotationalOffset = 180;
+            playerFloorCollider.enabled = false;
+            //effector.rotationalOffset = 180;
             StartCoroutine(Timer());
             print("RotatePlatform");
         }
 
         IEnumerator Timer()
         {
-            yield return new WaitForSeconds(0.3f);
+            yield return new WaitForSeconds(0.5f);
             canDetectExitCollision = true;
+            playerFloorCollider.enabled = true;
         }
 
         private void OnCollisionExit2D(Collision2D collision)

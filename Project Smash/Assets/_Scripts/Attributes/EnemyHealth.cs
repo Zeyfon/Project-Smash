@@ -114,7 +114,7 @@ namespace PSmash.Attributes
             DamageHealth(damage);
         }
 
-        public void Hooked(Transform attackerTransform)
+        public void Hooked()
         {
             aiController.SendEvent("STAGGER");
         }

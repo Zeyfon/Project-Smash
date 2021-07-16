@@ -5,8 +5,8 @@ using UnityEngine;
 
 public interface IGrapingHook
 {
-
-    void Hooked(Transform attackerTransform);
+    //bool isEnemy();
+    void Hooked();
 
     void Pulled();
 }

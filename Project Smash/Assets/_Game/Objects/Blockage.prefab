@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 3494038003527499021}
   - component: {fileID: 3494038003527499020}
   m_Layer: 19
-  m_Name: GameObject
+  m_Name: PS
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -26,11 +26,11 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3494038003527499010}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.09, y: -0.05, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 3494038004158159854}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!198 &3494038003527499021
 ParticleSystem:
@@ -283,9 +283,9 @@ ParticleSystem:
         m_NumAlphaKeys: 2
     startSize:
       serializedVersion: 2
-      minMaxState: 0
+      minMaxState: 3
       scalar: 0.15
-      minScalar: 1
+      minScalar: 0.05
       maxCurve:
         serializedVersion: 2
         m_Curve:
@@ -336,7 +336,7 @@ ParticleSystem:
         m_RotationOrder: 4
     startSizeY:
       serializedVersion: 2
-      minMaxState: 0
+      minMaxState: 3
       scalar: 1
       minScalar: 1
       maxCurve:
@@ -389,7 +389,7 @@ ParticleSystem:
         m_RotationOrder: 4
     startSizeZ:
       serializedVersion: 2
-      minMaxState: 0
+      minMaxState: 3
       scalar: 1
       minScalar: 1
       maxCurve:
@@ -667,7 +667,7 @@ ParticleSystem:
     donutRadius: 0.2
     m_Position: {x: 0, y: 0, z: 0}
     m_Rotation: {x: 0, y: 0, z: 0}
-    m_Scale: {x: 0.7, y: 2.5, z: 1}
+    m_Scale: {x: 0.8, y: 4, z: 1}
     placementMode: 0
     m_MeshMaterialIndex: 0
     m_MeshNormalOffset: 0
@@ -742,9 +742,9 @@ ParticleSystem:
     m_TextureColorAffectsParticles: 1
     m_TextureAlphaAffectsParticles: 1
     m_TextureBilinearFiltering: 0
-    randomDirectionAmount: 0.12
+    randomDirectionAmount: 0.1
     sphericalDirectionAmount: 0.01
-    randomPositionAmount: 0.03
+    randomPositionAmount: 0.1
     radius:
       value: 0.84
       mode: 0
@@ -1040,21 +1040,21 @@ ParticleSystem:
         m_Curve:
         - serializedVersion: 3
           time: 0
-          value: 0.99349976
-          inSlope: -0.21800178
-          outSlope: -0.21800178
+          value: 0.9900627
+          inSlope: -0.15647441
+          outSlope: -0.15647441
           tangentMode: 0
           weightedMode: 0
           inWeight: 0.33333334
-          outWeight: 0.22726975
+          outWeight: 0.15610857
         - serializedVersion: 3
           time: 1
           value: 0.045442283
-          inSlope: -1.6533026
-          outSlope: -1.6533026
+          inSlope: -0.049054775
+          outSlope: -0.049054775
           tangentMode: 0
           weightedMode: 0
-          inWeight: 0.19581474
+          inWeight: 0.12443453
           outWeight: 0.33333334
         m_PreInfinity: 2
         m_PostInfinity: 2
@@ -4825,7 +4825,7 @@ GameObject:
   - component: {fileID: 3494038004158159848}
   - component: {fileID: 7285861564624608672}
   - component: {fileID: 991352690563679734}
-  m_Layer: 19
+  m_Layer: 16
   m_Name: Blockage
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4843,8 +4843,8 @@ Transform:
   m_LocalPosition: {x: 28.56, y: 39.29, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 3494038003527499011}
   - {fileID: 1056944054936717735}
+  - {fileID: 3494038003527499011}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -4872,7 +4872,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1, y: 3}
+  m_Size: {x: 0.8, y: 4}
   m_EdgeRadius: 0
 --- !u!114 &3494038004158159848
 MonoBehaviour:
@@ -4886,11 +4886,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fabad73bbf4948446933f821b316947f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  health: 40
   damagedSound: {fileID: 8300000, guid: 350ac73aca6be944da442d67b1c60f6b, type: 3}
   destroyedSound: {fileID: 8300000, guid: 84e55a63c7f028c418d0d60b5d778be0, type: 3}
-  hitsToDestroyWall: 4
   particles: {fileID: 3494038003527499021}
   shakeAmount: 0.5
+  OnBlockageDestroyed:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!111 &7285861564624608672
 Animation:
   m_ObjectHideFlags: 0
@@ -5014,7 +5017,7 @@ GameObject:
   - component: {fileID: 1056944054936717735}
   - component: {fileID: 427203086471175064}
   m_Layer: 19
-  m_Name: GameObject (1)
+  m_Name: Sprite
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5028,11 +5031,11 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7052421011184613637}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.1, z: 0}
-  m_LocalScale: {x: 1.8, y: 1.3, z: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 3494038004158159854}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &427203086471175064
 SpriteRenderer:

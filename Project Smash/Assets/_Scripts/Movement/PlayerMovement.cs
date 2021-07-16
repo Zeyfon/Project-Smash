@@ -90,6 +90,7 @@ namespace PSmash.Movement
         {
             GroundCheck();
             SetVelocityInAnimator();
+            //print(rb.velocity);
         }
 
         private void SetVelocityInAnimator()
@@ -311,6 +312,10 @@ namespace PSmash.Movement
         void GroundCheck()
         {
             isGrounded = IsGrounded();
+            if (!isGrounded)
+            {
+                rb.sharedMaterial = noFriction;
+            }
             animator.SetBool("Grounded", isGrounded);
             canWalkOnSlope = slope.CanWalkOnThisGround(transform.position, transform.right, slopeCheckDistance, maxSlopeAngle, whatIsGround);
             if (isGrounded && canWalkOnSlope)
