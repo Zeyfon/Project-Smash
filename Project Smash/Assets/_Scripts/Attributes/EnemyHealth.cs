@@ -12,7 +12,7 @@ using UnityEngine;
 
 namespace PSmash.Attributes
 {
-    public class EnemyHealth : Health, ISaveable, IGrapingHook,IWeight
+    public class EnemyHealth : Health, ISaveable, IGrapingHook, IWeight
     {
 
         //CONFIG
@@ -75,14 +75,14 @@ namespace PSmash.Attributes
                 return;
             }
 
-            if (pm == null) 
+            if (pm == null)
             {
                 Debug.LogWarning("No Enemy State set to return DAMAGE Event");
                 return;
             }
             Damaged(weapon, characterDamage);
             ///
-            if(canBeKnockbacked)
+            if (canBeKnockbacked)
                 GetComponent<EnemyMovement>().ApplyAttackImpactReceived(attacker, weapon, LayerMask.NameToLayer("EnemiesGhost"), LayerMask.NameToLayer("Enemies"));
         }
 
@@ -125,12 +125,19 @@ namespace PSmash.Attributes
 
         public bool IWeight()
         {
-            if (weight == Weight.low)
+            if (weight == Weight.low && !IsUnblockingAttack())
                 return false;
             else
                 return true;
         }
 
+        bool IsUnblockingAttack()
+        {
+            if (pm.FsmName == "SPECIALATTACK2")
+                return true;
+            else
+                return false;
+        }
 
 
         #region Sounds

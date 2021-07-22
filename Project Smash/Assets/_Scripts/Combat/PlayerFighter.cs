@@ -1,6 +1,7 @@
 ﻿using PSmash.Attributes;
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using PSmash.Inventories;
 using PSmash.Stats;
@@ -25,6 +26,7 @@ namespace PSmash.Combat
         [SerializeField] AudioClip noHookSound = null;
         [SerializeField] Weapon grapingHook = null;
         [SerializeField] float grapingHookRadius = 11;
+        [SerializeField] HookRope hookRope = null;
 
         [Header("Finishing Move")]
         [SerializeField] AudioClip finisherSound = null;
@@ -115,35 +117,36 @@ namespace PSmash.Combat
         {
             if (GrapingHookTarget.TargetTransform !=null)
             {
-                StartCoroutine(BeingPullingTowardsEnemyWithGrapinHook(GrapingHookTarget.TargetTransform));
+                StartCoroutine(PulledTowardsTarget(GrapingHookTarget.TargetTransform));
                 return;
             }
 
             RaycastHit2D hit = Physics2D.Raycast(attackTransform.position, transform.right, 10, whatIsHooked);    
             if (hit)
             {
-                print("Enemy Detected");
+                //print("Enemy Detected");
                 enemyTargetTransform = hit.collider.transform;
-                if (CanEnemyBePulled())
+                if (CanEnemyBePulled(enemyTargetTransform))
                 {
-                    print("Enemy can be hooked");
+                    //print("Enemy can be hooked");
                     enemyTargetTransform.GetComponent<IGrapingHook>().Hooked();
+                    animator.SetInteger("Attack", 72);
                 }
                 else
                 {
-                    print("Enemy cannot be hooked");
+                    //print("Enemy cannot be hooked");
                     audioSource.PlayOneShot(noHookSound);
                 }
             }
             else
             {
-                animator.SetInteger("Attack", 75);
+                print("Did find nothing to grab");
             }
         }
 
-        private bool CanEnemyBePulled()
+        private bool CanEnemyBePulled(Transform enemyTransform)
         {
-            return !targetTransform.GetComponent<IWeight>().IWeight();
+            return !enemyTransform.GetComponent<IWeight>().IWeight();
         }
 
         //Anim Event
@@ -154,13 +157,18 @@ namespace PSmash.Combat
 
         IEnumerator PullingEnemyWithGrapingHook()
         {
-            
+            List<Transform> points = new List<Transform>();
+            points.Add(attackTransform);
+            points.Add(enemyTargetTransform);
+            HookRope rope = Instantiate(hookRope, attackTransform.position, Quaternion.identity, attackTransform);
+            yield return rope.DoHookShot(points);
+            rope.EnemyPulled(enemyTargetTransform);
             float distance = Mathf.Infinity;
-            targetTransform.GetComponent<IGrapingHook>().Pulled();
+            enemyTargetTransform.GetComponent<IGrapingHook>().Pulled();
             while (distance>1.25)
             {
                 print("Checking Distance");
-                distance = Vector3.Distance(targetTransform.position, transform.position);
+                distance = Vector3.Distance(enemyTargetTransform.position, transform.position);
                 print(distance);
                 yield return null;
             }
@@ -169,16 +177,23 @@ namespace PSmash.Combat
 
 
         //DO NOT DELETE. POSSIBLE USAGE IN THE FUTURE
-        IEnumerator BeingPullingTowardsEnemyWithGrapinHook(Transform targetTransform)
+        IEnumerator PulledTowardsTarget(Transform targetTransform)
         {
             animator.SetInteger("Attack", 73);
-            float speed = 25;
+            List<Transform> points = new List<Transform>();
+            points.Add(attackTransform);
+            points.Add(targetTransform);
+            HookRope rope = Instantiate(hookRope, attackTransform.position, Quaternion.identity, attackTransform);
+            yield return rope.DoHookShot(points);
+            rope.PlayerPulled();
+
+            float speed = 30;
             Vector2 direction = ((targetTransform.position + new Vector3(0, 2)) - transform.position).normalized;
             movement.GrapingHookMovement(direction, speed);
             float distance = Mathf.Infinity;
-            while ( distance> 5)
+            while ( distance> 4)
             {
-                print("Distance from player to " + targetTransform.name + " is  "  + distance );
+                //print("Distance from player to " + targetTransform.name + " is  "  + distance );
                 distance = Vector3.Distance(targetTransform.position, transform.position);
                 movement.GrapingHookMovement(direction, speed);
                 yield return new WaitForFixedUpdate();
@@ -186,6 +201,7 @@ namespace PSmash.Combat
             }
             animator.SetInteger("Attack", 75);
         }
+
 
         //Anim Event
         void StartSteam()
@@ -301,23 +317,23 @@ namespace PSmash.Combat
             }
         }
 
-        private void OnTriggerEnter2D(Collider2D collision)
-        {
-            if (collision.CompareTag("HookTarget"))
-            {
-                targetTransform = collision.transform;
-                print("Target is Detected");
-            }
-        }
+        //private void OnTriggerEnter2D(Collider2D collision)
+        //{
+        //    if (collision.CompareTag("HookTarget"))
+        //    {
+        //        targetTransform = collision.transform;
+        //        print("Target is Detected");
+        //    }
+        //}
 
-        private void OnTriggerExit2D(Collider2D collision)
-        {
-            if (collision.CompareTag("HookTarget"))
-            {
-                targetTransform = null;
-                print("Target is not detected");
-            }
-        }
+        //private void OnTriggerExit2D(Collider2D collision)
+        //{
+        //    if (collision.CompareTag("HookTarget"))
+        //    {
+        //        targetTransform = null;
+        //        print("Target is not detected");
+        //    }
+        //}
 
         void OnDrawGizmosSelected()
         {
