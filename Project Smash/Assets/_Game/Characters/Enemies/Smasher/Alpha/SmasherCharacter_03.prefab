@@ -4154,6 +4154,7 @@ MonoBehaviour:
     speedFactor: 1.1
   - impulseTime: 0.15
     speedFactor: 2.2
+  finisherImpulse: {x: 15, y: 7}
 --- !u!114 &1411232753491208321
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10682,6 +10683,7 @@ MonoBehaviour:
   posture: 300
   timeToCanRegen: 1
   timeToFullyRegenGuard: 120
+  stunEndedSound: {fileID: 8300000, guid: f3c2f312bf5e78242ad3f1edf5d3f3ff, type: 3}
   onStunStateStart:
     m_PersistentCalls:
       m_Calls:
@@ -14728,10 +14730,9 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
   health: 0
-  isArmorEnabled: 1
+  aiController: {fileID: 0}
   isInvulnerable: 0
-  weaknessWeapon: {fileID: 0}
-  weaknessFactor: 1.5
+  canBeKnockbacked: 1
   protectedDamageAudio: {fileID: 8300000, guid: fb37efac0f6f8aa4c8a1e253b763946f,
     type: 3}
   fleshDamageAudio: {fileID: 8300000, guid: c2d8cc2bf3918344293edb3b1f5a74a8, type: 3}
@@ -14739,9 +14740,7 @@ MonoBehaviour:
   staggerAuduio: {fileID: 8300000, guid: 2829b78c6bb193e48a1d92f8f4da2dce, type: 3}
   stunEndAudio: {fileID: 8300000, guid: f3c2f312bf5e78242ad3f1edf5d3f3ff, type: 3}
   finisherAudio: {fileID: 8300000, guid: d11bec2d3b46cad4ab13f62a2a332b02, type: 3}
-  volume: 1
-  damageMitigator: 0
-  finisherImpulse: {x: 20, y: 6.5}
+  weight: 0
 --- !u!114 &8812637445953361711
 MonoBehaviour:
   m_ObjectHideFlags: 0

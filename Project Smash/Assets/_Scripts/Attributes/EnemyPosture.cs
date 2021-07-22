@@ -17,11 +17,13 @@ namespace PSmash.Attributes
         public float posture = 50;
         [SerializeField] float timeToCanRegen = 1f;
         [SerializeField] float timeToFullyRegenGuard = 60f;
+        [SerializeField] AudioClip stunEndedSound = null;
         [SerializeField] UnityEvent onStunStateStart;
         [SerializeField] UnityEvent onStunStateEnded;
         [SerializeField] UnityEvent onDisablePostureBar;
         [SerializeField] UnityEvent onEnablePostureBar;
 
+        AudioSource audioSource = null;
 
         float timerCanRegen = 0;
         float initialPosture;
@@ -29,6 +31,7 @@ namespace PSmash.Attributes
         private void Awake()
         {
             initialPosture = posture;
+            audioSource = GetComponent<AudioSource>();
         }
 
         private void Update()
@@ -85,6 +88,7 @@ namespace PSmash.Attributes
             //print("Posture Fully Restored");
             posture = initialPosture;
             onStunStateEnded.Invoke();
+            audioSource.PlayOneShot(stunEndedSound);
         }
 
         public void DisablePostureBar()

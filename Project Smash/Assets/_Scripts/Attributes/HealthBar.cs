@@ -7,20 +7,49 @@ namespace PSmash.Attributes
 
     public class HealthBar : MonoBehaviour
     {
+        [SerializeField] bool isBarFixedLength = false;
         [SerializeField] Transform bar = null;
+        [SerializeField] Transform background = null;
+        [SerializeField] float healthValueForFixedLength = 300;
+        [Tooltip("The value the bar will have when fixed to healthValueForFiexLength")]
+        [SerializeField] float xScale = 1.5f;
 
         EnemyHealth enemyHealth;
         private void Awake()
         {
-            enemyHealth = transform.parent.transform.GetComponentInChildren<EnemyHealth>();
-            if(enemyHealth == null)
-                enemyHealth = GetComponentInParent<EnemyHealth>();
+            enemyHealth = GetComponentInParent<EnemyHealth>();     
+        }
 
+        private void Start()
+        {
+            float xScale;
+
+            if (!isBarFixedLength)
+            {
+                xScale = enemyHealth.GetMaxHealth() * this.xScale / healthValueForFixedLength;
+            }
+            else
+            {
+                xScale = this.xScale;
+            }
+            xScale += 0.05f;
+            background.localScale = new Vector2(xScale, background.localScale.y);
         }
         private void Update()
         {
+            float xLocalScale;
+
             transform.rotation = Quaternion.identity;
-            bar.localScale = new Vector2(enemyHealth.GetHealthValue() / enemyHealth.GetMaxHealth(), transform.localScale.y) ;
+            if (!isBarFixedLength)
+            {
+                xLocalScale = (enemyHealth.GetHealthValue() * xScale / healthValueForFixedLength);
+            }
+            else
+            {
+                xLocalScale = (enemyHealth.GetHealthValue() / enemyHealth.GetMaxHealth())*xScale;
+            }
+            bar.localScale = new Vector2(xLocalScale, bar.localScale.y);
+
         }
 
         //UNITY EVENT

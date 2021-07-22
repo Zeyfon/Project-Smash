@@ -91,7 +91,7 @@ public class GrapingHookTarget : MonoBehaviour
     {
         Vector3 direction = (transform.position - playerTransform.position).normalized;
         float dotProduct = Vector3.Dot(direction, playerTransform.right);
-        print(dotProduct);
+        //print(dotProduct);
         if (dotProduct > 0.25f)
             return true;
         else
