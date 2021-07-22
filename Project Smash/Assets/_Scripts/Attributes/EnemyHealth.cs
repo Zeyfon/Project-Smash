@@ -46,7 +46,6 @@ namespace PSmash.Attributes
         PlayMakerFSM pm;
         BaseStats baseStats;
 
-        //bool isGrapingHookFinished = false;
         static int checkpointCounter = 0;
 
         //INITIALIZE
@@ -278,7 +277,7 @@ namespace PSmash.Attributes
 
         void DamageHealth(float damage)
         {
-            //print(damage + " will be substracted from  " + health);
+            print(" New health is " + health);
 
             if (isInvulnerable)
                 return;

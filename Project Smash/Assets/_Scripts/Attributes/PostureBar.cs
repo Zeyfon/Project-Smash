@@ -5,7 +5,11 @@ namespace PSmash.Attributes
 {
     public class PostureBar : MonoBehaviour
     {
-        [SerializeField] Transform guardBar = null;
+        [SerializeField] bool isBarFixedLength = false;
+        [SerializeField] Transform bar = null;
+        [SerializeField] Transform background = null;
+        [SerializeField] float postureValueForFixedLength = 100;
+        [SerializeField] float xScale = 1.5f;
         [SerializeField] float effectTime = 0.5f;
         [SerializeField] AudioClip guardBarRecoveredSound = null;
         [SerializeField] Transform effectTransform = null;
@@ -13,66 +17,41 @@ namespace PSmash.Attributes
         EnemyPosture posture;
 
         private void Awake()
-        {
-            posture = transform.parent.transform.GetComponentInChildren<EnemyPosture>();
-            if(posture == null)
-                posture = GetComponentInParent<EnemyPosture>();
+        {          
+            posture = GetComponentInParent<EnemyPosture>();
             if(posture == null)
                 Destroy(gameObject);
         }
 
+        private void Start()
+        {
+            float xScale;
+
+            if (!isBarFixedLength)
+            {
+                xScale = posture.GetInitialPosture() * this.xScale / postureValueForFixedLength;
+            }
+            else
+            {
+                xScale = this.xScale;
+            }
+            xScale += 0.05f;
+            background.localScale = new Vector2(xScale, background.localScale.y);
+        }
         private void Update()
         {
+            float xLocalScale;
+
             transform.rotation = Quaternion.identity;
-            guardBar.localScale = new Vector2(posture.GetPosture() / posture.GetInitialPosture(), transform.localScale.y);
-        }
-
-        public void DisableGameObject()
-        {
-            gameObject.SetActive(false);
-        }
-
-        public void FullyRegenPosture()
-        {
-            StartCoroutine(FullyRegenBarVisualEffect());
-        }
-
-        IEnumerator FullyRegenBarVisualEffect()
-        {
-            SpriteRenderer renderer = effectTransform.GetComponent<SpriteRenderer>();
-            float alpha = renderer.color.a;
-            while(alpha < 1)
+            if (!isBarFixedLength)
             {
-                alpha += Time.deltaTime / effectTime;
-                if (alpha > 1) alpha = 1;
-                renderer.color = new Color(renderer.color.r, renderer.color.g, renderer.color.b, alpha);
+                xLocalScale = (posture.GetPosture() * xScale / postureValueForFixedLength);
             }
-            yield return new WaitForSeconds(1f);
-            alpha = 1;
-            while(alpha != 0)
+            else
             {
-                alpha -= Time.deltaTime / effectTime;
-                if (alpha < 0) alpha = 0;
-                renderer.color = new Color(renderer.color.r, renderer.color.g, renderer.color.b, alpha);
+                xLocalScale = (posture.GetPosture() / posture.GetInitialPosture()) * xScale;
             }
-        }
-
-        public void DisablePostureBar()
-        {
-            Transform transforms = GetComponentInChildren<Transform>();
-                foreach(Transform transform in transforms)
-            {
-                transform.gameObject.SetActive(false);
-            }
-        }
-
-        public void EnablePostureBar()
-        {
-            Transform transforms = GetComponentInChildren<Transform>();
-            foreach (Transform transform in transforms)
-            {
-                transform.gameObject.SetActive(true);
-            }
+            bar.localScale = new Vector2(xLocalScale, bar.localScale.y);
         }
     }
 }

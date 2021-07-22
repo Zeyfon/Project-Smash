@@ -203,6 +203,7 @@ namespace PSmash.Combat
         void FinisherAttack()
         {
             float finisherDamage = ((int)baseStats.GetStat(StatsList.Attack) + GetComponent<Equipment>().GetMainWeapon().GetDamage()) * 2;
+            print(targetTransform.name);
             targetTransform.GetComponent<EnemyHealth>().TakeFinisherAttackDamage(transform.position, finisherDamage);
             Instantiate(finisherPS, attackTransform.position, Quaternion.identity);
             OnCameraShake();
