@@ -161,7 +161,7 @@ namespace PSmash.Inventories
         void SetObject(bool isEnabled)
         {
             GetComponent<Collider2D>().enabled = isEnabled;
-            print("Collider is  " + isEnabled);
+            //print("Collider is  " + isEnabled);
             //Debug.Break();
         }
 

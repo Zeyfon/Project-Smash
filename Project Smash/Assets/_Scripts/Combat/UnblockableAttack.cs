@@ -52,15 +52,12 @@ namespace PSmash.Combat
         {
             if (IsEnemyBetweenPlayerAndMe() && IsTargetInSpecialAttackRange())
             {
-                //print("Sending to State " + pm.FsmName + " SPECIAL ATTACK Event ");
                 if (pm == null)
                 {
                     return;
                 }
                 else
                 {
-                    //print("SpecialAttack coming from " + transform.parent.gameObject.name);
-                    //Debug.Break();
                     pm.SendEvent("SPECIALATTACK");
                     return;
                 }
