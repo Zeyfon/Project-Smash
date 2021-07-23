@@ -251,8 +251,7 @@ namespace PSmash.Attributes
 
                     posture.OnStunStateStart();
                     float criticalHitFactor = 2;
-                    DamageHealth(combinedDamage* criticalHitFactor);
-                    pm.SendEvent("DAMAGED_STUNNED");
+                    StunnedDamage(combinedDamage * criticalHitFactor);
                 }
                 else
                 {
@@ -269,17 +268,23 @@ namespace PSmash.Attributes
                     myfsmEventData.FloatData = characterDamage;
                     HutongGames.PlayMaker.Fsm.EventData = myfsmEventData;
                     pm.SendEvent("DAMAGED_NOSTUNNED");
+
                 }
             }
             else
             {
                 //Debug.Log("Full Damage" + combinedDamage);
                 //print("3_DAMAGED_NOSTUNNED Event to the fsm " + pm.FsmName);
-
                 DamageHealth(combinedDamage);
                 pm.SendEvent("DAMAGED_NOSTUNNED");
             }
             //print("My Current health  " + health);
+        }
+
+        public void StunnedDamage(float damage)
+        {
+            DamageHealth(damage);
+            pm.SendEvent("DAMAGED_STUNNED");
         }
 
         void DamageHealth(float damage)

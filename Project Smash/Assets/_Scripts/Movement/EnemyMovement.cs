@@ -1,4 +1,5 @@
-﻿using PSmash.Inventories;
+﻿using PSmash.Attributes;
+using PSmash.Inventories;
 using System.Collections;
 using UnityEngine;
 
@@ -24,6 +25,7 @@ namespace PSmash.Movement
 
         [Header("General Info")]
         [SerializeField] Transform groundCheck = null;
+        [SerializeField] float yVelocityThresForFallDamage = 10;
 
         [SerializeField] float distanceCheckForObstacles = 1;
         [SerializeField] float groundCheckRadius = 0.5f;
@@ -305,7 +307,10 @@ namespace PSmash.Movement
         void GroundCheck()
         {
             isGrounded = Physics2D.OverlapCircle(groundCheck.position, groundCheckRadius, whatIsGround);
-            //print("Is Grounded  " + isGrounded);
+            if (isGrounded && rb.velocity.y < -Mathf.Abs(yVelocityThresForFallDamage))
+            {
+                GetComponent<EnemyHealth>().StunnedDamage(Mathf.Infinity);
+            }
         }
 
 
