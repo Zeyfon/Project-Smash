@@ -11,7 +11,7 @@ namespace PSmash.Inventories
     {
         [SerializeField] ToolSlot[] slots;
         [Tooltip("Acquired subweapon to use alternatively to the punches")]
-        [SerializeField] Weapon subWeapon;
+        Weapon subWeapon;
 
         public delegate void ToolChange(int index);
         public event ToolChange onCurrentToolEquippedChange;
@@ -20,32 +20,25 @@ namespace PSmash.Inventories
         public static event SubWeaponChange onSubWeaponChange;
 
         List<Weapon> subWeapons = new List<Weapon>();
+        int subweaponIndex = 0;
         int currentIndex = 0;
         Weapon mainWeapon;
         //INITIALIZE/////////////////////
-        private void Awake()
-        {
-            GetWeapons();
-            RestockToolNumbers();
-        }
+        //private void Start()
+        //{
+        //    GetWeapons();
+        //    RestockToolNumbers();
+        //}
 
         /// <summary>
         /// Get all the ScriptableObjects "Weapons" for the player to use
         /// </summary>
-        void GetWeapons()
-        {
-            foreach (Weapon item in Resources.LoadAll<Weapon>(""))
-            {
-                if (item.GetID() == "22fb0e72-60f1-4908-81f3-ed22b0195c88")
-                    mainWeapon = item;
-                subWeapons.Add(item);
-            }
-
-        }
 
         void Start()
         {
-            if(onCurrentToolEquippedChange != null)
+            GetWeapons();
+            RestockToolNumbers();
+            if (onCurrentToolEquippedChange != null)
                 onCurrentToolEquippedChange(currentIndex);
             if(onSubWeaponChange != null)
                 onSubWeaponChange(subWeapon);
@@ -60,6 +53,22 @@ namespace PSmash.Inventories
         {
             Tent.OnCheckpointDone -= RestockToolNumbersAndUpdateUI;
         }
+
+        void GetWeapons()
+        {
+            bool isSubweaponSet = false;
+            foreach (Subweapon item in GetComponentInChildren<Inventory>().GetSubweapons())
+            {
+                if (!isSubweaponSet)
+                {
+                    subWeapon = item; 
+                }
+                subWeapons.Add(item);
+                print(item.displayName);
+            }
+
+        }
+
 
         /////////////////////////////////////////PUBLIC//////////////
 
@@ -168,6 +177,18 @@ namespace PSmash.Inventories
                     return;
                 }
             }
+        }
+
+        public void SwitchSubWeapon()
+        {
+            subweaponIndex++;
+
+            if (subweaponIndex >= subWeapons.Count)
+                subweaponIndex = 0;
+
+            print(subweaponIndex + "  "  + subWeapons.Count);
+            subWeapon = subWeapons[subweaponIndex];
+            onSubWeaponChange(subWeapon);
         }
 
         ///////////////////////////PRIVATE//////////////////////

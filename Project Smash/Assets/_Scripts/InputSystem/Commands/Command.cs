@@ -9,7 +9,7 @@ namespace PSmash.InputSystem
 {
     public abstract class Command
     {
-        public abstract void ButtonPressed(Transform transform, InputHandler inputHandler, PlayMakerFSM pm, Vector2 input, float buttonState);
+        public abstract void ButtonPressed(Transform transform, InputHandler inputHandler, Equipment equipment, PlayMakerFSM pm, Vector2 input, float buttonState);
 
         public abstract void ButtonReleased(Transform transform, InputHandler inputHandler, PlayMakerFSM pm, Vector2 input, float buttonState);
 
@@ -18,7 +18,7 @@ namespace PSmash.InputSystem
     public class JumpCommand : Command
     {
         LayerMask whatIsOneWayPlatform = LayerMask.GetMask("PlayerGround");
-        public override void ButtonPressed(Transform transform, InputHandler inputHandler, PlayMakerFSM pm, Vector2 input, float buttonState)
+        public override void ButtonPressed(Transform transform, InputHandler inputHandler, Equipment equipment, PlayMakerFSM pm, Vector2 input, float buttonState)
         {
             IManualInteraction manualInteractableObject = transform.parent.GetComponent<InteractableElements>().GetInteractableObject();
             if (manualInteractableObject != null)
@@ -60,7 +60,7 @@ namespace PSmash.InputSystem
 
     public class EvadeCommand : Command
     {
-        public override void ButtonPressed(Transform transform, InputHandler inputHandler, PlayMakerFSM pm, Vector2 input,float buttonState)
+        public override void ButtonPressed(Transform transform, InputHandler inputHandler, Equipment equipment, PlayMakerFSM pm, Vector2 input,float buttonState)
         {
 
             if (Mathf.Abs(input.x) > 0.4f)
@@ -81,7 +81,7 @@ namespace PSmash.InputSystem
 
     public class AttackCommand : Command
     {
-        public override void ButtonPressed(Transform transform, InputHandler inputHandler, PlayMakerFSM pm, Vector2 input, float buttonState)
+        public override void ButtonPressed(Transform transform, InputHandler inputHandler, Equipment equipment, PlayMakerFSM pm, Vector2 input, float buttonState)
         {
             pm.SendEvent("MAINWEAPONATTACKCOMMAND");
         }
@@ -97,7 +97,7 @@ namespace PSmash.InputSystem
         float prevButtonState = 0;
         //bool guardButton = false;
         FsmBool guardButtonState = FsmVariables.GlobalVariables.FindFsmBool("guardButtonState");
-        public override void ButtonPressed(Transform transform, InputHandler inputHandler, PlayMakerFSM pm, Vector2 input, float buttonState)
+        public override void ButtonPressed(Transform transform, InputHandler inputHandler, Equipment equipment, PlayMakerFSM pm, Vector2 input, float buttonState)
         {
             if(buttonState==1 && buttonState != prevButtonState)
             {
@@ -130,7 +130,7 @@ namespace PSmash.InputSystem
 
     public class SubweaponCommand : Command
     {
-        public override void ButtonPressed(Transform transform, InputHandler inputHandler, PlayMakerFSM pm, Vector2 input, float buttonState)
+        public override void ButtonPressed(Transform transform, InputHandler inputHandler, Equipment equipment, PlayMakerFSM pm, Vector2 input, float buttonState)
         {
             pm.SendEvent("SUBWEAPONBUTTONPRESSED");
         }
@@ -143,9 +143,22 @@ namespace PSmash.InputSystem
 
     public class ToolCommand : Command
     {
-        public override void ButtonPressed(Transform transform, InputHandler inputHandler, PlayMakerFSM pm, Vector2 input, float buttonState)
+        public override void ButtonPressed(Transform transform, InputHandler inputHandler, Equipment equipment, PlayMakerFSM pm, Vector2 input, float buttonState)
         {
             pm.SendEvent("ITEMBUTTONPRESSED");
+        }
+
+        public override void ButtonReleased(Transform transform, InputHandler inputHandler, PlayMakerFSM pm, Vector2 input, float buttonState)
+        {
+            //throw new System.NotImplementedException();
+        }
+    }
+
+    public class SubweaponSwitchCommand : Command
+    {
+        public override void ButtonPressed(Transform transform, InputHandler inputHandler, Equipment equipment, PlayMakerFSM pm, Vector2 input, float buttonState)
+        {
+            equipment.SwitchSubWeapon();
         }
 
         public override void ButtonReleased(Transform transform, InputHandler inputHandler, PlayMakerFSM pm, Vector2 input, float buttonState)
@@ -157,7 +170,7 @@ namespace PSmash.InputSystem
     public class ToolSelectionCommand : Command
     {
         float previousButtonState = 1;
-        public override void ButtonPressed(Transform transform, InputHandler inputHandler, PlayMakerFSM pm, Vector2 input, float buttonState)
+        public override void ButtonPressed(Transform transform, InputHandler inputHandler, Equipment equipment, PlayMakerFSM pm, Vector2 input, float buttonState)
         {
 
             if(buttonState != previousButtonState && buttonState != 0)
@@ -177,7 +190,7 @@ namespace PSmash.InputSystem
     public class MoveCommand : Command
     {
         FsmVector2 movementInput = FsmVariables.GlobalVariables.FindFsmVector2("movementInput");
-        public override void ButtonPressed(Transform transform, InputHandler inputHandler, PlayMakerFSM pm, Vector2 input, float buttonState)
+        public override void ButtonPressed(Transform transform, InputHandler inputHandler, Equipment equipment, PlayMakerFSM pm, Vector2 input, float buttonState)
         {
             Debug.Log(input +"   here");
             movementInput.Value = input;
@@ -191,7 +204,7 @@ namespace PSmash.InputSystem
 
     public class GlideCommand : Command
     {
-        public override void ButtonPressed(Transform transform, InputHandler inputHandler, PlayMakerFSM pm, Vector2 input, float buttonState)
+        public override void ButtonPressed(Transform transform, InputHandler inputHandler, Equipment equipment, PlayMakerFSM pm, Vector2 input, float buttonState)
         {
             Debug.Log(pm.Fsm.Name);
             pm.SendEvent("GLIDE");

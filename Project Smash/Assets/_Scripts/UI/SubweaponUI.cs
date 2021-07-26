@@ -25,6 +25,7 @@ namespace PSmash.UI
 
         private void UpdateSubWeaponDisplay(Weapon subWeapon)
         {
+            print("Update UI");
             if (subWeapon == null)
                 return;
             else

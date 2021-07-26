@@ -51,6 +51,19 @@ namespace PSmash.Inventories
             return craftingItemSlots;
         }
 
+        public List<Subweapon> GetSubweapons()
+        {
+            List<Subweapon> subweapons = new List<Subweapon>();
+            foreach(Item item in inventoryItems)
+            {
+                if(item is Subweapon)
+                {
+                    subweapons.Add(item as Subweapon);
+                }
+            }
+            return subweapons;
+        }
+
         private void CraftingItemCollected(Pickup.ItemSlot item)
         {
             //print("Crafting item Collected");
