@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace PSmash.Inventories
 {
-    [CreateAssetMenu(menuName = "Items/SubWeapon")]
+    [CreateAssetMenu(menuName = "Items/Weapon")]
     public class Weapon : Item
     {
         [Header("ANIMATION INFO")]

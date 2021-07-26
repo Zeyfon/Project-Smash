@@ -26,6 +26,7 @@ namespace PSmash.InputSystem
         Command action6;
         Command action7;
         Command action8;
+        Command action9;
         
         float action5State = 0;
         float action7State = 0;
@@ -33,6 +34,7 @@ namespace PSmash.InputSystem
         FsmObject currentFSM;
         FsmVector2 movementInput;
         _Controller _controller;
+        Equipment equipment;
 
         Vector2 movement;
 
@@ -40,12 +42,14 @@ namespace PSmash.InputSystem
         {
             _controller = new _Controller();
             PlayMakerFSM[] pms = GetComponentsInParent<PlayMakerFSM>();
+            equipment = GetComponentInParent<Equipment>();
             foreach(PlayMakerFSM pm in pms)
             {
                 if (pm.FsmName == "PlayerController") pmPlayerController = pm;
             }
             if (pmPlayerController == null) Debug.LogWarning("FSM Player Controller could not be found");
         }
+
         private void Start()
         {
             currentFSM = FsmVariables.GlobalVariables.FindFsmObject("currentFSM");
@@ -63,19 +67,19 @@ namespace PSmash.InputSystem
             action6 = new ToolCommand();
             action7 = new ToolSelectionCommand();
             action8 = new GlideCommand();
+            action9 = new SubweaponSwitchCommand();
         }
 
         //Method used by each state in PlayMaker to inform to which state the inputs will be sent
-        public void SetCurrentStateFSM(PlayMakerFSM pm)
-        {
-            //currentPMState = pm;
-            //print("Current State in Player is " + currentPMState.FsmName);
-        }
+        //public void SetCurrentStateFSM(PlayMakerFSM pm)
+        //{
+        //    //currentPMState = pm;
+        //    //print("Current State in Player is " + currentPMState.FsmName);
+        //}
 
         private void OnEnable()
         {
             _controller.Player.Enable();
-            //_controller.Player.Move.performed += ctx => movement = ctx.ReadValue<Vector2>();
             _controller.Player.Action1.started += ctx => Action1Pressed();
             _controller.Player.Action1.canceled += ctx => Action1Released();
             _controller.Player.Action2.started += ctx => Action2Pressed();
@@ -87,7 +91,9 @@ namespace PSmash.InputSystem
             _controller.Player.Action6.started += ctx => Action6Pressed();
             _controller.Player.Action6.canceled += ctx => Action6Released();
             _controller.Player.Action1.performed += ctx => Action8Pressed();
-            //_controller.Player.Action6.canceled += ctx => Action6Released();
+            _controller.Player.SubweaponSwitch.started += ctx => SubweaponSwitchPressed();
+            //_controller.Player.SubweaponSwitch.canceled += ctx => SubweaponSwitchPressed();
+
 
             _controller.Player.Quit.performed += ctx => QuitKeyPressed();
             _controller.Player.ButtonStart.started += ctx => ButtonStartPressed();
@@ -109,7 +115,6 @@ namespace PSmash.InputSystem
         private void OnDisable()
         {
             _controller.Player.Disable();
-            //_controller.Player.Move.performed -= ctx => movement = ctx.ReadValue<Vector2>();
             _controller.Player.Action1.started -= ctx => Action1Pressed();
             _controller.Player.Action1.canceled -= ctx => Action1Released();
             _controller.Player.Action2.started -= ctx => Action2Pressed();
@@ -121,7 +126,8 @@ namespace PSmash.InputSystem
             _controller.Player.Action6.started -= ctx => Action6Pressed();
             _controller.Player.Action6.canceled -= ctx => Action6Released();
             _controller.Player.Action1.performed -= ctx => Action8Pressed();
-
+            _controller.Player.SubweaponSwitch.started -= ctx => SubweaponSwitchPressed();
+            //_controller.Player.SubweaponSwitch.canceled -= ctx => SubweaponSwitchPressed();
 
             _controller.Player.Quit.performed -= ctx => QuitKeyPressed();
             _controller.Player.ButtonStart.started -= ctx => ButtonStartPressed();
@@ -138,7 +144,6 @@ namespace PSmash.InputSystem
             Trap.EnablePlayerController -= IsPlayerInputEnabled;
             MainMenu.OnMenuAction -= IsPlayerInputEnabled;
             Portal.OnPortalTriggered -= EnableInput;
-
         }
 
         private void Update()
@@ -146,16 +151,14 @@ namespace PSmash.InputSystem
             action5State = _controller.Player.Action5.ReadValue<float>();
             movement = _controller.Player.Move.ReadValue<Vector2>();
             action7State = _controller.Player.Action7.ReadValue<float>();
-            action5.ButtonPressed(transform, this, currentFSM.Value as PlayMakerFSM, movement, action5State);
-            //action0.ButtonPressed(transform, this, currentFSM.Value as PlayMakerFSM, movement, action5State);
+            action5.ButtonPressed(transform, this, equipment, currentFSM.Value as PlayMakerFSM, movement, action5State);
             movementInput.Value = movement;
-            action7.ButtonPressed(transform, this, currentFSM.Value as PlayMakerFSM, movement, action7State);
-            //print(currentFSM.Value);
+            action7.ButtonPressed(transform, this, equipment, currentFSM.Value as PlayMakerFSM, movement, action7State);
         }
 
         private void Action1Pressed()
         {
-            action1.ButtonPressed(transform,this, currentFSM.Value as PlayMakerFSM, movement, action5State);
+            action1.ButtonPressed(transform,this, equipment, currentFSM.Value as PlayMakerFSM, movement, action5State);
         }
         private void Action1Released()
         {
@@ -165,7 +168,7 @@ namespace PSmash.InputSystem
 
         private void Action2Pressed()
         {
-            action2.ButtonPressed(transform, this, currentFSM.Value as PlayMakerFSM, movement, action5State);
+            action2.ButtonPressed(transform, this, equipment, currentFSM.Value as PlayMakerFSM, movement, action5State);
         }
         private void Action2Released()
         {
@@ -175,17 +178,17 @@ namespace PSmash.InputSystem
 
         private void Action3Pressed()
         {
-            action3.ButtonPressed(transform, this, currentFSM.Value as PlayMakerFSM, movement, action5State);
+            action3.ButtonPressed(transform, this, equipment, currentFSM.Value as PlayMakerFSM, movement, action5State);
         }
         private void Action3Released()
         {
-            action3.ButtonPressed(transform, this, currentFSM.Value as PlayMakerFSM, movement, action5State);
+            action3.ButtonPressed(transform, this, equipment, currentFSM.Value as PlayMakerFSM, movement, action5State);
         }
 
 
         private void Action4Pressed()
         {
-            action4.ButtonPressed(transform, this, currentFSM.Value as PlayMakerFSM, movement, action5State);
+            action4.ButtonPressed(transform, this, equipment, currentFSM.Value as PlayMakerFSM, movement, action5State);
         }
         private void Action4Released()
         {
@@ -199,13 +202,17 @@ namespace PSmash.InputSystem
 
         private void Action6Pressed()
         {
-            action6.ButtonPressed(transform, this, currentFSM.Value as PlayMakerFSM, movement, action5State);
+            action6.ButtonPressed(transform, this, equipment, currentFSM.Value as PlayMakerFSM, movement, action5State);
         }
 
         private void Action8Pressed()
         {
             print("Want to glide");
-            action8.ButtonPressed(transform, this, currentFSM.Value as PlayMakerFSM, movement, action5State);
+            action8.ButtonPressed(transform, this, equipment, currentFSM.Value as PlayMakerFSM, movement, action5State);
+        }
+        private void SubweaponSwitchPressed()
+        {
+            action9.ButtonPressed(transform, this, equipment, currentFSM.Value as PlayMakerFSM, movement, action5State);
         }
 
 
