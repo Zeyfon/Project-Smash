@@ -5,8 +5,6 @@ using PSmash.Combat;
 using PSmash.Inventories;
 using PSmash.Movement;
 using PSmash.Stats;
-using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -20,7 +18,7 @@ namespace PSmash.Attributes
 
         [Header("TestMode")]
         [SerializeField] bool isInvulnerable = false;
-        [SerializeField] bool canBeKnockbacked = true;
+        [SerializeField] bool canBeKnockedBack = true;
 
         [Header("Extras")]
         [SerializeField] AudioClip protectedDamageAudio = null;
@@ -82,13 +80,14 @@ namespace PSmash.Attributes
             }
             Damaged(weapon, characterDamage);
             ///
-            if (canBeKnockbacked)
+            if (canBeKnockedBack)
                 GetComponent<EnemyMovement>().ApplyAttackImpactReceived(attacker, weapon, LayerMask.NameToLayer("EnemiesGhost"), LayerMask.NameToLayer("Enemies"));
         }
 
-        //This is done every time the player hits the enemy after the armor was off
-        //TODO 
-        //Fix this issue. This must be used only once
+        public void SetCanBeKnockBack(bool canBeKnockedBack)
+        {
+            this.canBeKnockedBack = canBeKnockedBack;
+        }
 
         //Inform the AI that the NPC is being Finished
         public void SetStateToFinisher()
