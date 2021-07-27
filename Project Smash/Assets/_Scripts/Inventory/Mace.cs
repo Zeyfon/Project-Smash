@@ -8,7 +8,7 @@ namespace PSmash.Inventories
 {
     public class Mace : MonoBehaviour,ISaveable
     {
-        [SerializeField] Weapon subWeapon = null;
+        [SerializeField] Subweapon subWeapon = null;
         [SerializeField] AudioSource audioSource = null;
         [SerializeField] CanvasGroup canvasGroup;
         bool hasBeenTaken = false;

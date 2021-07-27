@@ -11,7 +11,7 @@ namespace PSmash.Inventories
     {
         [SerializeField] ToolSlot[] slots;
         [Tooltip("Acquired subweapon to use alternatively to the punches")]
-        Weapon subWeapon;
+        Subweapon equippedSubweapon;
 
         public delegate void ToolChange(int index);
         public event ToolChange onCurrentToolEquippedChange;
@@ -19,29 +19,21 @@ namespace PSmash.Inventories
         public delegate void SubWeaponChange(Weapon item);
         public static event SubWeaponChange onSubWeaponChange;
 
-        List<Weapon> subWeapons = new List<Weapon>();
+        List<Subweapon> subWeapons = new List<Subweapon>();
         int subweaponIndex = 0;
         int currentIndex = 0;
         Weapon mainWeapon;
         //INITIALIZE/////////////////////
-        //private void Start()
-        //{
-        //    GetWeapons();
-        //    RestockToolNumbers();
-        //}
-
-        /// <summary>
-        /// Get all the ScriptableObjects "Weapons" for the player to use
-        /// </summary>
 
         void Start()
         {
+
             GetWeapons();
             RestockToolNumbers();
             if (onCurrentToolEquippedChange != null)
                 onCurrentToolEquippedChange(currentIndex);
             if(onSubWeaponChange != null)
-                onSubWeaponChange(subWeapon);
+                onSubWeaponChange(equippedSubweapon);
         }
 
         private void OnEnable()
@@ -57,14 +49,20 @@ namespace PSmash.Inventories
         void GetWeapons()
         {
             bool isSubweaponSet = false;
-            foreach (Subweapon item in GetComponentInChildren<Inventory>().GetSubweapons())
+            foreach (Weapon item in GetComponentInChildren<Inventory>().GetWeapons())
             {
-                if (!isSubweaponSet)
+                if(item.GetID() == "22fb0e72-60f1-4908-81f3-ed22b0195c88")
                 {
-                    subWeapon = item; 
+                    mainWeapon = item;
                 }
-                subWeapons.Add(item);
-                print(item.displayName);
+                if(!isSubweaponSet && item is Subweapon)
+                    equippedSubweapon = item as Subweapon;
+                if (item is Subweapon)
+                {
+                    subWeapons.Add(item as Subweapon);
+                    print(item.displayName);
+                }
+
             }
 
         }
@@ -81,24 +79,34 @@ namespace PSmash.Inventories
         /// Set the current subweapon to whatever weapon is passed
         /// </summary>
         /// <param name="subWeapon"></param>
-        public void SetSubWeapon(Weapon subWeapon)
+        public void SetSubWeapon(Subweapon subWeapon)
         {
-            this.subWeapon = subWeapon; 
+            this.equippedSubweapon = subWeapon; 
         }
 
         /// <summary>
         /// Pass the current equipped subweapon. This can be null
         /// </summary>
         /// <returns></returns>
-        public Weapon GetSubWeapon()
+        public Subweapon GetSubWeapon()
         {
-            return subWeapon;
+            return equippedSubweapon;
         }
 
         public int GetSubWeaponAnimationValue()
         {
             //print(subWeapon.GetAnimatorInt());
-            return subWeapon.GetAnimatorInt();
+            return equippedSubweapon.GetAnimatorInt();
+        }
+
+        public float GetMainWeaponAttackImpulse()
+        {
+            return mainWeapon.GetWeaponAttackImpulse();
+        }
+
+        public float GetSubWeaponAttackImpulse()
+        {
+            return equippedSubweapon.GetWeaponAttackImpulse();
         }
 
 
@@ -187,8 +195,8 @@ namespace PSmash.Inventories
                 subweaponIndex = 0;
 
             print(subweaponIndex + "  "  + subWeapons.Count);
-            subWeapon = subWeapons[subweaponIndex];
-            onSubWeaponChange(subWeapon);
+            equippedSubweapon = subWeapons[subweaponIndex];
+            onSubWeaponChange(equippedSubweapon);
         }
 
         ///////////////////////////PRIVATE//////////////////////
@@ -230,9 +238,9 @@ namespace PSmash.Inventories
 
             toolsForSerialization.Add("currentIndex", currentIndex);
 
-            if (subWeapon != null)
+            if (equippedSubweapon != null)
             {
-                toolsForSerialization.Add("Mace", subWeapon.GetID());
+                toolsForSerialization.Add("Mace", equippedSubweapon.GetID());
             }
             return toolsForSerialization;
         }
@@ -270,12 +278,12 @@ namespace PSmash.Inventories
 
                 if(name == "Mace")
                 {
-                    foreach (Weapon subWeapon in subWeapons)
+                    foreach (Subweapon subWeapon in subWeapons)
                     {
                         string subWeaponName = (string)equippedItemsForSerialization[name];
                         if (subWeaponName == subWeapon.GetID())
                         {
-                            this.subWeapon = subWeapon;
+                            this.equippedSubweapon = subWeapon;
                             //print("I have the mace");
                         }
                     }
@@ -287,7 +295,7 @@ namespace PSmash.Inventories
                 RestockToolNumbersAndUpdateUI();
             }
             onCurrentToolEquippedChange(currentIndex);
-            onSubWeaponChange(subWeapon);
+            onSubWeaponChange(equippedSubweapon);
         }
     }
 }

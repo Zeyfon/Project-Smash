@@ -16,7 +16,7 @@ namespace PSmash.Combat
         [SerializeField] LayerMask whatIsDamagable;
         [SerializeField] LayerMask whatIsHooked;
         [SerializeField] LayerMask whatIsEnemy;
-        [SerializeField] float attackImpulse = 12f;
+        //[SerializeField] float attackImpulse = 12f;
 
         [Header("Combo Attack")]
         [SerializeField] Transform attackTransform = null;
@@ -260,6 +260,15 @@ namespace PSmash.Combat
         /// <returns></returns>
         void AttackImpulse(int index)
         {
+            float attackImpulse;
+            if (index == 1)
+            {
+                attackImpulse = GetComponent<Equipment>().GetMainWeaponAttackImpulse();
+            }
+            else
+            {
+                attackImpulse = GetComponent<Equipment>().GetSubWeaponAttackImpulse();
+            }
             GetComponent<PlayerMovement>().MovementImpulse(attackImpulse);
         }
 
@@ -311,7 +320,7 @@ namespace PSmash.Combat
                 if (target == null || coll.GetComponent<Projectile>())
                     continue;
                 //print(currentWeapon.name);
-                target.TakeDamage(transform, weapon, AttackType.NotUnblockable, baseStats.GetStat(StatsList.Attack), weapon.GetAttackForce());
+                target.TakeDamage(transform, weapon, AttackType.NotUnblockable, baseStats.GetStat(StatsList.Attack), weapon.GetKnockbackForceToApplyToEnemyAttacked());
                 //print("Sendingdamage from player to  " + target);
 
             }
