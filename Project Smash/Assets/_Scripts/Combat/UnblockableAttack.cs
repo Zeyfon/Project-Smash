@@ -3,6 +3,7 @@ using UnityEngine;
 using Spine.Unity;
 using PSmash.Stats;
 using PSmash.Movement;
+using PSmash.Attributes;
 
 namespace PSmash.Combat
 {
@@ -124,6 +125,7 @@ namespace PSmash.Combat
 
         public void TintMaterialToRed()
         {
+            GetComponent<EnemyHealth>().SetCanBeKnockBack(false);
             SkeletonRenderer skeletonRenderer = GetComponentInChildren<SkeletonRenderer>();
             if (addedMaterial != null)
             {
@@ -135,6 +137,7 @@ namespace PSmash.Combat
 
         public void ReturnToOriginalTint()
         {
+            GetComponent<EnemyHealth>().SetCanBeKnockBack(true);
             SkeletonRenderer skeletonRenderer = GetComponentInChildren<SkeletonRenderer>();
             skeletonRenderer.CustomMaterialOverride.Remove(defaultMaterial);
             if (addedMaterial != null)

@@ -2,8 +2,6 @@
 using UnityEngine;
 using GameDevTV.Saving;
 using System.Collections.Generic;
-using System;
-using PSmash.SceneManagement;
 
 namespace PSmash.Inventories
 {
