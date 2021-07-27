@@ -101,7 +101,7 @@ namespace PSmash.Movement
             //The time must be adjusted accordingly to the weapon with was damaged. 
             //float timerLimit = Mathf.Log10(attackForce)/ ((attackForce/2.4f)+1);
             //// 
-            float speedFactor = weapon.GetAttackForce();
+            float speedFactor = weapon.GetKnockbackForceToApplyToEnemyAttacked();
             float timerLimit = weapon.GetAttackForceTime();
 
 

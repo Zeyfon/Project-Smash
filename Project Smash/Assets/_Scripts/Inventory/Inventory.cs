@@ -51,15 +51,13 @@ namespace PSmash.Inventories
             return craftingItemSlots;
         }
 
-        public List<Subweapon> GetSubweapons()
+        public List<Weapon> GetWeapons()
         {
-            List<Subweapon> subweapons = new List<Subweapon>();
+            List<Weapon> subweapons = new List<Weapon>();
             foreach(Item item in inventoryItems)
             {
-                if(item is Subweapon)
-                {
-                    subweapons.Add(item as Subweapon);
-                }
+                if(item is Weapon)
+                    subweapons.Add(item as Weapon);
             }
             return subweapons;
         }

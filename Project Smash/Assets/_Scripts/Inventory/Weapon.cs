@@ -14,8 +14,9 @@ namespace PSmash.Inventories
         [Header("VALUES")]
         [SerializeField] Vector2 weaponDamageArea;
         [SerializeField] float damage;
+        [SerializeField] float weaponAttackImpulse = 12f;
         [Range(0,2)]
-        [SerializeField] float attackForce;
+        [SerializeField] float knockbackForceToApplyToEnemyAttacked;
         [Range(0,1f)]
         [SerializeField] float attackForceTime;
 
@@ -24,9 +25,14 @@ namespace PSmash.Inventories
             return damage;
         }
 
-        public float GetAttackForce()
+        public float GetWeaponAttackImpulse()
         {
-            return attackForce;
+            return weaponAttackImpulse;
+        }
+
+        public float GetKnockbackForceToApplyToEnemyAttacked()
+        {
+            return knockbackForceToApplyToEnemyAttacked;
         }
 
         public float GetAttackForceTime()
