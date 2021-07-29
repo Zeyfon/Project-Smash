@@ -129,6 +129,14 @@ public class @_Controller : IInputActionCollection, IDisposable
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """"
+                },
+                {
+                    ""name"": ""Utility"",
+                    ""type"": ""Button"",
+                    ""id"": ""14c763c4-0f0e-40f0-b17b-2876f7d41109"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
                 }
             ],
             ""bindings"": [
@@ -503,6 +511,28 @@ public class @_Controller : IInputActionCollection, IDisposable
                     ""processors"": """",
                     ""groups"": ""Keyboard&Mouse"",
                     ""action"": ""Subweapon Switch"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""c4e597d9-f902-4707-9fb4-a6b06ebc973e"",
+                    ""path"": ""<Keyboard>/r"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard&Mouse"",
+                    ""action"": ""Utility"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""a7dac4fb-44be-4a23-8ae4-8d67adba3bb3"",
+                    ""path"": ""<Gamepad>/rightTrigger"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""Utility"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -1141,6 +1171,7 @@ public class @_Controller : IInputActionCollection, IDisposable
         m_Player_Action7 = m_Player.FindAction("Action7", throwIfNotFound: true);
         m_Player_Action8 = m_Player.FindAction("Action8", throwIfNotFound: true);
         m_Player_SubweaponSwitch = m_Player.FindAction("Subweapon Switch", throwIfNotFound: true);
+        m_Player_Utility = m_Player.FindAction("Utility", throwIfNotFound: true);
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
         m_UI_Navigate = m_UI.FindAction("Navigate", throwIfNotFound: true);
@@ -1228,6 +1259,7 @@ public class @_Controller : IInputActionCollection, IDisposable
     private readonly InputAction m_Player_Action7;
     private readonly InputAction m_Player_Action8;
     private readonly InputAction m_Player_SubweaponSwitch;
+    private readonly InputAction m_Player_Utility;
     public struct PlayerActions
     {
         private @_Controller m_Wrapper;
@@ -1246,6 +1278,7 @@ public class @_Controller : IInputActionCollection, IDisposable
         public InputAction @Action7 => m_Wrapper.m_Player_Action7;
         public InputAction @Action8 => m_Wrapper.m_Player_Action8;
         public InputAction @SubweaponSwitch => m_Wrapper.m_Player_SubweaponSwitch;
+        public InputAction @Utility => m_Wrapper.m_Player_Utility;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -1297,6 +1330,9 @@ public class @_Controller : IInputActionCollection, IDisposable
                 @SubweaponSwitch.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnSubweaponSwitch;
                 @SubweaponSwitch.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnSubweaponSwitch;
                 @SubweaponSwitch.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnSubweaponSwitch;
+                @Utility.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnUtility;
+                @Utility.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnUtility;
+                @Utility.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnUtility;
             }
             m_Wrapper.m_PlayerActionsCallbackInterface = instance;
             if (instance != null)
@@ -1343,6 +1379,9 @@ public class @_Controller : IInputActionCollection, IDisposable
                 @SubweaponSwitch.started += instance.OnSubweaponSwitch;
                 @SubweaponSwitch.performed += instance.OnSubweaponSwitch;
                 @SubweaponSwitch.canceled += instance.OnSubweaponSwitch;
+                @Utility.started += instance.OnUtility;
+                @Utility.performed += instance.OnUtility;
+                @Utility.canceled += instance.OnUtility;
             }
         }
     }
@@ -1627,6 +1666,7 @@ public class @_Controller : IInputActionCollection, IDisposable
         void OnAction7(InputAction.CallbackContext context);
         void OnAction8(InputAction.CallbackContext context);
         void OnSubweaponSwitch(InputAction.CallbackContext context);
+        void OnUtility(InputAction.CallbackContext context);
     }
     public interface IUIActions
     {

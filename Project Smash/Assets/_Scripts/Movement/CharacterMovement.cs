@@ -37,6 +37,7 @@ namespace PSmash.Movement
         {
             float speedModified = baseSpeed * speedFactor * speedModifier;
             float xVelocity;
+
             if (!isGrounded)
             {
                 rb.sharedMaterial = noFriction;
@@ -67,6 +68,7 @@ namespace PSmash.Movement
                         //print(gameObject.name + "  " + rb.velocity);
                 }
             }
+            //print(rb.velocity);
         }
 
         public void GrapingHookMovement(Vector2 movementDirection, float speed)

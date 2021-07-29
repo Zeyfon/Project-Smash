@@ -10,11 +10,12 @@ using UnityEngine;
 
 namespace PSmash.Attributes
 {
-    public class EnemyHealth : Health, ISaveable, IGrapingHook, IWeight
+    public class EnemyHealth : Health, ISaveable, IGrapingHook//, IWeight, MyLevel
     {
 
         //CONFIG
         [SerializeField] PlayMakerFSM aiController = null;
+        [SerializeField] int myLevel = 1;
 
         [Header("TestMode")]
         [SerializeField] bool isInvulnerable = false;
@@ -114,13 +115,32 @@ namespace PSmash.Attributes
 
         public void Hooked()
         {
-            aiController.SendEvent("STAGGER");
+            foreach(PlayMakerFSM pm in GetComponents<PlayMakerFSM>())
+            {
+                if(pm.FsmName == "AIController")
+                {
+                    pm.SendEvent("STAGGER");
+                    break;
+                }
+            }
         }
 
         public void Pulled()
         {
-            aiController.SendEvent("HOOKED");
+            foreach (PlayMakerFSM pm in GetComponents<PlayMakerFSM>())
+            {
+                if (pm.FsmName == "AIController")
+                {
+                    pm.SendEvent("HOOKED");
+                    break;
+                }
+            }
         }
+
+        //public void EnableController()
+        //{
+        //    aiController.SendEvent("ENABLECONTROLLER");
+        //}
 
         public bool IWeight()
         {
@@ -136,6 +156,11 @@ namespace PSmash.Attributes
                 return true;
             else
                 return false;
+        }
+
+        public int GetMyLevel()
+        {
+            return myLevel;
         }
 
 
