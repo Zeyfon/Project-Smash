@@ -48,6 +48,7 @@ namespace PSmash.Combat
         PlayerMovement movement;
         Transform enemyTransform;
         HookRope rope;
+        Coroutine coroutine;
 
         void Awake()
         {
@@ -118,12 +119,13 @@ namespace PSmash.Combat
             Transform hookTarget = GetComponentInChildren<GrapingHookTargetDetector>().GetHookTarget();
             if (hookTarget != null)
             {
-                StartCoroutine(ThrowHook(hookTarget));
+                coroutine = StartCoroutine(ThrowHook(hookTarget));
             }
         }
         public void GrapingHook()
         {
-            StartCoroutine(ThrowHook(null));
+            if(coroutine == null)
+                StartCoroutine(ThrowHook(null));
         }
 
         IEnumerator ThrowHook(Transform target)
@@ -143,6 +145,7 @@ namespace PSmash.Combat
                         yield return new WaitForSeconds(0.25f);
                         yield return PullingEnemyWithGrapingHook();
                         animator.SetInteger("Attack", 75);
+                        coroutine = null;
                         yield break;
                     }
                     else
@@ -162,6 +165,7 @@ namespace PSmash.Combat
                 Destroy(rope.gameObject, 0.01f);
                 animator.SetInteger("Attack", 75);
             }
+            coroutine = null;
         }
 
         bool CanEnemyBePulled(Transform enemyTransform)
