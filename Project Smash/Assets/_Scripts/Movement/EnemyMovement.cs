@@ -309,6 +309,7 @@ namespace PSmash.Movement
             isGrounded = Physics2D.OverlapCircle(groundCheck.position, groundCheckRadius, whatIsGround);
             if (isGrounded && rb.velocity.y < -Mathf.Abs(yVelocityThresForFallDamage))
             {
+                print("YVelocity is " + rb.velocity);
                 GetComponent<EnemyHealth>().StunnedDamage(Mathf.Infinity);
             }
         }

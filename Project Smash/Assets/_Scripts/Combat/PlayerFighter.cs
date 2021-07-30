@@ -1,11 +1,10 @@
 ﻿using PSmash.Attributes;
+using PSmash.Inventories;
+using PSmash.Movement;
+using PSmash.Stats;
 using System;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using PSmash.Inventories;
-using PSmash.Stats;
-using PSmash.Movement;
 
 namespace PSmash.Combat
 {
@@ -16,7 +15,6 @@ namespace PSmash.Combat
         [SerializeField] LayerMask whatIsDamagable;
         [SerializeField] LayerMask whatIsHooked;
         [SerializeField] LayerMask whatIsEnemy;
-        //[SerializeField] float attackImpulse = 12f;
 
         [Header("Combo Attack")]
         [SerializeField] Transform attackTransform = null;
@@ -27,6 +25,7 @@ namespace PSmash.Combat
         [SerializeField] Weapon grapingHook = null;
         [SerializeField] float grapingHookRadius = 11;
         [SerializeField] HookRope hookRope = null;
+        [SerializeField] float hookPullingPlayerSpeed = 30;
 
         [Header("Finishing Move")]
         [SerializeField] AudioClip finisherSound = null;
@@ -45,9 +44,10 @@ namespace PSmash.Combat
         Animator animator;
         AudioSource audioSource;
         Transform targetTransform;
-        Transform enemyTargetTransform;
         Vector2 damageArea;
         PlayerMovement movement;
+        Transform enemyTransform;
+        HookRope rope;
 
         void Awake()
         {
@@ -58,7 +58,6 @@ namespace PSmash.Combat
         }
 
         #region Finisher
-
         public bool IsEnemyStunned()
         {
             RaycastHit2D hit = Physics2D.Raycast(transform.position + new Vector3(0, 1), transform.right, 2, whatIsEnemy);
@@ -113,93 +112,90 @@ namespace PSmash.Combat
             OnFinisherCamera(false);
         }
 
+
+        public void SubweaponUtility()
+        {
+            Transform hookTarget = GetComponentInChildren<GrapingHookTargetDetector>().GetHookTarget();
+            if (hookTarget != null)
+            {
+                StartCoroutine(ThrowHook(hookTarget));
+            }
+        }
         public void GrapingHook()
         {
-            if (GrapingHookTarget.TargetTransform !=null)
-            {
-                StartCoroutine(PulledTowardsTarget(GrapingHookTarget.TargetTransform));
-                return;
-            }
+            StartCoroutine(ThrowHook(null));
+        }
 
-            RaycastHit2D hit = Physics2D.Raycast(attackTransform.position, transform.right, 10, whatIsHooked);    
-            if (hit)
+        IEnumerator ThrowHook(Transform target)
+        {
+            rope = Instantiate(hookRope, attackTransform.position, Quaternion.identity, attackTransform);
+
+            if (target == null)
             {
-                //print("Enemy Detected");
-                enemyTargetTransform = hit.collider.transform;
-                if (CanEnemyBePulled(enemyTargetTransform))
+                yield return rope.DoHookShot(null);
+                enemyTransform = rope.EnemyHitByHook();
+                if (enemyTransform != null)
                 {
-                    //print("Enemy can be hooked");
-                    enemyTargetTransform.GetComponent<IGrapingHook>().Hooked();
-                    animator.SetInteger("Attack", 72);
+                    if (CanEnemyBePulled(enemyTransform))
+                    {
+                        enemyTransform.GetComponent<IGrapingHook>().Hooked();
+                        animator.SetInteger("Attack", 72);
+                        yield return new WaitForSeconds(0.25f);
+                        yield return PullingEnemyWithGrapingHook();
+                        animator.SetInteger("Attack", 75);
+                        yield break;
+                    }
+                    else
+                    {         
+                        audioSource.PlayOneShot(noHookSound);
+                    }
                 }
-                else
-                {
-                    //print("Enemy cannot be hooked");
-                    audioSource.PlayOneShot(noHookSound);
-                }
+                Destroy(rope.gameObject, 0.01f);
+                animator.SetInteger("Attack", 78);
             }
             else
             {
-                print("Did find nothing to grab");
+                yield return rope.DoHookShot(target);
+                animator.SetInteger("Attack", 73);
+                yield return null;
+                yield return PulledTowardsTarget(target);
+                Destroy(rope.gameObject, 0.01f);
+                animator.SetInteger("Attack", 75);
             }
         }
 
-        private bool CanEnemyBePulled(Transform enemyTransform)
+        bool CanEnemyBePulled(Transform enemyTransform)
         {
-            return !enemyTransform.GetComponent<IWeight>().IWeight();
-        }
-
-        //Anim Event
-        public void PullEnemyAction()
-        {
-            StartCoroutine(PullingEnemyWithGrapingHook());
+            return GetComponent<Equipment>().GetSubWeapon().GetMyLevel() >= enemyTransform.GetComponent<EnemyHealth>().GetMyLevel();
         }
 
         IEnumerator PullingEnemyWithGrapingHook()
         {
-            List<Transform> points = new List<Transform>();
-            points.Add(attackTransform);
-            points.Add(enemyTargetTransform);
-            HookRope rope = Instantiate(hookRope, attackTransform.position, Quaternion.identity, attackTransform);
-            yield return rope.DoHookShot(points);
-            rope.EnemyPulled(enemyTargetTransform);
+            rope.SetRopeToFollowEnemyDisplacement(enemyTransform);
             float distance = Mathf.Infinity;
-            enemyTargetTransform.GetComponent<IGrapingHook>().Pulled();
+            enemyTransform.GetComponent<IGrapingHook>().Pulled();
             while (distance>1.25)
             {
                 print("Checking Distance");
-                distance = Vector3.Distance(enemyTargetTransform.position, transform.position);
+                distance = Vector3.Distance(enemyTransform.position, transform.position);
                 print(distance);
                 yield return null;
             }
-            animator.SetInteger("Attack", 75);
         }
 
-
-        //DO NOT DELETE. POSSIBLE USAGE IN THE FUTURE
-        IEnumerator PulledTowardsTarget(Transform targetTransform)
+        IEnumerator PulledTowardsTarget(Transform target)
         {
-            animator.SetInteger("Attack", 73);
-            List<Transform> points = new List<Transform>();
-            points.Add(attackTransform);
-            points.Add(targetTransform);
-            HookRope rope = Instantiate(hookRope, attackTransform.position, Quaternion.identity, attackTransform);
-            yield return rope.DoHookShot(points);
             rope.PlayerPulled();
-
-            float speed = 30;
-            Vector2 direction = ((targetTransform.position + new Vector3(0, 2)) - transform.position).normalized;
-            movement.GrapingHookMovement(direction, speed);
+            float hookPullingPlayerSpeed = 30;
+            Vector2 direction = ((target.position + new Vector3(0, 2)) - transform.position).normalized;
+            movement.GrapingHookMovement(direction, hookPullingPlayerSpeed);
             float distance = Mathf.Infinity;
-            while ( distance> 4)
+            while (distance > 3)
             {
-                //print("Distance from player to " + targetTransform.name + " is  "  + distance );
-                distance = Vector3.Distance(targetTransform.position, transform.position);
-                movement.GrapingHookMovement(direction, speed);
+                distance = Vector3.Distance(target.position, transform.position);
+                movement.GrapingHookMovement(direction, hookPullingPlayerSpeed);
                 yield return new WaitForFixedUpdate();
-
             }
-            animator.SetInteger("Attack", 75);
         }
 
 

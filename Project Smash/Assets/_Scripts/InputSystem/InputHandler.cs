@@ -27,6 +27,7 @@ namespace PSmash.InputSystem
         Command action7;
         Command action8;
         Command action9;
+        Command action10;
         
         float action5State = 0;
         float action7State = 0;
@@ -68,6 +69,7 @@ namespace PSmash.InputSystem
             action7 = new ToolSelectionCommand();
             action8 = new GlideCommand();
             action9 = new SubweaponSwitchCommand();
+            action10 = new UtilityCommand();
         }
 
         //Method used by each state in PlayMaker to inform to which state the inputs will be sent
@@ -92,6 +94,7 @@ namespace PSmash.InputSystem
             _controller.Player.Action6.canceled += ctx => Action6Released();
             _controller.Player.Action1.performed += ctx => Action8Pressed();
             _controller.Player.SubweaponSwitch.started += ctx => SubweaponSwitchPressed();
+            _controller.Player.Utility.performed += ctx => UtilityPressed();
             //_controller.Player.SubweaponSwitch.canceled += ctx => SubweaponSwitchPressed();
 
 
@@ -127,6 +130,7 @@ namespace PSmash.InputSystem
             _controller.Player.Action6.canceled -= ctx => Action6Released();
             _controller.Player.Action1.performed -= ctx => Action8Pressed();
             _controller.Player.SubweaponSwitch.started -= ctx => SubweaponSwitchPressed();
+            _controller.Player.Utility.performed -= ctx => UtilityPressed();
             //_controller.Player.SubweaponSwitch.canceled -= ctx => SubweaponSwitchPressed();
 
             _controller.Player.Quit.performed -= ctx => QuitKeyPressed();
@@ -214,7 +218,10 @@ namespace PSmash.InputSystem
         {
             action9.ButtonPressed(transform, this, equipment, currentFSM.Value as PlayMakerFSM, movement, action5State);
         }
-
+        private void UtilityPressed()
+        {
+            action10.ButtonPressed(transform, this, equipment, currentFSM.Value as PlayMakerFSM, movement, action5State);
+        }
 
         private void ButtonStartPressed()
         {

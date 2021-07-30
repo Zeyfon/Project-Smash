@@ -7,6 +7,10 @@ namespace PSmash.Inventories
     [CreateAssetMenu(menuName = "Items/SubWeapon")]
     public class Subweapon : Weapon
     {
+        public int GetMyLevel()
+        {
+            return 1;
+        }
         //[Header("ANIMATION INFO")]
         //[SerializeField] int animatorIntValue = 0;
         //[SerializeField] AudioClip weaponAttackAudioClip = null;

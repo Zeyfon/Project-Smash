@@ -5,27 +5,76 @@ using UnityEngine;
 public class HookRope : MonoBehaviour
 {
 
-    [SerializeField] Transform targetTransform;
+    [SerializeField] Transform hookHead = null;
     [SerializeField] LineRenderer line;
     [SerializeField] float timeToReachTarget = 0.15f;
-    // Start is called before the first frame update
+    [SerializeField] float maxDistance = 10;
+
     Vector2 velocity;
-    Vector2 headPosition;
-    float timer = 0;
-    public IEnumerator DoHookShot(List<Transform> points)
+    Vector2 finalPosition;
+    Transform enemyTransform;
+
+    public Transform EnemyHitByHook()
     {
-        Setup(points);
-        yield return MoveRopeHeadToTarget();
-        timer = 0;
+        return enemyTransform;
     }
 
     public void PlayerPulled()
     {
         StartCoroutine(MoveRopeBaseToTarget());
     }
-    public void EnemyPulled(Transform enemyTransform)
+
+    public void SetRopeToFollowEnemyDisplacement(Transform enemyTransform)
     {
         StartCoroutine(MoveHeadWithEnemy(enemyTransform));
+    }
+
+    public IEnumerator DoHookShot(Transform target)
+    {
+        float timer = 0;
+        Setup(target);
+        Vector2 headPosition = transform.position;
+        while (timer < timeToReachTarget)
+        {
+            if (enemyTransform != null && target == null)
+                yield break;
+            Vector2 movement = velocity * Time.fixedDeltaTime;
+            headPosition += movement;
+            hookHead.position = headPosition;
+            line.SetPosition(0, transform.position);
+            line.SetPosition(1, headPosition);
+            timer += Time.fixedDeltaTime;
+            yield return new WaitForFixedUpdate();
+        }
+    }
+
+    void Setup(Transform target)
+    {
+        if (target)
+        {
+            finalPosition = target.position;
+        }
+        else
+        {
+            finalPosition = transform.position + transform.parent.right * maxDistance;
+        }
+        line.SetPosition(0, transform.position);
+        Vector2 distance = finalPosition - (Vector2)transform.position;
+        velocity = distance / timeToReachTarget;
+    }
+
+
+    IEnumerator MoveRopeBaseToTarget()
+    {
+        float timer = 0;
+        line.SetPosition(0, transform.position);
+        float distance = Mathf.Infinity;
+        while (distance > 2.5f && timer < timeToReachTarget)
+        {
+            line.SetPosition(0, transform.position);
+            timer += Time.fixedDeltaTime;
+            yield return new WaitForFixedUpdate();
+        }
     }
 
     IEnumerator MoveHeadWithEnemy(Transform enemyTransform)
@@ -36,50 +85,17 @@ public class HookRope : MonoBehaviour
         {
             distance = Vector3.Distance(enemyTransform.position, transform.position);
             line.SetPosition(1, enemyTransform.position);
-            //timer += Time.fixedDeltaTime;
             yield return new WaitForFixedUpdate();
         }
         line.SetPosition(1, transform.position);
-        Destroy(gameObject, 0.1f);
     }
 
-    void Setup(List<Transform> points)
-    {
-        transform.position = points[0].position;
-        targetTransform = points[1];
-        line.SetPosition(0, transform.position);
-        Vector2 distance = targetTransform.position - transform.position;
-        velocity = distance / timeToReachTarget;
-        headPosition = transform.position;
-    }
 
-    IEnumerator MoveRopeHeadToTarget()
+    private void OnTriggerEnter2D(Collider2D collision)
     {
-        while(timer < timeToReachTarget)
+        if(collision.CompareTag("Enemy"))
         {
-            Vector2 movement = velocity * Time.fixedDeltaTime;
-            headPosition += movement;
-            line.SetPosition(0, transform.position);
-            line.SetPosition(1, headPosition);
-            timer += Time.fixedDeltaTime;
-            yield return new WaitForFixedUpdate();
+            enemyTransform = collision.transform;
         }
-        line.SetPosition(1, targetTransform.position);
-    }
-
-    IEnumerator MoveRopeBaseToTarget()
-    {
-        line.SetPosition(0, transform.position);
-        float distance = Mathf.Infinity;
-        while (distance > 3 && timer < timeToReachTarget)
-        {
-            distance = Vector3.Distance(targetTransform.position, transform.position);
-            //MoveBase();
-            line.SetPosition(0, transform.position);
-            timer += Time.fixedDeltaTime;
-            yield return new WaitForFixedUpdate();
-        }
-        line.SetPosition(0, targetTransform.position);
-        Destroy(gameObject, 0.1f);
     }
 }
