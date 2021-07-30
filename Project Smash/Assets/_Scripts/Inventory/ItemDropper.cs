@@ -17,8 +17,6 @@ namespace PSmash.Inventories
 
         public void RandomDrop()
         {
-            //print("Random Drops from " + gameObject.name);
-            //int level = GetComponent<BaseStats>().GetLevel();
             int level = 1;
             var drops = dropLibrary.GetRandomDrops(level);
             if(HasDrops(drops))
@@ -31,13 +29,9 @@ namespace PSmash.Inventories
             {
                 if (drop.item != null)
                 {
-                   // print("Has Drops");
-                    //print(drop.item.name);
                     return true;
                 }
             }
-
-            //print("Does not have drops");
             return false;
         }
 
