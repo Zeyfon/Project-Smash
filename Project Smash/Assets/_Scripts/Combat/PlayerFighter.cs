@@ -112,18 +112,18 @@ namespace PSmash.Combat
             OnFinisherCamera(false);
         }
 
-        public void GrapingHook()
+
+        public void SubweaponUtility()
         {
             Transform hookTarget = GetComponentInChildren<GrapingHookTargetDetector>().GetHookTarget();
             if (hookTarget != null)
             {
                 StartCoroutine(ThrowHook(hookTarget));
-                return;
             }
-            else
-            {
-                StartCoroutine(ThrowHook(null));
-            }
+        }
+        public void GrapingHook()
+        {
+            StartCoroutine(ThrowHook(null));
         }
 
         IEnumerator ThrowHook(Transform target)

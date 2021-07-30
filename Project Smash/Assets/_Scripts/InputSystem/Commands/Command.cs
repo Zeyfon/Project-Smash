@@ -216,4 +216,17 @@ namespace PSmash.InputSystem
         }
     }
 
+    public class UtilityCommand : Command
+    {
+        public override void ButtonPressed(Transform transform, InputHandler inputHandler, Equipment equipment, PlayMakerFSM pm, Vector2 input, float buttonState)
+        {
+            pm.SendEvent("UTILITYCOMMAND");
+        }
+
+        public override void ButtonReleased(Transform transform, InputHandler inputHandler, PlayMakerFSM pm, Vector2 input, float buttonState)
+        {
+            //throw new System.NotImplementedException();
+        }
+    }
+
 }
