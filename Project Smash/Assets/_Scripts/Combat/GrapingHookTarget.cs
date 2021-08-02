@@ -8,24 +8,39 @@ namespace PSmash.Combat
 {
     public class GrapingHookTarget : MonoBehaviour
     {
-        [SerializeField] SpriteRenderer spriteRenderer = null;
+        [SerializeField] int level = 1;
+        [SerializeField] Sprite level1Sprite = null;
+        [SerializeField] Sprite level2Sprite = null;
+        [SerializeField] SpriteRenderer promptSpriteRenderer = null;
+        [SerializeField] SpriteRenderer levelSpriteRenderer = null;
+
         [UnityEngine.Tooltip("As it decreases, it enables more angle aperture to use the grapin hook. 0 = can grap from anywhere as long as you are in range ")]
         [Range(0, 1)]
         [SerializeField] float targetApertureRange = 0.25f;
 
+
         private void Awake()
         {
-            spriteRenderer.enabled = false;
+            promptSpriteRenderer.enabled = false;
+            if (level == 1)
+                levelSpriteRenderer.sprite = level1Sprite;
+            else
+                levelSpriteRenderer.sprite = level2Sprite;
         }
 
         public void EnablePrompt()
         {
-            spriteRenderer.enabled = true;
+            promptSpriteRenderer.enabled = true;
         }
 
         public void DisablePrompt()
         {
-            spriteRenderer.enabled = false;
+            promptSpriteRenderer.enabled = false;
+        }
+
+        public int GetMyLevel()
+        {
+            return level;
         }
     }
 

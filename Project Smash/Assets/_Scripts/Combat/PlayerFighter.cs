@@ -113,14 +113,16 @@ namespace PSmash.Combat
             OnFinisherCamera(false);
         }
 
-
-        public void SubweaponUtility()
+        public Transform CanDoUtility()
         {
             Transform hookTarget = GetComponentInChildren<GrapingHookTargetDetector>().GetHookTarget();
-            if (hookTarget != null)
-            {
-                coroutine = StartCoroutine(ThrowHook(hookTarget));
-            }
+            return hookTarget;
+        }
+
+        public void SubweaponUtility(Transform hookTarget)
+        {
+            animator.SetInteger("Attack", 70);
+            coroutine = StartCoroutine(ThrowHook(hookTarget));
         }
         public void GrapingHook()
         {
@@ -170,7 +172,7 @@ namespace PSmash.Combat
 
         bool CanEnemyBePulled(Transform enemyTransform)
         {
-            return GetComponent<Equipment>().GetSubWeapon().GetMyLevel() >= enemyTransform.GetComponent<EnemyHealth>().GetMyLevel();
+            return GetComponent<Equipment>().GetEquippedSubweapon().GetMyLevel() >= enemyTransform.GetComponent<EnemyHealth>().GetMyLevel();
         }
 
         IEnumerator PullingEnemyWithGrapingHook()
@@ -286,7 +288,7 @@ namespace PSmash.Combat
         void SubWeaponAttackDamage()
         {
             //print("SubWeapon Damage");
-            Weapon weapon = GetComponent<Equipment>().GetSubWeapon();
+            Weapon weapon = GetComponent<Equipment>().GetEquippedSubweapon();
             damageArea = weapon.GetWeaponDamageArea();
             //damageArea = new Vector2(4.5f, 1.75f);
             Attack(attackTransform, weapon);
@@ -298,7 +300,7 @@ namespace PSmash.Combat
             //if(index == 1)
             //{
                 audioSource.pitch = UnityEngine.Random.Range(0.75f, 1.5f);
-                audioSource.PlayOneShot(GetComponent<Equipment>().GetSubWeapon().GetWeaponAttackAudioClip());
+                audioSource.PlayOneShot(GetComponent<Equipment>().GetEquippedSubweapon().GetWeaponAttackAudioClip());
             //}
 
         }

@@ -74,7 +74,6 @@ namespace PSmash.Movement
         public void GrapingHookMovement(Vector2 movementDirection, float speed)
         {
             rb.velocity = movementDirection*speed;
-
         }
 
         /// <summary>
