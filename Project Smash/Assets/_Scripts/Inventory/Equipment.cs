@@ -86,9 +86,14 @@ namespace PSmash.Inventories
         /// Pass the current equipped subweapon. This can be null
         /// </summary>
         /// <returns></returns>
-        public Subweapon GetSubWeapon()
+        public Subweapon GetEquippedSubweapon()
         {
             return equippedSubweapon;
+        }
+
+        public int GetThisSubweaponLevel(Subweapon subweapon)
+        {
+            return subweapon.GetMyLevel();
         }
 
         public int GetSubWeaponAnimationValue()

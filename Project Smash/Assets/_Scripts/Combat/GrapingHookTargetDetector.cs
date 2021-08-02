@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using PSmash.Inventories;
+using UnityEngine;
 
 namespace PSmash.Combat
 {
@@ -7,9 +8,18 @@ namespace PSmash.Combat
         [SerializeField] float radiusDetection = 10;
         [SerializeField] LayerMask whatIsATargetHook;
         [SerializeField] float targetApertureRange = 0.25f;
+        [SerializeField] Subweapon grapingHook = null;
 
         Transform hookTarget;
+        Equipment equipment;
         float distance = 0;
+
+
+        private void Awake()
+        {
+            equipment = transform.parent.GetComponent<Equipment>();
+        }
+
 
         void FixedUpdate()
         {
@@ -32,10 +42,17 @@ namespace PSmash.Combat
         void SetHookTarget(Collider2D[] targets)
         {
             distance = 0;
+            bool targetUpdated = false;
             foreach (Collider2D coll in targets)
             {
                 if (IsTargetInFront(coll.transform) && IsAbovePlayer(coll.transform))
                 {
+                    if (equipment.GetThisSubweaponLevel(grapingHook) < coll.GetComponent<GrapingHookTarget>().GetMyLevel())
+                    {
+                        coll.transform.SendMessage("DisablePrompt");
+                        return;
+                    }
+                    targetUpdated = true;
                     float newMaxDistance = SetFartestTargetDistance(distance, coll.transform);
                     if (newMaxDistance > distance)
                     {
@@ -50,6 +67,11 @@ namespace PSmash.Combat
                 else
                 {
                     coll.transform.SendMessage("DisablePrompt");
+                }
+
+                if (!targetUpdated)
+                {
+                    hookTarget = null;
                 }
             }
         }
