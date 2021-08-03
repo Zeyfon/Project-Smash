@@ -14,13 +14,15 @@ namespace PSmash.Attributes
     {
 
         //CONFIG
-        [SerializeField] PlayMakerFSM aiController = null;
+
         [SerializeField] int myLevel = 1;
 
         [Header("TestMode")]
         [SerializeField] bool isInvulnerable = false;
         [SerializeField] bool canBeKnockedBack = true;
 
+        [SerializeField] float staggerThreshold = 3;
+        [SerializeField] float accumulatedDamageThreshold = 60;
         [Header("Extras")]
         [SerializeField] AudioClip protectedDamageAudio = null;
         [SerializeField] AudioClip fleshDamageAudio = null;
@@ -42,14 +44,31 @@ namespace PSmash.Attributes
 
         //STATE
         EnemyPosture posture;
-        PlayMakerFSM pm;
+        PlayMakerFSM curentPMFSM;
+        PlayMakerFSM aiController;
         BaseStats baseStats;
 
         static int checkpointCounter = 0;
+        float timer = 0;
+        float accumulatedDamageTimerThreshold = 0;
+        float accumulatedDamage = 0;
 
         //INITIALIZE
         private void Awake()
         {
+            foreach (PlayMakerFSM pm in GetComponents<PlayMakerFSM>())
+            {
+                if (pm.FsmName == "AIController")
+                {
+                    aiController = pm;
+                }
+            }
+            if(aiController == null)
+            {
+                Debug.LogWarning("AIController was not found for  " + gameObject.name);
+            }
+
+
             if (!GetComponent<EnemyPosture>())
                 GetComponentInChildren<PostureBar>().gameObject.SetActive(false);
             baseStats = GetComponent<BaseStats>();
@@ -58,12 +77,17 @@ namespace PSmash.Attributes
             posture = GetComponent<EnemyPosture>();
         }
 
+        void Update()
+        {
+            timer += Time.deltaTime;
+        }
+
         /////////////////////////////////////////////////////////////PUBLIC////////////////////////////////////////
         //This method will always be called from the AIController
         //when entering a new state
         public void SetCurrentStateInfo(PlayMakerFSM pm, float damagePenetrationPercentage)
         {
-            this.pm = pm;
+            this.curentPMFSM = pm;
         }
 
         public override void TakeDamage(Transform attacker, Weapon weapon, AttackType attackType, float characterDamage, float attackForce)
@@ -74,7 +98,7 @@ namespace PSmash.Attributes
                 return;
             }
 
-            if (pm == null)
+            if (curentPMFSM == null)
             {
                 Debug.LogWarning("No Enemy State set to return DAMAGE Event");
                 return;
@@ -93,7 +117,7 @@ namespace PSmash.Attributes
         //Inform the AI that the NPC is being Finished
         public void SetStateToFinisher()
         {
-            pm.SendEvent("FINISHER");
+            curentPMFSM.SendEvent("FINISHER");
         }
 
         //Start the Finisher Animation once the player and this npc
@@ -101,7 +125,7 @@ namespace PSmash.Attributes
         public void StartFinisherAnimation()
         {
             //Debug.Break();
-            pm.SendEvent("STARTFINISHERANIMATION");
+            curentPMFSM.SendEvent("STARTFINISHERANIMATION");
         }
 
         //The damage dealt by the player and the thrown away force of the impact
@@ -137,10 +161,6 @@ namespace PSmash.Attributes
             }
         }
 
-        //public void EnableController()
-        //{
-        //    aiController.SendEvent("ENABLECONTROLLER");
-        //}
 
         public bool IWeight()
         {
@@ -152,7 +172,7 @@ namespace PSmash.Attributes
 
         bool IsUnblockingAttack()
         {
-            if (pm.FsmName == "SPECIALATTACK2")
+            if (curentPMFSM.FsmName == "SPECIALATTACK2")
                 return true;
             else
                 return false;
@@ -219,7 +239,7 @@ namespace PSmash.Attributes
 
         public bool IsStunned()
         {
-            if (pm.FsmName == "Stun")
+            if (curentPMFSM.FsmName == "Stun")
             {
                 //print("Check if enemy is Stunned  " + fsm.FsmName);
                 return true;
@@ -262,8 +282,10 @@ namespace PSmash.Attributes
         void Damaged(Weapon attackedWeapon, float characterDamage)
         {
             //print("Damaged with " + attackedWeapon + "  " + "characterDamage "   + characterDamage + "  weaponDamage  " + attackedWeapon.GetDamage());
-            
             float combinedDamage = (characterDamage + attackedWeapon.GetDamage() /*+ damageModifiers*/);
+
+            //CheckForStaggerState(combinedDamage);
+
             if (posture != null && posture.enabled)
             {
                 //Debug.Log("Damage after Mitigation is " + combinedDamage);
@@ -291,7 +313,7 @@ namespace PSmash.Attributes
                     FsmEventData myfsmEventData = new FsmEventData();
                     myfsmEventData.FloatData = characterDamage;
                     HutongGames.PlayMaker.Fsm.EventData = myfsmEventData;
-                    pm.SendEvent("DAMAGED_NOSTUNNED");
+                    curentPMFSM.SendEvent("DAMAGED_NOSTUNNED");
 
                 }
             }
@@ -300,15 +322,33 @@ namespace PSmash.Attributes
                 //Debug.Log("Full Damage" + combinedDamage);
                 //print("3_DAMAGED_NOSTUNNED Event to the fsm " + pm.FsmName);
                 DamageHealth(combinedDamage);
-                pm.SendEvent("DAMAGED_NOSTUNNED");
+                curentPMFSM.SendEvent("DAMAGED_NOSTUNNED");
             }
             //print("My Current health  " + health);
+        }
+
+        private void CheckForStaggerState(float combinedDamage)
+        {
+            if (timer > accumulatedDamageTimerThreshold)
+            {
+                accumulatedDamageTimerThreshold = timer + staggerThreshold;
+                accumulatedDamage = 0;
+            }
+            if (accumulatedDamageTimerThreshold > timer)
+            {
+                accumulatedDamage += combinedDamage;
+            }
+
+            if (accumulatedDamage >= accumulatedDamageThreshold)
+            {
+                aiController.SendEvent("STAGGER");
+            }
         }
 
         public void StunnedDamage(float damage)
         {
             DamageHealth(damage);
-            pm.SendEvent("DAMAGED_STUNNED");
+            curentPMFSM.SendEvent("DAMAGED_STUNNED");
         }
 
         void DamageHealth(float damage)
