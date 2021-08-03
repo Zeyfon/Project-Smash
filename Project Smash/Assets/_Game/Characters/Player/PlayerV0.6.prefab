@@ -1475,7 +1475,7 @@ RectTransform:
   - {fileID: 6509877442725350144}
   - {fileID: 9188021825270245605}
   m_Father: {fileID: 6581303975160096540}
-  m_RootOrder: 9
+  m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -1589,7 +1589,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 6581303975160096540}
-  m_RootOrder: 10
+  m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &2226608908771653372
 MonoBehaviour:
@@ -1608,6 +1608,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 0
   targetApertureRange: 0.25
+  grapingHook: {fileID: 0}
 --- !u!58 &3086032421696782585
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -6482,7 +6483,7 @@ MonoBehaviour:
           tooltip: 
           showInInspector: 0
           networkSync: 0
-          value: GetSubWeapon
+          value: GetEquippedSubweapon
         fsmObjectParams:
         - useVariable: 1
           name: equipment

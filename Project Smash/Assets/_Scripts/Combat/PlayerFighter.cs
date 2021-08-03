@@ -328,24 +328,6 @@ namespace PSmash.Combat
             }
         }
 
-        //private void OnTriggerEnter2D(Collider2D collision)
-        //{
-        //    if (collision.CompareTag("HookTarget"))
-        //    {
-        //        targetTransform = collision.transform;
-        //        print("Target is Detected");
-        //    }
-        //}
-
-        //private void OnTriggerExit2D(Collider2D collision)
-        //{
-        //    if (collision.CompareTag("HookTarget"))
-        //    {
-        //        targetTransform = null;
-        //        print("Target is not detected");
-        //    }
-        //}
-
         void OnDrawGizmosSelected()
         {
             Gizmos.DrawWireCube(attackTransform.position, damageArea);

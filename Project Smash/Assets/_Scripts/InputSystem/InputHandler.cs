@@ -92,7 +92,7 @@ namespace PSmash.InputSystem
             _controller.Player.Action4.canceled += ctx => Action4Released();
             _controller.Player.Action6.started += ctx => Action6Pressed();
             _controller.Player.Action6.canceled += ctx => Action6Released();
-            _controller.Player.Action1.performed += ctx => Action8Pressed();
+            _controller.Player.Action8.started += ctx => Action8Pressed();
             _controller.Player.SubweaponSwitch.started += ctx => SubweaponSwitchPressed();
             _controller.Player.Utility.performed += ctx => UtilityPressed();
             //_controller.Player.SubweaponSwitch.canceled += ctx => SubweaponSwitchPressed();
@@ -128,7 +128,7 @@ namespace PSmash.InputSystem
             _controller.Player.Action4.canceled -= ctx => Action4Released();
             _controller.Player.Action6.started -= ctx => Action6Pressed();
             _controller.Player.Action6.canceled -= ctx => Action6Released();
-            _controller.Player.Action1.performed -= ctx => Action8Pressed();
+            _controller.Player.Action8.started -= ctx => Action8Pressed();
             _controller.Player.SubweaponSwitch.started -= ctx => SubweaponSwitchPressed();
             _controller.Player.Utility.performed -= ctx => UtilityPressed();
             //_controller.Player.SubweaponSwitch.canceled -= ctx => SubweaponSwitchPressed();
@@ -211,7 +211,6 @@ namespace PSmash.InputSystem
 
         private void Action8Pressed()
         {
-            print("Want to glide");
             action8.ButtonPressed(transform, this, equipment, currentFSM.Value as PlayMakerFSM, movement, action5State);
         }
         private void SubweaponSwitchPressed()

@@ -833,8 +833,8 @@ MonoBehaviour:
       colorIndex: 0
       position:
         serializedVersion: 2
-        x: 351.26562
-        y: 383.9375
+        x: 353.26562
+        y: 391.9375
         width: 123
         height: 48
       isBreakpoint: 0
@@ -19058,18 +19058,18 @@ MonoBehaviour:
       hideUnused: 0
       transitions:
       - fsmEvent:
-          name: ISPLAYERHEALTH
-          isSystemEvent: 0
+          name: FINISHED
+          isSystemEvent: 1
           isGlobal: 0
-        toState: Hit Player
+        toState: State 1
         linkStyle: 0
         linkConstraint: 0
         colorIndex: 0
       - fsmEvent:
-          name: FINISHED
-          isSystemEvent: 1
+          name: ISPLAYERHEALTH
+          isSystemEvent: 0
           isGlobal: 0
-        toState: Listener
+        toState: Hit Player
         linkStyle: 0
         linkConstraint: 0
         colorIndex: 0
@@ -19413,7 +19413,7 @@ MonoBehaviour:
           showInInspector: 1
           networkSync: 0
           typeName: UnityEngine.AudioClip
-          value: {fileID: 0}
+          value: {fileID: 8300000, guid: 4f2416ce4672e3b4abf39ab14ce98426, type: 3}
         fsmVarParams: []
         fsmArrayParams: []
         fsmEnumParams: []
@@ -20627,6 +20627,66 @@ MonoBehaviour:
         - updateType
         paramDataPos: 000000000000000000000000000000000100000002000000030000000400000005000000000000000100000002000000
         paramByteDataSize: 000000000000000000000000000000000000000000000000000000000000000000000000010000000100000004000000
+    - name: State 1
+      description: 
+      colorIndex: 0
+      position:
+        serializedVersion: 2
+        x: 290
+        y: 564.0078
+        width: 100
+        height: 32
+      isBreakpoint: 0
+      isSequence: 0
+      hideUnused: 0
+      transitions:
+      - fsmEvent:
+          name: FINISHED
+          isSystemEvent: 1
+          isGlobal: 0
+        toState: Listener
+        linkStyle: 0
+        linkConstraint: 0
+        colorIndex: 0
+      actionData:
+        actionNames: []
+        customNames: []
+        actionEnabled: 
+        actionIsOpen: 
+        actionStartIndex: 
+        actionHashCodes: 
+        unityObjectParams: []
+        fsmGameObjectParams: []
+        fsmOwnerDefaultParams: []
+        animationCurveParams: []
+        functionCallParams: []
+        fsmTemplateControlParams: []
+        fsmEventTargetParams: []
+        fsmPropertyParams: []
+        layoutOptionParams: []
+        fsmStringParams: []
+        fsmObjectParams: []
+        fsmVarParams: []
+        fsmArrayParams: []
+        fsmEnumParams: []
+        fsmFloatParams: []
+        fsmIntParams: []
+        fsmBoolParams: []
+        fsmVector2Params: []
+        fsmVector3Params: []
+        fsmColorParams: []
+        fsmRectParams: []
+        fsmQuaternionParams: []
+        stringParams: []
+        byteData: 
+        arrayParamSizes: 
+        arrayParamTypes: []
+        customTypeSizes: 
+        customTypeNames: []
+        paramDataType: 
+        paramName: []
+        paramDataPos: 
+        paramByteDataSize: 
     events:
     - name: HIT
       isSystemEvent: 0
@@ -20727,7 +20787,7 @@ MonoBehaviour:
         showInInspector: 1
         networkSync: 0
         typeName: UnityEngine.AudioClip
-        value: {fileID: 0}
+        value: {fileID: 8300000, guid: 4f2416ce4672e3b4abf39ab14ce98426, type: 3}
       - useVariable: 1
         name: myMovement
         tooltip: 
@@ -22435,10 +22495,11 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
   health: 0
-  aiController: {fileID: 0}
   myLevel: 1
   isInvulnerable: 0
   canBeKnockedBack: 1
+  staggerThreshold: 3
+  accumulatedDamageThreshold: 20
   protectedDamageAudio: {fileID: 8300000, guid: 4f7340b1234407d489f3a16352cb1558,
     type: 3}
   fleshDamageAudio: {fileID: 8300000, guid: a2c4afa4edc26494c9d118b432321eaa, type: 3}
