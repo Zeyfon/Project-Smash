@@ -41,7 +41,7 @@ namespace PSmash.Attributes
 
         public static List<string> takenOutEnemies = new List<string>();
 
-
+        
         //STATE
         EnemyPosture posture;
         PlayMakerFSM curentPMFSM;
