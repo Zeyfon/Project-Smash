@@ -41,7 +41,7 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 0}
+  m_audioClip: {fileID: 8300000, guid: da11ccde18763ea479755ebd274b64ae, type: 3}
   m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
@@ -1202,7 +1202,7 @@ Transform:
   - {fileID: 5863279415849750486}
   - {fileID: 4156749956752603776}
   m_Father: {fileID: 6581303975160096540}
-  m_RootOrder: 7
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &4791725229603026906
 GameObject:
@@ -1438,9 +1438,8 @@ Transform:
   - {fileID: 2103609530526705770}
   - {fileID: 2091369723035283744}
   - {fileID: 5682799017525445572}
-  - {fileID: 5251025299182577568}
   m_Father: {fileID: 6581303975160096540}
-  m_RootOrder: 8
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &4918185529378035339
 GameObject:
@@ -1475,7 +1474,7 @@ RectTransform:
   - {fileID: 6509877442725350144}
   - {fileID: 9188021825270245605}
   m_Father: {fileID: 6581303975160096540}
-  m_RootOrder: 10
+  m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -1589,7 +1588,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 6581303975160096540}
-  m_RootOrder: 9
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &2226608908771653372
 MonoBehaviour:
@@ -1654,7 +1653,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 6581303975160096540}
-  m_RootOrder: 5
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &7450504385249681600
 MonoBehaviour:
@@ -1834,7 +1833,7 @@ Transform:
   - {fileID: 2562515063808682428}
   - {fileID: 1502096364003079567}
   m_Father: {fileID: 6581303975160096540}
-  m_RootOrder: 6
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!50 &1469972295919988140
 Rigidbody2D:
@@ -2092,7 +2091,7 @@ MonoBehaviour:
           tooltip: 
           showInInspector: 0
           networkSync: 0
-          value: {fileID: 8767948832343416620}
+          value: {fileID: 0}
         fsmOwnerDefaultParams: []
         animationCurveParams: []
         functionCallParams: []
@@ -4126,7 +4125,7 @@ MonoBehaviour:
         tooltip: 
         showInInspector: 0
         networkSync: 0
-        value: {fileID: 8767948832343416620}
+        value: {fileID: 0}
       objectVariables:
       - useVariable: 1
         name: 
@@ -4166,14 +4165,11 @@ MonoBehaviour:
     manualUpdate: 0
     keepDelayedEventsOnStateExit: 0
     preprocessed: 0
-    ExposedEvents:
-    - name: DAMAGED
-      isSystemEvent: 0
-      isGlobal: 0
+    ExposedEvents: []
     RestartOnEnable: 1
     EnableDebugFlow: 0
     EnableBreakpoints: 1
-    editorFlags: 2
+    editorFlags: 0
     activeStateName: 
     mouseEvents: 0
     handleLevelLoaded: 0
@@ -5551,7 +5547,7 @@ MonoBehaviour:
     RestartOnEnable: 1
     EnableDebugFlow: 0
     EnableBreakpoints: 1
-    editorFlags: 1
+    editorFlags: 3
     activeStateName: 
     mouseEvents: 0
     handleLevelLoaded: 0
@@ -6754,7 +6750,7 @@ MonoBehaviour:
     RestartOnEnable: 1
     EnableDebugFlow: 0
     EnableBreakpoints: 1
-    editorFlags: 1
+    editorFlags: 3
     activeStateName: 
     mouseEvents: 0
     handleLevelLoaded: 0
@@ -7547,7 +7543,7 @@ MonoBehaviour:
     RestartOnEnable: 1
     EnableDebugFlow: 0
     EnableBreakpoints: 1
-    editorFlags: 3
+    editorFlags: 1
     activeStateName: 
     mouseEvents: 0
     handleLevelLoaded: 0
@@ -7594,7 +7590,7 @@ MonoBehaviour:
   parrySound: {fileID: 8300000, guid: 150d0370936b1024e9cfcf307fe6d58b, type: 3}
   guardSound: {fileID: 8300000, guid: 4f7340b1234407d489f3a16352cb1558, type: 3}
   parryTime: 1
-  parryAttackForce: 1.7
+  parryKnockback: 0.5
 --- !u!114 &1573666812580184509
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7609,18 +7605,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   onTakeDamage:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1354962760599718964}
-        m_MethodName: Spawn
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
   onDead:
     m_PersistentCalls:
       m_Calls: []
@@ -11472,10 +11457,8 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 4195328
   attackTransform: {fileID: 5414759444693801845}
-  toolAttackSound: {fileID: 8300000, guid: 86cd8d06ba31e3f48908229a918bdd97, type: 3}
-  noHookSound: {fileID: 0}
+  noHookSound: {fileID: 8300000, guid: c2d8cc2bf3918344293edb3b1f5a74a8, type: 3}
   grapingHook: {fileID: 11400000, guid: 7c6cdf203f536f345b56ee9ba73df85e, type: 2}
-  grapingHookRadius: 11
   hookRope: {fileID: 219541502889075118, guid: 3b21ba1cdf76eb648abb832385583e14, type: 3}
   hookPullingPlayerSpeed: 30
   finisherSound: {fileID: 8300000, guid: 981fc22d720df8f41bcd71e67ed4c6fc, type: 3}
@@ -15317,7 +15300,7 @@ MonoBehaviour:
       - useVariable: 1
         name: maxRunningSpeed
         tooltip: 
-        showInInspector: 1
+        showInInspector: 0
         networkSync: 0
         value: 1
       - useVariable: 1
@@ -15522,7 +15505,7 @@ MonoBehaviour:
     RestartOnEnable: 1
     EnableDebugFlow: 0
     EnableBreakpoints: 1
-    editorFlags: 2
+    editorFlags: 0
     activeStateName: 
     mouseEvents: 0
     handleLevelLoaded: 0
@@ -21120,23 +21103,6 @@ MonoBehaviour:
   audioSource: {fileID: 5182340456630765313}
   defaultMaterial: {fileID: 2100000, guid: 29d0c2cd4235415488c86aa75d7126da, type: 2}
   greenMaterial: {fileID: 2100000, guid: 6f3fd7a79f1f4bc44b1e51323f7c861e, type: 2}
---- !u!114 &7620525308625398330
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6581303975160096547}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4b120fa09f03fe041bc4349d0f034b6b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  skinNames:
-  - 01Espalda
-  - 02Side
-  - 03Idle
-  - 04Combat
 --- !u!114 &8235024681204614677
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -22149,87 +22115,6 @@ MonoBehaviour:
     handleAnimatorIK: 0
   fsmTemplate: {fileID: 0}
   eventHandlerComponentsAdded: 1
---- !u!1 &8767948832343416620
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 5251025299182577568}
-  - component: {fileID: 2345282903700165352}
-  m_Layer: 0
-  m_Name: Idle
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 0
---- !u!4 &5251025299182577568
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8767948832343416620}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.37, y: 0.37, z: 1}
-  m_Children: []
-  m_Father: {fileID: 5160043310986458569}
-  m_RootOrder: 6
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!212 &2345282903700165352
-SpriteRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8767948832343416620}
-  m_Enabled: 1
-  m_CastShadows: 0
-  m_ReceiveShadows: 0
-  m_DynamicOccludee: 1
-  m_MotionVectors: 1
-  m_LightProbeUsage: 1
-  m_ReflectionProbeUsage: 1
-  m_RayTracingMode: 0
-  m_RenderingLayerMask: 1
-  m_RendererPriority: 0
-  m_Materials:
-  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
-  m_StaticBatchInfo:
-    firstSubMesh: 0
-    subMeshCount: 0
-  m_StaticBatchRoot: {fileID: 0}
-  m_ProbeAnchor: {fileID: 0}
-  m_LightProbeVolumeOverride: {fileID: 0}
-  m_ScaleInLightmap: 1
-  m_ReceiveGI: 1
-  m_PreserveUVs: 0
-  m_IgnoreNormalsForChartDetection: 0
-  m_ImportantGI: 0
-  m_StitchLightmapSeams: 1
-  m_SelectedEditorRenderState: 0
-  m_MinimumChartSize: 4
-  m_AutoUVMaxDistance: 0.5
-  m_AutoUVMaxAngle: 89
-  m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
-  m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 57d36efb43aa7fd4eb64c06c3518cb57, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_FlipX: 0
-  m_FlipY: 0
-  m_DrawMode: 0
-  m_Size: {x: 3.12, y: 4.85}
-  m_AdaptiveModeThreshold: 0.5
-  m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
-  m_MaskInteraction: 0
-  m_SpriteSortPoint: 0
 --- !u!1001 &3262997416374927558
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -22461,15 +22346,3 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 8058836708823124820}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1354962760599718964 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 9014929069135497056, guid: 75561d9801edb4b48ad9e5f43cea3d05,
-    type: 3}
-  m_PrefabInstance: {fileID: 8058836708823124820}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b4a54fc1155d7dd4fb94090c8dc41bea, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 

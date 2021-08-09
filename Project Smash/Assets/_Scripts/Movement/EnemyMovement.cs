@@ -16,8 +16,8 @@ namespace PSmash.Movement
 
         //CONFIG
         [Header("Speed Values")]
-        [SerializeField] float speedFactor = 1;
-        [SerializeField] float speedAnimModifier = 1;
+        float speedFactor = 1;
+        float speedAnimModifier = 1;
         
 
         [Header("Slope Control")]
