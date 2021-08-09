@@ -13,7 +13,8 @@ namespace PSmash.Combat
         [SerializeField] AudioClip guardSound = null;
         [Range(0,2)]
         [SerializeField] float parryTime = 1;
-        [SerializeField] float parryAttackForce = 0.5f;
+        [Tooltip("The force with which you knockback the enemy when parried")]
+        [SerializeField] float parryKnockback = 0.5f;
         //STATE
         bool canParry=false;
         float parryTimer = 0;
@@ -48,7 +49,7 @@ namespace PSmash.Combat
                         if (pm.FsmName == "GuardParryState")
                         {
                             //print("Found guard fsm");
-                            attacker.GetComponent<IDamagable>().TakeDamage(transform, weapon, AttackType.NotUnblockable, damage, parryAttackForce);
+                            attacker.GetComponent<IDamagable>().TakeDamage(transform, weapon, AttackType.NotUnblockable, damage, parryKnockback);
                             pm.SendEvent("PARRY");
                             PlaySound(parrySound);
                             break;

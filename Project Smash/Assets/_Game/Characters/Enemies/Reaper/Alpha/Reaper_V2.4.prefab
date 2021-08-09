@@ -2160,16 +2160,12 @@ MonoBehaviour:
       actionData:
         actionNames:
         - HutongGames.PlayMaker.Actions.GetComponent
-        - HutongGames.PlayMaker.Actions.CallMethod
-        - HutongGames.PlayMaker.Actions.FloatOperator
         customNames:
         - 
-        - 
-        - 
-        actionEnabled: 010000
-        actionIsOpen: 010101
-        actionStartIndex: 00000000030000000a000000
-        actionHashCodes: 04d81402ca51e9000cdb0405
+        actionEnabled: 01
+        actionIsOpen: 01
+        actionStartIndex: 00000000
+        actionHashCodes: 04d81402
         unityObjectParams: []
         fsmGameObjectParams: []
         fsmOwnerDefaultParams:
@@ -2187,13 +2183,7 @@ MonoBehaviour:
         fsmEventTargetParams: []
         fsmPropertyParams: []
         layoutOptionParams: []
-        fsmStringParams:
-        - useVariable: 0
-          name: 
-          tooltip: 
-          showInInspector: 0
-          networkSync: 0
-          value: GetStat
+        fsmStringParams: []
         fsmObjectParams:
         - useVariable: 1
           name: playerHealth
@@ -2202,83 +2192,10 @@ MonoBehaviour:
           networkSync: 0
           typeName: PSmash.Attributes.PlayerHealth
           value: {fileID: 0}
-        - useVariable: 1
-          name: stats
-          tooltip: 
-          showInInspector: 0
-          networkSync: 0
-          typeName: PSmash.Stats.BaseStats
-          value: {fileID: 4191859700395274613}
-        fsmVarParams:
-        - variableName: 
-          objectType: PSmash.Stats.StatsList
-          useVariable: 0
-          type: 14
-          floatValue: 0
-          intValue: 1
-          boolValue: 0
-          stringValue: 
-          vector4Value: {x: 0, y: 0, z: 0, w: 0}
-          objectReference: {fileID: 0}
-          arrayValue:
-            useVariable: 0
-            name: 
-            tooltip: 
-            showInInspector: 0
-            networkSync: 0
-            type: -1
-            objectTypeName: 
-            floatValues: []
-            intValues: 
-            boolValues: 
-            stringValues: []
-            vector4Values: []
-            objectReferences: []
-        - variableName: attackDamage
-          objectType: UnityEngine.Object
-          useVariable: 1
-          type: 0
-          floatValue: 23
-          intValue: 0
-          boolValue: 0
-          stringValue: 
-          vector4Value: {x: 0, y: 0, z: 0, w: 0}
-          objectReference: {fileID: 0}
-          arrayValue:
-            useVariable: 0
-            name: 
-            tooltip: 
-            showInInspector: 0
-            networkSync: 0
-            type: -1
-            objectTypeName: 
-            floatValues: []
-            intValues: 
-            boolValues: 
-            stringValues: []
-            vector4Values: []
-            objectReferences: []
+        fsmVarParams: []
         fsmArrayParams: []
         fsmEnumParams: []
-        fsmFloatParams:
-        - useVariable: 1
-          name: attackDamage
-          tooltip: 
-          showInInspector: 1
-          networkSync: 0
-          value: 23
-        - useVariable: 1
-          name: specialAttackDamageFactor
-          tooltip: 
-          showInInspector: 1
-          networkSync: 0
-          value: 0
-        - useVariable: 1
-          name: attackDamage
-          tooltip: 
-          showInInspector: 1
-          networkSync: 0
-          value: 23
+        fsmFloatParams: []
         fsmIntParams: []
         fsmBoolParams: []
         fsmVector2Params: []
@@ -2287,31 +2204,18 @@ MonoBehaviour:
         fsmRectParams: []
         fsmQuaternionParams: []
         stringParams: []
-        byteData: 0000000200000000
-        arrayParamSizes: 01000000
-        arrayParamTypes:
-        - HutongGames.PlayMaker.FsmVar
+        byteData: 00
+        arrayParamSizes: 
+        arrayParamTypes: []
         customTypeSizes: 
         customTypeNames: []
-        paramDataType: 14000000180000000100000018000000120000000c000000270000002700000001000000010000000f0000000f000000070000000f00000001000000
+        paramDataType: 140000001800000001000000
         paramName:
         - gameObject
         - storeComponent
         - everyFrame
-        - behaviour
-        - methodName
-        - parameters
-        - 
-        - storeResult
-        - everyFrame
-        - manualUI
-        - float1
-        - float2
-        - operation
-        - storeResult
-        - everyFrame
-        paramDataPos: 000000000000000000000000010000000000000000000000000000000100000001000000020000000000000001000000030000000200000007000000
-        paramByteDataSize: 000000000000000001000000000000000000000000000000000000000000000001000000010000000000000000000000040000000000000001000000
+        paramDataPos: 000000000000000000000000
+        paramByteDataSize: 000000000000000001000000
     - name: Set Linear Drag
       description: 
       colorIndex: 0
@@ -4115,25 +4019,25 @@ MonoBehaviour:
         networkSync: 0
         value: 23
       - useVariable: 1
-        name: specialAttackDamageFactor
+        name: 
         tooltip: 
         showInInspector: 1
         networkSync: 0
         value: 0
       - useVariable: 1
-        name: xDirection
+        name: 
         tooltip: 
         showInInspector: 0
         networkSync: 0
         value: 0
       - useVariable: 1
-        name: speedFactor
+        name: 
         tooltip: 
         showInInspector: 1
         networkSync: 0
         value: 0
       - useVariable: 1
-        name: speedModifier
+        name: 
         tooltip: 
         showInInspector: 1
         networkSync: 0
@@ -4185,19 +4089,19 @@ MonoBehaviour:
       stringVariables: []
       vector2Variables:
       - useVariable: 1
-        name: myPosition
+        name: 
         tooltip: 
         showInInspector: 0
         networkSync: 0
         value: {x: 0, y: 0}
       - useVariable: 1
-        name: targetPos2
+        name: 
         tooltip: 
         showInInspector: 0
         networkSync: 0
         value: {x: 0, y: 0}
       - useVariable: 1
-        name: direction
+        name: 
         tooltip: 
         showInInspector: 0
         networkSync: 0
@@ -4308,12 +4212,12 @@ MonoBehaviour:
         typeName: PSmash.Combat.UnblockableAttack
         value: {fileID: 5698365038011637547}
       - useVariable: 1
-        name: stats
+        name: 
         tooltip: 
         showInInspector: 0
         networkSync: 0
-        typeName: PSmash.Stats.BaseStats
-        value: {fileID: 4191859700395274613}
+        typeName: 
+        value: {fileID: 0}
       materialVariables: []
       textureVariables: []
       arrayVariables: []
@@ -4387,11 +4291,9 @@ MonoBehaviour:
   whatIsGround:
     serializedVersion: 2
     m_Bits: 2130176
-  noFriction: {fileID: 0}
+  noFriction: {fileID: 6200000, guid: 22229002b67e3954cb0b31741f9095cd, type: 2}
   lowFriction: {fileID: 6200000, guid: 65236b81a583a484aa33d4c136233544, type: 2}
   fullFriction: {fileID: 6200000, guid: 4b501e885db70b54faf1caa7979b5f5f, type: 2}
-  speedFactor: 1
-  speedAnimModifier: 1
   maxSlopeAngle: 35
   groundCheck: {fileID: 1910916254316680253}
   yVelocityThresForFallDamage: 15
@@ -6467,7 +6369,7 @@ MonoBehaviour:
         networkSync: 0
         value: 0
       - useVariable: 1
-        name: length
+        name: 
         tooltip: 
         showInInspector: 0
         networkSync: 0
@@ -6489,7 +6391,7 @@ MonoBehaviour:
       vector2Variables: []
       vector3Variables:
       - useVariable: 1
-        name: myPosition
+        name: 
         tooltip: 
         showInInspector: 0
         networkSync: 0
@@ -6511,7 +6413,7 @@ MonoBehaviour:
         networkSync: 0
         value: {fileID: 0}
       - useVariable: 1
-        name: currentDrop
+        name: 
         tooltip: 
         showInInspector: 0
         networkSync: 0
@@ -6549,11 +6451,11 @@ MonoBehaviour:
         typeName: PSmash.Attributes.EnemyHealth
         value: {fileID: 0}
       - useVariable: 1
-        name: myFSM
+        name: 
         tooltip: 
         showInInspector: 0
         networkSync: 0
-        typeName: PlayMakerFSM
+        typeName: 
         value: {fileID: 0}
       - useVariable: 1
         name: deadSound
@@ -6587,7 +6489,7 @@ MonoBehaviour:
       textureVariables: []
       arrayVariables:
       - useVariable: 1
-        name: drops
+        name: 
         tooltip: 
         showInInspector: 1
         networkSync: 0
@@ -6598,9 +6500,7 @@ MonoBehaviour:
         boolValues: 
         stringValues: []
         vector4Values: []
-        objectReferences:
-        - {fileID: 0}
-        - {fileID: 0}
+        objectReferences: []
       enumVariables: []
       categories:
       - 
@@ -6623,7 +6523,7 @@ MonoBehaviour:
     RestartOnEnable: 1
     EnableDebugFlow: 0
     EnableBreakpoints: 1
-    editorFlags: 1
+    editorFlags: 3
     activeStateName: 
     mouseEvents: 0
     handleLevelLoaded: 0
@@ -12697,11 +12597,11 @@ MonoBehaviour:
         value: 0
       boolVariables:
       - useVariable: 1
-        name: canMidRangeBlockAttack
+        name: 
         tooltip: 
         showInInspector: 1
         networkSync: 0
-        value: 1
+        value: 0
       - useVariable: 1
         name: initialized
         tooltip: 
@@ -13492,7 +13392,7 @@ MonoBehaviour:
     RestartOnEnable: 1
     EnableDebugFlow: 0
     EnableBreakpoints: 1
-    editorFlags: 1
+    editorFlags: 3
     activeStateName: 
     mouseEvents: 0
     handleLevelLoaded: 0
@@ -13554,18 +13454,7 @@ MonoBehaviour:
         m_CallState: 2
   onStunStateEnded:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 3334160854757869577}
-        m_MethodName: FullyRegenPosture
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
   onDisablePostureBar:
     m_PersistentCalls:
       m_Calls: []
@@ -22457,18 +22346,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   onTakeDamage:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 4289945082001619250}
-        m_MethodName: Spawn
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
   onDead:
     m_PersistentCalls:
       m_Calls:
@@ -22635,7 +22513,7 @@ PrefabInstance:
     - target: {fileID: 1390539539241677357, guid: 587e06734df96fb45836c4df01ad03a7,
         type: 3}
       propertyPath: m_RootOrder
-      value: 7
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 2297644081278653716, guid: 587e06734df96fb45836c4df01ad03a7,
         type: 3}
@@ -22673,7 +22551,7 @@ PrefabInstance:
     - target: {fileID: 2297644081278653716, guid: 587e06734df96fb45836c4df01ad03a7,
         type: 3}
       propertyPath: slots.Array.data[0].number
-      value: 13
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2297644081278653716, guid: 587e06734df96fb45836c4df01ad03a7,
         type: 3}
@@ -22763,81 +22641,9 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 587e06734df96fb45836c4df01ad03a7, type: 3}
---- !u!114 &4289945082001619250 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 2181527263287352659, guid: 587e06734df96fb45836c4df01ad03a7,
-    type: 3}
-  m_PrefabInstance: {fileID: 2724296443517035617}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b4a54fc1155d7dd4fb94090c8dc41bea, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!1 &8773332421135218260 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 6633668612817146421, guid: 587e06734df96fb45836c4df01ad03a7,
-    type: 3}
-  m_PrefabInstance: {fileID: 2724296443517035617}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &3334160854757869579 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 832027454039813226, guid: 587e06734df96fb45836c4df01ad03a7,
-    type: 3}
-  m_PrefabInstance: {fileID: 2724296443517035617}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &3334160854757869577 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 832027454039813224, guid: 587e06734df96fb45836c4df01ad03a7,
-    type: 3}
-  m_PrefabInstance: {fileID: 2724296443517035617}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3334160854757869579}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1c89395bbe69e964e9835bdb781a0724, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!4 &6852413905604142774 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 8851278654538908375, guid: 587e06734df96fb45836c4df01ad03a7,
-    type: 3}
-  m_PrefabInstance: {fileID: 2724296443517035617}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &758294006274335666 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 3407154881087883219, guid: 587e06734df96fb45836c4df01ad03a7,
-    type: 3}
-  m_PrefabInstance: {fileID: 2724296443517035617}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6852413905604142772}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a7d62cc76a0850e4792f4f9d3ed1349f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &4191859700395274613 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 2297644081278653716, guid: 587e06734df96fb45836c4df01ad03a7,
-    type: 3}
-  m_PrefabInstance: {fileID: 2724296443517035617}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6852413905604142772}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 24a03d575fcbe764fbfff6203d61b643, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!4 &1910916254316680253 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 4560551147196231772, guid: 587e06734df96fb45836c4df01ad03a7,
-    type: 3}
-  m_PrefabInstance: {fileID: 2724296443517035617}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &6285349636030742712 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 8283431565955900633, guid: 587e06734df96fb45836c4df01ad03a7,
     type: 3}
   m_PrefabInstance: {fileID: 2724296443517035617}
   m_PrefabAsset: {fileID: 0}
@@ -22853,6 +22659,42 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fbc91c59a6320bd4f8b28dd33c4df43f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &758294006274335666 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3407154881087883219, guid: 587e06734df96fb45836c4df01ad03a7,
+    type: 3}
+  m_PrefabInstance: {fileID: 2724296443517035617}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6852413905604142772}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a7d62cc76a0850e4792f4f9d3ed1349f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!4 &6852413905604142774 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 8851278654538908375, guid: 587e06734df96fb45836c4df01ad03a7,
+    type: 3}
+  m_PrefabInstance: {fileID: 2724296443517035617}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &1910916254316680253 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 4560551147196231772, guid: 587e06734df96fb45836c4df01ad03a7,
+    type: 3}
+  m_PrefabInstance: {fileID: 2724296443517035617}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &6285349636030742712 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8283431565955900633, guid: 587e06734df96fb45836c4df01ad03a7,
+    type: 3}
+  m_PrefabInstance: {fileID: 2724296443517035617}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &8773332421135218260 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6633668612817146421, guid: 587e06734df96fb45836c4df01ad03a7,
+    type: 3}
+  m_PrefabInstance: {fileID: 2724296443517035617}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &6852413905604142772 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 8851278654538908373, guid: 587e06734df96fb45836c4df01ad03a7,

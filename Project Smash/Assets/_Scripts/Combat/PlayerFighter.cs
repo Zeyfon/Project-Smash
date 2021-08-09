@@ -20,10 +20,8 @@ namespace PSmash.Combat
         [SerializeField] Transform attackTransform = null;
 
         [Header("Tool Attack")]
-        [SerializeField] AudioClip toolAttackSound = null;
         [SerializeField] AudioClip noHookSound = null;
         [SerializeField] Weapon grapingHook = null;
-        [SerializeField] float grapingHookRadius = 11;
         [SerializeField] HookRope hookRope = null;
         [SerializeField] float hookPullingPlayerSpeed = 30;
 
@@ -192,7 +190,6 @@ namespace PSmash.Combat
         IEnumerator PulledTowardsTarget(Transform target)
         {
             rope.PlayerPulled();
-            float hookPullingPlayerSpeed = 30;
             Vector2 direction = ((target.position + new Vector3(0, 2)) - transform.position).normalized;
             movement.GrapingHookMovement(direction, hookPullingPlayerSpeed);
             float distance = Mathf.Infinity;
