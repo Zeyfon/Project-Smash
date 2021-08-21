@@ -7,11 +7,22 @@ namespace PSmash.Inventories
 {
     public class Pickup : MonoBehaviour
     {
+        [SerializeField] Item collectible = null;
         [SerializeField] Collider2D collectingCollider = null;
         public delegate void DropCollected(ItemSlot slot);
         public static event DropCollected onDropCollected;
 
         List<ItemSlot> slots = new List<ItemSlot>();
+
+        void Start()
+        {
+            if (collectible == null)
+                return;
+            ItemSlot slot = new ItemSlot();
+            slot.item = collectible;
+            slot.number = 1;
+            slots.Add(slot);
+        }
 
         public void Setup(IEnumerable<DropLibrary.Dropped> drops)
         {
@@ -50,7 +61,7 @@ namespace PSmash.Inventories
             if (collision.CompareTag("Player"))
             {
                 CollectDrops();
-                Destroy(gameObject);
+                Destroy(gameObject,0.1f);
             }
         }
 

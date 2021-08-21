@@ -186,8 +186,8 @@ GameObject:
   - component: {fileID: 4253175448236660594}
   - component: {fileID: 3597264271792743879}
   - component: {fileID: 7583575603400909811}
-  - component: {fileID: 1244703062407843937}
   - component: {fileID: 2489501145564008319}
+  - component: {fileID: 4331420931384980716}
   m_Layer: 26
   m_Name: Pikcup_Collectible
   m_TagString: Untagged
@@ -258,20 +258,6 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
---- !u!114 &1244703062407843937
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4253175448236660595}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e57cfb47fc9ddf4498ae77a75aa2bb1c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  collectingCollider: {fileID: 6990505458928683008}
-  body: {fileID: 8535909376365478359}
 --- !u!82 &2489501145564008319
 AudioSource:
   m_ObjectHideFlags: 0
@@ -368,3 +354,17 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &4331420931384980716
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4253175448236660595}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 59f34736e782a034081c009e3bd1a3d0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  collectible: {fileID: 0}
+  collectingCollider: {fileID: 6990505458928683008}
