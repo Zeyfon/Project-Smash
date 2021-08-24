@@ -1,6 +1,7 @@
 ﻿using PSmash.CraftingSystem;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using PSmash.Menus;
 
 namespace PSmash.UI.CraftingSytem
 {
@@ -29,12 +30,36 @@ namespace PSmash.UI.CraftingSytem
         private void OnEnable()
         {
             CraftingSystem.CraftingSystem.OnSkillPanelUpdate += UpdateSkillPanel;
+            MainMenuSelector.OnSelectionChange += CraftingSystemSubMenuSelectionChanged;
             UpdateSkillPanel(initialSkillSlot);
+        }
+
+        /// <summary>
+        /// Called only when the selection has changed and the crafting sub menu is active
+        /// </summary>
+        /// <param name="gameObject"></param>
+        void CraftingSystemSubMenuSelectionChanged(GameObject gameObject)
+        {
+            if (eventSystem == null)
+                return;
+            UpdateSkillPanel(null);
+            if (previousGameObject != eventSystem.currentSelectedGameObject)
+            {
+                SkillSlot skillSlot = eventSystem.currentSelectedGameObject.GetComponent<SkillSlot>();
+                if (skillSlot == null)
+                    return;
+
+                skillSlot.SetRingToYellow(yellowMaterial);
+                GetComponentInChildren<CraftingSystemInfoPanel>().UpdateInfoPanelWithSkillInfo(skillSlot);
+            }
+            previousGameObject = eventSystem.currentSelectedGameObject;
         }
 
         private void OnDisable()
         {
             CraftingSystem.CraftingSystem.OnSkillPanelUpdate -= UpdateSkillPanel;
+            MainMenuSelector.OnSelectionChange -= CraftingSystemSubMenuSelectionChanged;
+
         }
 
         ////////////////////////////////////////////////////////////////////////////////PUBLIC/////////////////////////////////////////////////////////////////////
@@ -43,48 +68,36 @@ namespace PSmash.UI.CraftingSytem
         /// </summary>
         public void UpdateSkillPanel(SkillSlot currentSelectedSkillSlot)
         {
-            //print("Updating Panel");
+            print("Updating Panel");
+            UpdateColorOfLinks();
+            UpdateWhiteRings();
+            //if (currentSelectedSkillSlot == null)
+            //{
+            //    //UpdateRings(initialSkillSlot);
+            //}
+            //else
+            //{
+            //    UpdateWhiteRings();
+            //}
+        }
+
+        private void UpdateColorOfLinks()
+        {
             foreach (SkillSlot slot in GetComponentsInChildren<SkillSlot>())
             {
                 slot.VisualUpdate();
-            }
-            if(currentSelectedSkillSlot == null)
-            {
-                UpdateRings(initialSkillSlot);
-            }
-            else
-            {
-                UpdateRings(currentSelectedSkillSlot);
             }
         }
 
         ////////////////////////////////////////////////////////////////////////////////PRIVATE/////////////////////////////////////////////////////////////////////
 
 
-        void Update()
-        {
-            if (eventSystem == null)
-                return;
-            if (previousGameObject != eventSystem.currentSelectedGameObject)
-            {
-                SkillSlot skillSlot = eventSystem.currentSelectedGameObject.GetComponent<SkillSlot>();
-                if (skillSlot == null)
-                {
-                    skillSlot = initialSkillSlot;
-                    eventSystem.SetSelectedGameObject(skillSlot.gameObject);
-                }
-                
-                UpdateRings(skillSlot);
-            }
-        }
-
-
-        void UpdateRings(SkillSlot skillSlot)
+        void UpdateWhiteRings()
         {
             CraftingSystem.CraftingSystem craftingSystem = GetComponentInParent<CraftingSystem.CraftingSystem>();
             foreach(SkillSlot slot in GetComponentsInChildren<SkillSlot>())
             {
-                if(slot.IsUnlockable() && craftingSystem.DoIHaveTheNecessaryItemNumbersToUnlockThisSkill(slot) != null)
+                if(slot.IsUnlockable() && craftingSystem.DoPlayerHasTheNecessaryItemNumbersToUnlockThisSkill(slot) != null)
                 {
                     slot.SetRightToWhite();
                 }
@@ -93,15 +106,14 @@ namespace PSmash.UI.CraftingSytem
                     slot.SetRingToNull();
                 }
             }
-            skillSlot.SetRingToYellow(yellowMaterial);
             
-            //Update ToolTipWindow
-            if (onSelectionChange != null)
-            {
-                onSelectionChange(skillSlot);
-            }
+            ////Update ToolTipWindow
+            //if (onSelectionChange != null)
+            //{
+            //    onSelectionChange(skillSlot);
+            //}
 
-            previousGameObject = skillSlot.gameObject;
+            //previousGameObject = skillSlot.gameObject;
         }
 
     }

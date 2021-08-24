@@ -155,7 +155,7 @@ namespace GameDevTV.Saving
             if (checkpoint != null && checkpoint.IsPlayerInSavePoint())
             {
                 int index = SceneManager.GetActiveScene().buildIndex;
-                print("lastSceneBuildIndex  " + index + " was captured");
+                //print("lastSceneBuildIndex  " + index + " was captured");
                 state["lastSceneBuildIndex"] = index;
             }
             else

@@ -248,9 +248,10 @@ namespace PSmash.Combat
         {
             //print("NormalAttack");
             Weapon weapon = GetComponent<Equipment>().GetMainWeapon();
+            float extraWeaponDamage = GetComponent<Equipment>().GetExtraWeaponDamage(weapon);
             damageArea = weapon.GetWeaponDamageArea();
             //damageArea = new Vector2(1.9f, 1.6f);
-            Attack(attackTransform, weapon);
+            Attack(attackTransform, weapon, extraWeaponDamage);
         }
 
         /// <summary>
@@ -284,11 +285,10 @@ namespace PSmash.Combat
         //Anim Event
         void SubWeaponAttackDamage()
         {
-            //print("SubWeapon Damage");
             Weapon weapon = GetComponent<Equipment>().GetEquippedSubweapon();
+            float extraWeaponDamage = GetComponent<Equipment>().GetExtraWeaponDamage(weapon);
             damageArea = weapon.GetWeaponDamageArea();
-            //damageArea = new Vector2(4.5f, 1.75f);
-            Attack(attackTransform, weapon);
+            Attack(attackTransform, weapon, extraWeaponDamage);
         }
 
         //AnimEvent
@@ -304,7 +304,7 @@ namespace PSmash.Combat
 
         #endregion
 
-        void Attack(Transform attackOriginPosition, Weapon weapon)
+        void Attack(Transform attackOriginPosition, Weapon weapon, float extraWeaponDamage)
         {
             //print("Looking to Damage Enemy");
             Collider2D[] colls = Physics2D.OverlapBoxAll(attackOriginPosition.position, damageArea, 0, whatIsDamagable);
@@ -319,7 +319,8 @@ namespace PSmash.Combat
                 if (target == null || coll.GetComponent<Projectile>())
                     continue;
                 //print(currentWeapon.name);
-                target.TakeDamage(transform, weapon, AttackType.NotUnblockable, baseStats.GetStat(StatsList.Attack), weapon.GetKnockbackForceToApplyToEnemyAttacked());
+                float damage = extraWeaponDamage + baseStats.GetStat(StatsList.Attack);
+                target.TakeDamage(transform, weapon, AttackType.NotUnblockable, damage , weapon.GetKnockbackForceToApplyToEnemyAttacked());
                 //print("Sendingdamage from player to  " + target);
 
             }

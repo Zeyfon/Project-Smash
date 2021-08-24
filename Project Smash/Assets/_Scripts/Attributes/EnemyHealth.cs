@@ -90,7 +90,7 @@ namespace PSmash.Attributes
             this.curentPMFSM = pm;
         }
 
-        public override void TakeDamage(Transform attacker, Weapon weapon, AttackType attackType, float characterDamage, float attackForce)
+        public override void TakeDamage(Transform attacker, Weapon weapon, AttackType attackType, float playerAndWeaponDamage, float attackForce)
         {
             if (isDead)
             {
@@ -103,7 +103,7 @@ namespace PSmash.Attributes
                 Debug.LogWarning("No Enemy State set to return DAMAGE Event");
                 return;
             }
-            Damaged(weapon, characterDamage);
+            Damaged(playerAndWeaponDamage);
             ///
             if (canBeKnockedBack)
                 GetComponent<EnemyMovement>().ApplyAttackImpactReceived(attacker, weapon, LayerMask.NameToLayer("EnemiesGhost"), LayerMask.NameToLayer("Enemies"));
@@ -278,11 +278,10 @@ namespace PSmash.Attributes
         /// The final damage will be a combination of the base player damage, the weapon damage and several modifiers
         /// </summary>
         /// <param name="attackedWeapon"></param>
-        /// <param name="characterDamage"></param>
-        void Damaged(Weapon attackedWeapon, float characterDamage)
+        /// <param name="playerAndWeaponDamage"></param>
+        void Damaged(float playerAndWeaponDamage)
         {
-            //print("Damaged with " + attackedWeapon + "  " + "characterDamage "   + characterDamage + "  weaponDamage  " + attackedWeapon.GetDamage());
-            float combinedDamage = (characterDamage + attackedWeapon.GetDamage() /*+ damageModifiers*/);
+            float combinedDamage = (playerAndWeaponDamage  /*+ damageModifiers*/);
 
             //CheckForStaggerState(combinedDamage);
 
@@ -293,8 +292,6 @@ namespace PSmash.Attributes
 
                 if (posture.posture <= 0)
                 {
-                    //print("1_DAMAGED_STUNNED Event to the fsm " + pm.FsmName);
-
                     posture.OnStunStateStart();
                     float criticalHitFactor = 2;
                     StunnedDamage(combinedDamage * criticalHitFactor);
@@ -311,7 +308,7 @@ namespace PSmash.Attributes
                     if (newDamage < 0) newDamage = 0;
                     DamageHealth(newDamage);
                     FsmEventData myfsmEventData = new FsmEventData();
-                    myfsmEventData.FloatData = characterDamage;
+                    myfsmEventData.FloatData = playerAndWeaponDamage;
                     HutongGames.PlayMaker.Fsm.EventData = myfsmEventData;
                     curentPMFSM.SendEvent("DAMAGED_NOSTUNNED");
 
@@ -409,7 +406,7 @@ namespace PSmash.Attributes
             checkpointCounter = info.checkpointCounter;
             if (checkpointCounter != worldManager.GetCheckpointCounter())
             {
-                print("No overwrite was applied to  " + gameObject.name);
+                //print("No overwrite was applied to  " + gameObject.name);
                 return;
             }
             else

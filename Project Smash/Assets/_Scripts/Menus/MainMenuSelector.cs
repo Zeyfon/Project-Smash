@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
@@ -6,7 +7,8 @@ namespace PSmash.Menus
 {
     public class MainMenuSelector : MonoBehaviour
     {
-        [SerializeField] GameObject initialSelection =  null; 
+        [SerializeField] GameObject initialSelection =  null;
+        [SerializeField] CraftingSystem.CraftingSystem craftingSystem = null; 
         [SerializeField] MenuTab[] menuTabs;
         
         //This variable is used by different UI elements that need to know
@@ -16,36 +18,41 @@ namespace PSmash.Menus
         GameObject previousGameObject;
         EventSystem eventSystem;
 
-        private void Start()
-        {
-            eventSystem = GameObject.FindObjectOfType<EventSystem>();
-            if(eventSystem == null)
-            {
-                Debug.LogWarning("Main Menu did not find an eventSystem");
-            }
-        }
+        public delegate void SelectionChanged(GameObject gameObject);
+        public static event SelectionChanged OnSelectionChange;
 
-        private void OnEnable()
+        public void EnableSubMenu(SubMenu subMenu)
         {
-            //print("Trying to open main menu");
+            DisableAllSubMenus();
             if (eventSystem == null)
             {
                 eventSystem = GameObject.FindObjectOfType<EventSystem>();
-                if (eventSystem == null)
-                {
-                    return;
-                }
             }
-            StartCoroutine(SetInitialGeneralMenuSelection());
-            //print("Main menu enabled");
-            UpdateMenuToNewTabSelection(initialSelection);
+            gameObject.SetActive(true);
+            menuTabs[(int)subMenu].EnableSubMenu();
+            SetCraftingSystemAviabilityToUnlockSkills(subMenu);
+            StartCoroutine(SetInitialButtonSelectionForThisSubMenu(subMenu));
+
         }
 
-        IEnumerator SetInitialGeneralMenuSelection()
+        void SetCraftingSystemAviabilityToUnlockSkills(SubMenu subMenu)
         {
+            if (subMenu == SubMenu.CraftingSystem)
+            {
+                craftingSystem.SetCanUnlockSkill(true);
+            }
+            else
+            {
+                craftingSystem.SetCanUnlockSkill(false);
+            }
+        }
+
+        IEnumerator SetInitialButtonSelectionForThisSubMenu(SubMenu subMenu)
+        {
+            print(eventSystem);
             eventSystem.SetSelectedGameObject(null);
             yield return null;
-            eventSystem.SetSelectedGameObject(initialSelection);
+            eventSystem.SetSelectedGameObject(menuTabs[(int)subMenu].gameObject);
         }
 
         void Update()
@@ -61,7 +68,13 @@ namespace PSmash.Menus
             {
                 DisableInteractionCapacityOfOtherTabs(previousGameObject);
             }
+
             previousGameObject = eventSystem.currentSelectedGameObject;
+
+            if (OnSelectionChange != null)
+            {
+                OnSelectionChange(previousGameObject);
+            }
         }
 
         /// <summary>
@@ -70,10 +83,14 @@ namespace PSmash.Menus
         /// <returns></returns>
         bool HasMenuSelectionChanged()
         {
-            if (eventSystem.currentSelectedGameObject == null || previousGameObject != eventSystem.currentSelectedGameObject)
+            if (eventSystem.currentSelectedGameObject == null || previousGameObject != eventSystem.currentSelectedGameObject)  
                 return true;
             else
+            {
+                print(eventSystem.currentSelectedGameObject);
                 return false;
+
+            }
         }
 
         /// <summary>

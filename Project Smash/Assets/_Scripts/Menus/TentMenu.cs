@@ -100,12 +100,8 @@ namespace PSmash.Menus
         /// </summary>
         public void OpenCraftingMenu()
         {
-            if (OnNextMenuOpen != null)
-            {
-                OnNextMenuOpen();
-                DisableMenuObjects();
-                DisableUIController();
-            }
+            print("Here i am");
+            GameObject.FindObjectOfType<MainMenu>().OpenMainMenuInCraftingSystemSubMenu();
         }
 
         /////////////PRIVATE///////////////

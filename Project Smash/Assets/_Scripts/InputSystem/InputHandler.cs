@@ -226,7 +226,7 @@ namespace PSmash.InputSystem
         {
             if (OnPlayerStartButtonPressed != null)
             {
-                print("Player will open menu");
+                //print("Player will open menu");
                 _controller.Player.Disable();
                 OnPlayerStartButtonPressed();
                 EnableInput(false);

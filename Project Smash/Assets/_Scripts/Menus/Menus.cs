@@ -8,12 +8,12 @@ namespace PSmash.Menus
     public class Menus : MonoBehaviour
     {
         [SerializeField] GameObject status = null;        
-        [SerializeField] GameObject craftingSystem = null;
+        //[SerializeField] GameObject craftingSystem = null;
         [SerializeField] GameObject tentMenu = null;
         void Awake()
         {
             Instantiate(status, transform);
-            Instantiate(craftingSystem, transform);
+            //Instantiate(craftingSystem, transform);
             Instantiate(tentMenu, transform);
         }
     }

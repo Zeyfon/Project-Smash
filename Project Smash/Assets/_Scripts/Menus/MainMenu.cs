@@ -6,7 +6,7 @@ namespace PSmash.Menus
 {
     public class MainMenu : MonoBehaviour
     {
-        // Start is called before the first frame update
+        [SerializeField] MainMenuSelector menuSelector = null;
         _Controller _controller;
 
         public delegate void MainMenuAction(bool isEnabled);
@@ -20,16 +20,16 @@ namespace PSmash.Menus
         }
         void Start()
         {
-            SetChildObjects(false);
+            menuSelector.gameObject.SetActive(false);
         }
 
         private void OnEnable()
         {
-            InputHandler.OnPlayerStartButtonPressed += OpenMainMenu;
+            InputHandler.OnPlayerStartButtonPressed += OpenMainMenuViaStartButton;
         }
         private void OnDisable()
         {
-            InputHandler.OnPlayerStartButtonPressed -= OpenMainMenu;
+            InputHandler.OnPlayerStartButtonPressed -= OpenMainMenuViaStartButton;
         }
 
         public void CloseMainMenuAndEnablePlayerInput()
@@ -42,32 +42,29 @@ namespace PSmash.Menus
 
         }
 
-        void OpenMainMenu()
+        public void OpenMainMenuInCraftingSystemSubMenu()
         {
-
-            OpenMenu();
+            OpenMenu(SubMenu.CraftingSystem);
         }
 
-        void OpenMenu()
+        void OpenMainMenuViaStartButton()
         {
-            SetChildObjects(true);
+            OpenMenu(SubMenu.PlayerStats);
+        }
+
+        void OpenMenu(SubMenu subMenu)
+        {
+            menuSelector.EnableSubMenu(subMenu);
+            //SetChildObjects(true);
             _controller.UI.Enable();
             _controller.UI.ButtonStart.started += ctx => CloseMainMenuAndEnablePlayerInput();
         }
 
         public void CloseMainMenu()
         {
-            SetChildObjects(false);
+            //SetChildObjects(false);
             _controller.UI.Disable();
             _controller.UI.ButtonStart.started -= ctx => CloseMainMenuAndEnablePlayerInput();
-        }
-
-        private void SetChildObjects(bool isEnabled)
-        {
-            for (int i = 0; i < transform.childCount; i++)
-            {
-                transform.GetChild(i).gameObject.SetActive(isEnabled);
-            }
         }
     }
 

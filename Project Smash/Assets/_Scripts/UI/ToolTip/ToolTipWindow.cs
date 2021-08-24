@@ -26,32 +26,14 @@ namespace PSmash.UI
 
         }
 
-        //private void Start()
-        //{
-        //    gameObject.SetActive(false);
-        //}
-
         private void OnDestroy()
         {
             CraftingSystemUI.onSelectionChange -= UpdateToolTipInfo;
 
         }
-        private void OnEnable()
-        {
-            //canvasGroup.alpha = 0;
-            //print("Enabled");
-            //CraftingSystemUI.onSelectionChange += UpdateToolTipInfo;
-        }
-
-        //private void OnDisable()
-        //{
-        //    CraftingSystemUI.onSelectionChange -= UpdateToolTipInfo;
-        //}
-
 
         public void UpdateToolTipInfo(SkillSlot skillSlot)
         {
-            //print("Wants to Update Description Window");
             if (coroutine != null)
                 StopCoroutine(coroutine);
             if (skillSlot == null)
@@ -66,7 +48,6 @@ namespace PSmash.UI
 
         IEnumerator InfoUpdate(SkillSlot skillSlotGameObject)
         {
-            //print("Updating Description Window");
             Fader fader = new Fader();
             yield return fader.FadeIn(canvasGroup, fadeOutTime);
 
@@ -83,7 +64,7 @@ namespace PSmash.UI
             requiredCraftingMaterials = skillSlot.GetCraftingItemsRequirement();
             descriptionText.text = skillSlot.GetSkill().GetDescription();
             nameText.text = skillSlot.GetSkill().GetItem().GetDisplayName();
-            requiredMaterialsUpdater.SetSkillSlotInfo(requiredCraftingMaterials);
+            //requiredMaterialsUpdater.SetSkillSlotInfo(requiredCraftingMaterials);
             yield return null;
         }
     }
