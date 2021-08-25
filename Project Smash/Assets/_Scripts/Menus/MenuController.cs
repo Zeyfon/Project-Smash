@@ -16,14 +16,14 @@ namespace PSmash.Menus
         [SerializeField] List<InputButton> inputButtons = new List<InputButton>();
 
         InputButton inputButton;
-        _Controller _controller;
+        //_Controller _controller;
         EventSystem eventSystem;
 
         int childrenCounter = 0;
         // Start is called before the first frame update
         void Awake()
         {
-            _controller = new _Controller();
+            //_controller = new _Controller();
             eventSystem = FindObjectOfType<EventSystem>();
         }
         void Update()

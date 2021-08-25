@@ -15,11 +15,9 @@ namespace PSmash.Menus
         public static event Action OnNextMenuOpen;
 
         public static event Action OnTentMenuClose;
-        _Controller _controller;
         // Start is called before the first frame update
         void Start()
         {
-            _controller = new _Controller();
             DisableMenuObjects();
         }
         private void OnEnable()
@@ -77,31 +75,31 @@ namespace PSmash.Menus
             CloseTentMenu();
         }
 
-        void EnableUIController()
-        {
-            _controller.UI.Enable();
-            _controller.UI.Cancel.performed += ctx => BacktrackMenu();
-            _controller.UI.ButtonStart.performed += ctx => CloseAllMenus();
-            //print("Enable Tent Menu Controller");
+        //void EnableUIController()
+        //{
+        //    _controller.UI.Enable();
+        //    _controller.UI.Cancel.performed += ctx => BacktrackMenu();
+        //    _controller.UI.ButtonStart.performed += ctx => CloseAllMenus();
+        //    //print("Enable Tent Menu Controller");
 
-        }
+        //}
 
-        void DisableUIController()
-        {
-            _controller.UI.Disable();
-            _controller.UI.Cancel.performed -= ctx => BacktrackMenu();
-            _controller.UI.ButtonStart.performed -= ctx => CloseAllMenus();
-            //print("Disable Tent Menu Controller");
-        }
+        //void DisableUIController()
+        //{
+        //    _controller.UI.Disable();
+        //    _controller.UI.Cancel.performed -= ctx => BacktrackMenu();
+        //    _controller.UI.ButtonStart.performed -= ctx => CloseAllMenus();
+        //    //print("Disable Tent Menu Controller");
+        //}
 
 
         /// <summary>
         /// TODO. This part must be taken out as is a method used by the button in the Tent Menu to open the Crafting Menu
         /// </summary>
-        public void OpenCraftingMenu()
+        public void OpenMainMenuInCraftingSystemSubMenu()
         {
             print("Here i am");
-            GameObject.FindObjectOfType<MainMenu>().OpenMainMenuInCraftingSystemSubMenu();
+            transform.parent.parent.GetComponentInChildren<MainMenu>().OpenMenu(SubMenu.CraftingSystem);
         }
 
         /////////////PRIVATE///////////////
@@ -122,7 +120,7 @@ namespace PSmash.Menus
         IEnumerator EnableControl()
         {
             yield return new WaitForEndOfFrame();
-            EnableUIController();
+            //EnableUIController();
         }
 
         void CloseTentMenu()
@@ -135,7 +133,7 @@ namespace PSmash.Menus
                 return;
             }
                 OnTentMenuClose();
-            DisableUIController();
+            //DisableUIController();
         }
 
         /// <summary>

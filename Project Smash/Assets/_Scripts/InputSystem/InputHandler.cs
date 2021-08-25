@@ -102,16 +102,16 @@ namespace PSmash.InputSystem
             _controller.Player.ButtonStart.started += ctx => ButtonStartPressed();
 
             Mace.onObjectTaken += EnableInput;
-            CraftingSystem.CraftingSystem.OnMenuClose += EnablePlayerInput;
-            MainMenu.OnMenuClose += EnablePlayerInput;
-            TentMenu.OnTentMenuClose += EnablePlayerInput;
+            //CraftingSystem.CraftingSystem.OnMenuClose += EnablePlayerInput;
+            //MainMenu.OnMenuClose += EnablePlayerInput;
+            Menus.Menus.OnMenuClose += EnablePlayerInput;
+            //TentMenu.OnTentMenuClose += EnablePlayerInput;
             EventManager.PauseGame += PauseGame;
             EventManager.UnpauseGame += UnpauseGame;
-            EventManager.PlayerGotBoots += PlayerGotBoots;
+            //EventManager.PlayerGotBoots += PlayerGotBoots;
             EventManager.PlayerPerformUncontrolledAction += IsPlayerInputEnabled;
             Door.EnablePlayerController += IsPlayerInputEnabled;
             Trap.EnablePlayerController += IsPlayerInputEnabled;
-            MainMenu.OnMenuAction += IsPlayerInputEnabled;
             Portal.OnPortalTriggered += EnableInput;
         }
 
@@ -138,15 +138,15 @@ namespace PSmash.InputSystem
 
             Mace.onObjectTaken -= EnableInput;
 
-            CraftingSystem.CraftingSystem.OnMenuClose -= EnablePlayerInput;
-            MainMenu.OnMenuClose -= EnablePlayerInput;
-            TentMenu.OnTentMenuClose -= EnablePlayerInput;
+            //CraftingSystem.CraftingSystem.OnMenuClose -= EnablePlayerInput;
+            Menus.Menus.OnMenuClose -= EnablePlayerInput;
+            //MainMenu.OnMenuClose -= EnablePlayerInput;
+            //TentMenu.OnTentMenuClose -= EnablePlayerInput;
             EventManager.PauseGame -= PauseGame;
             EventManager.UnpauseGame -= UnpauseGame;
-            EventManager.PlayerGotBoots -= PlayerGotBoots;
+            //EventManager.PlayerGotBoots -= PlayerGotBoots;
             Door.EnablePlayerController -= IsPlayerInputEnabled;
             Trap.EnablePlayerController -= IsPlayerInputEnabled;
-            MainMenu.OnMenuAction -= IsPlayerInputEnabled;
             Portal.OnPortalTriggered -= EnableInput;
         }
 
@@ -176,6 +176,7 @@ namespace PSmash.InputSystem
         }
         private void Action2Released()
         {
+            print(action2);
             action2.ButtonReleased(transform, this, currentFSM.Value as PlayMakerFSM, movement, action5State);
         }
 
@@ -247,13 +248,13 @@ namespace PSmash.InputSystem
             print(gameObject.name + "  game was paused");
             movement = new Vector2(0, 0);
             IsPlayerInputEnabled(false);
-            _controller.UI.Enable();
+            //_controller.UI.Enable();
         }
         void UnpauseGame()
         {
             print(gameObject.name + "  game was unpaused");
             IsPlayerInputEnabled(true);
-            _controller.UI.Disable();
+            //_controller.UI.Disable();
         }
 
         void PlayerGotBoots()
@@ -293,7 +294,7 @@ namespace PSmash.InputSystem
         {
             if (isEnabled)
             {
-                //print("Enabling input handler");
+                print("Enabling input handler");
                 _controller.Player.Enable();
             }
             else

@@ -49,7 +49,7 @@ namespace PSmash.CraftingSystem
             else
             {
                 Dictionary<CraftingItem, int> craftingItemsRequired = DoPlayerHasTheNecessaryItemNumbersToUnlockThisSkill(skillSlot);
-                if (IsThisSkillSlotAvailableToUnlock(skillSlot) && craftingItemsRequired != null && GetCanUnlockSkill())
+                   if (IsThisSkillSlotAvailableToUnlock(skillSlot) && craftingItemsRequired != null && GetCanUnlockSkill())
                 {
                     SubstractItemsFromInventory(craftingItemsRequired);
                     UnlockSkill(skillSlot);

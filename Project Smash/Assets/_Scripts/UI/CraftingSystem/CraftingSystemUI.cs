@@ -68,7 +68,7 @@ namespace PSmash.UI.CraftingSytem
         /// </summary>
         public void UpdateSkillPanel(SkillSlot currentSelectedSkillSlot)
         {
-            print("Updating Panel");
+            //print("Updating Panel");
             UpdateColorOfLinks();
             UpdateWhiteRings();
             //if (currentSelectedSkillSlot == null)

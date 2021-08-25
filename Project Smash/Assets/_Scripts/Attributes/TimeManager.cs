@@ -10,15 +10,6 @@ namespace PSmash.Attributes
     {
         [SerializeField] float slowDownFactor = 0.02f;
 
-        private void OnEnable()
-        {
-            MainMenu.OnMenuAction += EnableTimeScale;
-        }
-        private void OnDisable()
-        {
-            MainMenu.OnMenuAction -= EnableTimeScale;
-        }
-
         private void EnableTimeScale(bool isEnabled)
         {
             if (isEnabled)

@@ -49,7 +49,7 @@ namespace PSmash.Menus
 
         IEnumerator SetInitialButtonSelectionForThisSubMenu(SubMenu subMenu)
         {
-            print(eventSystem);
+            //print(eventSystem);
             eventSystem.SetSelectedGameObject(null);
             yield return null;
             eventSystem.SetSelectedGameObject(menuTabs[(int)subMenu].gameObject);
@@ -87,7 +87,7 @@ namespace PSmash.Menus
                 return true;
             else
             {
-                print(eventSystem.currentSelectedGameObject);
+                //print(eventSystem.currentSelectedGameObject);
                 return false;
 
             }
