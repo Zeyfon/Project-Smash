@@ -1,9 +1,6 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using PSmash.CraftingSystem;
+﻿using UnityEngine;
 
-namespace PSmash.UI.CraftingSytem
+namespace PSmash.CraftingSystem
 {
     /// <summary>
     /// Only use is the OnClick UnityEvent to try to unlock this skill in the CraftingSystem
@@ -12,7 +9,7 @@ namespace PSmash.UI.CraftingSytem
     {
         public void TryToUnlockThisSkill()
         {
-            GetComponentInParent<CraftingSystem.CraftingSystem>().TryToUnlockSkill(GetComponent<SkillSlot>());
+            GetComponentInParent<CraftingSystem>().TryToUnlockSkill(this);
         }
     }
 }

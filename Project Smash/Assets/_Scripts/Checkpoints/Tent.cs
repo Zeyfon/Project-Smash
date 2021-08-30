@@ -26,7 +26,7 @@ namespace PSmash.Checkpoints
                 //print("Interactin with Tent");
                 OnTentMenuOpen();
                 OnCheckpointDone();
-                //FindObjectOfType<WorldManager>().ResetWorld();
+                FindObjectOfType<SavingWrapper>().Save();
             }
         }
 

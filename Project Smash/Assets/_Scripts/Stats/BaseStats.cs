@@ -60,7 +60,7 @@ namespace PSmash.Stats
             }
         }
 
-        public void UnlockSkill(StatusItem stat)
+        public void UpgradeStat(StatusItem stat)
         {
             print("Unlocking a skill of  " + stat);
             foreach(StatSlot slot in slots)

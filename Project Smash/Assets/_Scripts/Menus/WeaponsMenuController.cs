@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Runtime.InteropServices.ComTypes;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace PSmash.Menus
 {
@@ -13,29 +9,29 @@ namespace PSmash.Menus
         [SerializeField] Transform weaponLeft = null;
         [SerializeField] Transform weaponUp = null;
         [SerializeField] Transform weaponDown = null;
-        _Controller _controller;
+        //_Controller _controller;
 
         private void Awake()
         {
-            _controller = new _Controller();
+            //_controller = new _Controller();
         }
 
         private void OnEnable()
         {
-            _controller.WeaponSelection.Enable();
-            _controller.WeaponSelection.DPadDown.performed += ctx => DPadDownPressed();
-            _controller.WeaponSelection.DPadUp.performed += ctx => DPadUpPressed();
-            _controller.WeaponSelection.DPadLeft.performed += ctx => DPadLeftPressed();
-            _controller.WeaponSelection.DPadRight.performed += ctx => DPadRightPressed();
+            //_controller.WeaponSelection.Enable();
+            //_controller.WeaponSelection.DPadDown.performed += ctx => DPadDownPressed();
+            //_controller.WeaponSelection.DPadUp.performed += ctx => DPadUpPressed();
+            //_controller.WeaponSelection.DPadLeft.performed += ctx => DPadLeftPressed();
+            //_controller.WeaponSelection.DPadRight.performed += ctx => DPadRightPressed();
         }
 
         private void Ondisable()
         {
-            _controller.WeaponSelection.Disable();
-            _controller.WeaponSelection.DPadDown.performed -= ctx => DPadDownPressed();
-            _controller.WeaponSelection.DPadUp.performed -= ctx => DPadUpPressed();
-            _controller.WeaponSelection.DPadLeft.performed -= ctx => DPadLeftPressed();
-            _controller.WeaponSelection.DPadRight.performed -= ctx => DPadRightPressed();
+            //_controller.WeaponSelection.Disable();
+            //_controller.WeaponSelection.DPadDown.performed -= ctx => DPadDownPressed();
+            //_controller.WeaponSelection.DPadUp.performed -= ctx => DPadUpPressed();
+            //_controller.WeaponSelection.DPadLeft.performed -= ctx => DPadLeftPressed();
+            //_controller.WeaponSelection.DPadRight.performed -= ctx => DPadRightPressed();
         }
 
         private void DPadRightPressed()

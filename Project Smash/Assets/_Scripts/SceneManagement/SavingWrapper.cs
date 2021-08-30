@@ -37,7 +37,14 @@ namespace PSmash.SceneManagement
             _controller.GameManagement.Load.performed += ctx => InitialLoad();
             _controller.GameManagement.Delete.performed += ctx => Delete();
         }
-        
+        private void OnDisable()
+        {
+            _controller.GameManagement.Disable();
+            _controller.GameManagement.Save.performed -= ctx => Save();
+            _controller.GameManagement.Load.performed -= ctx => InitialLoad();
+            _controller.GameManagement.Delete.performed -= ctx => Delete();
+        }
+
         void InitialLoad()
         {
             StartCoroutine(LoadLastScene(true));

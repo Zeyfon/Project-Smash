@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using PSmash.UI.CraftingSytem;
-using System;
 
 namespace PSmash.CraftingSystem
 {
+    [ExecuteAlways]
     public class SkillSlot : MonoBehaviour
     {
         //CONFIG
@@ -41,8 +41,10 @@ namespace PSmash.CraftingSystem
         // Start is called before the first frame update
         void Start()
         {
-            skillSlotImage.sprite = skill.GetSprite();
+            SetSkillSlotImage();
         }
+
+
 
         //////////////////////////////////////////////////////////////////////PUBLIC/////////////////////////////////////////////////////////////////////
 
@@ -214,7 +216,6 @@ namespace PSmash.CraftingSystem
         /// </summary>
         void Unlocked()
         {
-            //print(skill.name + "  is unlocked");
             UpdateSkillSlotVisualState(null);
             UpdateLinks("White");
         }
@@ -224,10 +225,8 @@ namespace PSmash.CraftingSystem
         /// </summary>
         void Unlockable()
         {
-            //print(skill.name + " is unlockable");
             UpdateSkillSlotVisualState(saturationCeroMaterial);
             UpdateLinks("Dark");
-            //EnableWhiteRing();
         }
 
         /// <summary>
@@ -236,12 +235,29 @@ namespace PSmash.CraftingSystem
         /// </summary>
         void Locked()
         {
-            //print(skill.name + " is locked");
             UpdateSkillSlotVisualState(saturationCeroMaterial);
             UpdateLinks("Dark");
-            //DisableWhiteRing();
         }
 
+        void SetSkillSlotImage()
+        {
+            skillSlotImage.sprite = skill.GetSprite();
+        }
+
+#if UNITY_EDITOR
+        private void Update()
+        {
+            if (Application.IsPlaying(gameObject)) return;
+            if (skill != null)
+            {
+                SetSkillSlotImage();
+            }
+            else
+            {
+                print("Not setting skill");
+            }
+        }
+#endif
 
     }
 

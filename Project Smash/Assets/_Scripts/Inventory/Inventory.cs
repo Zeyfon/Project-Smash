@@ -15,6 +15,8 @@ namespace PSmash.Inventories
 
 
         List<Item> inventoryItems = new List<Item>();
+        List<Weapon> weapons = new List<Weapon>();
+        Dictionary<string, float> extraDamageForWeapons = new Dictionary<string, float>();
 
         // Start is called before the first frame update
         void Awake()
@@ -24,16 +26,25 @@ namespace PSmash.Inventories
                 inventoryItems.Add(item);
             }
 
-            craftingItemSlots.Clear();
+            //craftingItemSlots.Clear();
+            //foreach (Item item in inventoryItems)
+            //{
+            //    if(item is CraftingItem)
+            //    {
+            //        CraftingSlot slot = new CraftingSlot();
+            //        slot.item = item as CraftingItem;
+            //        craftingItemSlots.Add(slot);
+            //    }
+            //}
             foreach (Item item in inventoryItems)
             {
-                if(item is CraftingItem)
+                if (item is Weapon)
                 {
-                    CraftingSlot slot = new CraftingSlot();
-                    slot.item = item as CraftingItem;
-                    craftingItemSlots.Add(slot);
+                    weapons.Add(item as Weapon);
+                    extraDamageForWeapons.Add(item.GetID(), 0);
                 }
             }
+            //print("");
         }
 
         private void OnEnable()
@@ -53,16 +64,11 @@ namespace PSmash.Inventories
 
         public List<Weapon> GetWeapons()
         {
-            List<Weapon> subweapons = new List<Weapon>();
-            foreach(Item item in inventoryItems)
-            {
-                if(item is Weapon)
-                    subweapons.Add(item as Weapon);
-            }
-            return subweapons;
+            return weapons;
         }
 
-        private void CraftingItemCollected(Pickup.ItemSlot item)
+
+        void CraftingItemCollected(Pickup.ItemSlot item)
         {
             //print("Crafting item Collected");
             foreach(CraftingSlot slot in craftingItemSlots)
@@ -73,6 +79,17 @@ namespace PSmash.Inventories
                     collectedDropAudioSource.PlayOneShot(collectedDrop);
                 }
             }
+        }
+
+        public Weapon GetMainWeapon()
+        {
+            foreach (Weapon weapon in weapons)
+            {
+                if (weapon.GetID() == "22fb0e72-60f1-4908-81f3-ed22b0195c88")
+                    return weapon;
+            }
+            Debug.LogError("No Main Weapon Found");
+            return null;
         }
 
         public int GetThisCraftingItemNumber(CraftingItem craftingItem) 
@@ -88,14 +105,17 @@ namespace PSmash.Inventories
         }
 
 
-        public void UpdateThisCraftingItem(CraftingItem craftingItem, int number)
+        public void SubstractTheseCraftingItemsNumbers(Dictionary<CraftingItem, int> craftingItemsRequired)
         {
-            foreach(CraftingSlot slot in craftingItemSlots)
+            foreach( CraftingItem item in craftingItemsRequired.Keys)
             {
-                if(slot.item == craftingItem)
+                foreach (CraftingSlot slot in craftingItemSlots)
                 {
-                    slot.number -= number;
-                    break;
+                    if (slot.item == item)
+                    {
+                        slot.number -= craftingItemsRequired[item];
+                        break;
+                    }
                 }
             }
         }
@@ -115,47 +135,100 @@ namespace PSmash.Inventories
 
         public void UnlockSkill(Item skill)
         {
-            //print("In Inventory unlocking the skill  " + skill.name);
             if(skill is ToolItem)
             {
                 GetComponentInParent<Equipment>().UpgradeStock(skill);
             }
-            else if(skill is StatusItem)
+            else if(skill is Weapon)
             {
-                GetComponentInParent<BaseStats>().UnlockSkill(skill as StatusItem);
+                UpgradeWeaponDamage(skill);
             }
         }
+
+        void UpgradeWeaponDamage(Item item)
+        {
+            foreach (string weaponID in extraDamageForWeapons.Keys)
+            {
+                if (weaponID == item.GetID())
+                {
+                    Item weapon = Item.GetFromID(weaponID);
+                    float weaponDamage = Mathf.Round((weapon as Weapon).GetDamage() * 0.25f);
+                    float currentWeaponDamage = extraDamageForWeapons[weaponID];
+                    extraDamageForWeapons[weaponID] = currentWeaponDamage + weaponDamage;
+                    print(weaponID + "  " + extraDamageForWeapons[weaponID]);
+                    break;
+                }
+            }
+        }
+
+        public float GetExtraWeaponDamage(Weapon equippedWeapon)
+        {
+            foreach (string weaponID in extraDamageForWeapons.Keys)
+            {
+                if (weaponID == equippedWeapon.GetID())
+                {
+                    return extraDamageForWeapons[weaponID];
+                }
+            }
+            Debug.LogWarning("Weapon not found for extra damage");
+            return 0;
+        }
+
+        ////////////////////////////////////////////////SAVE SYSTEM///////////////////////////////////////////////////////////////
 
         public object CaptureState()
         {
             //print("Inventory being captured");
-            Dictionary<string, int> inventoryState = new Dictionary<string, int>();
+            Dictionary<string, object> inventoryState = new Dictionary<string, object>();
+            Dictionary<string, int> craftingItemsState = new Dictionary<string, int>();
             foreach (CraftingSlot slot in craftingItemSlots)
             {
-                inventoryState.Add(slot.item.GetID(), slot.number);
+                craftingItemsState.Add(slot.item.GetID(), slot.number);
                 if (slot.number != 0)
                 {
-                    print(slot.item.GetDisplayName() + "  was captured with  " + slot.number);
+                    //print(slot.item.GetDisplayName() + "  was captured with  " + slot.number);
                 }
             }
+            inventoryState.Add("CraftingItems", craftingItemsState);
+            //print(extraDamageForWeapons.Count + "   counting");
+
+            inventoryState.Add("ExtraDamageWeapons", extraDamageForWeapons);
             return inventoryState;
         }
 
         public void RestoreState(object state, bool isLoadLastScene)
         {
-            Dictionary<string, int> inventoryState = (Dictionary<string, int>)state;
-            //print("Restoring Inventory");
-            foreach (string itemName in inventoryState.Keys)
+            Dictionary<string, object> inventoryState = (Dictionary<string, object>)state;
+            foreach (string name in inventoryState.Keys)
             {
-                foreach (CraftingSlot slot in craftingItemSlots)
+                if (name == "CraftingItems")
                 {
-                    if (slot.item.GetID() == itemName)
+                    Dictionary<string, int> craftingSlotsSaved = (Dictionary<string, int>)inventoryState[name];
+                    //Dictionary<string, int> craftingItemsState = new Dictionary<string, int>();
+                    foreach (string itemID in craftingSlotsSaved.Keys)
                     {
-                        slot.number = inventoryState[itemName];
-                        if (slot.number != 0)
+                        foreach (CraftingSlot slot in craftingItemSlots)
                         {
-                            print("Restoring  " + slot.item.GetDisplayName() + "  with  " + slot.number);
+                            
+                            if (slot.item.GetID() == itemID)
+                            {
+                                slot.number = craftingSlotsSaved[itemID];
+                                if (slot.number != 0)
+                                {
+                                    //print("Restoring  " + slot.item.GetDisplayName() + "  with  " + slot.number);
+                                }
+                            }
                         }
+                    }
+                }
+                else if (name == "ExtraDamageWeapons")
+                {
+                    Dictionary<string, float> extraDamage = inventoryState[name] as Dictionary<string, float>;
+                    extraDamageForWeapons.Clear();
+                    extraDamageForWeapons = extraDamage;
+                    foreach(string weaponID in extraDamage.Keys)
+                    {
+                        //print(Item.GetFromID(weaponID) + " has now  " + extraDamage[weaponID]);
                     }
                 }
             }

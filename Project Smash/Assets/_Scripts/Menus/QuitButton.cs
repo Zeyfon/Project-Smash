@@ -13,7 +13,7 @@ namespace PSmash.Menus
             print("Quitting Game");
             FindObjectOfType<PlayerHealth>().gameObject.layer = LayerMask.NameToLayer("Dead");
             FindObjectOfType<SavingWrapper>().QuitGame();
-            GetComponentInParent<MainMenu>().CloseMainMenu();
+            //GetComponentInParent<MainMenu>().CloseMainMenu();
         }
     }
 }

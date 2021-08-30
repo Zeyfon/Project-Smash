@@ -15,11 +15,9 @@ namespace PSmash.Menus
         public static event Action OnNextMenuOpen;
 
         public static event Action OnTentMenuClose;
-        _Controller _controller;
         // Start is called before the first frame update
         void Start()
         {
-            _controller = new _Controller();
             DisableMenuObjects();
         }
         private void OnEnable()
@@ -43,7 +41,7 @@ namespace PSmash.Menus
         {
             OpenMenu();
             //print(OnTentMenuClose.Target);
-            Checkpoint();
+            TentEnterSound();
         }
 
         /// <summary>
@@ -52,7 +50,8 @@ namespace PSmash.Menus
         public void OpenMenu()
         {
             //print("Open Tent Menu");
-            SetChildObjects(true);
+            transform.GetChild(0).gameObject.SetActive(true);
+            //SetChildObjects(true);
             StartCoroutine(EnableControl());
             StartCoroutine(InitializeSelection());
         }
@@ -77,40 +76,20 @@ namespace PSmash.Menus
             CloseTentMenu();
         }
 
-        void EnableUIController()
-        {
-            _controller.UI.Enable();
-            _controller.UI.Cancel.performed += ctx => BacktrackMenu();
-            _controller.UI.ButtonStart.performed += ctx => CloseAllMenus();
-            //print("Enable Tent Menu Controller");
-
-        }
-
-        void DisableUIController()
-        {
-            _controller.UI.Disable();
-            _controller.UI.Cancel.performed -= ctx => BacktrackMenu();
-            _controller.UI.ButtonStart.performed -= ctx => CloseAllMenus();
-            //print("Disable Tent Menu Controller");
-        }
 
 
         /// <summary>
         /// TODO. This part must be taken out as is a method used by the button in the Tent Menu to open the Crafting Menu
         /// </summary>
-        public void OpenCraftingMenu()
+        public void OpenMainMenuInCraftingSystemSubMenu()
         {
-            if (OnNextMenuOpen != null)
-            {
-                OnNextMenuOpen();
-                DisableMenuObjects();
-                DisableUIController();
-            }
+            print("Here i am");
+            transform.parent.parent.GetComponentInChildren<Menus>().OpenMenuViaCraftingSystem();
         }
 
         /////////////PRIVATE///////////////
 
-        void Checkpoint()
+        void TentEnterSound()
         {
             CheckpointOpenedAudioSource.Play();
         }
@@ -126,20 +105,17 @@ namespace PSmash.Menus
         IEnumerator EnableControl()
         {
             yield return new WaitForEndOfFrame();
-            EnableUIController();
+            //EnableUIController();
         }
 
         void CloseTentMenu()
         {
-            //print("Closing Tent Menu");
             DisableMenuObjects();
             if(OnTentMenuClose == null)
             {
-                //Debug.LogWarning("Player will not enable controller again");
                 return;
             }
                 OnTentMenuClose();
-            DisableUIController();
         }
 
         /// <summary>

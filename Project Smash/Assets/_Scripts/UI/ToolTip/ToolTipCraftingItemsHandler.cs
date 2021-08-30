@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using PSmash.UI.CraftingSytem;
 
-namespace PSmash.UI
+namespace PSmash.CraftingSystem
 {
     /// <summary>
     /// The idea is that this script will be in charge of updating the required materials for that specificil SkillSlot
@@ -18,14 +18,11 @@ namespace PSmash.UI
     {
         [SerializeField] ToolTipWindowItemSlot[] craftingItemSlots;
 
-        Inventory inventory;
-        private void Awake()
+        public void SetSkillSlotInfo(SkillSlot slot)
         {
-            inventory = Inventory.GetPlayerInventory();
-        }
 
-        public void SetSkillSlotInfo(Dictionary<CraftingItem, int> requiredCraftingMaterials)
-        {
+            Dictionary<CraftingItem, int> requiredCraftingMaterials = slot.GetCraftingItemsRequirement();
+
             foreach (ToolTipWindowItemSlot craftingItemSlot in craftingItemSlots)
             {
                 craftingItemSlot.gameObject.SetActive(true);
@@ -33,7 +30,7 @@ namespace PSmash.UI
             int j = 0;
             foreach (CraftingItem craftingItem in requiredCraftingMaterials.Keys)
             {
-                int playerQuantity = inventory.GetThisCraftingItemNumber(craftingItem);
+                int playerQuantity = Inventory.GetPlayerInventory().GetThisCraftingItemNumber(craftingItem);
                 craftingItemSlots[j].UpdateCraftingItem(craftingItem, requiredCraftingMaterials[craftingItem], playerQuantity);
                 j++;
             }

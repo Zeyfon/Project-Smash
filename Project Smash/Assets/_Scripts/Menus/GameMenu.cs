@@ -10,7 +10,7 @@ namespace PSmash.Menus
 {
     public class GameMenu : MonoBehaviour
     {
-        _Controller _controller;
+        //_Controller _controller;
         public bool menuIsOpened = false;
         PlayerInput playerInput;
         EventManager eventManager;

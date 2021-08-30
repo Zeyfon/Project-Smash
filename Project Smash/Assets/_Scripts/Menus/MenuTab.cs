@@ -16,7 +16,7 @@ namespace PSmash.Menus
 
         public void EnableSubMenu()
         {
-            // print("Enabling " + mySubMenu.name);
+            //print("Enabling " + mySubMenu.name);
             mySubMenu.SetActive(true);
         }
 
