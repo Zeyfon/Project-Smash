@@ -52,7 +52,7 @@ namespace PSmash.Menus
             //print("Open Tent Menu");
             transform.GetChild(0).gameObject.SetActive(true);
             //SetChildObjects(true);
-            StartCoroutine(EnableControl());
+            //StartCoroutine(EnableControl());
             StartCoroutine(InitializeSelection());
         }
 
@@ -83,7 +83,6 @@ namespace PSmash.Menus
         /// </summary>
         public void OpenMainMenuInCraftingSystemSubMenu()
         {
-            print("Here i am");
             transform.parent.parent.GetComponentInChildren<Menus>().OpenMenuViaCraftingSystem();
         }
 

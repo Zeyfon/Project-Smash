@@ -14,7 +14,6 @@ namespace PSmash.Checkpoints
     public class Tent : MonoBehaviour, IManualInteraction
     {
         public static event Action OnTentMenuOpen;
-        public static event Action OnCheckpointDone;
 
         bool isPlayerInSavePoint = false;
 
@@ -25,7 +24,6 @@ namespace PSmash.Checkpoints
             {
                 //print("Interactin with Tent");
                 OnTentMenuOpen();
-                OnCheckpointDone();
                 FindObjectOfType<SavingWrapper>().Save();
             }
         }

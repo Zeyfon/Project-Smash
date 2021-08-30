@@ -13,12 +13,12 @@ namespace PSmash.Checkpoints
         //INITIALIZE
         private void OnEnable()
         {
-            Tent.OnCheckpointDone += Tent_OnCheckpointDone;
+            Tent.OnTentMenuOpen += Tent_OnCheckpointDone;
         }
 
         private void OnDisable()
         {
-            Tent.OnCheckpointDone -= Tent_OnCheckpointDone;
+            Tent.OnTentMenuOpen -= Tent_OnCheckpointDone;
         }
 
         /////////////////////////////////////////PUBLIC//////////////////////////////////////

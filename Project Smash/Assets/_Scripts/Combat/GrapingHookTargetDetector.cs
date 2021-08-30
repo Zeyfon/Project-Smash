@@ -24,7 +24,7 @@ namespace PSmash.Combat
         void FixedUpdate()
         {
             Collider2D[] targets = Physics2D.OverlapCircleAll(transform.position, radiusDetection + 3, whatIsATargetHook);
-            if (targets.Length > 0)
+            if (targets.Length > 0 && equipment.GetEquippedSubweapon().GetID() == "1720dbad-ef7b-4371-acb1-344715d937d5")
             {
                 SetHookTarget(targets);
             }
@@ -45,9 +45,12 @@ namespace PSmash.Combat
             bool targetUpdated = false;
             foreach (Collider2D coll in targets)
             {
+                if (coll.transform == transform)
+                    continue;
                 if (IsTargetInFront(coll.transform) && IsAbovePlayer(coll.transform))
                 {
-                    if (equipment.GetThisSubweaponLevel(grapingHook) < coll.GetComponent<GrapingHookTarget>().GetMyLevel())
+                    print(equipment.GetEquippedSubweapon().GetMyLevel() + "  " + coll.GetComponent<GrapingHookTarget>().GetMyLevel());
+                    if (equipment.GetEquippedSubweapon().GetMyLevel() < coll.GetComponent<GrapingHookTarget>().GetMyLevel())
                     {
                         coll.transform.SendMessage("DisablePrompt");
                         return;

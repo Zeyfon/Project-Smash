@@ -286,6 +286,7 @@ namespace PSmash.Combat
         void SubWeaponAttackDamage()
         {
             Weapon weapon = GetComponent<Equipment>().GetEquippedSubweapon();
+            print(weapon.displayName);
             float extraWeaponDamage = GetComponent<Equipment>().GetExtraWeaponDamage(weapon);
             damageArea = weapon.GetWeaponDamageArea();
             Attack(attackTransform, weapon, extraWeaponDamage);

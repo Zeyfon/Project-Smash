@@ -176,7 +176,6 @@ namespace PSmash.InputSystem
         }
         private void Action2Released()
         {
-            print(action2);
             action2.ButtonReleased(transform, this, currentFSM.Value as PlayMakerFSM, movement, action5State);
         }
 
