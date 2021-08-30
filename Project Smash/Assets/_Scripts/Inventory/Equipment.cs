@@ -26,23 +26,27 @@ namespace PSmash.Inventories
 
         void Start()
         {
-            //GetWeapons();
 
             RestockToolNumbers();
             if (onCurrentToolEquippedChange != null)
                 onCurrentToolEquippedChange(currentIndex);
             if(onSubWeaponChange != null)
                 onSubWeaponChange(equippedSubweapon);
+            if(equippedSubweapon == null)
+            {
+               equippedSubweapon =  Inventory.GetPlayerInventory().GetSubweapon();
+                print(equippedSubweapon.GetDisplayName());
+            }
         }
 
         private void OnEnable()
         {
-            Tent.OnCheckpointDone += RestockToolNumbersAndUpdateUI;
+            Tent.OnTentMenuOpen += RestockToolNumbersAndUpdateUI;
         }
 
         private void OnDisable()
         {
-            Tent.OnCheckpointDone -= RestockToolNumbersAndUpdateUI;
+            Tent.OnTentMenuOpen -= RestockToolNumbersAndUpdateUI;
         }
 
 
@@ -172,25 +176,27 @@ namespace PSmash.Inventories
 
         public void SwitchSubWeapon()
         {
+
             subweaponIndex++;
-            List<Weapon> weapons = Inventory.GetPlayerInventory().GetWeapons();
-            foreach(Weapon weapon in weapons)
+            List<Subweapon> subweapons= GetSubweapons(Inventory.GetPlayerInventory().GetWeapons());
+            if (subweaponIndex >= subweapons.Count)
+                subweaponIndex = 0;
+            equippedSubweapon = subweapons[subweaponIndex];
+            print("Player changed subweapon to " + equippedSubweapon.GetDisplayName());
+            onSubWeaponChange(equippedSubweapon);
+        }
+
+        List<Subweapon> GetSubweapons(List<Weapon> weapons)
+        {
+            List<Subweapon> subweapons = new List<Subweapon>();
+            foreach (Weapon weapon in weapons)
             {
-                if(weapon is Subweapon)
+                if (weapon is Subweapon)
                 {
-                    continue;
-                }
-                else
-                {
-                    weapons.Remove(weapon);
+                    subweapons.Add(weapon as Subweapon);
                 }
             }
-            if (subweaponIndex >= weapons.Count)
-                subweaponIndex = 0;
-
-            print(subweaponIndex + "  "  + weapons.Count);
-            equippedSubweapon = weapons[subweaponIndex] as Subweapon;
-            onSubWeaponChange(equippedSubweapon);
+            return subweapons;
         }
 
         public float GetExtraWeaponDamage(Weapon equippedWeapon)
@@ -278,12 +284,13 @@ namespace PSmash.Inventories
 
                 if(name == "Subweapon")
                 {
-                    foreach (Subweapon subWeapon in Inventory.GetPlayerInventory().GetWeapons())
+                    foreach (Weapon weapon in Inventory.GetPlayerInventory().GetWeapons())
                     {
-                        string subWeaponName = (string)equippedItemsForSerialization[name];
-                        if (subWeaponName == subWeapon.GetID())
+                        string weaponID = (string)equippedItemsForSerialization[name];
+                        if (weaponID == weapon.GetID())
                         {
-                            this.equippedSubweapon = subWeapon;
+                            this.equippedSubweapon = weapon as Subweapon;
+                            print("Restoring Subweapon  " + this.equippedSubweapon.GetDisplayName());
                         }
                     }
                 }

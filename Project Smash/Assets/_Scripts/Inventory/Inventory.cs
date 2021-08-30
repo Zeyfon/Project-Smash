@@ -26,25 +26,15 @@ namespace PSmash.Inventories
                 inventoryItems.Add(item);
             }
 
-            //craftingItemSlots.Clear();
-            //foreach (Item item in inventoryItems)
-            //{
-            //    if(item is CraftingItem)
-            //    {
-            //        CraftingSlot slot = new CraftingSlot();
-            //        slot.item = item as CraftingItem;
-            //        craftingItemSlots.Add(slot);
-            //    }
-            //}
             foreach (Item item in inventoryItems)
             {
                 if (item is Weapon)
                 {
                     weapons.Add(item as Weapon);
+                    //print(item.displayName);
                     extraDamageForWeapons.Add(item.GetID(), 0);
                 }
             }
-            //print("");
         }
 
         private void OnEnable()
@@ -89,6 +79,18 @@ namespace PSmash.Inventories
                     return weapon;
             }
             Debug.LogError("No Main Weapon Found");
+            return null;
+        }
+
+        public Subweapon GetSubweapon()
+        {
+            foreach(Weapon weapon in weapons)
+            {
+                if(weapon is Subweapon)
+                {
+                    return weapon as Subweapon;
+                }
+            }
             return null;
         }
 

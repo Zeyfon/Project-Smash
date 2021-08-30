@@ -50,12 +50,12 @@ namespace PSmash.Attributes
 
         private void OnEnable()
         {
-            Tent.OnCheckpointDone += RestorePlayer;
+            Tent.OnTentMenuOpen += RestorePlayer;
         }
 
         private void OnDisable()
         {
-            Tent.OnCheckpointDone -= RestorePlayer;
+            Tent.OnTentMenuOpen -= RestorePlayer;
         }
 
         /////////////////////////////////////////////////////////////////////////////////////////PUBLIC/////////////////////////////////////////////////////////////////////////////////////////////
