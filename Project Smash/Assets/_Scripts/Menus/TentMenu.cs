@@ -41,7 +41,7 @@ namespace PSmash.Menus
         {
             OpenMenu();
             //print(OnTentMenuClose.Target);
-            Checkpoint();
+            TentEnterSound();
         }
 
         /// <summary>
@@ -50,7 +50,8 @@ namespace PSmash.Menus
         public void OpenMenu()
         {
             //print("Open Tent Menu");
-            SetChildObjects(true);
+            transform.GetChild(0).gameObject.SetActive(true);
+            //SetChildObjects(true);
             StartCoroutine(EnableControl());
             StartCoroutine(InitializeSelection());
         }
@@ -75,22 +76,6 @@ namespace PSmash.Menus
             CloseTentMenu();
         }
 
-        //void EnableUIController()
-        //{
-        //    _controller.UI.Enable();
-        //    _controller.UI.Cancel.performed += ctx => BacktrackMenu();
-        //    _controller.UI.ButtonStart.performed += ctx => CloseAllMenus();
-        //    //print("Enable Tent Menu Controller");
-
-        //}
-
-        //void DisableUIController()
-        //{
-        //    _controller.UI.Disable();
-        //    _controller.UI.Cancel.performed -= ctx => BacktrackMenu();
-        //    _controller.UI.ButtonStart.performed -= ctx => CloseAllMenus();
-        //    //print("Disable Tent Menu Controller");
-        //}
 
 
         /// <summary>
@@ -99,12 +84,12 @@ namespace PSmash.Menus
         public void OpenMainMenuInCraftingSystemSubMenu()
         {
             print("Here i am");
-            transform.parent.parent.GetComponentInChildren<MainMenu>().OpenMenu(SubMenu.CraftingSystem);
+            transform.parent.parent.GetComponentInChildren<Menus>().OpenMenuViaCraftingSystem();
         }
 
         /////////////PRIVATE///////////////
 
-        void Checkpoint()
+        void TentEnterSound()
         {
             CheckpointOpenedAudioSource.Play();
         }
@@ -125,15 +110,12 @@ namespace PSmash.Menus
 
         void CloseTentMenu()
         {
-            //print("Closing Tent Menu");
             DisableMenuObjects();
             if(OnTentMenuClose == null)
             {
-                //Debug.LogWarning("Player will not enable controller again");
                 return;
             }
                 OnTentMenuClose();
-            //DisableUIController();
         }
 
         /// <summary>

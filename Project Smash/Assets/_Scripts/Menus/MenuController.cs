@@ -45,10 +45,6 @@ namespace PSmash.Menus
         {
             eventSystem.SetSelectedGameObject(null);
             eventSystem.SetSelectedGameObject(buttonTransform.gameObject);
-            //_controller.UI.ButtonA.performed += ButtonAPressed;
-            //_controller.UI.ButtonB.performed += ButtonBPressed;
-            //_controller.UI.ButtonX.performed += ButtonXPressed;
-            //_controller.UI.ButtonY.performed += ButtonYPressed;
         }
 
         void EnableMenus()

@@ -12,7 +12,6 @@ namespace PSmash.UI.CraftingSytem
         [SerializeField] Material yellowMaterial = null;
 
         //STATE
-
         public delegate void SelectionChange(SkillSlot gameObject);
         public static event SelectionChange onSelectionChange;
 
@@ -68,17 +67,8 @@ namespace PSmash.UI.CraftingSytem
         /// </summary>
         public void UpdateSkillPanel(SkillSlot currentSelectedSkillSlot)
         {
-            //print("Updating Panel");
             UpdateColorOfLinks();
             UpdateWhiteRings();
-            //if (currentSelectedSkillSlot == null)
-            //{
-            //    //UpdateRings(initialSkillSlot);
-            //}
-            //else
-            //{
-            //    UpdateWhiteRings();
-            //}
         }
 
         private void UpdateColorOfLinks()
@@ -106,16 +96,7 @@ namespace PSmash.UI.CraftingSytem
                     slot.SetRingToNull();
                 }
             }
-            
-            ////Update ToolTipWindow
-            //if (onSelectionChange != null)
-            //{
-            //    onSelectionChange(skillSlot);
-            //}
-
-            //previousGameObject = skillSlot.gameObject;
         }
-
     }
 }
 

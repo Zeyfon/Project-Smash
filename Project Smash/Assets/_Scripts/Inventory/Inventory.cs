@@ -26,16 +26,16 @@ namespace PSmash.Inventories
                 inventoryItems.Add(item);
             }
 
-            craftingItemSlots.Clear();
-            foreach (Item item in inventoryItems)
-            {
-                if(item is CraftingItem)
-                {
-                    CraftingSlot slot = new CraftingSlot();
-                    slot.item = item as CraftingItem;
-                    craftingItemSlots.Add(slot);
-                }
-            }
+            //craftingItemSlots.Clear();
+            //foreach (Item item in inventoryItems)
+            //{
+            //    if(item is CraftingItem)
+            //    {
+            //        CraftingSlot slot = new CraftingSlot();
+            //        slot.item = item as CraftingItem;
+            //        craftingItemSlots.Add(slot);
+            //    }
+            //}
             foreach (Item item in inventoryItems)
             {
                 if (item is Weapon)
@@ -203,14 +203,16 @@ namespace PSmash.Inventories
             {
                 if (name == "CraftingItems")
                 {
-                    Dictionary<string, int> craftingItemsState = new Dictionary<string, int>();
-                    foreach (string itemName in craftingItemsState.Keys)
+                    Dictionary<string, int> craftingSlotsSaved = (Dictionary<string, int>)inventoryState[name];
+                    //Dictionary<string, int> craftingItemsState = new Dictionary<string, int>();
+                    foreach (string itemID in craftingSlotsSaved.Keys)
                     {
                         foreach (CraftingSlot slot in craftingItemSlots)
                         {
-                            if (slot.item.GetID() == itemName)
+                            
+                            if (slot.item.GetID() == itemID)
                             {
-                                slot.number = craftingItemsState[itemName];
+                                slot.number = craftingSlotsSaved[itemID];
                                 if (slot.number != 0)
                                 {
                                     //print("Restoring  " + slot.item.GetDisplayName() + "  with  " + slot.number);
