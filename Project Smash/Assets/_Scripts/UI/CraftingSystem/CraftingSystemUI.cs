@@ -31,6 +31,8 @@ namespace PSmash.UI.CraftingSytem
             CraftingSystem.CraftingSystem.OnSkillPanelUpdate += UpdateSkillPanel;
             MainMenuSelector.OnSelectionChange += CraftingSystemSubMenuSelectionChanged;
             UpdateSkillPanel(initialSkillSlot);
+            GetComponentInChildren<CraftingSystemInfoPanel>().UpdateInfoPanelWithSkillInfo(initialSkillSlot);
+
         }
 
         /// <summary>

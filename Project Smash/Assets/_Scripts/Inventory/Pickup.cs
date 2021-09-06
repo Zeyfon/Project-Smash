@@ -7,7 +7,7 @@ namespace PSmash.Inventories
 {
     public class Pickup : MonoBehaviour
     {
-        [SerializeField] Item collectible = null;
+        //[SerializeField] Item collectible = null;
         [SerializeField] Collider2D collectingCollider = null;
         public delegate void DropCollected(ItemSlot slot);
         public static event DropCollected onDropCollected;
@@ -16,10 +16,11 @@ namespace PSmash.Inventories
 
         void Start()
         {
-            if (collectible == null)
+            Collectible collectible = GetComponent<Collectible>();
+            if (collectible ==null)
                 return;
             ItemSlot slot = new ItemSlot();
-            slot.item = collectible;
+            slot.item = collectible.GetCollectible() ;
             slot.number = 1;
             slots.Add(slot);
         }

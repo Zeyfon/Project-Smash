@@ -72,13 +72,6 @@ namespace PSmash.InputSystem
             action10 = new UtilityCommand();
         }
 
-        //Method used by each state in PlayMaker to inform to which state the inputs will be sent
-        //public void SetCurrentStateFSM(PlayMakerFSM pm)
-        //{
-        //    //currentPMState = pm;
-        //    //print("Current State in Player is " + currentPMState.FsmName);
-        //}
-
         private void OnEnable()
         {
             _controller.Player.Enable();
@@ -95,20 +88,15 @@ namespace PSmash.InputSystem
             _controller.Player.Action8.started += ctx => Action8Pressed();
             _controller.Player.SubweaponSwitch.started += ctx => SubweaponSwitchPressed();
             _controller.Player.Utility.performed += ctx => UtilityPressed();
-            //_controller.Player.SubweaponSwitch.canceled += ctx => SubweaponSwitchPressed();
 
 
             _controller.Player.Quit.performed += ctx => QuitKeyPressed();
             _controller.Player.ButtonStart.started += ctx => ButtonStartPressed();
 
             Mace.onObjectTaken += EnableInput;
-            //CraftingSystem.CraftingSystem.OnMenuClose += EnablePlayerInput;
-            //MainMenu.OnMenuClose += EnablePlayerInput;
             Menus.Menus.OnMenuClose += EnablePlayerInput;
-            //TentMenu.OnTentMenuClose += EnablePlayerInput;
             EventManager.PauseGame += PauseGame;
             EventManager.UnpauseGame += UnpauseGame;
-            //EventManager.PlayerGotBoots += PlayerGotBoots;
             EventManager.PlayerPerformUncontrolledAction += IsPlayerInputEnabled;
             Door.EnablePlayerController += IsPlayerInputEnabled;
             Trap.EnablePlayerController += IsPlayerInputEnabled;
@@ -131,20 +119,14 @@ namespace PSmash.InputSystem
             _controller.Player.Action8.started -= ctx => Action8Pressed();
             _controller.Player.SubweaponSwitch.started -= ctx => SubweaponSwitchPressed();
             _controller.Player.Utility.performed -= ctx => UtilityPressed();
-            //_controller.Player.SubweaponSwitch.canceled -= ctx => SubweaponSwitchPressed();
-
             _controller.Player.Quit.performed -= ctx => QuitKeyPressed();
             _controller.Player.ButtonStart.started -= ctx => ButtonStartPressed();
 
             Mace.onObjectTaken -= EnableInput;
 
-            //CraftingSystem.CraftingSystem.OnMenuClose -= EnablePlayerInput;
             Menus.Menus.OnMenuClose -= EnablePlayerInput;
-            //MainMenu.OnMenuClose -= EnablePlayerInput;
-            //TentMenu.OnTentMenuClose -= EnablePlayerInput;
             EventManager.PauseGame -= PauseGame;
             EventManager.UnpauseGame -= UnpauseGame;
-            //EventManager.PlayerGotBoots -= PlayerGotBoots;
             Door.EnablePlayerController -= IsPlayerInputEnabled;
             Trap.EnablePlayerController -= IsPlayerInputEnabled;
             Portal.OnPortalTriggered -= EnableInput;

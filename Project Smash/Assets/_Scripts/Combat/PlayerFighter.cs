@@ -122,17 +122,18 @@ namespace PSmash.Combat
             animator.SetInteger("Attack", 70);
             coroutine = StartCoroutine(ThrowHook(hookTarget));
         }
+
         public void GrapingHook()
         {
             if(coroutine == null)
                 StartCoroutine(ThrowHook(null));
         }
 
-        IEnumerator ThrowHook(Transform target)
+        IEnumerator ThrowHook(Transform targetForMobility)
         {
             rope = Instantiate(hookRope, attackTransform.position, Quaternion.identity, attackTransform);
 
-            if (target == null)
+            if (targetForMobility == null)
             {
                 yield return rope.DoHookShot(null);
                 enemyTransform = rope.EnemyHitByHook();
@@ -158,10 +159,10 @@ namespace PSmash.Combat
             }
             else
             {
-                yield return rope.DoHookShot(target);
+                yield return rope.DoHookShot(targetForMobility);
                 animator.SetInteger("Attack", 73);
                 yield return null;
-                yield return PulledTowardsTarget(target);
+                yield return PulledTowardsTarget(targetForMobility);
                 Destroy(rope.gameObject, 0.01f);
                 animator.SetInteger("Attack", 75);
             }

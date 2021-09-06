@@ -9,7 +9,7 @@ namespace PSmash.Menus
     {
         [SerializeField] GameObject initialSelection =  null;
         [SerializeField] CraftingSystem.CraftingSystem craftingSystem = null; 
-        [SerializeField] MenuTab[] menuTabs;
+        MenuTab[] menuTabs;
         
         //This variable is used by different UI elements that need to know
         //the previous eventSystem.currentGameObjectSelected in order
@@ -21,6 +21,11 @@ namespace PSmash.Menus
         public delegate void SelectionChanged(GameObject gameObject);
         public static event SelectionChanged OnSelectionChange;
 
+        private void Awake()
+        {
+            menuTabs = GetComponentsInChildren<MenuTab>();
+
+        }
         public void EnableSubMenu(SubMenu subMenu)
         {
             DisableAllSubMenus();
