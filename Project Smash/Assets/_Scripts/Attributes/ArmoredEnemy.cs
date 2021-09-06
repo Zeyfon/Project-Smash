@@ -53,6 +53,7 @@ namespace PSmash.Attributes
         {
             Info info = new Info();
             info.checkpointCounter = FindObjectOfType<WorldManager>().GetCheckpointCounter();
+            info.isArmorEnable = isArmorEnable;
             return info;
         }
 
