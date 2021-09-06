@@ -5,7 +5,7 @@ using UnityEngine;
 public enum SubMenu
 {
     PlayerStats,
-    Journal,
     CraftingSystem,
+    Journal,
     Options
 }

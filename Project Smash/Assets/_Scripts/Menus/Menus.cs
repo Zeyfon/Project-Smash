@@ -12,7 +12,7 @@ namespace PSmash.Menus
     public class Menus : MonoBehaviour
     {
         [SerializeField] GameObject status = null;        
-        [SerializeField] GameObject tentMenu = null;
+       // [SerializeField] GameObject tentMenu = null;
 
         public static event Action OnMenuClose;
 
@@ -25,17 +25,20 @@ namespace PSmash.Menus
         {
             _controller = new _Controller();
             Instantiate(status, transform);
-            Instantiate(tentMenu, transform);
+            //Instantiate(tentMenu, transform);
         }
         private void OnEnable()
         {
             InputHandler.OnPlayerStartButtonPressed += OpenMainMenuViaStartButton;
             ContinueButton.OnMenuClose += CloseMainMenu;
+            Tent.OnTentMenuOpen += OpenMenuViaCraftingSystem;
         }
         private void OnDisable()
         {
             InputHandler.OnPlayerStartButtonPressed -= OpenMainMenuViaStartButton;
             ContinueButton.OnMenuClose -= CloseMainMenu;
+            Tent.OnTentMenuOpen -= OpenMenuViaCraftingSystem;
+
         }
 
         private void OpenMainMenuViaStartButton()
@@ -64,7 +67,7 @@ namespace PSmash.Menus
             }
         }
 
-        private void CloseMainMenu()
+        public void CloseMainMenu()
         {
             if (saveWhenExit)
             {

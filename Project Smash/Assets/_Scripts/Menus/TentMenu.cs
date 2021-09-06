@@ -20,15 +20,15 @@ namespace PSmash.Menus
         {
             DisableMenuObjects();
         }
-        private void OnEnable()
-        {
-            Tent.OnTentMenuOpen += OpenTentMenuAndDoCheckpoint;
-        }
+        //private void OnEnable()
+        //{
+        //    Tent.OnTentMenuOpen += OpenTentMenuAndDoCheckpoint;
+        //}
 
-        private void OnDisable()
-        {
-            Tent.OnTentMenuOpen -= OpenTentMenuAndDoCheckpoint;
-        }
+        //private void OnDisable()
+        //{
+        //    Tent.OnTentMenuOpen -= OpenTentMenuAndDoCheckpoint;
+        //}
 
         ///////////PUBLIC////////////// 
         ///

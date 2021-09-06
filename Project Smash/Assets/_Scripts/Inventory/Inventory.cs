@@ -16,6 +16,7 @@ namespace PSmash.Inventories
 
         List<Item> inventoryItems = new List<Item>();
         List<Weapon> weapons = new List<Weapon>();
+        List<CollectibleItem> collectibles = new List<CollectibleItem>();
         Dictionary<string, float> extraDamageForWeapons = new Dictionary<string, float>();
 
         // Start is called before the first frame update
@@ -30,9 +31,10 @@ namespace PSmash.Inventories
             {
                 if (item is Weapon)
                 {
-                    weapons.Add(item as Weapon);
+                    Weapon weapon = item as Weapon;
+                    weapons.Add(weapon);
                     //print(item.displayName);
-                    extraDamageForWeapons.Add(item.GetID(), 0);
+                    extraDamageForWeapons.Add(weapon.GetID(), weapon.GetDamage());
                 }
             }
         }
@@ -176,6 +178,16 @@ namespace PSmash.Inventories
             return 0;
         }
 
+        public List<CollectibleItem> GetCollectibles()
+        {
+            return collectibles;
+        }
+
+        public void AddCollectibleToInventory(CollectibleItem item)
+        {
+            collectibles.Add(item);
+        }
+
         ////////////////////////////////////////////////SAVE SYSTEM///////////////////////////////////////////////////////////////
 
         public object CaptureState()
@@ -195,6 +207,13 @@ namespace PSmash.Inventories
             //print(extraDamageForWeapons.Count + "   counting");
 
             inventoryState.Add("ExtraDamageWeapons", extraDamageForWeapons);
+            List<string> collectiblesID = new List<string>();
+            int i = 0;
+            foreach(CollectibleItem collectible in collectibles)
+            {
+                collectiblesID.Add(collectible.GetID());
+            }
+            inventoryState.Add("Collectibles", collectiblesID);
             return inventoryState;
         }
 
@@ -231,6 +250,14 @@ namespace PSmash.Inventories
                     foreach(string weaponID in extraDamage.Keys)
                     {
                         //print(Item.GetFromID(weaponID) + " has now  " + extraDamage[weaponID]);
+                    }
+                }
+                else if( name == "Collectibles")
+                {
+                    List<string> collectiblesID = (List<string>)inventoryState[name];
+                    foreach(string collectiblID in collectiblesID)
+                    {
+                        collectibles.Add(Item.GetFromID(collectiblID) as CollectibleItem);
                     }
                 }
             }
