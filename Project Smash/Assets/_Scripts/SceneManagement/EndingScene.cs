@@ -15,6 +15,8 @@ namespace PSmash.SceneManagement
         void Awake()
         {
             StartCoroutine(Ending());
+
+            Destroy(FindObjectOfType<SavingWrapper>().transform.parent.gameObject, 0.1f);
         }
 
         IEnumerator Ending()
@@ -27,6 +29,7 @@ namespace PSmash.SceneManagement
             yield return fader.FadeIn(canvasGroup, fadeIntTime);
             QuitGame();
         }
+
 
         void QuitGame()
         {
