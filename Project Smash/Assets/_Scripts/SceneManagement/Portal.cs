@@ -90,10 +90,10 @@ namespace PSmash.SceneManagement
                 else
                     Debug.LogWarning("Portal cannot enable new Player controller");
             }
-            else
-            {
-                Destroy(FindObjectOfType<SavingWrapper>().transform.parent.gameObject, 0.1f);
-            }
+            //else
+            //{
+            //    Destroy(FindObjectOfType<SavingWrapper>().transform.parent.gameObject, 0.1f);
+            //}
             Destroy(gameObject);
         }
 
