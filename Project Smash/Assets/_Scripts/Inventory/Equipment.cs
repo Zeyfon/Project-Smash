@@ -35,7 +35,7 @@ namespace PSmash.Inventories
             if(equippedSubweapon == null)
             {
                equippedSubweapon =  Inventory.GetPlayerInventory().GetSubweapon();
-                print(equippedSubweapon.GetDisplayName());
+                //print(equippedSubweapon.GetDisplayName());
             }
         }
 
@@ -290,7 +290,7 @@ namespace PSmash.Inventories
                         if (weaponID == weapon.GetID())
                         {
                             this.equippedSubweapon = weapon as Subweapon;
-                            print("Restoring Subweapon  " + this.equippedSubweapon.GetDisplayName());
+                            //print("Restoring Subweapon  " + this.equippedSubweapon.GetDisplayName());
                         }
                     }
                 }

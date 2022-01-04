@@ -9,7 +9,12 @@ namespace PSmash.CraftingSystem
     {
         public void TryToUnlockThisSkill()
         {
-            GetComponentInParent<CraftingSystem>().TryToUnlockSkill(this);
+            SkillSlot skillSlot = GetComponent<SkillSlot>();
+            if (skillSlot.CanBeUnlocked())
+            {
+                skillSlot.SetIsUnlocked(true);
+                GetComponentInParent<CraftingSystem>().UnlockSkill(skillSlot);
+            }
         }
     }
 }
