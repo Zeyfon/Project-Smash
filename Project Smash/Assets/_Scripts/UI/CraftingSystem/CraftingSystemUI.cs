@@ -28,10 +28,14 @@ namespace PSmash.UI.CraftingSytem
 
         private void OnEnable()
         {
-            CraftingSystem.CraftingSystem.OnSkillPanelUpdate += UpdateSkillPanel;
             MainMenuSelector.OnSelectionChange += CraftingSystemSubMenuSelectionChanged;
-            UpdateSkillPanel(initialSkillSlot);
             GetComponentInChildren<CraftingSystemInfoPanel>().UpdateInfoPanelWithSkillInfo(initialSkillSlot);
+
+        }
+
+        private void OnDisable()
+        {
+            MainMenuSelector.OnSelectionChange -= CraftingSystemSubMenuSelectionChanged;
 
         }
 
@@ -43,61 +47,25 @@ namespace PSmash.UI.CraftingSytem
         {
             if (eventSystem == null)
                 return;
-            UpdateSkillPanel(null);
-            if (previousGameObject != eventSystem.currentSelectedGameObject)
+            if (previousGameObject != eventSystem.currentSelectedGameObject && previousGameObject != null)
             {
                 SkillSlot skillSlot = eventSystem.currentSelectedGameObject.GetComponent<SkillSlot>();
                 if (skillSlot == null)
+                {
                     return;
+                }
 
-                skillSlot.SetRingToYellow(yellowMaterial);
+                print(previousGameObject.name + eventSystem.currentSelectedGameObject.name);
                 GetComponentInChildren<CraftingSystemInfoPanel>().UpdateInfoPanelWithSkillInfo(skillSlot);
+                if (previousGameObject.GetComponent<SkillSlotUI>())
+                {
+                    previousGameObject.GetComponent<SkillSlotUI>().SetRingToWhatIsNecessary();
+                }
+                eventSystem.currentSelectedGameObject.GetComponent<SkillSlotUI>().SetRingToYellow();
+
             }
             previousGameObject = eventSystem.currentSelectedGameObject;
-        }
-
-        private void OnDisable()
-        {
-            CraftingSystem.CraftingSystem.OnSkillPanelUpdate -= UpdateSkillPanel;
-            MainMenuSelector.OnSelectionChange -= CraftingSystemSubMenuSelectionChanged;
-
-        }
-
-        ////////////////////////////////////////////////////////////////////////////////PUBLIC/////////////////////////////////////////////////////////////////////
-        /// <summary>
-        /// Sets the SkillSlot to Unlocked, Unlockable and Locked states
-        /// </summary>
-        public void UpdateSkillPanel(SkillSlot currentSelectedSkillSlot)
-        {
-            UpdateColorOfLinks();
-            UpdateWhiteRings();
-        }
-
-        private void UpdateColorOfLinks()
-        {
-            foreach (SkillSlot slot in GetComponentsInChildren<SkillSlot>())
-            {
-                slot.VisualUpdate();
-            }
-        }
-
-        ////////////////////////////////////////////////////////////////////////////////PRIVATE/////////////////////////////////////////////////////////////////////
-
-
-        void UpdateWhiteRings()
-        {
-            CraftingSystem.CraftingSystem craftingSystem = GetComponentInParent<CraftingSystem.CraftingSystem>();
-            foreach(SkillSlot slot in GetComponentsInChildren<SkillSlot>())
-            {
-                if(slot.IsUnlockable() && craftingSystem.DoPlayerHasTheNecessaryItemNumbersToUnlockThisSkill(slot) != null)
-                {
-                    slot.SetRightToWhite();
-                }
-                else
-                {
-                    slot.SetRingToNull();
-                }
-            }
+            print(previousGameObject.name);
         }
     }
 }

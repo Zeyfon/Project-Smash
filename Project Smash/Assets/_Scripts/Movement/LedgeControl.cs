@@ -11,7 +11,7 @@ public class LedgeControl
         RaycastHit2D isTouchingMiddleWall;
         if (yVelocity > 0)
         {
-            Debug.Log("Ledge check Upwards");
+            //Debug.Log("Ledge check Upwards");
             isTouchingMiddleWall = GetIsTouchingMiddleWall(transform, wallCheckMiddle, whatIsGround);
             if (!isTouchingMiddleWall) return false;
             isTouchingUpperWall = GetIsTouchingUpperWall(transform, wallCheckUpper,whatIsGround);

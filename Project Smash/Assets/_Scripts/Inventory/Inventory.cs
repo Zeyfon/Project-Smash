@@ -3,6 +3,7 @@ using PSmash.Stats;
 using System.Collections.Generic;
 using UnityEngine;
 using GameDevTV.Saving;
+using PSmash.CraftingSystem;
 
 namespace PSmash.Inventories
 {
@@ -108,18 +109,15 @@ namespace PSmash.Inventories
             return 0;
         }
 
-
-        public void SubstractTheseCraftingItemsNumbers(Dictionary<CraftingItem, int> craftingItemsRequired)
+        public void SubstractTheseCraftingItemsNumbers(SkillSlot.CraftingItemSlot[] slots)
         {
-            foreach( CraftingItem item in craftingItemsRequired.Keys)
+            foreach (SkillSlot.CraftingItemSlot slot in slots)
             {
-                foreach (CraftingSlot slot in craftingItemSlots)
+                foreach(CraftingSlot item in craftingItemSlots)
+
+                if(slot.item == item.item)
                 {
-                    if (slot.item == item)
-                    {
-                        slot.number -= craftingItemsRequired[item];
-                        break;
-                    }
+                        item.number -= slot.number;
                 }
             }
         }

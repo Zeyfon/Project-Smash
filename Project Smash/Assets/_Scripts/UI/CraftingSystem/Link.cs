@@ -8,6 +8,11 @@ namespace PSmash.UI.CraftingSytem
         [SerializeField] Image image = null;
         bool isLinkSet = false;
 
+        private void Start()
+        {
+            image.color = new Color(0.3f, 0.3f, 0.3f, 0.3f);
+        }
+
 
         /// <summary>
         /// This method is to update the color of the link.
