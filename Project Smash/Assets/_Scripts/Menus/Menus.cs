@@ -12,7 +12,6 @@ namespace PSmash.Menus
     public class Menus : MonoBehaviour
     {
         [SerializeField] GameObject status = null;        
-       // [SerializeField] GameObject tentMenu = null;
 
         public static event Action OnMenuClose;
 
@@ -43,29 +42,27 @@ namespace PSmash.Menus
 
         private void OpenMainMenuViaStartButton()
         {
-            CloseMenusBeforeOpenOne();
-            _controller.UI.Enable();
-            _controller.UI.Cancel.started += ctx => CloseMainMenu();
-            GetComponentInChildren<MainMenu>().OpenMenu(SubMenu.PlayerStats);
-            saveWhenExit = false;
+            OpenSubMenu(SubMenu.PlayerStats, false);
         }
 
         public void OpenMenuViaCraftingSystem()
         {
-            CloseMenusBeforeOpenOne();
-            _controller.UI.Enable();
-            _controller.UI.Cancel.started += ctx => CloseMainMenu();
-            GetComponentInChildren<MainMenu>().OpenMenu(SubMenu.CraftingSystem);
-            saveWhenExit = true;
+            OpenSubMenu(SubMenu.CraftingSystem, true);
         }
 
-        public void CloseMenusBeforeOpenOne()
+        private void OpenSubMenu(SubMenu subMenu, bool saveAfterExit)
         {
             foreach (Canvas canvas in GetComponentsInChildren<Canvas>())
             {
                 canvas.transform.GetChild(0).gameObject.SetActive(false);
             }
+            _controller.UI.Enable();
+            _controller.UI.Cancel.started += ctx => CloseMainMenu();
+            GetComponentInChildren<MainMenu>().OpenMenu(subMenu);
+            saveWhenExit = saveAfterExit;
         }
+
+
 
         public void CloseMainMenu()
         {
