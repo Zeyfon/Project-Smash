@@ -32,7 +32,12 @@ namespace PSmash.UI.CraftingSytem
             slot.OnSkillPanelUpdate -= UpdateSkillslotSate;
         }
 
-        private void UpdateSkillslotSate(SkillSlot skillSlot)
+        /// <summary>
+        /// Set the visual aspect of the SkillSlot depending on if it being selected,
+        /// unlocked, able to be unlocked or locked
+        /// </summary>
+        /// <param name="skillSlot"></param>
+        public void UpdateSkillslotSate(SkillSlot skillSlot)
         {
             if (slot.IsUnlocked())
             {
@@ -91,6 +96,11 @@ namespace PSmash.UI.CraftingSytem
             image.material = yellowMaterial;
             image.enabled = true;
         }
+
+        /// <summary>
+        /// It is used by the CraftingSystemUI to set the ring color to what it needed.
+        /// Is different from the setskillslot method.
+        /// </summary>
 
         public void SetRingToWhatIsNecessary()
         {

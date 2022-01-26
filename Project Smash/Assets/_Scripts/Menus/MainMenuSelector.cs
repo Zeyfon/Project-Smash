@@ -24,32 +24,20 @@ namespace PSmash.Menus
         private void Awake()
         {
             menuTabs = GetComponentsInChildren<MenuTab>();
-
         }
         public void EnableSubMenu(SubMenu subMenu)
         {
             DisableAllSubMenus();
+            craftingSystem.SetCanUnlockSkill(false);
             if (eventSystem == null)
             {
                 eventSystem = GameObject.FindObjectOfType<EventSystem>();
             }
             gameObject.SetActive(true);
             menuTabs[(int)subMenu].EnableSubMenu();
-            SetCraftingSystemAviabilityToUnlockSkills(subMenu);
-            StartCoroutine(SetInitialButtonSelectionForThisSubMenu(subMenu));
-
-        }
-
-        void SetCraftingSystemAviabilityToUnlockSkills(SubMenu subMenu)
-        {
-            if (subMenu == SubMenu.CraftingSystem)
-            {
+            if(subMenu == SubMenu.CraftingSystem)
                 craftingSystem.SetCanUnlockSkill(true);
-            }
-            else
-            {
-                craftingSystem.SetCanUnlockSkill(false);
-            }
+            StartCoroutine(SetInitialButtonSelectionForThisSubMenu(subMenu));
         }
 
         IEnumerator SetInitialButtonSelectionForThisSubMenu(SubMenu subMenu)
@@ -106,7 +94,8 @@ namespace PSmash.Menus
         {
             foreach (MenuTab tab in menuTabs)
             {
-                if (eventSystem.currentSelectedGameObject == tab.gameObject) return true;
+                if (eventSystem.currentSelectedGameObject == tab.gameObject) 
+                    return true;
             }
             return false;
         }
